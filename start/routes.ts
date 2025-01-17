@@ -85,65 +85,6 @@ router
 
 router
     .group(() => {
-        /*router
-            .group(() => {
-                router.get("/redirect", async ({ ally }) => {
-                    return ally.use("facebrower").stateless().redirect();
-                });
-                router.get("/callback", async ({ auth, session, request, ally }) => {
-                    try {
-                        const fb = ally.use("facebrower").stateless();
-
-                        if (!request.input("auth_key")) {
-                            throw Error("Auth key not found");
-                        }
-
-                        if (fb.accessDenied()) {
-                            throw Error("You have cancelled the login process");
-                        }
-
-                        if (fb.hasError()) {
-                            return fb.getError();
-                        }
-
-                        const fbUser = await fb.user();
-
-                        if (!fbUser)
-                            throw Error("Facebrowser OAuth: Failure to get user information");
-
-                        const user = await User.firstOrCreate(
-                            { facebrowser_id: fbUser.id },
-                            {
-                                name: fbUser.nickName,
-                                facebrowser_id: fbUser.id,
-                            },
-                        );
-
-                        if (!user) throw Error("Failed to find or create account");
-
-                        await auth.use("web").login(user);
-
-                        session.flash("notification", {
-                            variant: "success",
-                            message: "Successful login!",
-                        });
-
-                        return "<script>window.close()</script>";
-                    } catch (e) {
-                        console.error(e);
-                        return "<script>window.close()</script>";
-                    }
-                });
-            })
-            .prefix("/api/auth/facebrowser");
-
-        router
-            .group(() => {
-                router.get("/redirect", async ({ ally }) => ally.use("discord").redirect());
-                router.get("/callback", async () => {});
-            })
-            .prefix("/api/auth/discord");*/
-
         router.get("/:provider/redirect", [AuthController, "redirect"]);
         router.get("/:provider/callback", [AuthController, "callback"]);
 
