@@ -17,6 +17,7 @@ const JobController = () => import("#controllers/job_controller");
 const EventController = () => import("#controllers/event_controller");
 const ProfileController = () => import("#controllers/profile_controller");
 const AuthController = () => import("#controllers/auth_controller");
+const ApplicationController = () => import("#controllers/application_controller");
 
 router.get("/", [WelcomeController, "show"]);
 
@@ -88,6 +89,11 @@ router
         router.get("/profile", [ProfileController, "show"]);
         router.patch("/profile", [ProfileController, "update"]);
         router.delete("/profile", [ProfileController, "destroy"]);
+
+        router.get("/applications", [ApplicationController, "showAll"]);
+        router
+            .get("/applications/:id", [ApplicationController, "show"])
+            .where("id", router.matchers.number());
     })
     .use(middleware.auth());
 
