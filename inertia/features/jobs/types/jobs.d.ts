@@ -1,8 +1,8 @@
 export interface Job {
     id: number;
-    created_at: string;
-    updated_at: string;
-    is_open: boolean;
+    createdAt: string;
+    updatedAt: string;
+    isOpen: boolean;
     expiration: string;
     title: string;
     description: string;

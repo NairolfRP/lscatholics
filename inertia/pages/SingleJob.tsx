@@ -70,7 +70,7 @@ export default function SingleJob({ job }: PageProps<{ job: Job }>) {
     const { t } = useTranslation();
 
     const handleJobApplyButton = useEventCallback(() => {
-        router.visit(`/apply/${job.id}`);
+        router.visit(`/job/apply/${job.id}`);
     });
 
     return (
@@ -78,7 +78,7 @@ export default function SingleJob({ job }: PageProps<{ job: Job }>) {
             <Head title={job.title} />
 
             <Container sx={{ mt: 5, mb: 25 }}>
-                <BackButton to="jobs" sx={{ mb: 3 }}>
+                <BackButton to="/jobs" sx={{ mb: 3 }}>
                     {t("job_button_back")}
                 </BackButton>
 
@@ -94,11 +94,11 @@ export default function SingleJob({ job }: PageProps<{ job: Job }>) {
                         <Grid>
                             <InformationLabel
                                 label={t("created_at")}
-                                value={t("date", formatStringDate(job.created_at))}
+                                value={t("date", formatStringDate(job.createdAt))}
                             />
                         </Grid>
                         <Grid>
-                            {job.is_open ? (
+                            {job.isOpen ? (
                                 <InformationLabel
                                     label={t("expires")}
                                     value={t("date", formatStringDate(job.expiration))}
@@ -165,7 +165,7 @@ export default function SingleJob({ job }: PageProps<{ job: Job }>) {
                         color="secondary"
                         variant="contained"
                         rel="noopener noreferrer"
-                        disabled={!job.is_open}
+                        disabled={!job.isOpen}
                     >
                         {t("job_apply_button")}
                     </Button>

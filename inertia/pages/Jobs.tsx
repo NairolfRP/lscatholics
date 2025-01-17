@@ -17,7 +17,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import { ChangeEvent, useMemo, useState } from "react";
+import { ChangeEvent, Suspense, useMemo, useState } from "react";
 import { Str } from "@shared/helpers/Str";
 
 const categories = [
@@ -47,7 +47,7 @@ export default function Jobs({ jobs }: PageProps<{ jobs: Job[] }>) {
     const [hiddenCategories, setHiddenCategories] = useState<JobCategory[]>([]);
 
     const jobsDisplayed = useMemo(
-        () => jobs.filter((j: { category: JobCategory; }) => !hiddenCategories.includes(j.category)),
+        () => jobs.filter((j: { category: JobCategory }) => !hiddenCategories.includes(j.category)),
         [jobs, hiddenCategories],
     );
 
@@ -92,28 +92,40 @@ export default function Jobs({ jobs }: PageProps<{ jobs: Job[] }>) {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {paginatedJobs.map((job: Job) => (
-                                    <StyledTableRow
-                                        key={job.id}
-                                        hover
-                                        tabIndex={-1}
-                                        sx={{ cursor: "pointer" }}
-                                        onClick={() => router.visit(`job/${Str.slug(job.title)}`)}
-                                    >
-                                        <StyledTableCell
-                                            component="th"
-                                            scope="row"
-                                            sx={{ color: getJobCategoryColor(job.category) }}
-                                        >
-                                            {job.title}
-                                        </StyledTableCell>
-                                        <StyledTableCell>{job.organization}</StyledTableCell>
-                                        <StyledTableCell>{job.location}</StyledTableCell>
-                                        <StyledTableCell>
-                                            {t("date", formatStringDate(job.created_at))}
-                                        </StyledTableCell>
-                                    </StyledTableRow>
-                                ))}
+                                <Suspense fallback="Loading...">
+                                    {paginatedJobs.map(async (job: Job) => {
+                                        return (
+                                            <StyledTableRow
+                                                key={job.id}
+                                                hover
+                                                tabIndex={-1}
+                                                sx={{ cursor: "pointer" }}
+                                                onClick={() =>
+                                                    router.visit(
+                                                        `job/${job.id}/${Str.slug(job.title)}`,
+                                                    )
+                                                }
+                                            >
+                                                <StyledTableCell
+                                                    component="th"
+                                                    scope="row"
+                                                    sx={{
+                                                        color: getJobCategoryColor(job.category),
+                                                    }}
+                                                >
+                                                    {job.title}
+                                                </StyledTableCell>
+                                                <StyledTableCell>
+                                                    {job.organization}
+                                                </StyledTableCell>
+                                                <StyledTableCell>{job.location}</StyledTableCell>
+                                                <StyledTableCell>
+                                                    {t("date", formatStringDate(job.createdAt))}
+                                                </StyledTableCell>
+                                            </StyledTableRow>
+                                        );
+                                    })}
+                                </Suspense>
                             </TableBody>
                         </Table>
                     </TableContainer>

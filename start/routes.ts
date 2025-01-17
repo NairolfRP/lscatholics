@@ -48,14 +48,22 @@ router.on("/volunteer").renderInertia("Volunteer");
 //router.post("/donate", [DonateController, "submit"]);
 //router.get("/donate/success", [DonateController, "success"]);
 
+router.get("/jobs", [JobController, "showAll"]);
+
 router
     .group(() => {
-        router.get("/", [JobController, "showAll"]);
-        router.get("/:job-:slug", [JobController, "show"]);
-        router.get("/apply/:job", [JobController, "showApplication"]);
-        router.post("/apply/:job", [JobController, "submitApplication"]);
+        router
+            .get("/:job/:slug", [JobController, "show"])
+            .where("job", router.matchers.number())
+            .where("slug", router.matchers.slug());
+        router
+            .get("/apply/:job", [JobController, "showApplication"])
+            .where("job", router.matchers.number());
+        router
+            .post("/apply/:job", [JobController, "submitApplication"])
+            .where("job", router.matchers.number());
     })
-    .prefix("jobs");
+    .prefix("job");
 
 router
     .group(() => {
