@@ -1,0 +1,17 @@
+{
+  "donation": {
+    "donation_amount": "Your Gift Amount",
+    "one_time_donation": "One-Time",
+    "recurring_donation": "Recurring",
+    "donation_by_an_organization_or_company": "My gift is on behalf of an organization or company",
+    "anonymous_donation": "I would like my gift to remain private. It will not be shown or announced.",
+    "recurring_donation_paragraph": "You can <0>automatically</0> make <0>recurring</0> gifts to the Church. Log in to your <0>Fleeca member area</0> and visit the <1 href=\"https://banking.gta.world/standing-orders\">Standing Orders</1> page. Click on <0>Add New</0> and complete the form as follows :",
+    "recurring_donation_amount_description": "Indicate the amount you wish to donate to the church on a recurring cycle.",
+    "recurring_donation_iban_description": "0200 1914 4",
+    "recurring_donation_repeat_type_description": "Choose how often you would like to make your recurring donation, monthly or every number of days.",
+    "recurring_donation_start_date_description": "Set the date on which recurring donations will begin.",
+    "recurring_donation_remarks_description": "Donation comments. Simply enter “Donation”.",
+    "recurring_donation_confirmation_paragraph": "Finally, click on “Confirm” to save your recurring donation.",
+    "success_donation_notification": "Successful donation! Thank you so much!"
+  }
+}

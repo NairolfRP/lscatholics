@@ -1,0 +1,17 @@
+{
+  "donation": {
+    "donation_amount": "Montant du don",
+    "one_time_donation": "Je donne une seule fois",
+    "recurring_donation": "Je donne périodiquement",
+    "donation_by_an_organization_or_company": "Je fais un don au nom d'une organisation ou d'une société",
+    "anonymous_donation": "Je souhaite que ma donation reste privée, ce qui veut dire qu'elle ne sera ni affichée ni communiquée publiquement.",
+    "recurring_donation_paragraph": "Vous pouvez de manière <0>périodique</0> et <0>automatique</0> effectuer des dons à l'intention de l'Église. Pour cela, vous devez vous connecter sur votre <0>espace en ligne Fleeca</0> puis accéder à la page <1 href=\"https://fleeca.gta.world/standing-orders\">Standing Orders</1>. Cliquez sur <0>Add New</0> et remplissez le formulaire avec les informations suivantes :",
+    "recurring_donation_amount_description": "Indiquez le montant que vous souhaitez donner à l'Église de manière automatique et périodique.",
+    "recurring_donation_iban_description": "0200 1914 4",
+    "recurring_donation_repeat_type_description": "Choisissez la fréquence à laquelle vous souhaitez effectuer votre don périodique, soit de manière mensuelle, soit tous les X jours.",
+    "recurring_donation_start_date_description": "Définissez la date à laquelle les dons périodiques commenceront.",
+    "recurring_donation_remarks_description": "Commentaire des dons. Remplissez simplement « Donation »",
+    "recurring_donation_confirmation_paragraph": "Cliquez enfin sur « Confirm » pour enregistrer votre don périodique.",
+    "success_donation_notification": "Don effectué avec succès ! Merci !"
+  }
+}

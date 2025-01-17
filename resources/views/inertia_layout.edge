@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <title inertia>
+            AdonisJS x Inertia x React
+        </title>
+
+        <link rel="preconnect" href="https://fonts.bunny.net">
+        <link href="https://fonts.bunny.net/css?family=pathway-gothic-one:400" rel="stylesheet" />
+        <link href="https://fonts.bunny.net/css?family=nunito:200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i|nunito-sans:200,200i,300,300i,400,400i,500,500i,600,600i,700,800,900|pathway-gothic-one:400" rel="stylesheet" />
+
+        @inertiaHead()
+        @viteReactRefresh()
+        @vite(['inertia/app/app.tsx', `inertia/pages/${page.component}.tsx`])
+    </head>
+
+    <body>
+        @inertia()
+    </body>
+
+</html>
