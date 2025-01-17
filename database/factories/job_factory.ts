@@ -13,7 +13,7 @@ export const JobFactory = factory
             wage: faker.number.float().toString(),
             category: faker.number.int({ min: 0, max: 3 }),
             expiration: DateTime.fromJSDate(faker.date.future()),
-            is_open: 1,
+            is_open: 1 as unknown as boolean,
         };
     })
     .build();
