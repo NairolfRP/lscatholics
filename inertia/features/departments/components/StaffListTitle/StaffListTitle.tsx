@@ -10,7 +10,7 @@ const StaffListTittleBackground = styled(Box)<BoxProps>(({ theme }) => ({
     paddingTop: theme.spacing(2),
     paddingBottom: theme.spacing(1),
     marginBottom: theme.spacing(4),
-    borderBottom: "15px solid #BD4909FF"
+    borderBottom: "15px solid #BD4909FF",
 }));
 
 export default function StaffListTittle() {

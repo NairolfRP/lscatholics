@@ -15,7 +15,7 @@ export const menuItems: HeaderNavItem[] = [
                 items: [
                     {
                         name: "archbishop_office",
-                        link: "/departments/archbishop-office"
+                        link: "/departments/archbishop-office",
                     },
                 ],
             },

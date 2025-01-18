@@ -11,7 +11,11 @@ interface LoadingScreenProps {
     transparent?: boolean;
 }
 
-export default function LoadingScreen({ message = "Loading...", delay = 500, transparent = false }: LoadingScreenProps) {
+export default function LoadingScreen({
+    message = "Loading...",
+    delay = 500,
+    transparent = false,
+}: LoadingScreenProps) {
     const theme = useTheme();
     const [show, setShow] = React.useState(false);
 
@@ -42,9 +46,11 @@ export default function LoadingScreen({ message = "Loading...", delay = 500, tra
                     flexDirection: "column",
                     alignItems: "center",
                     justifyContent: "center",
-                    backgroundColor: transparent ? `${theme.palette.background.default}cc` : theme.palette.background.default,
+                    backgroundColor: transparent
+                        ? `${theme.palette.background.default}cc`
+                        : theme.palette.background.default,
                     zIndex: theme.zIndex.modal + 1,
-                    backdropFilter: transparent ? "blur(4px)" : "none"
+                    backdropFilter: transparent ? "blur(4px)" : "none",
                 }}
             >
                 <Box
@@ -54,14 +60,16 @@ export default function LoadingScreen({ message = "Loading...", delay = 500, tra
                         alignItems: "center",
                         padding: 3,
                         borderRadius: 2,
-                        backgroundColor: transparent ? theme.palette.background.paper : "transparent"
+                        backgroundColor: transparent
+                            ? theme.palette.background.paper
+                            : "transparent",
                     }}
                 >
                     <CircularProgress
                         size={60}
                         thickness={4}
                         sx={{
-                            color: theme.palette.primary.main
+                            color: theme.palette.primary.main,
                         }}
                     />
                     <Typography
@@ -70,7 +78,7 @@ export default function LoadingScreen({ message = "Loading...", delay = 500, tra
                         sx={{
                             color: theme.palette.text.secondary,
                             marginTop: 2,
-                            textAlign: "center"
+                            textAlign: "center",
                         }}
                     >
                         {message}

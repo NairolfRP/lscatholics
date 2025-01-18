@@ -1,27 +1,27 @@
 {
-  "jobs": {
-    "job_archdiocesan_category": "Département/Service Archidiocésain",
-    "job_parish_category": "Paroisse",
-    "job_cemeteries_category": "Cimetière / Morgue",
-    "job_school_category": "Écoles",
-    "position": "Poste",
-    "location": "Localisation",
-    "description": "Description",
-    "requirements": "Conditions",
-    "wage_range": "Éventail des salaires",
-    "created_at": "Date de création",
-    "statut": "État",
-    "closed": "Fermé"
-  },
-  "application": {
-    "job_application_form_personal_information": "Informations personnelles",
-    "job_application_age_question": "Êtes-vous âgé de 18 ans ou plus (+) ?",
-    "job_application_eligibility_to_work_us_question": "Si vous êtes embauché, pourrez-vous fournir la preuve que vous êtes légalement autorisé à travailler aux États-Unis ?",
-    "job_application_driver_license_question": "Possédez-vous un permis de conduire valide ?",
-    "job_application_auto_insurance_question": "Possédez-vous une assurance automobile valide ?",
-    "full_time": "Temps plein",
-    "part_time": "Temps partiel",
-    "temporary": "Temporaire",
-    "job_application_archdiocese_policy_description": "L'Archidiocèse recrute, embauche et promeut sur la base du mérite, des compétences et des qualifications, sans distinction de race, de couleur, d'origine, d'ascendance, d'handicap physique ou mental, d'état de santé, d'état matrimonial, de sexe, d'âge, de grossesse ou de statut d'ancien combattant. L'Archidiocèse se réserve le droit d'être le seul juge du mérite, des compétences et des qualifications et peut favoriser les candidats catholiques dans toutes les décisions d'emploi."
-  }
+    "jobs": {
+        "job_archdiocesan_category": "Département/Service Archidiocésain",
+        "job_parish_category": "Paroisse",
+        "job_cemeteries_category": "Cimetière / Morgue",
+        "job_school_category": "Écoles",
+        "position": "Poste",
+        "location": "Localisation",
+        "description": "Description",
+        "requirements": "Conditions",
+        "wage_range": "Éventail des salaires",
+        "created_at": "Date de création",
+        "statut": "État",
+        "closed": "Fermé"
+    },
+    "application": {
+        "job_application_form_personal_information": "Informations personnelles",
+        "job_application_age_question": "Êtes-vous âgé de 18 ans ou plus (+) ?",
+        "job_application_eligibility_to_work_us_question": "Si vous êtes embauché, pourrez-vous fournir la preuve que vous êtes légalement autorisé à travailler aux États-Unis ?",
+        "job_application_driver_license_question": "Possédez-vous un permis de conduire valide ?",
+        "job_application_auto_insurance_question": "Possédez-vous une assurance automobile valide ?",
+        "full_time": "Temps plein",
+        "part_time": "Temps partiel",
+        "temporary": "Temporaire",
+        "job_application_archdiocese_policy_description": "L'Archidiocèse recrute, embauche et promeut sur la base du mérite, des compétences et des qualifications, sans distinction de race, de couleur, d'origine, d'ascendance, d'handicap physique ou mental, d'état de santé, d'état matrimonial, de sexe, d'âge, de grossesse ou de statut d'ancien combattant. L'Archidiocèse se réserve le droit d'être le seul juge du mérite, des compétences et des qualifications et peut favoriser les candidats catholiques dans toutes les décisions d'emploi."
+    }
 }

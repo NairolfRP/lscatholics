@@ -17,7 +17,17 @@ export class DiscordEmbedService implements DiscordEmbed {
     readonly author: DiscordEmbedAuthor | null;
     readonly fields: DiscordEmbedFields[] = [];
 
-    private constructor({ title, description = null, url = null, color = null, timestamp = null, footer = null, image = null, thumbnail = null, author = null }: Omit<DiscordEmbed, "fields">) {
+    private constructor({
+        title,
+        description = null,
+        url = null,
+        color = null,
+        timestamp = null,
+        footer = null,
+        image = null,
+        thumbnail = null,
+        author = null,
+    }: Omit<DiscordEmbed, "fields">) {
         this.title = title;
         this.description = description;
         this.url = url;
@@ -51,9 +61,13 @@ export class DiscordEmbedService implements DiscordEmbed {
             image: this.image,
             thumbnail: this.thumbnail,
             author: this.author,
-            fields: this.fields
+            fields: this.fields,
         };
 
-        return Object.fromEntries(Object.entries(payload).filter(([_, v]) => v !== null && v !== undefined && !(Array.isArray(v) && v.length === 0)));
+        return Object.fromEntries(
+            Object.entries(payload).filter(
+                ([_, v]) => v !== null && v !== undefined && !(Array.isArray(v) && v.length === 0),
+            ),
+        );
     }
 }

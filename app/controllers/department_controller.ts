@@ -18,8 +18,9 @@ export default class DepartmentController {
     public show({ params, response, inertia }: HttpContext) {
         const { department } = params as { department: string };
 
-        if(!this.availableDepartments.includes(department)) return response.abort("This department does not exist or has not been found", 404);
+        if (!this.availableDepartments.includes(department))
+            return response.abort("This department does not exist or has not been found", 404);
 
-        return inertia.render("SingleDepartment", { department })
+        return inertia.render("SingleDepartment", { department });
     }
 }

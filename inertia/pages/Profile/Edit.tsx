@@ -9,8 +9,8 @@ import DeleteUserForm from "./Partials/DeleteUserForm";
 const styles = {
     p: {
         md: 4,
-        sm: 8
-    }
+        sm: 8,
+    },
 };
 
 export default function Edit({ auth }: Partial<PageProps>) {

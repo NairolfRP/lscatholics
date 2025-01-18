@@ -19,7 +19,11 @@ export default function SingleApplication({ application, applicant }: SingleAppl
                     const field = application.fields[fieldKey];
                     return (
                         <Typography key={fieldKey}>
-                            {fieldKey} :{field.type === "date" && (typeof field.value === "string" || field.value instanceof Date) ? new Date(field.value).toLocaleDateString() : String(field.value)}
+                            {fieldKey} :
+                            {field.type === "date" &&
+                            (typeof field.value === "string" || field.value instanceof Date)
+                                ? new Date(field.value).toLocaleDateString()
+                                : String(field.value)}
                         </Typography>
                     );
                 })}

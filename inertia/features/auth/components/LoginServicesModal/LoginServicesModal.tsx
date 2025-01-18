@@ -15,10 +15,15 @@ interface LoginServicesModalProps {
 
 const modalStyles = {
     boxShadow: 24,
-    p: 3
+    p: 3,
 };
 
-export default function LoginServicesModal({ id, anchorEl, open = false, onClose }: LoginServicesModalProps) {
+export default function LoginServicesModal({
+    id,
+    anchorEl,
+    open = false,
+    onClose,
+}: LoginServicesModalProps) {
     const { t } = useTranslation();
 
     return (

@@ -54,7 +54,7 @@ export default function Archbishop() {
                     i18nKey="follow_archbishop_on_facebrowser"
                     components={{
                         Icon: <FacebrowserIcon fontSize="large" sx={{ color: "#B81C20" }} />,
-                        Link: <Box component="a" target="_blank"></Box>
+                        Link: <Box component="a" target="_blank"></Box>,
                     }}
                 />
             </Container>

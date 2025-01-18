@@ -1,28 +1,28 @@
 {
-  "about": {
-    "archbishop_lopez": "Archbishop Lopez",
-    "archbishop_office": "Office of the Archbishop",
-    "departments": "Departments",
-    "administrative_handbook": "Administrative Handbook",
-    "privacy_policy": "Privacy Policy"
-  },
-  "mission": {
-    "ls_catholics_mission": "LS Catholics Mission",
-    "ls_catholics_mission_paragraph1": "We, the People of God of the Archdiocese of Los Santos, accept our mission to continue the redemptive work of Jesus Christ. Baptized into the Body of Christ, confirmed in the Holy Spirit, and nourished by the Word and Eucharist, we share Christ’s mission as priest, prophet and servant kings. We are one with the Catholic Church throughout the world, in communion with the pope.",
-    "ls_catholics_mission_paragraph2": "With the pastoral leadership of our Archbishop, we collaborate to live and proclaim the gospel. Christ announced the reign of God. We are the instrument of this reign in the world. We commit ourselves to build a community of faith and love. With Christ, we bring good news to the poor. We commit ourselves to eliminate the many faces of poverty in our midst— spiritual, economic, and moral. With Christ, we uphold the dignity of human life. We commit ourselves to cherish each person and to be faithful stewards of God’s creation. With Christ, we affirm the bonds that unite us. We commit ourselves to remove the barriers that divide. We dedicate our parish communities and our schools, institutions, ministries, and organizations to fulfill this mission under the loving patronage of Mary, Queen of the Saints."
-  },
-  "statistics": {
-    "we_are_parishes": "We Are Parishes",
-    "we_are_schools": "We Are Schools",
-    "we_are_community": "We Are Community",
-    "number_of_parishes": "{{number}} parishes",
-    "number_of_missions_and_chapels": "{{number}} missions and chapels",
-    "number_of_eastern_rite_catholic_churches": "{{number}} Eastern Rite Catholic Churches",
-    "number_of_elementary_schools": "{{number}} elementary schools",
-    "number_of_high_schools": "{{number}} high schools",
-    "number_of_students_enrolled": "{{number}} students enrolled",
-    "number_of_catholics": "{{number}} Catholics",
-    "number_of_catholic_cities": "Residing in {{number}} cities",
-    "number_of_mass_languages": "Mass celebrated in {{number}} languages"
-  }
+    "about": {
+        "archbishop_lopez": "Archbishop Lopez",
+        "archbishop_office": "Office of the Archbishop",
+        "departments": "Departments",
+        "administrative_handbook": "Administrative Handbook",
+        "privacy_policy": "Privacy Policy"
+    },
+    "mission": {
+        "ls_catholics_mission": "LS Catholics Mission",
+        "ls_catholics_mission_paragraph1": "We, the People of God of the Archdiocese of Los Santos, accept our mission to continue the redemptive work of Jesus Christ. Baptized into the Body of Christ, confirmed in the Holy Spirit, and nourished by the Word and Eucharist, we share Christ’s mission as priest, prophet and servant kings. We are one with the Catholic Church throughout the world, in communion with the pope.",
+        "ls_catholics_mission_paragraph2": "With the pastoral leadership of our Archbishop, we collaborate to live and proclaim the gospel. Christ announced the reign of God. We are the instrument of this reign in the world. We commit ourselves to build a community of faith and love. With Christ, we bring good news to the poor. We commit ourselves to eliminate the many faces of poverty in our midst— spiritual, economic, and moral. With Christ, we uphold the dignity of human life. We commit ourselves to cherish each person and to be faithful stewards of God’s creation. With Christ, we affirm the bonds that unite us. We commit ourselves to remove the barriers that divide. We dedicate our parish communities and our schools, institutions, ministries, and organizations to fulfill this mission under the loving patronage of Mary, Queen of the Saints."
+    },
+    "statistics": {
+        "we_are_parishes": "We Are Parishes",
+        "we_are_schools": "We Are Schools",
+        "we_are_community": "We Are Community",
+        "number_of_parishes": "{{number}} parishes",
+        "number_of_missions_and_chapels": "{{number}} missions and chapels",
+        "number_of_eastern_rite_catholic_churches": "{{number}} Eastern Rite Catholic Churches",
+        "number_of_elementary_schools": "{{number}} elementary schools",
+        "number_of_high_schools": "{{number}} high schools",
+        "number_of_students_enrolled": "{{number}} students enrolled",
+        "number_of_catholics": "{{number}} Catholics",
+        "number_of_catholic_cities": "Residing in {{number}} cities",
+        "number_of_mass_languages": "Mass celebrated in {{number}} languages"
+    }
 }

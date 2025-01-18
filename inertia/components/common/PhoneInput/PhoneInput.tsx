@@ -18,14 +18,14 @@ export function PhoneInput(props: ComponentPropsWithRef<typeof TextField>) {
                         <InputAdornment position="start">
                             <ContactPhoneIcon />
                         </InputAdornment>
-                    )
+                    ),
                 },
                 htmlInput: {
                     ...slotProps?.htmlInput,
                     maxLength: 8,
                     minLength: 3,
-                    pattern: "[0-9]*"
-                }
+                    pattern: "[0-9]*",
+                },
             }}
             onChange={(e) => {
                 const value = e.target.value.replace(/[^0-9]/g, "");

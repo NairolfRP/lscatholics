@@ -19,8 +19,18 @@ export default function ConfirmationCheckbox() {
     });
 
     return (
-        <FormControl disabled={isProcessing} required sx={{ display: "flex", flexWrap: "wrap" }} error={invalid("confirmation")}>
-            <FormControlLabel checked={data.confirmation} onChange={handleChange} control={<Checkbox />} label={`(( ${t("confirmation_connected_to_fleeca")} ))`} />
+        <FormControl
+            disabled={isProcessing}
+            required
+            sx={{ display: "flex", flexWrap: "wrap" }}
+            error={invalid("confirmation")}
+        >
+            <FormControlLabel
+                checked={data.confirmation}
+                onChange={handleChange}
+                control={<Checkbox />}
+                label={`(( ${t("confirmation_connected_to_fleeca")} ))`}
+            />
             <FormHelperText>{invalid("confirmation") && errors.confirmation}</FormHelperText>
         </FormControl>
     );

@@ -2,11 +2,11 @@ export type DiscordEmbedFields = {
     name: string;
     value: string;
     inline?: boolean;
-}
+};
 
-export type DiscordEmbedFooter = { text: string; iconURL?: string; };
+export type DiscordEmbedFooter = { text: string; iconURL?: string };
 
-export type DiscordEmbedAuthor = { name: string, url?: string; iconURL: string; };
+export type DiscordEmbedAuthor = { name: string; url?: string; iconURL: string };
 
 export interface DiscordEmbed {
     readonly title: string;
@@ -20,5 +20,5 @@ export interface DiscordEmbed {
     readonly thumbnail?: string | null;
     readonly author?: DiscordEmbedAuthor | null;
 
-    fields?: DiscordEmbedFields[] | []
+    fields?: DiscordEmbedFields[] | [];
 }

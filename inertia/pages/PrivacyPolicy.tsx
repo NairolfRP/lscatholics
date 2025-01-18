@@ -17,14 +17,17 @@ export default function PrivacyPolicy() {
         <MainLayout bannerTitle={t("privacy_policy")}>
             <Head title={t("privacy_policy")} />
             <Container sx={{ mt: 5, mb: 15 }}>
-                <Alert severity="warning">Contrairement au reste du site, cette page n&#39;est pas fictive.</Alert>
+                <Alert severity="warning">
+                    Contrairement au reste du site, cette page n&#39;est pas fictive.
+                </Alert>
 
                 <Box mt={3}>
                     <Typography variant="h3" gutterBottom>
                         1. Informations Collectées
                     </Typography>
                     <Typography component="p" variant="body1">
-                        Lors de l’utilisation de notre site, nous collectons uniquement les informations nécessaires à l&apos;authentification des utilisateurs via{" "}
+                        Lors de l’utilisation de notre site, nous collectons uniquement les
+                        informations nécessaires à l&apos;authentification des utilisateurs via{" "}
                         <Link href={DISCORD_URL} target="_blank">
                             Discord
                         </Link>{" "}
@@ -37,17 +40,20 @@ export default function PrivacyPolicy() {
                     <ul>
                         <li>
                             <Typography variant="body1">
-                                <strong>Nom d’utilisateur :</strong> pseudonyme Facebrowser ou Discord
+                                <strong>Nom d’utilisateur :</strong> pseudonyme Facebrowser ou
+                                Discord
                             </Typography>
                         </li>
                         <li>
                             <Typography variant="body1">
-                                <strong>Identifiant unique :</strong> ID du compte Facebrowser ou Discord
+                                <strong>Identifiant unique :</strong> ID du compte Facebrowser ou
+                                Discord
                             </Typography>
                         </li>
                     </ul>
                     <Typography component="p" variant="body1">
-                        Ces informations sont exclusivement utilisées pour l’identification et la gestion des comptes sur notre site.
+                        Ces informations sont exclusivement utilisées pour l’identification et la
+                        gestion des comptes sur notre site.
                     </Typography>
                 </Box>
 
@@ -60,14 +66,19 @@ export default function PrivacyPolicy() {
                     </Typography>
                     <ul>
                         <li>
-                            <Typography variant="body1">Permettre l’accès sécurisé aux fonctionnalités du site</Typography>
+                            <Typography variant="body1">
+                                Permettre l’accès sécurisé aux fonctionnalités du site
+                            </Typography>
                         </li>
                         <li>
-                            <Typography variant="body1">Gérer et maintenir votre compte utilisateur</Typography>
+                            <Typography variant="body1">
+                                Gérer et maintenir votre compte utilisateur
+                            </Typography>
                         </li>
                     </ul>
                     <Typography component="p" variant="body1">
-                        Aucune autre information n’est demandée ni stockée, et vos données ne sont jamais partagées ni vendues à des tiers.
+                        Aucune autre information n’est demandée ni stockée, et vos données ne sont
+                        jamais partagées ni vendues à des tiers.
                     </Typography>
                 </Box>
 
@@ -76,8 +87,10 @@ export default function PrivacyPolicy() {
                         3. Cookies
                     </Typography>
                     <Typography component="p" variant="body1">
-                        Notre site utilise des cookies pour permettre une connexion sécurisée et maintenir la session utilisateur. Ces cookies sont nécessaires au bon fonctionnement du site et ne
-                        contiennent pas d’informations personnelles sensibles.
+                        Notre site utilise des cookies pour permettre une connexion sécurisée et
+                        maintenir la session utilisateur. Ces cookies sont nécessaires au bon
+                        fonctionnement du site et ne contiennent pas d’informations personnelles
+                        sensibles.
                     </Typography>
                 </Box>
 
@@ -86,8 +99,10 @@ export default function PrivacyPolicy() {
                         4. Suppression des Comptes
                     </Typography>
                     <Typography component="p" variant="body1">
-                        Vous avez la possibilité de supprimer votre compte à tout moment depuis les paramètres de votre profil. La suppression de votre compte entraîne la suppression définitive de
-                        toutes les informations associées (nom d’utilisateur et identifiant unique).
+                        Vous avez la possibilité de supprimer votre compte à tout moment depuis les
+                        paramètres de votre profil. La suppression de votre compte entraîne la
+                        suppression définitive de toutes les informations associées (nom
+                        d’utilisateur et identifiant unique).
                     </Typography>
                 </Box>
 
@@ -96,7 +111,8 @@ export default function PrivacyPolicy() {
                         5. Modifications de cette Politique
                     </Typography>
                     <Typography component="p" variant="body1">
-                        Cette politique de confidentialité peut être mise à jour pour refléter les changements de nos pratiques ou des exigences légales.
+                        Cette politique de confidentialité peut être mise à jour pour refléter les
+                        changements de nos pratiques ou des exigences légales.
                     </Typography>
                 </Box>
             </Container>

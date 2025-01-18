@@ -22,7 +22,11 @@ const Donate = () => {
                 <DonateFormProvider>
                     <DonationTabs donationType={donationType} setDonationType={setDonationType} />
                     <FormDivider />
-                    {donationType === DONATION_TYPE.RECURRING ? <RecurringDonationInfo /> : <DonationForm />}
+                    {donationType === DONATION_TYPE.RECURRING ? (
+                        <RecurringDonationInfo />
+                    ) : (
+                        <DonationForm />
+                    )}
                 </DonateFormProvider>
             </Container>
         </>

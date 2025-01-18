@@ -11,6 +11,6 @@ export function useTranslation(): I18nService {
                 await i18n.changeLanguage(lang);
             }
         },
-        language: i18n.language
+        language: i18n.language,
     };
 }

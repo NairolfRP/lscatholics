@@ -19,12 +19,18 @@ const schoolLevel = [
     "doctor_of_medicine",
     "doctor_of_dental_surgery",
     "doctor_of_pharmacy",
-    "master_of_business_administration"
+    "master_of_business_administration",
 ];
 
 const maxOfEducationFields = 3;
 
-export default function EducationField({ data, setData }: { data: Education[]; setData: (v: Education[]) => void }) {
+export default function EducationField({
+    data,
+    setData,
+}: {
+    data: Education[];
+    setData: (v: Education[]) => void;
+}) {
     const { t } = useTranslation();
 
     const hasMaxLength = data.length >= maxOfEducationFields;
@@ -38,8 +44,8 @@ export default function EducationField({ data, setData }: { data: Education[]; s
                 degree: "",
                 name: "",
                 year: "",
-                major: ""
-            }
+                major: "",
+            },
         ]);
     };
 
@@ -49,7 +55,11 @@ export default function EducationField({ data, setData }: { data: Education[]; s
         setData(newData);
     };
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent<string>, dataID: number, key: string) => {
+    const handleChange = (
+        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent<string>,
+        dataID: number,
+        key: string,
+    ) => {
         const newData = data.map((d, i) => {
             if (i !== dataID || !(key in d)) {
                 return d;
@@ -57,7 +67,7 @@ export default function EducationField({ data, setData }: { data: Education[]; s
 
             return {
                 ...d,
-                [key]: e.target.value
+                [key]: e.target.value,
             };
         });
 
@@ -71,7 +81,13 @@ export default function EducationField({ data, setData }: { data: Education[]; s
                     <Grid size={{ md: 2 }}>
                         <FormControl required fullWidth>
                             <InputLabel id="school_degree_label">{t("school_degree")}</InputLabel>
-                            <Select labelId="school_degree_label" label={t("school_degree")} displayEmpty value={d.degree} onChange={(e) => handleChange(e, index, "degree")}>
+                            <Select
+                                labelId="school_degree_label"
+                                label={t("school_degree")}
+                                displayEmpty
+                                value={d.degree}
+                                onChange={(e) => handleChange(e, index, "degree")}
+                            >
                                 {schoolLevel.map((option, optionID) => (
                                     <MenuItem key={optionID} value={option}>
                                         {t(option)}
@@ -81,7 +97,14 @@ export default function EducationField({ data, setData }: { data: Education[]; s
                         </FormControl>
                     </Grid>
                     <Grid>
-                        <TextField required name="school_name" value={d.name} placeholder="Harvard University" label={t("school_name")} onChange={(e) => handleChange(e, index, "name")} />
+                        <TextField
+                            required
+                            name="school_name"
+                            value={d.name}
+                            placeholder="Harvard University"
+                            label={t("school_name")}
+                            onChange={(e) => handleChange(e, index, "name")}
+                        />
                     </Grid>
                     <Grid size={{ md: 2 }}>
                         <TextField
@@ -95,10 +118,21 @@ export default function EducationField({ data, setData }: { data: Education[]; s
                         />
                     </Grid>
                     <Grid>
-                        <TextField required name="school_major" value={d.major} placeholder="Administration" label={t("school_major")} onChange={(e) => handleChange(e, index, "major")} />
+                        <TextField
+                            required
+                            name="school_major"
+                            value={d.major}
+                            placeholder="Administration"
+                            label={t("school_major")}
+                            onChange={(e) => handleChange(e, index, "major")}
+                        />
                     </Grid>
                     <Grid>
-                        <IconButton color="error" aria-label="remove school" onClick={() => handleRemoveClick(index)}>
+                        <IconButton
+                            color="error"
+                            aria-label="remove school"
+                            onClick={() => handleRemoveClick(index)}
+                        >
                             <RemoveCircleIcon />
                         </IconButton>
                     </Grid>
@@ -106,7 +140,12 @@ export default function EducationField({ data, setData }: { data: Education[]; s
             ))}
             <Grid container spacing={2} alignItems="center">
                 <Grid>
-                    <IconButton color="primary" aria-label="add school" onClick={handleAddClick} disabled={hasMaxLength}>
+                    <IconButton
+                        color="primary"
+                        aria-label="add school"
+                        onClick={handleAddClick}
+                        disabled={hasMaxLength}
+                    >
                         <AddIcon />
                     </IconButton>
                 </Grid>

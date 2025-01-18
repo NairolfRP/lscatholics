@@ -9,7 +9,7 @@ export const departments: IDepartmentList[] = [
             director: {
                 name: "Mgr. Francisco J. Lopez",
                 position: "archbishop_of_ls",
-                image: ArchbishopPortrait
+                image: ArchbishopPortrait,
             },
             sections: [
                 {
@@ -18,12 +18,12 @@ export const departments: IDepartmentList[] = [
                         {
                             name: "Alesia Ubaldi",
                             position: "executive_assistant_f",
-                            phone: "700"
-                        }
-                    ]
-                }
-            ]
-        }
+                            phone: "700",
+                        },
+                    ],
+                },
+            ],
+        },
     },
     {
         name: "catholic_charities",
@@ -31,10 +31,10 @@ export const departments: IDepartmentList[] = [
         page: {
             director: {
                 name: "N/A",
-                position: "executive_director"
+                position: "executive_director",
             },
-            sections: []
-        }
+            sections: [],
+        },
     },
     {
         name: "chancellor",
@@ -42,13 +42,13 @@ export const departments: IDepartmentList[] = [
         page: {
             director: {
                 name: "N/A",
-                position: "chancellor"
+                position: "chancellor",
             },
-            sections: []
-        }
+            sections: [],
+        },
     },
     {
-        name: "clergy"
+        name: "clergy",
     },
     {
         name: "communications",
@@ -56,10 +56,10 @@ export const departments: IDepartmentList[] = [
         page: {
             director: {
                 name: "N/A",
-                position: "vice_chancellor_communications"
+                position: "vice_chancellor_communications",
             },
-            sections: []
-        }
+            sections: [],
+        },
     },
     {
         name: "ethnic_ministry",
@@ -67,10 +67,10 @@ export const departments: IDepartmentList[] = [
         page: {
             director: {
                 name: "N/A",
-                position: "vicar_of_ethnic_ministry"
+                position: "vicar_of_ethnic_ministry",
             },
-            sections: []
-        }
+            sections: [],
+        },
     },
     {
         name: "financial_services",
@@ -78,10 +78,10 @@ export const departments: IDepartmentList[] = [
         page: {
             director: {
                 name: "N/A",
-                position: "chief_financial_officer"
+                position: "chief_financial_officer",
             },
-            sections: []
-        }
+            sections: [],
+        },
     },
     {
         name: "human_resources",
@@ -89,10 +89,10 @@ export const departments: IDepartmentList[] = [
         page: {
             director: {
                 name: "N/A",
-                position: "senior_director_of_human_resources"
+                position: "senior_director_of_human_resources",
             },
-            sections: []
-        }
+            sections: [],
+        },
     },
     {
         name: "legal_counsel",
@@ -100,10 +100,10 @@ export const departments: IDepartmentList[] = [
         page: {
             director: {
                 name: "N/A",
-                position: "general_counsel"
+                position: "general_counsel",
             },
-            sections: []
-        }
+            sections: [],
+        },
     },
     {
         name: "ecclesiastical_court",
@@ -111,10 +111,10 @@ export const departments: IDepartmentList[] = [
         page: {
             director: {
                 name: "N/A",
-                position: "judicial_vicar"
+                position: "judicial_vicar",
             },
-            sections: []
-        }
+            sections: [],
+        },
     },
     {
         name: "moderator_of_the_curia",
@@ -122,10 +122,10 @@ export const departments: IDepartmentList[] = [
         page: {
             director: {
                 name: "N/A",
-                position: "moderator_of_the_curia"
+                position: "moderator_of_the_curia",
             },
-            sections: []
-        }
+            sections: [],
+        },
     },
     {
         name: "sanctus_news",
@@ -133,9 +133,9 @@ export const departments: IDepartmentList[] = [
         page: {
             director: {
                 name: "Pablo Kay (( PNJ ))",
-                position: "editor_in_chief"
+                position: "editor_in_chief",
             },
-            sections: []
-        }
-    }
+            sections: [],
+        },
+    },
 ];

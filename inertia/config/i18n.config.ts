@@ -5,14 +5,14 @@ export const setupI18n = async () => {
     await i18n.use(initReactI18next).init({
         resources: {
             fr: await import("@/locales/fr.json"),
-            en: await import("@/locales/en.json")
+            en: await import("@/locales/en.json"),
         },
         lng: "fr",
         fallbackLng: "en",
         debug: true,
         interpolation: {
-            escapeValue: false
-        }
+            escapeValue: false,
+        },
     });
 
     /*router.on("navigate", (event) => {

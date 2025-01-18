@@ -9,7 +9,7 @@ import Typography from "@mui/material/Typography";
 const StaffImage = styled(CardMedia)<CardMediaProps>(({ theme }) => ({
     ...theme.typography.body1,
     backgroundColor: "#e3550a",
-    padding: "2.5rem 2rem 1.5rem"
+    padding: "2.5rem 2rem 1.5rem",
 }));
 
 export default function StaffListCard({ name, position, image, phone, email }: IStaffListCard) {

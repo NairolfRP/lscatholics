@@ -9,15 +9,24 @@ import TextField from "@mui/material/TextField";
 
 const highSchoolDegree = ["diploma", "ged"];
 
-export default function HighSchoolField({ data, setData }: { data: HighSchool; setData: (v: HighSchool) => void }) {
+export default function HighSchoolField({
+    data,
+    setData,
+}: {
+    data: HighSchool;
+    setData: (v: HighSchool) => void;
+}) {
     const { t } = useTranslation();
 
-    const handleHighSchoolChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent<string>, key: string) => {
+    const handleHighSchoolChange = (
+        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent<string>,
+        key: string,
+    ) => {
         if (!(key in data)) return;
 
         setData({
             ...data,
-            [key]: e.target.value
+            [key]: e.target.value,
         });
     };
 
@@ -48,7 +57,12 @@ export default function HighSchoolField({ data, setData }: { data: HighSchool; s
             <Grid size={{ md: 2 }}>
                 <FormControl required sx={{ width: "100%" }}>
                     <InputLabel id="high_school_degree_label">{t("high_school_degree")}</InputLabel>
-                    <Select labelId="high_school_degree_label" label={t("high_school_degree")} value={data.degree} onChange={(e) => handleHighSchoolChange(e, "degree")}>
+                    <Select
+                        labelId="high_school_degree_label"
+                        label={t("high_school_degree")}
+                        value={data.degree}
+                        onChange={(e) => handleHighSchoolChange(e, "degree")}
+                    >
                         <MenuItem value="none">{t("none")}</MenuItem>
                         {highSchoolDegree.map((option, optionID) => (
                             <MenuItem key={optionID} value={option}>

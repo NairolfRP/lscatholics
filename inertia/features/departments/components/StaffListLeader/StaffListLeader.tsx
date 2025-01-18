@@ -9,7 +9,7 @@ import Typography from "@mui/material/Typography";
 
 const GridItem = styled(Paper)(({ theme }) => ({
     ...theme.typography.body1,
-    padding: theme.spacing(2)
+    padding: theme.spacing(2),
 }));
 
 export default function StaffListLeader({ name, position, image }: IStaffListLeader) {
@@ -21,7 +21,11 @@ export default function StaffListLeader({ name, position, image }: IStaffListLea
                     <GridItem elevation={0}>
                         <Box
                             component="img"
-                            src={image ? image : "https://lacatholics.org/wp-content/uploads/2018/11/shutterstock_324535487-scaled.jpg"}
+                            src={
+                                image
+                                    ? image
+                                    : "https://lacatholics.org/wp-content/uploads/2018/11/shutterstock_324535487-scaled.jpg"
+                            }
                             alt=""
                             sx={{ width: "auto", height: "auto", maxWidth: "100%" }}
                         />
@@ -30,7 +34,12 @@ export default function StaffListLeader({ name, position, image }: IStaffListLea
                 <Grid size={{ xs: 7 }}>
                     <GridItem elevation={0}>
                         <Typography variant="h2">{name}</Typography>
-                        <Typography component="h3" variant="h4" fontWeight={800} sx={{ color: "#e3550a" }}>
+                        <Typography
+                            component="h3"
+                            variant="h4"
+                            fontWeight={800}
+                            sx={{ color: "#e3550a" }}
+                        >
                             {t(position)}
                         </Typography>
                     </GridItem>

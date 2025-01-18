@@ -1,5 +1,9 @@
 import FormDivider from "@/components/common/FormDivider/FormDivider";
-import type { Education, HighSchool, JobApplicationFormSubmission } from "@/features/applications/types/applications";
+import type {
+    Education,
+    HighSchool,
+    JobApplicationFormSubmission,
+} from "@/features/applications/types/applications";
 import { useEventCallback } from "@/hooks/useEventCallback";
 import { useTranslation } from "@/hooks/useTranslation";
 import EducationField from "@/pages/ApplyJob/Parts/EducationField";
@@ -9,14 +13,19 @@ import Typography from "@mui/material/Typography";
 
 export default function EducationInformation({
     data,
-    setData
+    setData,
 }: {
     data: JobApplicationFormSubmission;
-    setData: <K extends keyof JobApplicationFormSubmission>(key: K, value: JobApplicationFormSubmission[K]) => void;
+    setData: <K extends keyof JobApplicationFormSubmission>(
+        key: K,
+        value: JobApplicationFormSubmission[K],
+    ) => void;
 }) {
     const { t } = useTranslation();
 
-    const handleChange = useEventCallback((key: "highSchool" | "education", value: HighSchool | Education[]) => setData(key, value));
+    const handleChange = useEventCallback(
+        (key: "highSchool" | "education", value: HighSchool | Education[]) => setData(key, value),
+    );
 
     return (
         <Box>
@@ -29,7 +38,10 @@ export default function EducationInformation({
             <Typography variant="h5" gutterBottom>
                 {t("high_school")}
             </Typography>
-            <HighSchoolField data={data.highSchool} setData={(v: HighSchool) => handleChange("highSchool", v)} />
+            <HighSchoolField
+                data={data.highSchool}
+                setData={(v: HighSchool) => handleChange("highSchool", v)}
+            />
 
             <FormDivider />
 

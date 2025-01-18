@@ -1,28 +1,28 @@
 {
-  "about": {
-    "archbishop_lopez": "Mgr Francisco J. Lopez",
-    "archbishop_office": "Bureau de l'Archevêque",
-    "departments": "Départements",
-    "administrative_handbook": "Manuel administratif",
-    "privacy_policy": "Politique de confidentialité"
-  },
-  "mission": {
-    "ls_catholics_mission": "Notre Mission",
-    "ls_catholics_mission_paragraph1": "Nous, le Peuple de Dieu de l'Archidiocèse de Los Santos, acceptons notre mission de continuer l’œuvre rédemptrice de Jésus Christ. Baptisés dans le Corps du Christ, confirmés dans l'Esprit Saint, et nourris par le Verbe et l'Eucharistie, nous partageons la mission du Christ comme prêtre, prophète et rois serviteurs. Nous sommes unis à l'Église catholique à travers le monde, en communion avec le pape.",
-    "ls_catholics_mission_paragraph2": "Sous le leadership pastoral de notre Archevêque, nous collaborons à vivre et proclamer l'Évangile. Le Christ a annoncé le règne de Dieu. Nous sommes des instruments de ce règne dans le monde. Nous nous engageons à bâtir une communauté de foi et d'amour. Avec le Christ, nous apportons la Bonne Nouvelle aux pauvres. Nous nous engageons à éliminer les différentes formes de pauvreté dans notre monde - spirituelles, économiques et morales. Avec le Christ, nous défendons la dignité de la vie humaine. Nous nous engageons à chérir chaque personne et à être des intendants fidèles de la création de Dieu. Avec le Christ, nous affirmons les liens qui unissent. Nous nous engageons à supprimer les barrières de la division. Nous dédions nos communautés paroissiales et nos écoles, instituts, ministères et organisations à l'accomplissement de la mission sous le patronage aimant de Marie, Reine des Saints."
-  },
-  "statistics": {
-    "we_are_parishes": "Des Paroisses",
-    "we_are_schools": "Des Écoles",
-    "we_are_community": "Une Communauté",
-    "number_of_parishes": "{{number}} paroisses",
-    "number_of_missions_and_chapels": "{{number}} missions et chapelles",
-    "number_of_eastern_rite_catholic_churches": "{{number}} églises de rite oriental",
-    "number_of_elementary_schools": "{{number}} écoles élémentaires",
-    "number_of_high_schools": "{{number}} lycées",
-    "number_of_students_enrolled": "{{number}} étudiants",
-    "number_of_catholics": "{{number}} catholiques",
-    "number_of_catholic_cities": "Résidant dans {{number}} villes",
-    "number_of_mass_languages": "Messe célébrée dans {{number}} langues"
-  }
+    "about": {
+        "archbishop_lopez": "Mgr Francisco J. Lopez",
+        "archbishop_office": "Bureau de l'Archevêque",
+        "departments": "Départements",
+        "administrative_handbook": "Manuel administratif",
+        "privacy_policy": "Politique de confidentialité"
+    },
+    "mission": {
+        "ls_catholics_mission": "Notre Mission",
+        "ls_catholics_mission_paragraph1": "Nous, le Peuple de Dieu de l'Archidiocèse de Los Santos, acceptons notre mission de continuer l’œuvre rédemptrice de Jésus Christ. Baptisés dans le Corps du Christ, confirmés dans l'Esprit Saint, et nourris par le Verbe et l'Eucharistie, nous partageons la mission du Christ comme prêtre, prophète et rois serviteurs. Nous sommes unis à l'Église catholique à travers le monde, en communion avec le pape.",
+        "ls_catholics_mission_paragraph2": "Sous le leadership pastoral de notre Archevêque, nous collaborons à vivre et proclamer l'Évangile. Le Christ a annoncé le règne de Dieu. Nous sommes des instruments de ce règne dans le monde. Nous nous engageons à bâtir une communauté de foi et d'amour. Avec le Christ, nous apportons la Bonne Nouvelle aux pauvres. Nous nous engageons à éliminer les différentes formes de pauvreté dans notre monde - spirituelles, économiques et morales. Avec le Christ, nous défendons la dignité de la vie humaine. Nous nous engageons à chérir chaque personne et à être des intendants fidèles de la création de Dieu. Avec le Christ, nous affirmons les liens qui unissent. Nous nous engageons à supprimer les barrières de la division. Nous dédions nos communautés paroissiales et nos écoles, instituts, ministères et organisations à l'accomplissement de la mission sous le patronage aimant de Marie, Reine des Saints."
+    },
+    "statistics": {
+        "we_are_parishes": "Des Paroisses",
+        "we_are_schools": "Des Écoles",
+        "we_are_community": "Une Communauté",
+        "number_of_parishes": "{{number}} paroisses",
+        "number_of_missions_and_chapels": "{{number}} missions et chapelles",
+        "number_of_eastern_rite_catholic_churches": "{{number}} églises de rite oriental",
+        "number_of_elementary_schools": "{{number}} écoles élémentaires",
+        "number_of_high_schools": "{{number}} lycées",
+        "number_of_students_enrolled": "{{number}} étudiants",
+        "number_of_catholics": "{{number}} catholiques",
+        "number_of_catholic_cities": "Résidant dans {{number}} villes",
+        "number_of_mass_languages": "Messe célébrée dans {{number}} langues"
+    }
 }

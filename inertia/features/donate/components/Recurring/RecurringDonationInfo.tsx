@@ -12,12 +12,22 @@ export default function RecurringDonationInfo() {
         <>
             <Typography component="p">
                 {/* eslint-disable-next-line react/jsx-key */}
-                <Trans i18nKey="recurring_donation_paragraph" values={{}} components={[<strong></strong>, <Link target="_blank"></Link>, <ul></ul>, <li></li>]} />
+                <Trans
+                    i18nKey="recurring_donation_paragraph"
+                    values={{}}
+                    components={[
+                        <strong></strong>,
+                        <Link target="_blank"></Link>,
+                        <ul></ul>,
+                        <li></li>,
+                    ]}
+                />
             </Typography>
             <ul>
                 {RECURRING_FIELDS.map((key) => (
                     <li key={key}>
-                        <strong>{t(`recurring_donation_${key}`)} </strong>: {t(`recurring_donation_${key}_description`)}
+                        <strong>{t(`recurring_donation_${key}`)} </strong>:{" "}
+                        {t(`recurring_donation_${key}_description`)}
                     </li>
                 ))}
             </ul>

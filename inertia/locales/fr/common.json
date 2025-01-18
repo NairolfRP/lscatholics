@@ -1,47 +1,47 @@
 {
-  "navigation": {
-    "home": "Accueil",
-    "about_our_community": "Notre communauté",
-    "who_we_are": "Qui sommes-nous ?",
-    "login": "Connexion",
-    "logout": "Déconnexion",
-    "applications": "Requêtes",
-    "settings": "Paramètres",
-    "back_home": "Retour à l'accueil",
-    "get_involved": "S'impliquer",
-    "find": "Trouver",
-    "submit": "Soumettre",
-    "cancel": "Annuler",
-    "learn_more": "Lire plus"
-  },
-  "contact": {
-    "email": "Email",
-    "phone": "Téléphone",
-    "address": "Adresse postale",
-    "area": "Région/Quartier",
-    "iban": "IBAN"
-  },
-  "datetime": {
-    "datetime": "{{day}}/{{month}}/{{year}} à {{hours}}h{{minutes}}"
-  },
-  "forms": {
-    "yes": "Oui",
-    "no": "Non",
-    "form_error_message": "Il y a des erreurs. Corrigez-les et resoumettez.",
-    "signature": "Signature",
-    "firstname": "Prénom",
-    "lastname": "Nom de famille",
-    "age": "Âge",
-    "amount": "Montant",
-    "other": "Autre"
-  },
-  "footer": {
-    "footer_copyright": "LS Catholics © {{year}}",
-    "developed_by_nairolf": "Developpé avec <0>{{heart}}</0> par <1 href=\"https://forum-fr.gta.world/profile/11040-nairolf/\">Nairolf</1>",
-    "footer_fiction_notice": "Ce site et son contenu sont entièrement fictifs. Il est créé dans le cadre du contexte d'un projet roleplay sur le serveur <0 href=\"https://forum-fr.gta.world\">{{gtaw}}</0>. Ne faites confiance à aucune information si vous n'êtes pas un joueur de GTA World. Chaque message ou contenu a été publié pour être lu par le personnage incarné et non par un humain réel.",
-    "stay_connected": "Restez connecté",
-    "signup_newsletter_description": "Inscrivez-vous pour recevoir la newsletter Always Forward gratuitement.",
-    "connect_with_ls_catholics": "Suivez LS Catholics",
-    "gtaw": "GTA World France"
-  }
+    "navigation": {
+        "home": "Accueil",
+        "about_our_community": "Notre communauté",
+        "who_we_are": "Qui sommes-nous ?",
+        "login": "Connexion",
+        "logout": "Déconnexion",
+        "applications": "Requêtes",
+        "settings": "Paramètres",
+        "back_home": "Retour à l'accueil",
+        "get_involved": "S'impliquer",
+        "find": "Trouver",
+        "submit": "Soumettre",
+        "cancel": "Annuler",
+        "learn_more": "Lire plus"
+    },
+    "contact": {
+        "email": "Email",
+        "phone": "Téléphone",
+        "address": "Adresse postale",
+        "area": "Région/Quartier",
+        "iban": "IBAN"
+    },
+    "datetime": {
+        "datetime": "{{day}}/{{month}}/{{year}} à {{hours}}h{{minutes}}"
+    },
+    "forms": {
+        "yes": "Oui",
+        "no": "Non",
+        "form_error_message": "Il y a des erreurs. Corrigez-les et resoumettez.",
+        "signature": "Signature",
+        "firstname": "Prénom",
+        "lastname": "Nom de famille",
+        "age": "Âge",
+        "amount": "Montant",
+        "other": "Autre"
+    },
+    "footer": {
+        "footer_copyright": "LS Catholics © {{year}}",
+        "developed_by_nairolf": "Developpé avec <0>{{heart}}</0> par <1 href=\"https://forum-fr.gta.world/profile/11040-nairolf/\">Nairolf</1>",
+        "footer_fiction_notice": "Ce site et son contenu sont entièrement fictifs. Il est créé dans le cadre du contexte d'un projet roleplay sur le serveur <0 href=\"https://forum-fr.gta.world\">{{gtaw}}</0>. Ne faites confiance à aucune information si vous n'êtes pas un joueur de GTA World. Chaque message ou contenu a été publié pour être lu par le personnage incarné et non par un humain réel.",
+        "stay_connected": "Restez connecté",
+        "signup_newsletter_description": "Inscrivez-vous pour recevoir la newsletter Always Forward gratuitement.",
+        "connect_with_ls_catholics": "Suivez LS Catholics",
+        "gtaw": "GTA World France"
+    }
 }

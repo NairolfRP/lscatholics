@@ -10,7 +10,17 @@ import Grid from "@mui/material/Grid2";
 import Typography from "@mui/material/Typography";
 import type { MouseEventHandler } from "react";
 
-function ParishGridItem({ name, image, address, onAction }: { name: string; image: string; address: string; onAction?: MouseEventHandler<HTMLButtonElement> }) {
+function ParishGridItem({
+    name,
+    image,
+    address,
+    onAction,
+}: {
+    name: string;
+    image: string;
+    address: string;
+    onAction?: MouseEventHandler<HTMLButtonElement>;
+}) {
     return (
         <Grid>
             <Card sx={{ maxWidth: "100%", height: "100%" }} elevation={1}>
@@ -38,7 +48,12 @@ export default function Parishes() {
             <Container sx={{ mt: 10, mb: 15 }}>
                 <Grid container spacing={2}>
                     {parishesList.map((parish, parishIndex) => (
-                        <ParishGridItem key={parishIndex} name={t(parish.name)} image={parish.image} address={parish.address} />
+                        <ParishGridItem
+                            key={parishIndex}
+                            name={t(parish.name)}
+                            image={parish.image}
+                            address={parish.address}
+                        />
                     ))}
                 </Grid>
             </Container>

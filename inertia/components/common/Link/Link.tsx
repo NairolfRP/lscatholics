@@ -6,13 +6,15 @@ type InertiaLinkProps = MuiLinkProps & {
     href: string;
 };
 
-const Link = React.forwardRef(({ href, children, ...props }: React.PropsWithChildren<InertiaLinkProps>, ref) => {
-    return (
-        <MuiLink component={InertiaLink} href={href} ref={ref} {...props}>
-            {children}
-        </MuiLink>
-    );
-});
+const Link = React.forwardRef(
+    ({ href, children, ...props }: React.PropsWithChildren<InertiaLinkProps>, ref) => {
+        return (
+            <MuiLink component={InertiaLink} href={href} ref={ref} {...props}>
+                {children}
+            </MuiLink>
+        );
+    },
+);
 
 Link.displayName = "Link";
 

@@ -20,21 +20,40 @@ export default function About() {
         <MainLayout bannerTitle={t("who_we_are")} bannerImg={PageBanner}>
             <Head title={t("who_we_are")} />
 
-            <Grid container flexDirection="row" alignContent="center" color="primary.contrastText" justifyContent="center" sx={{ mb: 3 }}>
+            <Grid
+                container
+                flexDirection="row"
+                alignContent="center"
+                color="primary.contrastText"
+                justifyContent="center"
+                sx={{ mb: 3 }}
+            >
                 <Grid size={{ xs: 12, md: 4 }} sx={{ bgcolor: "primary.main", p: 2 }}>
                     <Typography variant="h2">{t("we_are_parishes")}</Typography>
 
                     <Box sx={{ ml: 5, mt: 3 }}>
-                        <Typography sx={{ fontSize: "1.8rem", display: "flex", fontWeight: 800 }} alignItems="center">
-                            <ChurchIcon sx={{ fontSize: "3rem", mr: 3 }} fontSize="inherit" /> {t("number_of_parishes", { number: 288 })}
+                        <Typography
+                            sx={{ fontSize: "1.8rem", display: "flex", fontWeight: 800 }}
+                            alignItems="center"
+                        >
+                            <ChurchIcon sx={{ fontSize: "3rem", mr: 3 }} fontSize="inherit" />{" "}
+                            {t("number_of_parishes", { number: 288 })}
                         </Typography>
 
-                        <Typography sx={{ mt: 3, fontSize: "1.8rem", display: "flex", fontWeight: 800 }} alignItems="center">
-                            <ChurchIcon sx={{ fontSize: "3rem", mr: 3 }} fontSize="inherit" /> {t("number_of_missions_and_chapels", { number: 30 })}
+                        <Typography
+                            sx={{ mt: 3, fontSize: "1.8rem", display: "flex", fontWeight: 800 }}
+                            alignItems="center"
+                        >
+                            <ChurchIcon sx={{ fontSize: "3rem", mr: 3 }} fontSize="inherit" />{" "}
+                            {t("number_of_missions_and_chapels", { number: 30 })}
                         </Typography>
 
-                        <Typography sx={{ mt: 3, fontSize: "1.8rem", display: "flex", fontWeight: 800 }} alignItems="center">
-                            <ChurchIcon sx={{ fontSize: "3rem", mr: 3 }} fontSize="inherit" /> {t("number_of_eastern_rite_catholic_churches", { number: 16 })}
+                        <Typography
+                            sx={{ mt: 3, fontSize: "1.8rem", display: "flex", fontWeight: 800 }}
+                            alignItems="center"
+                        >
+                            <ChurchIcon sx={{ fontSize: "3rem", mr: 3 }} fontSize="inherit" />{" "}
+                            {t("number_of_eastern_rite_catholic_churches", { number: 16 })}
                         </Typography>
                     </Box>
                 </Grid>
@@ -42,16 +61,28 @@ export default function About() {
                     <Typography variant="h2">{t("we_are_schools")}</Typography>
 
                     <Box sx={{ ml: 5, mt: 3 }}>
-                        <Typography sx={{ fontSize: "1.8rem", display: "flex", fontWeight: 800 }} alignItems="center">
-                            <HistoryEduIcon sx={{ fontSize: "3rem", mr: 3 }} fontSize="inherit" /> {t("number_of_elementary_schools", { number: 214 })}
+                        <Typography
+                            sx={{ fontSize: "1.8rem", display: "flex", fontWeight: 800 }}
+                            alignItems="center"
+                        >
+                            <HistoryEduIcon sx={{ fontSize: "3rem", mr: 3 }} fontSize="inherit" />{" "}
+                            {t("number_of_elementary_schools", { number: 214 })}
                         </Typography>
 
-                        <Typography sx={{ mt: 3, fontSize: "1.8rem", display: "flex", fontWeight: 800 }} alignItems="center">
-                            <SchoolIcon sx={{ fontSize: "3rem", mr: 3 }} fontSize="inherit" /> {t("number_of_high_schools", { number: 51 })}
+                        <Typography
+                            sx={{ mt: 3, fontSize: "1.8rem", display: "flex", fontWeight: 800 }}
+                            alignItems="center"
+                        >
+                            <SchoolIcon sx={{ fontSize: "3rem", mr: 3 }} fontSize="inherit" />{" "}
+                            {t("number_of_high_schools", { number: 51 })}
                         </Typography>
 
-                        <Typography sx={{ mt: 3, fontSize: "1.8rem", display: "flex", fontWeight: 800 }} alignItems="center">
-                            <SchoolIcon sx={{ fontSize: "3rem", mr: 3 }} fontSize="inherit" /> {t("number_of_students_enrolled", { number: "73 750+" })}
+                        <Typography
+                            sx={{ mt: 3, fontSize: "1.8rem", display: "flex", fontWeight: 800 }}
+                            alignItems="center"
+                        >
+                            <SchoolIcon sx={{ fontSize: "3rem", mr: 3 }} fontSize="inherit" />{" "}
+                            {t("number_of_students_enrolled", { number: "73 750+" })}
                         </Typography>
                     </Box>
                 </Grid>
@@ -59,16 +90,31 @@ export default function About() {
                     <Typography variant="h2">{t("we_are_community")}</Typography>
 
                     <Box sx={{ ml: 5, mt: 3 }}>
-                        <Typography sx={{ fontSize: "1.8rem", display: "flex", fontWeight: 800 }} alignItems="center">
-                            <FamilyRestroomIcon sx={{ fontSize: "3rem", mr: 3 }} fontSize="inherit" /> {t("number_of_catholics", { number: "4 349 267" })}
+                        <Typography
+                            sx={{ fontSize: "1.8rem", display: "flex", fontWeight: 800 }}
+                            alignItems="center"
+                        >
+                            <FamilyRestroomIcon
+                                sx={{ fontSize: "3rem", mr: 3 }}
+                                fontSize="inherit"
+                            />{" "}
+                            {t("number_of_catholics", { number: "4 349 267" })}
                         </Typography>
 
-                        <Typography sx={{ mt: 3, fontSize: "1.8rem", display: "flex", fontWeight: 800 }} alignItems="center">
-                            <LocationCityIcon sx={{ fontSize: "3rem", mr: 3 }} fontSize="inherit" /> {t("number_of_catholic_cities", { number: 120 })}
+                        <Typography
+                            sx={{ mt: 3, fontSize: "1.8rem", display: "flex", fontWeight: 800 }}
+                            alignItems="center"
+                        >
+                            <LocationCityIcon sx={{ fontSize: "3rem", mr: 3 }} fontSize="inherit" />{" "}
+                            {t("number_of_catholic_cities", { number: 120 })}
                         </Typography>
 
-                        <Typography sx={{ mt: 3, fontSize: "1.8rem", display: "flex", fontWeight: 800 }} alignItems="center">
-                            <LanguageIcon sx={{ fontSize: "3rem", mr: 3 }} fontSize="inherit" /> {t("number_of_mass_languages", { number: 42 })}
+                        <Typography
+                            sx={{ mt: 3, fontSize: "1.8rem", display: "flex", fontWeight: 800 }}
+                            alignItems="center"
+                        >
+                            <LanguageIcon sx={{ fontSize: "3rem", mr: 3 }} fontSize="inherit" />{" "}
+                            {t("number_of_mass_languages", { number: 42 })}
                         </Typography>
                     </Box>
                 </Grid>

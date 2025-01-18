@@ -6,12 +6,12 @@ export const loginServicesList = [
         name: "discord",
         title: "Discord",
         icon: <DiscordIcon />,
-        bgColor: "#5865F2"
+        bgColor: "#5865F2",
     },
     {
         name: "facebrowser",
         title: "Facebrowser",
         icon: <FacebrowserIcon />,
-        bgColor: "#B81C20"
-    }
+        bgColor: "#B81C20",
+    },
 ];

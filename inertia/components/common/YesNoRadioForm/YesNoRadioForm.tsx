@@ -17,7 +17,15 @@ interface YesNoRadioFormProps {
     errorMessage?: string;
 }
 
-export default function YesNoRadioForm({ required = false, label, name, value, onChange, error = false, errorMessage }: YesNoRadioFormProps) {
+export default function YesNoRadioForm({
+    required = false,
+    label,
+    name,
+    value,
+    onChange,
+    error = false,
+    errorMessage,
+}: YesNoRadioFormProps) {
     const { t } = useTranslation();
 
     const labelID = `${name}-label`;
@@ -27,8 +35,16 @@ export default function YesNoRadioForm({ required = false, label, name, value, o
             <FormLabel id={labelID}>{t(label)}</FormLabel>
             {error ? <FormHelperText>{errorMessage}</FormHelperText> : null}
             <RadioGroup aria-labelledby={labelID} name={name} value={value} onChange={onChange}>
-                <FormControlLabel value="yes" control={<Radio required={required} />} label={t("yes")} />
-                <FormControlLabel value="no" control={<Radio required={required} />} label={t("no")} />
+                <FormControlLabel
+                    value="yes"
+                    control={<Radio required={required} />}
+                    label={t("yes")}
+                />
+                <FormControlLabel
+                    value="no"
+                    control={<Radio required={required} />}
+                    label={t("no")}
+                />
             </RadioGroup>
         </FormControl>
     );

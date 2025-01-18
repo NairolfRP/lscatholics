@@ -95,5 +95,5 @@ export const gta5Areas = [
     "West Mirror Drive",
     "West Vinewood",
     "Zancudo River",
-    "Senora Freeway"
+    "Senora Freeway",
 ];

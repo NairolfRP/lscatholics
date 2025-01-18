@@ -26,9 +26,13 @@ export default function SingleDepartment({ department }: PageProps<{ department:
         <MainLayout bannerTitle={depTitle} bannerImg={CathedralTowerImg}>
             <Head title={depTitle} />
             <Container sx={{ mt: 5, mb: 5 }}>
-                <Typography>{dep.name ? t(`${dep.name}_description`) : "Invalid department"}</Typography>
+                <Typography>
+                    {dep.name ? t(`${dep.name}_description`) : "Invalid department"}
+                </Typography>
             </Container>
-            {dep.page ? <StaffList director={dep.page.director} sections={dep.page.sections} /> : null}
+            {dep.page ? (
+                <StaffList director={dep.page.director} sections={dep.page.sections} />
+            ) : null}
         </MainLayout>
     );
 }

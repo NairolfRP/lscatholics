@@ -1,7 +1,12 @@
 import { createSvgIcon } from "@mui/material/utils";
 
 export const FacebrowserIcon = createSvgIcon(
-    <svg version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 292.000000 292.000000" preserveAspectRatio="xMidYMid meet">
+    <svg
+        version="1.0"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 292.000000 292.000000"
+        preserveAspectRatio="xMidYMid meet"
+    >
         <path
             fill="currentcolor"
             stroke="none"
@@ -20,5 +25,5 @@ export const FacebrowserIcon = createSvgIcon(
 232 -60 388 -139 413 -513 739 -947 827 -96 19 -299 27 -387 15z"
         />
     </svg>,
-    "Facebrowser"
+    "Facebrowser",
 );

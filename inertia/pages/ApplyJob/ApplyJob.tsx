@@ -27,7 +27,9 @@ const ApplyJob = ({ job }: { job: Job }) => {
 
                 <FormDivider />
 
-                <Typography gutterBottom>{t("job_application_archdiocese_policy_description")}</Typography>
+                <Typography gutterBottom>
+                    {t("job_application_archdiocese_policy_description")}
+                </Typography>
 
                 <Form jobID={job.id} />
             </Container>

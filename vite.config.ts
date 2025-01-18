@@ -24,7 +24,7 @@ export default defineConfig({
         alias: {
             //"~/": `${getDirname(import.meta.url)}/inertia/`,
             "@": `${getDirname(import.meta.url)}/inertia/`,
-            "@shared": `${getDirname(import.meta.url)}/shared/`
+            "@shared": `${getDirname(import.meta.url)}/shared/`,
         },
     },
 });

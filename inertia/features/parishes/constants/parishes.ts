@@ -6,16 +6,16 @@ export const parishesList = [
     {
         name: "cathedral_of_our_lady_of_the_angels",
         image: CathedralImage,
-        address: "Ginger street, Little Seoul, Los Santos, SA 90010"
+        address: "Ginger street, Little Seoul, Los Santos, SA 90010",
     },
     {
         name: "good_shepherd_catholic_church",
         image: GoodShepherdChurchImage,
-        address: "Boulevard Del Perro, Rockford Hills, Los Santos, SA 90210-3298"
+        address: "Boulevard Del Perro, Rockford Hills, Los Santos, SA 90210-3298",
     },
     {
         name: "st_andrew_of_blaine_catholic_church",
         image: GreatChaparralChurch,
-        address: "Route 68, Great Chaparral, SA"
-    }
+        address: "Route 68, Great Chaparral, SA",
+    },
 ];

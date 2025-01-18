@@ -24,7 +24,10 @@ export default function Events({
 }) {
     const { t } = useTranslation();
 
-    const thereAreEvents = useMemo(() => Array.isArray(events?.items) && events?.items.length > 0, [events]);
+    const thereAreEvents = useMemo(
+        () => Array.isArray(events?.items) && events?.items.length > 0,
+        [events],
+    );
 
     const handlePaginationChange = useEventCallback(
         (_event: ChangeEvent<unknown>, page: number) => {
@@ -40,48 +43,48 @@ export default function Events({
 
             <Container maxWidth="xl" sx={{ mt: 3, mb: 10 }}>
                 <Suspense>
-                        {thereAreEvents ? (
-                            <>
-                                <Pagination
-                                    color="secondary"
-                                    size="large"
-                                    sx={{ mt: 5, mb: 5 }}
-                                    count={events.lastPage}
-                                    page={events.currentPage}
-                                    onChange={handlePaginationChange}
-                                />
+                    {thereAreEvents ? (
+                        <>
+                            <Pagination
+                                color="secondary"
+                                size="large"
+                                sx={{ mt: 5, mb: 5 }}
+                                count={events.lastPage}
+                                page={events.currentPage}
+                                onChange={handlePaginationChange}
+                            />
 
-                                <Grid
-                                    container
-                                    sx={{ height: { mobile: "165vh", tablet: "125vh" } }}
-                                    spacing={1}
-                                >
-                                    {events.items.map((event: EventArticle) => (
-                                        <Grid
-                                            key={event.id}
-                                            size={{ xs: 10, md: 4, tablet: 12, mobile: 12 }}
-                                            sx={{ display: "flex" }}
-                                            flexDirection="column"
-                                        >
-                                            <EventCard article={event} />
-                                        </Grid>
-                                    ))}
-                                </Grid>
+                            <Grid
+                                container
+                                sx={{ height: { mobile: "165vh", tablet: "125vh" } }}
+                                spacing={1}
+                            >
+                                {events.items.map((event: EventArticle) => (
+                                    <Grid
+                                        key={event.id}
+                                        size={{ xs: 10, md: 4, tablet: 12, mobile: 12 }}
+                                        sx={{ display: "flex" }}
+                                        flexDirection="column"
+                                    >
+                                        <EventCard article={event} />
+                                    </Grid>
+                                ))}
+                            </Grid>
 
-                                <Pagination
-                                    color="secondary"
-                                    size="large"
-                                    sx={{ mt: 5 }}
-                                    count={events.lastPage}
-                                    page={events.currentPage}
-                                    onChange={handlePaginationChange}
-                                />
-                            </>
-                        ) : (
-                            <Typography component="p" variant="h4">
-                                {t("no_upcoming_events")}
-                            </Typography>
-                        )}
+                            <Pagination
+                                color="secondary"
+                                size="large"
+                                sx={{ mt: 5 }}
+                                count={events.lastPage}
+                                page={events.currentPage}
+                                onChange={handlePaginationChange}
+                            />
+                        </>
+                    ) : (
+                        <Typography component="p" variant="h4">
+                            {t("no_upcoming_events")}
+                        </Typography>
+                    )}
                 </Suspense>
             </Container>
         </MainLayout>

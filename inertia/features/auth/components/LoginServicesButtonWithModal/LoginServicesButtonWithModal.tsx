@@ -24,7 +24,14 @@ export default function LoginServicesButtonsWithModal() {
 
     return (
         <>
-            <Button size="large" variant="text" color="inherit" sx={{ ml: 5 }} onClick={handleModalOpen} startIcon={<LoginIcon />}>
+            <Button
+                size="large"
+                variant="text"
+                color="inherit"
+                sx={{ ml: 5 }}
+                onClick={handleModalOpen}
+                startIcon={<LoginIcon />}
+            >
                 {t("login")}
             </Button>
             <LoginServicesModal anchorEl={anchorEl} open={openModal} onClose={handleModalClose} />

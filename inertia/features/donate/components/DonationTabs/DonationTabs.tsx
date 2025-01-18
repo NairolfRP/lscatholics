@@ -15,12 +15,25 @@ export default function DonationTabs({ donationType, setDonationType }: Donation
     const { isProcessing } = useDonateFormContext();
     const { t } = useTranslation();
 
-    const handleDonationTypeChange = useEventCallback((_: SyntheticEvent, value: number) => setDonationType(value));
+    const handleDonationTypeChange = useEventCallback((_: SyntheticEvent, value: number) =>
+        setDonationType(value),
+    );
 
     return (
-        <Tabs value={donationType} onChange={handleDonationTypeChange} textColor="primary" indicatorColor="secondary" aria-disabled={isProcessing}>
+        <Tabs
+            value={donationType}
+            onChange={handleDonationTypeChange}
+            textColor="primary"
+            indicatorColor="secondary"
+            aria-disabled={isProcessing}
+        >
             {Object.entries(DONATION_TYPE).map(([key, value]) => (
-                <Tab key={key} label={t(`${key.toLowerCase()}_donation`)} value={value} disabled={isProcessing} />
+                <Tab
+                    key={key}
+                    label={t(`${key.toLowerCase()}_donation`)}
+                    value={value}
+                    disabled={isProcessing}
+                />
             ))}
         </Tabs>
     );

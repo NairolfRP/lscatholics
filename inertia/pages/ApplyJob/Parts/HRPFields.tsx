@@ -41,7 +41,12 @@ export default function HRPFields({ discordID, oocMotivations, errors, setData }
                 onChange={handleChange}
                 sx={{ mb: 3 }}
                 error={!!discordID}
-                helperText={<Trans i18nKey="job_application_discord_id_question_helpertext" components={[<Link key="0" target="_blank"></Link>]} />}
+                helperText={
+                    <Trans
+                        i18nKey="job_application_discord_id_question_helpertext"
+                        components={[<Link key="0" target="_blank"></Link>]}
+                    />
+                }
                 name="discordID"
             />
 
@@ -57,7 +62,9 @@ export default function HRPFields({ discordID, oocMotivations, errors, setData }
                 onChange={handleChange}
                 name="oocMotivations"
             />
-            <Typography variant="subtitle2">{t("job_application_ooc_motivations_question_placeholder")}</Typography>
+            <Typography variant="subtitle2">
+                {t("job_application_ooc_motivations_question_placeholder")}
+            </Typography>
         </Box>
     );
 }

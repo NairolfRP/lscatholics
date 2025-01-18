@@ -8,9 +8,20 @@ export interface TransWrapperProps {
     defaultText?: string;
 }
 
-export default function Trans({ i18nKey, values = {}, components = [], defaultText = "", children }: React.PropsWithChildren<TransWrapperProps>) {
+export default function Trans({
+    i18nKey,
+    values = {},
+    components = [],
+    defaultText = "",
+    children,
+}: React.PropsWithChildren<TransWrapperProps>) {
     return (
-        <I18nextTrans i18nKey={i18nKey} values={values} components={components} defaultValue={defaultText}>
+        <I18nextTrans
+            i18nKey={i18nKey}
+            values={values}
+            components={components}
+            defaultValue={defaultText}
+        >
             {children}
         </I18nextTrans>
     );

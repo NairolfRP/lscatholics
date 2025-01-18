@@ -21,7 +21,7 @@ export default function MainPageBanner({ title, image, bgcolor = "black" }: Main
                 display: "flex",
                 height: "85vh",
                 position: "relative",
-                color: "#FFF"
+                color: "#FFF",
             }}
         >
             {title ? (
@@ -37,15 +37,15 @@ export default function MainPageBanner({ title, image, bgcolor = "black" }: Main
                             textShadow: "0 2px 4px rgba(0,0,0,.5)",
                             typography: {
                                 xs: {
-                                    fontSize: "2.5rem"
+                                    fontSize: "2.5rem",
                                 },
                                 sm: {
-                                    fontSize: "3rem"
+                                    fontSize: "3rem",
                                 },
                                 md: {
-                                    fontSize: "5rem"
-                                }
-                            }
+                                    fontSize: "5rem",
+                                },
+                            },
                         }}
                     >
                         {title}
@@ -78,7 +78,7 @@ export default function MainPageBanner({ title, image, bgcolor = "black" }: Main
                     height: "100%",
                     objectFit: "cover",
                     objectPosition: "75% 50%",
-                    opacity: 0.65
+                    opacity: 0.65,
                 }}
             />
         </Box>

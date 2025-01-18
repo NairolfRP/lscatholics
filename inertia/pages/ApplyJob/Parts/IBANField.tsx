@@ -8,7 +8,17 @@ function validateIBAN(value: string): boolean {
     return ibanPattern.test(value);
 }
 
-export default function IBANField({ value, setValue, error, setError }: { value: string; setValue: (v: string) => void; error: string | undefined; setError: (v: string) => void }) {
+export default function IBANField({
+    value,
+    setValue,
+    error,
+    setError,
+}: {
+    value: string;
+    setValue: (v: string) => void;
+    error: string | undefined;
+    setError: (v: string) => void;
+}) {
     const { t } = useTranslation();
 
     const handleIBANChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -41,15 +51,15 @@ export default function IBANField({ value, setValue, error, setError }: { value:
             helperText={error}
             slotProps={{
                 htmlInput: {
-                    maxLength: 11
+                    maxLength: 11,
                 },
                 input: {
                     startAdornment: (
                         <InputAdornment position="start">
                             <CreditCardIcon />
                         </InputAdornment>
-                    )
-                }
+                    ),
+                },
             }}
         />
     );

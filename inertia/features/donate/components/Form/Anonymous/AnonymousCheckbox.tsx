@@ -17,8 +17,18 @@ export const AnonymousCheckbox = () => {
     });
 
     return (
-        <FormControl error={invalid("anonymous")} disabled={isProcessing} sx={{ display: "flex", flexWrap: "wrap" }}>
-            <FormControlLabel name="anonymous" checked={data.anonymous} onChange={handleAnonymousChange} control={<Checkbox />} label={t("anonymous_donation")} />
+        <FormControl
+            error={invalid("anonymous")}
+            disabled={isProcessing}
+            sx={{ display: "flex", flexWrap: "wrap" }}
+        >
+            <FormControlLabel
+                name="anonymous"
+                checked={data.anonymous}
+                onChange={handleAnonymousChange}
+                control={<Checkbox />}
+                label={t("anonymous_donation")}
+            />
             <FormHelperText>{errors.anonymous}</FormHelperText>
         </FormControl>
     );

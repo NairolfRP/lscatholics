@@ -13,7 +13,7 @@ const StyledList = styled(List)(({ theme }) => ({
     zIndex: 1,
     top: "100%",
     left: 0,
-    backgroundColor: theme.palette.primary.main
+    backgroundColor: theme.palette.primary.main,
 }));
 
 export default function DropDownMenu({ position, open = false, ...props }: DropDownMenuProps) {
@@ -24,17 +24,17 @@ export default function DropDownMenu({ position, open = false, ...props }: DropD
             case "right":
                 return {
                     left: "100%",
-                    top: 0
+                    top: 0,
                 };
             case "left":
                 return {
                     left: "-100%",
-                    top: 0
+                    top: 0,
                 };
             case "top":
                 return {
                     left: 0,
-                    top: "-100%"
+                    top: "-100%",
                 };
             default:
                 return null;

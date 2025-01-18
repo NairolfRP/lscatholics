@@ -30,7 +30,7 @@ export default function Contact() {
     });
 
     useEffect(() => {
-        console.log(JSON.stringify(errors, null, 4))
+        console.log(JSON.stringify(errors, null, 4));
     }, [errors]);
 
     const hasErrors = Object.keys(errors).length > 0;
@@ -57,7 +57,7 @@ export default function Contact() {
             },
             onError: (e) => {
                 console.log(e);
-            }
+            },
         });
     };
 

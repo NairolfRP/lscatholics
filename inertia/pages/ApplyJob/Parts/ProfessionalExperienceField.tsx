@@ -12,7 +12,13 @@ import Typography from "@mui/material/Typography";
 
 const maxFields = 3;
 
-export default function ProfessionalExperienceField({ data, setData }: { data: EmploymentInformation[]; setData: (v: EmploymentInformation[]) => void }) {
+export default function ProfessionalExperienceField({
+    data,
+    setData,
+}: {
+    data: EmploymentInformation[];
+    setData: (v: EmploymentInformation[]) => void;
+}) {
     const { t } = useTranslation();
 
     const hasMaxLength = data.length >= maxFields;
@@ -26,8 +32,8 @@ export default function ProfessionalExperienceField({ data, setData }: { data: E
                 companyName: "",
                 position: "",
                 duration: "",
-                leavingReason: ""
-            }
+                leavingReason: "",
+            },
         ]);
     };
 
@@ -37,7 +43,11 @@ export default function ProfessionalExperienceField({ data, setData }: { data: E
         setData(newData);
     };
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent<string>, dataID: number, key: string) => {
+    const handleChange = (
+        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent<string>,
+        dataID: number,
+        key: string,
+    ) => {
         const newData = data.map((d, i) => {
             if (i !== dataID || !(key in d)) {
                 return d;
@@ -45,7 +55,7 @@ export default function ProfessionalExperienceField({ data, setData }: { data: E
 
             return {
                 ...d,
-                [key]: e.target.value
+                [key]: e.target.value,
             };
         });
 
@@ -62,10 +72,24 @@ export default function ProfessionalExperienceField({ data, setData }: { data: E
             {data.map((d, index) => (
                 <Grid key={index} container spacing={2} alignItems="center" sx={{ mb: 2 }}>
                     <Grid size={{ md: 2 }}>
-                        <TextField required name="company_name" value={d.companyName} placeholder="" label={t("company_name")} onChange={(e) => handleChange(e, index, "companyName")} />
+                        <TextField
+                            required
+                            name="company_name"
+                            value={d.companyName}
+                            placeholder=""
+                            label={t("company_name")}
+                            onChange={(e) => handleChange(e, index, "companyName")}
+                        />
                     </Grid>
                     <Grid size={{ md: 2 }}>
-                        <TextField required name="employment_position" value={d.position} placeholder="" label={t("employment_position")} onChange={(e) => handleChange(e, index, "position")} />
+                        <TextField
+                            required
+                            name="employment_position"
+                            value={d.position}
+                            placeholder=""
+                            label={t("employment_position")}
+                            onChange={(e) => handleChange(e, index, "position")}
+                        />
                     </Grid>
                     <Grid size={{ md: 2 }}>
                         <TextField
@@ -78,10 +102,20 @@ export default function ProfessionalExperienceField({ data, setData }: { data: E
                         />
                     </Grid>
                     <Grid size={{ md: 2 }}>
-                        <TextField required name="employment_leaving_reason" value={d.leavingReason} label={t("reason_for_leaving")} onChange={(e) => handleChange(e, index, "leavingReason")} />
+                        <TextField
+                            required
+                            name="employment_leaving_reason"
+                            value={d.leavingReason}
+                            label={t("reason_for_leaving")}
+                            onChange={(e) => handleChange(e, index, "leavingReason")}
+                        />
                     </Grid>
                     <Grid>
-                        <IconButton color="error" aria-label="remove employment information" onClick={() => handleRemoveClick(index)}>
+                        <IconButton
+                            color="error"
+                            aria-label="remove employment information"
+                            onClick={() => handleRemoveClick(index)}
+                        >
                             <RemoveCircleIcon />
                         </IconButton>
                     </Grid>
@@ -89,7 +123,12 @@ export default function ProfessionalExperienceField({ data, setData }: { data: E
             ))}
             <Grid container spacing={2} alignItems="center">
                 <Grid>
-                    <IconButton color="primary" aria-label="add employment information" onClick={handleAddClick} disabled={hasMaxLength}>
+                    <IconButton
+                        color="primary"
+                        aria-label="add employment information"
+                        onClick={handleAddClick}
+                        disabled={hasMaxLength}
+                    >
                         <AddIcon />
                     </IconButton>
                 </Grid>

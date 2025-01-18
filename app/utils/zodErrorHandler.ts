@@ -8,20 +8,20 @@ export const handleZodError = (error: unknown, ctx: HttpContext) => {
                 ...acc,
                 [path[0]]: message,
             }),
-            {}
-        )
+            {},
+        );
 
         ctx.session.flash("errors", formattedErrors);
 
         return ctx.response.redirect().back();
     }
 
-    throw error
-}
+    throw error;
+};
 
 export const validateRequest = async <T extends z.ZodSchema>(
     schema: T,
-    data: unknown
+    data: unknown,
 ): Promise<z.SafeParseReturnType<T, Record<keyof T, string>>> => {
-    return schema.parse(data)
-}
+    return schema.parse(data);
+};

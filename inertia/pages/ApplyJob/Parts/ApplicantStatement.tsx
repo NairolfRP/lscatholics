@@ -10,7 +10,11 @@ interface ApplicantStatementProps {
     setSignature: (v: string) => void;
 }
 
-export default function ApplicantStatement({ signature, error, setSignature }: ApplicantStatementProps) {
+export default function ApplicantStatement({
+    signature,
+    error,
+    setSignature,
+}: ApplicantStatementProps) {
     const { t } = useTranslation();
 
     return (
@@ -44,7 +48,16 @@ export default function ApplicantStatement({ signature, error, setSignature }: A
                 </Typography>
             </ul>
 
-            <TextField required name="signature" variant="filled" label={t("signature")} value={signature} error={!!error} helperText={error} onChange={(e) => setSignature(e.target.value)} />
+            <TextField
+                required
+                name="signature"
+                variant="filled"
+                label={t("signature")}
+                value={signature}
+                error={!!error}
+                helperText={error}
+                onChange={(e) => setSignature(e.target.value)}
+            />
         </Box>
     );
 }
