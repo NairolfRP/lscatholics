@@ -39,7 +39,7 @@ createInertiaApp({
         } catch (e) {
             console.error(`Failed to load page: ${name}`, e);
             return {
-                default: () => <ErrorPage status={404} />,
+                default: () => <ErrorPage error={404} />,
             };
         }
     },
