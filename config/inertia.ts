@@ -24,7 +24,6 @@ const inertiaConfig = defineConfig({
                     : null,
             };
         },
-        errors: (ctx) => ctx.inertia.always(() => ctx.session?.flashMessages.get("errors")),
         notification: (ctx) =>
             ctx.inertia.always(() => ctx.session?.flashMessages.get("notification")),
     },

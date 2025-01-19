@@ -24,7 +24,7 @@ Request.macro("validate", async function <
             const formattedErrors = Object.fromEntries(
                 e.issues.map(({ path, message }) => [path[0], message]),
             );
-            ctx.session.flash("errors", formattedErrors);
+            ctx.session.flashErrors(formattedErrors);
             return ctx.response.redirect().back();
         }
 
