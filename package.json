@@ -79,7 +79,7 @@
     "@mui/icons-material": "^6.4.0",
     "@mui/material": "^6.4.0",
     "@vinejs/vine": "^3.0.0",
-    "better-sqlite3": "^11.8.0",
+    "better-sqlite3": "^11.8.1",
     "edge.js": "^6.2.0",
     "i18next": "^24.2.1",
     "luxon": "^3.5.0",
