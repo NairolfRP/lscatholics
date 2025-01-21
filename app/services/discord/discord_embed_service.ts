@@ -3,6 +3,7 @@ import type {
     DiscordEmbedAuthor,
     DiscordEmbedFields,
     DiscordEmbedFooter,
+    DiscordEmbedImage,
 } from "../../interfaces/DiscordEmbed.d.ts";
 
 export class DiscordEmbedService implements DiscordEmbed {
@@ -12,8 +13,8 @@ export class DiscordEmbedService implements DiscordEmbed {
     readonly color: number | null;
     readonly timestamp: string | null;
     readonly footer: DiscordEmbedFooter | null;
-    readonly image: string | null;
-    readonly thumbnail: string | null;
+    readonly image: DiscordEmbedImage | null;
+    readonly thumbnail: DiscordEmbedImage | null;
     readonly author: DiscordEmbedAuthor | null;
     readonly fields: DiscordEmbedFields[] = [];
 
@@ -40,9 +41,7 @@ export class DiscordEmbedService implements DiscordEmbed {
     }
 
     public static create(options: Omit<DiscordEmbed, "fields">): DiscordEmbedService {
-        const instance = new DiscordEmbedService(options);
-
-        return instance;
+        return new DiscordEmbedService(options);
     }
 
     public addField({ name, value, inline = false }: DiscordEmbedFields) {
