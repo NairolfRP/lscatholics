@@ -1,6 +1,12 @@
 {
     "$schema": "https://docs.renovatebot.com/renovate-schema.json",
     "extends": [
-        "config:recommended"
-    ]
+        "config:js-app", "schedule:weekly"
+    ],
+    "labels": ["dependencies"],
+    "vulnerabilityAlerts": {
+        "labels": ["security"],
+        "automerge": false,
+        "assignees": ["@nairolfrp"]
+    }
 }
