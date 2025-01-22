@@ -28,7 +28,7 @@ const SNACKBAR_CONFIG = {
 createInertiaApp({
     progress: { color: "#5468FF" },
 
-    title: (title) => `${title} - ${appName}`,
+    title: (title) => `${title && `${title} - `}${appName}`,
 
     resolve: async (name) => {
         try {
@@ -45,7 +45,12 @@ createInertiaApp({
     },
 
     setup({ el, App, props }) {
-        setupI18n().then(() => {
+        const { locale, fallbackLocale } = props.initialPage.props as unknown as {
+            locale: string;
+            fallbackLocale?: string;
+        };
+
+        setupI18n({ locale, fallbackLocale }).then(() => {
             createRoot(el).render(
                 <ThemeProvider theme={theme}>
                     <CssBaseline />

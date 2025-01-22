@@ -23,6 +23,14 @@ export default await Env.create(new URL("../", import.meta.url), {
 
     /*
     |----------------------------------------------------------
+    | Variables for configuring i18n package
+    |----------------------------------------------------------
+    */
+    DEFAULT_LOCALE: Env.schema.string(),
+    FALLBACK_LOCALE: Env.schema.string.optional(),
+
+    /*
+    |----------------------------------------------------------
     | Variables for configuring session package
     |----------------------------------------------------------
     */

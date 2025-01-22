@@ -11,6 +11,8 @@ const inertiaConfig = defineConfig({
      * Data that should be shared with all rendered pages
      */
     sharedData: {
+        locale: (ctx) => ctx.inertia.always(() => ctx.i18n.locale),
+        fallbackLocale: (ctx) => ctx.inertia.always(() => ctx.i18n.fallbackLocale),
         auth: async ({ session, auth }) => {
             const social = session.get("user_social_info", null);
             return {
