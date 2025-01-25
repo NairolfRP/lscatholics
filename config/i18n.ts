@@ -8,7 +8,7 @@ const i18nConfig = defineConfig({
         fr: "en",
         en: "fr",
     },
-    fallback: env.get("FALLBACK_LOCALE") ? () => env.get("FALLBACK_LOCALE") as string : undefined,
+    //fallback: env.get("FALLBACK_LOCALE") ? () => env.get("FALLBACK_LOCALE") as string : undefined,
     formatter: formatters.icu(),
 
     loaders: [

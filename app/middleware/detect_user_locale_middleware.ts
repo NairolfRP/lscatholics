@@ -2,6 +2,7 @@ import { I18n } from "@adonisjs/i18n";
 import i18nManager from "@adonisjs/i18n/services/main";
 import type { NextFn } from "@adonisjs/core/types/http";
 import { type HttpContext, RequestValidator } from "@adonisjs/core/http";
+import env from "#start/env";
 
 /**
  * The "DetectUserLocaleMiddleware" middleware uses i18n service to share
@@ -25,9 +26,8 @@ export default class DetectUserLocaleMiddleware {
      *
      * Feel free to use different mechanism for finding user language.
      */
-    /*protected getRequestLocale(ctx: HttpContext) {
-        const userLanguages = ctx.request.languages();
-        return i18nManager.getSupportedLocaleFor(userLanguages);
+    /*protected getRequestLocale(_ctx: HttpContext) {
+        return i18nManager.defaultLocale;
     }*/
 
     async handle(ctx: HttpContext, next: NextFn) {
@@ -35,13 +35,11 @@ export default class DetectUserLocaleMiddleware {
          * Finding user language
          */
         //const language = this.getRequestLocale(ctx);
-        const language = i18nManager.defaultLocale;
-        const fallback = i18nManager.getFallbackLocaleFor(language);
 
         /**
          * Assigning i18n property to the HTTP context
          */
-        ctx.i18n = i18nManager.locale(language || fallback);
+        ctx.i18n = i18nManager.locale(i18nManager.defaultLocale || env.get("FALLBACK_LOCALE"));
 
         /**
          * Binding I18n class to the request specific instance of it.
@@ -58,9 +56,9 @@ export default class DetectUserLocaleMiddleware {
          * Remove the following block of code, if you are not using
          * edge templates.
          */
-        if ("view" in ctx) {
+        /*if ("view" in ctx) {
             ctx.view.share({ i18n: ctx.i18n });
-        }
+        }*/
 
         return next();
     }
