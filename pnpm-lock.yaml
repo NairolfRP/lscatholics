@@ -5,7 +5,7 @@ settings:
   excludeLinksFromLockfile: false
 
 overrides:
-  '@inertiajs/core': 2.0.0
+  '@inertiajs/core': 2.0.3
   strtok3: 8.0.1
 
 importers:
@@ -116,8 +116,8 @@ importers:
         specifier: ^1.4.0
         version: 1.4.0
       '@inertiajs/core':
-        specifier: 2.0.0
-        version: 2.0.0
+        specifier: 2.0.3
+        version: 2.0.3
       '@japa/api-client':
         specifier: ^3.0.3
         version: 3.0.3(@japa/assert@4.0.1(@japa/runner@3.1.4))(@japa/runner@3.1.4)
@@ -845,8 +845,8 @@ packages:
     resolution: {integrity: sha512-c7hNEllBlenFTHBky65mhq8WD2kbN9Q6gk0bTk8lSBvc554jpXSkST1iePudpt7+A/AQvuHs9EMqjHDXMY1lrA==}
     engines: {node: '>=18.18'}
 
-  '@inertiajs/core@2.0.0':
-    resolution: {integrity: sha512-2kvlk731NjwfXUku/ZoXsZNcOzx985icHtTC1dgN+8sAZtJfEg9QBrQ7sBjeLYiWtKgobJdwwpeDaexEneAtLQ==}
+  '@inertiajs/core@2.0.3':
+    resolution: {integrity: sha512-JvXzqc2XAt3WgEDMyxCyXO6bDLMCsBjFsYREU1/+3wtNTib7QKwK71+aF+MrhILpz+kRTi29TsLqnbkPHBAZjw==}
 
   '@inertiajs/react@2.0.3':
     resolution: {integrity: sha512-eUMywEY+w4jcROiNjD7Vm+2GFapqOQmMh3OGlSat9XJB5+H7vtsQI+cvDa7oQXvt3CCv9Y/+HrKDHC/m969peA==}
@@ -4803,7 +4803,7 @@ snapshots:
 
   '@humanwhocodes/retry@0.4.1': {}
 
-  '@inertiajs/core@2.0.0':
+  '@inertiajs/core@2.0.3':
     dependencies:
       axios: 1.7.9
       deepmerge: 4.3.1
@@ -4813,7 +4813,7 @@ snapshots:
 
   '@inertiajs/react@2.0.3(react@19.0.0)':
     dependencies:
-      '@inertiajs/core': 2.0.0
+      '@inertiajs/core': 2.0.3
       lodash.isequal: 4.5.0
       react: 19.0.0
     transitivePeerDependencies:
