@@ -18,6 +18,7 @@ const EventController = () => import("#controllers/event_controller");
 const ProfileController = () => import("#controllers/profile_controller");
 const AuthController = () => import("#controllers/auth_controller");
 const ApplicationController = () => import("#controllers/application_controller");
+const PaymentController = () => import("#controllers/payment_controller");
 
 router.get("/", [WelcomeController, "show"]);
 
@@ -105,3 +106,17 @@ router
         router.post("/logout", [AuthController, "logout"]).use(middleware.auth());
     })
     .prefix("/api/auth");
+
+router
+    .group(() => {
+        router.post("/cancel", [PaymentController, "cancel"]);
+    })
+    .prefix("/api/payment");
+
+router
+    .group(() => {
+        router
+            .get("/callback/:token", [PaymentController, "callback"])
+            .where("token", /^[a-zA-Z0-9-_]{30,}$/);
+    })
+    .prefix("/fleeca");

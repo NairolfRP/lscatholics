@@ -76,5 +76,8 @@ export default await Env.create(new URL("../", import.meta.url), {
     | Variables for Fleeca API
     |----------------------------------------------------------
     */
+    FLEECA_BASE_URL: Env.schema.string(),
     FLEECA_AUTH_KEY: Env.schema.string(),
+    FLEECA_SANDBOX_AUTH_KEY: Env.schema.string.optional(),
+    FLEECA_PAYMENT_ENCRYPTION_PURPOSE: Env.schema.string(),
 });
