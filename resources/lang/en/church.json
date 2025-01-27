@@ -15,14 +15,14 @@
         "we_are_parishes": "We Are Parishes",
         "we_are_schools": "We Are Schools",
         "we_are_community": "We Are Community",
-        "number_of_parishes": "{{number}} parishes",
-        "number_of_missions_and_chapels": "{{number}} missions and chapels",
-        "number_of_eastern_rite_catholic_churches": "{{number}} Eastern Rite Catholic Churches",
-        "number_of_elementary_schools": "{{number}} elementary schools",
-        "number_of_high_schools": "{{number}} high schools",
-        "number_of_students_enrolled": "{{number}} students enrolled",
-        "number_of_catholics": "{{number}} Catholics",
-        "number_of_catholic_cities": "Residing in {{number}} cities",
-        "number_of_mass_languages": "Mass celebrated in {{number}} languages"
+        "number_of_parishes": "{number} parishes",
+        "number_of_missions_and_chapels": "{number} missions and chapels",
+        "number_of_eastern_rite_catholic_churches": "{number} Eastern Rite Catholic Churches",
+        "number_of_elementary_schools": "{number} elementary schools",
+        "number_of_high_schools": "{number} high schools",
+        "number_of_students_enrolled": "{number} students enrolled",
+        "number_of_catholics": "{number} Catholics",
+        "number_of_catholic_cities": "Residing in {number} cities",
+        "number_of_mass_languages": "Mass celebrated in {number} languages"
     }
 }

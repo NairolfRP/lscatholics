@@ -15,14 +15,14 @@
         "we_are_parishes": "Des Paroisses",
         "we_are_schools": "Des Écoles",
         "we_are_community": "Une Communauté",
-        "number_of_parishes": "{{number}} paroisses",
-        "number_of_missions_and_chapels": "{{number}} missions et chapelles",
-        "number_of_eastern_rite_catholic_churches": "{{number}} églises de rite oriental",
-        "number_of_elementary_schools": "{{number}} écoles élémentaires",
-        "number_of_high_schools": "{{number}} lycées",
-        "number_of_students_enrolled": "{{number}} étudiants",
-        "number_of_catholics": "{{number}} catholiques",
-        "number_of_catholic_cities": "Résidant dans {{number}} villes",
-        "number_of_mass_languages": "Messe célébrée dans {{number}} langues"
+        "number_of_parishes": "{number} paroisses",
+        "number_of_missions_and_chapels": "{number} missions et chapelles",
+        "number_of_eastern_rite_catholic_churches": "{number} églises de rite oriental",
+        "number_of_elementary_schools": "{number} écoles élémentaires",
+        "number_of_high_schools": "{number} lycées",
+        "number_of_students_enrolled": "{number} étudiants",
+        "number_of_catholics": "{number} catholiques",
+        "number_of_catholic_cities": "Résidant dans {number} villes",
+        "number_of_mass_languages": "Messe célébrée dans {number} langues"
     }
 }

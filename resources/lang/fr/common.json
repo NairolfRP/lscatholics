@@ -24,7 +24,7 @@
         "iban": "IBAN"
     },
     "datetime": {
-        "datetime": "{{day}}/{{month}}/{{year}} à {{hours}}h{{minutes}}"
+        "datetime": "{day}/{month}/{year} à {hours}h{minutes}"
     },
     "forms": {
         "yes": "Oui",
@@ -38,9 +38,9 @@
         "other": "Autre"
     },
     "footer": {
-        "footer_copyright": "LS Catholics © {{year}}",
-        "developed_by_nairolf": "Developpé avec <0>{{heart}}</0> par <1 href=\"https://forum-fr.gta.world/profile/11040-nairolf/\">Nairolf</1>",
-        "footer_fiction_notice": "Ce site et son contenu sont entièrement fictifs. Il est créé dans le cadre du contexte d'un projet roleplay sur le serveur <0 href=\"https://forum-fr.gta.world\">{{gtaw}}</0>. Ne faites confiance à aucune information si vous n'êtes pas un joueur de GTA World. Chaque message ou contenu a été publié pour être lu par le personnage incarné et non par un humain réel.",
+        "footer_copyright": "LS Catholics © {year}",
+        "developed_by_nairolf": "Developpé avec <0>{heart}</0> par <1 href=\"https://forum-fr.gta.world/profile/11040-nairolf/\">Nairolf</1>",
+        "footer_fiction_notice": "Ce site et son contenu sont entièrement fictifs. Il est créé dans le cadre du contexte d'un projet roleplay sur le serveur <0 href=\"https://forum-fr.gta.world\">{gtaw}</0>. Ne faites confiance à aucune information si vous n'êtes pas un joueur de GTA World. Chaque message ou contenu a été publié pour être lu par le personnage incarné et non par un humain réel.",
         "stay_connected": "Restez connecté",
         "signup_newsletter_description": "Inscrivez-vous pour recevoir la newsletter Always Forward gratuitement.",
         "connect_with_ls_catholics": "Suivez LS Catholics",

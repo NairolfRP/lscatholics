@@ -21,7 +21,7 @@
         "iban": "IBAN"
     },
     "datetime": {
-        "datetime": "{{month}}/{{day}}/{{year}} at {{hours}}:{{minutes}}"
+        "datetime": "{month}/{day}/{year} at {hours}:{minutes}"
     },
     "forms": {
         "yes": "Yes",
@@ -32,9 +32,9 @@
         "other": "Other"
     },
     "footer": {
-        "footer_copyright": "LS Catholics © {{year}}",
-        "developed_by_nairolf": "Developed with <0>{{heart}}</0> by <1 href=\"https://forum.gta.world/en/profile/97357-nairolf/\">Nairolf</1>",
-        "footer_fiction_notice": "This site and its content are entirely fictional. It is created for the context of a roleplay project on <0 href=\"https://gta.world/\">{{gtaw}}</0>. Do not trust any information if you are not a GTA World player. Each message or content has been published to be read by the incarnated roleplay character and not by a real human.",
+        "footer_copyright": "LS Catholics © {year}",
+        "developed_by_nairolf": "Developed with <0>{heart}</0> by <1 href=\"https://forum.gta.world/en/profile/97357-nairolf/\">Nairolf</1>",
+        "footer_fiction_notice": "This site and its content are entirely fictional. It is created for the context of a roleplay project on <0 href=\"https://gta.world/\">{gtaw}</0>. Do not trust any information if you are not a GTA World player. Each message or content has been published to be read by the incarnated roleplay character and not by a real human.",
         "stay_connected": "Stay Connected",
         "signup_newsletter_description": "Sign up to receive the free Always Forward newsletter.",
         "connect_with_ls_catholics": "Connect with LS Catholics",
