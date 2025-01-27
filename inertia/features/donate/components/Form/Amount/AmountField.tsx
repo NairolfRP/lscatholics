@@ -20,11 +20,11 @@ const AMOUNT_MODE = { DEFAULT: 0, CUSTOM: 1 } as const;
 export default function AmountField() {
     const { t } = useTranslation();
     const { form, isProcessing } = useDonateFormContext();
-    const { data, setData, errors, validate, invalid, forgetError } = form;
+    const { data, setData, errors, clearErrors } = form;
     const [amountMode, setAmountMode] = useState<AMOUNT_SELECTOR_MODE_TYPE>(AMOUNT_MODE.DEFAULT);
 
     const handleAmountChange = useEventCallback((v: number) => {
-        if (amountMode === AMOUNT_MODE.DEFAULT && errors.amount) forgetError("amount");
+        if (amountMode === AMOUNT_MODE.DEFAULT && errors.amount) clearErrors("amount");
         const value = Math.max(1, Number(v) || 0);
         setData("amount", value);
     });
@@ -65,7 +65,7 @@ export default function AmountField() {
                         {t("other")}
                     </Button>
                 </ButtonGroup>
-                <FormHelperText error={invalid("amount")}>{errors.amount}</FormHelperText>
+                <FormHelperText error={!!errors.amount}>{errors.amount}</FormHelperText>
             </Collapse>
 
             {amountMode >= AMOUNT_MODE.CUSTOM && (
@@ -82,10 +82,9 @@ export default function AmountField() {
                                 },
                             }}
                             value={data.amount}
-                            error={invalid("amount")}
+                            error={!!errors.amount}
                             helperText={errors.amount}
                             onChange={(e) => handleAmountChange(Number(e.target.value))}
-                            onBlur={() => validate("amount")}
                             label={t("amount")}
                             disabled={isProcessing}
                             fullWidth

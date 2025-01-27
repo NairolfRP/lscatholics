@@ -10,7 +10,7 @@ import { SyntheticEvent } from "react";
 export const AnonymousCheckbox = () => {
     const { t } = useTranslation();
     const { form, isProcessing } = useDonateFormContext();
-    const { setData, data, invalid, errors } = form;
+    const { setData, data, errors } = form;
 
     const handleAnonymousChange = useEventCallback((_: SyntheticEvent, state: boolean) => {
         setData("anonymous", state);
@@ -18,7 +18,7 @@ export const AnonymousCheckbox = () => {
 
     return (
         <FormControl
-            error={invalid("anonymous")}
+            error={!!errors.anonymous}
             disabled={isProcessing}
             sx={{ display: "flex", flexWrap: "wrap" }}
         >

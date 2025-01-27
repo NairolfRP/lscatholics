@@ -10,10 +10,10 @@ import { type SyntheticEvent } from "react";
 export default function ConfirmationCheckbox() {
     const { t } = useTranslation();
     const { form, isProcessing } = useDonateFormContext();
-    const { data, setData, forgetError, invalid, errors } = form;
+    const { data, setData, clearErrors, errors } = form;
 
     const handleChange = useEventCallback((_: SyntheticEvent, checked: boolean) => {
-        if (checked && invalid("confirmation")) forgetError("confirmation");
+        if (checked && errors.confirmation) clearErrors("confirmation");
 
         setData("confirmation", checked);
     });
@@ -23,7 +23,7 @@ export default function ConfirmationCheckbox() {
             disabled={isProcessing}
             required
             sx={{ display: "flex", flexWrap: "wrap" }}
-            error={invalid("confirmation")}
+            error={!!errors.confirmation}
         >
             <FormControlLabel
                 checked={data.confirmation}
@@ -31,7 +31,7 @@ export default function ConfirmationCheckbox() {
                 control={<Checkbox />}
                 label={`(( ${t("confirmation_connected_to_fleeca")} ))`}
             />
-            <FormHelperText>{invalid("confirmation") && errors.confirmation}</FormHelperText>
+            <FormHelperText>{errors.confirmation}</FormHelperText>
         </FormControl>
     );
 }

@@ -18,6 +18,7 @@ const EventController = () => import("#controllers/event_controller");
 const ProfileController = () => import("#controllers/profile_controller");
 const AuthController = () => import("#controllers/auth_controller");
 const ApplicationController = () => import("#controllers/application_controller");
+const DonateController = () => import("#controllers/donate_controller");
 const PaymentController = () => import("#controllers/payment_controller");
 
 router.get("/", [WelcomeController, "show"]);
@@ -46,9 +47,8 @@ router.on("/prayers").renderInertia("Prayers");
 
 router.on("/volunteer").renderInertia("Volunteer");
 
-//router.get("/donate", [DonateController, "show"]);
-//router.post("/donate", [DonateController, "submit"]);
-//router.get("/donate/success", [DonateController, "success"]);
+router.get("/donate", [DonateController, "show"]);
+router.post("/donate", [DonateController, "submit"]);
 
 router.get("/jobs", [JobController, "showAll"]);
 

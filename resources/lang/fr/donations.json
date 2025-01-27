@@ -1,5 +1,4 @@
 {
-    "donation": {
         "donation_amount": "Montant du don",
         "one_time_donation": "Je donne une seule fois",
         "recurring_donation": "Je donne périodiquement",
@@ -12,6 +11,25 @@
         "recurring_donation_start_date_description": "Définissez la date à laquelle les dons périodiques commenceront.",
         "recurring_donation_remarks_description": "Commentaire des dons. Remplissez simplement « Donation »",
         "recurring_donation_confirmation_paragraph": "Cliquez enfin sur « Confirm » pour enregistrer votre don périodique.",
-        "success_donation_notification": "Don effectué avec succès ! Merci !"
-    }
+        "success_donation_notification": "Don effectué avec succès ! Merci !",
+
+        "discord": {
+            "private_announce_embed": {
+                "title": "Don réalisé en ligne !",
+                "organization_field": "Au nom d'une société/organisation",
+                "age_field": "Âge",
+                "phone_field": "Numéro de téléphone",
+                "amount_field": "Montant du don",
+                "anonymous_field": "Le don peut-il être rendu public ?"
+            },
+            "public_announce_embed": {
+                "title": "Un nouveau don en soutien à la mission de l'Église !",
+                "description": {
+                    "without_age_and_organization": "\uD83D\uDE4F Prions pour **{name}** et son don de **{amount}** !\n\nMerci pour votre générosité et que la joie de Dieu vous comble. N'oubliez pas de prier pour nous et tout le Peuple de Dieu, particulièrement pour les plus vulnérables \uD83D\uDC96",
+                    "with_age_and_organization": "\uD83D\uDE4F Merci à l'organisation **{organization}**, et son représentant **{name}** ({age} ans), pour son don de **{amount}** !\n\nMerci pour votre engagement ! N'oubliez pas de prier pour nous et tout le Peuple de Dieu, particulièrement pour les plus vulnérables \uD83D\uDC96",
+                    "with_organization": "\uD83D\uDE4F Merci à l'organisation **{organization}**, et son représentant **{name}**, pour son don de **{amount}** !\n\nMerci pour votre engagement ! N'oubliez pas de prier pour nous et tout le Peuple de Dieu, particulièrement pour les plus vulnérables \uD83D\uDC96",
+                    "with_age": "\uD83D\uDE4F Prions pour **{name}**, {age} ans, et son don de **{amount}** !\n\nMerci pour votre générosité et que la joie de Dieu vous comble. N'oubliez pas de prier pour nous et tout le Peuple de Dieu, particulièrement pour les plus vulnérables \uD83D\uDC96"
+                }
+            }
+        }
 }

@@ -1,6 +1,6 @@
 import { PhoneInput } from "@/components/common/PhoneInput/PhoneInput";
 import { useDonateFormContext } from "@/features/donate/hooks/useDonateFormContext";
-import { DonatePropsForm, OneTimeDonationFormProps } from "@/features/donate/types/donate_form";
+import { DonatePropsForm } from "@/features/donate/types/donate_form";
 import { useEventCallback } from "@/hooks/useEventCallback";
 import { useTranslation } from "@/hooks/useTranslation";
 import { TextFieldChangeEventType } from "@/types/forms";
@@ -20,7 +20,6 @@ interface PersonalInfoFieldsProps {
     data: Partial<DonatePropsForm>;
     errors: Partial<Record<keyof DonatePropsForm, string>>;
     setData: <K extends keyof DonatePropsForm>(field: K, value: DonatePropsForm[K]) => void;
-    validate: OneTimeDonationFormProps["useForm"]["validate"];
     disabled: boolean;
 }
 
@@ -54,7 +53,7 @@ const OrganizationCheckbox = ({
 const OrganizationField = () => {
     const { t } = useTranslation();
     const { form, isProcessing } = useDonateFormContext();
-    const { data, setData, errors, validate, invalid } = form;
+    const { data, setData, errors } = form;
     const [isOrganization, setIsOrganization] = useState(false);
 
     const handleOrganizationNameChange = useEventCallback((e: TextFieldChangeEventType) => {
@@ -75,9 +74,8 @@ const OrganizationField = () => {
                             variant="filled"
                             name="organization"
                             onChange={handleOrganizationNameChange}
-                            onBlur={() => validate("organization")}
                             value={data.organization}
-                            error={invalid("organization")}
+                            error={!!errors.organization}
                             helperText={errors.organization}
                             label={t("organization_name")}
                             sx={{ m: 1 }}
@@ -104,10 +102,10 @@ export default function PersonalInfoFields() {
     const { t } = useTranslation();
 
     const { form, isProcessing } = useDonateFormContext();
-    const { setData, data, validate, invalid, errors } = form;
+    const { setData, data, errors } = form;
 
     const handleTextFieldChange = useEventCallback(
-        (field: keyof PersonalInfoFieldsProps["data"], value: string) => {
+        (field: keyof PersonalInfoFieldsProps["data"], value: string | number) => {
             setData(field, value);
         },
     );
@@ -123,9 +121,8 @@ export default function PersonalInfoFields() {
                             variant="filled"
                             name={field}
                             onChange={(e) => handleTextFieldChange(field, e.target.value)}
-                            onBlur={() => validate(field)}
                             value={data[field]}
-                            error={invalid(field)}
+                            error={!!errors[field]}
                             helperText={errors[field]}
                             label={t(field)}
                             sx={{ m: 1 }}
@@ -149,8 +146,7 @@ export default function PersonalInfoFields() {
                     variant="filled"
                     type="number"
                     name="age"
-                    onChange={(e) => handleTextFieldChange("age", e.target.value)}
-                    onBlur={() => validate("age")}
+                    onChange={(e) => handleTextFieldChange("age", Number(e.target.value))}
                     value={data.age}
                     error={!!errors.age}
                     helperText={errors.age}
@@ -171,8 +167,7 @@ export default function PersonalInfoFields() {
                     variant="filled"
                     type="tel"
                     name="phone"
-                    onChange={(e) => handleTextFieldChange("phone", e.target.value)}
-                    onBlur={() => validate("phone")}
+                    onChange={(e) => handleTextFieldChange("phone", Number(e.target.value))}
                     value={data.phone}
                     error={!!errors.phone}
                     helperText={errors.phone}
