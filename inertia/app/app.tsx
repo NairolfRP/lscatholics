@@ -13,7 +13,6 @@ import { theme } from "@/lib/themes/theme";
 import LoadingIndicator from "@/components/loading/LoadingIndicator/LoadingIndicator";
 import { SnackbarOrigin, SnackbarProvider } from "notistack";
 import { setupI18n } from "@/config/i18n.config";
-import ErrorPage from "@/pages/ErrorPage";
 
 const appName = import.meta.env.VITE_APP_NAME ?? ("Archidiocèse de Los Santos" as const);
 
@@ -38,6 +37,7 @@ createInertiaApp({
             );
         } catch (e) {
             console.error(`Failed to load page: ${name}`, e);
+            const { default: ErrorPage } = await import("../pages/ErrorPage");
             return {
                 default: () => <ErrorPage error={404} />,
             };
