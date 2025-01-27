@@ -143,9 +143,9 @@ export default function MainFooter() {
                                     values={{
                                         heart: "❤",
                                     }}
-                                    /* @ts-expect-error Link doesn't need href attribute here */
                                     components={[
                                         <span key="0" style={{ color: "#e25555" }}></span>,
+                                        /* @ts-expect-error Link doesn't need href attribute here */
                                         <Link key="1" target="_blank"></Link>,
                                     ]}
                                 />{" "}
