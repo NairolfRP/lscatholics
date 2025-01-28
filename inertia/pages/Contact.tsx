@@ -1,7 +1,6 @@
-import { useEventCallback } from "@/hooks/useEventCallback";
 import { useTranslation } from "@/hooks/useTranslation";
 import MainLayout from "@/layouts/MainLayout/MainLayout";
-import { Head, useForm } from "@inertiajs/react";
+import { Head, router, usePage } from "@inertiajs/react";
 import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
 import CallIcon from "@mui/icons-material/Call";
 import CheckIcon from "@mui/icons-material/Check";
@@ -15,51 +14,44 @@ import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid2";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { Controller, useForm } from "react-hook-form";
+import type { SharedProps } from "@adonisjs/inertia/types";
 
 export default function Contact() {
     const { t } = useTranslation();
 
+    const { errors = {} } = usePage<SharedProps>().props;
+
     const [success, displaySuccess] = useState<boolean>(false);
 
-    const { data, setData, submit, processing, errors } = useForm({
-        firstname: "",
-        lastname: "",
-        phone: "",
-        message: "",
+    const { control, handleSubmit, reset } = useForm({
+        defaultValues: {
+            firstname: "",
+            lastname: "",
+            phone: "",
+            message: "",
+        },
     });
-
-    useEffect(() => {
-        console.log(JSON.stringify(errors, null, 4));
-    }, [errors]);
 
     const hasErrors = Object.keys(errors).length > 0;
 
-    const handleChange = useEventCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-        const key = e.target.id;
-        const value = e.target.value;
-        setData((data) => ({
-            ...data,
-            [key]: value,
-        }));
-    });
-
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
+    const onSubmit = handleSubmit((data) => {
+        console.log(data);
 
         displaySuccess(false);
 
-        submit("post", "/contact", {
-            /*only: ["firstname", "lastname", "phone", "message"],*/
+        router.post("/contact", data, {
             preserveScroll: true,
             onSuccess: () => {
+                reset();
                 displaySuccess(true);
             },
             onError: (e) => {
                 console.log(e);
             },
         });
-    };
+    });
 
     return (
         <MainLayout bannerTitle={t("contact_us")}>
@@ -132,7 +124,7 @@ export default function Contact() {
 
                 <Box
                     component="form"
-                    onSubmit={handleSubmit}
+                    onSubmit={onSubmit}
                     sx={{ "width": "65%", "& .MuiTextField-root": { mb: 3 } }}
                 >
                     {success || hasErrors ? (
@@ -152,56 +144,78 @@ export default function Contact() {
                     ) : null}
 
                     <Stack direction="row" spacing={2}>
-                        <TextField
-                            id="firstname"
-                            helperText={errors.firstname}
-                            error={!!errors.firstname}
-                            value={data.firstname}
-                            onChange={handleChange}
-                            label={t("firstname")}
-                            variant="filled"
-                            required
-                            fullWidth
+                        <Controller
+                            name="firstname"
+                            control={control}
+                            rules={{ required: true }}
+                            render={({ field }) => (
+                                <TextField
+                                    {...field}
+                                    helperText={errors.firstname}
+                                    error={!!errors.firstname}
+                                    label={t("firstname")}
+                                    variant="filled"
+                                    required
+                                    fullWidth
+                                />
+                            )}
                         />
-                        <TextField
-                            id="lastname"
-                            helperText={errors.lastname}
-                            error={!!errors.lastname}
-                            value={data.lastname}
-                            onChange={handleChange}
-                            label={t("lastname")}
-                            variant="filled"
-                            required
-                            fullWidth
+                        <Controller
+                            name="lastname"
+                            control={control}
+                            rules={{ required: true }}
+                            render={({ field }) => (
+                                <TextField
+                                    {...field}
+                                    id="lastname"
+                                    helperText={errors.lastname}
+                                    error={!!errors.lastname}
+                                    label={t("lastname")}
+                                    variant="filled"
+                                    required
+                                    fullWidth
+                                />
+                            )}
                         />
                     </Stack>
-                    <TextField
-                        id="phone"
-                        helperText={errors.phone}
-                        error={!!errors.phone}
-                        value={data.phone}
-                        onChange={handleChange}
-                        label={t("phone")}
-                        variant="filled"
-                        required
-                        fullWidth
+                    <Controller
+                        name="phone"
+                        control={control}
+                        rules={{ required: true }}
+                        render={({ field }) => (
+                            <TextField
+                                {...field}
+                                id="phone"
+                                helperText={errors.phone}
+                                error={!!errors.phone}
+                                label={t("phone")}
+                                variant="filled"
+                                required
+                                fullWidth
+                            />
+                        )}
+                    />
+                    <Controller
+                        name="message"
+                        control={control}
+                        rules={{ required: true }}
+                        render={({ field }) => (
+                            <TextField
+                                {...field}
+                                id="message"
+                                helperText={errors.message}
+                                error={!!errors.message}
+                                label={t("comments_or_question")}
+                                multiline
+                                rows={5}
+                                variant="filled"
+                                required
+                                fullWidth
+                            />
+                        )}
                     />
 
-                    <TextField
-                        id="message"
-                        helperText={errors.message}
-                        error={!!errors.message}
-                        value={data.message}
-                        onChange={handleChange}
-                        label={t("comments_or_question")}
-                        multiline
-                        rows={5}
-                        variant="filled"
-                        required
-                        fullWidth
-                    />
-
-                    <Button type="submit" variant="contained" disabled={processing}>
+                    <Button type="submit" variant="contained">
                         {t("submit")}
                     </Button>
                 </Box>

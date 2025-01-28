@@ -4,29 +4,64 @@ import AmountField from "@/features/donate/components/Form/Amount/AmountField";
 import { AnonymousCheckbox } from "@/features/donate/components/Form/Anonymous/AnonymousCheckbox";
 import ConfirmationCheckbox from "@/features/donate/components/Form/Confirmation/ConfirmationCheckbox";
 import PersonalInfoFields from "@/features/donate/components/Form/PersonalInformation/PersonalInfoFields";
-import { useDonateFormContext } from "@/features/donate/hooks/useDonateFormContext";
 import { usePaymentPopup } from "@/features/donate/hooks/usePaymentPopup";
-import { useEventCallback } from "@/hooks/useEventCallback";
 import { useTranslation } from "@/hooks/useTranslation";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import CircularProgress from "@mui/material/CircularProgress";
 import Typography from "@mui/material/Typography";
 import { useSnackbar } from "notistack";
-import { type SyntheticEvent, useRef } from "react";
+import { useRef } from "react";
 import { router, usePage } from "@inertiajs/react";
 import type { SharedProps } from "@adonisjs/inertia/types";
 import Alert from "@mui/material/Alert";
 import type { Page } from "@inertiajs/core";
+import { FormProvider, useForm, useFormContext } from "react-hook-form";
+import { usePaymentProcessing } from "@/features/donate/context/PaymentProcessingForm";
+
+function SubmitButton() {
+    const { t } = useTranslation();
+    const { watch } = useFormContext();
+    const { isPaymentProcessing } = usePaymentProcessing();
+
+    const [amount, confirmation] = watch(["amount", "confirmation"]);
+
+    const isSubmitDisabled = isPaymentProcessing || !confirmation || amount <= 0;
+
+    return (
+        <Button
+            type="submit"
+            variant="contained"
+            disabled={isSubmitDisabled}
+            startIcon={isPaymentProcessing && <CircularProgress color="inherit" />}
+            sx={{ mt: 5 }}
+        >
+            {isPaymentProcessing ? t("in_progress") : t("submit")}
+        </Button>
+    );
+}
 
 export default function DonationForm() {
     const { t } = useTranslation();
     const { errors, success } = usePage<SharedProps>().props;
-    const { form, setPaymentInProgress, isProcessing } = useDonateFormContext();
+    const methods = useForm({
+        defaultValues: {
+            firstname: "",
+            lastname: "",
+            age: "",
+            phone: "",
+            organization: "",
+            anonymous: false,
+            amount: 0,
+            confirmation: false,
+        },
+    });
+    const { setPaymentInProgress } = usePaymentProcessing();
     const { enqueueSnackbar } = useSnackbar();
     const { openPopup, watchPopup } = usePaymentPopup();
-    const { post, reset, data, setData } = form;
     const alertRef = useRef<HTMLDivElement>(null);
+
+    const { handleSubmit, reset, resetField } = methods;
 
     const handlePaymentError = (error?: any) => {
         router.post("/api/payment/cancel", undefined, {
@@ -46,7 +81,7 @@ export default function DonationForm() {
                 console.log("Failed to cancel the payment");
             },
         });
-        setData("confirmation", false);
+        resetField("confirmation");
         setPaymentInProgress(false);
     };
 
@@ -68,9 +103,8 @@ export default function DonationForm() {
         }
     };
 
-    const handleSubmit = useEventCallback((e: SyntheticEvent) => {
-        e.preventDefault();
-        post("/donate", {
+    const onSubmit = handleSubmit((data) => {
+        router.post("/donate", data, {
             preserveScroll: true,
             preserveState: true,
             onBefore: () => {
@@ -96,14 +130,12 @@ export default function DonationForm() {
             },
             onError: (e) => {
                 alertRef.current?.scrollIntoView();
-                setData("confirmation", false);
+                resetField("confirmation");
                 setPaymentInProgress(false);
                 console.error("Error generating Fleeca Gateway URL:", e);
             },
         });
     });
-
-    const isSubmitDisabled = isProcessing || !data.confirmation || data.amount <= 0;
 
     const alertMessage = success
         ? t("success_donation_notification")
@@ -125,26 +157,20 @@ export default function DonationForm() {
                 </Alert>
             )}
 
-            <AmountField />
-            <FormDivider />
+            <FormProvider {...methods}>
+                <Box component="form" onSubmit={onSubmit}>
+                    <AmountField />
+                    <FormDivider />
 
-            <Box component="form" onSubmit={handleSubmit}>
-                <PersonalInfoFields />
-                <FormDivider />
-                <AnonymousCheckbox />
-                <FormDivider />
-                <ConfirmationCheckbox />
+                    <PersonalInfoFields />
+                    <FormDivider />
+                    <AnonymousCheckbox />
+                    <FormDivider />
+                    <ConfirmationCheckbox />
 
-                <Button
-                    type="submit"
-                    variant="contained"
-                    disabled={isSubmitDisabled}
-                    startIcon={isProcessing && <CircularProgress color="inherit" />}
-                    sx={{ mt: 5 }}
-                >
-                    {isProcessing ? t("in_progress") : t("submit")}
-                </Button>
-            </Box>
+                    <SubmitButton />
+                </Box>
+            </FormProvider>
         </>
     );
 }

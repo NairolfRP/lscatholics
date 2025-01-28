@@ -1,34 +1,41 @@
-import { useDonateFormContext } from "@/features/donate/hooks/useDonateFormContext";
-import { useEventCallback } from "@/hooks/useEventCallback";
 import { useTranslation } from "@/hooks/useTranslation";
 import Checkbox from "@mui/material/Checkbox";
 import FormControl from "@mui/material/FormControl";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormHelperText from "@mui/material/FormHelperText";
-import { type SyntheticEvent } from "react";
+import { usePage } from "@inertiajs/react";
+import type { SharedProps } from "@adonisjs/inertia/types";
+import { usePaymentProcessing } from "@/features/donate/context/PaymentProcessingForm";
+import { Controller, useFormContext } from "react-hook-form";
 
 export default function ConfirmationCheckbox() {
     const { t } = useTranslation();
-    const { form, isProcessing } = useDonateFormContext();
-    const { data, setData, clearErrors, errors } = form;
-
-    const handleChange = useEventCallback((_: SyntheticEvent, checked: boolean) => {
-        if (checked && errors.confirmation) clearErrors("confirmation");
-
-        setData("confirmation", checked);
-    });
+    const { errors = {} } = usePage<SharedProps>().props;
+    const { isPaymentProcessing } = usePaymentProcessing();
+    const { control } = useFormContext();
 
     return (
         <FormControl
-            disabled={isProcessing}
+            disabled={isPaymentProcessing}
             required
             sx={{ display: "flex", flexWrap: "wrap" }}
             error={!!errors.confirmation}
         >
             <FormControlLabel
-                checked={data.confirmation}
-                onChange={handleChange}
-                control={<Checkbox />}
+                control={
+                    <Controller
+                        name="confirmation"
+                        control={control}
+                        rules={{ required: true }}
+                        render={({ field }) => (
+                            <Checkbox
+                                {...field}
+                                checked={field.value}
+                                onChange={(e) => field.onChange(e.target.checked)}
+                            />
+                        )}
+                    />
+                }
                 label={`(( ${t("confirmation_connected_to_fleeca")} ))`}
             />
             <FormHelperText>{errors.confirmation}</FormHelperText>

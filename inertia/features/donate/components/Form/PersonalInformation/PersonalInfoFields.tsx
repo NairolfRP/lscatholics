@@ -1,9 +1,7 @@
 import { PhoneInput } from "@/components/common/PhoneInput/PhoneInput";
-import { useDonateFormContext } from "@/features/donate/hooks/useDonateFormContext";
-import { DonatePropsForm } from "@/features/donate/types/donate_form";
+import type { DonatePropsForm } from "@/features/donate/types/donate_form";
 import { useEventCallback } from "@/hooks/useEventCallback";
 import { useTranslation } from "@/hooks/useTranslation";
-import { TextFieldChangeEventType } from "@/types/forms";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import BusinessIcon from "@mui/icons-material/Business";
 import CakeIcon from "@mui/icons-material/Cake";
@@ -14,7 +12,11 @@ import FormControl from "@mui/material/FormControl";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import InputAdornment from "@mui/material/InputAdornment";
 import TextField from "@mui/material/TextField";
-import { SyntheticEvent, useState } from "react";
+import { type SyntheticEvent, useState } from "react";
+import { usePaymentProcessing } from "@/features/donate/context/PaymentProcessingForm";
+import { Controller, useFormContext } from "react-hook-form";
+import { usePage } from "@inertiajs/react";
+import type { SharedProps } from "@adonisjs/inertia/types";
 
 interface PersonalInfoFieldsProps {
     data: Partial<DonatePropsForm>;
@@ -52,44 +54,46 @@ const OrganizationCheckbox = ({
 
 const OrganizationField = () => {
     const { t } = useTranslation();
-    const { form, isProcessing } = useDonateFormContext();
-    const { data, setData, errors } = form;
+    const { errors = {} } = usePage<SharedProps>().props;
+    const { control } = useFormContext();
+    const { isPaymentProcessing } = usePaymentProcessing();
     const [isOrganization, setIsOrganization] = useState(false);
-
-    const handleOrganizationNameChange = useEventCallback((e: TextFieldChangeEventType) => {
-        setData("organization", e.target.value);
-    });
 
     return (
         <>
             <OrganizationCheckbox
                 isOrganization={isOrganization}
                 setIsOrganization={setIsOrganization}
-                disabled={isProcessing}
+                disabled={isPaymentProcessing}
             />
             <Collapse in={isOrganization}>
                 {isOrganization && (
                     <Box sx={{ display: "flex", flexWrap: "wrap" }}>
-                        <TextField
-                            variant="filled"
+                        <Controller
                             name="organization"
-                            onChange={handleOrganizationNameChange}
-                            value={data.organization}
-                            error={!!errors.organization}
-                            helperText={errors.organization}
-                            label={t("organization_name")}
-                            sx={{ m: 1 }}
-                            slotProps={{
-                                input: {
-                                    startAdornment: (
-                                        <InputAdornment position="start">
-                                            <BusinessIcon />
-                                        </InputAdornment>
-                                    ),
-                                },
-                            }}
-                            disabled={isProcessing}
-                            required={isOrganization}
+                            control={control}
+                            rules={{ required: isOrganization }}
+                            render={({ field }) => (
+                                <TextField
+                                    {...field}
+                                    variant="filled"
+                                    error={!!errors.organization}
+                                    helperText={errors.organization}
+                                    label={t("organization_name")}
+                                    sx={{ m: 1 }}
+                                    slotProps={{
+                                        input: {
+                                            startAdornment: (
+                                                <InputAdornment position="start">
+                                                    <BusinessIcon />
+                                                </InputAdornment>
+                                            ),
+                                        },
+                                    }}
+                                    disabled={isPaymentProcessing}
+                                    required={isOrganization}
+                                />
+                            )}
                         />
                     </Box>
                 )}
@@ -100,80 +104,89 @@ const OrganizationField = () => {
 
 export default function PersonalInfoFields() {
     const { t } = useTranslation();
-
-    const { form, isProcessing } = useDonateFormContext();
-    const { setData, data, errors } = form;
-
-    const handleTextFieldChange = useEventCallback(
-        (field: keyof PersonalInfoFieldsProps["data"], value: string | number) => {
-            setData(field, value);
-        },
-    );
+    const { errors = {} } = usePage<SharedProps>().props;
+    const { control } = useFormContext();
+    const { isPaymentProcessing } = usePaymentProcessing();
 
     return (
         <>
             <Box sx={{ display: "flex", flexWrap: "wrap" }}>
                 {["lastname", "firstname"].map((f) => {
-                    const field = f as keyof DonatePropsForm;
+                    const fieldName = f as keyof DonatePropsForm;
                     return (
-                        <TextField
-                            key={field}
-                            variant="filled"
-                            name={field}
-                            onChange={(e) => handleTextFieldChange(field, e.target.value)}
-                            value={data[field]}
-                            error={!!errors[field]}
-                            helperText={errors[field]}
-                            label={t(field)}
-                            sx={{ m: 1 }}
-                            slotProps={{
-                                input: {
-                                    startAdornment: (
-                                        <InputAdornment position="start">
-                                            <AccountCircle />
-                                        </InputAdornment>
-                                    ),
-                                },
-                            }}
-                            disabled={isProcessing}
-                            required
+                        <Controller
+                            name={fieldName}
+                            control={control}
+                            rules={{ required: true }}
+                            render={({ field }) => (
+                                <TextField
+                                    key={fieldName}
+                                    {...field}
+                                    variant="filled"
+                                    error={!!errors[fieldName]}
+                                    helperText={errors[fieldName]}
+                                    label={t(fieldName)}
+                                    sx={{ m: 1 }}
+                                    slotProps={{
+                                        input: {
+                                            startAdornment: (
+                                                <InputAdornment position="start">
+                                                    <AccountCircle />
+                                                </InputAdornment>
+                                            ),
+                                        },
+                                    }}
+                                    disabled={isPaymentProcessing}
+                                    required
+                                />
+                            )}
                         />
                     );
                 })}
             </Box>
             <Box sx={{ display: "flex", flexWrap: "wrap" }}>
-                <TextField
-                    variant="filled"
-                    type="number"
+                <Controller
                     name="age"
-                    onChange={(e) => handleTextFieldChange("age", Number(e.target.value))}
-                    value={data.age}
-                    error={!!errors.age}
-                    helperText={errors.age}
-                    label={t("age")}
-                    sx={{ m: 1 }}
-                    slotProps={{
-                        input: {
-                            startAdornment: (
-                                <InputAdornment position="start">
-                                    <CakeIcon />
-                                </InputAdornment>
-                            ),
-                        },
-                    }}
-                    disabled={isProcessing}
+                    control={control}
+                    render={({ field }) => (
+                        <TextField
+                            {...field}
+                            variant="filled"
+                            type="number"
+                            onChange={(event) => field.onChange(+event.target.value)}
+                            error={!!errors.age}
+                            helperText={errors.age}
+                            label={t("age")}
+                            sx={{ m: 1 }}
+                            slotProps={{
+                                input: {
+                                    startAdornment: (
+                                        <InputAdornment position="start">
+                                            <CakeIcon />
+                                        </InputAdornment>
+                                    ),
+                                },
+                            }}
+                            disabled={isPaymentProcessing}
+                        />
+                    )}
                 />
-                <PhoneInput
-                    variant="filled"
-                    type="tel"
+                <Controller
                     name="phone"
-                    onChange={(e) => handleTextFieldChange("phone", Number(e.target.value))}
-                    value={data.phone}
-                    error={!!errors.phone}
-                    helperText={errors.phone}
-                    label={t("phone")}
-                    sx={{ m: 1 }}
-                    disabled={isProcessing}
+                    control={control}
+                    render={({ field }) => (
+                        <PhoneInput
+                            {...field}
+                            variant="filled"
+                            type="tel"
+                            onChange={(event) => field.onChange(+event.target.value)}
+                            error={!!errors.phone}
+                            helperText={errors.phone}
+                            label={t("phone")}
+                            sx={{ m: 1 }}
+                            disabled={isPaymentProcessing}
+                        />
+                    )}
                 />
             </Box>
             <OrganizationField />
