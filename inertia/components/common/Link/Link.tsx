@@ -6,10 +6,24 @@ type InertiaLinkProps = MuiLinkProps & {
     href: string;
 };
 
+const isExternalLink = (href: string) => {
+    if (!href.startsWith("http") && !href.startsWith("www")) return false;
+
+    try {
+        const link = new URL(href, window.location.href);
+
+        return link.hostname !== window.location.hostname;
+    } catch (e) {
+        return true;
+    }
+};
+
 const Link = React.forwardRef(
     ({ href, children, ...props }: React.PropsWithChildren<InertiaLinkProps>, ref) => {
+        const isExternal = isExternalLink(href);
+
         return (
-            <MuiLink component={InertiaLink} href={href} ref={ref} {...props}>
+            <MuiLink component={isExternal ? "a" : InertiaLink} href={href} ref={ref} {...props}>
                 {children}
             </MuiLink>
         );
