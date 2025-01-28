@@ -1,21 +1,21 @@
-export interface IStaffListLeader {
+export interface StaffListLeaderProps {
     name: string;
     position: string;
     image?: string;
 }
 
-export interface IStaffListCard extends IStaffListLeader {
+export interface StaffListCardProps extends StaffListLeaderProps {
     phone?: string;
     email?: string;
 }
 
-export interface IStaffListSection {
+export interface StaffListSectionProps {
     title: string;
-    cards: IStaffListCard[];
+    cards: StaffListCardProps[];
 }
 
 export interface StaffListProps {
     children?: React.ReactNode;
-    director: IStaffListLeader;
-    sections: IStaffListSection[];
+    director: StaffListLeaderProps;
+    sections: StaffListSectionProps[];
 }

@@ -1,7 +1,7 @@
 import ArchbishopPortrait from "@/assets/images/francisco_lopez_official_portrait.png";
-import { IDepartmentList } from "@/features/departments/types/departments";
+import { DepartmentList } from "@/features/departments/types/departments";
 
-export const departments: IDepartmentList[] = [
+export const departments: DepartmentList[] = [
     {
         name: "archbishop_office",
         link: "archbishop-office",

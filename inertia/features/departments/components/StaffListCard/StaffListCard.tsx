@@ -1,4 +1,4 @@
-import { IStaffListCard } from "@/features/departments/types/staff_list";
+import { StaffListCardProps } from "@/features/departments/types/staff_list";
 import { useTranslation } from "@/hooks/use_translation";
 import { CardMedia, CardMediaProps } from "@mui/material";
 import Card from "@mui/material/Card";
@@ -12,7 +12,7 @@ const StaffImage = styled(CardMedia)<CardMediaProps>(({ theme }) => ({
     padding: "2.5rem 2rem 1.5rem",
 }));
 
-export default function StaffListCard({ name, position, image, phone, email }: IStaffListCard) {
+export default function StaffListCard({ name, position, image, phone, email }: StaffListCardProps) {
     const { t } = useTranslation();
     return (
         <Card elevation={1} sx={{ width: "100%" }}>

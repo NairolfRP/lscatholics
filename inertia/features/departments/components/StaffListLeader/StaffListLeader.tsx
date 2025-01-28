@@ -1,4 +1,4 @@
-import { IStaffListLeader } from "@/features/departments/types/staff_list";
+import { StaffListLeaderProps } from "@/features/departments/types/staff_list";
 import { useTranslation } from "@/hooks/use_translation";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
@@ -12,7 +12,7 @@ const GridItem = styled(Paper)(({ theme }) => ({
     padding: theme.spacing(2),
 }));
 
-export default function StaffListLeader({ name, position, image }: IStaffListLeader) {
+export default function StaffListLeader({ name, position, image }: StaffListLeaderProps) {
     const { t } = useTranslation();
     return (
         <Container sx={{ marginBottom: "5rem" }}>
