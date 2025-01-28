@@ -60,7 +60,7 @@ export default class DonateController {
                     required_error: "Amount is required",
                     invalid_type_error: "Amount must be a number",
                 })
-                .min(1, { message: "The minimum amount is 200." })
+                .min(200, { message: "The minimum amount is 200." })
                 .positive({ message: "Amount must have a positive number." }),
             confirmation: z.boolean({
                 required_error:
