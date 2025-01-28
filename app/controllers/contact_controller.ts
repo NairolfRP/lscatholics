@@ -69,13 +69,13 @@ export default class ContactsController {
                     timestamp: new Date(Date.now()).toISOString(),
                 });
 
-                const response = await DiscordWebhookService.create(discordWebhookURL, {
+                const discordResponse = await DiscordWebhookService.create(discordWebhookURL, {
                     threadName,
                     tags: discordTagID ? [discordTagID] : [],
                     embeds: [personalInformationEmbed, messageEmbed],
                 }).send();
 
-                if (!response) {
+                if (!discordResponse) {
                     throw Error("Failed to send Contact Discord Notification");
                 }
             }
