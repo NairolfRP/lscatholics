@@ -1,5 +1,7 @@
 import { defineConfig } from "@adonisjs/inertia";
 import type { InferSharedProps, PageProps } from "@adonisjs/inertia/types";
+import i18nManager from "@adonisjs/i18n/services/main";
+import env from "#start/env";
 
 const inertiaConfig = defineConfig({
     /**
@@ -11,10 +13,12 @@ const inertiaConfig = defineConfig({
      * Data that should be shared with all rendered pages
      */
     sharedData: {
-        locale: (ctx) => ctx.inertia.always(() => ctx.i18n.locale),
-        fallbackLocale: (ctx) => ctx.inertia.always(() => ctx.i18n.fallbackLocale),
+        locale: (ctx) =>
+            ctx.inertia.always(() => ctx.i18n?.locale || i18nManager.config.defaultLocale),
+        fallbackLocale: (ctx) =>
+            ctx.inertia.always(() => ctx.i18n?.fallbackLocale || env.get("FALLBACK_LOCALE")),
         auth: async ({ session, auth }) => {
-            const social = session.get("user_social_info", null);
+            const social = session?.get("user_social_info", null);
             return {
                 user: (await auth.check())
                     ? {

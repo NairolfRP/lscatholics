@@ -39,7 +39,7 @@ createInertiaApp({
             console.error(`Failed to load page: ${name}`, e);
             const { default: ErrorPage } = await import("../pages/ErrorPage");
             return {
-                default: () => <ErrorPage error={404} />,
+                default: () => <ErrorPage error={{ status: 404 }} />,
             };
         }
     },
