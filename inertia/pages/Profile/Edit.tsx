@@ -24,7 +24,7 @@ export default function Edit({ auth }: Partial<PageProps>) {
 
             <Container>
                 <Box sx={styles}>
-                    <DeleteUserForm user={user} />
+                    <DeleteUserForm />
                 </Box>
             </Container>
         </MainLayout>
