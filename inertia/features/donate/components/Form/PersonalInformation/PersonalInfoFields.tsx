@@ -115,6 +115,7 @@ export default function PersonalInfoFields() {
                     const fieldName = f as keyof DonatePropsForm;
                     return (
                         <Controller
+                            key={f}
                             name={fieldName}
                             control={control}
                             rules={{ required: true }}
