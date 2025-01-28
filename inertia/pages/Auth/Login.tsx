@@ -1,5 +1,5 @@
 import LoginServiceButtons from "@/features/auth/components/LoginServiceButtons/LoginServiceButtons";
-import { useTranslation } from "@/hooks/useTranslation";
+import { useTranslation } from "@/hooks/use_translation";
 import { Head, usePage } from "@inertiajs/react";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ErrorIcon from "@mui/icons-material/Error";

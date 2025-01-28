@@ -1,7 +1,7 @@
 import FormDivider from "@/components/common/FormDivider/FormDivider";
 import Trans from "@/components/locales/Trans/Trans";
-import { useEventCallback } from "@/hooks/useEventCallback";
-import { useTranslation } from "@/hooks/useTranslation";
+import { useEventCallback } from "@/hooks/use_event_callback";
+import { useTranslation } from "@/hooks/use_translation";
 import { TextFieldChangeEventType } from "@/types/forms";
 import Box from "@mui/material/Box";
 import Link from "@mui/material/Link";

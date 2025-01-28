@@ -1,4 +1,4 @@
-import { useTranslation } from "@/hooks/useTranslation";
+import { useTranslation } from "@/hooks/use_translation";
 import MainLayout from "@/layouts/MainLayout/MainLayout";
 import { Head, router, usePage } from "@inertiajs/react";
 import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";

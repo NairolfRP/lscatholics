@@ -1,4 +1,4 @@
-import { useTranslation } from "@/hooks/useTranslation";
+import { useTranslation } from "@/hooks/use_translation";
 import MainLayout from "@/layouts/MainLayout/MainLayout";
 import { Head } from "@inertiajs/react";
 import Alert from "@mui/material/Alert";

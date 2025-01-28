@@ -1,5 +1,5 @@
-import { ApplicationStatut } from "@/enums/ApplicationStatut";
-import { ApplicationType } from "@/enums/ApplicationType";
+import { ApplicationStatut } from "@/enums/application_statut";
+import { ApplicationType } from "@/enums/application_type";
 import { YesNoRadioFormValue } from "@/types/forms";
 
 type ApplicationField = {

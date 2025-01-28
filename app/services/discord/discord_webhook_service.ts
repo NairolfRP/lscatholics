@@ -1,4 +1,4 @@
-import type { DiscordWebhook } from "../../interfaces/DiscordWebhook.d.ts";
+import type { DiscordWebhook } from "../../interfaces/discord_webhook.d.ts";
 import { DiscordEmbedService } from "#services/discord/discord_embed_service";
 
 export class DiscordWebhookService {

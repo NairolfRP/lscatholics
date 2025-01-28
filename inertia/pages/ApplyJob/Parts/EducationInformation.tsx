@@ -4,8 +4,8 @@ import type {
     HighSchool,
     JobApplicationFormSubmission,
 } from "@/features/applications/types/applications";
-import { useEventCallback } from "@/hooks/useEventCallback";
-import { useTranslation } from "@/hooks/useTranslation";
+import { useEventCallback } from "@/hooks/use_event_callback";
+import { useTranslation } from "@/hooks/use_translation";
 import EducationField from "@/pages/ApplyJob/Parts/EducationField";
 import HighSchoolField from "@/pages/ApplyJob/Parts/HighSchoolField";
 import Box from "@mui/material/Box";

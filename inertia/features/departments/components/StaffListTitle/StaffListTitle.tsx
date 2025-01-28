@@ -2,7 +2,7 @@ import Box, { BoxProps } from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
-import { useTranslation } from "@/hooks/useTranslation";
+import { useTranslation } from "@/hooks/use_translation";
 
 const StaffListTittleBackground = styled(Box)<BoxProps>(({ theme }) => ({
     backgroundColor: "#e3550a",

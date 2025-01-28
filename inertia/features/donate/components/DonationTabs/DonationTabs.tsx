@@ -1,6 +1,6 @@
 import { DONATION_TYPE } from "@/features/donate/constants/donation";
-import { useEventCallback } from "@/hooks/useEventCallback";
-import { useTranslation } from "@/hooks/useTranslation";
+import { useEventCallback } from "@/hooks/use_event_callback";
+import { useTranslation } from "@/hooks/use_translation";
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
 import { Dispatch, SetStateAction, type SyntheticEvent } from "react";

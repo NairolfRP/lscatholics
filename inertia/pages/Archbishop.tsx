@@ -2,7 +2,7 @@ import ArchbishopPageBanner from "@/assets/images/2f2d2f558c6a852a0c3f910222b328
 import OfficialPortrait from "@/assets/images/francisco_lopez_official_portrait.png";
 import { FacebrowserIcon } from "@/components/icons/Facebrowser/FacebrowserIcon";
 import Trans from "@/components/locales/Trans/Trans";
-import { useTranslation } from "@/hooks/useTranslation";
+import { useTranslation } from "@/hooks/use_translation";
 import MainLayout from "@/layouts/MainLayout/MainLayout";
 import { Head } from "@inertiajs/react";
 import Box from "@mui/material/Box";

@@ -1,5 +1,5 @@
 import { loginServicesList } from "@/features/auth/constants/loginServicesList";
-import { useEventCallback } from "@/hooks/useEventCallback";
+import { useEventCallback } from "@/hooks/use_event_callback";
 import { router } from "@inertiajs/react";
 import Button from "@mui/material/Button";
 import { useSnackbar } from "notistack";

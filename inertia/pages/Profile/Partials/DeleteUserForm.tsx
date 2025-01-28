@@ -1,4 +1,4 @@
-import { useTranslation } from "@/hooks/useTranslation";
+import { useTranslation } from "@/hooks/use_translation";
 import type { User } from "@/types/user";
 import { useForm } from "@inertiajs/react";
 import DeleteIcon from "@mui/icons-material/Delete";

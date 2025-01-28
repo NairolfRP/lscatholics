@@ -1,7 +1,7 @@
 import CreditCardIcon from "@mui/icons-material/CreditCard";
 import InputAdornment from "@mui/material/InputAdornment";
 import TextField from "@mui/material/TextField";
-import { useTranslation } from "@/hooks/useTranslation";
+import { useTranslation } from "@/hooks/use_translation";
 
 function validateIBAN(value: string): boolean {
     const ibanPattern = /^(0100|0200|0300) \d{4} \d$/;

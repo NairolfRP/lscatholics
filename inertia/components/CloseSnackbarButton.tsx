@@ -1,4 +1,4 @@
-import { useEventCallback } from "@/hooks/useEventCallback";
+import { useEventCallback } from "@/hooks/use_event_callback";
 import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from "@mui/material/IconButton";
 import { useSnackbar } from "notistack";

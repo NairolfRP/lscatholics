@@ -1,6 +1,6 @@
 import Link from "@/components/common/Link/Link";
-import { departments } from "@/features/departments/constants/departmentsList";
-import { useTranslation } from "@/hooks/useTranslation";
+import { departments } from "@/features/departments/constants/departments_list";
+import { useTranslation } from "@/hooks/use_translation";
 import MainLayout from "@/layouts/MainLayout/MainLayout";
 import { Head } from "@inertiajs/react";
 import Box from "@mui/material/Box";

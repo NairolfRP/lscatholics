@@ -1,6 +1,6 @@
-import { useEventCallback } from "@/hooks/useEventCallback";
-import { useTranslation } from "@/hooks/useTranslation";
-import { menuItems } from "@/layouts/MainLayout/Header/components/Navigation/config/menuItems";
+import { useEventCallback } from "@/hooks/use_event_callback";
+import { useTranslation } from "@/hooks/use_translation";
+import { menuItems } from "@/layouts/MainLayout/Header/components/Navigation/config/menu_items";
 import { Link } from "@inertiajs/react";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Divider, Drawer, ListItemButton, ListItemText } from "@mui/material";

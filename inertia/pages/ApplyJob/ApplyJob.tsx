@@ -1,7 +1,7 @@
 import BackButton from "@/components/common/BackButton/BackButton";
 import FormDivider from "@/components/common/FormDivider/FormDivider";
 import type { Job } from "@/features/jobs/types/jobs";
-import { useTranslation } from "@/hooks/useTranslation";
+import { useTranslation } from "@/hooks/use_translation";
 import MainLayout from "@/layouts/MainLayout/MainLayout";
 import Form from "@/pages/ApplyJob/Parts/Form";
 import Box from "@mui/material/Box";

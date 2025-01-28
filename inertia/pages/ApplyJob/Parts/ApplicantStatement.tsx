@@ -2,7 +2,7 @@ import FormDivider from "@/components/common/FormDivider/FormDivider";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import { useTranslation } from "@/hooks/useTranslation";
+import { useTranslation } from "@/hooks/use_translation";
 
 interface ApplicantStatementProps {
     signature: string;

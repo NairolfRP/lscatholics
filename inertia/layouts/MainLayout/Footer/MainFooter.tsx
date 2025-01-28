@@ -1,7 +1,7 @@
 import { FacebrowserIcon } from "@/components/icons/Facebrowser/FacebrowserIcon";
 import Link from "@/components/common/Link/Link";
 import Trans from "@/components/locales/Trans/Trans";
-import { useTranslation } from "@/hooks/useTranslation";
+import { useTranslation } from "@/hooks/use_translation";
 import { Button, Divider, ListItemButton, Stack, TextField } from "@mui/material";
 import Alert from "@mui/material/Alert";
 import Box from "@mui/material/Box";

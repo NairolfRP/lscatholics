@@ -1,5 +1,5 @@
-import { JobCategory } from "@/enums/JobCategory";
-import { JobCategoryColor } from "@/enums/JobCategoryColor";
+import { JobCategory } from "@/enums/job_category";
+import { JobCategoryColor } from "@/enums/job_category_color";
 
 export function formatStringDate(stringDate: string) {
     const date = new Date(stringDate);

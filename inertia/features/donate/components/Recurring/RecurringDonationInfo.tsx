@@ -1,5 +1,5 @@
 import Trans from "@/components/locales/Trans/Trans";
-import { useTranslation } from "@/hooks/useTranslation";
+import { useTranslation } from "@/hooks/use_translation";
 import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
 

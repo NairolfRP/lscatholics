@@ -1,6 +1,6 @@
 import FormDivider from "@/components/common/FormDivider/FormDivider";
 import type { EmploymentInformation } from "@/features/applications/types/applications";
-import { useTranslation } from "@/hooks/useTranslation";
+import { useTranslation } from "@/hooks/use_translation";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import Box from "@mui/material/Box";

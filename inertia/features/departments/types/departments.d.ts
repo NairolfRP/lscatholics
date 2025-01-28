@@ -1,4 +1,4 @@
-import type { StaffListProps } from "@/features/departments/types/staffList";
+import type { StaffListProps } from "@/features/departments/types/staff_list";
 
 export interface IDepartmentList {
     name: string;

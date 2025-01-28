@@ -1,5 +1,5 @@
-import { IStaffListLeader } from "@/features/departments/types/staffList";
-import { useTranslation } from "@/hooks/useTranslation";
+import { IStaffListLeader } from "@/features/departments/types/staff_list";
+import { useTranslation } from "@/hooks/use_translation";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid2";

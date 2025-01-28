@@ -1,4 +1,4 @@
-import { useEventCallback } from "@/hooks/useEventCallback";
+import { useEventCallback } from "@/hooks/use_event_callback";
 import { router } from "@inertiajs/react";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import Button, { ButtonProps } from "@mui/material/Button";

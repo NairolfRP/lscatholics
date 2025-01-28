@@ -1,12 +1,12 @@
 import CategoryFilter from "@/components/CategoryFilter";
 import StyledTableCell from "@/components/tables/StyledTableCell";
 import StyledTableRow from "@/components/tables/StyledTableRow";
-import { JobCategory } from "@/enums/JobCategory";
+import { JobCategory } from "@/enums/job_category";
 import type { Job } from "@/features/jobs/types/jobs";
-import { useEventCallback } from "@/hooks/useEventCallback";
-import { useTranslation } from "@/hooks/useTranslation";
+import { useEventCallback } from "@/hooks/use_event_callback";
+import { useTranslation } from "@/hooks/use_translation";
 import MainLayout from "@/layouts/MainLayout/MainLayout";
-import type { PageProps } from "@/types/pageProps";
+import type { PageProps } from "@/types/page_props";
 import { formatStringDate, getJobCategoryColor } from "@/utils/helpers";
 import { Head, router } from "@inertiajs/react";
 import Container from "@mui/material/Container";
@@ -18,7 +18,7 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import { ChangeEvent, Suspense, useMemo, useState } from "react";
-import { Str } from "@shared/helpers/Str";
+import { Str } from "@shared/helpers/str";
 
 const categories = [
     {

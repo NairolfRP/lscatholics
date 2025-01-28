@@ -1,6 +1,6 @@
 import type { HttpContext } from "@adonisjs/core/http";
 import Event from "#models/event";
-import { Str } from "../../shared/helpers/Str.js";
+import { Str } from "../../shared/helpers/str.js";
 import { bind } from "@adonisjs/route-model-binding";
 
 export default class EventController {

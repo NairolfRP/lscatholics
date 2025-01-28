@@ -5,8 +5,8 @@ import {
     HighSchool,
     JobApplicationFormSubmission,
 } from "@/features/applications/types/applications";
-import { useEventCallback } from "@/hooks/useEventCallback";
-import { useTranslation } from "@/hooks/useTranslation";
+import { useEventCallback } from "@/hooks/use_event_callback";
+import { useTranslation } from "@/hooks/use_translation";
 import ApplicantStatement from "@/pages/ApplyJob/Parts/ApplicantStatement";
 import EducationInformation from "@/pages/ApplyJob/Parts/EducationInformation";
 import HRPFields from "@/pages/ApplyJob/Parts/HRPFields";

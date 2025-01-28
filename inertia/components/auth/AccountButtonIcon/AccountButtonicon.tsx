@@ -1,5 +1,5 @@
-import { useEventCallback } from "@/hooks/useEventCallback";
-import { useTranslation } from "@/hooks/useTranslation";
+import { useEventCallback } from "@/hooks/use_event_callback";
+import { useTranslation } from "@/hooks/use_translation";
 import { router, usePage } from "@inertiajs/react";
 import LogoutIcon from "@mui/icons-material/Logout";
 import Settings from "@mui/icons-material/Settings";

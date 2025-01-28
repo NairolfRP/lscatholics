@@ -1,6 +1,6 @@
 import type { AMOUNT_SELECTOR_MODE_TYPE } from "@/features/donate/types/donate_form";
-import { useEventCallback } from "@/hooks/useEventCallback";
-import { useTranslation } from "@/hooks/useTranslation";
+import { useEventCallback } from "@/hooks/use_event_callback";
+import { useTranslation } from "@/hooks/use_translation";
 import { formatPrice } from "@/utils/helpers";
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import Button from "@mui/material/Button";

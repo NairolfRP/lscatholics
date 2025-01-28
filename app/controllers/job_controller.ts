@@ -1,7 +1,7 @@
 import type { HttpContext } from "@adonisjs/core/http";
 
 import Job from "#models/job";
-import { Str } from "../../shared/helpers/Str.js";
+import { Str } from "../../shared/helpers/str.js";
 import { bind } from "@adonisjs/route-model-binding";
 import { dd } from "@adonisjs/core/services/dumper";
 import { z } from "zod";

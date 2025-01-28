@@ -3,7 +3,7 @@ import DonationTabs from "@/features/donate/components/DonationTabs/DonationTabs
 import DonationForm from "@/features/donate/components/Form/DonationForm";
 import RecurringDonationInfo from "@/features/donate/components/Recurring/RecurringDonationInfo";
 import { DONATION_TYPE } from "@/features/donate/constants/donation";
-import { useTranslation } from "@/hooks/useTranslation";
+import { useTranslation } from "@/hooks/use_translation";
 import MainLayout from "@/layouts/MainLayout/MainLayout";
 import { Head } from "@inertiajs/react";
 import Container from "@mui/material/Container";

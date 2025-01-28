@@ -1,8 +1,8 @@
 import DropDownMenu from "@/components/common/DropDownMenu/DropDownMenu";
 import Link from "@/components/common/Link/Link";
 import { HeaderNavItem } from "@/features/navigation/types/navigation";
-import { useEventCallback } from "@/hooks/useEventCallback";
-import { useTranslation } from "@/hooks/useTranslation";
+import { useEventCallback } from "@/hooks/use_event_callback";
+import { useTranslation } from "@/hooks/use_translation";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import Box from "@mui/material/Box";

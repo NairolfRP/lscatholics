@@ -2,7 +2,7 @@ import CategoryButton from "@/components/CategoryButton";
 import { getJobCategoryColor } from "@/utils/helpers";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import { useTranslation } from "@/hooks/useTranslation";
+import { useTranslation } from "@/hooks/use_translation";
 
 interface CategoryFilterProps {
     categories: { id: number; label: string }[];

@@ -1,6 +1,6 @@
 import LoginServicesModal from "@/features/auth/components/LoginServicesModal/LoginServicesModal";
-import { useEventCallback } from "@/hooks/useEventCallback";
-import { useTranslation } from "@/hooks/useTranslation";
+import { useEventCallback } from "@/hooks/use_event_callback";
+import { useTranslation } from "@/hooks/use_translation";
 import LoginIcon from "@mui/icons-material/Login";
 import Button from "@mui/material/Button";
 import * as React from "react";

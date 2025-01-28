@@ -1,4 +1,4 @@
-import NotificationService from "@/services/NotificationService";
+import NotificationService from "@/services/notification_service";
 import type { Notification } from "@/types/notification";
 import { usePage } from "@inertiajs/react";
 import { useEffect } from "react";

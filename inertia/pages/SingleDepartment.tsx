@@ -1,10 +1,10 @@
 import CathedralTowerImg from "@/assets/images/cathedralTower.png";
 import StaffList from "@/features/departments/components/StaffList/StaffList";
-import { departments } from "@/features/departments/constants/departmentsList";
+import { departments } from "@/features/departments/constants/departments_list";
 import { IDepartmentList } from "@/features/departments/types/departments";
-import { useTranslation } from "@/hooks/useTranslation";
+import { useTranslation } from "@/hooks/use_translation";
 import MainLayout from "@/layouts/MainLayout/MainLayout";
-import type { PageProps } from "@/types/pageProps";
+import type { PageProps } from "@/types/page_props";
 import { Head } from "@inertiajs/react";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";

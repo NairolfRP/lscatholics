@@ -1,5 +1,5 @@
-import { IStaffListCard } from "@/features/departments/types/staffList";
-import { useTranslation } from "@/hooks/useTranslation";
+import { IStaffListCard } from "@/features/departments/types/staff_list";
+import { useTranslation } from "@/hooks/use_translation";
 import { CardMedia, CardMediaProps } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";

@@ -1,5 +1,5 @@
 import PageBanner from "@/assets/images/homebanner.png";
-import { useTranslation } from "@/hooks/useTranslation";
+import { useTranslation } from "@/hooks/use_translation";
 import MainLayout from "@/layouts/MainLayout/MainLayout";
 import { Head } from "@inertiajs/react";
 import ChurchIcon from "@mui/icons-material/Church";

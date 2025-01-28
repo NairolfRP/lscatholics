@@ -1,8 +1,8 @@
 import EventsBanner from "@/assets/images/eventsbanner.png";
 import EventCard from "@/features/events/components/EventCard/EventCard";
 import { EventArticle } from "@/features/events/types/events";
-import { useEventCallback } from "@/hooks/useEventCallback";
-import { useTranslation } from "@/hooks/useTranslation";
+import { useEventCallback } from "@/hooks/use_event_callback";
+import { useTranslation } from "@/hooks/use_translation";
 import MainLayout from "@/layouts/MainLayout/MainLayout";
 import { Head, router } from "@inertiajs/react";
 import { Pagination } from "@mui/material";

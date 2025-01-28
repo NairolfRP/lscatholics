@@ -1,9 +1,9 @@
 import BackButton from "@/components/common/BackButton/BackButton";
 import type { Job } from "@/features/jobs/types/jobs";
-import { useEventCallback } from "@/hooks/useEventCallback";
-import { useTranslation } from "@/hooks/useTranslation";
+import { useEventCallback } from "@/hooks/use_event_callback";
+import { useTranslation } from "@/hooks/use_translation";
 import MainLayout from "@/layouts/MainLayout/MainLayout";
-import type { PageProps } from "@/types/pageProps";
+import type { PageProps } from "@/types/page_props";
 import { formatStringDate, getJobCategoryColor } from "@/utils/helpers";
 import { Head, router } from "@inertiajs/react";
 import CloseIcon from "@mui/icons-material/Close";

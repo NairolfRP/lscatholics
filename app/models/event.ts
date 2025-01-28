@@ -1,6 +1,6 @@
 import { DateTime } from "luxon";
 import { BaseModel, column } from "@adonisjs/lucid/orm";
-import { Str } from "../../shared/helpers/Str.js";
+import { Str } from "../../shared/helpers/str.js";
 
 export default class Event extends BaseModel {
     static table = "events";

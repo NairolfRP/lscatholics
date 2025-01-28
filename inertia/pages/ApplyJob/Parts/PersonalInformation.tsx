@@ -1,15 +1,15 @@
 import FormDivider from "@/components/common/FormDivider/FormDivider";
 import YesNoRadioForm from "@/components/common/YesNoRadioForm/YesNoRadioForm";
 import type { JobApplicationFormSubmission } from "@/features/applications/types/applications";
-import { useEventCallback } from "@/hooks/useEventCallback";
-import { useTranslation } from "@/hooks/useTranslation";
+import { useEventCallback } from "@/hooks/use_event_callback";
+import { useTranslation } from "@/hooks/use_translation";
 import IBANField from "@/pages/ApplyJob/Parts/IBANField";
 import {
     SelectFieldChangeEventType,
     TextFieldChangeEvent,
     TextFieldChangeEventType,
 } from "@/types/forms";
-import { gta5Areas } from "@/utils/gta5Areas";
+import { gta5Areas } from "@/utils/gta5_areas";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import ContactPhoneIcon from "@mui/icons-material/ContactPhone";
 import HomeIcon from "@mui/icons-material/Home";

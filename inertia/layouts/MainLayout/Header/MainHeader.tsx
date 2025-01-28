@@ -2,7 +2,7 @@ import AccountButtonIcon from "@/components/auth/AccountButtonIcon/AccountButton
 import LoginServicesButtonsWithModal from "@/features/auth/components/LoginServicesButtonWithModal/LoginServicesButtonWithModal";
 import AppLogo from "@/layouts/MainLayout/Header/components/AppLogo/AppLogo";
 import DonateButton from "@/layouts/MainLayout/Header/components/Navigation/components/DonateButton/DonateButton";
-import { menuItems } from "@/layouts/MainLayout/Header/components/Navigation/config/menuItems";
+import { menuItems } from "@/layouts/MainLayout/Header/components/Navigation/config/menu_items";
 import DrawerNavigation from "@/layouts/MainLayout/Header/components/Navigation/DrawerNavigation";
 import Navigation from "@/layouts/MainLayout/Header/components/Navigation/Navigation";
 import AppBar from "@mui/material/AppBar";

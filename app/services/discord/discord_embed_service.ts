@@ -4,7 +4,7 @@ import type {
     DiscordEmbedFields,
     DiscordEmbedFooter,
     DiscordEmbedImage,
-} from "../../interfaces/DiscordEmbed.d.ts";
+} from "../../interfaces/discord_embed.d.ts";
 
 export class DiscordEmbedService implements DiscordEmbed {
     readonly title: string;

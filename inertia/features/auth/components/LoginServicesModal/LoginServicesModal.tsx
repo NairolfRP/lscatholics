@@ -1,5 +1,5 @@
 import LoginServiceButtons from "@/features/auth/components/LoginServiceButtons/LoginServiceButtons";
-import { useTranslation } from "@/hooks/useTranslation";
+import { useTranslation } from "@/hooks/use_translation";
 import Box from "@mui/material/Box";
 //import Modal from "@mui/material/Modal";
 import Popover from "@mui/material/Popover";

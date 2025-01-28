@@ -1,7 +1,7 @@
 import { PhoneInput } from "@/components/common/PhoneInput/PhoneInput";
 import type { DonatePropsForm } from "@/features/donate/types/donate_form";
-import { useEventCallback } from "@/hooks/useEventCallback";
-import { useTranslation } from "@/hooks/useTranslation";
+import { useEventCallback } from "@/hooks/use_event_callback";
+import { useTranslation } from "@/hooks/use_translation";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import BusinessIcon from "@mui/icons-material/Business";
 import CakeIcon from "@mui/icons-material/Cake";

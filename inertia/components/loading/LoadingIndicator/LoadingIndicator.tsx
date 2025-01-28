@@ -1,5 +1,5 @@
 import LoadingScreen from "@/components/loading/LoadingScreen/LoadingScreen";
-import { useIsomorphicLayoutEffect } from "@/hooks/useIsomorphicLayoutEffect";
+import { useIsomorphicLayoutEffect } from "@/hooks/use_isomorphic_layout_effect";
 import { router } from "@inertiajs/react";
 import React from "react";
 
