@@ -1,10 +1,13 @@
 ## Description
+
 Please describe the issue or feature clearly and concisely.
 
 ## Reproduction Steps
+
 1. ...
 2. ...
 3. ...
 
 ## What behaviour is expected?
+
 ...
