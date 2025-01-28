@@ -10,28 +10,25 @@ export default function RecurringDonationInfo() {
 
     return (
         <>
-            <Typography component="p">
+            <Typography component="p" sx={{ mb: 3 }}>
                 {/* eslint-disable-next-line react/jsx-key */}
                 <Trans
                     i18nKey="recurring_donation_paragraph"
                     values={{}}
-                    components={[
-                        <strong></strong>,
-                        <Link target="_blank"></Link>,
-                        <ul></ul>,
-                        <li></li>,
-                    ]}
+                    components={[<strong></strong>, <Link target="_blank"></Link>]}
                 />
             </Typography>
-            <ul>
+            <Typography component="ul">
                 {RECURRING_FIELDS.map((key) => (
-                    <li key={key}>
+                    <Typography key={key} component="li">
                         <strong>{t(`recurring_donation_${key}`)} </strong>:{" "}
                         {t(`recurring_donation_${key}_description`)}
-                    </li>
+                    </Typography>
                 ))}
-            </ul>
-            <Typography component="p">{t("recurring_donation_confirmation_paragraph")}</Typography>
+            </Typography>
+            <Typography component="p" sx={{ mt: 3 }}>
+                {t("recurring_donation_confirmation_paragraph")}
+            </Typography>
         </>
     );
 }
