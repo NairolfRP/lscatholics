@@ -22,10 +22,10 @@ const inertiaConfig = defineConfig({
             return {
                 user: (await auth.check())
                     ? {
-                          id: auth.user!.id,
-                          name: auth.user!.name,
-                          avatarURL: social?.avatarURL,
-                          token: social?.token,
+                          id: auth.user!.id as number,
+                          name: auth.user!.name as string,
+                          avatarURL: social?.avatarURL as string,
+                          token: social?.token as string,
                       }
                     : null,
             };

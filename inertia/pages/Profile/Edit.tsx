@@ -16,13 +16,15 @@ const styles = {
 export default function Edit({ auth }: Partial<PageProps>) {
     const { t } = useTranslation();
 
+    const user = auth!.user!;
+
     return (
         <MainLayout bannerTitle={t("settings")}>
-            <Head title={auth.user.name} />
+            <Head title={user.name} />
 
             <Container>
                 <Box sx={styles}>
-                    <DeleteUserForm user={auth.user} />
+                    <DeleteUserForm user={user} />
                 </Box>
             </Container>
         </MainLayout>
