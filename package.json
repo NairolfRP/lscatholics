@@ -2,8 +2,23 @@
   "name": "@lscatholics/app",
   "version": "0.0.0",
   "private": true,
-  "type": "module",
+  "description": "A web application for a Catholic Church roleplay project",
+  "homepage": "https://github.com/NairolfRP/lscatholics#readme",
+  "bugs": "https://github.com/NairolfRP/lscatholics/issues",
   "license": "GPL-3.0-only",
+  "author": {
+      "name": "NairolfRP",
+      "url": "https://github.com/NairolfRP"
+  },
+  "funding": {
+      "type": "patreon",
+      "url": "https://patreon.com/NairolfRP"
+  },
+  "repository": {
+      "type": "git",
+      "url": "git+https://github.com/NairolfRP/lscatholics.git"
+  },
+  "type": "module",
   "scripts": {
     "start": "node bin/server.js",
     "build": "node ace build",
