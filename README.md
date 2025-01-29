@@ -16,6 +16,7 @@ This project is built with the following technologies:
 ## 📦 Installation
 
 ### Prerequisites
+
 - [Node.js](https://nodejs.org) (LTS recommended)
 - PostgreSQL or SQLite (dev: SQLite recommended for lightweight database - prod: PostgreSQL)
 - [Pnpm](https://pnpm.io) (package manager)
@@ -23,25 +24,25 @@ This project is built with the following technologies:
 ### Setup
 
 1. Clone the repository:
-   ```sh
-   git clone https://github.com/NairolfRP/lscatholics.git
-   cd lscatholics
-   ```
+    ```sh
+    git clone https://github.com/NairolfRP/lscatholics.git
+    cd lscatholics
+    ```
 2. Install dependencies:
-   ```sh
-   pnpm install
-   ```
+    ```sh
+    pnpm install
+    ```
 3. Configure environment variables:
     - Copy `.env.example` to `.env`
     - Set up database credentials (not required with SQLite) and other necessary configurations
 4. Run database migrations:
-   ```sh
-   node ace migration:run
-   ```
+    ```sh
+    node ace migration:run
+    ```
 5. Start the development server:
-   ```sh
-   pnpm dev
-   ```
+    ```sh
+    pnpm dev
+    ```
 
 ## 🛠 Development
 
@@ -50,7 +51,7 @@ This project is built with the following technologies:
 
 ## 🔗 Links
 
-- **Hosted application**: *Coming soon*
+- **Hosted application**: _Coming soon_
 - **GTA World**: [https://gta.world](https://gta.world)
 - **Project Repository**: [https://github.com/NairolfRP/lscatholics](https://github.com/NairolfRP/lscatholics)
 
@@ -61,4 +62,3 @@ This project is licensed under the GPL v3.0 License - see the [LICENSE](LICENSE)
 ---
 
 Feel free to contribute and help improve the roleplay experience! ✝️
-
