@@ -42,12 +42,16 @@ export default function MainFooter() {
             component="footer"
             id="app-footer"
             sx={{
-                width: "100vw",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+                width: "100%",
                 marginTop: "auto",
                 borderTop: 10,
                 borderColor: "secondary.main",
-                pt: "1.8rem",
-                pb: "1.8rem",
+                px: 3,
+                py: "1.8rem",
             }}
         >
             <Container maxWidth="xl">
