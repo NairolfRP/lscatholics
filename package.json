@@ -52,7 +52,7 @@
     "@adonisjs/assembler": "^7.8.2",
     "@adonisjs/eslint-config": "2.0.0-beta.7",
     "@adonisjs/tsconfig": "^1.4.0",
-    "@inertiajs/core": "2.0.0",
+    "@inertiajs/core": "2.0.3",
     "@japa/api-client": "^3.0.3",
     "@japa/assert": "^4.0.1",
     "@japa/plugin-adonisjs": "^4.0.0",
@@ -116,16 +116,16 @@
     ]
   },
   "overrides": {
-    "@inertiajs/core": "2.0.0",
+    "@inertiajs/core": "2.0.3",
     "strtok3": "8.0.1"
   },
   "resolutions": {
-    "@inertiajs/core": "2.0.0",
+    "@inertiajs/core": "2.0.3",
     "strtok3": "8.0.1"
   },
   "pnpm": {
     "overrides": {
-      "@inertiajs/core": "2.0.0",
+      "@inertiajs/core": "2.0.3",
       "strtok3": "8.0.1"
     }
   }
