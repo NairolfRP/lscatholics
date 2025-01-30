@@ -6,6 +6,7 @@ import MainPageBanner, {
 } from "@/layouts/MainLayout/PageBanner/MainPageBanner";
 import Box from "@mui/material/Box";
 import * as React from "react";
+import ScrollToTop from "@/components/ScrollToTop";
 
 interface MainLayoutProps {
     bannerImg?: MainPageBannerProps["image"];
@@ -32,6 +33,7 @@ export default function MainLayout({
                 {children}
             </Box>
             <MainFooter />
+            <ScrollToTop />
         </React.Fragment>
     );
 }
