@@ -1,0 +1,64 @@
+name: Deploy
+
+on:
+    workflow_run:
+        workflows: ["Test"]
+        types:
+            - completed
+
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+        if: github.ref == 'refs/heads/prod' &&
+            github.event.workflow_run.conclusion == 'success'
+
+        steps:
+            - name: Check out repository
+              uses: actions/checkout@v4
+              with:
+                fetch-depth: 1
+
+            - name: Setup .env
+              id: env-setup
+              run: |
+                echo "${{ secrets.ENV_FILE }}" | base64 --decode > .env
+
+                ENV_VARS=$(cat .env | grep -v '^#' | grep -v '^\s*$' | sed 's/\(.*\)=\(.*\)/{"key":"\1","value":"\2","isSecret":true}/' | jq -s .)
+                echo "env_vars=$ENV_VARS" >> $GITHUB_OUTPUT
+
+            - name: Update environment variables
+              if: steps.env-setup.outputs.env_vars != '[]'
+              run: |
+                response=$(curl -s -w "\n%{http_code}" -X PUT \
+                  "https://api.render.com/v1/services/${{ secrets.RENDER_SERVICE_ID }}/env-vars" \
+                  -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
+                  -H "Accept: application/json" \
+                  -H "Content-Type: application/json" \
+                  -d "${{ steps.env-setup.outputs.env_vars }}")
+
+                status_code=$(echo "$response" | tail -n1)
+                response_body=$(echo "$response" | sed '$d')
+
+                if [ "$status_code" -ne 200 ]; then
+                  echo "Failed to update environment variables. Status: $status_code"
+                  echo "Response: $response_body"
+                  exit 1
+                fi
+
+              env:
+                  RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
+                  RENDER_SERVICE_ID: ${{ secrets.RENDER_SERVICE_ID }}
+
+            - name: Trigger deployment
+              id: deploy
+              run: |
+                  response=$(curl -s -w "\n%{http_code}" "${{ secrets.RENDER_DEPLOY_HOOK_URL }}")
+                  status_code=$(echo "$response" | tail -n1)
+                  response_body=$(echo "$response" | sed '$d')
+                  if [ "$status_code" -ne 200 ]; then
+                    echo "Deployment trigger failed. Status: $status_code"
+                    echo "Response: $response_body"
+                    exit 1
+                  fi
+
+                  echo "Deployment triggered successfully"
