@@ -10,6 +10,7 @@ import Grid from "@mui/material/Grid2";
 import IconButton from "@mui/material/IconButton";
 import List from "@mui/material/List";
 import Typography from "@mui/material/Typography";
+import GitHubIcon from "@mui/icons-material/GitHub";
 
 const FooterH2 = ({ children, ...others }: React.ComponentPropsWithoutRef<typeof Typography>) => {
     return (
@@ -168,6 +169,21 @@ export default function MainFooter() {
                         />{" "}
                         ))
                     </Alert>
+                </Box>
+                <Box
+                    sx={{
+                        display: "flex",
+                        justifyContent: "flex-end",
+                    }}
+                >
+                    <IconButton
+                        color="inherit"
+                        href="https://github.com/NairolfRP/lscatholics"
+                        target="_blank"
+                        sx={(theme) => ({ mt: theme.spacing(2) })}
+                    >
+                        <GitHubIcon />
+                    </IconButton>
                 </Box>
             </Container>
         </Box>
