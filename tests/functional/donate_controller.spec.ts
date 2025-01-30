@@ -3,15 +3,12 @@ import DonateController from "#controllers/donate_controller";
 import { PaymentIntent } from "#services/payment/interface";
 import { HttpContextFactory } from "@adonisjs/core/factories/http";
 import i18nManager from "@adonisjs/i18n/services/main";
+import nock from "nock";
 
-test.group("DonateController", (/*group*/) => {
-    /*let paymentService: FleecaPaymentService;
-    let controller: DonateController;
-
+test.group("DonateController", (group) => {
     group.each.setup(() => {
-        paymentService = new FleecaPaymentService();
-        controller = new DonateController(paymentService);
-    });*/
+        nock.cleanAll();
+    });
 
     test("show renders Donate page", async ({ client }) => {
         const response = await client.get("/donate").withInertia();
@@ -19,7 +16,14 @@ test.group("DonateController", (/*group*/) => {
         response.assertInertiaComponent("Donate/Donate");
     });
 
-    test("processes donation and sends Discord notifications", async () => {
+    test("processes donation and sends Discord notifications", async ({ assert }) => {
+        const privateDiscordWebhookMock = nock("https://discord.com")
+            .post("/api/webhooks/mock-private-id/mock-private-token")
+            .reply(200);
+        const publicDiscordWebhookMock = nock("https://discord.com")
+            .post("/api/webhooks/mock-public-id/mock-public-token")
+            .reply(200);
+
         const donationIntent: PaymentIntent<"donation"> = {
             type: "donation",
             price: 1000000,
@@ -47,5 +51,12 @@ test.group("DonateController", (/*group*/) => {
 
         // @ts-expect-error Don't need more properties for this test
         await DonateController.processDonation({ i18n: { t: newT } }, donationIntent);
+
+        assert.isTrue(privateDiscordWebhookMock.isDone());
+        assert.isTrue(publicDiscordWebhookMock.isDone());
+    });
+
+    group.each.teardown(() => {
+        nock.cleanAll();
     });
 });
