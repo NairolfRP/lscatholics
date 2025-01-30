@@ -10,8 +10,11 @@ on:
 jobs:
     deploy:
         runs-on: ubuntu-latest
-        if: github.ref == 'refs/heads/prod' &&
-            github.event.workflow_run.conclusion == 'success'
+        if: |
+           github.ref == 'refs/heads/prod' && (
+             github.event_name == 'workflow_dispatch' ||
+             github.event.workflow_run.conclusion == 'success'
+           )
 
         steps:
             - name: Check out repository
