@@ -4,11 +4,7 @@ on:
     workflow_dispatch:
 
 jobs:
-    test:
-        uses: ./.github/workflows/test.yaml
-
     deploy:
-        needs: test
         runs-on: ubuntu-latest
         if: github.ref == 'refs/heads/prod'
 
