@@ -8,82 +8,103 @@ on:
             - completed
 
 jobs:
+    test:
+        uses: ./.github/workflows/test.yaml
+
     deploy:
+        needs: test
         runs-on: ubuntu-latest
-        if: |
-           github.ref == 'refs/heads/prod' && (
-             github.event_name == 'workflow_dispatch' ||
-             github.event.workflow_run.conclusion == 'success'
-           )
+        if: github.ref == 'refs/heads/prod'
 
         steps:
             - name: Check out repository
               uses: actions/checkout@v4
               with:
-                fetch-depth: 1
+                  fetch-depth: 1
 
-            - name: Setup .env
+            - name: Setup environment
               id: env-setup
               run: |
-                if ! echo "${{ secrets.ENV_FILE }}" | base64 -d > .env 2>/dev/null; then
-                  echo "Error: Invalid base64 in ENV_FILE secret"
-                  exit 1
-                fi
+                  # Create temporary file
+                  TEMP_ENV=$(mktemp)
+                  echo "${{ secrets.ENV_FILE }}" > "$TEMP_ENV"
 
-                if [ ! -s .env ]; then
-                  echo "Warning: .env file is empty"
-                  echo "env_vars=[]" >> $GITHUB_OUTPUT
-                  exit 0
-                fi
+                  # Check if file is empty
+                  if [ ! -s "$TEMP_ENV" ]; then
+                    echo "Warning: No environment variables found"
+                    echo "env_vars=[]" >> $GITHUB_OUTPUT
+                    rm -f "$TEMP_ENV"
+                    exit 0
+                  }
 
-                ENV_VARS=$(while IFS= read -r line || [ -n "$line" ]; do
-                  [[ -z "${line}" || "${line}" =~ ^[[:space:]]*# ]] && continue
+                  # Process valid environment variables
+                  JSON_ARRAY="["
+                  FIRST=true
 
-                  key=$(echo "$line" | cut -d'=' -f1)
-                  value=$(echo "$line" | cut -d'=' -f2-)
+                  while IFS='=' read -r key value || [ -n "$key" ]; do
+                    # Skip empty lines and comments
+                    [[ -z "$key" || "$key" =~ ^[[:space:]]*# ]] && continue
 
-                  [[ -z "${key}" || -z "${value}" ]] && continue
+                    # Skip if no value
+                    [ -z "$value" ] && continue
 
-                  echo "{\"key\":\"${key}\",\"value\":\"${value}\",\"isSecret\":true}"
-                done < .env | jq -s .)
+                    # Clean the key and value
+                    key=$(echo "$key" | xargs)
+                    value=$(echo "$value" | xargs)
 
-                if [ $? -ne 0 ]; then
-                  echo "Error: Failed to parse environment variables"
-                  exit 1
-                fi
+                    # Skip if key is empty after cleaning
+                    [ -z "$key" ] && continue
 
-                echo "env_vars=$ENV_VARS" >> $GITHUB_OUTPUT
+                    # Add comma if not first entry
+                    if [ "$FIRST" = true ]; then
+                      FIRST=false
+                    else
+                      JSON_ARRAY="${JSON_ARRAY},"
+                    fi
 
+                    # Add the entry to JSON array
+                    JSON_ARRAY="${JSON_ARRAY}{\"key\":\"${key}\",\"value\":\"${value}\",\"isSecret\":true}"
+                  done < "$TEMP_ENV"
 
-            - name: Update environment variables
+                  # Close the JSON array
+                  JSON_ARRAY="${JSON_ARRAY}]"
+
+                  # Clean up
+                  rm -f "$TEMP_ENV"
+
+                  # Set output
+                  echo "env_vars=$JSON_ARRAY" >> $GITHUB_OUTPUT
+
+            - name: Update Render environment variables
               if: steps.env-setup.outputs.env_vars != '[]'
               run: |
-                response=$(curl -s -w "\n%{http_code}" -X PUT \
-                  "https://api.render.com/v1/services/${{ secrets.RENDER_SERVICE_ID }}/env-vars" \
-                  -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
-                  -H "Accept: application/json" \
-                  -H "Content-Type: application/json" \
-                  -d "${{ steps.env-setup.outputs.env_vars }}")
+                  response=$(curl -s -w "\n%{http_code}" -X PUT \
+                    "https://api.render.com/v1/services/${{ secrets.RENDER_SERVICE_ID }}/env-vars" \
+                    -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
+                    -H "Accept: application/json" \
+                    -H "Content-Type: application/json" \
+                    -d "${{ steps.env-setup.outputs.env_vars }}")
 
-                status_code=$(echo "$response" | tail -n1)
-                response_body=$(echo "$response" | sed '$d')
+                  status_code=$(echo "$response" | tail -n1)
+                  response_body=$(echo "$response" | sed '$d')
 
-                if [ "$status_code" -ne 200 ]; then
-                  echo "Failed to update environment variables. Status: $status_code"
-                  echo "Response: $response_body"
-                  exit 1
-                fi
-
+                  if [ "$status_code" -ne 200 ]; then
+                    echo "Failed to update environment variables. Status: $status_code"
+                    echo "Response: $response_body"
+                    exit 1
+                  fi
               env:
                   RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
                   RENDER_SERVICE_ID: ${{ secrets.RENDER_SERVICE_ID }}
 
-            - name: Trigger deployment
+            - name: Trigger Render deployment
               id: deploy
               run: |
                   response=$(curl -s -w "\n%{http_code}" "${{ secrets.RENDER_DEPLOY_HOOK_URL }}")
+
                   status_code=$(echo "$response" | tail -n1)
                   response_body=$(echo "$response" | sed '$d')
+
                   if [ "$status_code" -ne 200 ]; then
                     echo "Deployment trigger failed. Status: $status_code"
                     echo "Response: $response_body"
