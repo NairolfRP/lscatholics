@@ -1,4 +1,4 @@
-name: Deploy
+name: Deploy to Render
 
 on:
     workflow_dispatch:
@@ -27,45 +27,50 @@ jobs:
                     echo "env_vars=[]" >> $GITHUB_OUTPUT
                     rm -f "$TEMP_ENV"
                     exit 0
-                  }
+                  fi
 
-                  # Process valid environment variables
-                  JSON_ARRAY="["
-                  FIRST=true
+                  # Process valid environment variables using Python for better handling
+                  python3 - <<'EOF' > env_vars.json
+                  import json
+                  import re
 
-                  while IFS='=' read -r key value || [ -n "$key" ]; do
-                    # Skip empty lines and comments
-                    [[ -z "$key" || "$key" =~ ^[[:space:]]*# ]] && continue
+                  def process_env_file(filepath):
+                      env_vars = []
+                      with open(filepath, 'r') as f:
+                          for line in f:
+                              line = line.strip()
+                              if not line or line.startswith('#'):
+                                  continue
 
-                    # Skip if no value
-                    [ -z "$value" ] && continue
+                              if '=' not in line:
+                                  continue
 
-                    # Clean the key and value
-                    key=$(echo "$key" | xargs)
-                    value=$(echo "$value" | xargs)
+                              key, value = line.split('=', 1)
+                              key = key.strip()
+                              value = value.strip()
 
-                    # Skip if key is empty after cleaning
-                    [ -z "$key" ] && continue
+                              # Remove surrounding quotes if they exist
+                              if value.startswith('"') and value.endswith('"'):
+                                  value = value[1:-1]
 
-                    # Add comma if not first entry
-                    if [ "$FIRST" = true ]; then
-                      FIRST=false
-                    else
-                      JSON_ARRAY="${JSON_ARRAY},"
-                    fi
+                              if key and value:
+                                  env_vars.append({
+                                      "key": key,
+                                      "value": value,
+                                      "isSecret": True
+                                  })
 
-                    # Add the entry to JSON array
-                    JSON_ARRAY="${JSON_ARRAY}{\"key\":\"${key}\",\"value\":\"${value}\",\"isSecret\":true}"
-                  done < "$TEMP_ENV"
+                      return json.dumps(env_vars)
 
-                  # Close the JSON array
-                  JSON_ARRAY="${JSON_ARRAY}]"
+                  print(process_env_file("$TEMP_ENV"))
+                  EOF
 
-                  # Clean up
+                  # Clean up temp file
                   rm -f "$TEMP_ENV"
 
                   # Set output
-                  echo "env_vars=$JSON_ARRAY" >> $GITHUB_OUTPUT
+                  echo "env_vars=$(cat env_vars.json)" >> $GITHUB_OUTPUT
+                  rm -f env_vars.json
 
             - name: Update Render environment variables
               if: steps.env-setup.outputs.env_vars != '[]'
