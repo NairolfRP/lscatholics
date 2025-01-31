@@ -1,13 +1,7 @@
 import env from "#start/env";
-import app from "@adonisjs/core/services/app";
 import { defineConfig } from "@adonisjs/lucid";
 
-const migrations = {
-    naturalSort: true,
-    paths: ["database/migrations"],
-};
-
-const prod = defineConfig({
+const dbConfig = defineConfig({
     connection: "postgres",
     connections: {
         postgres: {
@@ -18,9 +12,6 @@ const prod = defineConfig({
                 user: env.get("DB_USER"),
                 password: env.get("DB_PASSWORD"),
                 database: env.get("DB_DATABASE"),
-                ssl: {
-                    rejectUnauthorized: true,
-                },
             },
             migrations: {
                 naturalSort: true,
@@ -29,21 +20,5 @@ const prod = defineConfig({
         },
     },
 });
-
-const dev = defineConfig({
-    connection: "sqlite",
-    connections: {
-        sqlite: {
-            client: "better-sqlite3",
-            connection: {
-                filename: app.tmpPath("db.sqlite3"),
-            },
-            useNullAsDefault: true,
-            migrations,
-        },
-    },
-});
-
-const dbConfig = env.get("NODE_ENV") === "production" ? prod : dev;
 
 export default dbConfig;

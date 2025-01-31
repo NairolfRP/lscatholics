@@ -7,7 +7,7 @@ Thank you for your interest in contributing to the **Los Santos Catholics Rolepl
 Before getting started, make sure you have:
 
 - Node.js (LTS version recommended)
-- SQLite or PostgreSQL installed and configured
+- PostgreSQL installed and configured
 - Pnpm installed globally
 - Familiarity with the following tools and conventions:
     - **TypeScript** for type-safe code
@@ -44,7 +44,7 @@ Before getting started, make sure you have:
         ```sh
         cp .env.example .env
         ```
-    - Update the `.env` file with your database credentials (not required for SQLite) and other required settings.
+    - Update the `.env` file with your database credentials and other required settings.
 
 5. **Run Database Migrations**
 
