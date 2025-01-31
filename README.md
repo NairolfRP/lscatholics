@@ -18,7 +18,7 @@ This project is built with the following technologies:
 ### Prerequisites
 
 - [Node.js](https://nodejs.org) (LTS recommended)
-- PostgreSQL or SQLite (dev: SQLite recommended for lightweight database - prod: PostgreSQL)
+- PostgreSQL
 - [Pnpm](https://pnpm.io) (package manager)
 
 ### Setup
@@ -34,7 +34,7 @@ This project is built with the following technologies:
     ```
 3. Configure environment variables:
     - Copy `.env.example` to `.env`
-    - Set up database credentials (not required with SQLite) and other necessary configurations
+    - Set up database credentials and other necessary configurations
 4. Run database migrations:
     ```sh
     node ace migration:run

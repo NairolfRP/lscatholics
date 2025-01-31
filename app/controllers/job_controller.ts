@@ -5,6 +5,7 @@ import { Str } from "../../shared/helpers/str.js";
 import { bind } from "@adonisjs/route-model-binding";
 import { dd } from "@adonisjs/core/services/dumper";
 import { z } from "zod";
+import { formatTimestamp } from "../helpers/date_time.js";
 
 export default class JobController {
     private isExpiredJob(expiration: Date): boolean {
@@ -40,7 +41,7 @@ export default class JobController {
     public async showAll({ inertia }: HttpContext) {
         const jobs = await Job.query()
             .where("is_open", true)
-            .where("expiration", ">=", Date.now())
+            .where("expiration", ">=", formatTimestamp(Date.now()))
             .orderBy("created_at")
             .select(["id", "title", "category", "organization", "location", "created_at"]);
 
