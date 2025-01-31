@@ -17,60 +17,13 @@ jobs:
             - name: Setup environment
               id: env-setup
               run: |
-                  # Create temporary file
-                  TEMP_ENV=$(mktemp)
-                  echo "${{ secrets.ENV_FILE }}" > "$TEMP_ENV"
-
-                  # Check if file is empty
-                  if [ ! -s "$TEMP_ENV" ]; then
-                    echo "Warning: No environment variables found"
-                    echo "env_vars=[]" >> $GITHUB_OUTPUT
-                    rm -f "$TEMP_ENV"
-                    exit 0
-                  fi
-
-                  # Process valid environment variables using Python for better handling
-                  python3 - <<'EOF' > env_vars.json
-                  import json
-                  import re
-
-                  def process_env_file(filepath):
-                      env_vars = []
-                      with open(filepath, 'r') as f:
-                          for line in f:
-                              line = line.strip()
-                              if not line or line.startswith('#'):
-                                  continue
-
-                              if '=' not in line:
-                                  continue
-
-                              key, value = line.split('=', 1)
-                              key = key.strip()
-                              value = value.strip()
-
-                              # Remove surrounding quotes if they exist
-                              if value.startswith('"') and value.endswith('"'):
-                                  value = value[1:-1]
-
-                              if key and value:
-                                  env_vars.append({
-                                      "key": key,
-                                      "value": value,
-                                      "isSecret": True
-                                  })
-
-                      return json.dumps(env_vars)
-
-                  print(process_env_file("$TEMP_ENV"))
-                  EOF
-
-                  # Clean up temp file
-                  rm -f "$TEMP_ENV"
-
-                  # Set output
-                  echo "env_vars=$(cat env_vars.json)" >> $GITHUB_OUTPUT
-                  rm -f env_vars.json
+                  echo "env_vars=[$(echo "${{ secrets.ENV_FILE }}" | \
+                    grep -v '^#' | \
+                    grep -v '^\s*$' | \
+                    sed 's/\(.*\)=\(.*\)/{"key":"\1","value":\2,"isSecret":true}/' | \
+                    tr '\n' ',' | \
+                    sed 's/,$//'
+                  )]" >> $GITHUB_OUTPUT
 
             - name: Update Render environment variables
               if: steps.env-setup.outputs.env_vars != '[]'
