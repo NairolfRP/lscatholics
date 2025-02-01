@@ -1,5 +1,5 @@
 import { defineConfig } from "@adonisjs/inertia";
-import type { InferSharedProps, PageProps } from "@adonisjs/inertia/types";
+import type { InferSharedProps } from "@adonisjs/inertia/types";
 import i18nManager from "@adonisjs/i18n/services/main";
 import env from "#start/env";
 
@@ -48,5 +48,5 @@ const inertiaConfig = defineConfig({
 export default inertiaConfig;
 
 declare module "@adonisjs/inertia/types" {
-    export interface SharedProps extends InferSharedProps<typeof inertiaConfig>, PageProps {}
+    export interface SharedProps extends InferSharedProps<typeof inertiaConfig> /*, PageProps*/ {}
 }
