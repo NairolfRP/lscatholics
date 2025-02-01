@@ -4,7 +4,7 @@ import { Head } from "@inertiajs/react";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 
-export default function ErrorPage({ error }: { error: HttpError }) {
+export default function ErrorPage({ error }: { error: Omit<HttpError, "message"> }) {
     const title = {
         503: "503: Service Unavailable",
         500: "500: Server Error",
