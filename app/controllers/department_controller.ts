@@ -1,7 +1,7 @@
 import type { HttpContext } from "@adonisjs/core/http";
 
 export default class DepartmentController {
-    private availableDepartments: string[] = [
+    private readonly availableDepartments: string[] = [
         "archbishop-office",
         "catholic-charities",
         "chancellor",
@@ -13,7 +13,7 @@ export default class DepartmentController {
         "ecclesiastical-court",
         "moderator-of-the-curia",
         "sanctus-news",
-    ] as const;
+    ];
 
     public show({ params, response, inertia }: HttpContext) {
         const { department } = params as { department: string };
