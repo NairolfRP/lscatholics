@@ -179,6 +179,17 @@
         "success_donation_notification": "Successful donation! Thank you so much!",
 
         "age": "Age",
-        "organization_name": "Organization Name"
+        "organization_name": "Organization Name",
+
+        "profile": {
+            "connections": "Connections",
+            "main": "MAIN :",
+            "unlink": "Unlink {provider} ({username})",
+            "set_as_main": "Set as Main",
+            "link_discord": "Link Discord",
+            "link_facebrowser": "Link Facebrowser",
+            "unlink_confirmation": "Do you really want to unlink this provider?",
+            "set_as_main_confirmation": "Do you really want to set this provider as main?"
+        }
     }
 }

@@ -103,6 +103,16 @@ router
         router.get("/:provider/redirect", [AuthController, "redirect"]);
         router.get("/:provider/callback", [AuthController, "callback"]);
 
+        router
+            .delete("/:provider/unlink", [AuthController, "unlink"])
+            .where("provider", "^[a-zA-Z]+$")
+            .use(middleware.auth());
+
+        router
+            .patch("/:provider/set-main", [AuthController, "setAsMain"])
+            .where("provider", "^[a-zA-Z]+$")
+            .use(middleware.auth());
+
         router.post("/logout", [AuthController, "logout"]).use(middleware.auth());
     })
     .prefix("/api/auth");

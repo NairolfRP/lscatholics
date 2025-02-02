@@ -18,16 +18,16 @@ const inertiaConfig = defineConfig({
         fallbackLocale: (ctx) =>
             ctx.inertia.always(() => ctx.i18n?.fallbackLocale || env.get("FALLBACK_LOCALE")),
         auth: async ({ session, auth }) => {
-            const social = session?.get("user_social_info", null);
+            if (!(await auth.check())) return { user: null };
+
+            const social = session.get("user_social_info", {});
+
             return {
-                user: (await auth.check())
-                    ? {
-                          id: auth.user!.id as number,
-                          name: auth.user!.name as string,
-                          avatarURL: social?.avatarURL as string,
-                          token: social?.token as string,
-                      }
-                    : null,
+                user: {
+                    id: auth.user!.id as number,
+                    name: (social?.mainProvider.nickname || social?.mainProvider.name) as string,
+                    avatarURL: social?.mainProvider.avatarURL as string,
+                },
             };
         },
         notification: (ctx) =>

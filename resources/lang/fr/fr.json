@@ -280,6 +280,17 @@
         "success_donation_notification": "Don effectué avec succès ! Merci !",
 
         "age": "Âge",
-        "organization_name": "Nom de l'organisation"
+        "organization_name": "Nom de l'organisation",
+
+        "profile": {
+            "connections": "Connexions",
+            "main": "PRINCIPAL :",
+            "unlink": "Délier {provider} ({username})",
+            "set_as_main": "Définir comme principal",
+            "link_discord": "Lier votre compte Discord",
+            "link_facebrowser": "Lier votre compte Facebrowser",
+            "unlink_confirmation": "Voulez-vous vraiment délier cette connexion ?",
+            "set_as_main_confirmation": "Voulez-vous vraiment définir cette connexion comme principal ?"
+        }
     }
 }
