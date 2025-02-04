@@ -167,8 +167,8 @@ importers:
         specifier: ^7.37.4
         version: 7.37.4(eslint@9.19.0)
       eslint-plugin-react-hooks:
-        specifier: 5.2.0-canary-9eabb373-20250124
-        version: 5.2.0-canary-9eabb373-20250124(eslint@9.19.0)
+        specifier: 5.2.0-canary-fc8a898d-20241226
+        version: 5.2.0-canary-fc8a898d-20241226(eslint@9.19.0)
       hot-hook:
         specifier: ^0.4.0
         version: 0.4.0
@@ -2156,8 +2156,8 @@ packages:
       eslint-config-prettier:
         optional: true
 
-  eslint-plugin-react-hooks@5.2.0-canary-9eabb373-20250124:
-    resolution: {integrity: sha512-gMQOGQgN9bLM663DQlB/geujwzgd9+MU2QiHcZKUymEjKqNFzHNj6NRWnfztFWfk8Z5D7+DMgLGUJ7DRpajLNg==}
+  eslint-plugin-react-hooks@5.2.0-canary-fc8a898d-20241226:
+    resolution: {integrity: sha512-qy7uSR6TYOVBDmwL4D+fQZWRosadQSP/MdtFNk2Y67+qMFrmjlpZqMY48MiTepgcU/HgSP6xmRSgtPiwx0PFhA==}
     engines: {node: '>=10'}
     peerDependencies:
       eslint: ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0-0 || ^9.0.0
@@ -6271,7 +6271,7 @@ snapshots:
     optionalDependencies:
       eslint-config-prettier: 9.1.0(eslint@9.19.0)
 
-  eslint-plugin-react-hooks@5.2.0-canary-9eabb373-20250124(eslint@9.19.0):
+  eslint-plugin-react-hooks@5.2.0-canary-fc8a898d-20241226(eslint@9.19.0):
     dependencies:
       eslint: 9.19.0
 
