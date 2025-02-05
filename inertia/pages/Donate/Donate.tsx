@@ -34,6 +34,8 @@ const Donate = () => {
 };
 
 // eslint-disable-next-line react/no-children-prop
-Donate.layout = (page: ReactNode) => <MainLayout children={page} bannerTitle={i18n.t("donate")} />;
+Donate.layout = (page: ReactNode) => (
+    <MainLayout children={page} bannerTitle={i18n.t("donate")} hideBanner />
+);
 
 export default Donate;
