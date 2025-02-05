@@ -125,7 +125,10 @@ export default function Contact() {
                 <Box
                     component="form"
                     onSubmit={onSubmit}
-                    sx={{ "width": "65%", "& .MuiTextField-root": { mb: 3 } }}
+                    sx={{
+                        "width": { mobile: "95%", tablet: "75%", laptop: "65%" },
+                        "& .MuiTextField-root": { mb: 3 },
+                    }}
                 >
                     {success || hasErrors ? (
                         <Alert
@@ -143,7 +146,10 @@ export default function Contact() {
                         </Alert>
                     ) : null}
 
-                    <Stack direction="row" spacing={2}>
+                    <Stack
+                        direction={{ mobile: "column", tablet: "row" }}
+                        spacing={{ mobile: 0, tablet: 2 }}
+                    >
                         <Controller
                             name="firstname"
                             control={control}
