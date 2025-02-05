@@ -7,12 +7,15 @@ import DrawerNavigation from "@/layouts/MainLayout/Header/components/Navigation/
 import Navigation from "@/layouts/MainLayout/Header/components/Navigation/Navigation";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
-import type { Theme } from "@mui/material/styles";
+import { type Theme, useColorScheme } from "@mui/material/styles";
 import Toolbar from "@mui/material/Toolbar";
 import { usePage } from "@inertiajs/react";
 import type { SharedProps } from "@adonisjs/inertia/types";
 import useScrollTrigger from "@mui/material/useScrollTrigger";
 import * as React from "react";
+import IconButton from "@mui/material/IconButton";
+import LightModeIcon from "@mui/icons-material/LightMode";
+import DarkModeIcon from "@mui/icons-material/DarkMode";
 
 const mainHeaderULStyle = (theme: Theme) => ({
     "display": "flex",
@@ -49,6 +52,7 @@ function PositionScroll(props: { children: React.ReactElement<{ position: string
 
 export default function MainHeader() {
     const { auth } = usePage<SharedProps>().props;
+    const { mode, setMode } = useColorScheme();
 
     return (
         <PositionScroll>
@@ -63,6 +67,12 @@ export default function MainHeader() {
                     <Box id="header-account-button">
                         {auth.user ? <AccountButtonIcon /> : <LoginServicesButtonsWithModal />}
                     </Box>
+                    <IconButton
+                        onClick={() => setMode(mode === "light" ? "dark" : "light")}
+                        color="inherit"
+                    >
+                        {mode === "light" ? <DarkModeIcon /> : <LightModeIcon />}
+                    </IconButton>
                     <DrawerNavigation />
                 </Toolbar>
             </AppBar>

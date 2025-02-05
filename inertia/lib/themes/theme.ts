@@ -21,15 +21,34 @@ const globalHeadingStyles: CSSProperties = {
 };
 
 const createdTheme = createTheme({
-    // Palette
-    palette: {
-        primary: {
-            main: "#328fcc",
-            contrastText: "#FFF",
+    colorSchemes: {
+        light: {
+            palette: {
+                primary: {
+                    main: "#328fcc",
+                    contrastText: "#FFF",
+                },
+                secondary: {
+                    main: "#db9b24",
+                    contrastText: "#FFF",
+                },
+            },
         },
-        secondary: {
-            main: "#db9b24",
-            contrastText: "#FFF",
+        dark: {
+            palette: {
+                primary: {
+                    main: "#1b72ab",
+                    contrastText: "#FFF",
+                },
+                secondary: {
+                    main: "#c08008",
+                    contrastText: "#FFF",
+                },
+                background: {
+                    default: "#1f1f1f",
+                    paper: "#1f1f1f",
+                },
+            },
         },
     },
 

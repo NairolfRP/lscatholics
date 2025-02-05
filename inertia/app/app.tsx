@@ -52,7 +52,7 @@ createInertiaApp({
 
         setupI18n({ locale, fallbackLocale }).then(() => {
             createRoot(el).render(
-                <ThemeProvider theme={theme}>
+                <ThemeProvider theme={theme} defaultMode="light" noSsr>
                     <CssBaseline />
                     <SnackbarProvider {...SNACKBAR_CONFIG}>
                         <App {...props} />
