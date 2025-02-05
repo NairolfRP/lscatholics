@@ -171,10 +171,13 @@ export default function MainFooter() {
                     </Alert>
                 </Box>
                 <Box
-                    sx={{
+                    sx={(theme) => ({
                         display: "flex",
-                        justifyContent: "flex-end",
-                    }}
+                        justifyContent: { mobile: "flex-start", tablet: "flex-end" },
+                        [theme.breakpoints.down(1608)]: {
+                            mr: 10,
+                        },
+                    })}
                 >
                     <IconButton
                         color="inherit"
