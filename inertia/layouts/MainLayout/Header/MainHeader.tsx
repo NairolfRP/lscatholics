@@ -10,8 +10,9 @@ import Box from "@mui/material/Box";
 import type { Theme } from "@mui/material/styles";
 import Toolbar from "@mui/material/Toolbar";
 import { usePage } from "@inertiajs/react";
-
 import type { SharedProps } from "@adonisjs/inertia/types";
+import useScrollTrigger from "@mui/material/useScrollTrigger";
+import * as React from "react";
 
 const mainHeaderULStyle = (theme: Theme) => ({
     "display": "flex",
@@ -33,26 +34,38 @@ const mainHeaderULStyle = (theme: Theme) => ({
     },
 });
 
+function PositionScroll(props: { children: React.ReactElement<{ position: string }> }) {
+    const trigger = useScrollTrigger({
+        disableHysteresis: true,
+        threshold: 0,
+    });
+
+    return props.children
+        ? React.cloneElement(props.children, {
+              position: trigger ? "fixed" : "sticky",
+          })
+        : null;
+}
+
 export default function MainHeader() {
     const { auth } = usePage<SharedProps>().props;
 
     return (
-        <AppBar position="fixed" id="app-header" sx={{ height: 100 }}>
-            <Toolbar component="nav" id="header-navigation">
-                <AppLogo />
+        <PositionScroll>
+            <AppBar id="app-header" sx={{ height: 100 }}>
+                <Toolbar component="nav" id="header-navigation">
+                    <AppLogo />
+                    <Box component="ul" id="header-menu" sx={mainHeaderULStyle}>
+                        <Navigation menus={menuItems} />
 
-                <Box component="ul" id="header-menu" sx={mainHeaderULStyle}>
-                    <Navigation menus={menuItems} />
-
-                    <DonateButton />
-                </Box>
-
-                <Box id="header-account-button">
-                    {auth.user ? <AccountButtonIcon /> : <LoginServicesButtonsWithModal />}
-                </Box>
-
-                <DrawerNavigation />
-            </Toolbar>
-        </AppBar>
+                        <DonateButton />
+                    </Box>
+                    <Box id="header-account-button">
+                        {auth.user ? <AccountButtonIcon /> : <LoginServicesButtonsWithModal />}
+                    </Box>
+                    <DrawerNavigation />
+                </Toolbar>
+            </AppBar>
+        </PositionScroll>
     );
 }
