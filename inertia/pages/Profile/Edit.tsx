@@ -21,7 +21,7 @@ export default function Edit({ auth }: SharedProps) {
     const user = auth!.user!;
 
     return (
-        <MainLayout bannerTitle={t("settings")}>
+        <MainLayout bannerTitle={t("settings")} hideBanner>
             <Head title={user.name} />
 
             <Container>
