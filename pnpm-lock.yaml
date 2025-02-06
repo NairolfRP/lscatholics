@@ -6,7 +6,7 @@ settings:
 
 overrides:
   '@inertiajs/core': 2.0.3
-  strtok3: 8.1.0
+  strtok3: 10.2.1
 
 importers:
 
@@ -3235,9 +3235,9 @@ packages:
     resolution: {integrity: sha512-vE7JKRyES09KiunauX7nd2Q9/L7lhok4smP9RZTDeD4MVs72Dp2qNFVz39Nz5a0FVEW0BJR6C0DYrq6unoziZA==}
     engines: {node: '>= 14.16'}
 
-  peek-readable@5.4.2:
-    resolution: {integrity: sha512-peBp3qZyuS6cNIJ2akRNG1uo1WJ1d0wTxg/fxMdZ0BqCVhx242bSFHM9eNqflfJVS9SsgkzgT/1UgnsurBOTMg==}
-    engines: {node: '>=14.16'}
+  peek-readable@6.1.1:
+    resolution: {integrity: sha512-7QmvgRKhxM0E2PGV4ocfROItVode+ELI27n4q+lpufZ+tRKBu/pBP8WOmw9HXn2ui/AUizqtvaVQhcJrOkRqYg==}
+    engines: {node: '>=18'}
 
   pg-cloudflare@1.1.1:
     resolution: {integrity: sha512-xWPagP/4B6BgFO+EKz3JONXv3YDgvkbVrGw2mTo3D6tVDQRh1e7cqVGvyR3BE+eQgAvx1XhW/iEASj4/jCWl3Q==}
@@ -3819,9 +3819,9 @@ packages:
     resolution: {integrity: sha512-6fPc+R4ihwqP6N/aIv2f1gMH8lOVtWQHoqC4yK6oSDVVocumAsfCqjkXnqiYMhmMwS/mEHLp7Vehlt3ql6lEig==}
     engines: {node: '>=8'}
 
-  strtok3@8.1.0:
-    resolution: {integrity: sha512-ExzDvHYPj6F6QkSNe/JxSlBxTh3OrI6wrAIz53ulxo1c4hBJ1bT9C/JrAthEKHWG9riVH3Xzg7B03Oxty6S2Lw==}
-    engines: {node: '>=16'}
+  strtok3@10.2.1:
+    resolution: {integrity: sha512-Q2dTnW3UXokAvXmXvrvMoUj/me3LyJI76HNHeuGMh2o0As/vzd7eHV3ncLOyvu928vQIDbE7Vf9ldEnC7cwy1w==}
+    engines: {node: '>=18'}
 
   stylis@4.2.0:
     resolution: {integrity: sha512-Orov6g6BB1sDfYgzWfTHDOxamtX1bE/zo104Dh9e6fqJ3PooipYyfJ0pUmrZO2wAvO8YbEyeFrkV91XTsGMSrw==}
@@ -6445,7 +6445,7 @@ snapshots:
   file-type@19.6.0:
     dependencies:
       get-stream: 9.0.1
-      strtok3: 8.1.0
+      strtok3: 10.2.1
       token-types: 6.0.0
       uint8array-extras: 1.4.0
 
@@ -7322,7 +7322,7 @@ snapshots:
 
   pathval@2.0.0: {}
 
-  peek-readable@5.4.2: {}
+  peek-readable@6.1.1: {}
 
   pg-cloudflare@1.1.1:
     optional: true
@@ -7988,10 +7988,10 @@ snapshots:
 
   strip-json-comments@3.1.1: {}
 
-  strtok3@8.1.0:
+  strtok3@10.2.1:
     dependencies:
       '@tokenizer/token': 0.3.0
-      peek-readable: 5.4.2
+      peek-readable: 6.1.1
 
   stylis@4.2.0: {}
 
