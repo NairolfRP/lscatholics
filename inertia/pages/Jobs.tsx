@@ -1,7 +1,7 @@
 import CategoryFilter from "@/components/CategoryFilter";
 import StyledTableCell from "@/components/tables/StyledTableCell";
 import StyledTableRow from "@/components/tables/StyledTableRow";
-import { JobCategory } from "@/enums/job_category";
+import { JOB_CATEGORY, JobCategory } from "@/enums/job_category";
 import type { Job } from "@/features/jobs/types/jobs";
 import { useEventCallback } from "@/hooks/use_event_callback";
 import { useTranslation } from "@/hooks/use_translation";
@@ -20,17 +20,17 @@ import TableRow from "@mui/material/TableRow";
 import { ChangeEvent, Suspense, useMemo, useState } from "react";
 import { Str } from "@shared/helpers/str";
 
-const categories = [
+const categories: { id: JobCategory; label: string }[] = [
     {
-        id: 0,
+        id: JOB_CATEGORY.ARCHDIOCESAN,
         label: "job_archdiocesan_category",
     },
     {
-        id: 1,
+        id: JOB_CATEGORY.PARISH,
         label: "job_parish_category",
     },
     {
-        id: 2,
+        id: JOB_CATEGORY.CEMETERIES,
         label: "job_cemeteries_category",
     },
 ];
@@ -47,7 +47,7 @@ export default function Jobs({ jobs }: PageProps<{ jobs: Job[] }>) {
     const [hiddenCategories, setHiddenCategories] = useState<JobCategory[]>([]);
 
     const jobsDisplayed = useMemo(
-        () => jobs.filter((j: { category: JobCategory }) => !hiddenCategories.includes(j.category)),
+        () => jobs.filter((j) => !hiddenCategories.includes(j.category)),
         [jobs, hiddenCategories],
     );
 

@@ -1,5 +1,5 @@
-import { JobCategory } from "@/enums/job_category";
-import { JobCategoryColor } from "@/enums/job_category_color";
+import { JOB_CATEGORY, JobCategory } from "@/enums/job_category";
+import { JOB_CATEGORY_COLOR } from "@/enums/job_category_color";
 
 export function formatStringDate(stringDate: string) {
     const date = new Date(stringDate);
@@ -36,14 +36,14 @@ export function formatPrice(price: number) {
 
 export function getJobCategoryColor(category: JobCategory) {
     switch (category) {
-        case JobCategory.ARCHDIOCESAN:
-            return JobCategoryColor.ARCHDIOCESAN;
-        case JobCategory.PARISH:
-            return JobCategoryColor.PARISH;
-        case JobCategory.CEMETERIES:
-            return JobCategoryColor.CEMETERIES;
-        case JobCategory.SCHOOL:
-            return JobCategoryColor.SCHOOL;
+        case JOB_CATEGORY.ARCHDIOCESAN:
+            return JOB_CATEGORY_COLOR.ARCHDIOCESAN;
+        case JOB_CATEGORY.PARISH:
+            return JOB_CATEGORY_COLOR.PARISH;
+        case JOB_CATEGORY.CEMETERIES:
+            return JOB_CATEGORY_COLOR.CEMETERIES;
+        case JOB_CATEGORY.SCHOOL:
+            return JOB_CATEGORY_COLOR.SCHOOL;
         default:
             return "inherit";
     }

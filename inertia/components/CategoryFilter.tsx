@@ -3,11 +3,12 @@ import { getJobCategoryColor } from "@/utils/helpers";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { useTranslation } from "@/hooks/use_translation";
+import type { JobCategory } from "@/enums/job_category";
 
 interface CategoryFilterProps {
-    categories: { id: number; label: string }[];
-    hiddenCategories: number[];
-    onChangeCategory: (id: number) => void;
+    categories: { id: JobCategory; label: string }[];
+    hiddenCategories: JobCategory[];
+    onChangeCategory: (id: JobCategory) => void;
 }
 
 export default function CategoryFilter({

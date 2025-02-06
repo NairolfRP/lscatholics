@@ -1,3 +1,5 @@
+import type { JobCategory } from "@/enums/job_category";
+
 export interface Job {
     id: number;
     createdAt: string;
@@ -7,7 +9,7 @@ export interface Job {
     title: string;
     description: string;
     requirements: string;
-    category: number;
+    category: JobCategory;
     organization: string;
     location: string;
     wage: string;
