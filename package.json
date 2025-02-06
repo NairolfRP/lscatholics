@@ -119,16 +119,16 @@
   },
   "overrides": {
     "@inertiajs/core": "2.0.3",
-    "strtok3": "8.0.1"
+    "strtok3": "8.1.0"
   },
   "resolutions": {
     "@inertiajs/core": "2.0.3",
-    "strtok3": "8.0.1"
+    "strtok3": "8.1.0"
   },
   "pnpm": {
     "overrides": {
       "@inertiajs/core": "2.0.3",
-      "strtok3": "8.0.1"
+      "strtok3": "8.1.0"
     }
   }
 }
