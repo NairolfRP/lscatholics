@@ -18,6 +18,7 @@ import Alert from "@mui/material/Alert";
 import type { Page } from "@inertiajs/core";
 import { FormProvider, useForm, useFormContext } from "react-hook-form";
 import { usePaymentProcessing } from "@/features/donate/context/PaymentProcessingForm";
+import { formatPrice } from "@/utils/helpers";
 
 function SubmitButton() {
     const { t } = useTranslation();
@@ -36,7 +37,9 @@ function SubmitButton() {
             startIcon={isPaymentProcessing && <CircularProgress color="inherit" />}
             sx={{ mt: 5 }}
         >
-            {isPaymentProcessing ? t("in_progress") : t("submit")}
+            {isPaymentProcessing
+                ? t("in_progress")
+                : `${t("submit")}${amount && confirmation ? `: ${formatPrice(amount)}` : ""}`}
         </Button>
     );
 }
