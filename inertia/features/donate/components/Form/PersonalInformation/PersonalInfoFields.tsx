@@ -2,7 +2,6 @@ import { PhoneInput } from "@/components/common/PhoneInput/PhoneInput";
 import type { DonatePropsForm } from "@/features/donate/types/donate_form";
 import { useEventCallback } from "@/hooks/use_event_callback";
 import { useTranslation } from "@/hooks/use_translation";
-import AccountCircle from "@mui/icons-material/AccountCircle";
 import BusinessIcon from "@mui/icons-material/Business";
 import CakeIcon from "@mui/icons-material/Cake";
 import Box from "@mui/material/Box";
@@ -17,6 +16,7 @@ import { usePaymentProcessing } from "@/features/donate/context/PaymentProcessin
 import { Controller, useFormContext } from "react-hook-form";
 import { usePage } from "@inertiajs/react";
 import type { SharedProps } from "@adonisjs/inertia/types";
+import NameInput from "@/components/common/NameInput/NameInput";
 
 interface PersonalInfoFieldsProps {
     data: Partial<DonatePropsForm>;
@@ -120,23 +120,14 @@ export default function PersonalInfoFields() {
                             control={control}
                             rules={{ required: true }}
                             render={({ field }) => (
-                                <TextField
+                                <NameInput
                                     key={fieldName}
                                     {...field}
+                                    fieldType={fieldName as "firstname" | "lastname"}
                                     variant="filled"
                                     error={!!errors[fieldName]}
                                     helperText={errors[fieldName]}
-                                    label={t(fieldName)}
                                     sx={{ m: 1 }}
-                                    slotProps={{
-                                        input: {
-                                            startAdornment: (
-                                                <InputAdornment position="start">
-                                                    <AccountCircle />
-                                                </InputAdornment>
-                                            ),
-                                        },
-                                    }}
                                     disabled={isPaymentProcessing}
                                     required
                                 />

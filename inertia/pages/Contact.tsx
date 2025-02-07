@@ -17,6 +17,8 @@ import Typography from "@mui/material/Typography";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import type { SharedProps } from "@adonisjs/inertia/types";
+import { PhoneInput } from "@/components/common/PhoneInput/PhoneInput";
+import NameInput from "@/components/common/NameInput/NameInput";
 
 export default function Contact() {
     const { t } = useTranslation();
@@ -155,11 +157,11 @@ export default function Contact() {
                             control={control}
                             rules={{ required: true }}
                             render={({ field }) => (
-                                <TextField
+                                <NameInput
                                     {...field}
+                                    fieldType="firstname"
                                     helperText={errors.firstname}
                                     error={!!errors.firstname}
-                                    label={t("firstname")}
                                     variant="filled"
                                     required
                                     fullWidth
@@ -171,12 +173,12 @@ export default function Contact() {
                             control={control}
                             rules={{ required: true }}
                             render={({ field }) => (
-                                <TextField
+                                <NameInput
                                     {...field}
+                                    fieldType="lastname"
                                     id="lastname"
                                     helperText={errors.lastname}
                                     error={!!errors.lastname}
-                                    label={t("lastname")}
                                     variant="filled"
                                     required
                                     fullWidth
@@ -189,7 +191,7 @@ export default function Contact() {
                         control={control}
                         rules={{ required: true }}
                         render={({ field }) => (
-                            <TextField
+                            <PhoneInput
                                 {...field}
                                 id="phone"
                                 helperText={errors.phone}
