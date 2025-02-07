@@ -13,6 +13,7 @@ import { theme } from "@/lib/themes/theme";
 import LoadingIndicator from "@/components/loading/LoadingIndicator/LoadingIndicator";
 import { SnackbarOrigin, SnackbarProvider } from "notistack";
 import { setupI18n } from "@/config/i18n.config";
+import { I18nextProvider } from "react-i18next";
 
 const appName = import.meta.env.VITE_APP_NAME ?? ("Archidiocèse de Los Santos" as const);
 
@@ -44,22 +45,24 @@ createInertiaApp({
         }
     },
 
-    setup({ el, App, props }) {
+    setup: async ({ el, App, props }) => {
         const { locale, fallbackLocale } = props.initialPage.props as unknown as {
             locale: string;
             fallbackLocale?: string;
         };
 
-        setupI18n({ locale, fallbackLocale }).then(() => {
-            createRoot(el).render(
+        const i18nInstance = await setupI18n({ locale, fallbackLocale });
+
+        createRoot(el).render(
+            <I18nextProvider i18n={i18nInstance}>
                 <ThemeProvider theme={theme} defaultMode="light" noSsr>
                     <CssBaseline />
                     <SnackbarProvider {...SNACKBAR_CONFIG}>
                         <App {...props} />
                     </SnackbarProvider>
                     <LoadingIndicator />
-                </ThemeProvider>,
-            );
-        });
+                </ThemeProvider>
+            </I18nextProvider>,
+        );
     },
 });
