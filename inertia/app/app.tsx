@@ -4,6 +4,7 @@
 /// <reference path="../../config/auth.ts" />
 
 import "../css/app.css";
+import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { createInertiaApp } from "@inertiajs/react";
 import { resolvePageComponent } from "@adonisjs/inertia/helpers";
@@ -54,15 +55,17 @@ createInertiaApp({
         const i18nInstance = await setupI18n({ locale, fallbackLocale });
 
         createRoot(el).render(
-            <I18nextProvider i18n={i18nInstance}>
-                <ThemeProvider theme={theme} defaultMode="light" noSsr>
-                    <CssBaseline />
-                    <SnackbarProvider {...SNACKBAR_CONFIG}>
-                        <App {...props} />
-                    </SnackbarProvider>
-                    <LoadingIndicator />
-                </ThemeProvider>
-            </I18nextProvider>,
+            <StrictMode>
+                <I18nextProvider i18n={i18nInstance}>
+                    <ThemeProvider theme={theme} defaultMode="light" noSsr>
+                        <CssBaseline />
+                        <SnackbarProvider {...SNACKBAR_CONFIG}>
+                            <App {...props} />
+                        </SnackbarProvider>
+                        <LoadingIndicator />
+                    </ThemeProvider>
+                </I18nextProvider>
+            </StrictMode>,
         );
     },
 });
