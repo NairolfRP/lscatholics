@@ -116,8 +116,8 @@ importers:
         specifier: ^7.8.2
         version: 7.8.2(babel-plugin-macros@3.1.0)(typescript@5.7.3)
       '@adonisjs/eslint-config':
-        specifier: 2.0.0-beta.7
-        version: 2.0.0-beta.7(eslint@9.19.0)(prettier@3.4.2)(typescript@5.7.3)
+        specifier: 2.0.0
+        version: 2.0.0(eslint@9.19.0)(prettier@3.4.2)(typescript@5.7.3)
       '@adonisjs/tsconfig':
         specifier: ^1.4.0
         version: 1.4.0
@@ -281,8 +281,8 @@ packages:
     resolution: {integrity: sha512-sYvcJMbLSqwFWH0WtTTLddxkyXzERZl+8TEkXlMiIFaAZveq9h5eC4SQ+L5ILe9FHHiHVfmHsYF6LlAfcsIG1w==}
     engines: {node: '>=18.16.0'}
 
-  '@adonisjs/eslint-config@2.0.0-beta.7':
-    resolution: {integrity: sha512-WTB4auU115ytr8qKG6KNNxn51dX0efY15Wkvib+hHwD0CC2sSZca3Lb1X4zdJob3G9wT9fY6lq9+HQ4SS+DXBw==}
+  '@adonisjs/eslint-config@2.0.0':
+    resolution: {integrity: sha512-u7xxPmYQ66cmVet6OjOR9yQsHC7h/ZhDXPb4w0UACsXKfKxL4VRsiYsI+/E5xwsfB3dmT/yWO6UrTx7auCLSJg==}
     peerDependencies:
       eslint: ^9.9.0
       prettier: ^3.3.3
@@ -4236,7 +4236,7 @@ snapshots:
       dotenv: 16.4.7
       split-lines: 3.0.0
 
-  '@adonisjs/eslint-config@2.0.0-beta.7(eslint@9.19.0)(prettier@3.4.2)(typescript@5.7.3)':
+  '@adonisjs/eslint-config@2.0.0(eslint@9.19.0)(prettier@3.4.2)(typescript@5.7.3)':
     dependencies:
       '@adonisjs/eslint-plugin': 2.0.0-beta.5(eslint@9.19.0)(typescript@5.7.3)
       '@stylistic/eslint-plugin-ts': 2.13.0(eslint@9.19.0)(typescript@5.7.3)
