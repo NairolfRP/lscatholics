@@ -12,6 +12,9 @@ declare module "@mui/material/styles" {
         tablet: true;
         laptop: true;
         desktop: true;
+        x2k: true;
+        x4k: true;
+        x8k: true;
     }
 }
 
@@ -64,6 +67,9 @@ const createdTheme = createTheme({
             tablet: 640,
             laptop: 1024,
             desktop: 1200,
+            x2k: 1920, // 2K screen
+            x4k: 3840, // 4K screen
+            x8k: 7680, // 8K screen
         },
     },
 
@@ -140,4 +146,20 @@ const createdTheme = createTheme({
     },
 });
 
-export const theme = responsiveFontSizes(createdTheme);
+export const theme = responsiveFontSizes(createdTheme, {
+    breakpoints: [
+        "xs",
+        "sm",
+        "md",
+        "lg",
+        "xl",
+        "mobile",
+        "tablet",
+        "laptop",
+        "desktop",
+        "x2k",
+        "x4k",
+        "x8k",
+    ],
+    factor: 7.5,
+});
