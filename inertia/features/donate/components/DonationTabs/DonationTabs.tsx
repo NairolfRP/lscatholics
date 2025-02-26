@@ -3,7 +3,7 @@ import { useEventCallback } from "@/hooks/use_event_callback";
 import { useTranslation } from "@/hooks/use_translation";
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
-import { Dispatch, SetStateAction, type SyntheticEvent } from "react";
+import { Dispatch, SetStateAction, type SyntheticEvent, useTransition } from "react";
 import { usePaymentProcessing } from "../../context/PaymentProcessingForm";
 
 interface DonationTabsProps {
@@ -14,9 +14,10 @@ interface DonationTabsProps {
 export default function DonationTabs({ donationType, setDonationType }: DonationTabsProps) {
     const { isPaymentProcessing } = usePaymentProcessing();
     const { t } = useTranslation();
+    const [_, startTransition] = useTransition();
 
     const handleDonationTypeChange = useEventCallback((_: SyntheticEvent, value: number) =>
-        setDonationType(value),
+        startTransition(() => setDonationType(value)),
     );
 
     return (
