@@ -161,5 +161,5 @@ export const theme = responsiveFontSizes(createdTheme, {
         "x4k",
         "x8k",
     ],
-    factor: 7.5,
+    factor: 2,
 });
