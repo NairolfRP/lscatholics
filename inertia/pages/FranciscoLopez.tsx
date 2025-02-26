@@ -38,27 +38,33 @@ export default function FranciscoLopez() {
                     {t(archbishopLopezTranslationKey)}
                 </Typography>
                 <Grid container spacing={5}>
-                    <Grid size={{ xs: 4 }}>
-                        <Box component="img" width="20rem" src={OfficialPortrait}></Box>
+                    <Grid size={{ md: 4 }}>
+                        <Box
+                            component="img"
+                            sx={{ width: { xs: "30vw", lg: "23rem" } }}
+                            src={OfficialPortrait}
+                        ></Box>
                     </Grid>
-                    <Grid size={{ xs: 8 }}>
+                    <Grid size={{ md: 8 }}>
                         {biographyParagraphs.map((paragraph, key) => (
                             <Typography key={key} component="p" sx={{ margin: "0 0 1.5em" }}>
                                 {paragraph}
                             </Typography>
                         ))}
+                        <Typography component="h3" variant="h4" sx={{ mt: 3 }}>
+                            {t("follow_achbishop_emeritus_on_social")}:
+                        </Typography>
+                        <Trans
+                            i18nKey="follow_archbishoplopez_on_facebrowser"
+                            components={{
+                                Icon: (
+                                    <FacebrowserIcon fontSize="large" sx={{ color: "#B81C20" }} />
+                                ),
+                                Link: <IconButton component="a" target="_blank"></IconButton>,
+                            }}
+                        />
                     </Grid>
                 </Grid>
-                <Typography component="h3" variant="h4" sx={{ mt: 3 }}>
-                    {t("follow_achbishop_emeritus_on_social")}:
-                </Typography>
-                <Trans
-                    i18nKey="follow_archbishoplopez_on_facebrowser"
-                    components={{
-                        Icon: <FacebrowserIcon fontSize="large" sx={{ color: "#B81C20" }} />,
-                        Link: <IconButton component="a" target="_blank"></IconButton>,
-                    }}
-                />
             </Container>
         </MainLayout>
     );

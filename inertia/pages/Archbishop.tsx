@@ -42,8 +42,19 @@ export default function Archbishop() {
                     {t(`${archbishopTranslationKey}_biography_title`)}
                 </Typography>
                 <Grid container spacing={5}>
-                    <Grid size={{ xs: 4 }}>
-                        <Box component="img" width="20rem" src={OfficialPortrait}></Box>
+                    <Grid size={{ md: 8 }}>
+                        {biographyParagraphs.map((paragraph, key) => (
+                            <Typography key={key} component="p" sx={{ margin: "0 0 1.5em" }}>
+                                {paragraph}
+                            </Typography>
+                        ))}
+                    </Grid>
+                    <Grid size={{ md: 4 }}>
+                        <Box
+                            component="img"
+                            sx={{ width: { md: "30vw", xs: "45vw" } }}
+                            src={OfficialPortrait}
+                        ></Box>
                         <Typography component="h3" variant="h5" sx={{ mt: 3 }}>
                             {t("follow_archbishop_on_social")}:
                         </Typography>
@@ -56,13 +67,6 @@ export default function Archbishop() {
                                 Link: <IconButton component="a" target="_blank"></IconButton>,
                             }}
                         />
-                    </Grid>
-                    <Grid size={{ xs: 8 }}>
-                        {biographyParagraphs.map((paragraph, key) => (
-                            <Typography key={key} component="p" sx={{ margin: "0 0 1.5em" }}>
-                                {paragraph}
-                            </Typography>
-                        ))}
                     </Grid>
                 </Grid>
             </Container>
