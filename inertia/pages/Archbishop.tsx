@@ -52,7 +52,7 @@ export default function Archbishop() {
                     <Grid size={{ md: 4 }}>
                         <Box
                             component="img"
-                            sx={{ width: { md: "30vw", xs: "45vw" } }}
+                            sx={{ width: { md: "20vw", xs: "45vw" } }}
                             src={OfficialPortrait}
                         ></Box>
                         <Typography component="h3" variant="h5" sx={{ mt: 3 }}>
