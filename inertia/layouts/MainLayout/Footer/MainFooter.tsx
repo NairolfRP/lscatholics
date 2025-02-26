@@ -2,7 +2,7 @@ import { FacebrowserIcon } from "@/components/icons/Facebrowser/FacebrowserIcon"
 import Link from "@/components/common/Link/Link";
 import Trans from "@/components/locales/Trans/Trans";
 import { useTranslation } from "@/hooks/use_translation";
-import { Button, Divider, ListItemButton, Stack, TextField } from "@mui/material";
+import { Divider, ListItemButton, Stack } from "@mui/material";
 import Alert from "@mui/material/Alert";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
@@ -11,6 +11,7 @@ import IconButton from "@mui/material/IconButton";
 import List from "@mui/material/List";
 import Typography from "@mui/material/Typography";
 import GitHubIcon from "@mui/icons-material/GitHub";
+import DiscordLogoBlue from "@/assets/images/discord-logo-blue.svg";
 
 const FooterH2 = ({ children, ...others }: React.ComponentPropsWithoutRef<typeof Typography>) => {
     return (
@@ -56,7 +57,7 @@ export default function MainFooter() {
             }}
         >
             <Container maxWidth="xl">
-                <Grid container spacing={2} sx={{ mb: 2 }} alignItems="center">
+                <Grid container spacing={2} sx={{ mb: 2 }} alignItems="flex-start">
                     <Grid sx={{ flexGrow: 1 }}>
                         <Grid container spacing={10}>
                             <Grid>
@@ -91,33 +92,7 @@ export default function MainFooter() {
                             </Grid>
                         </Grid>
                     </Grid>
-                    <Grid>
-                        <Box>
-                            <FooterRightH2>{t("stay_connected")}</FooterRightH2>
-                            <Typography>{t("signup_newsletter_description")}</Typography>
-                            <Box component="form" sx={{ pt: 1 }}>
-                                <Grid
-                                    container
-                                    spacing={1}
-                                    alignItems="center"
-                                    sx={{ pt: 2, pb: 3 }}
-                                >
-                                    <Grid sx={{ flexGrow: 1 }}>
-                                        <TextField
-                                            type="email"
-                                            label="Your Email Address"
-                                            fullWidth
-                                        />
-                                    </Grid>
-                                    <Grid>
-                                        <Button variant="contained" color="secondary">
-                                            {t("submit")}
-                                        </Button>
-                                    </Grid>
-                                </Grid>
-                            </Box>
-                        </Box>
-
+                    <Grid alignItems="flex-start">
                         <Box>
                             <FooterRightH2>{t("connect_with_ls_catholics")}</FooterRightH2>
                             <Stack direction="row" spacing={5}>
@@ -129,6 +104,19 @@ export default function MainFooter() {
                                     <FacebrowserIcon htmlColor="#B81C20" fontSize="large" />
                                 </IconButton>
                             </Stack>
+                        </Box>
+                        <Box
+                            sx={(theme) => ({
+                                mt: theme.spacing(5),
+                            })}
+                        >
+                            <Box
+                                component={Link}
+                                href="https://discord.gg/CXVKwfP6cs"
+                                target="_blank"
+                            >
+                                <img src={DiscordLogoBlue} width="200" alt="Join Discord" />
+                            </Box>
                         </Box>
                     </Grid>
                 </Grid>
