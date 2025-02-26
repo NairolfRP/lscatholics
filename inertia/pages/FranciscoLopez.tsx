@@ -1,5 +1,5 @@
-import ArchbishopPageBanner from "@/assets/images/cardinal_callahan_armoiries.png";
-import OfficialPortrait from "@/assets/images/portrait_cardinal_callahan.png";
+import ArchbishopPageBanner from "@/assets/images/2f2d2f558c6a852a0c3f910222b328e9.jpg";
+import OfficialPortrait from "@/assets/images/francisco_lopez_official_portrait.png";
 import { FacebrowserIcon } from "@/components/icons/Facebrowser/FacebrowserIcon";
 import Trans from "@/components/locales/Trans/Trans";
 import { useTranslation } from "@/hooks/use_translation";
@@ -12,10 +12,10 @@ import Typography from "@mui/material/Typography";
 import { useMemo } from "react";
 import IconButton from "@mui/material/IconButton";
 
-const biographyNbOfParagraphs = 6;
-const archbishopTranslationKey = "cardinal_callahan";
+const biographyNbOfParagraphs = 7;
+const archbishopLopezTranslationKey = "archbishop_lopez";
 
-export default function Archbishop() {
+export default function FranciscoLopez() {
     const { t } = useTranslation();
 
     const biographyParagraphs = useMemo(() => {
@@ -23,39 +23,23 @@ export default function Archbishop() {
 
         for (let i = 0; i < biographyNbOfParagraphs; i++) {
             const nb = i + 1;
-            paragraphsList.push(t(`${archbishopTranslationKey}_biography_paragraph${nb}`));
+            paragraphsList.push(t(`${archbishopLopezTranslationKey}_biography_paragraph${nb}`));
         }
 
         return paragraphsList;
     }, [t]);
 
     return (
-        <MainLayout
-            bannerTitle={t(archbishopTranslationKey)}
-            bannerImg={ArchbishopPageBanner}
-            bannerColor="#831F21"
-        >
-            <Head title={t(archbishopTranslationKey)} />
+        <MainLayout bannerTitle={t("archbishop_lopez")} bannerImg={ArchbishopPageBanner}>
+            <Head title={t(archbishopLopezTranslationKey)} />
 
             <Container sx={{ mt: 5, mb: 5 }}>
                 <Typography variant="h2" sx={{ mb: 5 }}>
-                    {t(`${archbishopTranslationKey}_biography_title`)}
+                    {t(archbishopLopezTranslationKey)}
                 </Typography>
                 <Grid container spacing={5}>
                     <Grid size={{ xs: 4 }}>
                         <Box component="img" width="20rem" src={OfficialPortrait}></Box>
-                        <Typography component="h3" variant="h5" sx={{ mt: 3 }}>
-                            {t("follow_archbishop_on_social")}:
-                        </Typography>
-                        <Trans
-                            i18nKey="follow_archbishop_on_facebrowser"
-                            components={{
-                                Icon: (
-                                    <FacebrowserIcon fontSize="large" sx={{ color: "#B81C20" }} />
-                                ),
-                                Link: <IconButton component="a" target="_blank"></IconButton>,
-                            }}
-                        />
                     </Grid>
                     <Grid size={{ xs: 8 }}>
                         {biographyParagraphs.map((paragraph, key) => (
@@ -65,6 +49,16 @@ export default function Archbishop() {
                         ))}
                     </Grid>
                 </Grid>
+                <Typography component="h3" variant="h4" sx={{ mt: 3 }}>
+                    {t("follow_achbishop_emeritus_on_social")}:
+                </Typography>
+                <Trans
+                    i18nKey="follow_archbishoplopez_on_facebrowser"
+                    components={{
+                        Icon: <FacebrowserIcon fontSize="large" sx={{ color: "#B81C20" }} />,
+                        Link: <IconButton component="a" target="_blank"></IconButton>,
+                    }}
+                />
             </Container>
         </MainLayout>
     );

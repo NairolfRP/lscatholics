@@ -10,7 +10,7 @@ export const menuItems: HeaderNavItem[] = [
         items: [
             { name: "who_we_are", link: "/about-us" },
             {
-                name: "archbishop_lopez",
+                name: "cardinal_callahan",
                 link: "/archbishop",
                 items: [
                     {
@@ -18,6 +18,10 @@ export const menuItems: HeaderNavItem[] = [
                         link: "/departments/archbishop-office",
                     },
                 ],
+            },
+            {
+                name: "archbishop_lopez",
+                link: "/francisco-j-lopez",
             },
             {
                 name: "departments",

@@ -26,6 +26,7 @@ router.get("/", [WelcomeController, "show"]);
 router.on("/about-us").renderInertia("About");
 
 router.on("/archbishop").renderInertia("Archbishop");
+router.on("/francisco-j-lopez").renderInertia("FranciscoLopez");
 
 router
     .group(() => {
