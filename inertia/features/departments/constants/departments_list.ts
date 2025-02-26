@@ -1,4 +1,4 @@
-import ArchbishopPortrait from "@/assets/images/francisco_lopez_official_portrait.png";
+import ArchbishopPortrait from "@/assets/images/portrait_cardinal_callahan.png";
 import { DepartmentList } from "@/features/departments/types/departments";
 
 export const departments: DepartmentList[] = [
@@ -7,7 +7,7 @@ export const departments: DepartmentList[] = [
         link: "archbishop-office",
         page: {
             director: {
-                name: "Mgr. Francisco J. Lopez",
+                name: "Cardinal Ronan Callahan",
                 position: "archbishop_of_ls",
                 image: ArchbishopPortrait,
             },
@@ -16,8 +16,8 @@ export const departments: DepartmentList[] = [
                     title: "office_of_archbishop_team",
                     cards: [
                         {
-                            name: "Alesia Ubaldi",
-                            position: "executive_assistant_f",
+                            name: "Vacant",
+                            position: "executive_assistant_m",
                             phone: "700",
                         },
                     ],
