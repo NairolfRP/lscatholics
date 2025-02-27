@@ -54,6 +54,7 @@ export default await Env.create(new URL("../", import.meta.url), {
     */
     DISCORD_CLIENT_ID: Env.schema.string(),
     DISCORD_CLIENT_SECRET: Env.schema.string(),
+    DISCORD_GUILD_ID: Env.schema.string(),
     DISCORD_BOT_TOKEN: Env.schema.string(),
 
     DISCORD_CONTACT_WEBHOOK: Env.schema.string(),
