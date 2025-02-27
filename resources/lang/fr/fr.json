@@ -1,5 +1,6 @@
 {
     "translation": {
+        "in_development_notice": "Le site est encore <0>en cours de développement</0> et est susceptible de contenir des bogues. Pour nous aider, n'hésitez pas à <1 href=\"https://github.com/NairolfRP/lscatholics/issues\">signaler les problèmes</1> que vous rencontrez.",
         "home": "Accueil",
         "about_our_community": "Notre communauté",
         "who_we_are": "Qui sommes-nous ?",
