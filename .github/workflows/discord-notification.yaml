@@ -1,0 +1,70 @@
+name: Discord Changeset Notification
+
+on:
+    push:
+        branches:
+            - prod
+
+jobs:
+    discord-notification:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v3
+              with:
+                  fetch-depth: 0
+
+            - name: Get commit messages
+              id: get-commits
+              run: |
+                  COMMITS=$(git log --pretty=format:"- %h %s" $(git merge-base HEAD~1 HEAD)..HEAD | sed 's/"/\\"/g')
+                  echo "commits<<EOF" >> $GITHUB_OUTPUT
+                  echo "$COMMITS" >> $GITHUB_OUTPUT
+                  echo "EOF" >> $GITHUB_OUTPUT
+
+            - name: Send Discord notification
+              uses: Ilshidur/action-discord@master
+              env:
+                  DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK_URL }}
+                  DISCORD_USERNAME: "[HRP] Site - Mise à jour"
+                  DISCORD_AVATAR: "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
+              with:
+                  args: |
+                      {
+                        "embeds": [
+                          {
+                            "title": "📦 Nouvelle mise à jour",
+                            "description": "Un push a été effectué sur la branche **prod**\n⚠️ **La mise à jour sera disponible en ligne après la fin du déploiement manuel dans quelques minutes.**",
+                            "color": 15105570,
+                            "fields": [
+                              {
+                                "name": "📝 Changements",
+                                "value": "${{ steps.get-commits.outputs.commits }}",
+                                "inline": false
+                              },
+                              {
+                                "name": "👤 Auteur",
+                                "value": "${{ github.actor }}",
+                                "inline": true
+                              },
+                              {
+                                "name": "🔄 Commit",
+                                "value": "[${{ github.event.after.substring(0,7) }}](${{ github.event.repository.html_url }}/commit/${{ github.event.after }})",
+                                "inline": true
+                              },
+                              {
+                                "name": "🧪 Voir les changements",
+                                "value": "[Comparer](${{ github.event.repository.html_url }}/compare/${{ github.event.before }}...${{ github.event.after }})",
+                                "inline": true
+                              }
+                            ],
+                            "thumbnail": {
+                              "url": "https://avatars.githubusercontent.com/${{ github.actor }}"
+                            },
+                            "footer": {
+                              "text": "Push effectué le ${{ format('DD/MM/YYYY à HH:mm', github.event.head_commit.timestamp) }}",
+                              "icon_url": "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
+                            }
+                          }
+                        ]
+                      }
