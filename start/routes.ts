@@ -99,6 +99,13 @@ router
     })
     .use(middleware.auth());
 
+router
+    .group(() => {
+        router.get("/", [DashboardController, "show"]);
+    })
+    .prefix("/dashboard")
+    .use([middleware.auth(), middleware.dashboard()]);
+
 const providerRegex = /gtaw|discord/;
 router
     .group(() => {
