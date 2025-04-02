@@ -25,6 +25,13 @@ export default function AccountButtonIcon() {
         setAnchorEl(event.currentTarget);
     });
 
+    const switchCharacter = useEventCallback((characterID: number) => {
+        router.patch(`/api/auth/switch-character/${characterID}`, undefined, {
+            preserveState: true,
+            preserveScroll: true,
+        });
+    });
+
     const handleMenuAction = useEventCallback(
         (_: React.MouseEvent<HTMLLIElement>, value: string) => {
             switch (value) {
@@ -46,7 +53,6 @@ export default function AccountButtonIcon() {
     const handleMenuClose = useEventCallback(() => {
         setAnchorEl(null);
     });
-
     return (
         <>
             <IconButton
@@ -59,9 +65,9 @@ export default function AccountButtonIcon() {
                 color="inherit"
                 sx={{ ml: 5 }}
             >
-                <Tooltip title={auth.user?.name}>
+                <Tooltip title={auth.user?.currentCharacter.fullName}>
                     <Avatar src={auth.user?.avatarURL ?? undefined}>
-                        {auth.user?.name?.substring(0, 1)}
+                        {auth.user?.currentCharacter.fullName.substring(0, 1)}
                     </Avatar>
                 </Tooltip>
             </IconButton>
@@ -102,6 +108,15 @@ export default function AccountButtonIcon() {
                 transformOrigin={{ horizontal: "right", vertical: "top" }}
                 anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
             >
+                {auth.user?.characters.map((character: { id: number; name: string }) => (
+                    <MenuItem key={character.id} onClick={() => switchCharacter(character.id)}>
+                        <ListItemIcon>
+                            <Avatar />
+                        </ListItemIcon>
+                        (( {character.name} ))
+                    </MenuItem>
+                ))}
+                <Divider />
                 <MenuItem onClick={(e) => handleMenuAction(e, "applications")}>
                     <ListItemIcon>
                         <TopicIcon fontSize="small" />

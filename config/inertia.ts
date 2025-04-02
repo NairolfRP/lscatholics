@@ -22,11 +22,27 @@ const inertiaConfig = defineConfig({
 
             const social = session.get("user_social_info", {});
 
+            const character = social.characters.find(
+                (c: { id: number }) => c.id === social.currentCharacter,
+            );
+
             return {
                 user: {
                     id: auth.user!.id as number,
-                    name: (social?.mainProvider.nickname || social?.mainProvider.name) as string,
-                    avatarURL: social?.mainProvider.avatarURL as string,
+                    name: social?.name,
+                    avatarURL: social?.avatarURL as string,
+                    currentCharacter: {
+                        id: character.id,
+                        firstname: character.firstname,
+                        lastname: character.lastname,
+                        fullName: `${character.firstname} ${character.lastname}`,
+                    },
+                    characters: social.characters
+                        .filter((c: { id: number }) => c.id !== character.id)
+                        .map((c: { id: number; firstname: string; lastname: string }) => ({
+                            id: c.id,
+                            name: `${c.firstname} ${c.lastname}`,
+                        })),
                 },
             };
         },
@@ -34,6 +50,7 @@ const inertiaConfig = defineConfig({
             ctx.inertia.always(() => ctx.session?.flashMessages.get("notification")),
         success: (ctx) =>
             ctx.inertia.always(() => ctx.session?.flashMessages.get("success") as boolean),
+        test: (ctx) => ({ abilities: ctx.bouncer.abilities, policies: ctx.bouncer.policies }),
     },
 
     /**

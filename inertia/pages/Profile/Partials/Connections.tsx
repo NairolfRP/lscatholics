@@ -10,7 +10,6 @@ import Stack from "@mui/material/Stack";
 import { DiscordIcon } from "@/components/icons/Discord/DiscordIcon";
 import { FacebrowserIcon } from "@/components/icons/Facebrowser/FacebrowserIcon";
 import LinkOffIcon from "@mui/icons-material/LinkOff";
-import VerifiedUserIcon from "@mui/icons-material/VerifiedUser";
 import { useTranslation } from "@/hooks/use_translation";
 
 function ProviderIcon({
@@ -52,15 +51,6 @@ export default function Connections() {
     const handleUnLink = useEventCallback((provider: string) => {
         if (window.confirm(t("profile.unlink_confirmation"))) {
             router.delete(`/api/auth/${provider}/unlink`, {
-                preserveScroll: true,
-                preserveState: true,
-            });
-        }
-    });
-
-    const handleSetAsMain = useEventCallback((provider: string) => {
-        if (window.confirm(t("profile.set_as_main_confirmation"))) {
-            router.patch(`/api/auth/${provider}/set-main`, undefined, {
                 preserveScroll: true,
                 preserveState: true,
             });
@@ -127,15 +117,6 @@ export default function Connections() {
                                     username: provider.username,
                                 })}
                             </Button>
-                            <Button
-                                onClick={() => handleSetAsMain(provider.provider)}
-                                variant="outlined"
-                                color="primary"
-                                size="small"
-                                startIcon={<VerifiedUserIcon />}
-                            >
-                                {t("profile.set_as_main")}
-                            </Button>
                         </Stack>
                     )}
                 </>
@@ -148,15 +129,6 @@ export default function Connections() {
                     onClick={() => handleLink("discord")}
                 >
                     {t("profile.link_discord")}
-                </Button>
-            )}
-            {!providers.some((p) => p.provider === "facebrowser") && (
-                <Button
-                    sx={{ backgroundColor: "#D15454", color: "#FFF", mt: 3 }}
-                    startIcon={<ProviderIcon sx={{ color: "inherit" }} provider="facebrowser" />}
-                    onClick={() => handleLink("facebrowser")}
-                >
-                    {t("profile.link_facebrowser")}
                 </Button>
             )}
         </Box>

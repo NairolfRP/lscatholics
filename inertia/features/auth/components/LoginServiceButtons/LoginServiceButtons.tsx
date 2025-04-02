@@ -1,8 +1,9 @@
-import { loginServicesList } from "@/features/auth/constants/loginServicesList";
 import { useEventCallback } from "@/hooks/use_event_callback";
 import { router } from "@inertiajs/react";
 import Button from "@mui/material/Button";
 import { useSnackbar } from "notistack";
+import GTAWLogo from "@/assets/images/gtaw-logo.png";
+import Box from "@mui/material/Box";
 
 export default function LoginServiceButtons() {
     const { enqueueSnackbar } = useSnackbar();
@@ -34,25 +35,23 @@ export default function LoginServiceButtons() {
         }, 1000);
     });
 
-    return loginServicesList.map(({ name, title, bgColor, icon }, index) => {
-        return (
-            <Button
-                onClick={() => handleClick(name)}
-                id={name}
-                name={name}
-                key={index}
-                fullWidth
-                variant="contained"
-                sx={{
-                    "mt": index === 0 ? 3 : null,
-                    "mb": 3,
-                    "backgroundColor": bgColor,
-                    "&:hover": { opacity: 0.95, backgroundColor: bgColor },
-                }}
-                startIcon={icon}
-            >
-                {title}
-            </Button>
-        );
-    });
+    return (
+        <Button
+            onClick={() => handleClick("gtaw")}
+            id="gtaw-oauth"
+            name="gtaw-oauth"
+            fullWidth
+            variant="contained"
+            color="success"
+            sx={{
+                mt: 3,
+                mb: 3,
+                //"backgroundColor": bgColor,
+                //"&:hover": { opacity: 0.95, backgroundColor: bgColor },
+            }}
+            startIcon={<Box component="img" height="20px" src={GTAWLogo}></Box>}
+        >
+            GTA World
+        </Button>
+    );
 }

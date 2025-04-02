@@ -99,22 +99,27 @@ router
     })
     .use(middleware.auth());
 
+const providerRegex = /gtaw|discord/;
 router
     .group(() => {
-        router.get("/:provider/redirect", [AuthController, "redirect"]);
-        router.get("/:provider/callback", [AuthController, "callback"]);
+        router
+            .get("/:provider/redirect", [AuthController, "redirect"])
+            .where("provider", providerRegex);
+        router
+            .get("/:provider/callback", [AuthController, "callback"])
+            .where("provider", providerRegex);
 
         router
             .delete("/:provider/unlink", [AuthController, "unlink"])
-            .where("provider", "^[a-zA-Z]+$")
-            .use(middleware.auth());
-
-        router
-            .patch("/:provider/set-main", [AuthController, "setAsMain"])
-            .where("provider", "^[a-zA-Z]+$")
+            .where("provider", "discord")
             .use(middleware.auth());
 
         router.post("/logout", [AuthController, "logout"]).use(middleware.auth());
+
+        router
+            .patch("/switch-character/:id", [AuthController, "switchCharacter"])
+            .where("id", router.matchers.number())
+            .use(middleware.auth());
     })
     .prefix("/api/auth");
 

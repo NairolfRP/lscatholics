@@ -68,9 +68,18 @@ export default await Env.create(new URL("../", import.meta.url), {
     | Variables for Facebrowser
     |----------------------------------------------------------
     */
-    FACEBROWSER_BASE_URL: Env.schema.string(),
+    /*FACEBROWSER_BASE_URL: Env.schema.string(),
     FACEBROWSER_CLIENT_ID: Env.schema.string(),
-    FACEBROWSER_CLIENT_SECRET: Env.schema.string(),
+    FACEBROWSER_CLIENT_SECRET: Env.schema.string(),*/
+
+    /*
+    |----------------------------------------------------------
+    | Variables for GTA World OAuth
+    |----------------------------------------------------------
+    */
+    GTAW_UCP_BASE_URL: Env.schema.string.optional(),
+    GTAW_OAUTH_CLIENT_ID: Env.schema.string(),
+    GTAW_OAUTH_CLIENT_SECRET: Env.schema.string(),
 
     /*
     |----------------------------------------------------------
