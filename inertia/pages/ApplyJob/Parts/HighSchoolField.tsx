@@ -1,7 +1,7 @@
 import type { HighSchool } from "@/features/applications/types/applications";
 import { useTranslation } from "@/hooks/use_translation";
 import FormControl from "@mui/material/FormControl";
-import Grid from "@mui/material/Grid2";
+import Grid from "@mui/material/Grid";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select, { SelectChangeEvent } from "@mui/material/Select";

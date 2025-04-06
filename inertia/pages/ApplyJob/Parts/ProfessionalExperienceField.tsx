@@ -4,7 +4,7 @@ import { useTranslation } from "@/hooks/use_translation";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid2";
+import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import type { SelectChangeEvent } from "@mui/material/Select";
 import TextField from "@mui/material/TextField";

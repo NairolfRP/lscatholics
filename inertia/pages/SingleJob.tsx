@@ -12,7 +12,7 @@ import { Divider, Stack } from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
-import Grid from "@mui/material/Grid2";
+import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 
 function InformationLabel({ label, value }: { label: React.ReactNode; value: React.ReactNode }) {

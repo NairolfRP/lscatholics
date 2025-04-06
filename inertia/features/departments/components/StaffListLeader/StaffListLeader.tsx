@@ -2,7 +2,7 @@ import { StaffListLeaderProps } from "@/features/departments/types/staff_list";
 import { useTranslation } from "@/hooks/use_translation";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
-import Grid from "@mui/material/Grid2";
+import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";

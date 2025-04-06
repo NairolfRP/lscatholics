@@ -7,7 +7,7 @@ import MainLayout from "@/layouts/MainLayout/MainLayout";
 import { Head, router } from "@inertiajs/react";
 import { Pagination } from "@mui/material";
 import Container from "@mui/material/Container";
-import Grid from "@mui/material/Grid2";
+import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { ChangeEvent, Suspense, useMemo } from "react";
 
