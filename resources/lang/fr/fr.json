@@ -1,6 +1,7 @@
 {
     "translation": {
         "in_development_notice": "Le site est encore <0>en cours de développement</0> et est susceptible de contenir des bogues. Pour nous aider, n'hésitez pas à <1 href=\"https://github.com/NairolfRP/lscatholics/issues\">signaler les problèmes</1> que vous rencontrez.",
+        "archdiocese_of_los_santos": "Archidiocèse de Los Santos",
         "home": "Accueil",
         "about_our_community": "Notre communauté",
         "who_we_are": "Qui sommes-nous ?",
@@ -304,6 +305,9 @@
             "link_facebrowser": "Lier votre compte Facebrowser",
             "unlink_confirmation": "Voulez-vous vraiment délier cette connexion ?",
             "set_as_main_confirmation": "Voulez-vous vraiment définir cette connexion comme principal ?"
-        }
+        },
+
+        "dashboard": "Tableau de bord",
+        "welcome_user": "Bienvenue {name}!"
     }
 }

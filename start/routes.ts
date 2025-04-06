@@ -20,6 +20,7 @@ const AuthController = () => import("#controllers/auth_controller");
 const ApplicationController = () => import("#controllers/application_controller");
 const DonateController = () => import("#controllers/donate_controller");
 const PaymentController = () => import("#controllers/payment_controller");
+const DashboardController = () => import("#controllers/dashboard_controller");
 
 router.get("/", [WelcomeController, "show"]);
 
