@@ -1,12 +1,14 @@
-import { type SyntheticEvent, useState } from "react";
+import { type SyntheticEvent } from "react";
 import { useEventCallback } from "@/hooks/use_event_callback";
 import Snackbar, { type SnackbarCloseReason } from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import Trans from "@/components/locales/Trans/Trans";
 import Link from "./common/Link/Link";
+import { useDevBannerStore } from "@/stores/dev_banner_store";
 
 export default function DevelopmentBanner() {
-    const [open, setOpen] = useState(true);
+    const { close, isVisible } = useDevBannerStore();
+    //const [open, setOpen] = useState(true);
 
     const handleClose = useEventCallback(
         (_?: SyntheticEvent | Event, reason?: SnackbarCloseReason) => {
@@ -14,13 +16,13 @@ export default function DevelopmentBanner() {
                 return;
             }
 
-            setOpen(false);
+            close();
         },
     );
 
     return (
         <Snackbar
-            open={open}
+            open={isVisible}
             onClose={handleClose}
             anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
         >
