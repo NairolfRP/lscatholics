@@ -134,13 +134,9 @@ router
 router
     .group(() => {
         router.post("/cancel", [PaymentController, "cancel"]);
-    })
-    .prefix("/api/payment");
 
-router
-    .group(() => {
         router
-            .get("/callback/:token", [PaymentController, "callback"])
+            .get("/fleeca/callback/:token", [PaymentController, "callback"])
             .where("token", /^[a-zA-Z0-9-_]{30,}$/);
     })
-    .prefix("/fleeca");
+    .prefix("/api/payment");
