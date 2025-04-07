@@ -111,7 +111,7 @@ export default function AccountButtonIcon() {
                 {auth.user?.characters.map((character: { id: number; name: string }) => (
                     <MenuItem key={character.id} onClick={() => switchCharacter(character.id)}>
                         <ListItemIcon>
-                            <Avatar />
+                            <Avatar>{character.name.substring(0, 1)}</Avatar>
                         </ListItemIcon>
                         (( {character.name} ))
                     </MenuItem>
