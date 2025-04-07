@@ -21,6 +21,7 @@ export default defineConfig({
      * your frontend code
      */
     resolve: {
+        conditions: ["mui-modern", "module", "browser", "development|production"],
         alias: {
             //"~/": `${getDirname(import.meta.url)}/inertia/`,
             "@": `${getDirname(import.meta.url)}/inertia/`,
