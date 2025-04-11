@@ -49,7 +49,7 @@ jobs:
                               },
                               {
                                 "name": "🔄 Commit",
-                                "value": "[${{ github.event.after.substring(0,7) }}](${{ github.event.repository.html_url }}/commit/${{ github.event.after }})",
+                                "value": "[${{ slice(github.event.after, 0, 7) }}](${{ github.event.repository.html_url }}/commit/${{ github.event.after }})",
                                 "inline": true
                               },
                               {
@@ -62,7 +62,7 @@ jobs:
                               "url": "https://avatars.githubusercontent.com/${{ github.actor }}"
                             },
                             "footer": {
-                              "text": "Push effectué le ${{ format('DD/MM/YYYY à HH:mm', github.event.head_commit.timestamp) }}",
+                              "text": "Push effectué le ${{ format(github.event.head_commit.timestamp, 'DD/MM/YYYY à HH:mm') }}",
                               "icon_url": "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
                             }
                           }
