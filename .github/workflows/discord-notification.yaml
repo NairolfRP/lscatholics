@@ -34,43 +34,42 @@ jobs:
                   DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK_URL }}
                   DISCORD_USERNAME: "[HRP] Site - Mise à jour"
                   DISCORD_AVATAR: "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
-              with:
-                  args: |
-                      {
-                        "embeds": [
-                          {
-                            "title": "📦 Nouvelle mise à jour",
-                            "description": "Un push a été effectué sur la branche **prod**\n⚠️ **La mise à jour sera disponible en ligne après la fin du déploiement manuel dans quelques minutes.**",
-                            "color": 15105570,
-                            "fields": [
-                              {
-                                "name": "📝 Changements",
-                                "value": "${{ steps.get-commits.outputs.commits }}",
-                                "inline": false
-                              },
-                              {
-                                "name": "👤 Auteur",
-                                "value": "${{ github.actor }}",
-                                "inline": true
-                              },
-                              {
-                                "name": "🔄 Commit",
-                                "value": "[${{ steps.vars.outputs.SHORT_SHA }}](${{ github.event.repository.html_url }}/commit/${{ github.event.after }})",
-                                "inline": true
-                              },
-                              {
-                                "name": "🧪 Voir les changements",
-                                "value": "[Comparer](${{ github.event.repository.html_url }}/compare/${{ github.event.before }}...${{ github.event.after }})",
-                                "inline": true
-                              }
-                            ],
-                            "thumbnail": {
-                              "url": "https://avatars.githubusercontent.com/${{ github.actor }}"
+                  DISCORD_EMBEDS: |
+                      [
+                        {
+                          "title": "📦 Nouvelle mise à jour",
+                          "description": "Un push a été effectué sur la branche **prod**\n⚠️ **La mise à jour sera disponible en ligne après la fin du déploiement manuel dans quelques minutes.**",
+                          "color": 15105570,
+                          "fields": [
+                            {
+                              "name": "📝 Changements",
+                              "value": "${{ steps.get-commits.outputs.commits }}",
+                              "inline": false
                             },
-                            "footer": {
-                              "text": "Push effectué le ${{ steps.vars.outputs.FORMATTED_DATE }}",
-                              "icon_url": "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
+                            {
+                              "name": "👤 Auteur",
+                              "value": "${{ github.actor }}",
+                              "inline": true
+                            },
+                            {
+                              "name": "🔄 Commit",
+                              "value": "[${{ steps.vars.outputs.SHORT_SHA }}](${{ github.event.repository.html_url }}/commit/${{ github.event.after }})",
+                              "inline": true
+                            },
+                            {
+                              "name": "🧪 Voir les changements",
+                              "value": "[Comparer](${{ github.event.repository.html_url }}/compare/${{ github.event.before }}...${{ github.event.after }})",
+                              "inline": true
                             }
+                          ],
+                          "thumbnail": {
+                            "url": "https://avatars.githubusercontent.com/${{ github.actor }}"
+                          },
+                          "footer": {
+                            "text": "Push effectué le ${{ steps.vars.outputs.FORMATTED_DATE }}",
+                            "icon_url": "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
                           }
-                        ]
-                      }
+                        }
+                      ]
+              with:
+                  args: ""
