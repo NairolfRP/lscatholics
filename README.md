@@ -51,7 +51,7 @@ This project is built with the following technologies:
 
 ## 🔗 Links
 
-- **Hosted application**: _Coming soon_
+- **Hosted application**: [https://archls.infos.st](https://archls.infos.st)
 - **GTA World**: [https://gta.world](https://gta.world)
 - **Project Repository**: [https://github.com/NairolfRP/lscatholics](https://github.com/NairolfRP/lscatholics)
 
