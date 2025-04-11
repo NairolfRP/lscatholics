@@ -136,7 +136,9 @@ router
         router.post("/cancel", [PaymentController, "cancel"]);
 
         router
-            .get("/fleeca/callback/:token", [PaymentController, "callback"])
+            //.get("/fleeca/callback/:token", [PaymentController, "callback"])
+            .get("/callback/:token", [PaymentController, "callback"])
             .where("token", /^[a-zA-Z0-9-_]{30,}$/);
     })
-    .prefix("/api/payment");
+    .prefix("/fleeca");
+//.prefix("/api/payment");
