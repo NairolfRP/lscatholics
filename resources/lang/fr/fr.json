@@ -1,5 +1,7 @@
 {
     "translation": {
+        "app_description": "Site internet fictif de l'Archidiocèse catholique romain de Los Santos, une faction roleplay sur le serveur GTA World France qui incarne l'Église catholique",
+
         "in_development_notice": "Le site est encore <0>en cours de développement</0> et est susceptible de contenir des bogues. Pour nous aider, n'hésitez pas à <1 href=\"https://github.com/NairolfRP/lscatholics/issues\">signaler les problèmes</1> que vous rencontrez.",
         "archdiocese_of_los_santos": "Archidiocèse de Los Santos",
         "home": "Accueil",

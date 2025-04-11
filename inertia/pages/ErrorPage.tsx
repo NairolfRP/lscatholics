@@ -1,6 +1,6 @@
 import MainLayout from "@/layouts/MainLayout/MainLayout";
 import type { HttpError } from "@adonisjs/core/types/http";
-import { Head } from "@inertiajs/react";
+import Head from "@/components/AppHead";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 

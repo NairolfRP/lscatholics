@@ -2,7 +2,7 @@ import type { EventArticle } from "@/features/events/types/events";
 import { useTranslation } from "@/hooks/use_translation";
 import MainLayout from "@/layouts/MainLayout/MainLayout";
 import type { PageProps } from "@/types/page_props";
-import { Head } from "@inertiajs/react";
+import Head from "@/components/AppHead";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";

@@ -1,5 +1,5 @@
 import DashboardLayout from "@/layouts/DashboardLayout/DashboardLayout";
-import { Head } from "@inertiajs/react";
+import Head from "@/components/AppHead";
 import { useTranslation } from "@/hooks/use_translation";
 import Typography from "@mui/material/Typography";
 import { type SharedProps } from "@adonisjs/inertia/types";

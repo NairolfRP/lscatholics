@@ -2,7 +2,7 @@ import Link from "@/components/common/Link/Link";
 import { departments } from "@/features/departments/constants/departments_list";
 import { useTranslation } from "@/hooks/use_translation";
 import MainLayout from "@/layouts/MainLayout/MainLayout";
-import { Head } from "@inertiajs/react";
+import Head from "@/components/AppHead";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";

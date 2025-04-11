@@ -5,11 +5,11 @@ import RecurringDonationInfo from "@/features/donate/components/Recurring/Recurr
 import { DONATION_TYPE } from "@/features/donate/constants/donation";
 import { useTranslation } from "@/hooks/use_translation";
 import MainLayout from "@/layouts/MainLayout/MainLayout";
-import { Head } from "@inertiajs/react";
 import Container from "@mui/material/Container";
 import i18n from "i18next";
 import { type ReactNode, useState } from "react";
 import { PaymentProcessingProvider } from "@/features/donate/context/PaymentProcessingForm";
+import Head from "@/components/AppHead";
 
 const Donate = () => {
     const { t } = useTranslation();

@@ -5,7 +5,7 @@ import { DepartmentList } from "@/features/departments/types/departments";
 import { useTranslation } from "@/hooks/use_translation";
 import MainLayout from "@/layouts/MainLayout/MainLayout";
 import type { PageProps } from "@/types/page_props";
-import { Head } from "@inertiajs/react";
+import Head from "@/components/AppHead";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 

@@ -1,7 +1,7 @@
 import { parishesList } from "@/features/parishes/constants/parishes";
 import { useTranslation } from "@/hooks/use_translation";
 import MainLayout from "@/layouts/MainLayout/MainLayout";
-import { Head } from "@inertiajs/react";
+import Head from "@/components/AppHead";
 import { CardActionArea, CardMedia } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";

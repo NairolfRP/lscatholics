@@ -1,6 +1,6 @@
 import { useTranslation } from "@/hooks/use_translation";
 import MainLayout from "@/layouts/MainLayout/MainLayout";
-import { Head } from "@inertiajs/react";
+import Head from "@/components/AppHead";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import DeleteUserForm from "./Partials/DeleteUserForm";

@@ -1,7 +1,7 @@
 import PageBanner from "@/assets/images/homebanner.png";
 import { useTranslation } from "@/hooks/use_translation";
 import MainLayout from "@/layouts/MainLayout/MainLayout";
-import { Head } from "@inertiajs/react";
+import Head from "@/components/AppHead";
 import ChurchIcon from "@mui/icons-material/Church";
 import FamilyRestroomIcon from "@mui/icons-material/FamilyRestroom";
 import HistoryEduIcon from "@mui/icons-material/HistoryEdu";
