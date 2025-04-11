@@ -22,6 +22,10 @@ jobs:
                   echo "$COMMITS" >> $GITHUB_OUTPUT
                   echo "EOF" >> $GITHUB_OUTPUT
 
+            - name: Set short SHA
+              id: vars
+              run: echo "SHORT_SHA=$(echo ${GITHUB_SHA} | cut -c1-7)" >> $GITHUB_OUTPUT
+
             - name: Send Discord notification
               uses: Ilshidur/action-discord@master
               env:
@@ -49,7 +53,7 @@ jobs:
                               },
                               {
                                 "name": "🔄 Commit",
-                                "value": "[${{ slice(github.event.after, 0, 7) }}](${{ github.event.repository.html_url }}/commit/${{ github.event.after }})",
+                                "value": "[${{ steps.vars.outputs.SHORT_SHA }}](${{ github.event.repository.html_url }}/commit/${{ github.event.after }})",
                                 "inline": true
                               },
                               {
@@ -62,7 +66,7 @@ jobs:
                               "url": "https://avatars.githubusercontent.com/${{ github.actor }}"
                             },
                             "footer": {
-                              "text": "Push effectué le ${{ format(github.event.head_commit.timestamp, 'DD/MM/YYYY à HH:mm') }}",
+                              "text": "Push effectué le ${{ format('{0:dd/MM/yyyy à HH:mm}', github.event.head_commit.timestamp) }}",
                               "icon_url": "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
                             }
                           }
