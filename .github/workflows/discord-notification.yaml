@@ -14,12 +14,18 @@ jobs:
               with:
                   fetch-depth: 0
 
+            - name: Install jq
+              run: sudo apt-get install -y jq
+
             - name: Get commit messages
               id: get-commits
               run: |
-                  COMMITS=$(git log --pretty=format:"- %h %s" $(git merge-base HEAD~1 HEAD)..HEAD | sed 's/"/\\"/g')
+                  COMMITS=$(git log --pretty=format:"- %h %s" $(git merge-base HEAD~1 HEAD)..HEAD)
+                  COMMITS_JSON=$(echo "$COMMITS" | jq -Rs .)
+                  COMMITS_JSON="${COMMITS_JSON:1:-1}"
+                  COMMITS_JSON="${COMMITS_JSON//\\/\\\\}"
                   echo "commits<<EOF" >> $GITHUB_OUTPUT
-                  echo "$COMMITS" >> $GITHUB_OUTPUT
+                  echo "$COMMITS_JSON" >> $GITHUB_OUTPUT
                   echo "EOF" >> $GITHUB_OUTPUT
 
             - name: Prepare variables
@@ -53,12 +59,12 @@ jobs:
                             },
                             {
                               "name": "🔄 Commit",
-                              "value": "[${{ steps.vars.outputs.SHORT_SHA }}](${{ github.event.repository.html_url }}/commit/${{ github.event.after }})",
+                              "value": "[${{ steps.vars.outputs.SHORT_SHA }}](${{ github.event.repository.html_url }}/commit/${{ github.sha }})",
                               "inline": true
                             },
                             {
                               "name": "🧪 Voir les changements",
-                              "value": "[Comparer](${{ github.event.repository.html_url }}/compare/${{ github.event.before }}...${{ github.event.after }})",
+                              "value": "[Comparer](${{ github.event.repository.html_url }}/compare/${{ github.event.before }}...${{ github.sha }})",
                               "inline": true
                             }
                           ],
