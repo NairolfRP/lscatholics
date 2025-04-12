@@ -6,15 +6,19 @@ import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
+import Divider from "@mui/material/Divider";
 
 const DISCORD_URL = "https://discord.com";
-const FACEBROWSER_URL = "https://facebrowser.gta.world";
+const GTAW_URL = "https://gta.world";
 
 export default function PrivacyPolicy() {
     const { t } = useTranslation();
 
     return (
-        <MainLayout bannerTitle={t("privacy_policy")}>
+        <MainLayout hideBanner>
             <Head title={t("privacy_policy")} />
             <Container sx={{ mt: 5, mb: 15 }}>
                 <Alert severity="warning">
@@ -22,35 +26,41 @@ export default function PrivacyPolicy() {
                 </Alert>
 
                 <Box mt={3}>
+                    <Typography variant="h2" gutterBottom>
+                        {t("privacy_policy")}
+                    </Typography>
+                    <Divider sx={{ mb: 5 }} />
                     <Typography variant="h3" gutterBottom>
                         1. Informations Collectées
                     </Typography>
                     <Typography component="p" variant="body1">
                         Lors de l’utilisation de notre site, nous collectons uniquement les
-                        informations nécessaires à l&apos;authentification des utilisateurs via{" "}
+                        informations nécessaires à l&apos;authentification des utilisateurs via
+                        l'API de{" "}
+                        <Link href={GTAW_URL} target="_blank">
+                            GTA World
+                        </Link>{" "}
+                        . Après l'inscription, l'utilisateur peut aussi, de manière optionnelle,
+                        lier son compte utilisateur{" "}
                         <Link href={DISCORD_URL} target="_blank">
                             Discord
-                        </Link>{" "}
-                        ou{" "}
-                        <Link href={FACEBROWSER_URL} target="_blank">
-                            Facebrowser
                         </Link>
                         . Les données collectées sont les suivantes :
                     </Typography>
-                    <ul>
-                        <li>
-                            <Typography variant="body1">
-                                <strong>Nom d’utilisateur :</strong> pseudonyme Facebrowser ou
+                    <List sx={{ pl: 2 }}>
+                        <ListItem disablePadding>
+                            <ListItemText>
+                                <strong>Nom d’utilisateur :</strong> pseudonyme GTA World et/ou
                                 Discord
-                            </Typography>
-                        </li>
-                        <li>
-                            <Typography variant="body1">
-                                <strong>Identifiant unique :</strong> ID du compte Facebrowser ou
+                            </ListItemText>
+                        </ListItem>
+                        <ListItem disablePadding>
+                            <ListItemText>
+                                <strong>Identifiant unique :</strong> ID du compte GTA World et/ou
                                 Discord
-                            </Typography>
-                        </li>
-                    </ul>
+                            </ListItemText>
+                        </ListItem>
+                    </List>
                     <Typography component="p" variant="body1">
                         Ces informations sont exclusivement utilisées pour l’identification et la
                         gestion des comptes sur notre site.
@@ -64,18 +74,16 @@ export default function PrivacyPolicy() {
                     <Typography component="p" variant="body1">
                         Les informations collectées servent uniquement à :
                     </Typography>
-                    <ul>
-                        <li>
-                            <Typography variant="body1">
+                    <List sx={{ listStyle: "decimal", pl: 4 }}>
+                        <ListItem sx={{ display: "list-item" }} disablePadding>
+                            <ListItemText>
                                 Permettre l’accès sécurisé aux fonctionnalités du site
-                            </Typography>
-                        </li>
-                        <li>
-                            <Typography variant="body1">
-                                Gérer et maintenir votre compte utilisateur
-                            </Typography>
-                        </li>
-                    </ul>
+                            </ListItemText>
+                        </ListItem>
+                        <ListItem sx={{ display: "list-item" }} disablePadding>
+                            <ListItemText>Gérer et maintenir votre compte utilisateur</ListItemText>
+                        </ListItem>
+                    </List>
                     <Typography component="p" variant="body1">
                         Aucune autre information n’est demandée ni stockée, et vos données ne sont
                         jamais partagées ni vendues à des tiers.
