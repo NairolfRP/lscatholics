@@ -8,6 +8,7 @@ import Box from "@mui/material/Box";
 import * as React from "react";
 import ScrollToTop from "@/components/ScrollToTop";
 import DevelopmentBanner from "@/components/DevelopmentBanner";
+import Head from "@/components/AppHead";
 
 interface MainLayoutProps {
     bannerImg?: MainPageBannerProps["image"];
@@ -25,6 +26,7 @@ export default function MainLayout({
 }: React.PropsWithChildren<MainLayoutProps>) {
     return (
         <React.Fragment>
+            <Head />
             <Notifications />
             <MainHeader />
             {!hideBanner ? (
