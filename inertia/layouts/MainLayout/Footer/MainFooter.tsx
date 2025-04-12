@@ -66,28 +66,31 @@ export default function MainFooter() {
                                     <FooterListLink href="/about-us" label={t("who_we_are")} />
                                     <FooterListLink
                                         href="/archbishop"
-                                        label={t("archbishop_lopez")}
+                                        label={t("cardinal_callahan")}
                                     />
                                     <FooterListLink href="/departments" label={t("departments")} />
-                                    <FooterListLink label={t("handbook")} />
-                                    <FooterListLink label={t("directory")} />
-                                    <FooterListLink label={t("contact_us")} href="/contact" />
+                                    <FooterListLink href="/handbook" label={t("handbook")} />
+                                    <FooterListLink href="/contact" label={t("contact_us")} />
                                 </List>
                             </Grid>
                             <Grid>
                                 <FooterLeftH2>{t("parishes")}</FooterLeftH2>
                                 <List>
-                                    <FooterListLink label={t("find_parish")} />
-                                    <FooterListLink label={t("ethnic_liturgies")} />
-                                    <FooterListLink label={t("parish_notices")} />
+                                    <FooterListLink
+                                        href="/find/parishes"
+                                        label={t("find_parish")}
+                                    />
                                 </List>
                             </Grid>
                             <Grid>
                                 <FooterLeftH2>{t("careers")}</FooterLeftH2>
                                 <List>
                                     <FooterListLink label={t("vocations")} />
-                                    <FooterListLink label={t("human_ressources")} />
-                                    <FooterListLink label={t("browse_jobs")} />
+                                    <FooterListLink
+                                        href="/departments/human-resources"
+                                        label={t("human_ressources")}
+                                    />
+                                    <FooterListLink href="/jobs" label={t("browse_jobs")} />
                                 </List>
                             </Grid>
                         </Grid>
