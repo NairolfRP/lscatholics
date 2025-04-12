@@ -17,6 +17,7 @@ import { Controller, useFormContext } from "react-hook-form";
 import { usePage } from "@inertiajs/react";
 import type { SharedProps } from "@adonisjs/inertia/types";
 import NameInput from "@/components/common/NameInput/NameInput";
+import { useCharacterFormSync } from "@/hooks/use_character_form_sync";
 
 interface PersonalInfoFieldsProps {
     data: Partial<DonatePropsForm>;
@@ -104,9 +105,11 @@ const OrganizationField = () => {
 
 export default function PersonalInfoFields() {
     const { t } = useTranslation();
-    const { errors = {} } = usePage<SharedProps>().props;
-    const { control } = useFormContext();
+    const { auth, errors = {} } = usePage<SharedProps>().props;
+    const { control, setValue } = useFormContext();
     const { isPaymentProcessing } = usePaymentProcessing();
+
+    useCharacterFormSync({ setValue, fields: ["firstname", "lastname"] });
 
     return (
         <>
@@ -119,6 +122,7 @@ export default function PersonalInfoFields() {
                             name={fieldName}
                             control={control}
                             rules={{ required: true }}
+                            disabled={!!auth.user || isPaymentProcessing}
                             render={({ field }) => (
                                 <NameInput
                                     key={fieldName}
@@ -128,7 +132,6 @@ export default function PersonalInfoFields() {
                                     error={!!errors[fieldName]}
                                     helperText={errors[fieldName]}
                                     sx={{ m: 1 }}
-                                    disabled={isPaymentProcessing}
                                     required
                                 />
                             )}

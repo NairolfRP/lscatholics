@@ -6,10 +6,14 @@ import type { DonationMetaData, PaymentIntent } from "#services/payment/interfac
 import env from "#start/env";
 import { DiscordWebhookService } from "#services/discord/discord_webhook_service";
 import { DiscordEmbedService } from "#services/discord/discord_embed_service";
+import CharacterService from "#services/character_service";
 
 @inject()
 export default class DonateController {
-    constructor(protected service: FleecaPaymentService) {}
+    constructor(
+        protected service: FleecaPaymentService,
+        protected characterService: CharacterService,
+    ) {}
 
     private initiateDonation({ amount, data }: { amount: number; data: DonationMetaData }): string {
         const payment = this.service.createPaymentIntent({
@@ -67,6 +71,8 @@ export default class DonateController {
                     "Please read, approve and check the confirmation checkbox when you are ready.",
             }),
         });
+
+        await this.characterService.syncCurrentCharacterWithRequestBody();
 
         const validation = await request.validate(validationSchema);
 

@@ -2,8 +2,13 @@ import type { HttpContext } from "@adonisjs/core/http";
 import { z } from "zod";
 import { DiscordEmbedService } from "#services/discord/discord_embed_service";
 import { DiscordWebhookService } from "#services/discord/discord_webhook_service";
+import CharacterService from "#services/character_service";
+import { inject } from "@adonisjs/core";
 
+@inject()
 export default class ContactsController {
+    constructor(protected characterService: CharacterService) {}
+
     async show({ inertia }: HttpContext) {
         return inertia.render("Contact");
     }
@@ -11,28 +16,30 @@ export default class ContactsController {
     async submit({ response, request }: HttpContext) {
         const validationSchema = z.object({
             firstname: z
-                .string()
+                .string({ required_error: "Firstname is required" })
                 .min(1, { message: "Firstname is required" })
                 .max(50, { message: "Firstname must not exceed 50 characters" }),
 
             lastname: z
-                .string()
-                .min(1, { message: "Firstname is required" })
+                .string({ required_error: "Lastname is required" })
+                .min(1, { message: "Lastname is required" })
                 .max(50, { message: "Lastname must not exceed 50 characters" }),
 
             phone: z
-                .string()
+                .string({ required_error: "Phone is required" })
                 .min(1, { message: "Phone is required" })
                 .regex(/^\d+$/, { message: "Phone must only contain digits" })
                 .min(3, { message: "Phone must contain at least 3 digits" })
                 .max(20, { message: "Phone must not exceed 20 digits" }),
 
             message: z
-                .string()
+                .string({ required_error: "Message is required" })
                 .min(1, { message: "Message is required" })
                 .min(3, { message: "Message must contain at least 3 characters" })
                 .max(3000, { message: "Message must not exceed 3 000 characters" }),
         });
+
+        await this.characterService.syncCurrentCharacterWithRequestBody();
 
         const validation = await request.validate(validationSchema);
 

@@ -19,24 +19,27 @@ import { Controller, useForm } from "react-hook-form";
 import type { SharedProps } from "@adonisjs/inertia/types";
 import { PhoneInput } from "@/components/common/PhoneInput/PhoneInput";
 import NameInput from "@/components/common/NameInput/NameInput";
+import { useCharacterFormSync } from "@/hooks/use_character_form_sync";
 
 export default function Contact() {
     const { t } = useTranslation();
 
-    const { errors = {} } = usePage<SharedProps>().props;
+    const { auth, errors = {} } = usePage<SharedProps>().props;
 
     const [success, displaySuccess] = useState<boolean>(false);
 
-    const { control, handleSubmit, reset } = useForm({
+    const { control, handleSubmit, reset, setValue } = useForm({
         defaultValues: {
-            firstname: "",
-            lastname: "",
+            firstname: auth.user?.currentCharacter?.firstname || "",
+            lastname: auth.user?.currentCharacter?.lastname || "",
             phone: "",
             message: "",
         },
     });
 
     const hasErrors = Object.keys(errors).length > 0;
+
+    console.log(auth.user?.currentCharacter);
 
     const onSubmit = handleSubmit((data) => {
         console.log(data);
@@ -54,6 +57,8 @@ export default function Contact() {
             },
         });
     });
+
+    useCharacterFormSync({ setValue, fields: ["firstname", "lastname"] });
 
     return (
         <MainLayout bannerTitle={t("contact_us")}>
@@ -156,6 +161,7 @@ export default function Contact() {
                             name="firstname"
                             control={control}
                             rules={{ required: true }}
+                            disabled={!!auth.user}
                             render={({ field }) => (
                                 <NameInput
                                     {...field}
@@ -172,6 +178,7 @@ export default function Contact() {
                             name="lastname"
                             control={control}
                             rules={{ required: true }}
+                            disabled={!!auth.user}
                             render={({ field }) => (
                                 <NameInput
                                     {...field}
