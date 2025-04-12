@@ -76,7 +76,13 @@ router
     })
     .prefix("find");
 
-router.on("/daily-readings").renderInertia("DailyReadings");
+router.get("/daily-readings", ({ inertia, i18n }) =>
+    inertia.location(
+        i18n.locale === "fr"
+            ? "https://www.aelf.org/"
+            : "https://www.usccb.org/bible/readings/index.cfm",
+    ),
+);
 
 router.on("/media").renderInertia("Media");
 
