@@ -35,13 +35,12 @@ jobs:
                   echo "FORMATTED_DATE=$(date '+%d/%m/%Y à %H:%M')" >> $GITHUB_OUTPUT
 
             - name: Send Discord notification
-              uses: Ilshidur/action-discord@master
+              uses: Ilshidur/action-discord@0.4.0
               env:
                   DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK_URL }}
                   DISCORD_USERNAME: "[HRP] Site - Mise à jour"
                   DISCORD_AVATAR: "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
-                  DISCORD_EMBEDS: |
-                      [
+                  DISCORD_EMBEDS: '[
                         {
                           "title": "📦 Nouvelle mise à jour",
                           "description": "Un push a été effectué sur la branche **prod**\n⚠️ **La mise à jour sera disponible en ligne après la fin du déploiement manuel dans quelques minutes.**",
@@ -76,6 +75,6 @@ jobs:
                             "icon_url": "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
                           }
                         }
-                      ]
+                      ]'
               with:
                   args: ""
