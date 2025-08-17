@@ -1,6 +1,6 @@
-import GreatChaparralChurch from "@/assets/images/great_chaparral_church.png";
-import CathedralImage from "@/assets/images/olscathedral.webp";
 import GoodShepherdChurchImage from "@/assets/images/rockfordhills_church.png";
+import CathedralImage from "@/assets/images/olscathedral.webp";
+import IglesiaNuestraSenoraReinaDeLosSantos from "@/assets/images/iglesia.png";
 
 export const parishesList = [
     {
@@ -14,8 +14,8 @@ export const parishesList = [
         address: "Boulevard Del Perro, Rockford Hills, Los Santos, SA 90210-3298",
     },
     {
-        name: "st_andrew_of_blaine_catholic_church",
-        image: GreatChaparralChurch,
-        address: "Route 68, Great Chaparral, SA",
+        name: "iglesia_nuestra_senora_reina_de_los_santos",
+        image: IglesiaNuestraSenoraReinaDeLosSantos,
+        address: "Old Mexican Plaza, Alta, Los Santos, SA 90012",
     },
 ];
