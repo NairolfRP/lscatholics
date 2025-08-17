@@ -141,12 +141,12 @@ router
     .group(() => {
         router.post("/cancel", [PaymentController, "cancel"]);
 
-        /*router
+        router
             .get("/fleeca/callback/:token", [PaymentController, "callback"])
-            .where("token", /^[a-zA-Z0-9-_]{30,}$/);*/
+            .where("token", /^[a-zA-Z0-9-_]{30,}$/);
     })
     .prefix("/api/payment");
 
-router
+/*router
     .get("/fleeca/callback/:token", [PaymentController, "callback"])
-    .where("token", /^[a-zA-Z0-9-_]{30,}$/);
+    .where("token", /^[a-zA-Z0-9-_]{30,}$/);*/
