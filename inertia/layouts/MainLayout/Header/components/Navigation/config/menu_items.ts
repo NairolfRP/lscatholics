@@ -20,10 +20,6 @@ export const menuItems: HeaderNavItem[] = [
                 ],
             },
             {
-                name: "archbishop_lopez",
-                link: "/francisco-j-lopez",
-            },
-            {
                 name: "departments",
                 link: "/departments",
             },
