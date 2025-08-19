@@ -65,7 +65,7 @@ importers:
         version: 11.14.0(@emotion/react@11.14.0(@types/react@19.0.12)(react@19.1.0))(@types/react@19.0.12)(react@19.1.0)
       '@inertiajs/react':
         specifier: ^2.0.5
-        version: 2.0.5(react@19.1.0)
+        version: 2.1.2(react@19.1.0)
       '@mui/icons-material':
         specifier: ^7.0.1
         version: 7.0.1(@mui/material@7.0.1(@emotion/react@11.14.0(@types/react@19.0.12)(react@19.1.0))(@emotion/styled@11.14.0(@emotion/react@11.14.0(@types/react@19.0.12)(react@19.1.0))(@types/react@19.0.12)(react@19.1.0))(@types/react@19.0.12)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(@types/react@19.0.12)(react@19.1.0)
@@ -868,8 +868,8 @@ packages:
   '@inertiajs/core@2.0.6':
     resolution: {integrity: sha512-Jv3NQdN0rX2lS+SXpMQfBWfD0dRp9F1eKrZvpX6pOO4DInSMD7gjCVnYs+zbYFa6Fbgms0mQnnQHvwlT6W+TSA==}
 
-  '@inertiajs/react@2.0.5':
-    resolution: {integrity: sha512-ber7MU+COXz/md/Nl2Z2V/uglsWIZjZEPulgSg6Qvr3/MuitIzmZX6FsZr4Muer+wI+Zzbj5vmoDKA2B/J7LzQ==}
+  '@inertiajs/react@2.1.2':
+    resolution: {integrity: sha512-hh3dQxoEumdjSRyMajYkEnG3fb3xkyexBD8tTSjo5OeulE/VteEjS7ZM8tNseM7ya/jb3G6ccoc5MSlYEh6atg==}
     peerDependencies:
       react: ^16.9.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
 
@@ -2175,6 +2175,9 @@ packages:
     resolution: {integrity: sha512-w+5mJ3GuFL+NjVtJlvydShqE1eN3h3PbI7/5LAsYJP/2qtuMXjfL2LpHSRqo4b4eSF5K/DH1JXKUAHSB2UW50g==}
     engines: {node: '>= 0.4'}
 
+  es-toolkit@1.39.10:
+    resolution: {integrity: sha512-E0iGnTtbDhkeczB0T+mxmoVlT4YNweEKBLq7oaU4p11mecdsZpNWOglI4895Vh4usbQ+LsJiuLuI2L0Vdmfm2w==}
+
   esbuild@0.25.2:
     resolution: {integrity: sha512-16854zccKPnC+toMywC+uKNeYSv+/eXkevRAfwRD/G9Cleq66m8XFIrigkbvauLLlCfDL45Q2cWegSg53gGBnQ==}
     engines: {node: '>=18'}
@@ -2956,10 +2959,6 @@ packages:
   locate-path@7.2.0:
     resolution: {integrity: sha512-gvVijfZvn7R+2qyPX8mAuKcFGDf6Nc61GdvGafQsHL0sBIxfKzA+usWn4GFC/bk+QdwPUD4kWFJLhElipq+0VA==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
-
-  lodash.isequal@4.5.0:
-    resolution: {integrity: sha512-pDo3lu8Jhfjqls6GkMgpahsF9kCyayhgykjyLMNFTKWrpVdAQtYyB4muAMWozBB4ig/dtWAmsMxLEI8wuz+DYQ==}
-    deprecated: This package is deprecated. Use require('node:util').isDeepStrictEqual instead.
 
   lodash.merge@4.6.2:
     resolution: {integrity: sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==}
@@ -3895,6 +3894,7 @@ packages:
   superagent@10.2.0:
     resolution: {integrity: sha512-IKeoGox6oG9zyDeizaezkJ2/aK0wc5la9st7WsAKyrAkfJ56W3whVbVtF68k6wuc87/y9T85NyON5FLz7Mrzzw==}
     engines: {node: '>=14.18.0'}
+    deprecated: Please upgrade to superagent v10.2.2+, see release notes at https://github.com/forwardemail/superagent/releases/tag/v10.2.2 - maintenance is supported by Forward Email @ https://forwardemail.net
 
   supports-color@10.0.0:
     resolution: {integrity: sha512-HRVVSbCCMbj7/kdWF9Q+bbckjBHLtHMEoJWlkmYzzdwhYMkjkOwubLM6t7NbWKjgKamGDrWL1++KrjUO1t9oAQ==}
@@ -5034,10 +5034,10 @@ snapshots:
     transitivePeerDependencies:
       - debug
 
-  '@inertiajs/react@2.0.5(react@19.1.0)':
+  '@inertiajs/react@2.1.2(react@19.1.0)':
     dependencies:
       '@inertiajs/core': 2.0.6
-      lodash.isequal: 4.5.0
+      es-toolkit: 1.39.10
       react: 19.1.0
     transitivePeerDependencies:
       - debug
@@ -6363,6 +6363,8 @@ snapshots:
       is-date-object: 1.1.0
       is-symbol: 1.1.1
 
+  es-toolkit@1.39.10: {}
+
   esbuild@0.25.2:
     optionalDependencies:
       '@esbuild/aix-ppc64': 0.25.2
@@ -7191,8 +7193,6 @@ snapshots:
   locate-path@7.2.0:
     dependencies:
       p-locate: 6.0.0
-
-  lodash.isequal@4.5.0: {}
 
   lodash.merge@4.6.2: {}
 
