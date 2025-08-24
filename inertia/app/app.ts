@@ -9,7 +9,7 @@ import { resolvePageComponent } from '@adonisjs/inertia/helpers'
 import { TuyauPlugin } from '@tuyau/inertia/vue'
 import { tuyau } from '@/lib/tuyau'
 
-const appName = import.meta.env.VITE_APP_NAME || 'AdonisJS'
+const appName = import.meta.env.VITE_APP_NAME || 'Archidiocèse de Los Santos'
 
 createInertiaApp({
   progress: { color: '#5468FF' },
