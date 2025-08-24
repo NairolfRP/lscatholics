@@ -14,7 +14,7 @@ const appName = import.meta.env.VITE_APP_NAME || 'Archidiocèse de Los Santos'
 createInertiaApp({
   progress: { color: '#5468FF' },
 
-  title: (title) => `${title} - ${appName}`,
+  title: (title) => (title ? `${title} - ${appName}` : `${appName}`),
 
   resolve: (name) => {
     return resolvePageComponent(
