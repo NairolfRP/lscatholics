@@ -1,11 +1,11 @@
 /// <reference path="../../adonisrc.ts" />
 /// <reference path="../../config/inertia.ts" />
 
-import 'inertia/css/app.css'
-import type { DefineComponent } from 'vue'
-import { createSSRApp, h } from 'vue'
+import '@/assets/css/app.css'
+import { createSSRApp, DefineComponent, h } from 'vue'
 import { createInertiaApp } from '@inertiajs/vue3'
 import { resolvePageComponent } from '@adonisjs/inertia/helpers'
+import AppLayout from '@/layouts/AppLayout.vue'
 import { TuyauPlugin } from '@tuyau/inertia/vue'
 import { tuyau } from '@/lib/tuyau'
 
@@ -17,10 +17,18 @@ createInertiaApp({
   title: (title) => (title ? `${title} - ${appName}` : `${appName}`),
 
   resolve: (name) => {
-    return resolvePageComponent(
+    const page = resolvePageComponent(
       `../pages/${name}.vue`,
       import.meta.glob<DefineComponent>('../pages/**/*.vue')
     )
+
+    page.then((module) => {
+      if (module.default.layout === undefined) {
+        module.default.layout = AppLayout
+      }
+    })
+
+    return page
   },
 
   setup({ el, App, props, plugin }) {

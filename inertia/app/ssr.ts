@@ -1,6 +1,8 @@
+import '@/assets/css/app.css'
 import { createInertiaApp } from '@inertiajs/vue3'
 import { renderToString } from '@vue/server-renderer'
-import { createSSRApp, h, type DefineComponent } from 'vue'
+import { createSSRApp, type DefineComponent, h } from 'vue'
+import AppLayout from '@/layouts/AppLayout.vue'
 import { TuyauPlugin } from '@tuyau/inertia/vue'
 import { tuyau } from '@/lib/tuyau'
 
@@ -10,7 +12,11 @@ export default function render(page: any) {
     render: renderToString,
     resolve: (name) => {
       const pages = import.meta.glob<DefineComponent>('../pages/**/*.vue', { eager: true })
-      return pages[`../pages/${name}.vue`]
+      let resolvedPage = pages[`../pages/${name}.vue`]
+
+      resolvedPage.default.layout = resolvedPage.default.layout || AppLayout
+
+      return resolvedPage
     },
 
     setup({ App, props, plugin }) {
