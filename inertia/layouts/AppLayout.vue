@@ -7,6 +7,8 @@
     </main>
 
     <AppFooter />
+
+    <ScrollToTopButton />
     <Toaster richColors />
   </div>
 </template>
@@ -16,6 +18,7 @@ import { Toaster } from '@/components/ui/sonner'
 import 'vue-sonner/style.css'
 import AppHeader from '@/components/layout/AppHeader.vue'
 import AppFooter from '@/components/layout/AppFooter.vue'
+import ScrollToTopButton from '@/components/ScrollToTopButton.vue'
 
 interface Props {
   title?: string
