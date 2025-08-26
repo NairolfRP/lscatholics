@@ -10,74 +10,41 @@
     "schedule:weekly"
   ],
   "rangeStrategy": "bump",
-  "labels": [
-    "dependencies",
-    "renovate"
-  ],
+  "labels": ["dependencies", "renovate"],
   "packageRules": [
     {
       "description": "Group Adonis.Js dependencies",
-      "matchPackageNames": [
-        "@adonisjs/**"
-      ],
+      "matchPackageNames": ["@adonisjs/**"],
       "groupName": "adonisjs",
-      "schedule": [
-        "before 3am on sunday"
-      ]
+      "schedule": ["before 3am on sunday"]
     },
     {
       "description": "Group Vue and Inertia dependencies",
-      "matchPackageNames": [
-        "vue",
-        "@vue/**",
-        "@inertiajs/**",
-        "lucide-vue-next"
-      ],
+      "matchPackageNames": ["vue", "@vue/**", "@inertiajs/**", "lucide-vue-next"],
       "groupName": "vue-inertia",
-      "schedule": [
-        "before 3am on sunday"
-      ]
+      "schedule": ["before 3am on sunday"]
     },
     {
       "description": "Group vite and plugins dependencies",
-      "matchPackageNames": [
-        "vite",
-        "@vitejs/**",
-        "@tailwindcss/vite"
-      ],
+      "matchPackageNames": ["vite", "@vitejs/**", "@tailwindcss/vite"],
       "groupName": "vite",
-      "schedule": [
-        "before 3am on sunday"
-      ]
+      "schedule": ["before 3am on sunday"]
     },
     {
       "description": "Group TypeScript and tools",
-      "matchPackageNames": [
-        "typescript",
-        "ts-node",
-        "@types/**",
-        "@adonisjs/tsconfig"
-      ],
+      "matchPackageNames": ["typescript", "ts-node", "@types/**", "@adonisjs/tsconfig"],
       "groupName": "typescript",
-      "schedule": [
-        "before 3am on sunday"
-      ]
+      "schedule": ["before 3am on sunday"]
     },
     {
       "description": "Limit SWC updates",
-      "matchPackageNames": [
-        "@swc/core"
-      ],
+      "matchPackageNames": ["@swc/core"],
       "rangeStrategy": "pin",
       "stabilityDays": 7
     },
     {
       "description": "Group Tailwind and plugins",
-      "matchPackageNames": [
-        "tailwind",
-        "tailwind-merge",
-        "tw-animate-css"
-      ],
+      "matchPackageNames": ["tailwind", "tailwind-merge", "tw-animate-css"],
       "groupName": "tailwind"
     },
     {
@@ -98,16 +65,10 @@
   "stabilityDays": 3,
   "dependencyDashboard": true,
   "timezone": "Europe/Paris",
-  "schedule": [
-    "before 3am on monday"
-  ],
+  "schedule": ["before 3am on monday"],
   "vulnerabilityAlerts": {
-    "labels": [
-      "security"
-    ],
+    "labels": ["security"],
     "automerge": false,
-    "assignees": [
-      "@nairolfrp"
-    ]
+    "assignees": ["@nairolfrp"]
   }
 }
