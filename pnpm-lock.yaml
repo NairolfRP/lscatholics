@@ -108,7 +108,7 @@ importers:
         specifier: ^1.4.5
         version: 1.4.5
       '@adonisjs/tsconfig':
-        specifier: ^1.4.0
+        specifier: ^1.4.1
         version: 1.4.1
       '@japa/assert':
         specifier: ^4.0.1
@@ -132,7 +132,7 @@ importers:
         specifier: ^3.7.1
         version: 3.7.1
       '@types/node':
-        specifier: ^22.15.18
+        specifier: ^22.17.2
         version: 22.17.2
       '@vitejs/plugin-vue':
         specifier: ^6.0.1
