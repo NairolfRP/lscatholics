@@ -1,5 +1,7 @@
 /// <reference path="../../adonisrc.ts" />
 /// <reference path="../../config/inertia.ts" />
+/// <reference path="../../config/ally.ts" />
+/// <reference path="../../config/auth.ts" />
 
 import '@/assets/css/app.css'
 import { createSSRApp, DefineComponent, h } from 'vue'
