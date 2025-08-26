@@ -154,7 +154,7 @@ importers:
         specifier: ^4.1.12
         version: 4.1.12
       ts-node-maintained:
-        specifier: ^10.9.5
+        specifier: ^10.9.6
         version: 10.9.6(@swc/core@1.11.24(@swc/helpers@0.5.17))(@types/node@22.17.2)(typescript@5.9.2)
       typescript:
         specifier: ~5.9.2
