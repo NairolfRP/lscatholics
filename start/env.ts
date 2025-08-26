@@ -35,4 +35,17 @@ export default await Env.create(new URL('../', import.meta.url), {
   DB_USER: Env.schema.string(),
   DB_PASSWORD: Env.schema.string.optional(),
   DB_DATABASE: Env.schema.string(),
+
+  /*
+  |----------------------------------------------------------
+  | Variables for configuring ally package
+  |----------------------------------------------------------
+  */
+  DISCORD_CLIENT_ID: Env.schema.string(),
+  DISCORD_CLIENT_SECRET: Env.schema.string(),
+  DISCORD_GUILD_ID: Env.schema.string.optional(),
+  DISCORD_BOT_TOKEN: Env.schema.string.optional(),
+
+  GTAW_CLIENT_ID: Env.schema.string(),
+  GTAW_CLIENT_SECRET: Env.schema.string(),
 })

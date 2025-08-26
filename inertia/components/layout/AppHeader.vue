@@ -29,10 +29,7 @@ import AppNavigation from '@/components/layout/Navigation/AppNavigation.vue'
 import AppMobileMenu from '@/components/layout/Navigation/AppMobileMenu.vue'
 import UserAccountMenu from '@/components/auth/UserAccountMenu.vue'
 import LoginButton from '@/components/auth/LoginButton.vue'
-import { usePage } from '@inertiajs/vue3'
-import { computed } from 'vue'
+import { useUser } from '@/composables/use_user'
 
-const page = usePage()
-
-const user = computed(() => page.props?.auth?.user)
+const user = useUser()
 </script>
