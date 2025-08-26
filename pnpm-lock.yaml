@@ -148,7 +148,7 @@ importers:
         specifier: ^13.0.0
         version: 13.1.1
       prettier:
-        specifier: ^3.5.3
+        specifier: ^3.6.2
         version: 3.6.2
       tailwindcss:
         specifier: ^4.1.12
