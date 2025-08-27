@@ -1,4 +1,3 @@
-import '@/assets/css/app.css'
 import { createInertiaApp } from '@inertiajs/vue3'
 import { renderToString } from '@vue/server-renderer'
 import { createSSRApp, type DefineComponent, h } from 'vue'
