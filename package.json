@@ -66,6 +66,7 @@
     "vue-tsc": "^3.0.6"
   },
   "dependencies": {
+    "@adonisjs-community/modules": "^1.1.0",
     "@adonisjs/ally": "^5.1.1",
     "@adonisjs/auth": "^9.4.2",
     "@adonisjs/core": "^6.19.0",

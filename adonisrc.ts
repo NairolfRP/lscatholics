@@ -29,6 +29,7 @@ export default defineConfig({
     () => import('@adonisjs/core/commands'),
     () => import('@adonisjs/lucid/commands'),
     () => import('@tuyau/core/commands'),
+    () => import('@adonisjs-community/modules/commands'),
   ],
 
   /*

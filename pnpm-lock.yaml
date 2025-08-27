@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@adonisjs-community/modules':
+        specifier: ^1.1.0
+        version: 1.1.0(@adonisjs/core@6.19.0(@adonisjs/assembler@7.8.2(typescript@5.9.2))(@vinejs/vine@3.0.1)(edge.js@6.3.0))
       '@adonisjs/ally':
         specifier: ^5.1.1
         version: 5.1.1(@adonisjs/core@6.19.0(@adonisjs/assembler@7.8.2(typescript@5.9.2))(@vinejs/vine@3.0.1)(edge.js@6.3.0))
@@ -170,6 +173,12 @@ packages:
 
   '@adobe/css-tools@4.4.4':
     resolution: {integrity: sha512-Elp+iwUx5rN5+Y8xLt5/GRoG20WGoDCQ/1Fb+1LiGtvwbDavuSk0jhD/eZdckHAuzcDzccnkv+rEjyWfRx18gg==}
+
+  '@adonisjs-community/modules@1.1.0':
+    resolution: {integrity: sha512-OG5OOlagXqYo3eEJg1icvfbGnTVHiJd99TlsXyCbLQzVaVrmH6wznLBbfRTxdLFC04hV/HTL1YFJ6UBFjCIMJA==}
+    engines: {node: '>=20.6.0'}
+    peerDependencies:
+      '@adonisjs/core': ^6.2.0
 
   '@adonisjs/ace@13.3.0':
     resolution: {integrity: sha512-68dveDFd766p69cBvK/MtOrOP0+YKYLeHspa9KLEWcWk9suPf3pbGkHQ2pwDnvLJxBPHk4932KbbSSzzpGNZGw==}
@@ -6240,6 +6249,10 @@ packages:
 snapshots:
 
   '@adobe/css-tools@4.4.4': {}
+
+  '@adonisjs-community/modules@1.1.0(@adonisjs/core@6.19.0(@adonisjs/assembler@7.8.2(typescript@5.9.2))(@vinejs/vine@3.0.1)(edge.js@6.3.0))':
+    dependencies:
+      '@adonisjs/core': 6.19.0(@adonisjs/assembler@7.8.2(typescript@5.9.2))(@vinejs/vine@3.0.1)(edge.js@6.3.0)
 
   '@adonisjs/ace@13.3.0':
     dependencies:
