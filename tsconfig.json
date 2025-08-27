@@ -13,6 +13,7 @@
     ]
   },
   "exclude": [
+    "inertia/**/*",
     "node_modules",
     "build"
   ]
