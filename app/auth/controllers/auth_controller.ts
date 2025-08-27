@@ -23,7 +23,7 @@ export default class AuthController {
     }
 
     if (gtaw.hasError()) {
-      return response.badRequest({ message: 'An error has occurred', error: gta5.getError() })
+      return response.badRequest({ message: 'An error has occurred', error: gtaw.getError() })
     }
 
     const gtawUser = await gtaw.user()
