@@ -61,13 +61,13 @@ const overlayClass = computed(() => {
 const paddingClasses = computed(() => {
   const classes = []
 
-  const pyMap = {
+  const pyMap: Record<string, string> = {
     '16': 'py-16',
     '20': 'py-20',
     '24': 'py-24',
   }
 
-  const ptMap = {
+  const ptMap: Record<string, string> = {
     '32': 'pt-32',
     '40': 'pt-40',
     '45': 'pt-45',

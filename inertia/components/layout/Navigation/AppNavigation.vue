@@ -36,7 +36,7 @@
         </template>
 
         <NavigationMenuLink :class="triggerButtonClasses" v-else-if="hasLink(item)" as-child>
-          <Link v-if="item.route" :route="item.route" :params="item.routeParams">
+          <Link v-if="item.route" :route="item.route as never" :params="item.routeParams as []">
             {{ item.label }}</Link
           >
           <a

@@ -1,6 +1,7 @@
 import type { CSSProperties } from 'vue'
 
 export type IconProps = {
+  clickable?: boolean
   iconName?: string
   viewBox?: string
   width?: number | string
@@ -22,7 +23,7 @@ export const useIconEvents = () => {
   }
 }
 
-export function createIconProps(customDefaults: Parital<IconProps> = {}) {
+export function createIconProps(customDefaults: Partial<IconProps> = {}) {
   return {
     ...defaultIconProps,
     ...customDefaults,

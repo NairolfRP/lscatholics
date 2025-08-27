@@ -12,7 +12,7 @@
               :key="`footer-menu-link-${item.id}-subitem-${subItem.id}`"
             >
               <Link
-                :route="subItem.route"
+                :route="subItem.route as never"
                 class="opacity-80 hover:opacity-100 hover:text-catholic-gold transition-colors"
               >
                 {{ subItem.label }}

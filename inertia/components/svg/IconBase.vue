@@ -18,7 +18,7 @@
 <script lang="ts" setup>
 import { defaultIconProps, type IconProps } from '@/composables/use_icon_props'
 
-withDefaults(defineProps<IconProps>(), defaultIconProps)
+const props = withDefaults(defineProps<IconProps>(), defaultIconProps)
 
 const emit = defineEmits<{
   click: [e: MouseEvent]

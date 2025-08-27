@@ -25,7 +25,7 @@ interface Props {
   description?: string
 }
 
-const props = withDefaults(defineProps<Props>(), {
+withDefaults(defineProps<Props>(), {
   title: '',
   description: "Site officiel de l'Archidiocèse - Communauté catholique",
 })

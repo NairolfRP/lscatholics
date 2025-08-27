@@ -113,7 +113,7 @@ const mobileMenuOpen = ref<boolean>(false)
 const toggleMobileMenu = () => (mobileMenuOpen.value = !mobileMenuOpen)
 
 const handleNavigate = (route: string, routeParams?: Record<string, any>) => {
-  router.visit({ route, params: routeParams })
+  router.visit({ route: route as never, params: routeParams as never })
   toggleMobileMenu()
 }
 </script>
