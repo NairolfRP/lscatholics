@@ -11,6 +11,7 @@ import router from '@adonisjs/core/services/router'
 import { middleware } from '#start/kernel'
 
 const AuthController = () => import('#auth/controllers/auth_controller')
+router.on('/').renderInertia('home').as('home')
 router
   .group(() => {
     router.get('/redirect/gtaw', [AuthController, 'redirectToProvider'])
