@@ -20,3 +20,11 @@ export function yearsBetween(date1: Date, date2: Date): number {
 export function formatNumber(nb: string | number, locale: string = 'fr-FR') {
   return new Intl.NumberFormat(locale).format(Number(nb))
 }
+
+export function formatDate(dateString: string): string {
+  return new Date(dateString).toLocaleDateString('fr-FR', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  })
+}

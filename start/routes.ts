@@ -11,7 +11,15 @@ import router from '@adonisjs/core/services/router'
 import { middleware } from '#start/kernel'
 
 const AuthController = () => import('#auth/controllers/auth_controller')
+const NewsController = () => import('#news/controllers/news_controller')
 router.on('/').renderInertia('home').as('home')
+router.get('/newsroom', [NewsController, 'index']).as('news.index')
+router
+  .get('/newsroom/:id', [NewsController, 'single'])
+  .where('id', router.matchers.slug())
+  .get('/newsroom/:slug', [NewsController, 'single'])
+  .where('slug', router.matchers.slug())
+  .as('news.single')
 router
   .group(() => {
     router.get('/redirect/gtaw', [AuthController, 'redirectToProvider'])

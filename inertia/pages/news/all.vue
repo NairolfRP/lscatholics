@@ -1,0 +1,193 @@
+<template>
+  <Head title="Actualités" />
+
+  <PageBanner py="16">
+    <h1 class="text-4xl md:text-5xl font-bold mb-4 font-serif">Actualités</h1>
+    <p class="text-xl opacity-90">Restez informé de la vie de notre archidiocèse</p>
+  </PageBanner>
+
+  <section class="py-8 bg-gray-50">
+    <div class="container mx-auto px-4">
+      <div class="flex flex-wrap gap-3 justify-center">
+        <Button
+          variant="outline"
+          size="sm"
+          :class="{ 'bg-catholic-gold text-white': !selectedCategory }"
+          @click="handleCategoryChange()"
+        >
+          Toutes les actualités
+        </Button>
+        <Button
+          v-for="category in categories"
+          :key="category.id"
+          variant="outline"
+          size="sm"
+          :class="{ 'bg-catholic-gold text-white': selectedCategory === category.id }"
+          @click="handleCategoryChange(category.id)"
+        >
+          {{ category.name }}
+        </Button>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-16">
+    <div v-if="error" class="max-w-4xl mx-auto px-3">
+      <Alert variant="destructive">
+        <CircleAlert />
+        <AlertTitle>Impossible de charger les actualités</AlertTitle>
+        <AlertDescription>
+          Nous n'avons pas pu récupérer les articles. Cela peut être dû à un problème serveur ou
+          réseau. Réessayez plus tard.
+        </AlertDescription>
+      </Alert>
+    </div>
+    <div
+      v-else-if="!articles.data || articles.data.length === 0"
+      class="w-full text-center mx-auto font-medium italic"
+    >
+      Aucun article trouvé
+    </div>
+    <div v-else class="container mx-auto px-4">
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <article v-for="article in articles.data" :key="article.id" class="group">
+          <Link route="news.single" :params="{ slug: article.slug }">
+            <Card class="m-0 p-0 card-hover h-full">
+              <div class="aspect-video bg-gray-200 rounded-t-lg">
+                <img
+                  v-if="article.coverImageUrl"
+                  :src="article.coverImageUrl"
+                  alt="Article featured image"
+                  class="object-cover h-full"
+                />
+              </div>
+              <CardContent class="p-6 flex flex-col h-full">
+                <div class="flex items-center gap-2 mb-3">
+                  <Badge>
+                    {{ article.category }}
+                  </Badge>
+                  <span class="text-xs text-gray-500">
+                    {{ formatDate(article.publishedAt) }}
+                  </span>
+                </div>
+
+                <h3 class="font-bold text-lg mb-3 group-hover:text-catholic-gold transition-colors">
+                  {{ article.title }}
+                </h3>
+
+                <p class="text-gray-600 text-sm mb-4 flex-grow">
+                  {{ article.excerpt }}
+                </p>
+
+                <div class="flex items-center justify-between pt-4 border-t">
+                  <Button variant="link" size="sm" class="p-0 text-catholic-gold">
+                    Lire la suite
+                    <ArrowRight class="w-3 h-3 ml-1" />
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          </Link>
+        </article>
+      </div>
+
+      <div class="mt-12 flex justify-center">
+        <Pagination
+          v-slot="{ page }"
+          :items-per-page="itemsPerPage"
+          :total="totalItems"
+          :default-page="page"
+        >
+          <PaginationContent v-slot="{ items }">
+            <PaginationFirst @click="handlePageChange(firstPage)" />
+            <PaginationPrevious @click="handlePageChange(page - 1)" />
+
+            <template v-for="(item, index) in items" :key="index">
+              <PaginationItem
+                v-if="item.type === 'page'"
+                :value="item.value"
+                :is-active="item.value === page"
+                @click="handlePageChange(item.value)"
+              >
+                {{ item.value }}
+              </PaginationItem>
+            </template>
+
+            <PaginationNext @click="handlePageChange(page + 1)" />
+            <PaginationLast @click="handlePageChange(lastPage)" />
+          </PaginationContent>
+        </Pagination>
+      </div>
+    </div>
+  </section>
+</template>
+
+<script setup lang="ts">
+import PageBanner from '@/components/layout/PageBanner.vue'
+import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent } from '@/components/ui/card'
+import {
+  Pagination,
+  PaginationContent,
+  PaginationFirst,
+  PaginationItem,
+  PaginationLast,
+  PaginationNext,
+  PaginationPrevious,
+} from '@/components/ui/pagination'
+import { Head } from '@inertiajs/vue3'
+import { ArrowRight } from 'lucide-vue-next'
+import type { InferPageProps } from '@adonisjs/inertia/types'
+import type NewsController from '#news/controllers/news_controller'
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
+import { CircleAlert } from 'lucide-vue-next'
+import { router } from '@inertiajs/vue3'
+import { tuyau } from '@/lib/tuyau'
+import { Link } from '@tuyau/inertia/vue'
+import { formatDate } from '@/lib/utils'
+
+const { selectedCategory, categories, articles } = defineProps<{
+  articles: InferPageProps<NewsController, 'index'>['articles']
+  selectedCategory: InferPageProps<NewsController, 'index'>['selectedCategory']
+  categories: InferPageProps<NewsController, 'index'>['categories']
+  error: boolean
+}>()
+
+const {
+  total: totalItems,
+  perPage: itemsPerPage,
+  currentPage: page,
+  firstPage,
+  lastPage,
+} = articles.meta
+
+const handleCategoryChange = (categoryId?: string) => {
+  router.get(
+    tuyau.newsroom.$url(),
+    {
+      category: categoryId,
+    },
+    {
+      preserveScroll: true,
+      only: ['articles', 'selectedCategory', 'error'],
+    }
+  )
+}
+
+const handlePageChange = (newPage?: number) => {
+  const p = Math.max(firstPage, Math.min(newPage || 1, lastPage))
+
+  router.get(
+    tuyau.newsroom.$url(),
+    {
+      page: p,
+      category: selectedCategory,
+    },
+    {
+      preserveScroll: true,
+      only: ['articles', 'selectedCategory', 'error'],
+    }
+  )
+}
+</script>

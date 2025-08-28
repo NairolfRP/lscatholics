@@ -2,6 +2,7 @@ import { DateTime } from 'luxon'
 import { BaseModel, column, hasMany } from '@adonisjs/lucid/orm'
 import Account from '#auth/models/account'
 import type { HasMany } from '@adonisjs/lucid/types/relations'
+import News from '#news/models/news'
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
@@ -12,6 +13,11 @@ export default class User extends BaseModel {
 
   @hasMany(() => Account)
   declare accounts: HasMany<typeof Account>
+
+  @hasMany(() => News, {
+    foreignKey: 'authorId',
+  })
+  declare articles: HasMany<typeof News>
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
