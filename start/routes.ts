@@ -20,8 +20,6 @@ router.get('/contact', [ContactController, 'index']).as('contact')
 router.post('/contact', [ContactController, 'submit']).as('contact.submit')
 
 router
-  .get('/newsroom/:id', [NewsController, 'single'])
-  .where('id', router.matchers.slug())
   .get('/newsroom/:slug', [NewsController, 'single'])
   .where('slug', router.matchers.slug())
   .as('news.single')
