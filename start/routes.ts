@@ -12,8 +12,13 @@ import { middleware } from '#start/kernel'
 
 const AuthController = () => import('#auth/controllers/auth_controller')
 const NewsController = () => import('#news/controllers/news_controller')
+const ContactController = () => import('#contact/controllers/contact_controller')
+
 router.on('/').renderInertia('home').as('home')
 router.get('/newsroom', [NewsController, 'index']).as('news.index')
+router.get('/contact', [ContactController, 'index']).as('contact')
+router.post('/contact', [ContactController, 'submit']).as('contact.submit')
+
 router
   .get('/newsroom/:id', [NewsController, 'single'])
   .where('id', router.matchers.slug())

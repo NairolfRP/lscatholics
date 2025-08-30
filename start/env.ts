@@ -48,4 +48,12 @@ export default await Env.create(new URL('../', import.meta.url), {
 
   GTAW_CLIENT_ID: Env.schema.string(),
   GTAW_CLIENT_SECRET: Env.schema.string(),
+
+  /*
+  |----------------------------------------------------------
+  | Variables for discord webhook
+  |----------------------------------------------------------
+  */
+  DISCORD_CONTACT_WEBHOOK: Env.schema.string.optional(),
+  DISCORD_CONTACT_WEBHOOK_TAG_ID: Env.schema.string.optional(),
 })
