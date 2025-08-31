@@ -1,14 +1,15 @@
 import { computed, ref } from 'vue'
+import type { DOMPurify } from 'dompurify'
 
 export function useSanitize() {
-  const DOMPurify = ref(null)
+  const service = ref<DOMPurify | null>(null)
   const isReady = ref(false)
 
   const initializePurify = async () => {
-    if (typeof window !== 'undefined' && !DOMPurify.value) {
+    if (typeof window !== 'undefined' && !service.value) {
       try {
         const { default: purify } = await import('dompurify')
-        DOMPurify.value = purify
+        service.value = purify
         isReady.value = true
       } catch (error) {
         console.error('Error loading DOMPurify:', error)
@@ -18,8 +19,8 @@ export function useSanitize() {
 
   const sanitize = (content: string) => {
     if (!content) return ''
-    if (!DOMPurify.value) return content
-    return DOMPurify.value.sanitize(content)
+    if (!service.value) return content
+    return service.value.sanitize(content)
   }
 
   return {
