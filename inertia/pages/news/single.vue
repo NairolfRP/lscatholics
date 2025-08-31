@@ -28,8 +28,6 @@
 </template>
 
 <script setup lang="ts">
-import type { InferPageProps } from '@adonisjs/inertia/types'
-import type NewsController from '#news/controllers/news_controller'
 import { Head } from '@inertiajs/vue3'
 import PageBanner from '@/components/layout/PageBanner.vue'
 import { formatDate } from '@/lib/utils'
@@ -37,7 +35,15 @@ import { computed, onMounted } from 'vue'
 import { useSanitize } from '@/composables/use_sanitize'
 
 const { post } = defineProps<{
-  post: InferPageProps<NewsController, 'single'>['post']
+  post: {
+    slug: string
+    title: string
+    excerpt: string
+    coverImageUrl?: string
+    content: string
+    publishedAt: string
+    status: string
+  }
 }>()
 
 const { initializePurify, sanitize, isReady } = useSanitize()

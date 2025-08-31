@@ -126,15 +126,7 @@ export default class NewsController {
     }
 
     return inertia.render('news/single', {
-      post: post.toJSON() as {
-        slug: string
-        title: string
-        excerpt: string
-        coverImageUrl?: string
-        content: string
-        publishedAt: string
-        status: string
-      },
+      post: post.toJSON(),
     })
   }
 }
