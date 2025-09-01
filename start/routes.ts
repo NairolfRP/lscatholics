@@ -26,6 +26,8 @@ router
 router
   .group(() => {
     router.get('/redirect/gtaw', [AuthController, 'redirectToProvider'])
+  .group(() => {
+    router.get('/redirect/gtaw', [AuthController, 'redirectToProvider']).as('signIn')
     router.get('/callback/gtaw', [AuthController, 'handleCallback'])
     router.get('/logout', [AuthController, 'logout']).use(middleware.auth()).as('logout')
   })
