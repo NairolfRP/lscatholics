@@ -12,7 +12,7 @@
   <section class="container mx-auto px-4 py-12 lg:py-16">
     <div class="max-w-4xl mx-auto">
       <Alert
-        v-if="props.message"
+        v-if="props.success || errors.CONTACT_ERROR"
         :variant="props.success ? 'default' : 'destructive'"
         role="alert"
         :aria-live="props.success ? 'polite' : 'assertive'"
@@ -20,7 +20,9 @@
       >
         <component :is="props.success ? CheckCircle : AlertTriangle" class="size-6" />
         <AlertTitle>{{ props.success ? 'Confirmation' : 'Erreur' }}</AlertTitle>
-        <AlertDescription>{{ props.message }}</AlertDescription>
+        <AlertDescription>{{
+          props.success ? props.success : errors.CONTACT_ERROR
+        }}</AlertDescription>
       </Alert>
       <div class="grid md:grid-cols-2 gap-16">
         <div>
@@ -289,16 +291,13 @@ import { Input } from '@/components/ui/input'
 import { useForm } from 'vee-validate'
 import { tuyau } from '@/lib/tuyau'
 import { toast } from 'vue-sonner'
-import type { InferPageProps } from '@adonisjs/inertia/types'
-import type ContactController from '#contact/controllers/contact_controller'
 import { watch } from 'vue'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
+import { usePageProps } from '@/composables/use_page_props'
+import { useErrors } from '@/composables/use_errors'
 
-const props = defineProps<{
-  success?: InferPageProps<ContactController, 'submit'>['success']
-  message?: InferPageProps<ContactController, 'submit'>['message']
-  errors: Record<string, string | string[]>
-}>()
+const props = usePageProps()
+const errors = useErrors()
 
 const { handleSubmit, isSubmitting, setErrors, resetForm } = useForm({
   initialValues: {
@@ -311,7 +310,7 @@ const { handleSubmit, isSubmitting, setErrors, resetForm } = useForm({
 })
 
 watch(
-  () => props.errors,
+  () => errors.value,
   (newErrors: Record<string, string | string[]>) => {
     if (newErrors && Object.keys(newErrors).length > 0) {
       setErrors(newErrors)
@@ -323,17 +322,15 @@ watch(
 const submitForm = handleSubmit((values) => {
   router.post(tuyau.contact.$url(), values, {
     preserveScroll: true,
-    onSuccess: (page) => {
-      const { success: responseSuccess, message: responseMessage } = page.props
-      if (responseSuccess) {
+    onSuccess: () => {
+      if (props.value.success) {
         resetForm()
-        return toast.success(responseMessage || 'Submitted!')
+        return toast.success(props.value.success || 'Submitted!')
       }
-      toast.error(responseMessage || 'An error occured')
+      toast.error(errors.value.CONTACT_ERROR || 'An error occured')
     },
     onError: (err) => {
       if (err) {
-        setErrors(err)
         return toast.error('Veuillez corriger les erreurs dans le formulaire')
       }
     },

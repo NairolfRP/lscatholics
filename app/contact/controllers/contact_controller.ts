@@ -12,41 +12,40 @@ export default class ContactController {
     return inertia.render('contact')
   }
 
-  async submit({ logger, request, inertia }: HttpContext) {
+  async submit({ logger, request, response, session }: HttpContext) {
     const payload = await request.validateUsing(createContactValidator)
 
     try {
       const webhookUrl = env.get('DISCORD_CONTACT_WEBHOOK')
       if (!webhookUrl) {
         logger.error('[CONTACT] Discord webhook URL not configured')
-        return this.service.renderErrorResponse(inertia, {
-          success: false,
-          message: this.service.ERROR_MESSAGES.MISSING_WEBHOOK,
-          errorCode: 'MISSING_WEBHOOK_URL',
+        session.flashErrors({
+          CONTACT_ERROR: this.service.ERROR_MESSAGES.MISSING_WEBHOOK,
         })
+
+        return response.redirect().back()
       }
 
       const { success } = await this.service.sendToDiscord(payload, webhookUrl)
 
       if (!success) {
-        return this.service.renderErrorResponse(inertia, {
-          success: false,
-          message: this.service.ERROR_MESSAGES.WEBHOOK_FAILED,
-          errorCode: 'WEBHOOK_EXECUTION_FAILED',
+        session.flashErrors({
+          CONTACT_ERROR: this.service.ERROR_MESSAGES.WEBHOOK_FAILED,
         })
+
+        return response.redirect().back()
       }
 
-      return this.service.renderSuccessResponse(inertia, {
-        success: true,
-        message: this.service.ERROR_MESSAGES.SUCCESS,
-      })
+      session.flash('success', this.service.ERROR_MESSAGES.SUCCESS)
+
+      return response.redirect().back()
     } catch (e) {
       logger.error('Unexpected error in contact submission', { error: e.message })
-      return this.service.renderErrorResponse(inertia, {
-        success: false,
-        message: this.service.ERROR_MESSAGES.WEBHOOK_FAILED,
-        errorCode: 'UNEXPECTED_ERROR',
+      session.flashErrors({
+        CONTACT_ERROR: this.service.ERROR_MESSAGES.WEBHOOK_FAILED,
       })
+
+      return response.redirect().back()
     }
   }
 }

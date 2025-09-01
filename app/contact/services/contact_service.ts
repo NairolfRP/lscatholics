@@ -2,18 +2,6 @@ import { DiscordWebhookService } from '#discord/services/discord_webhook_service
 import env from '#start/env'
 import logger from '@adonisjs/core/services/logger'
 
-interface ContactErrorResponse {
-  success: false
-  message: string
-  errorCode?: string
-  erroors?: Record<string, string | string[]>
-}
-
-interface ContactSuccessResponse {
-  success: true
-  message: string
-}
-
 export class ContactService {
   public readonly ERROR_MESSAGES = {
     MISSING_WEBHOOK: 'Un problème est survenu. Contactez un administrateur du site.',
@@ -83,13 +71,5 @@ export class ContactService {
         tags: threadTag ? [threadTag] : undefined,
       },
     })
-  }
-
-  public renderErrorResponse(inertia: any, response: ContactErrorResponse) {
-    return inertia.render('contact', response)
-  }
-
-  public renderSuccessResponse(inertia: any, response: ContactSuccessResponse) {
-    return inertia.render('contact', response)
   }
 }
