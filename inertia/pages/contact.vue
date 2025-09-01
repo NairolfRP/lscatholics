@@ -295,9 +295,12 @@ import { usePageProps } from '@/composables/use_page_props'
 import { useErrors } from '@/composables/use_errors'
 import type { InferPageProps } from '@adonisjs/inertia/types'
 import type ContactController from '#contact/controllers/contact_controller'
+import { useCurrentCharacter } from '@/composables/use_current_character'
 
 const props = usePageProps()
 const errors = useErrors()
+
+const currentCharacter = useCurrentCharacter()
 
 const { subjects } = defineProps<{
   subjects: InferPageProps<ContactController, 'index'>['subjects']
@@ -305,8 +308,8 @@ const { subjects } = defineProps<{
 
 const { handleSubmit, isSubmitting, setErrors, resetForm } = useForm({
   initialValues: {
-    firstname: '',
-    lastname: '',
+    firstname: currentCharacter.value?.firstname || '',
+    lastname: currentCharacter.value?.lastname || '',
     phone: '',
     subject: undefined,
     message: '',
