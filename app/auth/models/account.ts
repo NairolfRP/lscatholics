@@ -1,7 +1,7 @@
 import { DateTime } from 'luxon'
 import { BaseModel, beforeSave, belongsTo, column } from '@adonisjs/lucid/orm'
 import User from '#auth/models/user'
-import type { BelongsTo, HasOne } from '@adonisjs/lucid/types/relations'
+import type { BelongsTo } from '@adonisjs/lucid/types/relations'
 import encryption from '@adonisjs/core/services/encryption'
 
 export default class Account extends BaseModel {
@@ -9,7 +9,7 @@ export default class Account extends BaseModel {
   declare id: number
 
   @column()
-  declare userId: HasOne<typeof User>
+  declare userId: number
 
   @column()
   declare providerId: string
