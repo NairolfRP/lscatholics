@@ -30,6 +30,7 @@ const inertiaConfig = defineConfig({
 
         return null
       }),
+    success: (ctx) => ctx.inertia.always(() => ctx.session?.flashMessages.get('success')),
   },
 
   /**
