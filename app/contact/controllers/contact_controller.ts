@@ -3,13 +3,16 @@ import { createContactValidator } from '#contact/validators/contact_validation'
 import env from '#start/env'
 import { inject } from '@adonisjs/core'
 import { ContactService } from '#contact/services/contact_service'
+import { CONTACT_SUBJECTS } from '#contact/constants/contact_subjects'
 
 @inject()
 export default class ContactController {
   constructor(protected service: ContactService) {}
 
   index({ inertia }: HttpContext) {
-    return inertia.render('contact')
+    return inertia.render('contact', {
+      subjects: CONTACT_SUBJECTS,
+    })
   }
 
   async submit({ logger, request, response, session }: HttpContext) {

@@ -1,6 +1,7 @@
 import { DiscordWebhookService } from '#discord/services/discord_webhook_service'
 import env from '#start/env'
 import logger from '@adonisjs/core/services/logger'
+import { CONTACT_SUBJECTS } from '#contact/constants/contact_subjects'
 
 export class ContactService {
   public readonly ERROR_MESSAGES = {
@@ -30,6 +31,8 @@ export class ContactService {
   }
 
   private buildDiscordEmbeds(discordWebhook: any, payload: any): void {
+    const subjectLabel = CONTACT_SUBJECTS.find((item) => item.id === payload.subject)?.label
+
     discordWebhook.addEmbed({
       title: 'Informations générales',
       fields: [
@@ -49,7 +52,7 @@ export class ContactService {
         },
         {
           name: 'Objet',
-          value: String(payload.subject || 'N/A'),
+          value: String(subjectLabel || 'N/A'),
         },
       ],
     })

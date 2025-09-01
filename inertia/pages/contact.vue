@@ -105,11 +105,9 @@
                     </FormControl>
                     <SelectContent>
                       <SelectGroup>
-                        <SelectItem value="archbishop">Cardinal Ronan Callahan</SelectItem>
-                        <SelectItem value="sacraments">Sacrements</SelectItem>
-                        <SelectItem value="parishes">Paroisses</SelectItem>
-                        <SelectItem value="exorcism">Service de l'Exorcisme</SelectItem>
-                        <SelectItem value="other">Autre</SelectItem>
+                        <SelectItem v-for="item in subjects" :key="item.id" :value="item.id">
+                          {{ item.label }}
+                        </SelectItem>
                       </SelectGroup>
                     </SelectContent>
                   </Select>
@@ -295,9 +293,15 @@ import { watch } from 'vue'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { usePageProps } from '@/composables/use_page_props'
 import { useErrors } from '@/composables/use_errors'
+import type { InferPageProps } from '@adonisjs/inertia/types'
+import type ContactController from '#contact/controllers/contact_controller'
 
 const props = usePageProps()
 const errors = useErrors()
+
+const { subjects } = defineProps<{
+  subjects: InferPageProps<ContactController, 'index'>['subjects']
+}>()
 
 const { handleSubmit, isSubmitting, setErrors, resetForm } = useForm({
   initialValues: {
