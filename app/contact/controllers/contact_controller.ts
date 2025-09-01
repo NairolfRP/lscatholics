@@ -13,8 +13,7 @@ export default class ContactController {
   }
 
   async submit({ logger, request, inertia }: HttpContext) {
-    const data = request.all()
-    const payload = await createContactValidator.validate(data)
+    const payload = await request.validateUsing(createContactValidator)
 
     try {
       const webhookUrl = env.get('DISCORD_CONTACT_WEBHOOK')
