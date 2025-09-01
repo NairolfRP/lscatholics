@@ -13,7 +13,7 @@
     <div class="max-w-4xl mx-auto">
       <Alert
         v-if="props.success || errors.CONTACT_ERROR"
-        :variant="props.success ? 'default' : 'destructive'"
+        :variant="props.success ? 'success' : 'destructive'"
         role="alert"
         :aria-live="props.success ? 'polite' : 'assertive'"
         class="mb-8"

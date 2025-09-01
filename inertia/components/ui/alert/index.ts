@@ -12,7 +12,12 @@ export const alertVariants = cva(
       variant: {
         default: 'bg-card text-card-foreground',
         destructive:
-          'text-destructive bg-card [&>svg]:text-current *:data-[slot=alert-description]:text-destructive/90',
+          'text-destructive-foreground bg-destructive border border-destructive-foreground/10 [&>svg]:text-current *:data-[slot=alert-description]:text-destructive-foreground/90',
+        success:
+          'text-success-foreground bg-success border border-success/10 [&>svg]:text-current *:data-[slot=alert-description]:text-success-foreground/90',
+        warning:
+          'text-warning-foreground bg-warning border border-warning-foreground/10 [&>svg]:text-current *:data-[slot=alert-description]:text-warning-foreground/90',
+        info: 'text-info-foreground bg-info border border-info-foreground/10 [&>svg]:text-current *:data-[slot=alert-description]:text-info-foreground/90',
       },
     },
     defaultVariants: {
