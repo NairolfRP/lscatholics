@@ -13,7 +13,7 @@ const inertiaConfig = defineConfig({
   sharedData: {
     user: (ctx) =>
       ctx.inertia.always(async () => {
-        if (ctx.session.has('auth_web')) {
+        if (ctx.session?.has('auth_web')) {
           try {
             await ctx.auth.check()
             return ctx.auth.user
