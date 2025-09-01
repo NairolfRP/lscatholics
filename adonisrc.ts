@@ -60,6 +60,7 @@ export default defineConfig({
     () => import('@adonisjs/inertia/inertia_provider'),
     () => import('@tuyau/core/tuyau_provider'),
     () => import('@adonisjs/ally/ally_provider'),
+    () => import('#core/providers/app_provider'),
   ],
 
   /*
