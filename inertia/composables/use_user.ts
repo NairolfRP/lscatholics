@@ -1,7 +1,7 @@
 import { computed } from 'vue'
 import { usePage } from '@inertiajs/vue3'
-import type User from '#auth/models/user'
+import type { SharedProps } from '@adonisjs/inertia/types'
 
 export function useUser() {
-  return computed(() => usePage().props.user as User)
+  return computed(() => usePage().props.user as SharedProps['user'])
 }

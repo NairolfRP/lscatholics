@@ -9,7 +9,7 @@ export default class AuthController {
     return ally.use('gtaw').redirect()
   }
 
-  async handleCallback({ ally, auth, response }: HttpContext) {
+  async handleCallback({ ally, auth, characters, response }: HttpContext) {
     const gtaw = ally.use('gtaw')
 
     if (gtaw.accessDenied()) {
@@ -88,13 +88,18 @@ export default class AuthController {
       })
     }
 
+    const currentCharacter = gtawUser.original.character.at(0)
+
+    characters.setCurrentCharacter(currentCharacter)
+
     await auth.use('web').login(user)
 
     return response.redirect().back()
   }
 
-  async logout({ auth, response }: HttpContext) {
+  async logout({ auth, characters, response }: HttpContext) {
     await auth.use('web').logout()
+    characters.clearCurrentCharacter()
     return response.redirect('/')
   }
 }

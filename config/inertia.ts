@@ -16,7 +16,13 @@ const inertiaConfig = defineConfig({
         if (ctx.session?.has('auth_web')) {
           try {
             await ctx.auth.check()
-            return ctx.auth.user
+
+            const currentCharacter = await ctx.characters.getCurrentCharacter()
+
+            return {
+              ...ctx.auth.user,
+              currentCharacter,
+            }
           } catch (error) {
             return null
           }
