@@ -20,7 +20,9 @@ const inertiaConfig = defineConfig({
             const currentCharacter = await ctx.characters.getCurrentCharacter()
 
             return {
-              ...ctx.auth.user,
+              id: ctx.auth.user?.id,
+              name: ctx.auth.user?.name,
+              createdAt: ctx.auth.user?.createdAt,
               currentCharacter,
             }
           } catch (error) {
