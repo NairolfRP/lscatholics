@@ -1,15 +1,47 @@
 <template>
-  <Button variant="ghost" :alt="characterName" class="cursor-pointer"
-    ><User class="size-lg laptop:size-sm" />
-    <span class="block lg:hidden laptop:block">{{ characterName }}</span></Button
-  >
+  <DropdownMenu>
+    <DropdownMenuTrigger as-child>
+      <Button variant="ghost" :alt="characterName" class="cursor-pointer">
+        <User class="size-lg laptop:size-sm" />
+        <span class="block lg:hidden laptop:block">{{ characterName }}</span>
+      </Button>
+    </DropdownMenuTrigger>
+
+    <DropdownMenuContent class="w-56 mr-10 z-99">
+      <DropdownMenuLabel>Mon compte - {{ user!.name }}</DropdownMenuLabel>
+      <DropdownMenuSeparator />
+      <DropdownMenuGroup>
+        <DropdownMenuItem @click="handleMenuAction('settings')">
+          <Settings />
+          <span>Paramètres</span>
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem @click="handleMenuAction('logout')" class="text-destructive font-medium">
+          <LogOut />
+          <span>Déconnexion</span>
+        </DropdownMenuItem>
+      </DropdownMenuGroup>
+    </DropdownMenuContent>
+  </DropdownMenu>
 </template>
 
 <script lang="ts" setup>
-import { User } from 'lucide-vue-next'
+import { LogOut, Settings, User } from 'lucide-vue-next'
 import { Button } from '@/components/ui/button'
 import { computed } from 'vue'
 import { useUser } from '@/composables/use_user'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
+import { tuyau } from '@/lib/tuyau'
+import { router } from '@inertiajs/vue3'
+import { toast } from 'vue-sonner'
 
 const user = useUser()
 
@@ -18,4 +50,25 @@ const characterName = computed(() => {
   const fullName = `${currentCharacter?.firstname} ${currentCharacter?.lastname}`
   return fullName.length > 15 ? fullName.slice(0, 15) + '...' : fullName
 })
+
+const handleMenuAction = (action: string) => {
+  switch (action) {
+    case 'settings':
+      router.visit(tuyau.$url('profile'))
+      break
+    case 'logout':
+      router.post(tuyau.$url('logout'), undefined, {
+        preserveScroll: true,
+        onSuccess: () => {
+          toast.success('Déconnecté avec succès. A très bientôt !')
+        },
+        onError: (err) => {
+          toast.error(err.E_LOGOUT, {
+            duration: 10_000,
+          })
+        },
+      })
+      break
+  }
+}
 </script>

@@ -30,5 +30,6 @@ router
     router.get('/redirect/gtaw', [AuthController, 'redirectToProvider']).as('signIn')
     router.get('/callback/gtaw', [AuthController, 'handleCallback'])
     router.get('/logout', [AuthController, 'logout']).use(middleware.auth()).as('logout')
+    router.post('/logout', [AuthController, 'logout']).use(middleware.auth()).as('logout')
   })
   .prefix('api/auth')
