@@ -98,10 +98,21 @@ export default class AuthController {
     return response.redirect().back()
   }
 
-  async logout({ auth, characters, response }: HttpContext) {
-    await auth.use('web').logout()
-    characters.clearCurrentCharacter()
-    return response.redirect('/')
+  async logout({ auth, characters, response, session, logger }: HttpContext) {
+    try {
+      await auth.use('web').logout()
+      characters.clearCurrentCharacter()
+      return response.redirect().back()
+    } catch (error) {
+      logger.error('Failed to logout', { error })
+
+      session.flashErrors({
+        E_LOGOUT:
+          'Une erreur est survenue. Impossible de vous déconnecter. Contactez un administrateur du site ou supprimez vos cookies manuellement.',
+      })
+
+      return response.redirect().back()
+    }
   }
 
   async deleteUser({ auth, characters, request, response, session, logger }: HttpContext) {
