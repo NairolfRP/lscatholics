@@ -95,6 +95,8 @@ export default class AuthController {
 
     await auth.use('web').login(user)
 
+    characters.setUserCharacters(gtawUser.original.character)
+
     return response.redirect().back()
   }
 

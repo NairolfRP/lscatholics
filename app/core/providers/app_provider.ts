@@ -1,4 +1,11 @@
 import type { ApplicationService } from '@adonisjs/core/types'
+import { CharacterCacheService } from '#auth/services/character_cache_service'
+
+declare module '@adonisjs/core/types' {
+  interface ContainerBindings {
+    characterCache: CharacterCacheService
+  }
+}
 
 export default class AppProvider {
   constructor(protected app: ApplicationService) {}
@@ -6,7 +13,11 @@ export default class AppProvider {
   /**
    * Register bindings to the container
    */
-  register() {}
+  async register() {
+    this.app.container.singleton('characterCache', function () {
+      return new CharacterCacheService()
+    })
+  }
 
   /**
    * The container bindings have booted
@@ -28,5 +39,8 @@ export default class AppProvider {
   /**
    * Preparing to shutdown the app
    */
-  async shutdown() {}
+  async shutdown() {
+    const cacheService = await this.app.container.make('characterCache')
+    cacheService.stopCleanupInterval()
+  }
 }
