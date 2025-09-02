@@ -29,7 +29,12 @@ router
   .group(() => {
     router.get('/redirect/gtaw', [AuthController, 'redirectToProvider']).as('signIn')
     router.get('/callback/gtaw', [AuthController, 'handleCallback'])
-    router.get('/logout', [AuthController, 'logout']).use(middleware.auth()).as('logout')
+    router
+      .delete('/delete-user', [AuthController, 'deleteUser'])
+      .use(middleware.auth())
+      .as('deleteUser')
     router.post('/logout', [AuthController, 'logout']).use(middleware.auth()).as('logout')
   })
   .prefix('api/auth')
+
+router.on('/profile').renderInertia('profile').as('profile')

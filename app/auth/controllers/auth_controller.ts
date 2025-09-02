@@ -3,6 +3,7 @@ import Account from '#auth/models/account'
 import User from '#auth/models/user'
 import { DateTime } from 'luxon'
 import db from '@adonisjs/lucid/services/db'
+import { createDeleteUserConfirmationValidator } from '#auth/validators/delete_user_confirmation'
 
 export default class AuthController {
   async redirectToProvider({ ally }: HttpContext) {
@@ -101,5 +102,32 @@ export default class AuthController {
     await auth.use('web').logout()
     characters.clearCurrentCharacter()
     return response.redirect('/')
+  }
+
+  async deleteUser({ auth, characters, request, response, session, logger }: HttpContext) {
+    const user = auth.user!
+
+    await request.validateUsing(createDeleteUserConfirmationValidator(user.name))
+
+    try {
+      await user.delete()
+
+      await auth.use('web').logout()
+      characters.clearCurrentCharacter()
+
+      session.flash('success', {
+        message:
+          'Votre compte et ses données associées ont définitivement été supprimées avec succès.',
+      })
+
+      return response.redirect('/')
+    } catch (error) {
+      logger.error('Failed to delete account', { user, error })
+      session.flashErrors({
+        E_DELETE_USER:
+          "Une erreur s'est produite lors de la suppression du compte. Contactez un administrateur du site.",
+      })
+      return response.redirect().back()
+    }
   }
 }
