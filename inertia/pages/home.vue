@@ -1,6 +1,4 @@
 <template>
-  <Head title="Accueil" />
-
   <PageBanner :bg-image="HomepageBanner" height="min-h-[50vh]">
     <div class="max-w-4xl mx-auto text-center">
       <h1 class="text-5xl md:text-6xl font-bold mb-6 font-serif">
@@ -140,65 +138,68 @@
         <div class="w-24 h-1 bg-catholic-gold mx-auto cross-divider"></div>
       </div>
 
-      <div class="grid md:grid-cols-3 gap-8">
-        <Card class="card-hover">
-          <div class="aspect-video bg-gray-200 rounded-t-lg overflow-hidden">
-            <div
-              class="w-full h-full bg-gradient-to-br from-catholic-purple to-catholic-blue opacity-20"
-            ></div>
-          </div>
-          <CardContent class="p-6">
-            <Badge class="mb-2">Actualité</Badge>
-            <h3 class="font-bold text-lg mb-2">Célébration de la Semaine Sainte</h3>
-            <p class="text-gray-600 mb-4 text-sm">
-              Rejoignez-nous pour les célébrations spéciales de la Semaine Sainte dans toutes nos
-              paroisses.
-            </p>
-            <Button variant="link" class="p-0 text-catholic-gold">
-              Lire la suite <ArrowRight class="w-4 h-4 ml-1" />
-            </Button>
-          </CardContent>
-        </Card>
+      <WhenVisible data="posts">
+        <template #fallback>
+          <div><LoaderCircle class="animate-spin" /></div>
+        </template>
+        <Alert v-if="errors.E_HOME_RECENT_POSTS" variant="destructive">
+          <CircleAlert />
+          <AlertDescription>{{ errors.E_HOME_RECENT_POSTS }}</AlertDescription>
+        </Alert>
 
-        <Card class="card-hover">
-          <div class="aspect-video bg-gray-200 rounded-t-lg overflow-hidden">
-            <div
-              class="w-full h-full bg-gradient-to-br from-catholic-gold to-catholic-red opacity-20"
-            ></div>
-          </div>
-          <CardContent class="p-6">
-            <Badge variant="secondary" class="mb-2">Événement</Badge>
-            <h3 class="font-bold text-lg mb-2">Pèlerinage annuel</h3>
-            <p class="text-gray-600 mb-4 text-sm">
-              Participez à notre pèlerinage annuel vers les lieux saints de notre région.
-            </p>
-            <Button variant="link" class="p-0 text-catholic-gold">
-              Lire la suite <ArrowRight class="w-4 h-4 ml-1" />
-            </Button>
-          </CardContent>
-        </Card>
+        <div v-else-if="props.posts.length === 0" class="italic text-center">
+          Aucun article pour le moment !
+        </div>
 
-        <Card class="card-hover">
-          <div class="aspect-video bg-gray-200 rounded-t-lg overflow-hidden">
-            <div
-              class="w-full h-full bg-gradient-to-br from-catholic-blue to-catholic-purple opacity-20"
-            ></div>
-          </div>
-          <CardContent class="p-6">
-            <Badge variant="outline" class="mb-2">Formation</Badge>
-            <h3 class="font-bold text-lg mb-2">Session de catéchèse</h3>
-            <p class="text-gray-600 mb-4 text-sm">
-              Nouvelles sessions de formation pour les catéchistes et animateurs.
-            </p>
-            <Button variant="link" class="p-0 text-catholic-gold">
-              Lire la suite <ArrowRight class="w-4 h-4 ml-1" />
-            </Button>
-          </CardContent>
-        </Card>
-      </div>
+        <div v-else class="grid md:grid-cols-3 gap-8 items-stretch">
+          <Link
+            v-for="post in props.posts"
+            route="news.single"
+            :params="{ slug: post.slug }"
+            :key="`home-recent-post-${post.id}`"
+            as-child
+          >
+            <Card class="card-hover h-full pt-0">
+              <div class="aspect-video bg-gray-200 rounded-t-lg overflow-hidden">
+                <div
+                  v-if="post.coverImageUrl"
+                  class="w-full h-full bg-cover bg-center"
+                  :style="`background-image: url(${post.coverImageUrl})`"
+                ></div>
+                <div
+                  v-else
+                  class="w-full h-full bg-gradient-to-br from-catholic-purple to-catholic-blue opacity-20"
+                ></div>
+              </div>
+              <CardContent class="p-6">
+                <span
+                  v-if="post.publishedAt"
+                  class="flex justify-end text-sm text-muted-foreground"
+                >
+                  {{ formatDate(new Date(post.publishedAt), 'DD/MM/YYYY') }}
+                </span>
+                <Badge class="mb-2">{{ post.category }}</Badge>
+                <h3 class="font-bold text-lg mb-2">{{ post.title }}</h3>
 
-      <div class="text-center mt-8">
-        <Button variant="outline" size="lg"> Voir toutes les actualités </Button>
+                <p class="text-gray-600 mb-4 mt-4 text-sm">
+                  {{ post.excerpt }}
+                </p>
+
+                <Button variant="link" class="p-0 text-catholic-gold">
+                  Lire la suite <ArrowRight class="w-4 h-4 ml-1" />
+                </Button>
+              </CardContent>
+            </Card>
+          </Link>
+        </div>
+      </WhenVisible>
+
+      <div v-if="props.posts.length > 0" class="text-center mt-8">
+        <Link route="news.index" as-child>
+          <Button variant="default" size="lg" class="cursor-pointer">
+            Voir toutes les actualités
+          </Button>
+        </Link>
       </div>
     </div>
   </section>
@@ -305,18 +306,37 @@
 </template>
 
 <script setup lang="ts">
-import { Head } from '@inertiajs/vue3'
+import { WhenVisible } from '@inertiajs/vue3'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { ArrowRight, BookOpen, Calendar, Heart, MapPin } from 'lucide-vue-next'
+import {
+  ArrowRight,
+  BookOpen,
+  Calendar,
+  CircleAlert,
+  Heart,
+  LoaderCircle,
+  MapPin,
+  NotebookPen,
+} from 'lucide-vue-next'
 import { formatNumber, yearsBetween } from '@/lib/utils'
 import { ARCHDIOCESAN_HISTORY_START_DATE } from '@/constants/archdiocese.constants'
 import { computed } from 'vue'
 import HomepageBanner from '@/assets/images/cathedral-mass-with-cardinal.png'
 import PageBanner from '@/components/layout/PageBanner.vue'
-import { NotebookPen } from 'lucide-vue-next'
 import { Link } from '@tuyau/inertia/vue'
+import { useErrors } from '@/composables/use_errors'
+import { Alert, AlertDescription } from '@/components/ui/alert'
+import type { InferPageProps } from '@adonisjs/inertia/types'
+import type HomeController from '#pages/controllers/home_controller'
+import { formatDate } from '@vueuse/core'
+
+const props = defineProps<{
+  posts: InferPageProps<HomeController, 'index'>['posts']
+}>()
+
+const errors = useErrors()
 
 const now = new Date()
 

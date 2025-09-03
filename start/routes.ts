@@ -10,12 +10,13 @@
 import router from '@adonisjs/core/services/router'
 import { middleware } from '#start/kernel'
 
+const HomeController = () => import('#pages/controllers/home_controller')
 const AuthController = () => import('#auth/controllers/auth_controller')
 const CharactersController = () => import('#auth/controllers/characters_controller')
 const NewsController = () => import('#news/controllers/news_controller')
 const ContactController = () => import('#contact/controllers/contact_controller')
 
-router.on('/').renderInertia('home').as('home')
+router.get('/', [HomeController, 'index']).as('home')
 router.get('/newsroom', [NewsController, 'index']).as('news.index')
 router.get('/contact', [ContactController, 'index']).as('contact')
 router.post('/contact', [ContactController, 'submit']).as('contact.submit')
