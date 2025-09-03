@@ -35,6 +35,7 @@
     "#core/*": "./app/core/*.js",
     "#contact/*": "./app/contact/*.js",
     "#discord/*": "./app/discord/*.js",
+    "#events/*": "./app/events/*.js",
     "#news/*": "./app/news/*.js",
     "#pages/*": "./app/pages/*.js",
     "#mails/*": "./app/mails/*.js",

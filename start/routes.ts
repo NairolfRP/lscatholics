@@ -14,6 +14,7 @@ const HomeController = () => import('#pages/controllers/home_controller')
 const AuthController = () => import('#auth/controllers/auth_controller')
 const CharactersController = () => import('#auth/controllers/characters_controller')
 const NewsController = () => import('#news/controllers/news_controller')
+const EventsController = () => import('#events/controllers/events_controller')
 const ContactController = () => import('#contact/controllers/contact_controller')
 const FindController = () => import('#pages/controllers/finds_controller')
 
@@ -29,6 +30,8 @@ router
 router
   .group(() => {
     router.get('/redirect/gtaw', [AuthController, 'redirectToProvider'])
+    router.get('/', [EventsController, 'index'])
+    router.get('/events', [EventsController, 'index']).as('find.events')
     router.get('/parishes', [FindController, 'parishes']).as('find.parishes')
   })
   .prefix('find')
