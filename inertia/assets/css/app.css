@@ -137,7 +137,7 @@
   --muted-foreground: oklch(0.551 0.0234 264.3637);
   --accent: oklch(0.977 0.013 236.62);
   --accent-foreground: oklch(0 0 0);
-  --destructive: oklch(53% 0.13 29);
+  --destructive: oklch(0.53 0.2165 29);
   --destructive-foreground: oklch(100% 0 0);
   --success: oklch(54% 0.22 140);
   --success-foreground: oklch(100% 0 0);
@@ -146,10 +146,10 @@
   --info: oklch(54% 0.25 246);
   --info-foreground: oklch(100% 0 0);
 
-  --catholic-gold: #daa520;
-  --catholic-red: #8b0000;
-  --catholic-purple: #4b0082;
-  --catholic-blue: #191970;
+  --catholic-gold: oklch(0.7516 0.1469 83.99);
+  --catholic-red: oklch(0.3999 0.1641 29.23);
+  --catholic-purple: oklch(0.339 0.1793 301.68);
+  --catholic-blue: oklch(0.2881 0.1436 272.76);
 
   --border: oklch(0.9527 0.0027 286.3492);
   --input: oklch(0.9276 0.0058 264.5313);
@@ -208,19 +208,19 @@
   --muted-foreground: oklch(0.7118 0.0129 286.0665);
   --accent: oklch(0.2406 0.0695 21.4707);
   --accent-foreground: oklch(0.9705 0.0129 17.3797);
-  --destructive: oklch(6% 0.06 29);
-  --destructive-foreground: oklch(66% 0.21 29);
-  --success: oklch(6% 0.06 140);
-  --success-foreground: oklch(46% 0.19 140);
-  --warning: oklch(6% 0.06 97);
-  --warning-foreground: oklch(46% 0.19 97);
-  --info: oklch(6% 0.07 246);
-  --info-foreground: oklch(66% 0.22 246);
+  --destructive: oklch(66% 0.21 29);
+  --destructive-foreground: oklch(6% 0.06 29);
+  --success: oklch(46% 0.19 140);
+  --success-foreground: oklch(6% 0.06 140);
+  --warning: oklch(46% 0.19 97);
+  --warning-foreground: oklch(6% 0.06 97);
+  --info: oklch(66% 0.22 246);
+  --info-foreground: oklch(6% 0.07 246);
 
-  --catholic-gold: #daa520;
-  --catholic-red: #8b0000;
-  --catholic-purple: #4b0082;
-  --catholic-blue: #191970;
+  --catholic-gold: oklch(0.7516 0.1469 83.99);
+  --catholic-red: oklch(0.3999 0.1641 29.23);
+  --catholic-purple: oklch(0.339 0.1793 301.68);
+  --catholic-blue: oklch(0.2881 0.1436 272.76);
 
   --border: oklch(0.2406 0.0695 21.4707);
   --input: oklch(0.2406 0.0695 21.4707);
