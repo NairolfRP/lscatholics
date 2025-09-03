@@ -6,120 +6,124 @@
     <p class="text-xl opacity-90">Restez informé de la vie de notre archidiocèse</p>
   </PageBanner>
 
-  <section class="py-8 bg-gray-50">
-    <div class="container mx-auto px-4">
-      <div class="flex flex-wrap gap-3 justify-center">
-        <Button
-          variant="outline"
-          size="sm"
-          :class="{ 'bg-catholic-gold text-white': !selectedCategory }"
-          @click="handleCategoryChange()"
-        >
-          Toutes les actualités
-        </Button>
-        <Button
-          v-for="category in categories"
-          :key="category.id"
-          variant="outline"
-          size="sm"
-          :class="{ 'bg-catholic-gold text-white': selectedCategory === category.id }"
-          @click="handleCategoryChange(category.id)"
-        >
-          {{ category.name }}
-        </Button>
+  <div class="container mx-auto max-w-7xl">
+    <section class="py-8 bg-gray-50">
+      <div class="md:container mx-auto px-4">
+        <div class="flex flex-wrap gap-3 justify-center">
+          <Button
+            variant="outline"
+            size="sm"
+            :class="{ 'bg-catholic-gold text-white': !selectedCategory }"
+            @click="handleCategoryChange()"
+          >
+            Toutes les actualités
+          </Button>
+          <Button
+            v-for="category in categories"
+            :key="category.id"
+            variant="outline"
+            size="sm"
+            :class="{ 'bg-catholic-gold text-white': selectedCategory === category.id }"
+            @click="handleCategoryChange(category.id)"
+          >
+            {{ category.name }}
+          </Button>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="py-16">
-    <div v-if="error" class="max-w-4xl mx-auto px-3">
-      <Alert variant="destructive">
-        <CircleAlert />
-        <AlertTitle>Impossible de charger les actualités</AlertTitle>
-        <AlertDescription>
-          Nous n'avons pas pu récupérer les articles. Cela peut être dû à un problème serveur ou
-          réseau. Réessayez plus tard.
-        </AlertDescription>
-      </Alert>
-    </div>
-    <div
-      v-else-if="!articles.data || articles.data.length === 0"
-      class="w-full text-center mx-auto font-medium italic"
-    >
-      Aucun article trouvé
-    </div>
-    <div v-else class="container mx-auto px-4">
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <article v-for="article in articles.data" :key="article.id" class="group">
-          <Link route="news.single" :params="{ slug: article.slug }">
-            <Card class="m-0 p-0 card-hover h-full">
-              <div class="aspect-video bg-gray-200 rounded-t-lg">
-                <img
-                  v-if="article.coverImageUrl"
-                  :src="article.coverImageUrl"
-                  alt="Article featured image"
-                  class="object-cover h-full"
-                />
-              </div>
-              <CardContent class="p-6 flex flex-col h-full">
-                <div class="flex items-center gap-2 mb-3">
-                  <Badge>
-                    {{ article.category }}
-                  </Badge>
-                  <span class="text-xs text-gray-500">
-                    {{ formatDate(article.publishedAt) }}
-                  </span>
+    <section class="py-16">
+      <div v-if="error" class="max-w-4xl mx-auto px-3">
+        <Alert variant="destructive">
+          <CircleAlert />
+          <AlertTitle>Impossible de charger les actualités</AlertTitle>
+          <AlertDescription>
+            Nous n'avons pas pu récupérer les articles. Cela peut être dû à un problème serveur ou
+            réseau. Réessayez plus tard.
+          </AlertDescription>
+        </Alert>
+      </div>
+      <div
+        v-else-if="!articles.data || articles.data.length === 0"
+        class="w-full text-center mx-auto font-medium italic"
+      >
+        Aucun article trouvé
+      </div>
+      <div v-else class="container mx-auto px-4">
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <article v-for="article in articles.data" :key="article.id" class="group">
+            <Link route="news.single" :params="{ slug: article.slug }">
+              <Card class="m-0 p-0 card-hover h-full">
+                <div class="aspect-video bg-gray-200 rounded-t-lg">
+                  <img
+                    v-if="article.coverImageUrl"
+                    :src="article.coverImageUrl"
+                    alt="Article featured image"
+                    class="object-cover h-full"
+                  />
                 </div>
+                <CardContent class="p-6 flex flex-col h-full">
+                  <div class="flex items-center gap-2 mb-3">
+                    <Badge>
+                      {{ article.category }}
+                    </Badge>
+                    <span class="text-xs text-gray-500">
+                      {{ formatDate(article.publishedAt) }}
+                    </span>
+                  </div>
 
-                <h3 class="font-bold text-lg mb-3 group-hover:text-catholic-gold transition-colors">
-                  {{ article.title }}
-                </h3>
+                  <h3
+                    class="font-bold text-lg mb-3 group-hover:text-catholic-gold transition-colors"
+                  >
+                    {{ article.title }}
+                  </h3>
 
-                <p class="text-gray-600 text-sm mb-4 flex-grow">
-                  {{ article.excerpt }}
-                </p>
+                  <p class="text-gray-600 text-sm mb-4 flex-grow">
+                    {{ article.excerpt }}
+                  </p>
 
-                <div class="flex items-center justify-between pt-4 border-t">
-                  <Button variant="link" size="sm" class="p-0 text-catholic-gold">
-                    Lire la suite
-                    <ArrowRight class="w-3 h-3 ml-1" />
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          </Link>
-        </article>
+                  <div class="flex items-center justify-between pt-4 border-t">
+                    <Button variant="link" size="sm" class="p-0 text-catholic-gold">
+                      Lire la suite
+                      <ArrowRight class="w-3 h-3 ml-1" />
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            </Link>
+          </article>
+        </div>
+
+        <div class="mt-12 flex justify-center">
+          <Pagination
+            v-slot="{ page }"
+            :items-per-page="itemsPerPage"
+            :total="totalItems"
+            :default-page="page"
+          >
+            <PaginationContent v-slot="{ items }">
+              <PaginationFirst @click="handlePageChange(firstPage)" />
+              <PaginationPrevious @click="handlePageChange(page - 1)" />
+
+              <template v-for="(item, index) in items" :key="index">
+                <PaginationItem
+                  v-if="item.type === 'page'"
+                  :value="item.value"
+                  :is-active="item.value === page"
+                  @click="handlePageChange(item.value)"
+                >
+                  {{ item.value }}
+                </PaginationItem>
+              </template>
+
+              <PaginationNext @click="handlePageChange(page + 1)" />
+              <PaginationLast @click="handlePageChange(lastPage)" />
+            </PaginationContent>
+          </Pagination>
+        </div>
       </div>
-
-      <div class="mt-12 flex justify-center">
-        <Pagination
-          v-slot="{ page }"
-          :items-per-page="itemsPerPage"
-          :total="totalItems"
-          :default-page="page"
-        >
-          <PaginationContent v-slot="{ items }">
-            <PaginationFirst @click="handlePageChange(firstPage)" />
-            <PaginationPrevious @click="handlePageChange(page - 1)" />
-
-            <template v-for="(item, index) in items" :key="index">
-              <PaginationItem
-                v-if="item.type === 'page'"
-                :value="item.value"
-                :is-active="item.value === page"
-                @click="handlePageChange(item.value)"
-              >
-                {{ item.value }}
-              </PaginationItem>
-            </template>
-
-            <PaginationNext @click="handlePageChange(page + 1)" />
-            <PaginationLast @click="handlePageChange(lastPage)" />
-          </PaginationContent>
-        </Pagination>
-      </div>
-    </div>
-  </section>
+    </section>
+  </div>
 </template>
 
 <script setup lang="ts">
