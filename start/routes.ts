@@ -19,7 +19,7 @@ const ContactController = () => import('#contact/controllers/contact_controller'
 router.get('/', [HomeController, 'index']).as('home')
 router.get('/newsroom', [NewsController, 'index']).as('news.index')
 router.get('/contact', [ContactController, 'index']).as('contact')
-router.post('/contact', [ContactController, 'submit']).as('contact.submit')
+router.post('/contact', [ContactController, 'submit']).use(middleware.auth()).as('contact.submit')
 
 router
   .get('/newsroom/:slug', [NewsController, 'single'])
