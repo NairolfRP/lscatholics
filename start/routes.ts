@@ -11,6 +11,7 @@ import router from '@adonisjs/core/services/router'
 import { middleware } from '#start/kernel'
 
 const AuthController = () => import('#auth/controllers/auth_controller')
+const CharactersController = () => import('#auth/controllers/characters_controller')
 const NewsController = () => import('#news/controllers/news_controller')
 const ContactController = () => import('#contact/controllers/contact_controller')
 
@@ -34,6 +35,15 @@ router
       .use(middleware.auth())
       .as('deleteUser')
     router.post('/logout', [AuthController, 'logout']).use(middleware.auth()).as('logout')
+
+    router
+      .get('/list-characters', [CharactersController, 'listCharacters'])
+      .use(middleware.auth())
+      .as('listCharacters')
+    router
+      .patch('/current-character', [CharactersController, 'switchCharacter'])
+      .use(middleware.auth())
+      .as('switchCharacter')
   })
   .prefix('api/auth')
 

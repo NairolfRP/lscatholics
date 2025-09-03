@@ -11,6 +11,10 @@
       <DropdownMenuLabel>Mon compte - {{ user!.name }}</DropdownMenuLabel>
       <DropdownMenuSeparator />
       <DropdownMenuGroup>
+        <DropdownMenuItem @click="openSwitchCharacter">
+          <ArrowRightLeft />
+          <span>Changer de personnage</span>
+        </DropdownMenuItem>
         <DropdownMenuItem @click="handleMenuAction('settings')">
           <Settings />
           <span>Paramètres</span>
@@ -23,12 +27,14 @@
       </DropdownMenuGroup>
     </DropdownMenuContent>
   </DropdownMenu>
+
+  <SwitchCharacter v-model:open="isSwitchCharacterOpen" />
 </template>
 
 <script lang="ts" setup>
-import { LogOut, Settings, User } from 'lucide-vue-next'
+import { ArrowRightLeft, LogOut, Settings, User } from 'lucide-vue-next'
 import { Button } from '@/components/ui/button'
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useUser } from '@/composables/use_user'
 import {
   DropdownMenu,
@@ -42,14 +48,21 @@ import {
 import { tuyau } from '@/lib/tuyau'
 import { router } from '@inertiajs/vue3'
 import { toast } from 'vue-sonner'
+import SwitchCharacter from '@/components/SwitchCharacter.vue'
 
 const user = useUser()
+
+const isSwitchCharacterOpen = ref(false)
 
 const characterName = computed(() => {
   const currentCharacter = user.value?.currentCharacter
   const fullName = `${currentCharacter?.firstname} ${currentCharacter?.lastname}`
   return fullName.length > 15 ? fullName.slice(0, 15) + '...' : fullName
 })
+
+const openSwitchCharacter = () => {
+  isSwitchCharacterOpen.value = true
+}
 
 const handleMenuAction = (action: string) => {
   switch (action) {
