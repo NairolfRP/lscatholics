@@ -25,12 +25,16 @@
         }}</AlertDescription>
       </Alert>
       <div class="grid md:grid-cols-2 gap-16">
-        <div>
+        <div class="flex flex-col gap-4">
           <h2 class="text-2xl font-bold text-catholic-purple mb-6 font-serif">
             Envoyez-nous un message
           </h2>
 
-          <form @submit.prevent="submitForm" class="space-y-6">
+          <AuthentificationRequiredAlert
+            v-if="!user"
+            text="pour utiliser le formulaire de contact."
+          />
+          <form v-else @submit.prevent="submitForm" class="space-y-6">
             <div class="grid md:grid-cols-2 gap-4">
               <div>
                 <FormField v-slot="{ componentField }" name="firstname">
@@ -296,10 +300,13 @@ import { useErrors } from '@/composables/use_errors'
 import type { InferPageProps } from '@adonisjs/inertia/types'
 import type ContactController from '#contact/controllers/contact_controller'
 import { useCurrentCharacter } from '@/composables/use_current_character'
+import AuthentificationRequiredAlert from '@/components/AuthentificationRequiredAlert.vue'
+import { useUser } from '@/composables/use_user'
 
 const props = usePageProps()
 const errors = useErrors()
 
+const user = useUser()
 const currentCharacter = useCurrentCharacter()
 
 const { subjects } = defineProps<{
