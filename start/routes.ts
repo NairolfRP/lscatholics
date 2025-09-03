@@ -15,6 +15,7 @@ const AuthController = () => import('#auth/controllers/auth_controller')
 const CharactersController = () => import('#auth/controllers/characters_controller')
 const NewsController = () => import('#news/controllers/news_controller')
 const ContactController = () => import('#contact/controllers/contact_controller')
+const FindController = () => import('#pages/controllers/finds_controller')
 
 router.get('/', [HomeController, 'index']).as('home')
 router.get('/newsroom', [NewsController, 'index']).as('news.index')
@@ -28,6 +29,11 @@ router
 router
   .group(() => {
     router.get('/redirect/gtaw', [AuthController, 'redirectToProvider'])
+    router.get('/parishes', [FindController, 'parishes']).as('find.parishes')
+  })
+  .prefix('find')
+
+router
   .group(() => {
     router.get('/redirect/gtaw', [AuthController, 'redirectToProvider']).as('signIn')
     router.get('/callback/gtaw', [AuthController, 'handleCallback'])
