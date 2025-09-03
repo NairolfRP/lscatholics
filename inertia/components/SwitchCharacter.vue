@@ -100,6 +100,7 @@ const handleSwitchCharacter = (characterId: number | undefined) => {
       onSuccess(page) {
         toast.success(page.props.success as string)
         selectedCharacterId.value = undefined
+        router.reload()
         emit('update:open', false)
       },
     }
