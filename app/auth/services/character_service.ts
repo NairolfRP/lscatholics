@@ -3,6 +3,7 @@ import { HttpContext } from '@adonisjs/core/http'
 import type { Character, CurrentCharacter } from '#auth/types/character'
 import { GTAWorldCharacter } from '@gtaw-oauth-providers/adonisjs-ally'
 import app from '@adonisjs/core/services/app'
+import type User from '#auth/models/user'
 
 @inject()
 export default class CharacterService {
@@ -39,9 +40,7 @@ export default class CharacterService {
     }
   }
 
-  async setUserCharacters(characters: Character[]) {
-    const user = this.ctx.auth.user
-
+  async setUserCharacters(user: User, characters: Character[]) {
     if (!user) {
       throw new Error('Cannot set user characters for undefined user.')
     }
