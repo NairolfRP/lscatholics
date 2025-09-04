@@ -24,6 +24,11 @@ router.get('/contact', [ContactController, 'index']).as('contact')
 router.post('/contact', [ContactController, 'submit']).use(middleware.auth()).as('contact.submit')
 
 router
+  .get('/event/:slug', [EventsController, 'single'])
+  .where('slug', router.matchers.slug())
+  .as('event')
+
+router
   .get('/newsroom/:slug', [NewsController, 'single'])
   .where('slug', router.matchers.slug())
   .as('news.single')

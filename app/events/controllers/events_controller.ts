@@ -33,4 +33,33 @@ export default class EventsController {
       }>,
     })
   }
+
+  async single({ response, params, inertia }: HttpContext) {
+    const { slug } = params
+
+    const event = await Event.query()
+      .select(
+        'slug',
+        'title',
+        'content',
+        'location',
+        'coverImageUrl',
+        'flyerUrl',
+        'registrationRequired',
+        'maxParticipants',
+        'startDate',
+        'endDate'
+      )
+      .where('slug', slug)
+      .first()
+
+    if (!event) {
+      response.status(404)
+      return inertia.render('errors/not_found')
+    }
+
+    return inertia.render('find/event_single', {
+      event: event.toJSON(),
+    })
+  }
 }
