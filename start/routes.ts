@@ -34,13 +34,13 @@ router
   .as('news.single')
 router
   .group(() => {
-    router.get('/redirect/gtaw', [AuthController, 'redirectToProvider'])
     router.get('/', [EventsController, 'index'])
     router.get('/events', [EventsController, 'index']).as('find.events')
     router.get('/parishes', [FindController, 'parishes']).as('find.parishes')
   })
   .prefix('find')
 
+router.on('/about').renderInertia('about_us').as('about-us')
 router
   .group(() => {
     router.get('/redirect/gtaw', [AuthController, 'redirectToProvider']).as('signIn')
