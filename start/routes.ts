@@ -16,7 +16,7 @@ const CharactersController = () => import('#auth/controllers/characters_controll
 const NewsController = () => import('#news/controllers/news_controller')
 const EventsController = () => import('#events/controllers/events_controller')
 const ContactController = () => import('#contact/controllers/contact_controller')
-const FindController = () => import('#pages/controllers/finds_controller')
+const ParishesController = () => import('#pages/controllers/parishes_controller')
 
 router.get('/', [HomeController, 'index']).as('home')
 router.get('/newsroom', [NewsController, 'index']).as('news.index')
@@ -36,7 +36,7 @@ router
   .group(() => {
     router.get('/', [EventsController, 'index'])
     router.get('/events', [EventsController, 'index']).as('find.events')
-    router.get('/parishes', [FindController, 'parishes']).as('find.parishes')
+    router.get('/parishes', [ParishesController, 'parishes']).as('find.parishes')
   })
   .prefix('find')
 

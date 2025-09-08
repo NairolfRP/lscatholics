@@ -20,7 +20,7 @@ export default class EventsController {
         .orderBy('start_date', 'asc')
         .limit(4)
 
-      return inertia.render('find/events', {
+      return inertia.render('events/all', {
         events: data as Array<{
           id: number
           title: string
@@ -36,7 +36,7 @@ export default class EventsController {
       })
     } catch (err) {
       logger.error({ err }, 'Failed to load events')
-      return inertia.render('find/events', {
+      return inertia.render('events/all', {
         events: [],
         error: true,
       })
@@ -67,7 +67,7 @@ export default class EventsController {
       return inertia.render('errors/not_found')
     }
 
-    return inertia.render('find/event_single', {
+    return inertia.render('events/single', {
       event: event.toJSON(),
     })
   }
