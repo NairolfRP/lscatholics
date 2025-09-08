@@ -14,7 +14,17 @@
         Événements à venir
       </h2>
 
-      <div class="space-y-6">
+      <div v-if="error" class="max-w-4xl mx-auto px-3">
+        <Alert variant="destructive">
+          <CircleAlert />
+          <AlertTitle>Impossible de charger les événements</AlertTitle>
+          <AlertDescription>
+            Nous n'avons pas pu récupérer les événements à venir. Cela peut être dû à un problème
+            serveur ou réseau. Réessayez plus tard.
+          </AlertDescription>
+        </Alert>
+      </div>
+      <div v-else class="space-y-6">
         <Link
           v-for="event in events"
           :key="event.id"
@@ -95,12 +105,14 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Head } from '@inertiajs/vue3'
 import { Link } from '@tuyau/inertia/vue'
-import { ArrowRight, Clock, MapPin } from 'lucide-vue-next'
+import { ArrowRight, CircleAlert, Clock, MapPin } from 'lucide-vue-next'
 import type { InferPageProps } from '@adonisjs/inertia/types'
 import type EventsController from '#events/controllers/events_controller'
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 
 const { events } = defineProps<{
   events: InferPageProps<EventsController, 'index'>['events']
+  error: InferPageProps<EventsController, 'index'>['error']
 }>()
 
 const formatDay = (date: Date): string => {
