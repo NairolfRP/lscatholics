@@ -41,6 +41,7 @@ router
   .prefix('find')
 
 router.on('/about').renderInertia('about_us').as('about-us')
+router.on('/archbishop').renderInertia('archbishop').as('archbishop.index')
 router
   .group(() => {
     router.get('/redirect/gtaw', [AuthController, 'redirectToProvider']).as('signIn')
