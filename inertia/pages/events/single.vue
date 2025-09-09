@@ -4,17 +4,15 @@
     <header>
       <PageBanner :bg-image="event.coverImageUrl" py="16" align="text-left">
         <div class="flex flex-col gap-5 text-left">
-          <h1 class="text-4xl md:text-5xl font-bold uppercase">
+          <Typography variant="h1" class="md:text-5xl font-bold uppercase">
             {{ event.title }}
-          </h1>
+          </Typography>
           <p class="text-xl font-bold opacity-90">
             {{ formatDate(new Date(event.startDate), 'DD MMMM @ HH:mm', { locales: 'fr-FR' }) }}
-            <span v-if="event.endDate"
-              >-
-              {{
-                formatDate(new Date(event.endDate), 'DD MMMM @ HH:mm', { locales: 'fr-FR' })
-              }}</span
-            >
+            <span v-if="event.endDate">
+              -
+              {{ formatDate(new Date(event.endDate), 'DD MMMM @ HH:mm', { locales: 'fr-FR' }) }}
+            </span>
           </p>
         </div>
       </PageBanner>
@@ -32,7 +30,7 @@
             <div v-else v-text="event?.content || ''" class="prose text-justify" />
           </div>
           <div class="space-y-3">
-            <h3 class="scroll-m-20 text-2xl font-bold tracking-tight">Détails</h3>
+            <Typography variant="h3" class="font-bold">Détails</Typography>
             <dl>
               <dt class="text-primary uppercase text-sm font-bold">Début</dt>
               <dd class="text-sm">
@@ -82,6 +80,7 @@ import { useSanitize } from '@/composables/use_sanitize'
 import { formatDate } from '@vueuse/core'
 import { Button } from '@/components/ui/button'
 import { ArrowLeft } from 'lucide-vue-next'
+import { Typography } from '@/components/ui/typography'
 
 const { event } = defineProps<{
   event: {

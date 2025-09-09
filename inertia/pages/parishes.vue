@@ -10,11 +10,9 @@
 
   <section class="py-16">
     <div class="container max-w-7xl mx-auto px-4">
-      <h2
-        class="scroll-m-20 border-b pb-10 text-3xl text-catholic-purple font-bold tracking-tight transition-colors first:mt-0"
-      >
+      <Typography variant="h2" class="pb-10 text-catholic-purple font-bold">
         Doyenné Notre-Dame-des-Saints
-      </h2>
+      </Typography>
       <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
         <Card v-for="parish in parishes" :key="parish.id" class="card-hover pt-0">
           <div
@@ -51,4 +49,5 @@ import { Card, CardContent } from '@/components/ui/card'
 import { Head } from '@inertiajs/vue3'
 import { MapPin } from 'lucide-vue-next'
 import { parishes } from '@/constants/parishes.constants'
+import { Typography } from '@/components/ui/typography'
 </script>

@@ -1,17 +1,17 @@
 <template>
   <Head :title="user!.name" />
   <section class="container max-w-4xl mx-auto my-40 space-y-10 px-5">
-    <h1 class="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">Mes paramètres</h1>
+    <Typography variant="h1">Mes paramètres</Typography>
     <Card>
       <CardHeader>
-        <CardTitle class="flex items-center gap-3 text-destructive"
-          ><Trash /> Danger Zone</CardTitle
-        >
-        <CardDescription
-          >Toutes les informations et les données associées à votre compte seront définitivement et
+        <CardTitle class="flex items-center gap-3 text-destructive">
+          <Trash /> Danger Zone
+        </CardTitle>
+        <CardDescription>
+          Toutes les informations et les données associées à votre compte seront définitivement et
           instantanément effacées. Avant de supprimer votre compte, veillez à sauvegarder toutes les
-          informations que vous souhaitez conserver.</CardDescription
-        >
+          informations que vous souhaitez conserver.
+        </CardDescription>
       </CardHeader>
       <CardFooter class="flex justify-end">
         <Dialog>
@@ -76,6 +76,7 @@ import { Input } from '@/components/ui/input'
 import { watch } from 'vue'
 import { useErrors } from '@/composables/use_errors'
 import { toast } from 'vue-sonner'
+import { Typography } from '@/components/ui/typography'
 
 const user = useUser()
 

@@ -2,7 +2,7 @@
   <Head title="Actualités" />
 
   <PageBanner py="16">
-    <h1 class="text-4xl md:text-5xl font-bold mb-4 font-serif">Actualités</h1>
+    <Typography variant="h1" class="md:text-5xl font-bold mb-4">Actualités</Typography>
     <p class="text-xl opacity-90">Restez informé de la vie de notre archidiocèse</p>
   </PageBanner>
 
@@ -150,6 +150,7 @@ import { router } from '@inertiajs/vue3'
 import { tuyau } from '@/lib/tuyau'
 import { Link } from '@tuyau/inertia/vue'
 import { formatDate } from '@/lib/utils'
+import { Typography } from '@/components/ui/typography'
 
 const { selectedCategory, categories, articles } = defineProps<{
   articles: InferPageProps<NewsController, 'index'>['articles']

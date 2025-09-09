@@ -4,7 +4,9 @@
     <header>
       <PageBanner :bg-image="post.coverImageUrl" py="16">
         <div class="flex flex-col gap-5">
-          <h1 class="text-4xl md:text-5xl font-bold mb-4 font-serif">{{ post.title }}</h1>
+          <Typography variant="h1" class="md:text-5xl font-bold mb-4">
+            {{ post.title }}
+          </Typography>
           <p class="text-xl opacity-90">
             {{ post.excerpt }}
           </p>
@@ -33,6 +35,7 @@ import PageBanner from '@/components/layout/PageBanner.vue'
 import { formatDate } from '@/lib/utils'
 import { computed, onMounted } from 'vue'
 import { useSanitize } from '@/composables/use_sanitize'
+import { Typography } from '@/components/ui/typography'
 
 const { post } = defineProps<{
   post: {

@@ -10,9 +10,12 @@
 
   <section class="py-16">
     <div class="container max-w-7xl mx-auto px-4">
-      <h2 class="text-3xl font-bold text-catholic-purple mb-8 text-center font-serif">
+      <Typography
+        variant="h2"
+        class="border-none text-3xl font-bold text-catholic-purple mb-8 text-center font-serif"
+      >
         Événements à venir
-      </h2>
+      </Typography>
 
       <div v-if="error" class="max-w-4xl mx-auto px-3">
         <Alert variant="destructive">
@@ -109,6 +112,7 @@ import { ArrowRight, CircleAlert, Clock, MapPin } from 'lucide-vue-next'
 import type { InferPageProps } from '@adonisjs/inertia/types'
 import type EventsController from '#events/controllers/events_controller'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
+import { Typography } from '@/components/ui/typography'
 
 const { events } = defineProps<{
   events: InferPageProps<EventsController, 'index'>['events']

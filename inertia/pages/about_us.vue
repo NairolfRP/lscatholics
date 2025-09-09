@@ -27,15 +27,15 @@
         </div>
 
         <div class="prose prose-lg max-w-none text-justify">
-          <p class="leading-7 [&:not(:first-child)]:mt-6">
+          <Typography>
             Nous, le Peuple de Dieu de l'Archidiocèse de Los Santos, recevons notre mission de
             poursuivre l'oeuvre rédemptrice de Jésus-Christ. Baptisés dans le Corps du Christ,
             confirmés dans l'Esprit Saint, nourris par la Parole et l'Eucharistie, nous partageons
             la mission du Christ, comme prêtres, prophètes et rois-serviteurs. Nous formons un seul
             corps avec l'Église catholique à travers le monde, en communion avec le Pape.
-          </p>
+          </Typography>
 
-          <p class="leading-7 [&:not(:first-child)]:mt-6">
+          <Typography>
             Sous l'autorité pastorale de notre
             <Link route="archbishop.index" class="underline text-primary">Archevêque</Link>, nous
             collaborons ensemble pour vivre et annoncer l'Évangile. Le Christ a proclamé le règne de
@@ -48,7 +48,7 @@
             qui nous unissent. Nous nous engageons à abattre les murs qui divisent. Nous consacrons
             nos paroisses, nos écoles, nos institutions, nos services et nos organisations à cette
             mission, sous la tendre protection de Marie, Reine des Saints.
-          </p>
+          </Typography>
         </div>
       </div>
     </div>
@@ -63,13 +63,13 @@
         </div>
 
         <div class="prose prose-lg max-w-none text-justify">
-          <p class="leading-7 [&:not(:first-child)]:mt-6">
+          <Typography>
             La première église de Haute-Andreas se composait de 21 missions, trois pueblos, quatre
             presidios et plusieurs asistencias. Chacun de ces lieux répondait à un plan précis. On
             peut retrouver ces fondations, au nord et au sud, le long de l'El Camino Real.
-          </p>
+          </Typography>
 
-          <p class="leading-7 [&:not(:first-child)]:mt-6">
+          <Typography>
             L'Église de Notre Dame, la Reine des Saints, aussi connue sous le nom de La Placita, fut
             construite en 1814. C'est la première église de la ville de Los Santos, dont le nom
             abrégé provient du nom complet de la ville : El Pueblo de Nuestra Señora la Reina de los
@@ -80,34 +80,34 @@
             espagnol, qui a taversé le Mexique pour rejoindre San Andreas. L'influence franciscaine
             se perçoit encore aujourd'hui dans les noms de nombreuses rues, villes et quartiers de
             notre archidiocèse.
-          </p>
+          </Typography>
 
-          <p class="leading-7 [&:not(:first-child)]:mt-6">
+          <Typography>
             Sur le plan spirituel, saint Junìpero est reconnu comme l'un des fondateurs de notre
             Église à Los Santos, dans notre État et même dans notre pays. Il commença son oeuvre
             missionnaire à Mexico où il rendit visite à la relique de la Tilma de Notre-Dame de
             Guadalupe, patronne des Amériques. Nous avons la grâce immense de puvoir vénérer
             Notre-Dame, tout comme saint Junìpero, devant une des reliques de la Tilma précieusement
             conservée dans l'une des chapelles latérales de la Cathédrale Notre-Dame-des-Saints.
-          </p>
+          </Typography>
 
-          <p class="leading-7 [&:not(:first-child)]:mt-6">
+          <Typography>
             Aujourd'hui, l'Archidiocèse de Los Santos comprend trois comtés situés au sud de San
             Andreas : Los Santos, Ventura et Santa Barbara. Son territoire s'étend de la limite du
             nord du comté de Santa Barbara, près de Maria, jusqu'à la limite sud de l'île du comté
             de Los Santos. Il couvre une superficie de 22 430 km². En 2005, la population catholique
             s'élevait à 4 349 267 fidèles sur un total de 11 258 600 habitants. L'archidiocèse
             compte 288 paroisses réparties dans 120 villes.
-          </p>
+          </Typography>
 
-          <p class="leading-7 [&:not(:first-child)]:mt-6">
+          <Typography>
             Il y a également 30 missions et chapelles, ainsi que 16 églises catholiques de rite
             oriental. Au total, l'Archidiocèse dispose de 214 écoles primaires et 51 lycées
             catholiques, le plus vaste réseau scolaire de l'État de San Andreas. Dans ce contexte
             culturellement très diversifié, des services éthniques sont proposés à 72 communautés
             différentes. Cela inclut l'accompagnement clrical, la liturgie, les services sociaux,
             des ressources, des conseils et des initiatives culturelles.
-          </p>
+          </Typography>
         </div>
       </div>
     </div>
@@ -120,16 +120,14 @@
     <div class="absolute inset-0 bg-black/60"></div>
     <div class="container relative z-10 mx-auto px-4">
       <div class="max-w-6xl mx-auto space-y-5">
-        <h2
-          class="scroll-m-20 text-5xl text-catholic-gold font-bold tracking-tight transition-colors first:mt-0"
-        >
+        <Typography variant="h2" class="border-none pb-0 text-5xl text-catholic-gold font-bold">
           Notre impact
-        </h2>
-        <p class="leading-7 [&:not(:first-child)]:mt-6">
+        </Typography>
+        <Typography>
           Avec Catholic Charities, nous venons en aide à des millions d'enfants, de personnes âgées,
           de familles, d'hommes et de femmes, de migrants, de sans-abri et autres populations
           vulnérables, dans les comtés de Los Santos, de Ventura et de Santa Babara.
-        </p>
+        </Typography>
         <Button variant="warning" size="lg" class="cursor-pointer">
           <ArrowRight /> Devenez bénévole
         </Button>
@@ -146,4 +144,5 @@ import VolunteerImage from '@/assets/images/thanksgiving2024.png'
 import { ChevronDown, ArrowRight } from 'lucide-vue-next'
 import PageBanner from '@/components/layout/PageBanner.vue'
 import BannerImage from '@/assets/images/olacathedral-cross.png'
+import { Typography } from '@/components/ui/typography'
 </script>

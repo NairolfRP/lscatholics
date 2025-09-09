@@ -2,7 +2,9 @@
   <Head title="Contact" />
 
   <PageBanner py="16">
-    <h1 class="text-4xl md:text-5xl font-bold mb-4 font-serif">Nous Contacter</h1>
+    <Typography variant="h1" class="text-4xl md:text-5xl font-bold mb-4 font-serif">
+      Nous Contacter
+    </Typography>
     <p class="text-xl opacity-90">
       Nous sommes là pour vous. N'hésitez pas à nous appeler ou nous écrire pour poser vos questions
       et nous faire part de vos préoccupations et commentaires.
@@ -302,6 +304,7 @@ import type ContactController from '#contact/controllers/contact_controller'
 import { useCurrentCharacter } from '@/composables/use_current_character'
 import AuthentificationRequiredAlert from '@/components/AuthentificationRequiredAlert.vue'
 import { useUser } from '@/composables/use_user'
+import { Typography } from '@/components/ui/typography'
 
 const props = usePageProps()
 const errors = useErrors()

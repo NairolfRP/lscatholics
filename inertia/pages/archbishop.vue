@@ -11,11 +11,9 @@
   <div class="py-20">
     <div class="container flex flex-col gap-15 max-w-7xl mx-auto px-4">
       <section>
-        <h2
-          class="scroll-m-20 pb-10 text-4xl font-bold tracking-tight transition-colors first:mt-0"
-        >
+        <Typography variant="h2" class="border-none pb-10 text-4xl font-bold">
           Son Éminence, le cardinal Ronan Callahan, archevêque de Los Santos
-        </h2>
+        </Typography>
 
         <div class="flex flex-col md:flex-row gap-5">
           <div class="flex flex-col space-y-5 md:w-80 md:flex-shrink-0 items-center md:items-start">
@@ -38,58 +36,59 @@
           </div>
 
           <div class="flex-1">
-            <p class="text-justify leading-7 [&:not(:first-child)]:mt-6">
+            <Typography class="text-justify">
               Le cardinal Ronan Callahan a été nommé 7e archevêque de Los Santos le 22 février 2025
               par le pape François. Né le 26 janvier 1960 à Worcester dans le Massachusetts, il est
               le deuxième enfant de l'union de Seamus (1936-2005) et Bridget (1938-2015) Callahan,
               une famille irlandais-américaine immigrée dans l'est des États-Unis depuis le 19e
               siècle.
-            </p>
+            </Typography>
 
-            <p class="text-justify leading-7 [&:not(:first-child)]:mt-6">
+            <Typography class="text-justify">
               Il commence ses études à l'école élémentaire catholique de la Sainte Famille (Holy
               Family Academy) de Gardner (Massachusetts), puis poursuit au lycée de Saint Jean (St
               John's High School) à Shrewsbury (Massachusetts) avant d'entrer au Séminaire Saint
               Jean à Boston et poursuivre ses études en vue d'être prêtre au Collège pontifical
               nord-américain à Rome.
-            </p>
+            </Typography>
 
-            <p class="text-justify leading-7 [&:not(:first-child)]:mt-6">
+            <Typography class="text-justify">
               Il est ordonné prêtre en 1987 pour l'archidiocèse de Los Santos. Il est vicaire de
               paroisse de 1987 à 1989, puis curé d'une paroisse de 1989 à 1995. De 1995 à 2002, il
               est professeur au Séminaire Saint Jean à Boston.
-            </p>
+            </Typography>
 
-            <p class="text-justify leading-7 [&:not(:first-child)]:mt-6">
+            <Typography class="text-justify">
               En 2002, il est nommé évêque auxiliaire de l'archidiocèse de Boston par le pape saint
               Jean-Paul II et reçoit la consécration épiscopale des mains du cardinal Bernard Law.
               En 2011, le pape Benoit XVI le nomme évêque de Bridport (Connecticut), puis en 2018,
               le pape François le transfert en Ohio comme Archevêque de Cincinnati.
-            </p>
+            </Typography>
 
-            <p class="text-justify leading-7 [&:not(:first-child)]:mt-6">
+            <Typography class="text-justify">
               Lors du consistoire du 29 juin 2018, Sa Sainteté le Pape François le créé cardinal. A
               Rome, il est actuellement membre du Dicastère pour l'Évangélisation et du Dicastère
               pour la Culture et l'Éducation.
-            </p>
+            </Typography>
 
-            <p class="text-justify leading-7 [&:not(:first-child)]:mt-6">
+            <Typography class="text-justify">
               En mai 2025, il participe au conclave qui élit le pape Léon XIV.
-            </p>
+            </Typography>
 
-            <p class="text-justify leading-7 [&:not(:first-child)]:mt-6">
+            <Typography class="text-justify">
               Sa devise épiscopale est « Qui est semblable au Seigneur notre Dieu ? » (Ps 113:5)
-            </p>
+            </Typography>
           </div>
         </div>
       </section>
 
       <section>
-        <h3
-          class="uppercase scroll-m-20 border-b border-[#D15454] mb-10 text-3xl font-bold tracking-tight transition-colors first:mt-0"
+        <Typography
+          variant="h3"
+          class="uppercase border-b border-[#D15454] mb-10 text-3xl font-bold"
         >
           Armoiries
-        </h3>
+        </Typography>
 
         <img
           :src="CoatOfArms"
@@ -97,11 +96,11 @@
           class="md:float-right max-h-90 md:max-h-70 mx-auto md:mx-0"
         />
 
-        <p class="text-justify leading-7 [&:not(:first-child)]:mt-6">
+        <Typography class="text-justify">
           Comme le veut la tradition héraldique de l’Église, les armoiries d’un archevêque se
           composent de deux parties :
-        </p>
-        <ul class="ml-6 list-disc [&>li]:mt-2">
+        </Typography>
+        <Typography variant="list" class="my-0">
           <li>
             d’une part, les <strong>armes de l’archidiocèse de Los Santos</strong>, qui apparaissent
             à dextre (côté gauche pour le spectateur) ;
@@ -110,13 +109,13 @@
             d’autre part, les <strong>armes personnelles du prélat</strong>, qui figurent à senestre
             (côté droit pour le spectateur).
           </li>
-        </ul>
-        <p class="text-justify leading-7 [&:not(:first-child)]:mt-4 mb-6">
+        </Typography>
+        <Typography class="text-justify [&:not(:first-child)]:mt-4 mb-6">
           Ce parti d’écu exprime l’union spirituelle et pastorale entre l’évêque et l’Église locale
           confiée à sa sollicitude.
-        </p>
+        </Typography>
 
-        <ul class="ml-6 list-disc [&>li]:mt-2">
+        <Typography variant="list" class="my-0">
           <li>
             <strong>À dextre :</strong> sur fond d’azur, trois paires d’ailes d’or, chacune
             accompagnée d’une rose stylisée. Ces insignes représentent l’Archidiocèse de Los Santos.
@@ -130,13 +129,13 @@
             Conception, patronne des États-Unis, et l’aigle rouge symbolise les origines américaines
             de sa famille dans l’Est du pays.
           </li>
-        </ul>
+        </Typography>
 
-        <p class="text-justify leading-7 [&:not(:first-child)]:mt-6">
+        <Typography class="text-justify">
           Les ornements qui entourent l’écu sont ceux réservés aux cardinaux de la Sainte Église
           romaine :
-        </p>
-        <ul class="ml-6 list-disc [&>li]:mt-2">
+        </Typography>
+        <Typography variant="list" class="my-0">
           <li>
             le <strong>chapeau galero de gueules</strong>, orné de quinze houppes de chaque côté ;
           </li>
@@ -144,13 +143,13 @@
             la <strong>croix archiépiscopale à double traverse</strong>, signe de sa dignité
             métropolitaine.
           </li>
-        </ul>
+        </Typography>
 
-        <p class="text-justify leading-7 [&:not(:first-child)]:mt-6">
+        <Typography class="text-justify">
           Au bas de l’écu, un listel d’argent porte la devise de Son Éminence :
           <em>« Quis ut Deus »</em> (« Qui est semblable au Seigneur notre Dieu ? »), tirée du
           Psaume 112:5.
-        </p>
+        </Typography>
 
         <div class="clear-both"></div>
       </section>
@@ -164,4 +163,5 @@ import ArchbishopPortrait from '@/assets/images/cardinal_callahan_officiel_portr
 import { Button } from '@/components/ui/button'
 import Facebrower from '@/components/svg/Facebrower.vue'
 import CoatOfArms from '@/assets/images/cardinal_callahan_armoiries.png'
+import { Typography } from '@/components/ui/typography'
 </script>
