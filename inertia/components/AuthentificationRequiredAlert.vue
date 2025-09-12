@@ -4,7 +4,7 @@
     <AlertDescription>
       <span>
         Vous devez vous
-        <Link route="signIn" class="underline cursor-pointer"> connecter</Link>
+        <LinkText route="signIn" class="text-info-foreground">connecter</LinkText>
         {{ props.text || 'pour utiliser cette fonctionnalité.' }}
       </span>
     </AlertDescription>
@@ -14,7 +14,7 @@
 <script setup lang="ts">
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { LogIn } from 'lucide-vue-next'
-import { Link } from '@tuyau/inertia/vue'
+import { LinkText } from '@/components/ui/LinkText'
 
 type Props = {
   text?: string

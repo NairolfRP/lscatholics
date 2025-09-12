@@ -37,17 +37,17 @@
 
           <Typography>
             Sous l'autorité pastorale de notre
-            <Link route="archbishop.index" class="underline text-primary">Archevêque</Link>, nous
-            collaborons ensemble pour vivre et annoncer l'Évangile. Le Christ a proclamé le règne de
-            Dieu. Nous sommes appelés à en être les instruments dans le monde. Nous nous engageons à
-            bâtir une communauté de foi et d'amour. Avec le Christ, nous portons la Bonne Nouvelle
-            aux pauvres. Nous nous engageons à combattre toutes les formes de pauvreté présentes
-            parmi nous — spirituelles, économiques et morales. Avec le Christ, nous défendons la
-            dignité de toute vie humaine. Nous nous engageons à respecter chaque personne et à être
-            des intendants fidèles de la création de Dieu. Avec le Christ, nous affirmons les liens
-            qui nous unissent. Nous nous engageons à abattre les murs qui divisent. Nous consacrons
-            nos paroisses, nos écoles, nos institutions, nos services et nos organisations à cette
-            mission, sous la tendre protection de Marie, Reine des Saints.
+            <LinkText route="archbishop.index">Archevêque</LinkText>, nous collaborons ensemble pour
+            vivre et annoncer l'Évangile. Le Christ a proclamé le règne de Dieu. Nous sommes appelés
+            à en être les instruments dans le monde. Nous nous engageons à bâtir une communauté de
+            foi et d'amour. Avec le Christ, nous portons la Bonne Nouvelle aux pauvres. Nous nous
+            engageons à combattre toutes les formes de pauvreté présentes parmi nous — spirituelles,
+            économiques et morales. Avec le Christ, nous défendons la dignité de toute vie humaine.
+            Nous nous engageons à respecter chaque personne et à être des intendants fidèles de la
+            création de Dieu. Avec le Christ, nous affirmons les liens qui nous unissent. Nous nous
+            engageons à abattre les murs qui divisent. Nous consacrons nos paroisses, nos écoles,
+            nos institutions, nos services et nos organisations à cette mission, sous la tendre
+            protection de Marie, Reine des Saints.
           </Typography>
         </div>
       </div>
@@ -139,10 +139,10 @@
 <script setup lang="ts">
 import { Head } from '@inertiajs/vue3'
 import { Button } from '@/components/ui/button'
-import { Link } from '@tuyau/inertia/vue'
 import VolunteerImage from '@/assets/images/thanksgiving2024.png'
 import { ChevronDown, ArrowRight } from 'lucide-vue-next'
 import PageBanner from '@/components/layout/PageBanner.vue'
 import BannerImage from '@/assets/images/olacathedral-cross.png'
 import { Typography } from '@/components/ui/typography'
+import { LinkText } from '@/components/ui/LinkText'
 </script>

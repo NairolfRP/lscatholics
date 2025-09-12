@@ -14,10 +14,10 @@
     <Typography class="[&:not(:first-child)]:mt-2">
       Lors de l’utilisation de notre site, nous collectons uniquement les informations nécessaires à
       l&apos;authentification des utilisateurs via l'API de
-      <a href="https://gta.world/" class="underline text-primary" target="_blank">GTA World</a>.
-      Après l'inscription, l'utilisateur peut aussi, de manière optionnelle, lier son compte
-      utilisateur <a class="underline text-primary" href="https://discord.com/">Discord</a>. Les
-      données collectées sont les suivantes :
+      <LinkText external href="https://gta.world/" target="_blank">GTA World</LinkText>. Après
+      l'inscription, l'utilisateur peut aussi, de manière optionnelle, lier son compte utilisateur
+      <LinkText external href="https://discord.com/" target="_blank">Discord</LinkText>. Les données
+      collectées sont les suivantes :
     </Typography>
     <Typography variant="list" class="my-4">
       <li><strong>Nom d'utilisateur :</strong> pseudonyme GTA World</li>
@@ -66,4 +66,5 @@
 import PageBanner from '@/components/layout/PageBanner.vue'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { Typography } from '@/components/ui/typography'
+import { LinkText } from '@/components/ui/LinkText'
 </script>
