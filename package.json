@@ -54,7 +54,7 @@
     "@japa/plugin-adonisjs": "^4.0.0",
     "@japa/runner": "^4.4.0",
     "@swc/core": "1.11.24",
-    "@tailwindcss/vite": "^4.1.12",
+    "@tailwindcss/vite": "^4.1.13",
     "@tuyau/utils": "^0.0.9",
     "@types/luxon": "^3.7.1",
     "@types/node": "^24.3.0",
