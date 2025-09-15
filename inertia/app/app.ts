@@ -3,6 +3,12 @@
 /// <reference path="../../config/ally.ts" />
 /// <reference path="../../config/auth.ts" />
 
+declare global {
+  interface Window {
+    __TANSTACK_QUERY_CLIENT__: import('@tanstack/vue-query').QueryClient
+  }
+}
+
 import '@/assets/css/app.css'
 import { createSSRApp, DefineComponent, h } from 'vue'
 import { createInertiaApp } from '@inertiajs/vue3'
@@ -10,8 +16,11 @@ import { resolvePageComponent } from '@adonisjs/inertia/helpers'
 import AppLayout from '@/layouts/AppLayout.vue'
 import { TuyauPlugin } from '@tuyau/inertia/vue'
 import { tuyau } from '@/lib/tuyau'
+import { QueryClient, VueQueryPlugin } from '@tanstack/vue-query'
 
 const appName = import.meta.env.VITE_APP_NAME || 'Archidiocèse de Los Santos'
+
+const queryClient = new QueryClient()
 
 createInertiaApp({
   progress: { color: '#5468FF' },
@@ -34,9 +43,12 @@ createInertiaApp({
   },
 
   setup({ el, App, props, plugin }) {
+    window.__TANSTACK_QUERY_CLIENT__ = queryClient
+
     createSSRApp({ render: () => h(App, props) })
       .use(plugin)
       .use(TuyauPlugin, { client: tuyau })
+      .use(VueQueryPlugin, { queryClient })
       .mount(el)
   },
 })

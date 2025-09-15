@@ -77,6 +77,11 @@ export const MENU_ITEMS: MenuItem[] = [
         label: 'Liste des événements',
         route: 'find.events',
       },
+      {
+        id: 'daily-readings',
+        label: 'Lectures du jour',
+        route: 'dailyReadings',
+      },
     ],
   },
 

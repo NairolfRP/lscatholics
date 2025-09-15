@@ -43,6 +43,9 @@ router
 router.on('/about').renderInertia('about_us').as('about-us')
 router.on('/archbishop').renderInertia('archbishop').as('archbishop.index')
 router.on('/privacy').renderInertia('privacy').as('privacy')
+
+router.on('daily-readings').renderInertia('readings').as('dailyReadings')
+
 router
   .group(() => {
     router.get('/redirect/gtaw', [AuthController, 'redirectToProvider']).as('signIn')
