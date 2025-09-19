@@ -17,6 +17,7 @@ const NewsController = () => import('#news/controllers/news_controller')
 const EventsController = () => import('#events/controllers/events_controller')
 const ContactController = () => import('#contact/controllers/contact_controller')
 const ParishesController = () => import('#pages/controllers/parishes_controller')
+const DepartmentsController = () => import('#pages/controllers/departments_controller')
 
 router.get('/', [HomeController, 'index']).as('home')
 router.get('/newsroom', [NewsController, 'index']).as('news.index')
@@ -42,6 +43,11 @@ router
 
 router.on('/about').renderInertia('about_us').as('about-us')
 router.on('/archbishop').renderInertia('archbishop').as('archbishop.index')
+router.get('/departments', [DepartmentsController, 'index']).as('departments.index')
+router
+  .get('/department/:slug', [DepartmentsController, 'single'])
+  .where('slug', router.matchers.slug())
+  .as('departments.single')
 router.on('/privacy').renderInertia('privacy').as('privacy')
 
 router.on('daily-readings').renderInertia('readings').as('dailyReadings')
