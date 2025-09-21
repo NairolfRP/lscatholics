@@ -57,7 +57,7 @@
     "@tailwindcss/vite": "^4.1.13",
     "@tuyau/utils": "^0.0.9",
     "@types/luxon": "^3.7.1",
-    "@types/node": "^24.4.0",
+    "@types/node": "^24.5.2",
     "@vitejs/plugin-vue": "^6.0.1",
     "eslint": "^9.35.0",
     "hot-hook": "^0.4.0",
