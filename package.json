@@ -58,7 +58,7 @@
     "@tailwindcss/vite": "^4.1.13",
     "@tuyau/utils": "^0.0.9",
     "@types/luxon": "^3.7.1",
-    "@types/node": "^24.4.0",
+    "@types/node": "^24.5.2",
     "@vitejs/plugin-vue": "^6.0.1",
     "eslint": "^9.35.0",
     "hot-hook": "^0.4.0",
@@ -74,7 +74,7 @@
   "dependencies": {
     "@adonisjs-community/modules": "^1.1.0",
     "@adonisjs/ally": "^5.1.1",
-    "@adonisjs/auth": "^9.4.2",
+    "@adonisjs/auth": "^9.5.0",
     "@adonisjs/core": "^6.19.0",
     "@adonisjs/cors": "^2.2.1",
     "@adonisjs/inertia": "^3.1.1",
@@ -84,19 +84,19 @@
     "@adonisjs/static": "^1.1.1",
     "@adonisjs/vite": "^4.0.0",
     "@gtaw-oauth-providers/adonisjs-ally": "^2.0.1",
-    "@inertiajs/vue3": "^2.1.3",
+    "@inertiajs/vue3": "^2.1.10",
     "@tanstack/vue-query": "^5.87.4",
     "@tuyau/client": "^0.2.10",
     "@tuyau/core": "^0.4.2",
     "@tuyau/inertia": "^0.0.15",
     "@vinejs/vine": "^3.0.1",
-    "@vue/server-renderer": "^3.5.20",
+    "@vue/server-renderer": "^3.5.21",
     "@vueuse/core": "^13.8.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "dompurify": "^3.2.6",
     "edge.js": "^6.3.0",
-    "lucide-vue-next": "^0.542.0",
+    "lucide-vue-next": "^0.544.0",
     "luxon": "^3.7.2",
     "pg": "^8.16.3",
     "reflect-metadata": "^0.2.2",
@@ -104,7 +104,7 @@
     "tailwind-merge": "^3.3.1",
     "tw-animate-css": "^1.3.7",
     "vee-validate": "^4.15.1",
-    "vue": "^3.5.20",
+    "vue": "^3.5.21",
     "vue-sonner": "^2.0.8"
   },
   "hotHook": {
@@ -114,5 +114,5 @@
     ]
   },
   "prettier": "@adonisjs/prettier-config",
-  "packageManager": "pnpm@10.16.1+sha512.0e155aa2629db8672b49e8475da6226aa4bdea85fdcdfdc15350874946d4f3c91faaf64cbdc4a5d1ab8002f473d5c3fcedcd197989cf0390f9badd3c04678706"
+  "packageManager": "pnpm@10.17.1+sha512.17c560fca4867ae9473a3899ad84a88334914f379be46d455cbf92e5cf4b39d34985d452d2583baf19967fa76cb5c17bc9e245529d0b98745721aa7200ecaf7a"
 }
