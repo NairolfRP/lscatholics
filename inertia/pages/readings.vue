@@ -3,15 +3,22 @@
     <Typography variant="h1"> Lectures du jour </Typography>
 
     <div v-if="data?.informations" class="space-y-1 mt-2">
-      <div class="flex items-center space-x-2">
-        <span
-          class="w-4 h-4 rounded-sm border border-gray-600"
-          :style="{ backgroundColor: liturgicalColor(liturgicalHeader?.couleur || '') }"
-        ></span>
-        <span class="text-gray-700 font-bold">
-          {{ liturgicalHeader?.dateInfo.weekday }}, {{ liturgicalHeader?.dateInfo.semaine || '' }} —
-          Année {{ liturgicalHeader?.dateInfo.annee }}
-        </span>
+      <div>
+        <div class="flex items-center space-x-2">
+          <span
+            class="w-4 h-4 rounded-sm border border-gray-600"
+            :style="{ backgroundColor: liturgicalColor(liturgicalHeader?.couleur || '') }"
+          ></span>
+          <span class="text-gray-700 font-bold">
+            {{ liturgicalHeader?.dateInfo.weekday }},
+            {{ liturgicalHeader?.dateInfo.semaine || '' }} — Année
+            {{ liturgicalHeader?.dateInfo.annee }}
+          </span>
+        </div>
+        <div v-if="liturgicalHeader?.mainName" class="flex space-x-2">
+          <span class="w-4 h-4"></span>
+          <span>{{ liturgicalHeader?.mainName }}</span>
+        </div>
       </div>
 
       <div v-if="liturgicalHeader?.subFeast" class="flex items-center space-x-2">
@@ -171,7 +178,7 @@ const { isLoading, data, error, refetch } = useQuery({
     }
     return response.json()
   },
-  staleTime: 1000 * 60 * 30,
+  staleTime: 1000 * 60 * 5,
   retry: 3,
   retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
 })
