@@ -71,7 +71,7 @@
           </Card>
         </Link>
 
-        <Link route="sacraments.index" as-child>
+        <Link route="services.index" as-child>
           <Card class="text-center hover:shadow-lg transition-shadow">
             <CardContent class="p-6">
               <div

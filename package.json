@@ -39,6 +39,7 @@
     "#news/*": "./app/news/*.js",
     "#pages/*": "./app/pages/*.js",
     "#mails/*": "./app/mails/*.js",
+    "#shared/*": "./app/shared/*.js",
     "#providers/*": "./providers/*.js",
     "#database/*": "./database/*.js",
     "#tests/*": "./tests/*.js",

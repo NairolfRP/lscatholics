@@ -45,24 +45,6 @@ export const MENU_ITEMS: MenuItem[] = [
       },
     ],
   },
-
-  {
-    id: 'pray-celebrate',
-    label: 'Prier/Célébrer',
-    children: [
-      {
-        id: 'sacraments',
-        label: 'Sacrements',
-        route: 'sacraments.index',
-      },
-      {
-        id: 'prayers',
-        label: 'Prières',
-        route: 'prayers',
-      },
-    ],
-  },
-
   {
     id: 'find',
     label: 'Trouver',
@@ -110,6 +92,12 @@ export const MENU_ITEMS: MenuItem[] = [
         route: 'jobs.index',
       },
     ],
+  },
+
+  {
+    id: 'services',
+    label: 'Services',
+    route: 'services.index',
   },
 
   {
@@ -161,9 +149,9 @@ export const FOOTER_MENU_ITEMS: MenuItem[] = [
         route: 'find.parishes',
       },
       {
-        id: 'sacraments',
-        label: 'Sacrements',
-        route: 'sacraments.index',
+        id: 'services',
+        label: 'Services',
+        route: 'services.index',
       },
       {
         id: 'events',
