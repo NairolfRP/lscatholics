@@ -19,6 +19,7 @@ const ContactController = () => import('#contact/controllers/contact_controller'
 const ParishesController = () => import('#pages/controllers/parishes_controller')
 const DepartmentsController = () => import('#pages/controllers/departments_controller')
 const ServicesController = () => import('#pages/controllers/services_controller')
+const PaymentController = () => import('#core/controllers/payments_controller')
 
 router.get('/', [HomeController, 'index']).as('home')
 router.get('/newsroom', [NewsController, 'index']).as('news.index')
@@ -75,5 +76,9 @@ router
       .as('switchCharacter')
   })
   .prefix('api/auth')
+
+router
+  .get('/api/payment/fleeca/callback/:token', [PaymentController, 'callback'])
+  .as('payment.callback')
 
 router.on('/profile').renderInertia('profile').as('profile')

@@ -46,8 +46,14 @@ export default await Env.create(new URL('../', import.meta.url), {
   DISCORD_GUILD_ID: Env.schema.string.optional(),
   DISCORD_BOT_TOKEN: Env.schema.string.optional(),
 
+  /*
+  |----------------------------------------------------------
+  | Variables for configuring GTA World API
+  |----------------------------------------------------------
+  */
   GTAW_CLIENT_ID: Env.schema.string(),
   GTAW_CLIENT_SECRET: Env.schema.string(),
+  GTAW_FLEECA_AUTH_KEY: Env.schema.string(),
 
   /*
   |----------------------------------------------------------
