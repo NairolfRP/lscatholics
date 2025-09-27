@@ -20,6 +20,7 @@ const ParishesController = () => import('#pages/controllers/parishes_controller'
 const DepartmentsController = () => import('#pages/controllers/departments_controller')
 const ServicesController = () => import('#pages/controllers/services_controller')
 const PaymentController = () => import('#core/controllers/payments_controller')
+const DonateController = () => import('#pages/controllers/donate_controller')
 
 router.get('/', [HomeController, 'index']).as('home')
 router.get('/newsroom', [NewsController, 'index']).as('news.index')
@@ -53,6 +54,8 @@ router
 router.on('/privacy').renderInertia('privacy').as('privacy')
 router.get('/services', [ServicesController, 'index']).as('services.index')
 router.get('/services/:slug', [ServicesController, 'single']).as('services.single')
+router.get('/donate', [DonateController, 'index']).as('donate.index')
+router.post('/donate', [DonateController, 'submit']).as('donate.submit')
 
 router.on('daily-readings').renderInertia('readings').as('dailyReadings')
 
