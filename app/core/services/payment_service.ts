@@ -42,7 +42,7 @@ export class PaymentService {
         sessionId,
       }
     } catch (error) {
-      logger.error({ error }, 'Error generating payment URL')
+      logger.error({ err: error }, 'Error generating payment URL')
       throw new Error('Failed to generate payment URL')
     }
   }
@@ -81,7 +81,7 @@ export class PaymentService {
         transactionData: validationResponse,
       }
     } catch (error) {
-      logger.error({ error }, 'Payment callback processing error:')
+      logger.error({ err: error }, 'Payment callback processing error')
       session.forget('payment_data')
 
       return {

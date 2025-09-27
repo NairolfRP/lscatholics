@@ -70,7 +70,7 @@ export class CharacterCacheService {
     }
 
     if (deletedCount > 0) {
-      logger.info(`Cache cleanup: ${deletedCount} expired entries removed`)
+      logger.info(`Cache cleanup: %s expired entries removed`, deletedCount)
     }
   }
 

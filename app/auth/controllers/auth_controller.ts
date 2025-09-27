@@ -106,7 +106,7 @@ export default class AuthController {
       characters.clearCurrentCharacter()
       return response.redirect().back()
     } catch (error) {
-      logger.error('Failed to logout', { error })
+      logger.error({ err: error }, 'Failed to logout')
 
       session.flashErrors({
         E_LOGOUT:
@@ -135,7 +135,7 @@ export default class AuthController {
 
       return response.redirect('/')
     } catch (error) {
-      logger.error('Failed to delete account', { user, error })
+      logger.error({ err: error, user: user }, 'Failed to delete account')
       session.flashErrors({
         E_DELETE_USER:
           "Une erreur s'est produite lors de la suppression du compte. Contactez un administrateur du site.",

@@ -29,14 +29,14 @@ export default class CharacterService {
       return await characterCache.getCachedUserCharacters(user.id.toString(), () =>
         this.fetchCharactersFromAPI()
       )
-    } catch (err) {
+    } catch (error) {
       this.ctx.logger.error(
-        { err },
+        { err: error },
         `Failed to get characters for user '%s' (id: %d):`,
         user.name,
         user.id
       )
-      throw err
+      throw error
     }
   }
 
@@ -113,8 +113,7 @@ export default class CharacterService {
 
     this.ctx.session.put(this.CURRENT_CHARACTER_SESSION_KEY, currentCharacter)
 
-    this.ctx.logger.debug('Current character set for user', {
-      userId: this.ctx.auth.user?.id,
+    this.ctx.logger.debug('Current character set for user id %s: %o', this.ctx.auth.user?.id, {
       characterId: character.id,
       characterName: `${character.firstname} ${character.lastname}`,
     })
@@ -180,7 +179,7 @@ export default class CharacterService {
 
   async clearCurrentCharacter() {
     this.ctx.session.forget(this.CURRENT_CHARACTER_SESSION_KEY)
-    this.ctx.logger.debug(`Current character cleared for user ${this.ctx.auth.user?.id}`)
+    this.ctx.logger.debug(`Current character cleared for user %s`, this.ctx.auth.user?.id)
 
     if (this.ctx.auth.user) {
       const characterCache = await this.getCharacterCacheService()

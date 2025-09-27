@@ -21,10 +21,13 @@ export class ContactService {
     const result = await discordWebhook.execute()
 
     if (result) {
-      logger.info('Contact form submitted successfully', {
-        name: `${payload.firstname} ${payload.lastname}`,
-        subject: payload.subject,
-      })
+      logger.info(
+        {
+          name: `${payload.firstname} ${payload.lastname}`,
+          subject: payload.subject,
+        },
+        'Contact form submitted successfully'
+      )
     }
 
     return result

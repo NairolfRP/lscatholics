@@ -34,8 +34,8 @@ export default class EventsController {
         }>,
         error: false,
       })
-    } catch (err) {
-      logger.error({ err }, 'Failed to load events')
+    } catch (error) {
+      logger.error({ err: error }, 'Failed to load events')
       return inertia.render('events/all', {
         events: [],
         error: true,

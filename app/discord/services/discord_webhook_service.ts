@@ -87,7 +87,7 @@ export class DiscordWebhookService {
       await createDiscordWebhookUrlValidator.validate(url)
       return service
     } catch (e) {
-      logger.error('Invalid Discord webhook URL provided', { url })
+      logger.error({ url }, 'Invalid Discord webhook URL provided')
       throw new DiscordWebhookException('Invalid webhook URL', true)
     }
   }
@@ -208,11 +208,14 @@ export class DiscordWebhookService {
 
         this.lastExecutionTime = new Date()
 
-        logger.info('Discord webhook executed successfully', {
-          attempt,
-          contentLength: this.content.length,
-          embedCount: this.embeds.length,
-        })
+        logger.info(
+          {
+            attempt,
+            contentLength: this.content.length,
+            embedCount: this.embeds.length,
+          },
+          'Discord webhook executed successfully'
+        )
 
         return { success: true }
       } catch (e) {
@@ -224,19 +227,24 @@ export class DiscordWebhookService {
 
         if (attempt < this.retries) {
           const delay = Math.min(1000 * Math.pow(2, attempt - 1), 5000) // Exponential backoff, max 5s
-          logger.warn(`Discord webhook attempt ${attempt} failed, retrying in ${delay}ms`, {
-            error: e instanceof Error ? e.message : String(e),
-          })
+          logger.warn(
+            {
+              error: e instanceof Error ? e.message : String(e),
+            },
+            `Discord webhook attempt %s failed, retrying in %s ms`,
+            attempt,
+            delay
+          )
           await this.sleep(delay)
         }
       }
     }
 
     const errorMessage = lastError?.message || 'Unknown error'
-    logger.error('Discord webhook failed after all retries', {
-      error: errorMessage,
-      retries: this.retries,
-    })
+    logger.error(
+      { err: errorMessage, retries: this.retries },
+      'Discord webhook failed after all retries'
+    )
 
     return {
       success: false,
@@ -309,9 +317,7 @@ export class DiscordWebhookService {
           ? e.messages.join(', ')
           : JSON.stringify(e.messages)
 
-        logger.error('Discord webhook payload validation failed', {
-          messages: e.messages,
-        })
+        logger.error({ err: e }, 'Discord webhook payload validation failed')
 
         throw new DiscordWebhookException(`Payload validation failed: ${validationMessages}`, true)
       }

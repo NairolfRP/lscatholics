@@ -23,7 +23,7 @@ export default class HomeController {
         }>,
       })
     } catch (error) {
-      logger.error({ error }, 'Failed to get recent posts')
+      logger.error({ err: error }, 'Failed to get recent posts')
 
       session.flashErrors({
         E_HOME_RECENT_POSTS: 'Une erreur est survenue lors du chargement des récentes actualités',
