@@ -103,7 +103,7 @@ export class PaymentService {
    */
   private async validateToken(token: string): Promise<FleecaValidationResponse> {
     try {
-      const tokenValidationUrl = `${this.getBaseUrl()}/gateway_token`
+      const tokenValidationUrl = `${this.getBaseUrl()}/gateway_token/${token}`
 
       const response = await fetch(tokenValidationUrl, {
         method: 'POST',
@@ -140,7 +140,7 @@ export class PaymentService {
       throw new Error('Invalid auth key in payment response')
     }
 
-    if (validationResponse.message !== 'successful_payment') {
+    if (validationResponse.message !== 'payment_successful') {
       throw new Error(`Payment was not successful: ${validationResponse.message}`)
     }
 
