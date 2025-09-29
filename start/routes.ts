@@ -54,8 +54,13 @@ router
 router.on('/privacy').renderInertia('privacy').as('privacy')
 router.get('/services', [ServicesController, 'index']).as('services.index')
 router.get('/services/:slug', [ServicesController, 'single']).as('services.single')
+router.on('/catholic-charities').renderInertia('catholic-charities').as('charities.index')
+
 router.get('/donate', [DonateController, 'index']).as('donate.index')
 router.post('/donate', [DonateController, 'submit']).as('donate.submit')
+
+router.on('/vocations').renderInertia('vocations').as('vocations')
+router.on('/jobs').renderInertia('jobs').as('jobs.index')
 
 router.on('daily-readings').renderInertia('readings').as('dailyReadings')
 
