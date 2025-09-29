@@ -65,7 +65,7 @@
           <div class="text-center md:text-left opacity-80 mb-4 md:mb-0">
             <p>&copy; 2025 Archidiocèse de Los Santos. Tous droits réservés.</p>
           </div>
-          <div class="flex flex-col flex-row gap-4 justify-center text-center md:text-left">
+          <div class="flex gap-4 justify-center text-center md:text-left">
             <Link
               route="privacy"
               class="opacity-80 hover:opacity-100 hover:text-catholic-gold underline transition-colors"
@@ -75,9 +75,23 @@
           </div>
         </div>
         <div class="text-center opacity-60 px-2 text-sm">
-          (( Le contenu de ce site est entièrement fictif, dans le cadre d'un jeu de rôle. Il n'est
-          ni affilié ni un produit officiel de
-          <a href="https://gta.world/" target="_blank" class="underline">GTA World</a> ))
+          <p>
+            (( Le contenu de ce site est entièrement fictif, dans le cadre d'un jeu de rôle. Il
+            n'est ni affilié ni un produit officiel de
+            <a href="https://gta.world/" target="_blank" class="underline">GTA World</a>. ))
+          </p>
+          <p class="mt-3 text-xs">
+            (( Développé avec <span class="color-[#e25555]">❤</span> par
+            <LinkText
+              class="text-inherit"
+              href="https://forum-fr.gta.world/profile/11040-nairolf/"
+              target="_blank"
+              external
+            >
+              Nairolf
+            </LinkText>
+            ))
+          </p>
         </div>
       </div>
     </div>
@@ -94,4 +108,5 @@ import {
   ARCHDIOCESE_FACEBROWSER_LINK,
 } from '@/constants/archdiocese.constants'
 import { FOOTER_MENU_ITEMS } from '@/constants/menu.constants'
+import { LinkText } from '@/components/ui/LinkText'
 </script>
