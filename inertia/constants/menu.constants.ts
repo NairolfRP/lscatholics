@@ -28,11 +28,11 @@ export const MENU_ITEMS: MenuItem[] = [
         label: 'Départements',
         route: 'departments.index',
       },
-      {
+      /*{
         id: 'administrative-handbook',
         label: 'Manuel administratif',
         href: '#',
-      },
+      },*/
       {
         id: 'privacy-policy',
         label: 'Politique de confidentialité',
