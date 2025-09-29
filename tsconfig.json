@@ -4,17 +4,9 @@
     "rootDir": "./",
     "outDir": "./build",
     "paths": {
-      "@/*": [
-        "./inertia/*"
-      ]
+      "@/*": ["./inertia/*"]
     },
-    "types": [
-      "hot-hook/import-meta"
-    ]
+    "types": ["hot-hook/import-meta"]
   },
-  "exclude": [
-    "inertia/**/*",
-    "node_modules",
-    "build"
-  ]
+  "exclude": ["inertia/**/*", "node_modules", "build"]
 }
