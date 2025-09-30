@@ -56,7 +56,7 @@
   </section>
 </template>
 <script setup lang="ts">
-import { Head } from '@inertiajs/vue3'
+import Head from '@/components/AppHead.vue'
 import { useUser } from '@/composables/use_user'
 import { Trash, TriangleAlert } from 'lucide-vue-next'
 import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'

@@ -30,7 +30,7 @@
 </template>
 
 <script setup lang="ts">
-import { Head } from '@inertiajs/vue3'
+import Head from '@/components/AppHead.vue'
 import PageBanner from '@/components/layout/PageBanner.vue'
 import { formatDate } from '@/lib/utils'
 import { computed, onMounted } from 'vue'

@@ -28,6 +28,6 @@
 import { Typography } from '@/components/ui/typography'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { DEPARTMENTS } from '@/constants/departments.constants'
-import { Head } from '@inertiajs/vue3'
+import Head from '@/components/AppHead.vue'
 import { Link } from '@tuyau/inertia/vue'
 </script>

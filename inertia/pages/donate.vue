@@ -1,5 +1,5 @@
 <template>
-  <Head title="Faire un don" />
+  <Head title="Faire un don" :image="DonateHero" />
   <PageBanner :bg-image="DonateHero" align="text-left">
     <Typography variant="h1" class="text-4xl md:text-5xl font-bold mb-4 font-serif">
       Soutenir notre communauté

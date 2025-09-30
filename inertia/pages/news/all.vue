@@ -140,7 +140,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from '@/components/ui/pagination'
-import { Head } from '@inertiajs/vue3'
+import Head from '@/components/AppHead.vue'
 import { ArrowRight } from 'lucide-vue-next'
 import type { InferPageProps } from '@adonisjs/inertia/types'
 import type NewsController from '#news/controllers/news_controller'

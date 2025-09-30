@@ -11,6 +11,7 @@ const inertiaConfig = defineConfig({
    * Data that should be shared with all rendered pages
    */
   sharedData: {
+    url: (ctx) => ctx.inertia.always(() => ctx.request.completeUrl()),
     user: (ctx) =>
       ctx.inertia.always(async () => {
         if (ctx.session?.has('auth_web')) {

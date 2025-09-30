@@ -72,7 +72,7 @@
 </template>
 
 <script setup lang="ts">
-import { Head } from '@inertiajs/vue3'
+import Head from '@/components/AppHead.vue'
 import { Link } from '@tuyau/inertia/vue'
 import PageBanner from '@/components/layout/PageBanner.vue'
 import { computed, onMounted } from 'vue'

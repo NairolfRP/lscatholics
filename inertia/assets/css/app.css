@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Geist+Mono:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Geist+Mono:wght@100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 
 @import 'tailwindcss';
 @import 'tw-animate-css';
@@ -20,8 +20,8 @@
 }
 
 @theme inline {
-  --font-lora: initial;
-  --font-geist-mono: initial;
+  --font-lora: 'Inter', ui-sans-serif, sans-serif;
+  --font-geist-mono: 'Geist Mono', ui-monospace, monospace;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -168,9 +168,9 @@
   --sidebar-accent-foreground: oklch(0.2781 0.0296 256.848);
   --sidebar-border: oklch(0.9276 0.0058 264.5313);
   --sidebar-ring: oklch(0 0 0);
-  --font-sans: Inter, ui-sans-serif, sans-serif, system-ui;
-  --font-serif: Crimson Text, ui-serif, serif;
-  --font-mono: Geist Mono, ui-monospace, monospace;
+  --font-sans: var(--font-lora);
+  --font-mono: var(--font-geist-mono);
+  --font-serif: 'Crimson Text', ui-serif, serif;
   --shadow-color: #000000;
   --shadow-opacity: 0.1;
   --shadow-blur: 4px;
@@ -239,9 +239,9 @@
   --sidebar-border: oklch(0.2406 0.0695 21.4707);
   --sidebar-ring: oklch(0.5771 0.2152 27.325);
   --radius: 0rem;
-  --font-sans: Inter, ui-sans-serif, sans-serif, system-ui;
-  --font-serif: Crimson Text, ui-serif, serif;
-  --font-mono: Geist Mono, ui-monospace, monospace;
+  --font-sans: 'Inter', ui-sans-serif, sans-serif, system-ui;
+  --font-serif: 'Crimson' Text, ui-serif, serif;
+  --font-mono: 'Geist Mono', ui-monospace, monospace;
   --shadow-color: #000000;
   --shadow-opacity: 0.1;
   --shadow-blur: 4px;

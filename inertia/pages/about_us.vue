@@ -1,5 +1,5 @@
 <template>
-  <Head title="À propos" />
+  <Head title="À propos" :image="BannerImage" />
 
   <PageBanner bg-color="hero-gradient" :bg-image="BannerImage" class="relative" py="24">
     <div class="relative z-10">
@@ -137,7 +137,7 @@
 </template>
 
 <script setup lang="ts">
-import { Head } from '@inertiajs/vue3'
+import Head from '@/components/AppHead.vue'
 import { Button } from '@/components/ui/button'
 import VolunteerImage from '@/assets/images/thanksgiving2024.png'
 import { ChevronDown, ArrowRight } from 'lucide-vue-next'
