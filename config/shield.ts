@@ -1,4 +1,5 @@
 import { defineConfig } from '@adonisjs/shield'
+import app from '@adonisjs/core/services/app'
 
 const shieldConfig = defineConfig({
   /**
@@ -6,8 +7,25 @@ const shieldConfig = defineConfig({
    * to learn more
    */
   csp: {
-    enabled: false,
-    directives: {},
+    enabled: true,
+    directives: {
+      defaultSrc: [`'self'`],
+      scriptSrc: [`'self'`, `'unsafe-eval'`, `'unsafe-inline'`],
+      styleSrc: [`'self'`, `'unsafe-inline'`, 'https://fonts.googleapis.com'],
+      imgSrc: [`'self'`, 'data:', 'https:'],
+      fontSrc: [`'self'`, 'https://fonts.gstatic.com'],
+      connectSrc: [
+        `'self'`,
+        ...(app.inDev ? ['ws://localhost:24678'] : []),
+        'https://api.aelf.org',
+        'https://ucp-fr.gta.world',
+      ],
+      frameSrc: [`'none'`],
+      objectSrc: [`'none'`],
+      baseUri: [`'self'`],
+      formAction: [`'self'`],
+      frameAncestors: [`'none'`],
+    },
     reportOnly: false,
   },
 
