@@ -4,7 +4,7 @@
     <h1 class="text-4xl text-white font-bold">{{ pageTitle }}</h1>
   </PageBanner>
 
-  <section class="py-16 bg-gray-50">
+  <section class="py-16">
     <div class="container max-w-7xl mx-auto px-4">
       <Alert variant="info">
         <Construction />
