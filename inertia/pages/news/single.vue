@@ -1,5 +1,12 @@
 <template>
-  <Head :title="post.title" />
+  <Head :title="post.title" :description="post.excerpt" :image="post.coverImageUrl">
+    <meta head-key="og:type" property="og:type" content="article" />
+    <meta head-key="twitter:card" name="twitter:card" content="summary_large_image" />
+
+    <meta property="article:published_time" :content="post.publishedAt" />
+    <meta property="article:modified_time" :content="post.updatedAt" />
+    <meta property="article:section" :content="post.category" />
+  </Head>
   <article>
     <header>
       <PageBanner :bg-image="post.coverImageUrl" py="16">
@@ -43,8 +50,10 @@ const { post } = defineProps<{
     title: string
     excerpt: string
     coverImageUrl?: string
+    category: string
     content: string
     publishedAt: string
+    updatedAt: string
     status: string
   }
 }>()

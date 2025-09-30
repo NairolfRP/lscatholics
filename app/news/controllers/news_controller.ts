@@ -116,7 +116,17 @@ export default class NewsController {
     const { slug } = params
 
     const post = await News.query()
-      .select('slug', 'title', 'excerpt', 'coverImageUrl', 'content', 'publishedAt', 'status')
+      .select(
+        'slug',
+        'title',
+        'excerpt',
+        'coverImageUrl',
+        'category',
+        'content',
+        'publishedAt',
+        'updatedAt',
+        'status'
+      )
       .where('slug', slug)
       .first()
 

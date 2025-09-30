@@ -50,6 +50,7 @@ export default class EventsController {
       .select(
         'slug',
         'title',
+        'description',
         'content',
         'location',
         'coverImageUrl',

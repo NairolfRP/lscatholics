@@ -1,5 +1,12 @@
 <template>
-  <Head :title="event.title" />
+  <Head :title="event.title" :description="event.description" :image="event.coverImageUrl">
+    <meta head-key="og:type" property="og:type" content="event" />
+    <meta head-key="twitter:card" name="twitter:card" content="summary_large_image" />
+
+    <meta v-if="event.startDate" property="event:start_time" :content="event.startDate" />
+    <meta v-if="event.endDate" property="event:end_time" :content="event.endDate" />
+    <meta property="event:location" :content="event.location" />
+  </Head>
   <article>
     <header>
       <PageBanner :bg-image="event.coverImageUrl" py="16" align="text-left">
@@ -85,6 +92,7 @@ import { Typography } from '@/components/ui/typography'
 const { event } = defineProps<{
   event: {
     title: string
+    description: string
     content: string
     location: string
     coverImageUrl?: string
