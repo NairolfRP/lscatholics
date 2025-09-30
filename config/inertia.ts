@@ -42,6 +42,7 @@ const inertiaConfig = defineConfig({
   ssr: {
     enabled: true,
     entrypoint: 'inertia/app/ssr.ts',
+    pages: (_ctx, page) => !page.startsWith('dashboard') && !page.startsWith('profile'),
   },
 })
 
