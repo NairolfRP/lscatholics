@@ -9,422 +9,476 @@ import type { InferInput } from '@vinejs/vine/types'
 
 type NewsroomGetHead = {
   request: unknown
-  response: MakeTuyauResponse<import('../app/news/controllers/news_controller.ts').default['index'], false>
+  response: MakeTuyauResponse<
+    import('../app/news/controllers/news_controller.ts').default['index'],
+    false
+  >
 }
 type ContactGetHead = {
   request: unknown
-  response: MakeTuyauResponse<import('../app/contact/controllers/contact_controller.ts').default['index'], false>
+  response: MakeTuyauResponse<
+    import('../app/contact/controllers/contact_controller.ts').default['index'],
+    false
+  >
 }
 type ContactPost = {
-  request: MakeTuyauRequest<InferInput<typeof import('../app/contact/validators/contact_validation.ts')['createContactValidator']>>
-  response: MakeTuyauResponse<import('../app/contact/controllers/contact_controller.ts').default['submit'], true>
+  request: MakeTuyauRequest<
+    InferInput<
+      (typeof import('../app/contact/validators/contact_validation.ts'))['createContactValidator']
+    >
+  >
+  response: MakeTuyauResponse<
+    import('../app/contact/controllers/contact_controller.ts').default['submit'],
+    true
+  >
 }
 type EventIdGetHead = {
   request: unknown
-  response: MakeTuyauResponse<import('../app/events/controllers/events_controller.ts').default['single'], false>
+  response: MakeTuyauResponse<
+    import('../app/events/controllers/events_controller.ts').default['single'],
+    false
+  >
 }
 type NewsroomIdGetHead = {
   request: unknown
-  response: MakeTuyauResponse<import('../app/news/controllers/news_controller.ts').default['single'], false>
+  response: MakeTuyauResponse<
+    import('../app/news/controllers/news_controller.ts').default['single'],
+    false
+  >
 }
 type FindGetHead = {
   request: unknown
-  response: MakeTuyauResponse<import('../app/events/controllers/events_controller.ts').default['index'], false>
+  response: MakeTuyauResponse<
+    import('../app/events/controllers/events_controller.ts').default['index'],
+    false
+  >
 }
 type FindEventsGetHead = {
   request: unknown
-  response: MakeTuyauResponse<import('../app/events/controllers/events_controller.ts').default['index'], false>
+  response: MakeTuyauResponse<
+    import('../app/events/controllers/events_controller.ts').default['index'],
+    false
+  >
 }
 type FindParishesGetHead = {
   request: unknown
-  response: MakeTuyauResponse<import('../app/pages/controllers/parishes_controller.ts').default['parishes'], false>
+  response: MakeTuyauResponse<
+    import('../app/pages/controllers/parishes_controller.ts').default['parishes'],
+    false
+  >
 }
 type DepartmentsGetHead = {
   request: unknown
-  response: MakeTuyauResponse<import('../app/pages/controllers/departments_controller.ts').default['index'], false>
+  response: MakeTuyauResponse<
+    import('../app/pages/controllers/departments_controller.ts').default['index'],
+    false
+  >
 }
 type DepartmentIdGetHead = {
   request: unknown
-  response: MakeTuyauResponse<import('../app/pages/controllers/departments_controller.ts').default['single'], false>
+  response: MakeTuyauResponse<
+    import('../app/pages/controllers/departments_controller.ts').default['single'],
+    false
+  >
 }
 type ServicesGetHead = {
   request: unknown
-  response: MakeTuyauResponse<import('../app/pages/controllers/services_controller.ts').default['index'], false>
+  response: MakeTuyauResponse<
+    import('../app/pages/controllers/services_controller.ts').default['index'],
+    false
+  >
 }
 type ServicesIdGetHead = {
-  request: MakeTuyauRequest<InferInput<typeof import('../app/pages/validators/service_slug.ts')['createServiceSlugValidator']>>
-  response: MakeTuyauResponse<import('../app/pages/controllers/services_controller.ts').default['single'], true>
+  request: MakeTuyauRequest<
+    InferInput<
+      (typeof import('../app/pages/validators/service_slug.ts'))['createServiceSlugValidator']
+    >
+  >
+  response: MakeTuyauResponse<
+    import('../app/pages/controllers/services_controller.ts').default['single'],
+    true
+  >
 }
 type DonateGetHead = {
   request: unknown
-  response: MakeTuyauResponse<import('../app/pages/controllers/donate_controller.ts').default['index'], false>
+  response: MakeTuyauResponse<
+    import('../app/pages/controllers/donate_controller.ts').default['index'],
+    false
+  >
 }
 type DonatePost = {
-  request: MakeTuyauRequest<InferInput<typeof import('../app/pages/validators/donate.ts')['createDonateFormValidator']>>
-  response: MakeTuyauResponse<import('../app/pages/controllers/donate_controller.ts').default['submit'], true>
+  request: MakeTuyauRequest<
+    InferInput<(typeof import('../app/pages/validators/donate.ts'))['createDonateFormValidator']>
+  >
+  response: MakeTuyauResponse<
+    import('../app/pages/controllers/donate_controller.ts').default['submit'],
+    true
+  >
 }
 type ApiAuthRedirectGtawGetHead = {
   request: unknown
-  response: MakeTuyauResponse<import('../app/auth/controllers/auth_controller.ts').default['redirectToProvider'], false>
+  response: MakeTuyauResponse<
+    import('../app/auth/controllers/auth_controller.ts').default['redirectToProvider'],
+    false
+  >
 }
 type ApiAuthCallbackGtawGetHead = {
   request: unknown
-  response: MakeTuyauResponse<import('../app/auth/controllers/auth_controller.ts').default['handleCallback'], false>
+  response: MakeTuyauResponse<
+    import('../app/auth/controllers/auth_controller.ts').default['handleCallback'],
+    false
+  >
 }
 type ApiAuthDeleteuserDelete = {
   request: unknown
-  response: MakeTuyauResponse<import('../app/auth/controllers/auth_controller.ts').default['deleteUser'], false>
+  response: MakeTuyauResponse<
+    import('../app/auth/controllers/auth_controller.ts').default['deleteUser'],
+    false
+  >
 }
 type ApiAuthLogoutPost = {
   request: unknown
-  response: MakeTuyauResponse<import('../app/auth/controllers/auth_controller.ts').default['logout'], false>
+  response: MakeTuyauResponse<
+    import('../app/auth/controllers/auth_controller.ts').default['logout'],
+    false
+  >
 }
 type ApiAuthListcharactersGetHead = {
   request: unknown
-  response: MakeTuyauResponse<import('../app/auth/controllers/characters_controller.ts').default['listCharacters'], false>
+  response: MakeTuyauResponse<
+    import('../app/auth/controllers/characters_controller.ts').default['listCharacters'],
+    false
+  >
 }
 type ApiAuthCurrentcharacterPatch = {
   request: unknown
-  response: MakeTuyauResponse<import('../app/auth/controllers/characters_controller.ts').default['switchCharacter'], false>
+  response: MakeTuyauResponse<
+    import('../app/auth/controllers/characters_controller.ts').default['switchCharacter'],
+    false
+  >
 }
 type ApiPaymentFleecaCallbackIdGetHead = {
   request: unknown
-  response: MakeTuyauResponse<import('../app/core/controllers/payments_controller.ts').default['callback'], false>
+  response: MakeTuyauResponse<
+    import('../app/core/controllers/payments_controller.ts').default['callback'],
+    false
+  >
 }
 export interface ApiDefinition {
-  'newsroom': {
-    '$url': {
-    };
-    '$get': NewsroomGetHead;
-    '$head': NewsroomGetHead;
+  newsroom: {
+    '$url': {}
+    '$get': NewsroomGetHead
+    '$head': NewsroomGetHead
     ':slug': {
-      '$url': {
-      };
-      '$get': NewsroomIdGetHead;
-      '$head': NewsroomIdGetHead;
-    };
-  };
-  'contact': {
-    '$url': {
-    };
-    '$get': ContactGetHead;
-    '$head': ContactGetHead;
-    '$post': ContactPost;
-  };
-  'event': {
+      $url: {}
+      $get: NewsroomIdGetHead
+      $head: NewsroomIdGetHead
+    }
+  }
+  contact: {
+    $url: {}
+    $get: ContactGetHead
+    $head: ContactGetHead
+    $post: ContactPost
+  }
+  event: {
     ':slug': {
-      '$url': {
-      };
-      '$get': EventIdGetHead;
-      '$head': EventIdGetHead;
-    };
-  };
-  'find': {
-    '$url': {
-    };
-    '$get': FindGetHead;
-    '$head': FindGetHead;
-    'events': {
-      '$url': {
-      };
-      '$get': FindEventsGetHead;
-      '$head': FindEventsGetHead;
-    };
-    'parishes': {
-      '$url': {
-      };
-      '$get': FindParishesGetHead;
-      '$head': FindParishesGetHead;
-    };
-  };
-  'departments': {
-    '$url': {
-    };
-    '$get': DepartmentsGetHead;
-    '$head': DepartmentsGetHead;
-  };
-  'department': {
+      $url: {}
+      $get: EventIdGetHead
+      $head: EventIdGetHead
+    }
+  }
+  find: {
+    $url: {}
+    $get: FindGetHead
+    $head: FindGetHead
+    events: {
+      $url: {}
+      $get: FindEventsGetHead
+      $head: FindEventsGetHead
+    }
+    parishes: {
+      $url: {}
+      $get: FindParishesGetHead
+      $head: FindParishesGetHead
+    }
+  }
+  departments: {
+    $url: {}
+    $get: DepartmentsGetHead
+    $head: DepartmentsGetHead
+  }
+  department: {
     ':slug': {
-      '$url': {
-      };
-      '$get': DepartmentIdGetHead;
-      '$head': DepartmentIdGetHead;
-    };
-  };
-  'services': {
-    '$url': {
-    };
-    '$get': ServicesGetHead;
-    '$head': ServicesGetHead;
+      $url: {}
+      $get: DepartmentIdGetHead
+      $head: DepartmentIdGetHead
+    }
+  }
+  services: {
+    '$url': {}
+    '$get': ServicesGetHead
+    '$head': ServicesGetHead
     ':slug': {
-      '$url': {
-      };
-      '$get': ServicesIdGetHead;
-      '$head': ServicesIdGetHead;
-    };
-  };
-  'donate': {
-    '$url': {
-    };
-    '$get': DonateGetHead;
-    '$head': DonateGetHead;
-    '$post': DonatePost;
-  };
-  'api': {
-    'auth': {
+      $url: {}
+      $get: ServicesIdGetHead
+      $head: ServicesIdGetHead
+    }
+  }
+  donate: {
+    $url: {}
+    $get: DonateGetHead
+    $head: DonateGetHead
+    $post: DonatePost
+  }
+  api: {
+    auth: {
       'redirect': {
-        'gtaw': {
-          '$url': {
-          };
-          '$get': ApiAuthRedirectGtawGetHead;
-          '$head': ApiAuthRedirectGtawGetHead;
-        };
-      };
+        gtaw: {
+          $url: {}
+          $get: ApiAuthRedirectGtawGetHead
+          $head: ApiAuthRedirectGtawGetHead
+        }
+      }
       'callback': {
-        'gtaw': {
-          '$url': {
-          };
-          '$get': ApiAuthCallbackGtawGetHead;
-          '$head': ApiAuthCallbackGtawGetHead;
-        };
-      };
+        gtaw: {
+          $url: {}
+          $get: ApiAuthCallbackGtawGetHead
+          $head: ApiAuthCallbackGtawGetHead
+        }
+      }
       'delete-user': {
-        '$url': {
-        };
-        '$delete': ApiAuthDeleteuserDelete;
-      };
+        $url: {}
+        $delete: ApiAuthDeleteuserDelete
+      }
       'logout': {
-        '$url': {
-        };
-        '$post': ApiAuthLogoutPost;
-      };
+        $url: {}
+        $post: ApiAuthLogoutPost
+      }
       'list-characters': {
-        '$url': {
-        };
-        '$get': ApiAuthListcharactersGetHead;
-        '$head': ApiAuthListcharactersGetHead;
-      };
+        $url: {}
+        $get: ApiAuthListcharactersGetHead
+        $head: ApiAuthListcharactersGetHead
+      }
       'current-character': {
-        '$url': {
-        };
-        '$patch': ApiAuthCurrentcharacterPatch;
-      };
-    };
-    'payment': {
-      'fleeca': {
-        'callback': {
+        $url: {}
+        $patch: ApiAuthCurrentcharacterPatch
+      }
+    }
+    payment: {
+      fleeca: {
+        callback: {
           ':token': {
-            '$url': {
-            };
-            '$get': ApiPaymentFleecaCallbackIdGetHead;
-            '$head': ApiPaymentFleecaCallbackIdGetHead;
-          };
-        };
-      };
-    };
-  };
+            $url: {}
+            $get: ApiPaymentFleecaCallbackIdGetHead
+            $head: ApiPaymentFleecaCallbackIdGetHead
+          }
+        }
+      }
+    }
+  }
 }
 const routes = [
   {
     params: [],
     name: 'home',
     path: '/',
-    method: ["GET","HEAD"],
+    method: ['GET', 'HEAD'],
     types: {} as unknown,
   },
   {
     params: [],
     name: 'news.index',
     path: '/newsroom',
-    method: ["GET","HEAD"],
+    method: ['GET', 'HEAD'],
     types: {} as NewsroomGetHead,
   },
   {
     params: [],
     name: 'contact',
     path: '/contact',
-    method: ["GET","HEAD"],
+    method: ['GET', 'HEAD'],
     types: {} as ContactGetHead,
   },
   {
     params: [],
     name: 'contact.submit',
     path: '/contact',
-    method: ["POST"],
+    method: ['POST'],
     types: {} as ContactPost,
   },
   {
-    params: ["slug"],
+    params: ['slug'],
     name: 'event',
     path: '/event/:slug',
-    method: ["GET","HEAD"],
+    method: ['GET', 'HEAD'],
     types: {} as EventIdGetHead,
   },
   {
-    params: ["slug"],
+    params: ['slug'],
     name: 'news.single',
     path: '/newsroom/:slug',
-    method: ["GET","HEAD"],
+    method: ['GET', 'HEAD'],
     types: {} as NewsroomIdGetHead,
   },
   {
     params: [],
     name: 'find.events',
     path: '/find/events',
-    method: ["GET","HEAD"],
+    method: ['GET', 'HEAD'],
     types: {} as FindEventsGetHead,
   },
   {
     params: [],
     name: 'find.parishes',
     path: '/find/parishes',
-    method: ["GET","HEAD"],
+    method: ['GET', 'HEAD'],
     types: {} as FindParishesGetHead,
   },
   {
     params: [],
     name: 'about-us',
     path: '/about',
-    method: ["GET","HEAD"],
+    method: ['GET', 'HEAD'],
     types: {} as unknown,
   },
   {
     params: [],
     name: 'archbishop.index',
     path: '/archbishop',
-    method: ["GET","HEAD"],
+    method: ['GET', 'HEAD'],
     types: {} as unknown,
   },
   {
     params: [],
     name: 'departments.index',
     path: '/departments',
-    method: ["GET","HEAD"],
+    method: ['GET', 'HEAD'],
     types: {} as DepartmentsGetHead,
   },
   {
-    params: ["slug"],
+    params: ['slug'],
     name: 'departments.single',
     path: '/department/:slug',
-    method: ["GET","HEAD"],
+    method: ['GET', 'HEAD'],
     types: {} as DepartmentIdGetHead,
   },
   {
     params: [],
     name: 'privacy',
     path: '/privacy',
-    method: ["GET","HEAD"],
+    method: ['GET', 'HEAD'],
     types: {} as unknown,
   },
   {
     params: [],
     name: 'services.index',
     path: '/services',
-    method: ["GET","HEAD"],
+    method: ['GET', 'HEAD'],
     types: {} as ServicesGetHead,
   },
   {
-    params: ["slug"],
+    params: ['slug'],
     name: 'services.single',
     path: '/services/:slug',
-    method: ["GET","HEAD"],
+    method: ['GET', 'HEAD'],
     types: {} as ServicesIdGetHead,
   },
   {
     params: [],
     name: 'charities.index',
     path: '/catholic-charities',
-    method: ["GET","HEAD"],
+    method: ['GET', 'HEAD'],
     types: {} as unknown,
   },
   {
     params: [],
     name: 'donate.index',
     path: '/donate',
-    method: ["GET","HEAD"],
+    method: ['GET', 'HEAD'],
     types: {} as DonateGetHead,
   },
   {
     params: [],
     name: 'donate.submit',
     path: '/donate',
-    method: ["POST"],
+    method: ['POST'],
     types: {} as DonatePost,
   },
   {
     params: [],
     name: 'vocations',
     path: '/vocations',
-    method: ["GET","HEAD"],
+    method: ['GET', 'HEAD'],
     types: {} as unknown,
   },
   {
     params: [],
     name: 'jobs.index',
     path: '/jobs',
-    method: ["GET","HEAD"],
+    method: ['GET', 'HEAD'],
     types: {} as unknown,
   },
   {
     params: [],
     name: 'dailyReadings',
     path: '/daily-readings',
-    method: ["GET","HEAD"],
+    method: ['GET', 'HEAD'],
     types: {} as unknown,
   },
   {
     params: [],
     name: 'signIn',
     path: '/api/auth/redirect/gtaw',
-    method: ["GET","HEAD"],
+    method: ['GET', 'HEAD'],
     types: {} as ApiAuthRedirectGtawGetHead,
   },
   {
     params: [],
     name: 'deleteUser',
     path: '/api/auth/delete-user',
-    method: ["DELETE"],
+    method: ['DELETE'],
     types: {} as ApiAuthDeleteuserDelete,
   },
   {
     params: [],
     name: 'logout',
     path: '/api/auth/logout',
-    method: ["POST"],
+    method: ['POST'],
     types: {} as ApiAuthLogoutPost,
   },
   {
     params: [],
     name: 'listCharacters',
     path: '/api/auth/list-characters',
-    method: ["GET","HEAD"],
+    method: ['GET', 'HEAD'],
     types: {} as ApiAuthListcharactersGetHead,
   },
   {
     params: [],
     name: 'switchCharacter',
     path: '/api/auth/current-character',
-    method: ["PATCH"],
+    method: ['PATCH'],
     types: {} as ApiAuthCurrentcharacterPatch,
   },
   {
-    params: ["token"],
+    params: ['token'],
     name: 'payment.callback',
     path: '/api/payment/fleeca/callback/:token',
-    method: ["GET","HEAD"],
+    method: ['GET', 'HEAD'],
     types: {} as ApiPaymentFleecaCallbackIdGetHead,
   },
   {
     params: [],
     name: 'profile',
     path: '/profile',
-    method: ["GET","HEAD"],
+    method: ['GET', 'HEAD'],
     types: {} as unknown,
   },
-] as const;
+] as const
 export const api = {
   routes,
-  definition: {} as ApiDefinition
+  definition: {} as ApiDefinition,
 }
 declare module '@tuyau/inertia/types' {
   type InertiaApi = typeof api
