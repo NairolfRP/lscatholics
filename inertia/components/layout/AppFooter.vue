@@ -40,18 +40,13 @@
           </div>
           <div class="flex justify-center md:justify-start gap-3 mt-7">
             <a
-              :href="ARCHDIOCESE_FACEBROWSER_LINK"
+              v-for="social of ARCHDIOCESE_SOCIAL_MEDIAS"
+              :href="social.url"
+              :title="social.title"
               target="_blank"
               class="size-12 md:size-8 bg-white/10 rounded-full flex items-center justify-center hover:bg-catholic-gold transition-colors"
             >
-              <Facebrower class="size-8 md:size-4" />
-            </a>
-            <a
-              :href="ARCHDIOCESE_DISCORD_LINK"
-              target="_blank"
-              class="size-12 md:size-8 bg-white/10 rounded-full flex items-center justify-center hover:bg-catholic-gold transition-colors"
-            >
-              <Discord class="size-8 md:size-4" />
+              <component :is="social.icon" class="size-8 md:size-4" />
             </a>
           </div>
         </div>
@@ -100,13 +95,8 @@
 
 <script setup lang="ts">
 import { MapPin, Phone } from 'lucide-vue-next'
-import Discord from '@/components/svg/Discord.vue'
-import Facebrower from '@/components/svg/Facebrower.vue'
 import { Link } from '@tuyau/inertia/vue'
-import {
-  ARCHDIOCESE_DISCORD_LINK,
-  ARCHDIOCESE_FACEBROWSER_LINK,
-} from '@/constants/archdiocese.constants'
 import { FOOTER_MENU_ITEMS } from '@/constants/menu.constants'
 import { LinkText } from '@/components/ui/LinkText'
+import { ARCHDIOCESE_SOCIAL_MEDIAS } from '@/constants/social.constants'
 </script>

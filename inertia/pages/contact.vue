@@ -230,22 +230,17 @@
             <h3 class="font-semibold text-lg mb-4">Suivez-nous</h3>
             <div class="flex gap-3">
               <a
-                :href="ARCHDIOCESE_FACEBROWSER_LINK"
-                class="size-10 bg-red-400 text-white rounded-full flex items-center justify-center hover:bg-red-500 transition-colors"
+                v-for="social of ARCHDIOCESE_SOCIAL_MEDIAS.filter((s) => !s.isOOC && !s.footerOnly)"
+                :href="social.url"
+                :title="social.title"
+                :class="
+                  cn(
+                    'size-10 text-white rounded-full flex items-center justify-center transition-colors',
+                    social.colorClasses
+                  )
+                "
               >
-                <Facebrower class="size-5" />
-              </a>
-              <a
-                :href="ARCHDIOCESE_YOUTUBE_LINK"
-                class="size-10 bg-red-600 text-white rounded-full flex items-center justify-center hover:bg-red-700 transition-colors"
-              >
-                <Youtube class="size-5" />
-              </a>
-              <a
-                :href="ARCHDIOCESE_DISCORD_LINK"
-                class="size-10 bg-blue-600 text-white rounded-full flex items-center justify-center hover:bg-blue-700 transition-colors"
-              >
-                <Discord class="size-5" />
+                <component :is="social.icon" class="size-5" />
               </a>
             </div>
           </div>
@@ -273,14 +268,6 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { AlertTriangle, CheckCircle, Loader2, MapPin, Phone, Send } from 'lucide-vue-next'
 import PageBanner from '@/components/layout/PageBanner.vue'
-import Discord from '@/components/svg/Discord.vue'
-import Facebrower from '@/components/svg/Facebrower.vue'
-import {
-  ARCHDIOCESE_DISCORD_LINK,
-  ARCHDIOCESE_FACEBROWSER_LINK,
-  ARCHDIOCESE_YOUTUBE_LINK,
-} from '@/constants/archdiocese.constants'
-import Youtube from '@/components/svg/Youtube.vue'
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import {
   Select,
@@ -305,6 +292,8 @@ import { useCurrentCharacter } from '@/composables/use_current_character'
 import AuthentificationRequiredAlert from '@/components/AuthentificationRequiredAlert.vue'
 import { useUser } from '@/composables/use_user'
 import { Typography } from '@/components/ui/typography'
+import { ARCHDIOCESE_SOCIAL_MEDIAS } from '@/constants/social.constants'
+import { cn } from '@/lib/utils'
 
 const props = usePageProps()
 const errors = useErrors()

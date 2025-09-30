@@ -9,7 +9,7 @@
     v-bind="$attrs"
     @click="handleClick"
   >
-    <title :id="iconName" lang="en">{{ iconName }} icon</title>
+    <!-- <title :id="iconName" lang="en">{{ iconName }} icon</title> -->
     <g :style="{ fill: iconColor }">
       <slot />
     </g>
