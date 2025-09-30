@@ -46,7 +46,7 @@
 <script setup lang="ts">
 import PageBanner from '@/components/layout/PageBanner.vue'
 import { Card, CardContent } from '@/components/ui/card'
-import { Head } from '@inertiajs/vue3'
+import Head from '@/components/AppHead.vue'
 import { MapPin } from 'lucide-vue-next'
 import { parishes } from '@/constants/parishes.constants'
 import { Typography } from '@/components/ui/typography'

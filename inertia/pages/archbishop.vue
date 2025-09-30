@@ -1,5 +1,5 @@
 <template>
-  <Head title="Cardinal Callahan" />
+  <Head title="Cardinal Callahan" :image="CoatOfArms" />
 
   <PageBanner bg-color="bg-catholic-red" py="24">
     <h1 class="text-5xl md:text-6xl mb-4 font-bold font-serif">Cardinal Callahan</h1>
@@ -157,7 +157,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { Head } from '@inertiajs/vue3'
+import Head from '@/components/AppHead.vue'
 import PageBanner from '@/components/layout/PageBanner.vue'
 import ArchbishopPortrait from '@/assets/images/cardinal_callahan_officiel_portrait.png'
 import { Button } from '@/components/ui/button'

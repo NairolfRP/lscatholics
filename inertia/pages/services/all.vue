@@ -46,7 +46,7 @@
   </section>
 </template>
 <script lang="ts" setup>
-import { Head } from '@inertiajs/vue3'
+import Head from '@/components/AppHead.vue'
 import PageBanner from '@/components/layout/PageBanner.vue'
 import { Card, CardContent, CardFooter } from '@/components/ui/card'
 import { Heart, ArrowRight } from 'lucide-vue-next'
