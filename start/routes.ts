@@ -89,4 +89,4 @@ router
   .get('/api/payment/fleeca/callback/:token', [PaymentController, 'callback'])
   .as('payment.callback')
 
-router.on('/profile').renderInertia('profile').as('profile')
+router.on('/profile').renderInertia('profile').use(middleware.auth()).as('profile')
