@@ -54,11 +54,13 @@ export default class NewsController {
         data = await News.query()
           .select(...columns)
           .where('category', category)
+          .orderBy('publishedAt', 'desc')
           .paginate(page, limit)
       } else {
         data = await News.query()
           .select(...columns)
           .where('status', 'published')
+          .orderBy('publishedAt', 'desc')
           .paginate(page, limit)
       }
 
