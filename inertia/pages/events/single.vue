@@ -1,5 +1,9 @@
 <template>
-  <Head :title="event.title" :description="event.description" :image="event.coverImageUrl">
+  <Head
+    :title="event.title"
+    :description="event.description"
+    :image="event.coverImageUrl || undefined"
+  >
     <meta head-key="og:type" property="og:type" content="event" />
     <meta head-key="twitter:card" name="twitter:card" content="summary_large_image" />
 
@@ -33,8 +37,7 @@
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-10">
           <div class="article-content">
-            <div v-if="isContentReady" v-html="sanitizedContent" class="prose text-justify" />
-            <div v-else v-text="event?.content || ''" class="prose text-justify" />
+            <MarkdownContent :content="event.content" class="prose text-justify" />
           </div>
           <div class="space-y-3">
             <Typography variant="h3" class="font-bold">Détails</Typography>
@@ -82,12 +85,11 @@
 import Head from '@/components/AppHead.vue'
 import { Link } from '@tuyau/inertia/vue'
 import PageBanner from '@/components/layout/PageBanner.vue'
-import { computed, onMounted } from 'vue'
-import { useSanitize } from '@/composables/use_sanitize'
 import { formatDate } from '@vueuse/core'
 import { Button } from '@/components/ui/button'
 import { ArrowLeft } from 'lucide-vue-next'
 import { Typography } from '@/components/ui/typography'
+import { MarkdownContent } from '@/components/ui/markdown'
 
 const { event } = defineProps<{
   event: {
@@ -103,20 +105,6 @@ const { event } = defineProps<{
     endDate?: string
   }
 }>()
-
-const { initializePurify, sanitize, isReady } = useSanitize()
-
-const sanitizedContent = computed(() => {
-  return sanitize(event?.content)
-})
-
-const isContentReady = computed(() => {
-  return isReady.value && event?.content
-})
-
-onMounted(async () => {
-  await initializePurify()
-})
 </script>
 <style scoped>
 .article-content {

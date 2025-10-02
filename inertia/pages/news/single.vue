@@ -1,5 +1,5 @@
 <template>
-  <Head :title="post.title" :description="post.excerpt" :image="post.coverImageUrl">
+  <Head :title="post.title" :description="post.excerpt" :image="post.coverImageUrl || undefined">
     <meta head-key="og:type" property="og:type" content="article" />
     <meta head-key="twitter:card" name="twitter:card" content="summary_large_image" />
 
@@ -28,8 +28,7 @@
             <span class="font-bold uppercase">Pour diffusion immédiate</span>
             <time :datetime="post.publishedAt">{{ formatDate(post.publishedAt) }}</time>
           </div>
-          <div v-if="isContentReady" v-html="sanitizedContent" class="prose text-justify" />
-          <div v-else v-text="post?.content || ''" class="prose text-justify" />
+          <MarkdownContent :content="post.content" class="prose text-justify" />
         </div>
       </div>
     </div>
@@ -40,9 +39,8 @@
 import Head from '@/components/AppHead.vue'
 import PageBanner from '@/components/layout/PageBanner.vue'
 import { formatDate } from '@/lib/utils'
-import { computed, onMounted } from 'vue'
-import { useSanitize } from '@/composables/use_sanitize'
 import { Typography } from '@/components/ui/typography'
+import { MarkdownContent } from '@/components/ui/markdown'
 
 const { post } = defineProps<{
   post: {
@@ -57,20 +55,6 @@ const { post } = defineProps<{
     status: string
   }
 }>()
-
-const { initializePurify, sanitize, isReady } = useSanitize()
-
-const sanitizedContent = computed(() => {
-  return sanitize(post?.content)
-})
-
-const isContentReady = computed(() => {
-  return isReady.value && post?.content
-})
-
-onMounted(async () => {
-  await initializePurify()
-})
 </script>
 <style scoped>
 .article-content {
