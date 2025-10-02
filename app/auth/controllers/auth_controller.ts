@@ -10,7 +10,7 @@ export default class AuthController {
     return ally.use('gtaw').redirect()
   }
 
-  async handleCallback({ ally, auth, characters, response }: HttpContext) {
+  async handleCallback({ ally, auth, characters, response, session, logger }: HttpContext) {
     const gtaw = ally.use('gtaw')
 
     if (gtaw.accessDenied()) {
@@ -41,63 +41,71 @@ export default class AuthController {
       })
     }
 
-    const account = await Account.query()
-      .where('provider_id', 'gtaw')
-      .where('account_id', gtawUser.id)
-      .preload('user')
-      .first()
+    try {
+      const account = await Account.query()
+        .where('provider_id', 'gtaw')
+        .where('account_id', gtawUser.id)
+        .preload('user')
+        .first()
 
-    let user: User
+      let user: User
 
-    if (account) {
-      user = account.user
-
-      let expiresAt: DateTime | null = null
-      if (gtawUser.token.expiresAt) {
-        expiresAt = DateTime.fromJSDate(gtawUser.token.expiresAt)
-      }
-
-      account.merge({
-        accessToken: gtawUser.token.token,
-        refreshToken: gtawUser.token.refreshToken,
-        accessTokenExpiresAt: expiresAt,
-      })
-
-      await account.save()
-    } else {
-      user = await db.transaction(async (trx) => {
-        const newUser = new User()
-        newUser.name = gtawUser.name
-
-        newUser.useTransaction(trx)
-        await newUser.save()
+      if (account) {
+        user = account.user
 
         let expiresAt: DateTime | null = null
         if (gtawUser.token.expiresAt) {
           expiresAt = DateTime.fromJSDate(gtawUser.token.expiresAt)
         }
 
-        await newUser.related('accounts').create({
-          providerId: 'gtaw',
-          accountId: gtawUser.id,
+        account.merge({
           accessToken: gtawUser.token.token,
           refreshToken: gtawUser.token.refreshToken,
           accessTokenExpiresAt: expiresAt,
         })
 
-        return newUser
+        await account.save()
+      } else {
+        user = await db.transaction(async (trx) => {
+          const newUser = new User()
+          newUser.name = gtawUser.name
+
+          newUser.useTransaction(trx)
+          await newUser.save()
+
+          let expiresAt: DateTime | null = null
+          if (gtawUser.token.expiresAt) {
+            expiresAt = DateTime.fromJSDate(gtawUser.token.expiresAt)
+          }
+
+          await newUser.related('accounts').create({
+            providerId: 'gtaw',
+            accountId: gtawUser.id,
+            accessToken: gtawUser.token.token,
+            refreshToken: gtawUser.token.refreshToken,
+            accessTokenExpiresAt: expiresAt,
+          })
+
+          return newUser
+        })
+      }
+
+      const currentCharacter = gtawUser.original.character.at(0)
+
+      characters.setCurrentCharacter(currentCharacter)
+
+      await auth.use('web').login(user)
+
+      await characters.setUserCharacters(user, gtawUser.original.character)
+    } catch (err) {
+      logger.error({ err }, 'Failed to authenticate user')
+      session.flashErrors({
+        E_AUTHENTIFICATION_FAILED:
+          "Une erreur est survenue lors de l'authentification de votre compte.",
       })
+    } finally {
+      response.redirect().back()
     }
-
-    const currentCharacter = gtawUser.original.character.at(0)
-
-    characters.setCurrentCharacter(currentCharacter)
-
-    await auth.use('web').login(user)
-
-    await characters.setUserCharacters(user, gtawUser.original.character)
-
-    return response.redirect().back()
   }
 
   async logout({ auth, characters, response, session, logger }: HttpContext) {

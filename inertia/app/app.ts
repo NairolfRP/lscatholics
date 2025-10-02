@@ -52,3 +52,12 @@ createInertiaApp({
       .mount(el)
   },
 })
+
+router.on('navigate', (event) => {
+  const errors = event.detail.page.props.errors
+
+  const E_AUTHENTIFICATION_FAILED = errors?.E_AUTHENTIFICATION_FAILED
+  if (E_AUTHENTIFICATION_FAILED) {
+    toast.error(E_AUTHENTIFICATION_FAILED)
+  }
+})
