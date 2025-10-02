@@ -1,0 +1,44 @@
+import { BaseSeeder } from '@adonisjs/lucid/seeders'
+import Permission from '#auth/models/permission'
+
+export default class extends BaseSeeder {
+  async run() {
+    await Permission.createMany([
+      {
+        name: 'Dashboard Access',
+        slug: 'dashboardAccess',
+        description: 'Can access the dashboard',
+      },
+      {
+        name: 'View Articles',
+        slug: 'viewArticles',
+        description: 'Can view articles in dashboard',
+      },
+      {
+        name: 'Create Articles',
+        slug: 'createArticles',
+        description: 'Can create new articles',
+      },
+      {
+        name: 'Edit Articles',
+        slug: 'editArticles',
+        description: 'Can edit existing articles',
+      },
+      {
+        name: 'Delete Articles',
+        slug: 'deleteArticles',
+        description: 'Can delete articles',
+      },
+      {
+        name: 'Manage Events',
+        slug: 'manageEvents',
+        description: 'Can manage events',
+      },
+      {
+        name: 'Manage Users',
+        slug: 'manageUsers',
+        description: 'Can manage users and permissions',
+      },
+    ])
+  }
+}

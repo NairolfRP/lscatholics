@@ -30,6 +30,7 @@ export default defineConfig({
     () => import('@adonisjs/lucid/commands'),
     () => import('@tuyau/core/commands'),
     () => import('@adonisjs-community/modules/commands'),
+    () => import('@adonisjs/bouncer/commands'),
   ],
 
   /*
@@ -61,6 +62,7 @@ export default defineConfig({
     () => import('@tuyau/core/tuyau_provider'),
     () => import('@adonisjs/ally/ally_provider'),
     () => import('#core/providers/app_provider'),
+    () => import('@adonisjs/bouncer/bouncer_provider'),
   ],
 
   /*
