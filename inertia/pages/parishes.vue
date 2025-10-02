@@ -28,7 +28,9 @@
               <span>{{ parish.address }}</span>
             </div>
 
-            <p class="text-base text-justify leading-7 py-2">{{ parish.description }}</p>
+            <p v-if="parish?.description" class="text-base text-justify leading-7 py-2">
+              {{ parish.description }}
+            </p>
 
             <div class="mb-4">
               <h4 class="inline font-semibold mb-2 text-sm">{{ parish.priestOffice }} :</h4>

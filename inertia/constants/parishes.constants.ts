@@ -19,6 +19,7 @@ export const parishes = [
     image: RockfordHillsChurch,
     name: 'Église du Bon Pasteur',
     address: 'Boulevard Del Perro, Rockford Hills, Los Santos, SA 90210-3298',
+    description: undefined,
     priestOffice: 'Doyen',
     priestName: 'Don Giuseppe Benedetti',
   },
