@@ -3,7 +3,7 @@ import Cathedral from '@/assets/images/olscathedral.webp'
 import RockfordHillsChurch from '@/assets/images/rockfordhills_church.png'
 import Iglesia from '@/assets/images/iglesia.png'
 
-export const parishes: Parish[] = [
+export const parishes = [
   {
     id: 1,
     image: Cathedral,
@@ -32,4 +32,4 @@ export const parishes: Parish[] = [
     priestOffice: 'Doyen',
     priestName: 'Don Giuseppe Benedetti',
   },
-] as const
+] as const satisfies Parish[]
