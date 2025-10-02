@@ -3,20 +3,22 @@
 /// <reference path="../../config/ally.ts" />
 /// <reference path="../../config/auth.ts" />
 
-declare global {
-  interface Window {
-    __TANSTACK_QUERY_CLIENT__: import('@tanstack/vue-query').QueryClient
-  }
-}
-
+import DashboardLayout from '@/layouts/DashboardLayout.vue'
 import '@/assets/css/app.css'
 import { createSSRApp, DefineComponent, h } from 'vue'
-import { createInertiaApp } from '@inertiajs/vue3'
+import { createInertiaApp, router } from '@inertiajs/vue3'
 import { resolvePageComponent } from '@adonisjs/inertia/helpers'
 import AppLayout from '@/layouts/AppLayout.vue'
 import { TuyauPlugin } from '@tuyau/inertia/vue'
 import { tuyau } from '@/lib/tuyau'
 import { QueryClient, VueQueryPlugin } from '@tanstack/vue-query'
+import { toast } from 'vue-sonner'
+
+declare global {
+  interface Window {
+    __TANSTACK_QUERY_CLIENT__: import('@tanstack/vue-query').QueryClient
+  }
+}
 
 const appName = import.meta.env.VITE_APP_NAME || 'Archidiocèse de Los Santos'
 
@@ -35,7 +37,7 @@ createInertiaApp({
 
     page.then((module) => {
       if (module.default.layout === undefined) {
-        module.default.layout = AppLayout
+        module.default.layout = name.startsWith('dashboard/') ? DashboardLayout : AppLayout
       }
     })
 

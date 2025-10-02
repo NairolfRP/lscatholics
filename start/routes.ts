@@ -21,6 +21,9 @@ const DepartmentsController = () => import('#pages/controllers/departments_contr
 const ServicesController = () => import('#pages/controllers/services_controller')
 const PaymentController = () => import('#core/controllers/payments_controller')
 const DonateController = () => import('#pages/controllers/donate_controller')
+const DashboardController = () => import('#dashboard/controllers/pages_controller')
+const DashboardArticlesController = () => import('#dashboard/controllers/articles_controller')
+const DashboardEventsController = () => import('#dashboard/controllers/events_controller')
 
 router.get('/', [HomeController, 'index']).as('home')
 router.get('/newsroom', [NewsController, 'index']).as('news.index')
@@ -90,3 +93,14 @@ router
   .as('payment.callback')
 
 router.on('/profile').renderInertia('profile').use(middleware.auth()).as('profile')
+
+router
+  .group(() => {
+    router.get('/', [DashboardController, 'index']).as('index')
+    router.resource('articles', DashboardArticlesController).as('dashboard.articles')
+    router.resource('events', DashboardEventsController).as('dashboard.events')
+  })
+  .prefix('dashboard')
+  .use(middleware.auth())
+  .use(middleware.dashboard())
+  .as('dashboard')

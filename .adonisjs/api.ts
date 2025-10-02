@@ -164,6 +164,119 @@ type ApiPaymentFleecaCallbackIdGetHead = {
     false
   >
 }
+type DashboardGetHead = {
+  request: unknown
+  response: MakeTuyauResponse<
+    import('../app/dashboard/controllers/pages_controller.ts').default['index'],
+    false
+  >
+}
+type DashboardArticlesGetHead = {
+  request: unknown
+  response: MakeTuyauResponse<
+    import('../app/dashboard/controllers/articles_controller.ts').default['index'],
+    false
+  >
+}
+type DashboardArticlesCreateGetHead = {
+  request: unknown
+  response: MakeTuyauResponse<
+    import('../app/dashboard/controllers/articles_controller.ts').default['create'],
+    false
+  >
+}
+type DashboardArticlesPost = {
+  request: MakeTuyauRequest<
+    InferInput<(typeof import('../app/dashboard/validators/article.ts'))['createArticleValidator']>
+  >
+  response: MakeTuyauResponse<
+    import('../app/dashboard/controllers/articles_controller.ts').default['store'],
+    true
+  >
+}
+type DashboardArticlesIdGetHead = {
+  request: unknown
+  response: MakeTuyauResponse<
+    import('../app/dashboard/controllers/articles_controller.ts').default['show'],
+    false
+  >
+}
+type DashboardArticlesIdEditGetHead = {
+  request: unknown
+  response: MakeTuyauResponse<
+    import('../app/dashboard/controllers/articles_controller.ts').default['edit'],
+    false
+  >
+}
+type DashboardArticlesIdPutPatch = {
+  request: MakeTuyauRequest<
+    InferInput<(typeof import('../app/dashboard/validators/article.ts'))['updatedArticleValidator']>
+  >
+  response: MakeTuyauResponse<
+    import('../app/dashboard/controllers/articles_controller.ts').default['update'],
+    true
+  >
+}
+type DashboardArticlesIdDelete = {
+  request: unknown
+  response: MakeTuyauResponse<
+    import('../app/dashboard/controllers/articles_controller.ts').default['destroy'],
+    false
+  >
+}
+type DashboardEventsGetHead = {
+  request: unknown
+  response: MakeTuyauResponse<
+    import('../app/dashboard/controllers/events_controller.ts').default['index'],
+    false
+  >
+}
+type DashboardEventsCreateGetHead = {
+  request: unknown
+  response: MakeTuyauResponse<
+    import('../app/dashboard/controllers/events_controller.ts').default['create'],
+    false
+  >
+}
+type DashboardEventsPost = {
+  request: MakeTuyauRequest<
+    InferInput<(typeof import('../app/dashboard/validators/event.ts'))['createEventValidator']>
+  >
+  response: MakeTuyauResponse<
+    import('../app/dashboard/controllers/events_controller.ts').default['store'],
+    true
+  >
+}
+type DashboardEventsIdGetHead = {
+  request: unknown
+  response: MakeTuyauResponse<
+    import('../app/dashboard/controllers/events_controller.ts').default['show'],
+    false
+  >
+}
+type DashboardEventsIdEditGetHead = {
+  request: unknown
+  response: MakeTuyauResponse<
+    import('../app/dashboard/controllers/events_controller.ts').default['edit'],
+    false
+  >
+}
+type DashboardEventsIdPutPatch = {
+  request: MakeTuyauRequest<
+    InferInput<(typeof import('../app/dashboard/validators/event.ts'))['updateEventValidator']>
+  >
+  response: MakeTuyauResponse<
+    import('../app/dashboard/controllers/events_controller.ts').default['update'],
+    true
+  >
+}
+type DashboardEventsIdDelete = {
+  request: unknown
+  response: MakeTuyauResponse<
+    import('../app/dashboard/controllers/events_controller.ts').default['destroy'],
+    false
+  >
+}
 export interface ApiDefinition {
   newsroom: {
     '$url': {}
@@ -274,6 +387,59 @@ export interface ApiDefinition {
             $head: ApiPaymentFleecaCallbackIdGetHead
           }
         }
+      }
+    }
+  }
+  dashboard: {
+    $url: {}
+    $get: DashboardGetHead
+    $head: DashboardGetHead
+    articles: {
+      '$url': {}
+      '$get': DashboardArticlesGetHead
+      '$head': DashboardArticlesGetHead
+      'create': {
+        $url: {}
+        $get: DashboardArticlesCreateGetHead
+        $head: DashboardArticlesCreateGetHead
+      }
+      '$post': DashboardArticlesPost
+      ':id': {
+        $url: {}
+        $get: DashboardArticlesIdGetHead
+        $head: DashboardArticlesIdGetHead
+        edit: {
+          $url: {}
+          $get: DashboardArticlesIdEditGetHead
+          $head: DashboardArticlesIdEditGetHead
+        }
+        $put: DashboardArticlesIdPutPatch
+        $patch: DashboardArticlesIdPutPatch
+        $delete: DashboardArticlesIdDelete
+      }
+    }
+    events: {
+      '$url': {}
+      '$get': DashboardEventsGetHead
+      '$head': DashboardEventsGetHead
+      'create': {
+        $url: {}
+        $get: DashboardEventsCreateGetHead
+        $head: DashboardEventsCreateGetHead
+      }
+      '$post': DashboardEventsPost
+      ':id': {
+        $url: {}
+        $get: DashboardEventsIdGetHead
+        $head: DashboardEventsIdGetHead
+        edit: {
+          $url: {}
+          $get: DashboardEventsIdEditGetHead
+          $head: DashboardEventsIdEditGetHead
+        }
+        $put: DashboardEventsIdPutPatch
+        $patch: DashboardEventsIdPutPatch
+        $delete: DashboardEventsIdDelete
       }
     }
   }
@@ -474,6 +640,111 @@ const routes = [
     path: '/profile',
     method: ['GET', 'HEAD'],
     types: {} as unknown,
+  },
+  {
+    params: [],
+    name: 'dashboard.index',
+    path: '/dashboard',
+    method: ['GET', 'HEAD'],
+    types: {} as DashboardGetHead,
+  },
+  {
+    params: [],
+    name: 'dashboard.dashboard_articles.index',
+    path: '/dashboard/articles',
+    method: ['GET', 'HEAD'],
+    types: {} as DashboardArticlesGetHead,
+  },
+  {
+    params: [],
+    name: 'dashboard.dashboard_articles.create',
+    path: '/dashboard/articles/create',
+    method: ['GET', 'HEAD'],
+    types: {} as DashboardArticlesCreateGetHead,
+  },
+  {
+    params: [],
+    name: 'dashboard.dashboard_articles.store',
+    path: '/dashboard/articles',
+    method: ['POST'],
+    types: {} as DashboardArticlesPost,
+  },
+  {
+    params: ['id'],
+    name: 'dashboard.dashboard_articles.show',
+    path: '/dashboard/articles/:id',
+    method: ['GET', 'HEAD'],
+    types: {} as DashboardArticlesIdGetHead,
+  },
+  {
+    params: ['id'],
+    name: 'dashboard.dashboard_articles.edit',
+    path: '/dashboard/articles/:id/edit',
+    method: ['GET', 'HEAD'],
+    types: {} as DashboardArticlesIdEditGetHead,
+  },
+  {
+    params: ['id'],
+    name: 'dashboard.dashboard_articles.update',
+    path: '/dashboard/articles/:id',
+    method: ['PUT', 'PATCH'],
+    types: {} as DashboardArticlesIdPutPatch,
+  },
+  {
+    params: ['id'],
+    name: 'dashboard.dashboard_articles.destroy',
+    path: '/dashboard/articles/:id',
+    method: ['DELETE'],
+    types: {} as DashboardArticlesIdDelete,
+  },
+  {
+    params: [],
+    name: 'dashboard.dashboard_events.index',
+    path: '/dashboard/events',
+    method: ['GET', 'HEAD'],
+    types: {} as DashboardEventsGetHead,
+  },
+  {
+    params: [],
+    name: 'dashboard.dashboard_events.create',
+    path: '/dashboard/events/create',
+    method: ['GET', 'HEAD'],
+    types: {} as DashboardEventsCreateGetHead,
+  },
+  {
+    params: [],
+    name: 'dashboard.dashboard_events.store',
+    path: '/dashboard/events',
+    method: ['POST'],
+    types: {} as DashboardEventsPost,
+  },
+  {
+    params: ['id'],
+    name: 'dashboard.dashboard_events.show',
+    path: '/dashboard/events/:id',
+    method: ['GET', 'HEAD'],
+    types: {} as DashboardEventsIdGetHead,
+  },
+  {
+    params: ['id'],
+    name: 'dashboard.dashboard_events.edit',
+    path: '/dashboard/events/:id/edit',
+    method: ['GET', 'HEAD'],
+    types: {} as DashboardEventsIdEditGetHead,
+  },
+  {
+    params: ['id'],
+    name: 'dashboard.dashboard_events.update',
+    path: '/dashboard/events/:id',
+    method: ['PUT', 'PATCH'],
+    types: {} as DashboardEventsIdPutPatch,
+  },
+  {
+    params: ['id'],
+    name: 'dashboard.dashboard_events.destroy',
+    path: '/dashboard/events/:id',
+    method: ['DELETE'],
+    types: {} as DashboardEventsIdDelete,
   },
 ] as const
 export const api = {
