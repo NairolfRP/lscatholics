@@ -13,7 +13,9 @@ export default class EventsController {
       page = 1
     }
 
-    let query = Event.query().orderBy('start_date', 'desc')
+    let query = Event.query()
+      .select('id', 'title', 'location', 'startDate', 'maxParticipants')
+      .orderBy('start_date', 'desc')
 
     const events = await query.paginate(page, limit)
 

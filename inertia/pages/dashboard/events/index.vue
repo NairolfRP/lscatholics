@@ -144,7 +144,6 @@ interface Event {
   title: string
   location: string | null
   startDate: string
-  endDate: string | null
   maxParticipants: number | null
 }
 
