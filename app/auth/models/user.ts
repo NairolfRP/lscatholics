@@ -32,6 +32,15 @@ export default class User extends BaseModel {
   declare roles: ManyToMany<typeof Role>
 
   async hasPermission(permissionSlug: string): Promise<boolean> {
+    if (this.$preloaded.roles) {
+      return this.roles.some((role) => {
+        if (role.$preloaded.permissions) {
+          return role.permissions.some((permission) => permission.slug === permissionSlug)
+        }
+
+        return false
+      })
+    }
     const roles = await (this as User).related('roles').query().preload('permissions')
 
     return roles.some((role) =>
@@ -40,6 +49,27 @@ export default class User extends BaseModel {
   }
 
   async getPermissions(): Promise<string[]> {
+    if (this.$extras.permissionsCache) {
+      return this.$extras.permissionsCache
+    }
+
+    if (this.$preloaded.roles) {
+      const permissions = new Set<string>()
+
+      for (const role of this.roles) {
+        if (role.$preloaded.permissions) {
+          for (const permission of role.permissions) {
+            permissions.add(permission.slug)
+          }
+        }
+      }
+
+      if (permissions.size > 0) {
+        this.$extras.permissionsCache = Array.from(permissions)
+        return this.$extras.permissionsCache
+      }
+    }
+
     const roles = await (this as User).related('roles').query().preload('permissions')
 
     const permissions = new Set<string>()
@@ -50,18 +80,26 @@ export default class User extends BaseModel {
       }
     }
 
-    return Array.from(permissions)
+    this.$extras.permissionsCache = Array.from(permissions)
+    return this.$extras.permissionsCache
+  }
+
+  clearPermissionsCache() {
+    delete this.$extras.permissionsCache
   }
 
   async assignRole(roleId: number): Promise<void> {
     await (this as User).related('roles').attach([roleId])
+    this.clearPermissionsCache()
   }
 
   async removeRole(roleId: number): Promise<void> {
     await (this as User).related('roles').detach([roleId])
+    this.clearPermissionsCache()
   }
 
   async syncRoles(roleIds: number[]): Promise<void> {
     await (this as User).related('roles').sync(roleIds)
+    this.clearPermissionsCache()
   }
 }

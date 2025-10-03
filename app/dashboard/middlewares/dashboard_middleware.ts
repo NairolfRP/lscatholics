@@ -2,10 +2,15 @@ import type { HttpContext } from '@adonisjs/core/http'
 import type { NextFn } from '@adonisjs/core/types/http'
 
 export default class DashboardMiddleware {
-  async handle({ bouncer, inertia, response }: HttpContext, next: NextFn) {
-    /**
-     * Middleware logic goes here (before the next call)
-     */
+  async handle({ bouncer, inertia, response, auth }: HttpContext, next: NextFn) {
+    if (auth.user) {
+      await auth.user.load((loader) => {
+        loader.load('roles', (rolesQuery) => {
+          rolesQuery.preload('permissions')
+        })
+      })
+    }
+
     if (!(await bouncer.allows('userAbility', 'dashboardAccess'))) {
       return response.redirect().toRoute('home')
     }
