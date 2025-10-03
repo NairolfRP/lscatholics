@@ -27,7 +27,6 @@
             <TableHeader>
               <TableRow>
                 <TableHead>Titre</TableHead>
-                <TableHead>Auteur</TableHead>
                 <TableHead>Statut</TableHead>
                 <TableHead>Date</TableHead>
                 <TableHead class="text-right">Actions</TableHead>
@@ -47,8 +46,6 @@
                     {{ article.title }}
                   </Link>
                 </TableCell>
-                <TableCell v-if="article.author?.name">{{ article.author.name }}</TableCell>
-                <TableCell v-else>Inconnu</TableCell>
                 <TableCell>
                   <Badge
                     :variant="
@@ -152,9 +149,6 @@ interface Article {
   id: number
   title: string
   status: 'draft' | 'published' | 'archived'
-  author: {
-    name: string
-  }
   createdAt: string
 }
 

@@ -16,7 +16,7 @@ export default class ArticlesController {
       page = 1
     }
 
-    let query = News.query().preload('author')
+    let query = News.query().select('id', 'title', 'createdAt', 'status', 'authorId')
 
     if (search) {
       query = query.where((builder) => {
