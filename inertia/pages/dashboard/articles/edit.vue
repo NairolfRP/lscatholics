@@ -113,19 +113,19 @@
             </CardHeader>
             <CardContent class="space-y-2">
               <Input
-                id="featuredImage"
-                v-model="form.featuredImage"
+                id="coverImageUrl"
+                v-model="form.coverImageUrl"
                 placeholder="URL de l'image"
                 type="url"
               />
-              <p v-if="form.errors.featuredImage" class="text-sm text-red-600">
-                {{ form.errors.featuredImage }}
+              <p v-if="form.errors.coverImageUrl" class="text-sm text-red-600">
+                {{ form.errors.coverImageUrl }}
               </p>
               <div
-                v-if="form.featuredImage"
+                v-if="form.coverImageUrl"
                 class="mt-4 aspect-video w-full overflow-hidden rounded-lg border"
               >
-                <img :src="form.featuredImage" alt="Aperçu" class="h-full w-full object-cover" />
+                <img :src="form.coverImageUrl" alt="Aperçu" class="h-full w-full object-cover" />
               </div>
             </CardContent>
           </Card>
@@ -174,7 +174,7 @@ const form = useForm({
   excerpt: props.article.excerpt,
   content: props.article.content,
   status: props.article.status,
-  featuredImage: props.article.coverImageUrl || '',
+  coverImageUrl: props.article.coverImageUrl || '',
 })
 
 const submit = () => {
