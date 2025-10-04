@@ -140,14 +140,26 @@
 
       <WhenVisible data="posts">
         <template #fallback>
-          <div><LoaderCircle class="animate-spin" /></div>
+          <div class="grid md:grid-cols-3 gap-8 items-stretch">
+            <div v-for="() of Array.from({ length: 3 })" class="flex flex-col space-y-3 h-full">
+              <Skeleton class="h-[400px] w-full rounded-xl" />
+              <div class="space-y-2">
+                <Skeleton class="h-4 w-w-full" />
+                <Skeleton class="h-4 w-full" />
+              </div>
+            </div>
+          </div>
+
+          <div class="flex justify-center mt-8">
+            <Skeleton class="h-10 w-[212px]" />
+          </div>
         </template>
         <Alert v-if="errors.E_HOME_RECENT_POSTS" variant="destructive">
           <CircleAlert />
           <AlertDescription>{{ errors.E_HOME_RECENT_POSTS }}</AlertDescription>
         </Alert>
 
-        <div v-else-if="props.posts.length === 0" class="italic text-center">
+        <div v-else-if="props.posts?.length === 0" class="italic text-center">
           Aucun article pour le moment !
         </div>
 
@@ -194,7 +206,7 @@
         </div>
       </WhenVisible>
 
-      <div v-if="props.posts.length > 0" class="text-center mt-8">
+      <div v-if="props.posts?.length > 0" class="text-center mt-8">
         <Link route="news.index" as-child>
           <Button variant="default" size="lg" class="cursor-pointer">
             Voir toutes les actualités
@@ -316,7 +328,6 @@ import {
   Calendar,
   CircleAlert,
   Heart,
-  LoaderCircle,
   MapPin,
   NotebookPen,
 } from 'lucide-vue-next'
@@ -328,13 +339,26 @@ import PageBanner from '@/components/layout/PageBanner.vue'
 import { Link } from '@tuyau/inertia/vue'
 import { useErrors } from '@/composables/use_errors'
 import { Alert, AlertDescription } from '@/components/ui/alert'
-import type { InferPageProps } from '@adonisjs/inertia/types'
-import type HomeController from '#pages/controllers/home_controller'
+import { Skeleton } from '@/components/ui/skeleton'
 import { formatDate } from '@vueuse/core'
 
-const props = defineProps<{
-  posts: InferPageProps<HomeController, 'index'>['posts']
-}>()
+type Post = {
+  id: number
+  slug: string
+  title: string
+  excerpt?: string
+  coverImageUrl?: string
+  category?: string
+  publishedAt?: string
+}
+
+type Props = {
+  posts?: Post[]
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  posts: () => [] as Post[],
+})
 
 const errors = useErrors()
 
