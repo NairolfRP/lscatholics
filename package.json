@@ -93,6 +93,7 @@
     "@gtaw-oauth-providers/adonisjs-ally": "^2.0.1",
     "@inertiajs/vue3": "^2.2.0",
     "@internationalized/date": "^3.9.0",
+    "@libsql/sqlite3": "^0.3.1",
     "@tanstack/vue-query": "^5.90.2",
     "@tanstack/vue-table": "^8.21.3",
     "@tuyau/client": "^0.2.10",

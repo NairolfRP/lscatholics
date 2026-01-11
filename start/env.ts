@@ -36,6 +36,9 @@ export default await Env.create(new URL('../', import.meta.url), {
   DB_PASSWORD: Env.schema.string.optional(),
   DB_DATABASE: Env.schema.string(),
 
+  TURSO_DATABASE_URL: Env.schema.string(),
+  TURSO_AUTH_TOKEN: Env.schema.string.optional(),
+
   /*
   |----------------------------------------------------------
   | Variables for configuring ally package
