@@ -44,9 +44,9 @@ export default class extends BaseSchema {
   }
 
   async down() {
-    this.schema.dropTable(this.permissionsTableName)
-    this.schema.dropTable(this.rolesTableName)
-    this.schema.dropTable(this.userRolesTableName)
     this.schema.dropTable(this.rolePermissionsTableName)
+    this.schema.dropTable(this.userRolesTableName)
+    this.schema.dropTable(this.rolesTableName)
+    this.schema.dropTable(this.permissionsTableName)
   }
 }
