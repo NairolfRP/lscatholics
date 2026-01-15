@@ -27,7 +27,7 @@ export const updatedArticleValidator = vine.compile(
     slug: vine.string().trim().optional(),
     excerpt: vine.string().trim().minLength(10).maxLength(150).optional(),
     content: vine.string().trim().minLength(10).optional(),
-    coverImageUrl: vine.string().url().optional().optional(),
+    coverImageUrl: vine.string().url().optional(),
     status: vine.enum(['draft', 'published', 'archived']).optional(),
     publishedAt: vine.date().after('today').optional(),
   })

@@ -12,7 +12,7 @@ export const createEventValidator = vine.compile(
     description: vine.string().trim().minLength(10).maxLength(255),
     content: vine.string().trim().minLength(10),
     location: vine.string().trim().minLength(5),
-    parishId: vine.number().positive().optional(),
+    parishId: vine.number().nonNegative().optional(),
     coverImageUrl: vine.string().url().optional(),
     flyerUrl: vine.string().url().optional(),
     registrationRequired: vine
@@ -43,7 +43,7 @@ export const updateEventValidator = vine.compile(
     description: vine.string().trim().minLength(10).maxLength(255).optional(),
     content: vine.string().trim().minLength(10).optional(),
     location: vine.string().trim().minLength(5).optional(),
-    parishId: vine.number().positive().optional(),
+    parishId: vine.number().nonNegative().optional(),
     coverImageUrl: vine.string().url().optional(),
     flyerUrl: vine.string().url().optional(),
     registrationRequired: vine

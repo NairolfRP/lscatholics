@@ -72,7 +72,7 @@ const registerParishionerSchema = vine.object({
 
   religion: vine.enum(catholicOrOtherIds()),
 
-  parish: vine.number().withoutDecimals().positive(),
+  parish: vine.number().withoutDecimals().nonNegative(),
 
   familyMembers: vine
     .array(
