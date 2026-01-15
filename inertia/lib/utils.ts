@@ -1,6 +1,8 @@
 import type { ClassValue } from 'clsx'
 import { clsx } from 'clsx'
 import { twMerge } from 'tailwind-merge'
+import { z } from 'zod'
+import type { $ZodCustomParams } from 'zod/v4/core'
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -27,4 +29,11 @@ export function formatDate(dateString: string): string {
     month: 'long',
     year: 'numeric',
   })
+}
+
+export function numberEnum<Num extends number, T extends Readonly<Num[]>>(
+  args: T,
+  params?: string | $ZodCustomParams | undefined
+): z.ZodSchema<T[number]> {
+  return z.custom<T[number]>((val: any) => args.includes(val), params)
 }

@@ -111,14 +111,16 @@
         Découvrez la richesse de notre foi et participez à la vie de notre communauté
       </p>
       <div class="flex flex-col sm:flex-row gap-4 justify-center">
-        <Button
-          variant="outline"
-          size="lg"
-          class="border-white hover:bg-white hover:text-catholic-purple"
-        >
-          <NotebookPen class="w-5 h-5 mr-2" />
-          S'enregistrer comme paroissien
-        </Button>
+        <Link route="registerParishioner.index" as-child>
+          <Button
+            variant="outline"
+            size="lg"
+            class="border-white hover:bg-white hover:text-catholic-purple"
+          >
+            <NotebookPen class="w-5 h-5 mr-2" />
+            S'enregistrer comme paroissien
+          </Button>
+        </Link>
         <Link route="find.parishes" as-child>
           <Button size="lg" class="bg-catholic-gold hover:bg-yellow-600">
             <MapPin class="w-5 h-5 mr-2" />

@@ -39,6 +39,11 @@ export const MENU_ITEMS: MenuItem[] = [
         route: 'privacy',
       },
       {
+        id: 'register-as-parishioner',
+        label: "S'enregistrer comme paroissien",
+        route: 'registerParishioner.index',
+      },
+      {
         id: 'contact-us',
         label: 'Nous contacter',
         route: 'contact',

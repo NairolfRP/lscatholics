@@ -9,6 +9,8 @@ const ParishesController = () => import('#pages/controllers/parishes_controller'
 const DepartmentsController = () => import('#pages/controllers/departments_controller')
 const ServicesController = () => import('#pages/controllers/services_controller')
 const DonateController = () => import('#pages/controllers/donate_controller')
+const RegisterParishionerController = () =>
+  import('#pages/controllers/register_parishioners_controller')
 
 router.get('/', [HomeController, 'index']).as('home')
 
@@ -45,6 +47,14 @@ router.get('/services/:slug', [ServicesController, 'single']).as('services.singl
 
 router.get('/donate', [DonateController, 'index']).as('donate.index')
 router.post('/donate', [DonateController, 'submit']).as('donate.submit')
+
+router
+  .get('/register-parishioner', [RegisterParishionerController, 'index'])
+  .as('registerParishioner.index')
+router
+  .post('/register-parishioner', [RegisterParishionerController, 'submit'])
+  .as('registerParishioner.submit')
+  .use(middleware.auth())
 
 router.on('/privacy').renderInertia('privacy').as('privacy')
 

@@ -34,3 +34,7 @@ export const parishes = [
     priestName: 'Don Giuseppe Benedetti',
   },
 ] as const satisfies Parish[]
+
+export const parishesIds = () => {
+  return parishes.map((p) => p.id)
+}

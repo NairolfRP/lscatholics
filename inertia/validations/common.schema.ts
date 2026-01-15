@@ -1,6 +1,7 @@
 import { z } from 'zod'
 import { getEthnicsGroupsIds } from '#shared/constants/ethnicity.constants'
 import { getDistrictIds } from '#shared/constants/districts.constants'
+import { civilTitleIds, genderIds, maritalStatusIds } from '#shared/constants/person.constants'
 
 export const firstnameSchema = z
   .string({
@@ -25,4 +26,16 @@ export const ethnicitySchema = z.enum(getEthnicsGroupsIds(), {
 
 export const districtSchema = z.enum(getDistrictIds(), {
   error: 'Veuillez sélectionner un district valide.',
+})
+
+export const civilTitleSchema = z.enum(civilTitleIds(), {
+  error: 'Veuillez sélectionner un titre de civilité valide.',
+})
+
+export const maritalStatusSchema = z.enum(maritalStatusIds(), {
+  error: 'Veuillez sélectionner un état matrimonial valide.',
+})
+
+export const genderSchema = z.enum(genderIds(), {
+  error: 'Veuillez sélectionner un sexe valide.',
 })

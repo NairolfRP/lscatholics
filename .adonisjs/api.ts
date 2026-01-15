@@ -277,8 +277,26 @@ type DonatePost = {
     true
   >
 }
+type RegisterParishionerGetHead = {
+  request: unknown
+  response: MakeTuyauResponse<
+    import('../app/pages/controllers/register_parishioners_controller.ts').default['index'],
+    false
+  >
+}
+type RegisterParishionerPost = {
+  request: MakeTuyauRequest<
+    InferInput<
+      (typeof import('../app/pages/validators/register_parishioner.ts'))['createRegisterParishionerValidator']
+    >
+  >
+  response: MakeTuyauResponse<
+    import('../app/pages/controllers/register_parishioners_controller.ts').default['submit'],
+    true
+  >
+}
 export interface ApiDefinition {
-  api: {
+  'api': {
     payment: {
       fleeca: {
         callback: {
@@ -324,7 +342,7 @@ export interface ApiDefinition {
       }
     }
   }
-  dashboard: {
+  'dashboard': {
     $url: {}
     $get: DashboardGetHead
     $head: DashboardGetHead
@@ -377,13 +395,13 @@ export interface ApiDefinition {
       }
     }
   }
-  contact: {
+  'contact': {
     $url: {}
     $get: ContactGetHead
     $head: ContactGetHead
     $post: ContactPost
   }
-  newsroom: {
+  'newsroom': {
     '$url': {}
     '$get': NewsroomGetHead
     '$head': NewsroomGetHead
@@ -393,7 +411,7 @@ export interface ApiDefinition {
       $head: NewsroomIdGetHead
     }
   }
-  find: {
+  'find': {
     $url: {}
     $get: FindGetHead
     $head: FindGetHead
@@ -408,26 +426,26 @@ export interface ApiDefinition {
       $head: FindParishesGetHead
     }
   }
-  event: {
+  'event': {
     ':slug': {
       $url: {}
       $get: EventIdGetHead
       $head: EventIdGetHead
     }
   }
-  departments: {
+  'departments': {
     $url: {}
     $get: DepartmentsGetHead
     $head: DepartmentsGetHead
   }
-  department: {
+  'department': {
     ':slug': {
       $url: {}
       $get: DepartmentIdGetHead
       $head: DepartmentIdGetHead
     }
   }
-  services: {
+  'services': {
     '$url': {}
     '$get': ServicesGetHead
     '$head': ServicesGetHead
@@ -437,11 +455,17 @@ export interface ApiDefinition {
       $head: ServicesIdGetHead
     }
   }
-  donate: {
+  'donate': {
     $url: {}
     $get: DonateGetHead
     $head: DonateGetHead
     $post: DonatePost
+  }
+  'register-parishioner': {
+    $url: {}
+    $get: RegisterParishionerGetHead
+    $head: RegisterParishionerGetHead
+    $post: RegisterParishionerPost
   }
 }
 const routes = [
@@ -710,6 +734,20 @@ const routes = [
     path: '/donate',
     method: ['POST'],
     types: {} as DonatePost,
+  },
+  {
+    params: [],
+    name: 'registerParishioner.index',
+    path: '/register-parishioner',
+    method: ['GET', 'HEAD'],
+    types: {} as RegisterParishionerGetHead,
+  },
+  {
+    params: [],
+    name: 'registerParishioner.submit',
+    path: '/register-parishioner',
+    method: ['POST'],
+    types: {} as RegisterParishionerPost,
   },
   {
     params: [],
