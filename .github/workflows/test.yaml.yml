@@ -69,3 +69,4 @@ jobs:
         env:
           NODE_ENV: test
           HOST: 0.0.0.0
+          TURSO_DATABASE_URL: "tmp/test.db"
