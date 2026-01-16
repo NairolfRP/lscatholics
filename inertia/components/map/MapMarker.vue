@@ -16,9 +16,9 @@ const props = defineProps<{
 }>()
 
 const customIcon = L.icon({
-  iconRetinaUrl: '/assets/map/marker-icon-2x.png',
-  iconUrl: '/assets/map/marker-icon.png',
-  shadowUrl: '/assets/map/marker-shadow.png',
+  iconRetinaUrl: '/map/assets/marker-icon-2x.png',
+  iconUrl: '/map/assets/marker-icon.png',
+  shadowUrl: '/map/assets/marker-shadow.png',
   iconSize: [25, 41],
   iconAnchor: [12, 41],
   popupAnchor: [1, -34],
