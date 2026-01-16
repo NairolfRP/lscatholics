@@ -48,6 +48,9 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Rebuild sqlite3
+        run: pnpm rebuild sqlite3
+
       - name: Run Lint
         run: pnpm lint
 
@@ -59,11 +62,11 @@ jobs:
 
       - name: Tests
         run: |
-          rm -f test.db
+          rm -f tmp/test.db
           node ace migration:run --force
           pnpm test
         env:
           NODE_ENV: test
           HOST: 0.0.0.0
-          TURSO_DATABASE_URL: file:test.db
+          TURSO_DATABASE_URL: file:tmp/test.db
           TURSO_AUTH_TOKEN: ""
