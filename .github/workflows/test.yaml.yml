@@ -17,30 +17,30 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
-    services:
-      postgres:
-        image: postgres:14
-        env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: test_db
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd="pg_isready -U postgres"
-          --health-interval=10s
-          --health-timeout=5s
-          --health-retries=5
+    #services:
+    #  postgres:
+    #    image: postgres:14
+    #    env:
+    #      POSTGRES_USER: postgres
+    #      POSTGRES_PASSWORD: postgres
+    #      POSTGRES_DB: test_db
+    #    ports:
+    #      - 5432:5432
+    #    options: >-
+    #      --health-cmd="pg_isready -U postgres"
+    #      --health-interval=10s
+    #      --health-timeout=5s
+    #      --health-retries=5
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Install pnpm
         uses: pnpm/action-setup@v4
 
       - name: Setup Node.js
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@v6
         with:
           node-version: 24.12.0
           cache: 'pnpm'
@@ -59,13 +59,11 @@ jobs:
 
       - name: Tests
         run: |
+          rm -f test.db
           node ace migration:run --force
           pnpm test
         env:
           NODE_ENV: test
           HOST: 0.0.0.0
-          DB_HOST: 127.0.0.1
-          DB_PORT: 5432
-          DB_USER: postgres
-          DB_PASSWORD: postgres
-          DB_DATABASE: test_db
+          TURSO_DATABASE_URL: file:test.db
+          TURSO_AUTH_TOKEN: ""
