@@ -1,3 +1,9 @@
 build
 node_modules
+.pnpm-store/
+dist/
+build/
+corerage/
+tmp/
+*.min.js
 renovate.json

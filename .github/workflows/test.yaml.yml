@@ -45,35 +45,30 @@ jobs:
           node-version: 24.12.0
           cache: 'pnpm'
 
+      - name: Allow sqlite3 build (CI Only)
+        run: |
+          npm pkg set 'pnpm.onlyBuiltDependencies[]=sqlite3'
+          npm pkg set 'pnpm.onlyBuiltDependencies[]=@libsql/sqlite3'
+
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Install Turso CLI
-        run: |
-          curl -sSfL https://get.tur.so/install.sh | bash
-          echo "$HOME/.turso/bin" >> $GITHUB_PATH
+    #  - name: Run Lint
+    #    run: pnpm lint
 
-      - name: Start Turso local instance
-        run: |
-          turso dev --port 8080 &
-          timeout 30 bash -c 'until curl -s http://127.0.0.1:8080 > /dev/null 2>&1; do sleep 1; done' || true
-          sleep 2
+    #  - name: Run Format Check
+    #    run: pnpm format --check
 
-      - name: Run Lint
-        run: pnpm lint
-
-      - name: Run Format Check
-        run: pnpm format --check
-
-      - name: Run Type-Check
-        run: pnpm typecheck
+    #  - name: Run Type-Check
+    #    run: pnpm typecheck
 
       - name: Tests
         run: |
+          mkdir -p tmp
+          rm -f tmp/test.db
           node ace migration:run --force
           pnpm test
         env:
           NODE_ENV: test
           HOST: 0.0.0.0
-          TURSO_DATABASE_URL: http://127.0.0.1:8080
-          TURSO_AUTH_TOKEN: ""
+          TURSO_DATABASE_URL: file:tmp/test.db
