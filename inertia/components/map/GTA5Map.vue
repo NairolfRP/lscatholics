@@ -63,9 +63,9 @@ onMounted(() => {
     maxZoom: 5,
   }
 
-  const atlas = L.tileLayer('/assets/map/map-tiles/atlas/{z}/{x}/{y}.jpg', commonOptions)
-  const satellite = L.tileLayer('/assets/map/map-tiles/satelite/{z}/{x}/{y}.jpg', commonOptions)
-  const grid = L.tileLayer('/assets/map/map-tiles/grid/{z}/{x}/{y}.png', commonOptions)
+  const atlas = L.tileLayer('/map/assets/map-tiles/atlas/{z}/{x}/{y}.jpg', commonOptions)
+  const satellite = L.tileLayer('/map/assets/map-tiles/satelite/{z}/{x}/{y}.jpg', commonOptions)
+  const grid = L.tileLayer('/map/assets/map-tiles/grid/{z}/{x}/{y}.png', commonOptions)
 
   const baseMaps = {
     Atlas: atlas,
