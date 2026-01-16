@@ -56,7 +56,8 @@ jobs:
       - name: Start Turso local instance
         run: |
           turso dev --port 8080 &
-          sleep 3
+          timeout 30 bash -c 'until curl -s http://127.0.0.1:8080 > /dev/null 2>&1; do sleep 1; done' || true
+          sleep 2
 
       - name: Run Lint
         run: pnpm lint
