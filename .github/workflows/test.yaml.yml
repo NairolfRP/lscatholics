@@ -48,8 +48,15 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Rebuild sqlite3
-        run: pnpm rebuild sqlite3
+      - name: Install Turso CLI
+        run: |
+          curl -sSfL https://get.tur.so/install.sh | bash
+          echo "$HOME/.turso/bin" >> $GITHUB_PATH
+
+      - name: Start Turso local instance
+        run: |
+          turso dev --port 8080 &
+          sleep 3
 
       - name: Run Lint
         run: pnpm lint
@@ -62,11 +69,10 @@ jobs:
 
       - name: Tests
         run: |
-          rm -f tmp/test.db
           node ace migration:run --force
           pnpm test
         env:
           NODE_ENV: test
           HOST: 0.0.0.0
-          TURSO_DATABASE_URL: file:tmp/test.db
+          TURSO_DATABASE_URL: http://127.0.0.1:8080
           TURSO_AUTH_TOKEN: ""

@@ -52,7 +52,7 @@ const dbConfig = defineConfig({
       useNullAsDefault: true,
       debug: app.inDev,
     },
-    postgres: {
+    /*postgres: {
       client: 'pg',
       connection: {
         host: env.get('DB_HOST'),
@@ -67,7 +67,7 @@ const dbConfig = defineConfig({
         paths: ['database/migrations'],
       },
       debug: app.inDev,
-    },
+    },*/
   },
 })
 
