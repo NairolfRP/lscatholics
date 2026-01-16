@@ -14,7 +14,12 @@
         Doyenné Notre-Dame-des-Saints
       </Typography>
       <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <Card v-for="parish in parishes" :key="parish.id" class="card-hover pt-0">
+        <Card
+          v-for="(parish, index) in parishes"
+          :key="parish.id"
+          @click="focusParish(index)"
+          class="card-hover cursor-pointer transition-all hover:ring-2 hover-ring-catholic-gold pt-0"
+        >
           <div
             v-if="parish.image"
             class="aspect-video bg-cover bg-center"
@@ -41,6 +46,29 @@
           </CardContent>
         </Card>
       </div>
+
+      <div ref="mapScrollTarget" class="mt-12">
+        <ClientOnly>
+          <GTA5Map
+            ref="mapRef"
+            :center="[-709.148, -759.794]"
+            :zoom="0"
+            class="h-[500px] rounded-xl border-2 border-catholic-gold shadow-xl"
+          >
+            <MapMarker
+              v-for="(parish, index) in parishes"
+              :key="parish.id"
+              :ref="(el) => (markerRefs[index] = el as any)"
+              :position="parish.coords"
+              :variant="parish.isCathedral ? 'cathedral' : 'parish'"
+            >
+              <div class="p-2">
+                <h4 class="font-bold">{{ parish.name }}</h4>
+              </div>
+            </MapMarker>
+          </GTA5Map>
+        </ClientOnly>
+      </div>
     </div>
   </section>
 </template>
@@ -52,4 +80,35 @@ import Head from '@/components/AppHead.vue'
 import { MapPin } from 'lucide-vue-next'
 import { parishes } from '@/constants/parishes.constants'
 import { Typography } from '@/components/ui/typography'
+import ClientOnly from '@/components/ClientOnly.vue'
+import { ref, defineAsyncComponent } from 'vue'
+
+const GTA5Map = defineAsyncComponent(() => import('@/components/map/GTA5Map.vue'))
+const MapMarker = defineAsyncComponent(() => import('@/components/map/MapMarker.vue'))
+
+const mapScrollTarget = ref<HTMLElement | null>(null)
+const mapRef = ref<{ flyTo: (coords: [number, number], zoom?: number) => void } | null>(null)
+const markerRefs = ref<Array<{ openPopup: () => void } | null>>([])
+
+const focusParish = (index: number) => {
+  const parish = parishes[index]
+
+  if (mapScrollTarget.value) {
+    mapScrollTarget.value.scrollIntoView({
+      behavior: 'smooth',
+      block: 'center',
+    })
+  }
+
+  if (mapRef.value) {
+    mapRef.value.flyTo(parish.coords as [number, number], 5)
+  }
+
+  setTimeout(() => {
+    const marker = markerRefs.value[index]
+    if (marker) {
+      marker.openPopup()
+    }
+  }, 600)
+}
 </script>

@@ -30,7 +30,18 @@ const props = withDefaults(
 const mapContainer = ref<HTMLElement | null>(null)
 const mapInstance = shallowRef<Map | null>(null)
 
+const flyTo = (coords: LatLngExpression, zoom?: number) => {
+  if (mapInstance.value) {
+    mapInstance.value.flyTo(coords, zoom || 5, {
+      duration: 1.5,
+      easeLinearity: 0.25,
+    })
+  }
+}
+
 provide('mapInstance', mapInstance)
+
+defineExpose({ flyTo })
 
 onMounted(() => {
   if (!mapContainer.value) return

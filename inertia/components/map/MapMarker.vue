@@ -47,6 +47,12 @@ const addMarkerToMap = () => {
   }
 }
 
+const openPopup = () => {
+  if (marker) marker.openPopup()
+}
+
+defineExpose({ openPopup })
+
 onMounted(() => {
   addMarkerToMap()
 })

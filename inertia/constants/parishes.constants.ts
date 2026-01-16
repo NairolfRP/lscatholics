@@ -13,6 +13,8 @@ export const parishes = [
       "Église-mère de l'archidiocèse de Los Santos et chef-lieu du Doyenné, la Cathédrale Notre-Dame-des-Saints accueille les plus grandes célébrations de l'année, présidées par le cardinal-archevêque de Los Santos.",
     priestOffice: 'Curé-archiprêtre',
     priestName: 'Don Giuseppe Benedetti',
+    coords: [-709.148, -759.794],
+    isCathedral: true,
   },
   {
     id: 2,
@@ -22,6 +24,8 @@ export const parishes = [
     description: undefined,
     priestOffice: 'Doyen',
     priestName: 'Don Giuseppe Benedetti',
+    coords: [-23.6121, -766.689],
+    isCathedral: false,
   },
   {
     id: 3,
@@ -32,6 +36,8 @@ export const parishes = [
       "L'Iglesia Nuestra Señora Reina de Los Santos se trouve sur la place historique de la fondation de Los Santos. Plus vieille église de la Ville, elle demeure une trace précieuse des premiers pas chrétiens sur cette nouvelle terre, consacrée à Notre-Dame, la Reine des Saints.",
     priestOffice: 'Doyen',
     priestName: 'Don Giuseppe Benedetti',
+    coords: [-338.861, 402.143],
+    isCathedral: false,
   },
 ] as const satisfies Parish[]
 
