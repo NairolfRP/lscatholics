@@ -157,18 +157,18 @@
               <Skeleton class="h-10 w-[212px]" />
             </div>
           </template>
-          <Alert v-if="errors.E_HOME_RECENT_POSTS" variant="destructive">
+          <Alert v-if="posts.error" variant="destructive">
             <CircleAlert />
-            <AlertDescription>{{ errors.E_HOME_RECENT_POSTS }}</AlertDescription>
+            <AlertDescription>{{ posts.error }}</AlertDescription>
           </Alert>
 
-          <div v-else-if="props.posts?.length === 0" class="italic text-center">
+          <div v-else-if="props.posts?.data?.length === 0" class="italic text-center">
             Aucun article pour le moment !
           </div>
 
           <div v-else class="grid md:grid-cols-3 gap-8 items-stretch">
             <Link
-              v-for="post in props.posts"
+              v-for="post in props.posts.data"
               route="news.single"
               :params="{ slug: post.slug }"
               :key="`home-recent-post-${post.id}`"
@@ -210,7 +210,7 @@
         </WhenVisible>
       </ClientOnly>
 
-      <div v-if="props.posts?.length > 0" class="text-center mt-8">
+      <div v-if="props.posts?.data?.length > 0" class="text-center mt-8">
         <Link route="news.index" as-child>
           <Button variant="default" size="lg" class="cursor-pointer">
             Voir toutes les actualités
@@ -341,7 +341,6 @@ import { computed } from 'vue'
 import HomepageBanner from '@/assets/images/cathedral-mass-with-cardinal.png'
 import PageBanner from '@/components/layout/PageBanner.vue'
 import { Link } from '@tuyau/inertia/vue'
-import { useErrors } from '@/composables/use_errors'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { Skeleton } from '@/components/ui/skeleton'
 import { formatDate } from '@vueuse/core'
@@ -358,14 +357,15 @@ type Post = {
 }
 
 type Props = {
-  posts?: Post[]
+  posts?: {
+    data: Post[]
+    error?: string
+  }
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  posts: () => [] as Post[],
+  posts: () => ({ data: [] as Post[] }),
 })
-
-const errors = useErrors()
 
 const now = new Date()
 
