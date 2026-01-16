@@ -14,14 +14,14 @@ This project is built with the following technologies:
 - **[Vue.js 3.0](https://vuejs.org/)** - Frontend framework
 - **[TaildwindCSS](https://tailwindcss.com/)** - For the style
 - **[Shadcn/vue](https://www.shadcn-vue.com/)** - UI components
-- **[PostgreSQL](https://www.postgresql.org/)** - Database
+- **SQLite ([Turso](https://turso.tech/)**) - Database
 
 ## 📦 Installation
 
 ### Prerequisites
 
 - [Node.js](https://nodejs.org) (LTS recommended)
-- PostgreSQL
+- SQLite (Turso CLI or instance recommended)
 - [Pnpm](https://pnpm.io) (package manager)
 
 ### Setup
