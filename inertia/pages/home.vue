@@ -140,73 +140,75 @@
         <div class="w-24 h-1 bg-catholic-gold mx-auto cross-divider"></div>
       </div>
 
-      <WhenVisible data="posts">
-        <template #fallback>
-          <div class="grid md:grid-cols-3 gap-8 items-stretch">
-            <div v-for="() of Array.from({ length: 3 })" class="flex flex-col space-y-3 h-full">
-              <Skeleton class="h-[400px] w-full rounded-xl" />
-              <div class="space-y-2">
-                <Skeleton class="h-4 w-w-full" />
-                <Skeleton class="h-4 w-full" />
+      <ClientOnly>
+        <WhenVisible data="posts">
+          <template #fallback>
+            <div class="grid md:grid-cols-3 gap-8 items-stretch">
+              <div v-for="() of Array.from({ length: 3 })" class="flex flex-col space-y-3 h-full">
+                <Skeleton class="h-[400px] w-full rounded-xl" />
+                <div class="space-y-2">
+                  <Skeleton class="h-4 w-w-full" />
+                  <Skeleton class="h-4 w-full" />
+                </div>
               </div>
             </div>
+
+            <div class="flex justify-center mt-8">
+              <Skeleton class="h-10 w-[212px]" />
+            </div>
+          </template>
+          <Alert v-if="errors.E_HOME_RECENT_POSTS" variant="destructive">
+            <CircleAlert />
+            <AlertDescription>{{ errors.E_HOME_RECENT_POSTS }}</AlertDescription>
+          </Alert>
+
+          <div v-else-if="props.posts?.length === 0" class="italic text-center">
+            Aucun article pour le moment !
           </div>
 
-          <div class="flex justify-center mt-8">
-            <Skeleton class="h-10 w-[212px]" />
+          <div v-else class="grid md:grid-cols-3 gap-8 items-stretch">
+            <Link
+              v-for="post in props.posts"
+              route="news.single"
+              :params="{ slug: post.slug }"
+              :key="`home-recent-post-${post.id}`"
+              as-child
+            >
+              <Card class="card-hover h-full pt-0">
+                <div class="aspect-video bg-gray-200 rounded-t-lg overflow-hidden">
+                  <div
+                    v-if="post.coverImageUrl"
+                    class="w-full h-full bg-cover bg-center"
+                    :style="`background-image: url(${post.coverImageUrl})`"
+                  ></div>
+                  <div
+                    v-else
+                    class="w-full h-full bg-gradient-to-br from-catholic-purple to-catholic-blue opacity-20"
+                  ></div>
+                </div>
+                <CardContent class="p-6">
+                  <span
+                    v-if="post.publishedAt"
+                    class="flex justify-end text-sm text-muted-foreground"
+                  >
+                    {{ formatDate(new Date(post.publishedAt), 'DD/MM/YYYY') }}
+                  </span>
+                  <Badge class="mb-2">{{ post.category }}</Badge>
+                  <h3 class="font-bold text-lg mb-2">{{ post.title }}</h3>
+
+                  <p class="text-gray-600 mb-4 mt-4 text-sm">
+                    {{ post.excerpt }}
+                  </p>
+
+                  <Button variant="link" class="p-0 text-catholic-gold">
+                    Lire la suite <ArrowRight class="w-4 h-4 ml-1" />
+                  </Button>
+                </CardContent>
+              </Card>
+            </Link>
           </div>
-        </template>
-        <Alert v-if="errors.E_HOME_RECENT_POSTS" variant="destructive">
-          <CircleAlert />
-          <AlertDescription>{{ errors.E_HOME_RECENT_POSTS }}</AlertDescription>
-        </Alert>
-
-        <div v-else-if="props.posts?.length === 0" class="italic text-center">
-          Aucun article pour le moment !
-        </div>
-
-        <div v-else class="grid md:grid-cols-3 gap-8 items-stretch">
-          <Link
-            v-for="post in props.posts"
-            route="news.single"
-            :params="{ slug: post.slug }"
-            :key="`home-recent-post-${post.id}`"
-            as-child
-          >
-            <Card class="card-hover h-full pt-0">
-              <div class="aspect-video bg-gray-200 rounded-t-lg overflow-hidden">
-                <div
-                  v-if="post.coverImageUrl"
-                  class="w-full h-full bg-cover bg-center"
-                  :style="`background-image: url(${post.coverImageUrl})`"
-                ></div>
-                <div
-                  v-else
-                  class="w-full h-full bg-gradient-to-br from-catholic-purple to-catholic-blue opacity-20"
-                ></div>
-              </div>
-              <CardContent class="p-6">
-                <span
-                  v-if="post.publishedAt"
-                  class="flex justify-end text-sm text-muted-foreground"
-                >
-                  {{ formatDate(new Date(post.publishedAt), 'DD/MM/YYYY') }}
-                </span>
-                <Badge class="mb-2">{{ post.category }}</Badge>
-                <h3 class="font-bold text-lg mb-2">{{ post.title }}</h3>
-
-                <p class="text-gray-600 mb-4 mt-4 text-sm">
-                  {{ post.excerpt }}
-                </p>
-
-                <Button variant="link" class="p-0 text-catholic-gold">
-                  Lire la suite <ArrowRight class="w-4 h-4 ml-1" />
-                </Button>
-              </CardContent>
-            </Card>
-          </Link>
-        </div>
-      </WhenVisible>
+        </WhenVisible>
+      </ClientOnly>
 
       <div v-if="props.posts?.length > 0" class="text-center mt-8">
         <Link route="news.index" as-child>
@@ -343,6 +345,7 @@ import { useErrors } from '@/composables/use_errors'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { Skeleton } from '@/components/ui/skeleton'
 import { formatDate } from '@vueuse/core'
+import ClientOnly from '@/components/ClientOnly.vue'
 
 type Post = {
   id: number
