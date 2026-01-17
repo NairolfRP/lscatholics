@@ -27,6 +27,12 @@
           </AlertDescription>
         </Alert>
       </div>
+      <div
+        v-else-if="!events || events.length === 0"
+        class="w-full text-center mx-auto font-medium italic"
+      >
+        Aucun événement à venir
+      </div>
       <div v-else class="space-y-6">
         <Link
           v-for="event in events"

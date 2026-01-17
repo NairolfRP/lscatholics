@@ -1,8 +1,10 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import type { NextFn } from '@adonisjs/core/types/http'
+import { dashboardAccessAbility } from '#core/abilities/main'
 
 export default class DashboardMiddleware {
-  async handle({ bouncer, inertia, response, auth }: HttpContext, next: NextFn) {
+  async handle(ctx: HttpContext, next: NextFn) {
+    const { bouncer, inertia, response, auth } = ctx
     if (auth.user) {
       await auth.user.load((loader) => {
         loader.load('roles', (rolesQuery) => {
@@ -11,13 +13,13 @@ export default class DashboardMiddleware {
       })
     }
 
-    if (!(await bouncer.allows('userAbility', 'dashboardAccess'))) {
+    if (await bouncer.denies(dashboardAccessAbility, ctx)) {
       return response.redirect().toRoute('home')
     }
 
     inertia.share({
-      permissions: async (ctx: HttpContext) =>
-        ((await ctx.auth.user!.getPermissions()) || []) as string[],
+      permissions: async (iCtx: HttpContext) =>
+        ((await iCtx.auth.user!.getPermissions()) || []) as string[],
     })
 
     return await next()

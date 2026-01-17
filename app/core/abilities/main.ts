@@ -14,6 +14,8 @@
 
 import { Bouncer } from '@adonisjs/bouncer'
 import User from '#auth/models/user'
+import type { HttpContext } from '@adonisjs/core/http'
+import factionConfig from '#config/faction'
 
 /**
  * Delete the following ability to start from
@@ -25,4 +27,23 @@ export const editUser = Bouncer.ability(() => {
 
 export const userAbility = Bouncer.ability((_user: User, permission: string) => {
   return _user.hasPermission(permission)
+})
+
+export const dashboardAccessAbility = Bouncer.ability(async (_user: User, ctx: HttpContext) => {
+  try {
+    const currentCharacter = await ctx.characters.getCurrentCharacter()
+
+    if (!currentCharacter) {
+      throw new Error('Failed to determine current character')
+    }
+
+    return await ctx.factions.characterHasMinRank(
+      currentCharacter.id,
+      factionConfig.factionId,
+      factionConfig.minimalRankDashboardAccess
+    )
+  } catch (err) {
+    ctx.logger.error({ err }, 'Failed to check ability for dashboard access')
+    return false
+  }
 })
