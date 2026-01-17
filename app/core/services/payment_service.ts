@@ -146,10 +146,10 @@ export class PaymentService {
    */
   private async validateToken(token: string): Promise<FleecaValidationResponse> {
     try {
-      const tokenValidationUrl = `${this.getBaseUrl()}/gateway_token/${token}/strict`
+      const tokenValidationUrl = `${this.getBaseUrl()}/gateway_token/${token}`
 
       const response = await fetch(tokenValidationUrl, {
-        method: 'GET',
+        method: 'POST',
         body: JSON.stringify({ token }),
         headers: {
           'Content-Type': 'application/json',
