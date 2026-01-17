@@ -18,6 +18,7 @@ export type FleecaValidationResponse = {
 
 export type PaymentSessionData = {
   sessionId: string
+  token: string
   source: string
   amount: number
   metadata: Record<string, any>
@@ -30,3 +31,5 @@ export type PaymentResult<TData extends Record<string, any>> = {
   sessionData: PaymentSessionData
   transactionData?: TData
 }
+
+export type FleecaGatewayToken = string
