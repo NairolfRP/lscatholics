@@ -149,10 +149,11 @@ export class PaymentService {
       const tokenValidationUrl = `${this.getBaseUrl()}/gateway_token/${token}/strict`
 
       const response = await fetch(tokenValidationUrl, {
-        method: 'POST',
+        method: 'GET',
         body: JSON.stringify({ token }),
         headers: {
           'Content-Type': 'application/json',
+          'Accept': 'application/json',
         },
       })
 
