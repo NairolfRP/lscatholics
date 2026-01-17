@@ -60,6 +60,16 @@ export default await Env.create(new URL('../', import.meta.url), {
 
   /*
   |----------------------------------------------------------
+  | Variables for configuring GTAW faction
+  |----------------------------------------------------------
+  */
+  GTAW_FACTION_ID: Env.schema.number.optional(),
+  LOWEST_FACTION_LEADERSHIP_RANK: Env.schema.number.optional(),
+  LOWEST_FACTION_SUPERVISOR_RANK: Env.schema.number.optional(),
+  MINIMAL_FACTION_RANK_DASHBOARD_ACCESS: Env.schema.number.optional(),
+
+  /*
+  |----------------------------------------------------------
   | Variables for discord webhook
   |----------------------------------------------------------
   */

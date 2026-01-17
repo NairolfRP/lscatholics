@@ -1,9 +1,11 @@
 import type { ApplicationService } from '@adonisjs/core/types'
 import { CharacterCacheService } from '#auth/services/character_cache_service'
+import { FactionCacheService } from '#auth/services/faction_cache_service'
 
 declare module '@adonisjs/core/types' {
   interface ContainerBindings {
     characterCache: CharacterCacheService
+    factionCache: FactionCacheService
   }
 }
 
@@ -16,6 +18,10 @@ export default class AppProvider {
   async register() {
     this.app.container.singleton('characterCache', function () {
       return new CharacterCacheService()
+    })
+
+    this.app.container.singleton('factionCache', function () {
+      return new FactionCacheService()
     })
   }
 
@@ -42,5 +48,8 @@ export default class AppProvider {
   async shutdown() {
     const cacheService = await this.app.container.make('characterCache')
     cacheService.stopCleanupInterval()
+
+    const factionCache = await this.app.container.make('factionCache')
+    factionCache.stopCleanupInterval()
   }
 }

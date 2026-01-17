@@ -1,5 +1,10 @@
 import fleecaConfig from '#config/fleeca'
-import { FleecaValidationResponse, PaymentResult, PaymentSessionData } from '#core/types/payment'
+import {
+  FleecaGatewayToken,
+  FleecaValidationResponse,
+  PaymentResult,
+  PaymentSessionData,
+} from '#core/types/payment'
 import encryption from '@adonisjs/core/services/encryption'
 import hash from '@adonisjs/core/services/hash'
 import logger from '@adonisjs/core/services/logger'
@@ -7,6 +12,36 @@ import logger from '@adonisjs/core/services/logger'
 export class PaymentService {
   private getBaseUrl(): string {
     return fleecaConfig.server === 'fr' ? 'https://fleeca.gta.world' : 'https://banking.gta.world'
+  }
+
+  /**
+   * Generate Fleeca Gateway Token
+   */
+  private async generateGatewayToken({ price, type = 0 }: { price: number; type?: number }) {
+    if (price <= 0) {
+      throw new Error('Price number must be greater than 0.')
+    }
+
+    try {
+      const apiKey = fleecaConfig.authKey
+      const generateGatewayTokenUrl = `${this.getBaseUrl()}/gateway_token/generateToken?price=${price}&type=${type}`
+
+      const response = await fetch(generateGatewayTokenUrl, {
+        method: 'GET',
+        headers: {
+          Accept: 'application/json',
+          Authorization: `Bearer ${apiKey}`,
+        },
+      })
+
+      if (!response.ok) {
+        throw new Error(`Gateway token request failed with status ${response.status}`)
+      }
+
+      return (await response.text()) as FleecaGatewayToken
+    } catch (error) {
+      throw error
+    }
   }
 
   /**
@@ -21,10 +56,17 @@ export class PaymentService {
     try {
       this.validatePaymentParameters(amount, source)
 
+      const gatewayToken = await this.generateGatewayToken({ price: amount })
+
+      if (!gatewayToken) {
+        throw new Error('Failed to generate gateway token.')
+      }
+
       const sessionId = await hash.make(`${source}_${amount}_${Date.now()}_${Math.random()}`)
 
       const sessionData: PaymentSessionData = {
         sessionId,
+        token: gatewayToken,
         source,
         amount,
         metadata,
@@ -35,7 +77,7 @@ export class PaymentService {
       const encryptedData = encryption.encrypt(JSON.stringify(sessionData))
       session.put('payment_data', encryptedData)
 
-      const paymentUrl = this.buildGatewayUrl(amount)
+      const paymentUrl = this.buildGatewayUrl(gatewayToken)
 
       return {
         paymentUrl,
@@ -87,6 +129,7 @@ export class PaymentService {
       return {
         success: false,
         sessionData: {
+          token: '',
           sessionId: '',
           source: 'unknown',
           amount: 0,
@@ -103,7 +146,7 @@ export class PaymentService {
    */
   private async validateToken(token: string): Promise<FleecaValidationResponse> {
     try {
-      const tokenValidationUrl = `${this.getBaseUrl()}/gateway_token/${token}`
+      const tokenValidationUrl = `${this.getBaseUrl()}/gateway_token/${token}/strict`
 
       const response = await fetch(tokenValidationUrl, {
         method: 'POST',
@@ -152,11 +195,8 @@ export class PaymentService {
   /**
    * Build Fleeca gateway URL
    */
-  private buildGatewayUrl(amount: number): string {
-    const gatewayUrl = `${this.getBaseUrl()}/gateway/`
-    const params = [fleecaConfig.authKey, '0', amount.toString()]
-
-    return new URL(params.join('/'), gatewayUrl).toString()
+  private buildGatewayUrl(token: string): string {
+    return `${this.getBaseUrl()}/gateway/${token}`
   }
 
   /**
