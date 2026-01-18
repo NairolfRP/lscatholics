@@ -22,7 +22,7 @@
         <AuthentificationRequiredAlert v-if="!user" text="pour enregistrer votre foyer en ligne." />
         <form v-else @submit.prevent="onSubmit" class="space-y-8">
           <div class="space-y-4">
-            <FormField v-slot="{ componentField }" type="radio" name="recordType">
+            <!-- <FormField v-slot="{ componentField }" type="radio" name="recordType">
               <div class="space-y-2 my-5">
                 <FormItem>
                   <FormLabel class="font-bold mb-2">
@@ -52,7 +52,7 @@
                   <FormMessage />
                 </FormItem>
               </div>
-            </FormField>
+            </FormField> --->
 
             <ParishionerPersonalInfoSection />
           </div>

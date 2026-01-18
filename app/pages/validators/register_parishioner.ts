@@ -46,7 +46,7 @@ const emergencyPhoneRule = vine.createRule((value, _options, field) => {
 })
 
 const registerParishionerSchema = vine.object({
-  recordType: vine.enum(['new', 'update']),
+  //recordType: vine.enum(['new', 'update']),
 
   civilTitle: civilTitleSchema,
   maritalStatus: maritalStatusSchema,

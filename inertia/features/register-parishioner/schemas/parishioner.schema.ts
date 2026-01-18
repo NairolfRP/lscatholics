@@ -25,7 +25,7 @@ const preprocessedAge = (schema: any) => {
 }
 
 export const parishionerSchema = z.object({
-  recordType: z.enum(['new', 'update']),
+  //recordType: z.enum(['new', 'update']),
   civilTitle: civilTitleSchema,
   maritalStatus: maritalStatusSchema,
   firstname: firstnameSchema,
