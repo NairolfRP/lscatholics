@@ -232,16 +232,22 @@
 <script setup lang="ts">
 import { Head, Link, useForm } from '@inertiajs/vue3'
 import DashboardLayout from '@/layouts/DashboardLayout.vue'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Textarea } from '@/components/ui/textarea'
+import { Button } from '@/shared/components/ui/button'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/shared/components/ui/card'
+import { Input } from '@/shared/components/ui/input'
+import { Label } from '@/shared/components/ui/label'
+import { Textarea } from '@/shared/components/ui/textarea'
 import { ArrowLeft } from 'lucide-vue-next'
 import { tuyau } from '@/lib/tuyau'
-import { MarkdownTextarea } from '@/components/ui/markdown'
-import { parishes } from '@/constants/parishes.constants'
-import { Checkbox } from '@/components/ui/checkbox'
+import { MarkdownTextarea } from '@/shared/components/ui/markdown'
+import { parishes } from '@/shared/constants/parishes.constants'
+import { Checkbox } from '@/shared/components/ui/checkbox'
 import {
   Select,
   SelectContent,
@@ -249,8 +255,8 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select'
-import { DateTimePicker } from '@/components/ui/datetime-picker'
+} from '@/shared/components/ui/select'
+import { DateTimePicker } from '@/shared/components/ui/datetime-picker'
 
 type Event = {
   id: number

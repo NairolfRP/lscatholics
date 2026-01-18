@@ -33,7 +33,7 @@
 </template>
 <script lang="ts" setup>
 import { Head } from '@inertiajs/vue3'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent, CardHeader, CardTitle } from '@/shared/components/ui/card'
 import { FileText, Calendar, Users } from 'lucide-vue-next'
 
 interface Props {

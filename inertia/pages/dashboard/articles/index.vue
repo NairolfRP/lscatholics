@@ -119,9 +119,15 @@
 </template>
 <script setup lang="ts">
 import { Head, Link, router } from '@inertiajs/vue3'
-import { Button } from '@/components/ui/button'
+import { Button } from '@/shared/components/ui/button'
 import { tuyau } from '@/lib/tuyau'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/shared/components/ui/card'
 import {
   Table,
   TableBody,
@@ -129,13 +135,13 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table'
-import { Badge } from '@/components/ui/badge'
+} from '@/shared/components/ui/table'
+import { Badge } from '@/shared/components/ui/badge'
 import { Plus, Edit, Trash2 } from 'lucide-vue-next'
 import { ref, watch } from 'vue'
 import { useDebounceFn } from '@vueuse/core'
-import { Input } from '@/components/ui/input'
-import { Typography } from '@/components/ui/typography'
+import { Input } from '@/shared/components/ui/input'
+import { Typography } from '@/shared/components/ui/typography'
 import {
   Pagination,
   PaginationContent,
@@ -143,7 +149,7 @@ import {
   PaginationItem,
   PaginationNext,
   PaginationPrevious,
-} from '@/components/ui/pagination'
+} from '@/shared/components/ui/pagination'
 
 interface Article {
   id: number

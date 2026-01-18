@@ -74,17 +74,17 @@
 </template>
 
 <script setup lang="ts">
-import PageBanner from '@/components/layout/PageBanner.vue'
-import { Card, CardContent } from '@/components/ui/card'
-import Head from '@/components/AppHead.vue'
+import PageBanner from '@/shared/components/layout/PageBanner.vue'
+import { Card, CardContent } from '@/shared/components/ui/card'
+import Head from '@/shared/components/AppHead.vue'
 import { MapPin } from 'lucide-vue-next'
-import { parishes } from '@/constants/parishes.constants'
-import { Typography } from '@/components/ui/typography'
-import ClientOnly from '@/components/ClientOnly.vue'
+import { parishes } from '@/shared/constants/parishes.constants'
+import { Typography } from '@/shared/components/ui/typography'
+import ClientOnly from '@/shared/components/ClientOnly.vue'
 import { ref, defineAsyncComponent } from 'vue'
 
-const GTA5Map = defineAsyncComponent(() => import('@/components/map/GTA5Map.vue'))
-const MapMarker = defineAsyncComponent(() => import('@/components/map/MapMarker.vue'))
+const GTA5Map = defineAsyncComponent(() => import('@/shared/components/map/GTA5Map.vue'))
+const MapMarker = defineAsyncComponent(() => import('@/shared/components/map/MapMarker.vue'))
 
 const mapScrollTarget = ref<HTMLElement | null>(null)
 const mapRef = ref<{ flyTo: (coords: [number, number], zoom?: number) => void } | null>(null)

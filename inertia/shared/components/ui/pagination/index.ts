@@ -1,0 +1,8 @@
+export { default as Pagination } from '@/shared/components/ui/pagination/Pagination.vue'
+export { default as PaginationContent } from '@/shared/components/ui/pagination/PaginationContent.vue'
+export { default as PaginationEllipsis } from '@/shared/components/ui/pagination/PaginationEllipsis.vue'
+export { default as PaginationFirst } from '@/shared/components/ui/pagination/PaginationFirst.vue'
+export { default as PaginationItem } from '@/shared/components/ui/pagination/PaginationItem.vue'
+export { default as PaginationLast } from '@/shared/components/ui/pagination/PaginationLast.vue'
+export { default as PaginationNext } from '@/shared/components/ui/pagination/PaginationNext.vue'
+export { default as PaginationPrevious } from '@/shared/components/ui/pagination/PaginationPrevious.vue'

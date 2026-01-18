@@ -105,14 +105,20 @@
   <Not_found v-else />
 </template>
 <script lang="ts" setup>
-import PageBanner from '@/components/layout/PageBanner.vue'
+import PageBanner from '@/shared/components/layout/PageBanner.vue'
 import { computed } from 'vue'
-import { getDepartmentBySlug } from '@/constants/departments.constants'
+import { getDepartmentBySlug } from '@/shared/constants/departments.constants'
 import Not_found from '@/pages/errors/not_found.vue'
 import { Head } from '@inertiajs/vue3'
-import { Typography } from '@/components/ui/typography'
+import { Typography } from '@/shared/components/ui/typography'
 import { Phone } from 'lucide-vue-next'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/shared/components/ui/card'
 import { cn } from '@/lib/utils'
 import DefaultBanner from '@/assets/images/cathedralTower.png'
 

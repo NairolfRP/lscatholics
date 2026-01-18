@@ -56,11 +56,17 @@
   </section>
 </template>
 <script setup lang="ts">
-import Head from '@/components/AppHead.vue'
-import { useUser } from '@/composables/use_user'
+import Head from '@/shared/components/AppHead.vue'
+import { useUser } from '@/shared/composables/use_user'
 import { Trash, TriangleAlert } from 'lucide-vue-next'
-import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
+import {
+  Card,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/shared/components/ui/card'
+import { Button } from '@/shared/components/ui/button'
 import {
   Dialog,
   DialogContent,
@@ -68,15 +74,15 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/dialog'
-import { Alert, AlertTitle } from '@/components/ui/alert'
+} from '@/shared/components/ui/dialog'
+import { Alert, AlertTitle } from '@/shared/components/ui/alert'
 import { useForm } from '@inertiajs/vue3'
 import { tuyau } from '@/lib/tuyau'
-import { Input } from '@/components/ui/input'
+import { Input } from '@/shared/components/ui/input'
 import { watch } from 'vue'
-import { useErrors } from '@/composables/use_errors'
+import { useErrors } from '@/shared/composables/use_errors'
 import { toast } from 'vue-sonner'
-import { Typography } from '@/components/ui/typography'
+import { Typography } from '@/shared/components/ui/typography'
 
 const user = useUser()
 

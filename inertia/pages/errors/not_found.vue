@@ -7,5 +7,5 @@
   </div>
 </template>
 <script setup lang="ts">
-import Head from '@/components/AppHead.vue'
+import Head from '@/shared/components/AppHead.vue'
 </script>

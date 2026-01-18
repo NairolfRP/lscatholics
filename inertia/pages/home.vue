@@ -323,9 +323,9 @@
 
 <script setup lang="ts">
 import { WhenVisible } from '@inertiajs/vue3'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
+import { Button } from '@/shared/components/ui/button'
+import { Card, CardContent } from '@/shared/components/ui/card'
+import { Badge } from '@/shared/components/ui/badge'
 import {
   ArrowRight,
   BookOpen,
@@ -336,15 +336,15 @@ import {
   NotebookPen,
 } from 'lucide-vue-next'
 import { formatNumber, yearsBetween } from '@/lib/utils'
-import { ARCHDIOCESAN_HISTORY_START_DATE } from '@/constants/archdiocese.constants'
+import { ARCHDIOCESAN_HISTORY_START_DATE } from '@/shared/constants/archdiocese.constants'
 import { computed } from 'vue'
 import HomepageBanner from '@/assets/images/cathedral-mass-with-cardinal.png'
-import PageBanner from '@/components/layout/PageBanner.vue'
+import PageBanner from '@/shared/components/layout/PageBanner.vue'
 import { Link } from '@tuyau/inertia/vue'
-import { Alert, AlertDescription } from '@/components/ui/alert'
-import { Skeleton } from '@/components/ui/skeleton'
+import { Alert, AlertDescription } from '@/shared/components/ui/alert'
+import { Skeleton } from '@/shared/components/ui/skeleton'
 import { formatDate } from '@vueuse/core'
-import ClientOnly from '@/components/ClientOnly.vue'
+import ClientOnly from '@/shared/components/ClientOnly.vue'
 
 type Post = {
   id: number

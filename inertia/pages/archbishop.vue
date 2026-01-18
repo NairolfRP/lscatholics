@@ -157,11 +157,11 @@
   </div>
 </template>
 <script setup lang="ts">
-import Head from '@/components/AppHead.vue'
-import PageBanner from '@/components/layout/PageBanner.vue'
+import Head from '@/shared/components/AppHead.vue'
+import PageBanner from '@/shared/components/layout/PageBanner.vue'
 import ArchbishopPortrait from '@/assets/images/cardinal_callahan_officiel_portrait.png'
-import { Button } from '@/components/ui/button'
-import Facebrower from '@/components/svg/Facebrower.vue'
+import { Button } from '@/shared/components/ui/button'
+import Facebrower from '@/shared/components/svg/Facebrower.vue'
 import CoatOfArms from '@/assets/images/cardinal_callahan_armoiries.png'
-import { Typography } from '@/components/ui/typography'
+import { Typography } from '@/shared/components/ui/typography'
 </script>
