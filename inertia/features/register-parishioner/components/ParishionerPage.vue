@@ -106,14 +106,6 @@ import { Separator } from '@/shared/components/ui/separator'
 import { LoaderCircle } from 'lucide-vue-next'
 import AuthentificationRequiredAlert from '@/shared/components/AuthentificationRequiredAlert.vue'
 import { LinkText } from '@/shared/components/ui/LinkText'
-import { RadioGroup, RadioGroupItem } from '@/shared/components/ui/radio-group'
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/shared/components/ui/form'
 import ParishionerReligionSection from '@/features/register-parishioner/components/form/ParishionerReligionSection.vue'
 import {
   Card,
@@ -135,10 +127,10 @@ import { useParishionerForm } from '@/features/register-parishioner/composables/
 
 const user = useUser()
 
-const recordTypeOptions = [
+/*const recordTypeOptions = [
   { value: 'new', label: 'Nouvel enregistrement' },
   { value: 'update', label: "Mise à jour d'un enregistrement" },
-]
+]*/
 
 const form = useParishionerForm()
 const { isSubmitting, isValidating, meta } = form

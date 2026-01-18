@@ -10,7 +10,7 @@ export function useParishionerForm() {
   return useForm<RegisterParishionerFormValues>({
     validationSchema: toTypedSchema(parishionerSchema),
     initialValues: {
-      recordType: 'new',
+      //recordType: 'new',
       civilTitle: undefined,
       maritalStatus: undefined,
       firstname: currentCharacter.value?.firstname || '',
