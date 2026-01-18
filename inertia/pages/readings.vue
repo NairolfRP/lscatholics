@@ -121,12 +121,12 @@
   </section>
 </template>
 <script lang="ts" setup>
-import { Typography } from '@/components/ui/typography'
+import { Typography } from '@/shared/components/ui/typography'
 import { useQuery } from '@tanstack/vue-query'
-import { Button } from '@/components/ui/button'
+import { Button } from '@/shared/components/ui/button'
 import { computed } from 'vue'
 import { formatDate } from '@vueuse/core'
-import { getReadingTypeLabel, liturgicalColor } from '@/services/liturgy'
+import { getReadingTypeLabel, liturgicalColor } from '@/shared/services/liturgy'
 
 interface ReadingsMetadata {
   date: string

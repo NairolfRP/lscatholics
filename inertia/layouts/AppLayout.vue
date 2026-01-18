@@ -15,12 +15,12 @@
 </template>
 
 <script setup lang="ts">
-import { Toaster } from '@/components/ui/sonner'
+import { Toaster } from '@/shared/components/ui/sonner'
 import 'vue-sonner/style.css'
-import AppHeader from '@/components/layout/AppHeader.vue'
-import AppFooter from '@/components/layout/AppFooter.vue'
-import ScrollToTopButton from '@/components/ScrollToTopButton.vue'
-import AppHead from '@/components/AppHead.vue'
+import AppHeader from '@/shared/components/layout/AppHeader.vue'
+import AppFooter from '@/shared/components/layout/AppFooter.vue'
+import ScrollToTopButton from '@/shared/components/ScrollToTopButton.vue'
+import AppHead from '@/shared/components/AppHead.vue'
 
 interface Props {
   title?: string

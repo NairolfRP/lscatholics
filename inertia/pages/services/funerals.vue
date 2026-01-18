@@ -30,6 +30,6 @@
   </ServiceLayout>
 </template>
 <script lang="ts" setup>
-import { Typography } from '@/components/ui/typography'
+import { Typography } from '@/shared/components/ui/typography'
 import ServiceLayout from '@/pages/services/ServiceLayout.vue'
 </script>

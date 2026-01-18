@@ -120,8 +120,8 @@
 import { computed, watch } from 'vue'
 import { Link } from '@inertiajs/vue3'
 import { Calendar, FileText, LayoutDashboard, LogOut, Menu, Settings, Users } from 'lucide-vue-next'
-import { Button } from '@/components/ui/button'
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
+import { Button } from '@/shared/components/ui/button'
+import { Sheet, SheetContent, SheetTrigger } from '@/shared/components/ui/sheet'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -129,14 +129,14 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
-import { Avatar, AvatarFallback } from '@/components/ui/avatar'
+} from '@/shared/components/ui/dropdown-menu'
+import { Avatar, AvatarFallback } from '@/shared/components/ui/avatar'
 import { tuyau } from '@/lib/tuyau'
-import { useUser } from '@/composables/use_user'
-import { usePageProps } from '@/composables/use_page_props'
+import { useUser } from '@/shared/composables/use_user'
+import { usePageProps } from '@/shared/composables/use_page_props'
 import { toast } from 'vue-sonner'
-import { Toaster } from '@/components/ui/sonner'
-import ScrollToTopButton from '@/components/ScrollToTopButton.vue'
+import { Toaster } from '@/shared/components/ui/sonner'
+import ScrollToTopButton from '@/shared/components/ScrollToTopButton.vue'
 
 const user = useUser()
 const pageProps = usePageProps()

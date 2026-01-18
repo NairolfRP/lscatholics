@@ -35,8 +35,8 @@
 <script lang="ts" setup>
 import { Head } from '@inertiajs/vue3'
 import { Link } from '@tuyau/inertia/vue'
-import PageBanner from '@/components/layout/PageBanner.vue'
-import { Button } from '@/components/ui/button'
+import PageBanner from '@/shared/components/layout/PageBanner.vue'
+import { Button } from '@/shared/components/ui/button'
 import { ChevronLeft } from 'lucide-vue-next'
 import { SERVICES } from '#shared/constants/services.constants'
 import { computed } from 'vue'

@@ -46,8 +46,8 @@
   </ServiceLayout>
 </template>
 <script lang="ts" setup>
-import { Typography } from '@/components/ui/typography'
+import { Typography } from '@/shared/components/ui/typography'
 import ServiceLayout from '@/pages/services/ServiceLayout.vue'
-import { Alert, AlertDescription } from '@/components/ui/alert'
+import { Alert, AlertDescription } from '@/shared/components/ui/alert'
 import { Info } from 'lucide-vue-next'
 </script>

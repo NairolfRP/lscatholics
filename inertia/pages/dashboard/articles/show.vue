@@ -106,12 +106,12 @@
 </template>
 <script lang="ts" setup>
 import { Head, Link } from '@inertiajs/vue3'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
+import { Button } from '@/shared/components/ui/button'
+import { Card, CardContent, CardHeader, CardTitle } from '@/shared/components/ui/card'
+import { Badge } from '@/shared/components/ui/badge'
 import { ArrowLeft, Edit, Eye } from 'lucide-vue-next'
 import { tuyau } from '@/lib/tuyau'
-import { MarkdownContent } from '@/components/ui/markdown'
+import { MarkdownContent } from '@/shared/components/ui/markdown'
 
 interface Article {
   id: number

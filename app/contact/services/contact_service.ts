@@ -1,7 +1,7 @@
 import { DiscordWebhookService } from '#discord/services/discord_webhook_service'
 import env from '#start/env'
 import logger from '@adonisjs/core/services/logger'
-import { CONTACT_SUBJECTS } from '#contact/constants/contact_subjects'
+import { CONTACT_SUBJECTS } from '#shared/constants/contact_subjects'
 
 export class ContactService {
   public readonly ERROR_MESSAGES = {
