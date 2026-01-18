@@ -1,7 +1,7 @@
 <template>
   <h3 class="text-lg font-medium text-gray-900">Informations personnelles</h3>
 
-  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+  <DonationFieldsGrid>
     <FormField
       v-for="field of [
         { id: 'firstname', label: 'Prénom', placeholder: 'John' },
@@ -18,14 +18,14 @@
         <FormMessage />
       </FormItem>
     </FormField>
-  </div>
+  </DonationFieldsGrid>
 
   <DonationOrganizationField />
 
-  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+  <DonationFieldsGrid>
     <DonationAgeField />
     <DonationEthnicityField />
-  </div>
+  </DonationFieldsGrid>
 
   <DonationPhoneField />
 </template>
@@ -43,4 +43,5 @@ import DonationOrganizationField from '@/features/donation/components/form/Donat
 import DonationAgeField from '@/features/donation/components/form/DonationAgeField.vue'
 import DonationEthnicityField from '@/features/donation/components/form/DonationEthnicityField.vue'
 import DonationPhoneField from '@/features/donation/components/form/DonationPhoneField.vue'
+import DonationFieldsGrid from '@/features/donation/components/form/DonationFieldsGrid.vue'
 </script>

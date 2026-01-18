@@ -1,5 +1,5 @@
 <template>
-  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+  <DonationFieldsGrid>
     <FormField v-slot="{ componentField }" name="address">
       <FormItem>
         <FormLabel>Adresse</FormLabel>
@@ -11,7 +11,7 @@
     </FormField>
 
     <DonationDistrictField />
-  </div>
+  </DonationFieldsGrid>
 </template>
 
 <script setup lang="ts">
@@ -24,4 +24,5 @@ import {
 } from '@/shared/components/ui/form'
 import { Input } from '@/shared/components/ui/input'
 import DonationDistrictField from '@/features/donation/components/form/DonationDistrictField.vue'
+import DonationFieldsGrid from '@/features/donation/components/form/DonationFieldsGrid.vue'
 </script>
