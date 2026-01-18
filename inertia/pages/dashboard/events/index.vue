@@ -116,9 +116,15 @@
 </template>
 <script lang="ts" setup>
 import { Head, Link, router } from '@inertiajs/vue3'
-import { Button } from '@/components/ui/button'
+import { Button } from '@/shared/components/ui/button'
 import { tuyau } from '@/lib/tuyau'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/shared/components/ui/card'
 import {
   Table,
   TableBody,
@@ -126,7 +132,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table'
+} from '@/shared/components/ui/table'
 import { Plus, Edit, Trash2, Calendar as CalendarIcon } from 'lucide-vue-next'
 import {
   Pagination,
@@ -135,8 +141,8 @@ import {
   PaginationItem,
   PaginationNext,
   PaginationPrevious,
-} from '@/components/ui/pagination'
-import { Typography } from '@/components/ui/typography'
+} from '@/shared/components/ui/pagination'
+import { Typography } from '@/shared/components/ui/typography'
 import { useDebounceFn } from '@vueuse/core'
 
 interface Event {

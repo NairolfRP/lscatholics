@@ -20,5 +20,5 @@
 </template>
 <script lang="ts" setup>
 import ServiceLayout from '@/pages/services/ServiceLayout.vue'
-import { Typography } from '@/components/ui/typography'
+import { Typography } from '@/shared/components/ui/typography'
 </script>

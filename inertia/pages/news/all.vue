@@ -127,10 +127,10 @@
 </template>
 
 <script setup lang="ts">
-import PageBanner from '@/components/layout/PageBanner.vue'
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent } from '@/components/ui/card'
+import PageBanner from '@/shared/components/layout/PageBanner.vue'
+import { Badge } from '@/shared/components/ui/badge'
+import { Button } from '@/shared/components/ui/button'
+import { Card, CardContent } from '@/shared/components/ui/card'
 import {
   Pagination,
   PaginationContent,
@@ -139,18 +139,18 @@ import {
   PaginationLast,
   PaginationNext,
   PaginationPrevious,
-} from '@/components/ui/pagination'
-import Head from '@/components/AppHead.vue'
+} from '@/shared/components/ui/pagination'
+import Head from '@/shared/components/AppHead.vue'
 import { ArrowRight } from 'lucide-vue-next'
 import type { InferPageProps } from '@adonisjs/inertia/types'
 import type NewsController from '#news/controllers/news_controller'
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
+import { Alert, AlertDescription, AlertTitle } from '@/shared/components/ui/alert'
 import { CircleAlert } from 'lucide-vue-next'
 import { router } from '@inertiajs/vue3'
 import { tuyau } from '@/lib/tuyau'
 import { Link } from '@tuyau/inertia/vue'
 import { formatDate } from '@/lib/utils'
-import { Typography } from '@/components/ui/typography'
+import { Typography } from '@/shared/components/ui/typography'
 
 const { selectedCategory, categories, articles } = defineProps<{
   articles: InferPageProps<NewsController, 'index'>['articles']

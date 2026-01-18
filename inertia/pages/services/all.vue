@@ -46,9 +46,9 @@
   </section>
 </template>
 <script lang="ts" setup>
-import Head from '@/components/AppHead.vue'
-import PageBanner from '@/components/layout/PageBanner.vue'
-import { Card, CardContent, CardFooter } from '@/components/ui/card'
+import Head from '@/shared/components/AppHead.vue'
+import PageBanner from '@/shared/components/layout/PageBanner.vue'
+import { Card, CardContent, CardFooter } from '@/shared/components/ui/card'
 import { Heart, ArrowRight } from 'lucide-vue-next'
 import { Link } from '@tuyau/inertia/vue'
 import { SERVICES } from '#shared/constants/services.constants'

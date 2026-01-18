@@ -1,5 +1,5 @@
 import vine from '@vinejs/vine'
-import { contactSubjectsIds } from '#contact/constants/contact_subjects'
+import { contactSubjectsIds } from '#shared/constants/contact_subjects'
 
 export const contactSchema = vine.object({
   firstname: vine.string().minLength(2).maxLength(50),

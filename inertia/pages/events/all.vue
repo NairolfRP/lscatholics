@@ -108,17 +108,17 @@
 </template>
 
 <script setup lang="ts">
-import PageBanner from '@/components/layout/PageBanner.vue'
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent } from '@/components/ui/card'
-import Head from '@/components/AppHead.vue'
+import PageBanner from '@/shared/components/layout/PageBanner.vue'
+import { Badge } from '@/shared/components/ui/badge'
+import { Button } from '@/shared/components/ui/button'
+import { Card, CardContent } from '@/shared/components/ui/card'
+import Head from '@/shared/components/AppHead.vue'
 import { Link } from '@tuyau/inertia/vue'
 import { ArrowRight, CircleAlert, Clock, MapPin } from 'lucide-vue-next'
 import type { InferPageProps } from '@adonisjs/inertia/types'
 import type EventsController from '#events/controllers/events_controller'
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
-import { Typography } from '@/components/ui/typography'
+import { Alert, AlertDescription, AlertTitle } from '@/shared/components/ui/alert'
+import { Typography } from '@/shared/components/ui/typography'
 
 const { events } = defineProps<{
   events: InferPageProps<EventsController, 'index'>['events']

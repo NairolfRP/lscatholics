@@ -63,8 +63,8 @@
   </section>
 </template>
 <script setup lang="ts">
-import PageBanner from '@/components/layout/PageBanner.vue'
-import { Alert, AlertDescription } from '@/components/ui/alert'
-import { Typography } from '@/components/ui/typography'
-import { LinkText } from '@/components/ui/LinkText'
+import PageBanner from '@/shared/components/layout/PageBanner.vue'
+import { Alert, AlertDescription } from '@/shared/components/ui/alert'
+import { Typography } from '@/shared/components/ui/typography'
+import { LinkText } from '@/shared/components/ui/LinkText'
 </script>

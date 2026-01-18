@@ -36,11 +36,11 @@
 </template>
 
 <script setup lang="ts">
-import Head from '@/components/AppHead.vue'
-import PageBanner from '@/components/layout/PageBanner.vue'
+import Head from '@/shared/components/AppHead.vue'
+import PageBanner from '@/shared/components/layout/PageBanner.vue'
 import { formatDate } from '@/lib/utils'
-import { Typography } from '@/components/ui/typography'
-import { MarkdownContent } from '@/components/ui/markdown'
+import { Typography } from '@/shared/components/ui/typography'
+import { MarkdownContent } from '@/shared/components/ui/markdown'
 
 const { post } = defineProps<{
   post: {

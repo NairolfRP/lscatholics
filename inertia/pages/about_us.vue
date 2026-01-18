@@ -137,12 +137,12 @@
 </template>
 
 <script setup lang="ts">
-import Head from '@/components/AppHead.vue'
-import { Button } from '@/components/ui/button'
+import Head from '@/shared/components/AppHead.vue'
+import { Button } from '@/shared/components/ui/button'
 import VolunteerImage from '@/assets/images/thanksgiving2024.png'
 import { ChevronDown, ArrowRight } from 'lucide-vue-next'
-import PageBanner from '@/components/layout/PageBanner.vue'
+import PageBanner from '@/shared/components/layout/PageBanner.vue'
 import BannerImage from '@/assets/images/olacathedral-cross.png'
-import { Typography } from '@/components/ui/typography'
-import { LinkText } from '@/components/ui/LinkText'
+import { Typography } from '@/shared/components/ui/typography'
+import { LinkText } from '@/shared/components/ui/LinkText'
 </script>

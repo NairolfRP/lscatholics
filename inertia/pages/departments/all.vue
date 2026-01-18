@@ -25,9 +25,9 @@
   </section>
 </template>
 <script lang="ts" setup>
-import { Typography } from '@/components/ui/typography'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { DEPARTMENTS } from '@/constants/departments.constants'
-import Head from '@/components/AppHead.vue'
+import { Typography } from '@/shared/components/ui/typography'
+import { Card, CardContent, CardHeader, CardTitle } from '@/shared/components/ui/card'
+import { DEPARTMENTS } from '@/shared/constants/departments.constants'
+import Head from '@/shared/components/AppHead.vue'
 import { Link } from '@tuyau/inertia/vue'
 </script>

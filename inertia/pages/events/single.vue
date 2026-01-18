@@ -82,14 +82,14 @@
 </template>
 
 <script setup lang="ts">
-import Head from '@/components/AppHead.vue'
+import Head from '@/shared/components/AppHead.vue'
 import { Link } from '@tuyau/inertia/vue'
-import PageBanner from '@/components/layout/PageBanner.vue'
+import PageBanner from '@/shared/components/layout/PageBanner.vue'
 import { formatDate } from '@vueuse/core'
-import { Button } from '@/components/ui/button'
+import { Button } from '@/shared/components/ui/button'
 import { ArrowLeft } from 'lucide-vue-next'
-import { Typography } from '@/components/ui/typography'
-import { MarkdownContent } from '@/components/ui/markdown'
+import { Typography } from '@/shared/components/ui/typography'
+import { MarkdownContent } from '@/shared/components/ui/markdown'
 
 const { event } = defineProps<{
   event: {
