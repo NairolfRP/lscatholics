@@ -9,30 +9,31 @@
 <script setup lang="ts">
 import { inject, onBeforeUnmount, onMounted, ref, type ShallowRef, useSlots, watch } from 'vue'
 import type { LatLngExpression, Map, Marker } from 'leaflet'
-import L from 'leaflet'
 
 const props = defineProps<{
   position: LatLngExpression
 }>()
-
-const customIcon = L.icon({
-  iconRetinaUrl: '/map/assets/marker-icon-2x.png',
-  iconUrl: '/map/assets/marker-icon.png',
-  shadowUrl: '/map/assets/marker-shadow.png',
-  iconSize: [25, 41],
-  iconAnchor: [12, 41],
-  popupAnchor: [1, -34],
-  tooltipAnchor: [16, -28],
-  shadowSize: [41, 41],
-})
 
 const mapInstance = inject<ShallowRef<Map | null>>('mapInstance')
 const popupContent = ref<HTMLElement | null>(null)
 const slots = useSlots()
 let marker: Marker | null = null
 
-const addMarkerToMap = () => {
+const addMarkerToMap = async () => {
   if (!mapInstance?.value || marker) return
+
+  const L = await import('leaflet')
+
+  const customIcon = L.icon({
+    iconRetinaUrl: '/map/assets/marker-icon-2x.png',
+    iconUrl: '/map/assets/marker-icon.png',
+    shadowUrl: '/map/assets/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    tooltipAnchor: [16, -28],
+    shadowSize: [41, 41],
+  })
 
   marker = L.marker(props.position, { icon: customIcon }).addTo(mapInstance.value)
 

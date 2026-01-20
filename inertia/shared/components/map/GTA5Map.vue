@@ -6,10 +6,9 @@
 </template>
 <script setup lang="ts">
 import { cn } from '@/lib/utils'
-import L, { type LatLngExpression, type LatLngTuple, Map, type TileLayerOptions } from 'leaflet'
+import type { LatLngExpression, LatLngTuple, Map, TileLayerOptions } from 'leaflet'
 import { onBeforeUnmount, onMounted, provide, ref, shallowRef } from 'vue'
-import 'leaflet/dist/leaflet.css'
-import { CustomCRS } from '@/shared/components/map/custom_crs'
+import { getCustomCRS } from '@/shared/components/map/custom_crs'
 
 defineOptions({
   inheritAttrs: false,
@@ -42,8 +41,13 @@ provide('mapInstance', mapInstance)
 
 defineExpose({ flyTo })
 
-onMounted(() => {
+onMounted(async () => {
   if (!mapContainer.value) return
+
+  const L = await import('leaflet')
+  await import('leaflet/dist/leaflet.css')
+
+  const CustomCRS = await getCustomCRS()
 
   const map = L.map(mapContainer.value, {
     crs: CustomCRS,
