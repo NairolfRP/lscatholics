@@ -104,7 +104,8 @@ export default class AuthController {
           "Une erreur est survenue lors de l'authentification de votre compte.",
       })
     } finally {
-      response.redirect().back()
+      const intendedUrl = session.pull('url.intended', '/')
+      response.redirect(intendedUrl)
     }
   }
 
