@@ -20,46 +20,103 @@
 
   <section class="py-20">
     <div class="container mx-auto px-4">
-      <div class="max-w-4xl mx-auto">
-        <div class="text-center mb-16">
-          <h2 class="text-4xl font-bold text-catholic-purple mb-6 font-serif">Notre Mission</h2>
-          <div class="w-24 h-1 bg-catholic-gold mx-auto cross-divider mb-8"></div>
-        </div>
+      <div class="max-w-7xl mx-auto">
+        <div class="grid lg:grid-cols-2 gap-12 items-start">
+          <div>
+            <div class="text-center mb-16">
+              <h2 class="text-4xl font-bold text-catholic-purple mb-6 font-serif">Notre Mission</h2>
+              <div class="w-24 h-1 bg-catholic-gold mx-auto cross-divider mb-8"></div>
+            </div>
 
-        <div class="prose prose-lg max-w-none text-justify">
-          <Typography>
-            Nous, le Peuple de Dieu de l'Archidiocèse de Los Santos, recevons notre mission de
-            poursuivre l'oeuvre rédemptrice de Jésus-Christ. Baptisés dans le Corps du Christ,
-            confirmés dans l'Esprit Saint, nourris par la Parole et l'Eucharistie, nous partageons
-            la mission du Christ, comme prêtres, prophètes et rois-serviteurs. Nous formons un seul
-            corps avec l'Église catholique à travers le monde, en communion avec le Pape.
-          </Typography>
+            <div class="prose prose-lg max-w-none text-justify">
+              <Typography>
+                Nous, le Peuple de Dieu de l'Archidiocèse de Los Santos, recevons notre mission de
+                poursuivre l'oeuvre rédemptrice de Jésus-Christ. Baptisés dans le Corps du Christ,
+                confirmés dans l'Esprit Saint, nourris par la Parole et l'Eucharistie, nous
+                partageons la mission du Christ, comme prêtres, prophètes et rois-serviteurs. Nous
+                formons un seul corps avec l'Église catholique à travers le monde, en communion avec
+                le Pape.
+              </Typography>
 
-          <Typography>
-            Sous l'autorité pastorale de notre
-            <LinkText route="archbishop.index">Archevêque</LinkText>, nous collaborons ensemble pour
-            vivre et annoncer l'Évangile. Le Christ a proclamé le règne de Dieu. Nous sommes appelés
-            à en être les instruments dans le monde. Nous nous engageons à bâtir une communauté de
-            foi et d'amour. Avec le Christ, nous portons la Bonne Nouvelle aux pauvres. Nous nous
-            engageons à combattre toutes les formes de pauvreté présentes parmi nous — spirituelles,
-            économiques et morales. Avec le Christ, nous défendons la dignité de toute vie humaine.
-            Nous nous engageons à respecter chaque personne et à être des intendants fidèles de la
-            création de Dieu. Avec le Christ, nous affirmons les liens qui nous unissent. Nous nous
-            engageons à abattre les murs qui divisent. Nous consacrons nos paroisses, nos écoles,
-            nos institutions, nos services et nos organisations à cette mission, sous la tendre
-            protection de Marie, Reine des Saints.
-          </Typography>
+              <Typography>
+                Sous l'autorité pastorale de notre
+                <LinkText route="archbishop.index">Archevêque</LinkText>, nous collaborons ensemble
+                pour vivre et annoncer l'Évangile. Le Christ a proclamé le règne de Dieu. Nous
+                sommes appelés à en être les instruments dans le monde. Nous nous engageons à bâtir
+                une communauté de foi et d'amour.
+              </Typography>
+
+              <Typography>
+                Avec le Christ, nous portons la Bonne Nouvelle aux pauvres. Nous nous engageons à
+                combattre toutes les formes de pauvreté présentes parmi nous — spirituelles,
+                économiques et morales.
+              </Typography>
+
+              <Typography>
+                Avec le Christ, nous affirmons les liens qui nous unissent. Nous nous engageons à
+                abattre les murs qui divisent.
+              </Typography>
+
+              <Typography>
+                Nous consacrons nos paroisses, nos écoles, nos institutions, nos services et nos
+                organisations à cette mission, sous la tendre protection de Marie, Reine des Saints.
+              </Typography>
+            </div>
+          </div>
+          <div class="relative lg:-mt-5 hidden lg:block">
+            <div class="relative rounded-lg overflow-hidden shadow-2xl">
+              <img
+                src="@/assets/images/gta-world-2025-12-19-22-50-48.png"
+                alt="People of God praying at Christmas Mass 2025"
+                class="w-full h-auto objec-cover"
+              />
+            </div>
+          </div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <section
+    class="relative py-20 bg-gray-50 bg-cover bg-center h-100 text-white"
+    :style="`background-image: url(${VolunteerImage})`"
+  >
+    <div class="absolute inset-0 bg-black/60"></div>
+    <div class="container relative z-10 mx-auto px-4">
+      <div class="max-w-6xl mx-auto space-y-5">
+        <Typography variant="h2" class="border-none pb-0 text-5xl text-catholic-gold font-bold">
+          Notre impact
+        </Typography>
+        <Typography>
+          Avec Catholic Charities, nous venons en aide à des millions d'enfants, de personnes âgées,
+          de familles, d'hommes et de femmes, de migrants, de sans-abri et autres populations
+          vulnérables, dans les comtés de Los Santos, de Ventura et de Santa Babara.
+        </Typography>
+        <Button variant="warning" size="lg" class="cursor-pointer" as-child>
+          <Link route="vocations"><ArrowRight /> Devenez bénévole </Link>
+        </Button>
       </div>
     </div>
   </section>
 
   <section class="py-15">
     <div class="container mx-auto px-4">
-      <div class="max-w-4xl mx-auto">
+      <div class="max-w-7xl mx-auto">
         <div class="text-center mb-16">
           <h2 class="text-4xl font-bold text-primary mb-6 font-serif">Notre Histoire</h2>
           <div class="w-24 h-1 bg-catholic-gold mx-auto cross-divider mb-8"></div>
+        </div>
+
+        <div class="relative">
+          <div class="float-left mr-8 mb-6 lg:w-1/2 w-full">
+            <div class="relative rounded-lg overflow-hidden shadow-2xl">
+              <img
+                src="@/assets/images/la_placita_1814.png"
+                alt="La Placita, first church of Los Santos"
+                class="w-full h-auto object-cover"
+              />
+            </div>
+          </div>
         </div>
 
         <div class="prose prose-lg max-w-none text-justify">
@@ -82,55 +139,49 @@
             notre archidiocèse.
           </Typography>
 
-          <Typography>
-            Sur le plan spirituel, saint Junìpero est reconnu comme l'un des fondateurs de notre
-            Église à Los Santos, dans notre État et même dans notre pays. Il commença son oeuvre
-            missionnaire à Mexico où il rendit visite à la relique de la Tilma de Notre-Dame de
-            Guadalupe, patronne des Amériques. Nous avons la grâce immense de puvoir vénérer
-            Notre-Dame, tout comme saint Junìpero, devant une des reliques de la Tilma précieusement
-            conservée dans l'une des chapelles latérales de la Cathédrale Notre-Dame-des-Saints.
-          </Typography>
+          <div class="clear-both"></div>
 
-          <Typography>
-            Aujourd'hui, l'Archidiocèse de Los Santos comprend trois comtés situés au sud de San
-            Andreas : Los Santos, Ventura et Santa Barbara. Son territoire s'étend de la limite du
-            nord du comté de Santa Barbara, près de Maria, jusqu'à la limite sud de l'île du comté
-            de Los Santos. Il couvre une superficie de 22 430 km². En 2005, la population catholique
-            s'élevait à 4 349 267 fidèles sur un total de 11 258 600 habitants. L'archidiocèse
-            compte 288 paroisses réparties dans 120 villes.
-          </Typography>
+          <div class="grid lg:grid-cols-2 gap-12 items-start">
+            <div>
+              <Typography>
+                Sur le plan spirituel, saint Junìpero est reconnu comme l'un des fondateurs de notre
+                Église à Los Santos, dans notre État et même dans notre pays. Il commença son oeuvre
+                missionnaire à Mexico où il rendit visite à la relique de la Tilma de Notre-Dame de
+                Guadalupe, patronne des Amériques. Nous avons la grâce immense de puvoir vénérer
+                Notre-Dame, tout comme saint Junìpero, devant une des reliques de la Tilma
+                précieusement conservée dans l'une des chapelles latérales de la Cathédrale
+                Notre-Dame-des-Saints.
+              </Typography>
 
-          <Typography>
-            Il y a également 30 missions et chapelles, ainsi que 16 églises catholiques de rite
-            oriental. Au total, l'Archidiocèse dispose de 214 écoles primaires et 51 lycées
-            catholiques, le plus vaste réseau scolaire de l'État de San Andreas. Dans ce contexte
-            culturellement très diversifié, des services éthniques sont proposés à 72 communautés
-            différentes. Cela inclut l'accompagnement clrical, la liturgie, les services sociaux,
-            des ressources, des conseils et des initiatives culturelles.
-          </Typography>
+              <Typography>
+                Aujourd'hui, l'Archidiocèse de Los Santos comprend trois comtés situés au sud de San
+                Andreas : Los Santos, Ventura et Santa Barbara. Son territoire s'étend de la limite
+                du nord du comté de Santa Barbara, près de Maria, jusqu'à la limite sud de l'île du
+                comté de Los Santos. Il couvre une superficie de 22 430 km². En 2005, la population
+                catholique s'élevait à 4 349 267 fidèles sur un total de 11 258 600 habitants.
+                L'archidiocèse compte 288 paroisses réparties dans 120 villes.
+              </Typography>
+
+              <Typography>
+                Il y a également 30 missions et chapelles, ainsi que 16 églises catholiques de rite
+                oriental. Au total, l'Archidiocèse dispose de 214 écoles primaires et 51 lycées
+                catholiques, le plus vaste réseau scolaire de l'État de San Andreas. Dans ce
+                contexte culturellement très diversifié, des services éthniques sont proposés à 72
+                communautés différentes. Cela inclut l'accompagnement clrical, la liturgie, les
+                services sociaux, des ressources, des conseils et des initiatives culturelles.
+              </Typography>
+            </div>
+            <div class="relative hidden lg:block w-95">
+              <div class="relative rounded-lg overflow-hidden shadow-2xl">
+                <img
+                  src="@/assets/images/st_junipero_serra.png"
+                  alt="St. Junìpero Serra, San Andreas Catholic Missions Founder"
+                  class="w-full h-auto objec-cover"
+                />
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <section
-    class="relative py-20 bg-gray-50 bg-cover bg-center h-100 text-white"
-    :style="`background-image: url(${VolunteerImage})`"
-  >
-    <div class="absolute inset-0 bg-black/60"></div>
-    <div class="container relative z-10 mx-auto px-4">
-      <div class="max-w-6xl mx-auto space-y-5">
-        <Typography variant="h2" class="border-none pb-0 text-5xl text-catholic-gold font-bold">
-          Notre impact
-        </Typography>
-        <Typography>
-          Avec Catholic Charities, nous venons en aide à des millions d'enfants, de personnes âgées,
-          de familles, d'hommes et de femmes, de migrants, de sans-abri et autres populations
-          vulnérables, dans les comtés de Los Santos, de Ventura et de Santa Babara.
-        </Typography>
-        <Button variant="warning" size="lg" class="cursor-pointer">
-          <ArrowRight /> Devenez bénévole
-        </Button>
       </div>
     </div>
   </section>
@@ -145,4 +196,20 @@ import PageBanner from '@/shared/components/layout/PageBanner.vue'
 import BannerImage from '@/assets/images/olacathedral-cross.png'
 import { Typography } from '@/shared/components/ui/typography'
 import { LinkText } from '@/shared/components/ui/LinkText'
+import { Link } from '@tuyau/inertia/vue'
 </script>
+
+<style scoped>
+.relative img {
+  transition: transform 0.3s ease;
+}
+
+.relative:hover img {
+  transform: scale(1.02);
+}
+
+.order-2.lg\:order-1 .absolute.-bottom-6 {
+  right: auto;
+  left: -1.5rem;
+}
+</style>

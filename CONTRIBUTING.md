@@ -8,7 +8,7 @@ welcome and appreciated. Please follow these guidelines to ensure a smooth colla
 Before getting started, make sure you have:
 
 - Node.js (LTS version recommended)
-- PostgreSQL installed and configured
+- Turso CLI or SQLite database installed
 - Pnpm installed globally
 - Familiarity with the following tools and conventions:
   - **TypeScript** for type-safe code
@@ -52,7 +52,7 @@ Before getting started, make sure you have:
 5. **Run Database Migrations**
 
    ```sh
-   node ace migration:run
+   pnpm db:migrate
    ```
 
 6. **Start the Development Server**
