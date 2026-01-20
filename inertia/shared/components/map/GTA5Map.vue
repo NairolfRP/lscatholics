@@ -6,8 +6,7 @@
 </template>
 <script setup lang="ts">
 import { cn } from '@/lib/utils'
-import type { LatLngExpression, LatLngTuple, Map } from 'leaflet'
-import L from 'leaflet'
+import L, { type LatLngExpression, type LatLngTuple, Map, type TileLayerOptions } from 'leaflet'
 import { onBeforeUnmount, onMounted, provide, ref, shallowRef } from 'vue'
 import 'leaflet/dist/leaflet.css'
 import { CustomCRS } from '@/shared/components/map/custom_crs'
@@ -48,16 +47,25 @@ onMounted(() => {
 
   const map = L.map(mapContainer.value, {
     crs: CustomCRS,
-    minZoom: 3,
+    minZoom: 1,
     maxZoom: 5,
     preferCanvas: true,
     center: props.center,
     zoom: props.zoom,
-    attributionControl: false,
+    attributionControl: true,
   })
 
-  const commonOptions = {
+  map.attributionControl.setPrefix('<a href="https://leafletjs.com/">Leaflet</a> | GTA V Map')
+  const southWest = map.unproject([0, 8192], map.getMaxZoom())
+  const northEast = map.unproject([8192, 0], map.getMaxZoom())
+  map.setMaxBounds(new L.LatLngBounds(southWest, northEast))
+
+  const commonOptions: TileLayerOptions = {
     keepBuffer: 64,
+    bounds: new L.LatLngBounds(
+      map.unproject([0, 8192], map.getMaxZoom()),
+      map.unproject([8192, 0], map.getMaxZoom())
+    ),
     noWrap: true,
     minZoom: 0,
     maxZoom: 5,
