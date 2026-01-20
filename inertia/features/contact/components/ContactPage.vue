@@ -38,8 +38,6 @@
 <script setup lang="ts">
 import { Head } from '@inertiajs/vue3'
 import PageBanner from '@/shared/components/layout/PageBanner.vue'
-import { usePageProps } from '@/shared/composables/use_page_props'
-import { useErrors } from '@/shared/composables/use_errors'
 import AuthentificationRequiredAlert from '@/shared/components/AuthentificationRequiredAlert.vue'
 import { useUser } from '@/shared/composables/use_user'
 import { Typography } from '@/shared/components/ui/typography'
