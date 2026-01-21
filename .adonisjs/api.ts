@@ -56,6 +56,34 @@ type ApiAuthCurrentcharacterPatch = {
     false
   >
 }
+type ApiAuthRedirectDiscordGetHead = {
+  request: unknown
+  response: MakeTuyauResponse<
+    import('../app/auth/controllers/auth_controller.ts').default['redirectToDiscord'],
+    false
+  >
+}
+type ApiAuthCallbackDiscordGetHead = {
+  request: unknown
+  response: MakeTuyauResponse<
+    import('../app/auth/controllers/auth_controller.ts').default['handleDiscordCallback'],
+    false
+  >
+}
+type ApiAuthUnlinkDiscordDelete = {
+  request: unknown
+  response: MakeTuyauResponse<
+    import('../app/auth/controllers/auth_controller.ts').default['unlinkDiscord'],
+    false
+  >
+}
+type ProfileGetHead = {
+  request: unknown
+  response: MakeTuyauResponse<
+    import('../app/auth/controllers/profile_controller.ts').default['show'],
+    false
+  >
+}
 type DashboardGetHead = {
   request: unknown
   response: MakeTuyauResponse<
@@ -315,12 +343,22 @@ export interface ApiDefinition {
           $get: ApiAuthRedirectGtawGetHead
           $head: ApiAuthRedirectGtawGetHead
         }
+        discord: {
+          $url: {}
+          $get: ApiAuthRedirectDiscordGetHead
+          $head: ApiAuthRedirectDiscordGetHead
+        }
       }
       'callback': {
         gtaw: {
           $url: {}
           $get: ApiAuthCallbackGtawGetHead
           $head: ApiAuthCallbackGtawGetHead
+        }
+        discord: {
+          $url: {}
+          $get: ApiAuthCallbackDiscordGetHead
+          $head: ApiAuthCallbackDiscordGetHead
         }
       }
       'delete-user': {
@@ -340,7 +378,18 @@ export interface ApiDefinition {
         $url: {}
         $patch: ApiAuthCurrentcharacterPatch
       }
+      'unlink': {
+        discord: {
+          $url: {}
+          $delete: ApiAuthUnlinkDiscordDelete
+        }
+      }
     }
+  }
+  'profile': {
+    $url: {}
+    $get: ProfileGetHead
+    $head: ProfileGetHead
   }
   'dashboard': {
     $url: {}
@@ -513,10 +562,24 @@ const routes = [
   },
   {
     params: [],
+    name: 'discord.redirect',
+    path: '/api/auth/redirect/discord',
+    method: ['GET', 'HEAD'],
+    types: {} as ApiAuthRedirectDiscordGetHead,
+  },
+  {
+    params: [],
+    name: 'discord.unlink',
+    path: '/api/auth/unlink/discord',
+    method: ['DELETE'],
+    types: {} as ApiAuthUnlinkDiscordDelete,
+  },
+  {
+    params: [],
     name: 'profile',
     path: '/profile',
     method: ['GET', 'HEAD'],
-    types: {} as unknown,
+    types: {} as ProfileGetHead,
   },
   {
     params: [],

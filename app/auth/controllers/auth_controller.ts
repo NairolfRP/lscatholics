@@ -109,6 +109,92 @@ export default class AuthController {
     }
   }
 
+  async redirectToDiscord({ ally }: HttpContext) {
+    return ally.use('discord').redirect()
+  }
+
+  async handleDiscordCallback({ ally, response, auth, session, logger }: HttpContext) {
+    try {
+      const discord = ally.use('discord')
+
+      if (discord.accessDenied()) {
+        return response.badRequest({ message: 'You have cancelled the login process' })
+      }
+
+      if (discord.stateMisMatch()) {
+        return response.badRequest({
+          message: 'We are unable to verify the request. Please try again',
+        })
+      }
+
+      if (discord.hasError()) {
+        return response.badRequest({ message: 'An error has occurred', error: discord.getError() })
+      }
+
+      const discordUser = await discord.user()
+      const user = auth.user!
+
+      const userDiscordAccount = await user
+        .related('accounts')
+        .query()
+        .where('provider_id', 'discord')
+        .first()
+
+      if (!userDiscordAccount) {
+        await user.related('accounts').create({
+          providerId: 'discord',
+          accountId: discordUser.id,
+          accessToken: discordUser.token.token,
+          refreshToken: discordUser.token.refreshToken,
+          accessTokenExpiresAt: DateTime.fromJSDate(discordUser.token.expiresAt),
+          scope: discordUser.token.scope,
+        })
+        return response.redirect().toRoute('profile')
+      }
+
+      if (userDiscordAccount.accountId !== discordUser.id) {
+        return response.unauthorized({ message: 'Other Discord account is linked' })
+      }
+
+      userDiscordAccount.merge({
+        accessToken: discordUser.token.token,
+        refreshToken: discordUser.token.refreshToken,
+        accessTokenExpiresAt: DateTime.fromJSDate(discordUser.token.expiresAt),
+        scope: discordUser.token.scope,
+      })
+
+      await userDiscordAccount.save()
+
+      return response.redirect().toRoute('profile')
+    } catch (err) {
+      logger.error({ err }, `Failed to link discord to user ${auth.user!.id}`)
+      session.flashErrors({
+        E_AUTHENTIFICATION_FAILED:
+          'Une erreur est survenue lors de la connexion de votre compte Discord.',
+      })
+      return response.redirect().toRoute('profile')
+    }
+  }
+
+  async unlinkDiscord({ auth, response, logger }: HttpContext) {
+    try {
+      const user = auth.user!
+
+      const discord = await user.related('accounts').query().where('provider_id', 'discord').first()
+
+      if (!discord) {
+        throw new Error('No discord account found')
+      }
+
+      await discord.delete()
+
+      return response.redirect().back()
+    } catch (err) {
+      logger.error({ err }, `Failed to unlink discord from user ${auth.user!.id}`)
+      return response.redirect().back()
+    }
+  }
+
   async logout({ auth, characters, response, session, logger }: HttpContext) {
     try {
       await auth.use('web').logout()
