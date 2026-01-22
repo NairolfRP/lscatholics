@@ -33,7 +33,7 @@
   <template v-else>Une erreur est survenue</template>
 </template>
 <script lang="ts" setup>
-import { Head } from '@inertiajs/vue3'
+import Head from '@/shared/components/AppHead.vue'
 import { Link } from '@tuyau/inertia/vue'
 import PageBanner from '@/shared/components/layout/PageBanner.vue'
 import { Button } from '@/shared/components/ui/button'

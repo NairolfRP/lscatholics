@@ -109,7 +109,7 @@ import PageBanner from '@/shared/components/layout/PageBanner.vue'
 import { computed } from 'vue'
 import { getDepartmentBySlug } from '@/shared/constants/departments.constants'
 import Not_found from '@/pages/errors/not_found.vue'
-import { Head } from '@inertiajs/vue3'
+import Head from '@/shared/components/AppHead.vue'
 import { Typography } from '@/shared/components/ui/typography'
 import { Phone } from 'lucide-vue-next'
 import {

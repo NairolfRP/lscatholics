@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Head } from '@inertiajs/vue3'
+import Head from '@/shared/components/AppHead.vue'
 
 defineProps<{ error: any }>()
 </script>

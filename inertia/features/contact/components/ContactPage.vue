@@ -36,7 +36,7 @@
 </template>
 
 <script setup lang="ts">
-import { Head } from '@inertiajs/vue3'
+import Head from '@/shared/components/AppHead.vue'
 import PageBanner from '@/shared/components/layout/PageBanner.vue'
 import AuthentificationRequiredAlert from '@/shared/components/AuthentificationRequiredAlert.vue'
 import { useUser } from '@/shared/composables/use_user'

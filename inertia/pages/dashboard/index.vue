@@ -32,7 +32,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { Head } from '@inertiajs/vue3'
+import Head from '@/shared/components/AppHead.vue'
 import { Card, CardContent, CardHeader, CardTitle } from '@/shared/components/ui/card'
 import { FileText, Calendar, Users } from 'lucide-vue-next'
 
