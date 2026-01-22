@@ -198,7 +198,7 @@ export default class AuthController {
   async logout({ auth, characters, response, session, logger }: HttpContext) {
     try {
       await auth.use('web').logout()
-      characters.clearCurrentCharacter()
+      await characters.clearCurrentCharacter()
       return response.redirect().back()
     } catch (error) {
       logger.error({ err: error }, 'Failed to logout')
@@ -221,7 +221,7 @@ export default class AuthController {
       await user.delete()
 
       await auth.use('web').logout()
-      characters.clearCurrentCharacter()
+      await characters.clearCurrentCharacter()
 
       session.flash('success', {
         message:
