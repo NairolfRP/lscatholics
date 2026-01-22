@@ -29,7 +29,7 @@
           <CardContent class="p-6">
             <h3 class="font-bold text-xl mb-2 text-catholic-purple">{{ parish.name }}</h3>
             <div class="flex items-start gap-2 mb-3 text-sm text-gray-600">
-              <MapPin class="w-4 h-4 mt-0.5 flex-shrink-0" />
+              <MapPin class="w-4 h-4 mt-0.5 shrink-0" />
               <span>{{ parish.address }}</span>
             </div>
 
