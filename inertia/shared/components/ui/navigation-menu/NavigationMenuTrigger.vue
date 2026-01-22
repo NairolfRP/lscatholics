@@ -5,7 +5,7 @@ import type { HTMLAttributes } from 'vue'
 import { reactiveOmit } from '@vueuse/core'
 import { ChevronDown } from 'lucide-vue-next'
 import { cn } from '@/lib/utils'
-import { navigationMenuTriggerStyle } from '@/shared/components/ui/navigation-menu/index'
+import { navigationMenuTriggerStyle } from '.'
 
 const props = defineProps<NavigationMenuTriggerProps & { class?: HTMLAttributes['class'] }>()
 
