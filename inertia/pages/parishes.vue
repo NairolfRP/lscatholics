@@ -1,7 +1,7 @@
 <template>
   <Head title="Nos Paroisses" />
 
-  <PageBanner bg-color="bg-gradient-to-r from-catholic-purple to-catholic-blue" py="16">
+  <PageBanner bg-color="bg-linear-to-r from-catholic-purple to-catholic-blue" py="16">
     <h1 class="text-4xl md:text-5xl font-bold mb-4 font-serif">Nos Paroisses</h1>
     <p class="text-xl opacity-90">
       Découvrez les communautés de foi qui composent notre archidiocèse

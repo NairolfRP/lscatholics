@@ -43,7 +43,7 @@ interface Props {
   overlayOpacity?: '10' | '20' | '30' | '40' | '50' | '60' | '70'
 }
 const props = withDefaults(defineProps<Props>(), {
-  bgColor: 'bg-gradient-to-r from-catholic-purple to-catholic-red',
+  bgColor: 'bg-linear-to-r from-catholic-purple to-catholic-red',
   py: '24',
   pt: '45',
   align: 'text-center',

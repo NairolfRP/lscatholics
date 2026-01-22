@@ -1,5 +1,5 @@
 <template>
-  <PageBanner align="text-left" bg-color="bg-gradient-to-r from-primary to-catholic-blue">
+  <PageBanner align="text-left" bg-color="bg-linear-to-r from-primary to-catholic-blue">
     <h1 class="text-4xl text-white font-bold">(( Politique de confidentialité ))</h1>
   </PageBanner>
 

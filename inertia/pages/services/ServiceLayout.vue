@@ -6,7 +6,7 @@
       :bg-color="
         service.iconClasses
           ? service.iconClasses
-          : 'bg-gradient-to-r from-catholic-blue to-catholic-blue/90'
+          : 'bg-linear-to-r from-catholic-blue to-catholic-blue/90'
       "
       py="16"
     >
