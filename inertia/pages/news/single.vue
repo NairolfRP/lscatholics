@@ -1,5 +1,9 @@
 <template>
-  <Head :title="post.title" :description="post.excerpt" :image="post.coverImageUrl || undefined">
+  <Head
+    :title="post.title"
+    :description="post.excerpt || post.title"
+    :image="post.coverImageUrl || undefined"
+  >
     <meta head-key="og:type" property="og:type" content="article" />
     <meta head-key="twitter:card" name="twitter:card" content="summary_large_image" />
 

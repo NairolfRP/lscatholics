@@ -28,7 +28,7 @@ test.group('Api payment fleeca callback', (group) => {
   test('should handle successful donation payment', async ({ client, assert }) => {
     const token = 'valid-token'
     const mockValidationResponse = {
-      token: 'valid-token',
+      token,
       auth_key: 'test-auth-key',
       message: 'payment_successful',
       payment: 1000,
@@ -39,6 +39,7 @@ test.group('Api payment fleeca callback', (group) => {
       token_created_at: new Date().toISOString(),
     }
     const mockSessionData = {
+      token,
       sessionId: 'test-session',
       source: 'donation',
       amount: 1000,
@@ -93,7 +94,7 @@ test.group('Api payment fleeca callback', (group) => {
   test('should handle unknown payment source', async ({ client, assert }) => {
     const token = 'valid-token'
     const mockValidationResponse = {
-      token: 'valid-token',
+      token,
       auth_key: 'test-auth-key',
       message: 'payment_successful',
       payment: 1000,
@@ -104,6 +105,7 @@ test.group('Api payment fleeca callback', (group) => {
       token_created_at: new Date().toISOString(),
     }
     const mockSessionData = {
+      token,
       sessionId: 'test-session',
       source: 'unknown-source',
       amount: 1000,

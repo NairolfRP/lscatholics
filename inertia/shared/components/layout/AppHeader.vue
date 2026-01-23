@@ -1,7 +1,7 @@
 <template>
   <header class="fixed top-0 left-0 right-0 z-99 text-primary-foreground">
     <div
-      class="absolute top-0 left-0 w-full h-30 bg-gradient-to-b from-black/50 to-transparent -z-10"
+      class="absolute top-0 left-0 w-full h-30 bg-linear-to-b from-black/50 to-transparent -z-10"
     ></div>
     <div class="flex w-full justify-between align-middle items-center lg:py-5 lg:px-10">
       <h1>

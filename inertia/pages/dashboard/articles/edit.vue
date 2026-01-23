@@ -49,6 +49,7 @@
                   v-model="form.excerpt"
                   placeholder="Résumé de l'article"
                   :rows="3"
+                  :maxlength="150"
                 />
                 <p v-if="form.errors.excerpt" class="text-sm text-red-600">
                   {{ form.errors.excerpt }}
@@ -93,6 +94,14 @@
                 </Select>
                 <p v-if="form.errors.status" class="text-sm text-red-600">
                   {{ form.errors.status }}
+                </p>
+              </div>
+
+              <div v-if="form.status === 'published'" class="space-y-2">
+                <Label for="publishedAt">Date de publication</Label>
+                <DateTimePicker id="publishedAt" v-model="form.publishedAt" />
+                <p v-if="form.errors.publishedAt" class="text-sm text-red-600">
+                  {{ form.errors.publishedAt }}
                 </p>
               </div>
 
@@ -157,6 +166,8 @@ import {
 import { ArrowLeft } from 'lucide-vue-next'
 import { tuyau } from '@/lib/tuyau'
 import { MarkdownTextarea } from '@/shared/components/ui/markdown'
+import { DateTimePicker } from '@/shared/components/ui/datetime-picker'
+import { computed, watch } from 'vue'
 
 type Article = {
   id: number
@@ -166,6 +177,7 @@ type Article = {
   content: string
   status: 'draft' | 'published'
   coverImageUrl: string | null
+  publishedAt: string | null
 }
 
 type Props = {
@@ -181,9 +193,25 @@ const form = useForm({
   content: props.article.content,
   status: props.article.status,
   coverImageUrl: props.article.coverImageUrl || '',
+  publishedAt: (props.article.publishedAt
+    ? new Date(props.article.publishedAt)
+    : undefined) as Date | null,
 })
 
 const submit = () => {
   form.put(tuyau.$url('dashboard.dashboard_articles.update', { params: { id: props.article.id } }))
 }
+
+const status = computed(() => form.status)
+
+watch(status, (newStatus) => {
+  if (newStatus === 'published') {
+    form.publishedAt = props.article.publishedAt
+      ? new Date(props.article.publishedAt)
+      : new Date(Date.now())
+    return
+  }
+
+  form.publishedAt = null
+})
 </script>

@@ -3,6 +3,7 @@ import News from '#news/models/news'
 import { createArticleValidator, updatedArticleValidator } from '#dashboard/validators/article'
 import { DateTime } from 'luxon'
 import type User from '#auth/models/user'
+import { ExcerptGenerator } from '#dashboard/utils/excerpt_generator'
 
 export default class ArticlesController {
   async index({ inertia, request, bouncer }: HttpContext) {
@@ -45,9 +46,24 @@ export default class ArticlesController {
 
     const payload = await request.validateUsing(createArticleValidator)
 
-    const newArticle = {
+    const excerpt = payload.excerpt?.trim()
+      ? payload.excerpt
+      : ExcerptGenerator.generate(payload.content, 150)
+
+    const isStatusPublished = payload.status === 'published'
+
+    let publishedAt: News['publishedAt'] = payload.publishedAt
+      ? DateTime.fromJSDate(payload.publishedAt)
+      : null
+
+    if (isStatusPublished && !payload.publishedAt) {
+      publishedAt = DateTime.now()
+    }
+
+    const newArticle: Partial<News> = {
       ...payload,
-      publishedAt: payload.publishedAt ? DateTime.fromJSDate(payload.publishedAt) : undefined,
+      excerpt,
+      publishedAt,
     }
 
     const article = await News.create({
@@ -85,9 +101,24 @@ export default class ArticlesController {
     const article = await News.findOrFail(params.id)
     const payload = await request.validateUsing(updatedArticleValidator)
 
+    const excerpt = payload.excerpt?.trim()
+      ? payload.excerpt
+      : ExcerptGenerator.generate(payload.content || article.content, 150)
+
+    const isStatusPublished = (payload.status || article.status) === 'published'
+
+    let publishedAt: News['publishedAt'] = payload.publishedAt
+      ? DateTime.fromJSDate(payload.publishedAt || article.publishedAt)
+      : null
+
+    if (isStatusPublished && !payload.publishedAt && !article.publishedAt) {
+      publishedAt = DateTime.now()
+    }
+
     const updatedArticle = {
       ...payload,
-      publishedAt: payload.publishedAt ? DateTime.fromJSDate(payload.publishedAt) : undefined,
+      excerpt,
+      publishedAt,
     }
 
     await article.merge(updatedArticle).save()

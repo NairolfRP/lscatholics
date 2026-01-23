@@ -183,7 +183,7 @@
                   ></div>
                   <div
                     v-else
-                    class="w-full h-full bg-gradient-to-br from-catholic-purple to-catholic-blue opacity-20"
+                    class="w-full h-full bg-linear-to-br from-catholic-purple to-catholic-blue opacity-20"
                   ></div>
                 </div>
                 <CardContent class="p-6">
@@ -227,7 +227,7 @@
           <div class="md:flex">
             <div class="md:w-1/3">
               <div
-                class="aspect-square bg-gradient-to-br from-catholic-gold/20 to-catholic-purple/20 md:h-full flex items-center justify-center"
+                class="aspect-square bg-linear-to-br from-catholic-gold/20 to-catholic-purple/20 md:h-full flex items-center justify-center"
               >
                 <div class="w-32 h-32 bg-white/50 rounded-full flex items-center justify-center">
                   <span class="text-4xl">👨‍💼</span>

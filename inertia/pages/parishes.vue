@@ -1,7 +1,7 @@
 <template>
   <Head title="Nos Paroisses" />
 
-  <PageBanner bg-color="bg-gradient-to-r from-catholic-purple to-catholic-blue" py="16">
+  <PageBanner bg-color="bg-linear-to-r from-catholic-purple to-catholic-blue" py="16">
     <h1 class="text-4xl md:text-5xl font-bold mb-4 font-serif">Nos Paroisses</h1>
     <p class="text-xl opacity-90">
       Découvrez les communautés de foi qui composent notre archidiocèse
@@ -29,7 +29,7 @@
           <CardContent class="p-6">
             <h3 class="font-bold text-xl mb-2 text-catholic-purple">{{ parish.name }}</h3>
             <div class="flex items-start gap-2 mb-3 text-sm text-gray-600">
-              <MapPin class="w-4 h-4 mt-0.5 flex-shrink-0" />
+              <MapPin class="w-4 h-4 mt-0.5 shrink-0" />
               <span>{{ parish.address }}</span>
             </div>
 

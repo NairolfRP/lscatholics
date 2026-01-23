@@ -57,4 +57,11 @@ export default class Account extends BaseModel {
     }
     return encryption.decrypt(this.accessToken)
   }
+
+  public getDecryptedRefreshToken(): string | null {
+    if (!this.refreshToken) {
+      return null
+    }
+    return encryption.decrypt(this.refreshToken)
+  }
 }
