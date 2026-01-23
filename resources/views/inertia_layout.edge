@@ -10,15 +10,20 @@
     </title>
 
     <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-SD54CD8NY1"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-SD54CD8NY1">
+      
+    </script>
     <script>
       window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'G-SD54CD8NY1');
+      
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      
+      gtag("js", new Date());
+      
+      gtag("config", "G-SD54CD8NY1");
     </script>
-
 
     @vite(['inertia/app/app.ts', `inertia/pages/${page.component}.vue`])
     @inertiaHead()
