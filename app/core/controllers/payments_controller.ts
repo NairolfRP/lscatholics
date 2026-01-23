@@ -22,19 +22,19 @@ export default class PaymentsController {
 
       logger.info(`Processing payment callback for token %s`, token)
 
-      const result = await this.paymentService.processPaymentCallback(token, session)
+      try {
+        const result = await this.paymentService.processPaymentCallback(token, session)
 
-      if (!result.success) {
-        logger.error('Payment processing failed for token %s', token)
+        await this.handleSuccessfulPayment(result)
+
+        return this.handlePaymentSuccess(response, session, inertia, result.sessionData)
+      } catch (err) {
+        logger.error({ err }, 'Payment processing failed for token %s', token)
         return this.handlePaymentError(inertia, {
           title: 'Erreur de paiement',
           message: "Le paiement n'a pas pu être vérifié",
         })
       }
-
-      await this.handleSuccessfulPayment(result)
-
-      return this.handlePaymentSuccess(response, session, inertia, result.sessionData)
     } catch (error) {
       logger.error({ err: error }, 'Payment callback error')
       return this.handlePaymentError(inertia, {

@@ -1,7 +1,7 @@
 <template>
   <Head title="Événements" />
 
-  <PageBanner bg-color="bg-gradient-to-r from-catholic-blue to-catholic-gold" py="16">
+  <PageBanner bg-color="bg-linear-to-r from-catholic-blue to-catholic-gold" py="16">
     <h1 class="text-4xl md:text-5xl font-bold mb-4 font-serif">Événements</h1>
     <p class="text-xl opacity-90">
       Participez à la vie spirituelle et communautaire de notre archidiocèse

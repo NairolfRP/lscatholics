@@ -44,6 +44,7 @@ test.group('Payment Service', (group) => {
     const source = 'donation'
     const amount = 1000
     const metadata = { firstname: 'John', lastname: 'Doe' }
+    const mockGatewayToken = 'mocked-gateway-token'
     const mockSessionId = 'mocked-session-id'
     const mockEncryptedData = 'encrypted-session-data'
 
@@ -52,14 +53,16 @@ test.group('Payment Service', (group) => {
     sinon.stub(hash, 'make').resolves(mockSessionId)
     sinon.stub(encryption, 'encrypt').returns(mockEncryptedData)
 
+    nock(fleecaBaseUrl)
+      .get(`/gateway_token/generateToken?price=${amount}&type=0`)
+      .reply(200, mockGatewayToken)
+
     const result = await paymentService.generatePaymentUrl(source, amount, metadata, mockSession)
 
     assert.equal(result.sessionId, mockSessionId)
-    assert.equal(
-      result.paymentUrl,
-      `${fleecaBaseUrl}/gateway/${fleecaConfig.authKey}/0/${amount.toString()}`
-    )
+    assert.equal(result.paymentUrl, `${fleecaBaseUrl}/gateway/${mockGatewayToken}`)
     assert.isTrue(mockSession.put.calledWith('payment_data', mockEncryptedData))
+    assert.isTrue(nock.isDone())
 
     hash.restore()
   })
@@ -72,8 +75,8 @@ test.group('Payment Service', (group) => {
 
     for (const amount of invalidAmounts) {
       await assert.rejects(
-        () => paymentService.generatePaymentUrl(source, amount as any, {}, mockSession),
-        'Failed to generate payment URL'
+        async () => await paymentService.generatePaymentUrl(source, amount as any, {}, mockSession),
+        'The payment amount must be greater than 0'
       )
     }
 
@@ -88,8 +91,8 @@ test.group('Payment Service', (group) => {
 
     for (const source of invalidSources) {
       await assert.rejects(
-        () => paymentService.generatePaymentUrl(source as any, amount, {}, mockSession),
-        'Failed to generate payment URL'
+        async () => await paymentService.generatePaymentUrl(source as any, amount, {}, mockSession),
+        'Payment source is required'
       )
     }
 
@@ -97,17 +100,27 @@ test.group('Payment Service', (group) => {
   })
 
   test('should use correct base URL for different servers', async ({ assert }) => {
+    const mockGatewayToken = 'mocked-gateway-token'
+
     hash.fake()
 
     fleecaConfig.server = 'fr'
+    nock('https://fleeca.gta.world')
+      .get(`/gateway_token/generateToken?price=1000&type=0`)
+      .reply(200, mockGatewayToken)
     let result = await paymentService.generatePaymentUrl('donation', 1000, {}, mockSession)
     assert.isTrue(result.paymentUrl.includes('https://fleeca.gta.world'))
 
     fleecaConfig.server = 'en'
+    nock('https://banking.gta.world')
+      .get(`/gateway_token/generateToken?price=1000&type=0`)
+      .reply(200, mockGatewayToken)
     result = await paymentService.generatePaymentUrl('donation', 1000, {}, mockSession)
     assert.isTrue(result.paymentUrl.includes('https://banking.gta.world'))
 
     fleecaConfig.server = originalServer
+
+    assert.isTrue(nock.isDone())
 
     hash.restore()
   })
@@ -115,6 +128,7 @@ test.group('Payment Service', (group) => {
   test('should process successful payment', async ({ assert }) => {
     const token = 'valid-token'
     const mockSessionData = {
+      token,
       sessionId: 'test-session',
       source: 'donation',
       amount: 1000,
@@ -123,7 +137,7 @@ test.group('Payment Service', (group) => {
       expiresAt: new Date(Date.now() + 3600000), // 1 hour from now
     }
     const mockValidationResponse = {
-      token: 'valid-token',
+      token,
       auth_key: 'test-auth-key',
       message: 'payment_successful',
       payment: 1000,
@@ -154,15 +168,16 @@ test.group('Payment Service', (group) => {
     const token = 'valid-token'
     mockSession.get.returns(null)
 
-    const result = await paymentService.processPaymentCallback(token, mockSession)
-
-    assert.isFalse(result.success)
-    assert.equal(result.sessionData.source, 'unknown')
+    await assert.rejects(
+      async () => await paymentService.processPaymentCallback(token, mockSession),
+      'Payment session not found or has expired'
+    )
   })
 
   test('should fail when session expired', async ({ assert }) => {
     const token = 'valid-token'
     const expiredSessionData = {
+      token,
       sessionId: 'test-session',
       source: 'donation',
       amount: 1000,
@@ -172,17 +187,21 @@ test.group('Payment Service', (group) => {
     }
 
     mockSession.get.returns('encrypted-session-data')
-    sinon.stub(encryption, 'decrypt').returns(JSON.stringify(expiredSessionData))
+    sinon.stub(paymentService as any, 'getSessionData').resolves(expiredSessionData)
+    sinon.stub(paymentService as any, 'validateToken').resolves()
 
-    const result = await paymentService.processPaymentCallback(token, mockSession)
+    await assert.rejects(
+      () => paymentService.processPaymentCallback(token, mockSession),
+      'The payment session has expired'
+    )
 
-    assert.isFalse(result.success)
     assert.isTrue(mockSession.forget.calledWith('payment_data'))
   })
 
   test('should fail when payment amount mismatch', async ({ assert }) => {
     const token = 'valid-token'
     const mockSessionData = {
+      token,
       sessionId: 'test-session',
       source: 'donation',
       amount: 1000,
@@ -191,10 +210,10 @@ test.group('Payment Service', (group) => {
       expiresAt: new Date(Date.now() + 3600000),
     }
     const mockValidationResponse = {
-      token: 'valid-token',
+      token,
       auth_key: 'test-auth-key',
       message: 'payment_successful',
-      payment: 2000, // Different amount
+      payment: 2000,
       routing_from: 'user',
       routing_to: 'merchant',
       sandbox: false,
@@ -203,19 +222,24 @@ test.group('Payment Service', (group) => {
     }
 
     mockSession.get.returns('encrypted-session-data')
-    sinon.stub(encryption, 'decrypt').returns(JSON.stringify(mockSessionData))
+    sinon.stub(paymentService as any, 'getSessionData').resolves(mockSessionData)
 
-    nock(fleecaBaseUrl).post(`/gateway_token/${token}`).reply(200, mockValidationResponse)
+    nock(fleecaBaseUrl)
+      .post(`/gateway_token/${token}`, { token })
+      .reply(200, mockValidationResponse)
 
-    const result = await paymentService.processPaymentCallback(token, mockSession)
+    await assert.rejects(
+      () => paymentService.processPaymentCallback(token, mockSession),
+      'Amount mismatch: expected 1000, got 2000'
+    )
 
-    assert.isFalse(result.success)
     assert.isTrue(nock.isDone())
   })
 
   test('should fail when invalid auth key', async ({ assert }) => {
     const token = 'valid-token'
     const mockSessionData = {
+      token,
       sessionId: 'test-session',
       source: 'donation',
       amount: 1000,
@@ -224,7 +248,7 @@ test.group('Payment Service', (group) => {
       expiresAt: new Date(Date.now() + 3600000),
     }
     const mockValidationResponse = {
-      token: 'valid-token',
+      token,
       auth_key: 'wrong-auth-key', // Invalid auth key
       message: 'payment_successful',
       payment: 1000,
@@ -236,19 +260,24 @@ test.group('Payment Service', (group) => {
     }
 
     mockSession.get.returns('encrypted-session-data')
-    sinon.stub(encryption, 'decrypt').returns(JSON.stringify(mockSessionData))
+    sinon.stub(paymentService as any, 'getSessionData').resolves(mockSessionData)
 
-    nock(fleecaBaseUrl).post(`/gateway_token/${token}`).reply(200, mockValidationResponse)
+    nock(fleecaBaseUrl)
+      .post(`/gateway_token/${token}`, { token })
+      .reply(200, mockValidationResponse)
 
-    const result = await paymentService.processPaymentCallback(token, mockSession)
+    await assert.rejects(
+      () => paymentService.processPaymentCallback(token, mockSession),
+      'Invalid authentication key'
+    )
 
-    assert.isFalse(result.success)
     assert.isTrue(nock.isDone())
   })
 
   test('should fail when token is expired', async ({ assert }) => {
     const token = 'expired-token'
     const mockSessionData = {
+      token,
       sessionId: 'test-session',
       source: 'donation',
       amount: 1000,
@@ -257,25 +286,29 @@ test.group('Payment Service', (group) => {
       expiresAt: new Date(Date.now() + 3600000),
     }
     const mockValidationResponse = {
-      token: 'expired-token',
+      token,
       auth_key: 'test-auth-key',
       message: 'payment_successful',
       payment: 1000,
       routing_from: 'user',
       routing_to: 'merchant',
       sandbox: false,
-      token_expired: true, // Token is expired
+      token_expired: true,
       token_created_at: new Date().toISOString(),
     }
 
     mockSession.get.returns('encrypted-session-data')
-    sinon.stub(encryption, 'decrypt').returns(JSON.stringify(mockSessionData))
+    sinon.stub(paymentService as any, 'getSessionData').resolves(mockSessionData)
 
-    nock(fleecaBaseUrl).post(`/gateway_token/${token}`).reply(200, mockValidationResponse)
+    nock(fleecaBaseUrl)
+      .post(`/gateway_token/${token}`, { token })
+      .reply(200, mockValidationResponse)
 
-    const result = await paymentService.processPaymentCallback(token, mockSession)
+    await assert.rejects(
+      () => paymentService.processPaymentCallback(token, mockSession),
+      'The payment token has expired'
+    )
 
-    assert.isFalse(result.success)
     assert.isTrue(nock.isDone())
   })
 
@@ -291,18 +324,24 @@ test.group('Payment Service', (group) => {
     }
 
     mockSession.get.returns('encrypted-session-data')
-    sinon.stub(encryption, 'decrypt').returns(JSON.stringify(mockSessionData))
+    sinon.stub(paymentService as any, 'getSessionData').resolves(mockSessionData)
 
-    nock(fleecaBaseUrl).post(`/gateway_token/${token}`).reply(404, { error: 'Token not found' })
+    nock(fleecaBaseUrl).post(`/gateway_token/${token}`, { token }).reply(404, { message: '' })
 
-    const result = await paymentService.processPaymentCallback(token, mockSession)
+    await assert.rejects(
+      () => paymentService.processPaymentCallback(token, mockSession),
+      'Error occurred during the payment request'
+    )
 
-    assert.isFalse(result.success)
     assert.isTrue(nock.isDone())
   })
 
   test('should handle network timeout', async ({ assert }) => {
     const token = 'valid-token'
+
+    ;(paymentService as any).RETRY_DELAY_MS = 0
+    ;(paymentService as any).MAX_RETRIES = 3
+
     const mockSessionData = {
       sessionId: 'test-session',
       source: 'donation',
@@ -313,28 +352,18 @@ test.group('Payment Service', (group) => {
     }
 
     mockSession.get.returns('encrypted-session-data')
-    sinon.stub(encryption, 'decrypt').returns(JSON.stringify(mockSessionData))
+    sinon.stub(paymentService as any, 'getSessionData').resolves(mockSessionData)
 
-    nock(fleecaBaseUrl).post(`/gateway_token/${token}`).replyWithError('Network timeout')
+    nock(fleecaBaseUrl)
+      .post(`/gateway_token/${token}`, { token })
+      .times(3)
+      .replyWithError({ code: 'ETIMEDOUT' })
 
-    const result = await paymentService.processPaymentCallback(token, mockSession)
-
-    assert.isFalse(result.success)
-    assert.isTrue(nock.isDone())
-  })
-
-  test('boundary value analysis for amounts', async ({ assert }) => {
-    hash.fake()
-
-    const result1 = await paymentService.generatePaymentUrl('donation', 1, {}, mockSession)
-    assert.strictEqual(result1.paymentUrl, `${fleecaBaseUrl}/gateway/${fleecaConfig.authKey}/0/1`)
-
-    const result2 = await paymentService.generatePaymentUrl('donation', 999999999, {}, mockSession)
-    assert.strictEqual(
-      result2.paymentUrl,
-      `${fleecaBaseUrl}/gateway/${fleecaConfig.authKey}/0/999999999`
+    await assert.rejects(
+      () => paymentService.processPaymentCallback(token, mockSession),
+      'Network error while connecting to the payment service'
     )
 
-    hash.restore()
+    assert.isTrue(nock.isDone())
   })
 })

@@ -6,7 +6,7 @@
       :bg-color="
         service.iconClasses
           ? service.iconClasses
-          : 'bg-gradient-to-r from-catholic-blue to-catholic-blue/90'
+          : 'bg-linear-to-r from-catholic-blue to-catholic-blue/90'
       "
       py="16"
     >
@@ -33,7 +33,7 @@
   <template v-else>Une erreur est survenue</template>
 </template>
 <script lang="ts" setup>
-import { Head } from '@inertiajs/vue3'
+import Head from '@/shared/components/AppHead.vue'
 import { Link } from '@tuyau/inertia/vue'
 import PageBanner from '@/shared/components/layout/PageBanner.vue'
 import { Button } from '@/shared/components/ui/button'

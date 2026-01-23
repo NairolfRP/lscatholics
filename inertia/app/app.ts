@@ -11,18 +11,10 @@ import { resolvePageComponent } from '@adonisjs/inertia/helpers'
 import AppLayout from '@/layouts/AppLayout.vue'
 import { TuyauPlugin } from '@tuyau/inertia/vue'
 import { tuyau } from '@/lib/tuyau'
-import { QueryClient, VueQueryPlugin } from '@tanstack/vue-query'
+import { hydrate, QueryClient, VueQueryPlugin } from '@tanstack/vue-query'
 import { toast } from 'vue-sonner'
 
-declare global {
-  interface Window {
-    __TANSTACK_QUERY_CLIENT__: import('@tanstack/vue-query').QueryClient
-  }
-}
-
 const appName = import.meta.env.VITE_APP_NAME || 'Archidiocèse de Los Santos'
-
-const queryClient = new QueryClient()
 
 createInertiaApp({
   progress: { color: '#5468FF' },
@@ -45,7 +37,19 @@ createInertiaApp({
   },
 
   setup({ el, App, props, plugin }) {
-    window.__TANSTACK_QUERY_CLIENT__ = queryClient
+    const queryClient = new QueryClient({
+      defaultOptions: {
+        queries: {
+          staleTime: 1000 * 60 * 5,
+          retry: 1,
+          refetchOnWindowFocus: false,
+        },
+      },
+    })
+
+    if (props.initialPage.props.dehydratedState) {
+      hydrate(queryClient, props.initialPage.props.dehydratedState)
+    }
 
     createSSRApp({ render: () => h(App, props) })
       .use(plugin)

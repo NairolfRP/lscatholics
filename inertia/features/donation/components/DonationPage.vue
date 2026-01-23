@@ -18,7 +18,7 @@
 </template>
 
 <script lang="ts" setup>
-import { Head } from '@inertiajs/vue3'
+import Head from '@/shared/components/AppHead.vue'
 import PageBanner from '@/shared/components/layout/PageBanner.vue'
 import DonateHero from '@/assets/images/donate-background.png'
 import { Typography } from '@/shared/components/ui/typography'

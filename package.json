@@ -71,6 +71,7 @@
     "@types/sanitize-html": "^2.16.0",
     "@types/sinon": "^21.0.0",
     "@vitejs/plugin-vue": "^6.0.1",
+    "better-sqlite3": "^12.6.2",
     "eslint": "^9.39.2",
     "hot-hook": "^0.4.0",
     "nock": "^14.0.10",

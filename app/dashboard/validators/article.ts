@@ -1,7 +1,7 @@
 import vine from '@vinejs/vine'
 import { sanitizeHtml } from '#dashboard/utils'
 
-export const createArticleValidator = vine.compile(
+export const createArticleValidator = vine.create(
   vine.object({
     title: vine.string().trim().minLength(3).maxLength(255).escape(),
     slug: vine
@@ -17,18 +17,33 @@ export const createArticleValidator = vine.compile(
       .transform((v) => sanitizeHtml(v)),
     coverImageUrl: vine.string().url(),
     status: vine.enum(['draft', 'published', 'archived']),
-    publishedAt: vine.date().after('today').optional(),
+    publishedAt: vine
+      .date({ formats: { utc: true } })
+      .nullable()
+      .optional(),
   })
 )
 
-export const updatedArticleValidator = vine.compile(
+export const updatedArticleValidator = vine.create(
   vine.object({
-    title: vine.string().trim().minLength(3).maxLength(255).optional(),
-    slug: vine.string().trim().optional(),
+    title: vine.string().trim().minLength(3).maxLength(255).escape().optional(),
+    slug: vine
+      .string()
+      .trim()
+      .regex(/^[a-z0-9-]+$/)
+      .optional(),
     excerpt: vine.string().trim().minLength(10).maxLength(150).optional(),
-    content: vine.string().trim().minLength(10).optional(),
+    content: vine
+      .string()
+      .trim()
+      .minLength(10)
+      .transform((v) => sanitizeHtml(v))
+      .optional(),
     coverImageUrl: vine.string().url().optional(),
     status: vine.enum(['draft', 'published', 'archived']).optional(),
-    publishedAt: vine.date().after('today').optional(),
+    publishedAt: vine
+      .date({ formats: { utc: true } })
+      .nullable()
+      .optional(),
   })
 )

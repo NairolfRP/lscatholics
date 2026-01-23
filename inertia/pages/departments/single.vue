@@ -38,7 +38,7 @@
             alt="Director image"
             class="max-w-full h-auto md:w-[20%]"
           />
-          <div v-else class="bg-gradient-to-b from-secondary to-yellow-800 h-70 w-[20%]"></div>
+          <div v-else class="bg-linear-to-b from-secondary to-yellow-800 h-70 w-[20%]"></div>
           <div>
             <Typography variant="h3" class="uppercase font-bold m-0 p-0 leading-5">{{
               department.page.director.name || 'Vacant'
@@ -72,7 +72,7 @@
                 <CardHeader
                   :class="
                     cn('flex flex-col justify-end p-5 min-h-60 bg-cover', {
-                      'bg-gradient-to-b from-secondary to-yellow-950': !member.image,
+                      'bg-linear-to-b from-secondary to-yellow-950': !member.image,
                     })
                   "
                   :style="member.image ? `background-image: url(${member.image})` : undefined"
@@ -109,7 +109,7 @@ import PageBanner from '@/shared/components/layout/PageBanner.vue'
 import { computed } from 'vue'
 import { getDepartmentBySlug } from '@/shared/constants/departments.constants'
 import Not_found from '@/pages/errors/not_found.vue'
-import { Head } from '@inertiajs/vue3'
+import Head from '@/shared/components/AppHead.vue'
 import { Typography } from '@/shared/components/ui/typography'
 import { Phone } from 'lucide-vue-next'
 import {

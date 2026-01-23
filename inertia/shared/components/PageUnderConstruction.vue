@@ -17,7 +17,7 @@
   </section>
 </template>
 <script lang="ts" setup>
-import { Head } from '@inertiajs/vue3'
+import Head from '@/shared/components/AppHead.vue'
 import PageBanner from '@/shared/components/layout/PageBanner.vue'
 import { Alert, AlertDescription, AlertTitle } from '@/shared/components/ui/alert'
 import { Construction } from 'lucide-vue-next'

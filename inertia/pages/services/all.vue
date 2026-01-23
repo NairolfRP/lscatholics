@@ -1,7 +1,7 @@
 <template>
   <Head title="Services" />
 
-  <PageBanner bg-color="bg-gradient-to-r from-catholic-blue to-catholic-blue/90" py="16">
+  <PageBanner bg-color="bg-linear-to-r from-catholic-blue to-catholic-blue/90" py="16">
     <h1 class="text-4xl md:text-5xl font-bold mb-4 font-serif">Services</h1>
     <p class="text-xl opacity-90">
       Tous les sacrements et sacramentaux catholiques ainsi que les services proposés pour vivre sa

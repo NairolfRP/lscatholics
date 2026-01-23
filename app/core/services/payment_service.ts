@@ -1,5 +1,5 @@
 import fleecaConfig from '#config/fleeca'
-import {
+import type {
   FleecaGatewayToken,
   FleecaValidationResponse,
   PaymentResult,
@@ -8,39 +8,130 @@ import {
 import encryption from '@adonisjs/core/services/encryption'
 import hash from '@adonisjs/core/services/hash'
 import logger from '@adonisjs/core/services/logger'
+import PaymentException from '#core/exceptions/payment_exception'
+import app from '@adonisjs/core/services/app'
+import type { HeadersInit } from '#shared/types/utils.types'
 
 export class PaymentService {
+  private readonly MAX_RETRIES = 3
+  private readonly RETRY_DELAY_MS = 1000
+
   private getBaseUrl(): string {
     return fleecaConfig.server === 'fr' ? 'https://fleeca.gta.world' : 'https://banking.gta.world'
+  }
+
+  private getHeaders({ includeAuth = true }: { includeAuth?: boolean }): HeadersInit {
+    const headers: HeadersInit = {
+      Accept: 'application/json',
+    }
+
+    if (includeAuth && fleecaConfig.authKey) {
+      headers['Authorization'] = `Bearer ${fleecaConfig.authKey}`
+    }
+
+    return headers
+  }
+
+  private async fetchWithRetry({
+    url,
+    options,
+    retries = this.MAX_RETRIES,
+  }: {
+    url: string
+    options: RequestInit
+    retries?: number
+  }) {
+    for (let attempt = 0; attempt < retries; attempt++) {
+      try {
+        const response = await fetch(url, options)
+
+        if (response.ok) {
+          return response
+        }
+
+        if (response.status >= 400 && response.status < 500 && response.status !== 429) {
+          throw PaymentException.create('HTTP_CLIENT_ERROR')
+        }
+
+        throw new Error('Retryable error')
+      } catch (error) {
+        if (error instanceof PaymentException) throw error
+
+        const isLastAttempt = attempt === retries - 1
+        if (isLastAttempt) {
+          throw error instanceof PaymentException
+            ? error
+            : PaymentException.create('NETWORK_ERROR', error)
+        }
+
+        await new Promise((resolve) =>
+          setTimeout(resolve, this.RETRY_DELAY_MS * Math.pow(2, attempt))
+        )
+      }
+    }
+
+    throw PaymentException.create('RETRY_ERROR')
   }
 
   /**
    * Generate Fleeca Gateway Token
    */
-  private async generateGatewayToken({ price, type = 0 }: { price: number; type?: number }) {
+  private async generateGatewayToken({
+    price,
+    type = 0,
+  }: {
+    price: number
+    type?: number
+  }): Promise<FleecaGatewayToken> {
     if (price <= 0) {
-      throw new Error('Price number must be greater than 0.')
+      throw PaymentException.create('INVALID_PRICE')
     }
 
     try {
-      const apiKey = fleecaConfig.authKey
-      const generateGatewayTokenUrl = `${this.getBaseUrl()}/gateway_token/generateToken?price=${price}&type=${type}`
+      const url = `${this.getBaseUrl()}/gateway_token/generateToken?price=${price}&type=${type}`
 
-      const response = await fetch(generateGatewayTokenUrl, {
-        method: 'GET',
-        headers: {
-          Accept: 'application/json',
-          Authorization: `Bearer ${apiKey}`,
+      const response = await this.fetchWithRetry({
+        url,
+        options: {
+          method: 'GET',
+          headers: this.getHeaders({ includeAuth: true }),
         },
       })
 
-      if (!response.ok) {
-        throw new Error(`Gateway token request failed with status ${response.status}`)
+      const token = (await response.text()) as FleecaGatewayToken
+
+      if (!token?.trim()) {
+        throw PaymentException.create('EMPTY_TOKEN')
       }
 
-      return (await response.text()) as FleecaGatewayToken
+      return token
+    } catch (err) {
+      logger.error({ err, price, type }, 'Failed to generate Gateway Token')
+      throw err instanceof PaymentException
+        ? err
+        : PaymentException.create('TOKEN_GENERATION_ERROR', err)
+    }
+  }
+
+  private storeSessionData(session: any, sessionData: PaymentSessionData): void {
+    const encryptedData = encryption.encrypt(JSON.stringify(sessionData))
+    session.put('payment_data', encryptedData)
+  }
+
+  private async getSessionData(session: any): Promise<PaymentSessionData | null> {
+    const encryptedData = session.get('payment_data')
+
+    if (!encryptedData) {
+      return null
+    }
+
+    try {
+      const decrypted = encryption.decrypt(encryptedData) as string
+      return JSON.parse(decrypted)
     } catch (error) {
-      throw error
+      logger.error({ err: error }, 'Failed to decrypt session data')
+      this.cancelPayment(session)
+      return null
     }
   }
 
@@ -57,11 +148,6 @@ export class PaymentService {
       this.validatePaymentParameters(amount, source)
 
       const gatewayToken = await this.generateGatewayToken({ price: amount })
-
-      if (!gatewayToken) {
-        throw new Error('Failed to generate gateway token.')
-      }
-
       const sessionId = await hash.make(`${source}_${amount}_${Date.now()}_${Math.random()}`)
 
       const sessionData: PaymentSessionData = {
@@ -74,18 +160,17 @@ export class PaymentService {
         expiresAt: new Date(Date.now() + fleecaConfig.sessionTTL * 1000),
       }
 
-      const encryptedData = encryption.encrypt(JSON.stringify(sessionData))
-      session.put('payment_data', encryptedData)
-
-      const paymentUrl = this.buildGatewayUrl(gatewayToken)
+      this.storeSessionData(session, sessionData)
 
       return {
-        paymentUrl,
+        paymentUrl: this.buildGatewayUrl(gatewayToken),
         sessionId,
       }
-    } catch (error) {
-      logger.error({ err: error }, 'Error generating payment URL')
-      throw new Error('Failed to generate payment URL')
+    } catch (err) {
+      logger.error({ err, source, amount }, 'Error generating payment URL')
+      throw err instanceof PaymentException
+        ? err
+        : PaymentException.create('URL_GENERATION_ERROR', err)
     }
   }
 
@@ -97,47 +182,33 @@ export class PaymentService {
     session: any
   ): Promise<PaymentResult<FleecaValidationResponse>> {
     try {
-      const encryptedData = session.get('payment_data')
-      if (!encryptedData) {
-        throw new Error('No payment session found')
+      const sessionData = await this.getSessionData(session)
+
+      if (!sessionData) {
+        throw PaymentException.create('SESSION_NOT_FOUND')
       }
 
-      const sessionData: PaymentSessionData = JSON.parse(
-        encryption.decrypt(encryptedData) as string
-      )
-
       if (new Date() > sessionData.expiresAt) {
-        session.forget('payment_data')
-        throw new Error('Payment session expired')
+        this.cancelPayment(session)
+        throw PaymentException.create('SESSION_EXPIRED')
       }
 
       const validationResponse = await this.validateToken(token)
 
-      this.validatePaymentDetails(validationResponse, sessionData)
+      await this.validatePaymentDetails(validationResponse, sessionData)
 
-      session.forget('payment_data')
+      this.cancelPayment(session)
 
       return {
         success: true,
         sessionData,
         transactionData: validationResponse,
       }
-    } catch (error) {
-      logger.error({ err: error }, 'Payment callback processing error')
-      session.forget('payment_data')
+    } catch (err) {
+      logger.error({ err }, 'Payment callback processing error')
+      this.cancelPayment(session)
 
-      return {
-        success: false,
-        sessionData: {
-          token: '',
-          sessionId: '',
-          source: 'unknown',
-          amount: 0,
-          metadata: {},
-          createdAt: new Date(),
-          expiresAt: new Date(),
-        },
-      }
+      throw err instanceof PaymentException ? err : PaymentException.create('PROCESSING_ERROR', err)
     }
   }
 
@@ -146,50 +217,74 @@ export class PaymentService {
    */
   private async validateToken(token: string): Promise<FleecaValidationResponse> {
     try {
-      const tokenValidationUrl = `${this.getBaseUrl()}/gateway_token/${token}`
-
-      const response = await fetch(tokenValidationUrl, {
-        method: 'POST',
-        body: JSON.stringify({ token }),
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
+      const url = `${this.getBaseUrl()}/gateway_token/${token}`
+      const response = await this.fetchWithRetry({
+        url,
+        options: {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          },
+          body: JSON.stringify({ token }),
         },
       })
 
       if (!response.ok) {
-        throw new Error(`Validation request failed with status ${response.status}`)
+        throw PaymentException.create('VALIDATION_ERROR')
       }
 
-      return (await response.json()) as FleecaValidationResponse
-    } catch (error) {
-      throw error
+      const data = (await response.json()) as FleecaValidationResponse
+
+      if (!data) {
+        throw PaymentException.create('EMPTY_RESPONSE')
+      }
+
+      return data
+    } catch (err) {
+      logger.error({ err, token }, 'Token validation failed')
+      throw err instanceof PaymentException ? err : PaymentException.create('VALIDATION_ERROR', err)
     }
   }
 
   /**
    * Validate payment details against session
    */
-  private validatePaymentDetails(
+  private async validatePaymentDetails(
     validationResponse: FleecaValidationResponse,
     sessionData: PaymentSessionData
-  ): void {
+  ): Promise<void> {
+    if (app.inProduction && validationResponse.sandbox) {
+      throw PaymentException.custom(
+        'Sandbox token not allowed in production',
+        'PAYMENT_NOT_SUCCESSFUL'
+      )
+    }
+
+    if (validationResponse.token !== sessionData.token) {
+      throw PaymentException.create('TOKEN_MISMATCH')
+    }
+
     if (validationResponse.payment !== sessionData.amount) {
-      throw new Error(
-        `Payment amount mismatch: expected ${sessionData.amount}, got ${validationResponse.payment}`
+      throw PaymentException.custom(
+        `Amount mismatch: expected ${sessionData.amount}, got ${validationResponse.payment}`,
+        'AMOUNT_MISMATCH'
       )
     }
 
     if (validationResponse.auth_key !== fleecaConfig.authKey) {
-      throw new Error('Invalid auth key in payment response')
+      throw PaymentException.create('INVALID_AUTH_KEY')
     }
 
     if (validationResponse.message !== 'payment_successful') {
-      throw new Error(`Payment was not successful: ${validationResponse.message}`)
+      throw PaymentException.custom(
+        `Payment not successful: ${validationResponse.message}`,
+        'PAYMENT_NOT_SUCCESSFUL'
+      )
     }
 
     if (validationResponse.token_expired) {
-      throw new Error('Payment token is expired')
+      throw PaymentException.create('TOKEN_EXPIRED')
     }
   }
 
@@ -204,16 +299,20 @@ export class PaymentService {
    * Validate payment parameters
    */
   private validatePaymentParameters(amount: number, source: string): void {
-    if (!amount || amount <= 0) {
-      throw new Error('Payment amount must be greater than 0')
-    }
-
-    if (!source || source.trim().length === 0) {
-      throw new Error('Payment source is required')
-    }
-
     if (!fleecaConfig.authKey) {
-      throw new Error('Fleeca auth key is not configured')
+      throw PaymentException.create('INVALID_PARAMETERS')
     }
+
+    if (!amount || amount <= 0) {
+      throw PaymentException.create('INVALID_PRICE')
+    }
+
+    if (!source?.trim()) {
+      throw PaymentException.custom('Payment source is required', 'INVALID_PARAMETERS')
+    }
+  }
+
+  cancelPayment(session: any): void {
+    session.forget('payment_data')
   }
 }
