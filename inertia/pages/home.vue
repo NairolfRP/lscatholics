@@ -167,45 +167,15 @@
           </div>
 
           <div v-else class="grid md:grid-cols-3 gap-8 items-stretch">
-            <Link
-              v-for="post in props.posts.data"
-              route="news.single"
-              :params="{ slug: post.slug }"
-              :key="`home-recent-post-${post.id}`"
-              as-child
-            >
-              <Card class="card-hover h-full pt-0">
-                <div class="aspect-video bg-gray-200 rounded-t-lg overflow-hidden">
-                  <div
-                    v-if="post.coverImageUrl"
-                    class="w-full h-full bg-cover bg-center"
-                    :style="`background-image: url(${post.coverImageUrl})`"
-                  ></div>
-                  <div
-                    v-else
-                    class="w-full h-full bg-linear-to-br from-catholic-purple to-catholic-blue opacity-20"
-                  ></div>
-                </div>
-                <CardContent class="p-6">
-                  <span
-                    v-if="post.publishedAt"
-                    class="flex justify-end text-sm text-muted-foreground"
-                  >
-                    {{ formatDate(new Date(post.publishedAt), 'DD/MM/YYYY') }}
-                  </span>
-                  <Badge class="mb-2">{{ post.category }}</Badge>
-                  <h3 class="font-bold text-lg mb-2">{{ post.title }}</h3>
-
-                  <p class="text-gray-600 mb-4 mt-4 text-sm">
-                    {{ post.excerpt }}
-                  </p>
-
-                  <Button variant="link" class="p-0 text-catholic-gold">
-                    Lire la suite <ArrowRight class="w-4 h-4 ml-1" />
-                  </Button>
-                </CardContent>
-              </Card>
-            </Link>
+            <ArticleCard
+              v-for="article in props.posts.data"
+              :key="`home-recent-post-${article.id}`"
+              :title="article.title"
+              :slug="article.slug"
+              :category="article.category"
+              :published-at="article.publishedAt"
+              class="group"
+            />
           </div>
         </WhenVisible>
       </ClientOnly>
@@ -325,16 +295,7 @@
 import { WhenVisible } from '@inertiajs/vue3'
 import { Button } from '@/shared/components/ui/button'
 import { Card, CardContent } from '@/shared/components/ui/card'
-import { Badge } from '@/shared/components/ui/badge'
-import {
-  ArrowRight,
-  BookOpen,
-  Calendar,
-  CircleAlert,
-  Heart,
-  MapPin,
-  NotebookPen,
-} from 'lucide-vue-next'
+import { BookOpen, Calendar, CircleAlert, Heart, MapPin, NotebookPen } from 'lucide-vue-next'
 import { formatNumber, yearsBetween } from '@/lib/utils'
 import { ARCHDIOCESAN_HISTORY_START_DATE } from '@/shared/constants/archdiocese.constants'
 import { computed } from 'vue'
@@ -343,17 +304,15 @@ import PageBanner from '@/shared/components/layout/PageBanner.vue'
 import { Link } from '@tuyau/inertia/vue'
 import { Alert, AlertDescription } from '@/shared/components/ui/alert'
 import { Skeleton } from '@/shared/components/ui/skeleton'
-import { formatDate } from '@vueuse/core'
 import ClientOnly from '@/shared/components/ClientOnly.vue'
+import ArticleCard from '@/shared/components/ArticleCard.vue'
 
 type Post = {
   id: number
   slug: string
   title: string
-  excerpt?: string
-  coverImageUrl?: string
   category?: string
-  publishedAt?: string
+  publishedAt: string
 }
 
 type Props = {
