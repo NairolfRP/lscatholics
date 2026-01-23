@@ -3,7 +3,7 @@ import { sanitizeHtml } from '#dashboard/utils'
 
 export const createArticleValidator = vine.create(
   vine.object({
-    title: vine.string().trim().minLength(3).maxLength(255).escape(),
+    title: vine.string().trim().minLength(3).maxLength(255),
     slug: vine
       .string()
       .trim()
@@ -26,7 +26,7 @@ export const createArticleValidator = vine.create(
 
 export const updatedArticleValidator = vine.create(
   vine.object({
-    title: vine.string().trim().minLength(3).maxLength(255).escape().optional(),
+    title: vine.string().trim().minLength(3).maxLength(255).optional(),
     slug: vine
       .string()
       .trim()
