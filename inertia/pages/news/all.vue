@@ -7,7 +7,7 @@
   </PageBanner>
 
   <div class="container mx-auto max-w-7xl">
-    <section class="py-8 bg-gray-50">
+    <section class="py-8 bg-gray-50 hidden">
       <div class="md:container mx-auto px-4">
         <div class="flex flex-wrap gap-3 justify-center">
           <Button
@@ -49,46 +49,34 @@
       >
         Aucun article trouvé
       </div>
-      <div v-else class="container mx-auto px-4">
+      <div v-else class="md:container mx-auto px-4">
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           <article v-for="article in articles.data" :key="article.id" class="group">
             <Link route="news.single" :params="{ slug: article.slug }">
-              <Card class="m-0 p-0 card-hover h-full">
-                <div class="aspect-video bg-gray-200 rounded-t-lg">
-                  <img
-                    v-if="article.coverImageUrl"
-                    :src="article.coverImageUrl"
-                    alt="Article featured image"
-                    class="object-cover h-full"
-                  />
-                </div>
-                <CardContent class="p-6 flex flex-col h-full">
-                  <div class="flex items-center gap-2 mb-3">
-                    <Badge>
-                      {{ article.category }}
-                    </Badge>
-                    <span class="text-xs text-gray-500">
-                      {{ formatDate(article.publishedAt) }}
-                    </span>
+              <Card class="card-hover h-full">
+                <CardHeader>
+                  <div class="uppercase font-bold text-primary text-sm">
+                    {{ article.category || 'Archidiocèse' }}
                   </div>
-
-                  <h3
-                    class="font-bold text-lg mb-3 group-hover:text-catholic-gold transition-colors"
+                  <CardTitle
+                    class="font-bold text-xl group-hover:text-catholic-gold transition-colors mb-1"
                   >
                     {{ article.title }}
-                  </h3>
-
-                  <p class="text-gray-600 text-sm mb-4 flex-grow">
-                    {{ article.excerpt }}
-                  </p>
-
-                  <div class="flex items-center justify-between pt-4 border-t">
-                    <Button variant="link" size="sm" class="p-0 text-catholic-gold">
+                  </CardTitle>
+                  <span class="text-base font-normal">
+                    <time :datetime="article.publishedAt">{{
+                      formatDate(article.publishedAt)
+                    }}</time>
+                  </span>
+                </CardHeader>
+                <CardFooter class="px-6">
+                  <CardAction class="flex">
+                    <Button variant="link" size="sm" class="text-catholic-gold">
                       Lire la suite
                       <ArrowRight class="w-3 h-3 ml-1" />
                     </Button>
-                  </div>
-                </CardContent>
+                  </CardAction>
+                </CardFooter>
               </Card>
             </Link>
           </article>
@@ -96,6 +84,7 @@
 
         <div class="mt-12 flex justify-center">
           <Pagination
+            v-if="totalItems > itemsPerPage"
             v-slot="{ page }"
             :items-per-page="itemsPerPage"
             :total="totalItems"
@@ -128,9 +117,8 @@
 
 <script setup lang="ts">
 import PageBanner from '@/shared/components/layout/PageBanner.vue'
-import { Badge } from '@/shared/components/ui/badge'
 import { Button } from '@/shared/components/ui/button'
-import { Card, CardContent } from '@/shared/components/ui/card'
+import { Card, CardAction, CardFooter, CardHeader, CardTitle } from '@/shared/components/ui/card'
 import {
   Pagination,
   PaginationContent,
