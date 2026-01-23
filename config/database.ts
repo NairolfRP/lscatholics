@@ -1,9 +1,18 @@
 import env from '#start/env'
 import { defineConfig } from '@adonisjs/lucid'
 import app from '@adonisjs/core/services/app'
+import type { LibSQLConfig, SqliteConfig } from '@adonisjs/lucid/types/database'
 
 const tursoUrl = env.get('TURSO_DATABASE_URL')
 const tursoToken = env.get('TURSO_AUTH_TOKEN')
+
+const sharedConfig: Partial<SqliteConfig | LibSQLConfig> = {
+  migrations: {
+    naturalSort: true,
+    paths: ['database/migrations'],
+  },
+  useNullAsDefault: true,
+}
 
 const getTursoConnectionString = () => {
   if (!tursoToken) {
@@ -23,9 +32,10 @@ const getTursoConnectionString = () => {
 
 const dbConfig = defineConfig({
   prettyPrintDebugQueries: app.inDev,
-  connection: 'sqlite',
+  connection: app.inTest ? 'test' : 'default',
   connections: {
-    sqlite: {
+    default: {
+      ...sharedConfig,
       client: 'libsql',
       connection: {
         filename: getTursoConnectionString(),
@@ -45,29 +55,25 @@ const dbConfig = defineConfig({
         createRetryIntervalMillis: 200,
         propagateCreateError: true,
       },
-      migrations: {
-        naturalSort: true,
-        paths: ['database/migrations'],
-      },
-      useNullAsDefault: true,
       debug: app.inDev,
     },
-    /*postgres: {
-      client: 'pg',
+    test: {
+      ...sharedConfig,
+      client: 'better-sqlite3',
       connection: {
-        host: env.get('DB_HOST'),
-        port: env.get('DB_PORT'),
-        user: env.get('DB_USER'),
-        password: env.get('DB_PASSWORD'),
-        database: env.get('DB_DATABASE'),
-        ssl: app.inProduction,
+        filename: env.get('TURSO_DATABASE_URL', app.tmpPath('test.db')),
+        debug: app.inTest,
       },
-      migrations: {
-        naturalSort: true,
-        paths: ['database/migrations'],
+      pool: {
+        afterCreate: (conn: any, done: any) => {
+          conn.exec('PRAGMA busy_timeout = 5000;')
+          done()
+        },
+        min: 1,
+        max: 10,
       },
-      debug: app.inDev,
-    },*/
+      debug: app.inTest,
+    },
   },
 })
 
