@@ -261,10 +261,6 @@ export class PaymentService {
       )
     }
 
-    if (validationResponse.token !== sessionData.token) {
-      throw PaymentException.create('TOKEN_MISMATCH')
-    }
-
     if (validationResponse.payment !== sessionData.amount) {
       throw PaymentException.custom(
         `Amount mismatch: expected ${sessionData.amount}, got ${validationResponse.payment}`,
