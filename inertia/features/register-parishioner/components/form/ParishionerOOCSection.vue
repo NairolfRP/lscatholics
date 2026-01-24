@@ -6,16 +6,21 @@
       tant qu'Église nous sommes censés posséder.
     </p>
 
-    <FormField v-slot="{ componentField }" name="characterSacraments">
-      <FormItem>
+    <VeeField v-slot="{ field, errors }" name="characterSacraments">
+      <Field :data-invalid="!!errors.length">
         <div class="space-y-2">
-          <FormLabel>Votre personnage a reçu les sacrements de...</FormLabel>
-          <Select v-bind="componentField" multiple>
-            <FormControl>
-              <SelectTrigger class="w-full">
-                <SelectValue placeholder="Sélectionnez des sacrements" />
-              </SelectTrigger>
-            </FormControl>
+          <FieldContent>
+            <FieldLabel :for="field.name">Votre personnage a reçu les sacrements de...</FieldLabel>
+          </FieldContent>
+          <Select
+            :model-value="field.value"
+            @update:model-value="field.onChange"
+            @blur="field.onBlur"
+            multiple
+          >
+            <SelectTrigger :id="field.name" class="w-full" :aria-invalid="!!errors.length">
+              <SelectValue placeholder="Sélectionnez des sacrements" />
+            </SelectTrigger>
             <SelectContent>
               <SelectItem
                 v-for="sacrament in INDIVIDUAL_SACRAMENTS"
@@ -27,7 +32,8 @@
               </SelectItem>
             </SelectContent>
           </Select>
-          <FormDescription class="text-muted-foreground text-xs">
+          <FieldError v-if="errors.length" :errors="errors" />
+          <FieldDescription class="text-muted-foreground text-xs">
             <p>
               Cochez ce que votre personnage a bien reçu dans son histoire passée. Ça nous permet de
               jouer nos archives et registres !
@@ -46,31 +52,34 @@
                 histoire passée (au début de l'adolescence ou plus tard)
               </li>
             </Typography>
-          </FormDescription>
-          <FormMessage />
+          </FieldDescription>
         </div>
-      </FormItem>
-    </FormField>
+      </Field>
+    </VeeField>
 
-    <FormField v-slot="{ componentField }" name="oocAdditionalInformation">
-      <FormItem>
+    <VeeField v-slot="{ field, errors }" name="oocAdditionalInformation">
+      <Field :data-invalid="!!errors.length">
         <div class="space-y-2">
-          <FormLabel>
+          <FieldLabel :for="field.name">
             Qu'est-ce que le clergé de l'archidiocèse de Los Santos est censé savoir en RP sur votre
             personnage ?
-          </FormLabel>
-          <FormControl>
-            <Textarea v-bind="componentField" :max="700" rows="3" />
-          </FormControl>
-          <FormDescription class="text-muted-foreground text-sm">
+          </FieldLabel>
+          <Textarea
+            :id="field.name"
+            v-bind="field"
+            :max="700"
+            rows="3"
+            :aria-invalid="!!errors.length"
+          />
+          <FieldDescription class="text-muted-foreground text-sm">
             Laissez vide si rien ou si vous ne souhaitez pas partager d'informations. Soumettez
             uniquement des informations qui devraient déjà être sues en RP par le clergé de
             l'archidiocèse de Los Santos.
-          </FormDescription>
-          <FormMessage />
+          </FieldDescription>
+          <FieldError v-if="errors.length" :errors="errors" />
         </div>
-      </FormItem>
-    </FormField>
+      </Field>
+    </VeeField>
   </div>
 </template>
 
@@ -83,18 +92,17 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/shared/components/ui/select'
-import {
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/shared/components/ui/form'
 import { Textarea } from '@/shared/components/ui/textarea'
 import { Typography } from '@/shared/components/ui/typography'
-import { useFormContext } from 'vee-validate'
+import { Field as VeeField, useFormContext } from 'vee-validate'
 import type { RegisterParishionerFormValues } from '@/features/register-parishioner/types/parishioner_form.types'
+import {
+  Field,
+  FieldContent,
+  FieldDescription,
+  FieldError,
+  FieldLabel,
+} from '@/shared/components/ui/field'
 
 const form = useFormContext<RegisterParishionerFormValues>()
 

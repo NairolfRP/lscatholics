@@ -6,35 +6,45 @@
     </h3>
 
     <div class="grid md:grid-cols-2 gap-4">
-      <FormField v-slot="{ componentField }" name="address" :validate-on-blur="!isFieldDirty">
-        <FormItem>
+      <VeeField v-slot="{ field, errors }" name="address" :validate-on-blur="!isFieldDirty">
+        <Field :data-invalid="!!errors.length">
           <div class="space-y-2 mb-7">
-            <FormLabel>Adresse postale *</FormLabel>
-            <FormControl>
-              <Input v-bind="componentField" required placeholder="123 Main Street" />
-            </FormControl>
-            <FormDescription>
+            <FieldLabel :for="field.name">Adresse postale *</FieldLabel>
+
+            <Input
+              :id="field.name"
+              v-bind="field"
+              required
+              placeholder="123 Main Street"
+              :aria-invalid="!!errors.length"
+            />
+            <FieldError v-if="errors.length" :errors="errors" />
+            <FieldDescription>
               (( Indiquez le nom exact de votre propriété pour que nous puissions vous envoyer des
               colis depuis le script La Poste. ))
-            </FormDescription>
-            <FormMessage />
+            </FieldDescription>
           </div>
-        </FormItem>
-      </FormField>
+        </Field>
+      </VeeField>
 
-      <FormField v-slot="{ value }" name="district">
-        <FormItem>
+      <VeeField v-slot="{ field, errors }" name="district">
+        <Field :data-invalid="!!errors.length">
           <div class="space-y-2">
-            <FormLabel>District *</FormLabel>
-            <Select :model-value="value" @update:model-value="handleDistrictChange" required>
-              <FormControl>
-                <SelectTrigger class="w-full">
-                  <SelectValue placeholder="Sélectionnez un district" />
-                </SelectTrigger>
-              </FormControl>
+            <FieldContent>
+              <FieldLabel :for="field.name">District *</FieldLabel>
+            </FieldContent>
+            <Select
+              :model-value="field.value"
+              @update:model-value="handleDistrictChange"
+              @blur="field.onBlur"
+              required
+            >
+              <SelectTrigger :id="field.name" class="w-full" :aria-invalid="!!errors.length">
+                <SelectValue placeholder="Sélectionnez un district" />
+              </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectItem value="null" :disabled="!value"> N/A </SelectItem>
+                  <SelectItem value="null" :disabled="!field.value"> N/A </SelectItem>
                 </SelectGroup>
                 <SelectSeparator />
                 <SelectGroup>
@@ -60,10 +70,10 @@
                 </SelectGroup>
               </SelectContent>
             </Select>
-            <FormMessage />
+            <FieldError v-if="errors.length" :errors="errors" />
           </div>
-        </FormItem>
-      </FormField>
+        </Field>
+      </VeeField>
     </div>
   </div>
 </template>
@@ -84,20 +94,19 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/shared/components/ui/select'
-import {
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/shared/components/ui/form'
 import { MapPin } from 'lucide-vue-next'
 import { Input } from '@/shared/components/ui/input'
-import { useFormContext } from 'vee-validate'
+import { Field as VeeField, useFormContext } from 'vee-validate'
 import type { RegisterParishionerFormValues } from '@/features/register-parishioner/types/parishioner_form.types'
 import type { AcceptableValue } from 'reka-ui'
 import { computed } from 'vue'
+import {
+  Field,
+  FieldContent,
+  FieldDescription,
+  FieldError,
+  FieldLabel,
+} from '@/shared/components/ui/field'
 
 const { isFieldDirty, setFieldValue } = useFormContext<RegisterParishionerFormValues>()
 

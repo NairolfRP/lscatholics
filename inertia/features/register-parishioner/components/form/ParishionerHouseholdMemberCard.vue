@@ -28,89 +28,104 @@
       </div>
 
       <div class="grid md:grid-cols-2 gap-4 pr-10">
-        <FormField v-slot="{ componentField }" :name="`familyMembers[${index}].firstname`">
-          <FormItem>
+        <VeeField v-slot="{ field, errors }" :name="`familyMembers[${index}].firstname`">
+          <Field :data-invalid="!!errors.length">
             <div class="space-y-2">
-              <FormLabel>Prénom *</FormLabel>
-              <FormControl>
-                <Input v-bind="componentField" required placeholder="Prénom" />
-              </FormControl>
-              <FormMessage />
+              <FieldLabel :for="field.name">Prénom *</FieldLabel>
+              <Input
+                :id="field.name"
+                v-bind="field"
+                required
+                placeholder="Prénom"
+                :aria-invalid="!!errors.length"
+              />
+              <FieldError v-if="errors.length" :errors="errors" />
             </div>
-          </FormItem>
-        </FormField>
+          </Field>
+        </VeeField>
 
-        <FormField v-slot="{ componentField }" :name="`familyMembers[${index}].lastname`">
-          <FormItem>
+        <VeeField v-slot="{ field, errors }" :name="`familyMembers[${index}].lastname`">
+          <Field :data-invalid="!!errors.length">
             <div class="space-y-2">
-              <FormLabel>Nom de famille *</FormLabel>
-              <FormControl>
-                <Input v-bind="componentField" required placeholder="Nom de famille" />
-              </FormControl>
-              <FormMessage />
+              <FieldLabel :for="field.name">Nom de famille *</FieldLabel>
+              <Input
+                :id="field.name"
+                v-bind="field"
+                required
+                placeholder="Nom de famille"
+                :aria-invalid="!!errors.length"
+              />
+              <FieldError v-if="errors.length" :errors="errors" />
             </div>
-          </FormItem>
-        </FormField>
+          </Field>
+        </VeeField>
 
-        <FormField v-slot="{ componentField }" :name="`familyMembers[${index}].age`">
-          <FormItem>
+        <VeeField v-slot="{ field, errors }" :name="`familyMembers[${index}].age`">
+          <Field :data-invalid="!!errors.length">
             <div class="space-y-2">
-              <FormLabel>Âge *</FormLabel>
-              <FormControl>
-                <Input
-                  v-bind="componentField"
-                  type="number"
-                  min="0"
-                  max="120"
-                  placeholder="Âge"
-                  required
-                />
-              </FormControl>
-              <FormMessage />
+              <FieldLabel :for="field.name">Âge *</FieldLabel>
+              <Input
+                :id="field.name"
+                v-bind="field"
+                type="number"
+                min="0"
+                max="120"
+                placeholder="Âge"
+                required
+                :aria-invalid="!!errors.length"
+              />
+              <FieldError v-if="errors.length" :errors="errors" />
             </div>
-          </FormItem>
-        </FormField>
+          </Field>
+        </VeeField>
 
-        <FormField v-slot="{ componentField }" :name="`familyMembers[${index}].role`">
-          <FormItem>
+        <VeeField v-slot="{ field, errors }" :name="`familyMembers[${index}].role`">
+          <Field :data-invalid="!!errors.length">
             <div class="space-y-2">
-              <FormLabel>Rôle dans le foyer *</FormLabel>
-              <Select v-bind="componentField" required>
-                <FormControl>
-                  <SelectTrigger class="w-full">
-                    <SelectValue placeholder="Sélectionner un rôle" />
-                  </SelectTrigger>
-                </FormControl>
+              <FieldContent>
+                <FieldLabel :for="field.name">Rôle dans le foyer *</FieldLabel>
+              </FieldContent>
+              <Select
+                :model-value="field.value"
+                @update:model-value="field.onChange"
+                @blur="field.onBlur"
+                required
+              >
+                <SelectTrigger :id="field.name" class="w-full" :aria-invalid="!!errors.length">
+                  <SelectValue placeholder="Sélectionner un rôle" />
+                </SelectTrigger>
                 <SelectContent>
                   <SelectItem v-for="role in HOUSEHOLD_ROLES" :key="role.id" :value="role.id">
                     {{ role.label }}
                   </SelectItem>
                 </SelectContent>
               </Select>
-
-              <FormMessage />
+              <FieldError v-if="errors.length" :errors="errors" />
             </div>
-          </FormItem>
-        </FormField>
+          </Field>
+        </VeeField>
       </div>
 
-      <FormField
-        v-slot="{ value, handleChange }"
-        type="checkbox"
-        :name="`familyMembers[${index}].isNpc`"
-      >
-        <FormItem class="flex flex-row items-center gap-x-2 mt-2">
-          <FormControl>
-            <Checkbox :model-value="value" @update:model-value="handleChange" />
-          </FormControl>
+      <VeeField v-slot="{ field, errors }" type="checkbox" :name="`familyMembers[${index}].isNpc`">
+        <Field
+          orientation="horizontal"
+          class="flex flex-row items-center gap-x-2 mt-2"
+          :data-invalid="!!errors.length"
+        >
+          <Checkbox
+            :id="field.name"
+            :model-value="field.value"
+            :aria-invalid="!!errors.length"
+            @update:model-value="field.onChange"
+          />
           <div class="space-y-1 leading-none">
-            <FormLabel class="inline text-sm">
+            <FieldLabel :for="field.name" class="inline text-sm">
               (( C'est un personnage non-joueur (PNJ) ))
-            </FormLabel>
-            <FormMessage />
+            </FieldLabel>
+            <FieldError v-if="errors.length" :errors="errors" />
           </div>
-        </FormItem>
-      </FormField>
+        </Field>
+      </VeeField>
     </CardContent>
   </Card>
 </template>
@@ -124,17 +139,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/shared/components/ui/select'
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/shared/components/ui/form'
 import { Button } from '@/shared/components/ui/button'
 import { Card, CardContent } from '@/shared/components/ui/card'
 import { Checkbox } from '@/shared/components/ui/checkbox'
 import { Input } from '@/shared/components/ui/input'
+import { Field as VeeField } from 'vee-validate'
+import { Field, FieldContent, FieldError, FieldLabel } from '@/shared/components/ui/field'
 
 defineProps<{ index: number }>()
 defineEmits<{ remove: [] }>()

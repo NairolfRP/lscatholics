@@ -1,69 +1,69 @@
 <template>
-  <form @submit.prevent="submitForm" class="space-y-6">
+  <form @submit="submitForm" class="space-y-6">
     <div class="grid md:grid-cols-2 gap-4">
-      <div>
-        <FormField v-slot="{ componentField }" name="firstname">
-          <FormItem>
-            <FormLabel class="block text-sm font-medium text-gray-700 mb-2">Prénom *</FormLabel>
-          </FormItem>
-          <FormControl>
+      <div
+        v-for="item of [
+          { id: 'firstname', label: 'Prénom', placeholder: 'John' },
+          { id: 'lastname', label: 'Nom de famille', placeholder: 'Doe' },
+        ]"
+        :key="item.id"
+      >
+        <VeeField v-slot="{ componentField, errors: fieldErrors }" :name="item.id">
+          <Field :data-invalid="!!fieldErrors.length">
+            <FieldLabel :for="item.id" class="block text-sm font-medium text-gray-700">
+              {{ item.label }} *
+            </FieldLabel>
             <Input
-              type="text"
-              placeholder="John"
+              :id="item.id"
               v-bind="componentField"
+              type="text"
+              :placeholder="item.placeholder"
+              :aria-invalid="!!fieldErrors.length"
               class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-catholic-gold focus:border-transparent"
             />
-          </FormControl>
-          <FormMessage />
-        </FormField>
-      </div>
-      <div>
-        <FormField v-slot="{ componentField }" name="lastname">
-          <FormItem>
-            <FormLabel class="block text-sm font-medium text-gray-700 mb-2">Nom *</FormLabel>
-          </FormItem>
-          <FormControl>
-            <Input
-              type="text"
-              placeholder="Doe"
-              v-bind="componentField"
-              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-catholic-gold focus:border-transparent"
-            />
-          </FormControl>
-          <FormMessage />
-        </FormField>
+            <FieldError v-if="fieldErrors.length" :errors="fieldErrors" />
+          </Field>
+        </VeeField>
       </div>
     </div>
 
     <div>
-      <FormField v-slot="{ componentField }" name="phone">
-        <FormItem>
-          <FormLabel class="block text-sm font-medium text-gray-700 mb-2">Téléphone *</FormLabel>
-        </FormItem>
-        <FormControl>
+      <VeeField v-slot="{ field, errors: fieldErrors }" name="phone">
+        <Field :data-invalid="!!fieldErrors.length">
+          <FieldLabel :for="field.name" class="block text-sm font-medium text-gray-700">
+            Téléphone *
+          </FieldLabel>
           <Input
+            :id="field.name"
+            v-bind="field"
             type="tel"
             placeholder="1234"
-            v-bind="componentField"
+            :aria-invalid="!!fieldErrors.length"
             class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-catholic-gold focus:border-transparent"
           />
-        </FormControl>
-        <FormMessage />
-      </FormField>
+          <FieldError v-if="fieldErrors.length" :errors="fieldErrors" />
+        </Field>
+      </VeeField>
     </div>
 
     <div>
-      <FormField v-slot="{ componentField }" name="subject">
-        <FormItem>
-          <FormLabel class="block text-sm font-medium text-gray-700 mb-1"> Sujet * </FormLabel>
-          <Select v-bind="componentField">
-            <FormControl>
-              <SelectTrigger
-                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-catholic-gold focus:border-transparent"
-              >
-                <SelectValue placeholder="Choisissez un sujet" />
-              </SelectTrigger>
-            </FormControl>
+      <VeeField v-slot="{ field, errors: fieldErrors }" name="subject">
+        <Field :data-invalid="!!fieldErrors.length">
+          <FieldLabel :for="field.name" class="block text-sm font-medium text-gray-700 mb-1">
+            Sujet *
+          </FieldLabel>
+          <Select
+            :model-value="field.value"
+            @update:model-value="field.onChange"
+            @blur="field.onBlur"
+          >
+            <SelectTrigger
+              :id="field.name"
+              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-catholic-gold focus:border-transparent"
+              :aria-invalid="!!fieldErrors.length"
+            >
+              <SelectValue placeholder="Choisissez un sujet" />
+            </SelectTrigger>
             <SelectContent>
               <SelectGroup>
                 <SelectItem v-for="item in props.subjects" :key="item.id" :value="item.id">
@@ -72,27 +72,29 @@
               </SelectGroup>
             </SelectContent>
           </Select>
-          <FormMessage />
-        </FormItem>
-      </FormField>
+          <FieldError v-if="fieldErrors.length" :errors="fieldErrors" />
+        </Field>
+      </VeeField>
     </div>
 
     <div>
-      <FormField v-slot="{ componentField }" name="message">
-        <FormItem>
-          <FormLabel class="block text-sm font-medium text-gray-700 mb-1"> Message * </FormLabel>
-          <FormControl>
-            <Textarea
-              v-bind="componentField"
-              rows="6"
-              :maxlength="2000"
-              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-catholic-gold focus:border-transparent"
-              placeholder="Décrivez votre demande en détail..."
-            />
-          </FormControl>
-          <FormMessage />
-        </FormItem>
-      </FormField>
+      <VeeField v-slot="{ field, errors: fieldErrors }" name="message">
+        <Field :data-invalid="!!fieldErrors.length">
+          <FieldLabel :for="field.name" class="block text-sm font-medium text-gray-700 mb-1">
+            Message *
+          </FieldLabel>
+          <Textarea
+            :id="field.name"
+            v-bind="field"
+            :rows="6"
+            :maxlength="2000"
+            placeholder="Décrivez votre demande en détail..."
+            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-catholic-gold focus:border-transparent"
+            :aria-invalid="!!fieldErrors.length"
+          />
+          <FieldError v-if="fieldErrors.length" :errors="fieldErrors" />
+        </Field>
+      </VeeField>
     </div>
 
     <Button
@@ -121,17 +123,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/shared/components/ui/select'
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/shared/components/ui/form'
 import { Button } from '@/shared/components/ui/button'
 import { Textarea } from '@/shared/components/ui/textarea'
 import { Input } from '@/shared/components/ui/input'
-import { useForm } from 'vee-validate'
+import { Field as VeeField, useForm } from 'vee-validate'
 import { watch } from 'vue'
 import { router } from '@inertiajs/vue3'
 import { tuyau } from '@/lib/tuyau'
@@ -143,6 +138,7 @@ import type { InferPageProps } from '@adonisjs/inertia/types'
 import type ContactController from '#contact/controllers/contact_controller'
 import { toTypedSchema } from '@vee-validate/zod'
 import { contactSchema } from '@/features/contact/schemas/contact.schema'
+import { Field, FieldError, FieldLabel } from '@/shared/components/ui/field'
 
 const props = usePageProps<{ subjects: InferPageProps<ContactController, 'index'>['subjects'] }>()
 const errors = useErrors()

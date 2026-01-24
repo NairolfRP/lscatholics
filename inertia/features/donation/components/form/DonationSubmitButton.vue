@@ -1,5 +1,5 @@
 <template>
-  <Button type="submit" :disabled="isSubmitting" class="w-full">
+  <Button type="submit" form="donation-form" :disabled="isSubmitting" class="w-full">
     Donner {{ formattedAmount }}
   </Button>
 </template>
