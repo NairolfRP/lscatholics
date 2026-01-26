@@ -10,7 +10,7 @@ const shieldConfig = defineConfig({
     enabled: true,
     directives: {
       defaultSrc: [`'self'`],
-      scriptSrc: [`'self'`, `'unsafe-eval'`, `'unsafe-inline'`],
+      scriptSrc: [`'self'`, `'unsafe-eval'`, `'unsafe-inline'`, 'https://cloud.umami.is'],
       styleSrc: [`'self'`, `'unsafe-inline'`, 'https://fonts.googleapis.com'],
       imgSrc: [`'self'`, 'data:', 'https:'],
       fontSrc: [`'self'`, 'https://fonts.gstatic.com'],
@@ -19,6 +19,7 @@ const shieldConfig = defineConfig({
         ...(app.inDev ? ['ws://localhost:24678'] : []),
         'https://api.aelf.org',
         'https://ucp-fr.gta.world',
+        'https://api-gateway.umami.dev',
       ],
       frameSrc: [`'none'`],
       objectSrc: [`'none'`],
