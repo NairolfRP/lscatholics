@@ -3,6 +3,7 @@ import { inject } from '@adonisjs/core'
 import { PaymentService } from '#core/services/payment_service'
 import { PaymentSessionData } from '#core/types/payment'
 import { DonateService } from '#pages/services/donate_service'
+import type { Logger } from '@adonisjs/core/logger'
 
 @inject()
 export default class PaymentsController {
@@ -25,7 +26,7 @@ export default class PaymentsController {
       try {
         const result = await this.paymentService.processPaymentCallback(token, session)
 
-        await this.handleSuccessfulPayment(result)
+        await this.handleSuccessfulPayment(result, logger)
 
         return this.handlePaymentSuccess(response, session, inertia, result.sessionData)
       } catch (err) {
@@ -79,9 +80,12 @@ export default class PaymentsController {
     })
   }
 
-  private async handleSuccessfulPayment(result: any): Promise<void> {
+  private async handleSuccessfulPayment(result: any, logger: Logger): Promise<void> {
     const { sessionData } = result
-    console.log(`Processing successful payment: ${sessionData.source} - $${sessionData.amount}`)
+    logger.info(
+      { source: sessionData.source, amount: sessionData.amount },
+      `Processing successful payment`
+    )
 
     try {
       switch (sessionData.source) {
@@ -89,10 +93,11 @@ export default class PaymentsController {
           await this.processDonation(sessionData, result.transactionData)
           break
         default:
-          console.warn(`Unknown payment source: ${sessionData.source}`)
+          logger.warn({ source: sessionData.source }, `Unknown payment source`)
+          throw new Error(`Unsupported payment source: ${sessionData.source}`)
       }
     } catch (error) {
-      console.error('Error handling successful payment:', error)
+      logger.error('Error handling successful payment:', error)
     }
   }
 
