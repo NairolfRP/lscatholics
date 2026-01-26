@@ -43,8 +43,8 @@ const dbConfig = defineConfig({
       },
       pool: {
         afterCreate: (conn: any, done: any) => {
-          conn.run('PRAGMA busy_timeout = 5000;')
-          done()
+          conn.run('PRAGMA foreign_keys = ON; PRAGMA busy_timeout = 5000;')
+          done(null, conn)
         },
         min: 1,
         max: 10,
@@ -57,6 +57,7 @@ const dbConfig = defineConfig({
       },
       debug: app.inDev,
     },
+
     test: {
       ...sharedConfig,
       client: 'better-sqlite3',
@@ -65,12 +66,15 @@ const dbConfig = defineConfig({
         debug: app.inTest,
       },
       pool: {
-        afterCreate: (conn: any, done: any) => {
-          conn.exec('PRAGMA busy_timeout = 5000;')
+        afterCreate: (conn: any, done) => {
+          conn.exec('PRAGMA foreign_keys = ON')
+          conn.exec('PRAGMA busy_timeout = 5000')
           done()
         },
         min: 1,
-        max: 10,
+        max: 1,
+        acquireTimeoutMillis: 10000,
+        idleTimeoutMillis: 1000,
       },
       debug: app.inTest,
     },
