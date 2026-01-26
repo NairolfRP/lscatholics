@@ -1,25 +1,29 @@
 <template>
-  <FormField v-slot="{ value }" :name="name">
-    <FormItem>
-      <FormLabel v-if="props.label" class="text-sm font-medium text-gray-700 mb-3 block">
+  <VeeField v-slot="{ value, errors }" :name="name">
+    <Field :data-invalid="!!errors.length">
+      <FieldLabel
+        v-if="props.label"
+        :for="name"
+        class="text-sm font-medium text-gray-700 mb-3 block"
+      >
         {{ props.label }}
-      </FormLabel>
+      </FieldLabel>
 
       <div class="mt-1" v-if="showCustomField">
         <div class="flex justify-between">
           <NumberField
+            :id="name"
             :min="minAmount"
             :max="maxAmount"
             :format-options="currencyFormat"
             :model-value="value"
             class="w-full"
             @update:model-value="handleAmountChange"
+            :aria-invalid="!!errors.length"
           >
             <NumberFieldContent>
               <NumberFieldDecrement />
-              <FormControl>
-                <NumberFieldInput />
-              </FormControl>
+              <NumberFieldInput />
               <NumberFieldIncrement />
             </NumberFieldContent>
           </NumberField>
@@ -45,11 +49,12 @@
         </Button>
         <Button variant="outline" @click="showCustomField = true"> Autre </Button>
       </div>
-      <FormMessage />
-    </FormItem>
-  </FormField>
+      <FieldError v-if="errors.length" :errors="errors" />
+    </Field>
+  </VeeField>
 </template>
 <script setup lang="ts">
+import { Field as VeeField, useFormContext } from 'vee-validate'
 import {
   NumberField,
   NumberFieldContent,
@@ -58,17 +63,10 @@ import {
   NumberFieldInput,
 } from '@/shared/components/ui/number-field'
 import { CircleX } from 'lucide-vue-next'
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/shared/components/ui/form'
 import { Button } from '@/shared/components/ui/button'
 import { computed, ref } from 'vue'
-import { useFormContext } from 'vee-validate'
 import { cn } from '@/lib/utils'
+import { Field, FieldError, FieldLabel } from '@/shared/components/ui/field'
 
 type Props = {
   name: string

@@ -1,170 +1,196 @@
 <template>
-  <h3 class="text-lg font-semibold text-gray-900 flex items-center gap-2">
-    <Users class="w-5 h-5" />
-    Informations personnelles
-  </h3>
-  <FormField v-slot="{ componentField }" name="civilTitle">
-    <FormItem>
-      <div class="space-y-2">
-        <FormLabel>Titre de civilité *</FormLabel>
-        <Select v-bind="componentField" required>
-          <FormControl>
-            <SelectTrigger class="w-full">
+  <div class="space-y-4">
+    <h3 class="text-lg font-semibold text-gray-900 flex items-center gap-2">
+      <Users class="w-5 h-5" />
+      Informations personnelles
+    </h3>
+    <VeeField v-slot="{ field, errors }" name="civilTitle">
+      <Field :data-invalid="!!errors.length">
+        <div class="space-y-2">
+          <FieldContent>
+            <FieldLabel :for="field.name">Titre de civilité *</FieldLabel>
+          </FieldContent>
+          <Select
+            :model-value="field.value"
+            @update:model-value="field.onChange"
+            @blur="field.onBlur"
+            required
+          >
+            <SelectTrigger :id="field.name" class="w-full" :aria-invalid="!!errors.length">
               <SelectValue placeholder="Sélectionnez un titre de civilité" />
             </SelectTrigger>
-          </FormControl>
-          <SelectContent>
-            <SelectGroup>
+            <SelectContent>
               <SelectItem v-for="cTitle of CIVIL_TITLES" :value="cTitle.id">
                 {{ cTitle.label }}
               </SelectItem>
-            </SelectGroup>
-          </SelectContent>
-        </Select>
-        <FormMessage />
-      </div>
-    </FormItem>
-  </FormField>
+            </SelectContent>
+          </Select>
+          <FieldError v-if="errors.length" :errors="errors" />
+        </div>
+      </Field>
+    </VeeField>
 
-  <FormField v-slot="{ componentField }" name="maritalStatus">
-    <FormItem>
-      <div class="space-y-2">
-        <FormLabel>État matrimonial *</FormLabel>
-        <Select v-bind="componentField" required>
-          <FormControl>
-            <SelectTrigger class="w-full">
+    <VeeField v-slot="{ field, errors }" name="maritalStatus">
+      <Field :data-invalid="!!errors.length">
+        <div class="space-y-2">
+          <FieldContent>
+            <FieldLabel :for="field.name">État matrimonial *</FieldLabel>
+          </FieldContent>
+          <Select
+            :model-value="field.value"
+            @update:model-value="field.onChange"
+            @blur="field.onBlur"
+            required
+          >
+            <SelectTrigger :id="field.name" class="w-full" :aria-invalid="!!errors.length">
               <SelectValue placeholder="Sélectionnez un état matrimonial" />
             </SelectTrigger>
-          </FormControl>
-          <SelectContent>
-            <SelectGroup>
-              <SelectItem v-for="mStatus of MARITAL_STATUS" :value="mStatus.id">
-                {{ mStatus.label }}
-              </SelectItem>
-            </SelectGroup>
-          </SelectContent>
-        </Select>
-        <FormMessage />
-      </div>
-    </FormItem>
-  </FormField>
-
-  <div class="grid md:grid-cols-2 gap-4">
-    <FormField v-slot="{ componentField }" name="firstname" :validate-on-blur="!isFieldDirty">
-      <FormItem>
-        <div class="space-y-2">
-          <FormLabel>Prénom *</FormLabel>
-          <FormControl>
-            <Input v-bind="componentField" required placeholder="John" />
-          </FormControl>
-          <FormMessage />
-        </div>
-      </FormItem>
-    </FormField>
-
-    <FormField v-slot="{ componentField }" name="lastname" :validate-on-blur="!isFieldDirty">
-      <FormItem>
-        <div class="space-y-2">
-          <FormLabel>Nom de famille *</FormLabel>
-          <FormControl>
-            <Input v-bind="componentField" required placeholder="Doe" />
-          </FormControl>
-          <FormMessage />
-        </div>
-      </FormItem>
-    </FormField>
-
-    <FormField v-slot="{ componentField }" name="gender">
-      <FormItem>
-        <div class="space-y-2">
-          <FormLabel>Sexe *</FormLabel>
-          <Select v-bind="componentField" required>
-            <FormControl>
-              <SelectTrigger class="w-full">
-                <SelectValue placeholder="Sélectionnez un genre" />
-              </SelectTrigger>
-            </FormControl>
             <SelectContent>
               <SelectGroup>
-                <SelectItem v-for="gender of GENDERS" :value="gender.id">
-                  {{ gender.label }}
+                <SelectItem v-for="mStatus of MARITAL_STATUS" :value="mStatus.id">
+                  {{ mStatus.label }}
                 </SelectItem>
               </SelectGroup>
             </SelectContent>
           </Select>
-          <FormMessage />
+          <FieldError v-if="errors.length" :errors="errors" />
         </div>
-      </FormItem>
-    </FormField>
+      </Field>
+    </VeeField>
 
-    <FormField v-slot="{ value, setValue }" name="age">
-      <FormItem>
-        <div class="space-y-2">
-          <FormLabel>Âge *</FormLabel>
-          <NumberField
-            id="age"
-            :min="16"
-            :max="120"
-            :model-value="value ?? null"
-            @update:model-value="
-              (v) => {
-                if (v) {
-                  setValue(v)
-                } else {
-                  setValue(undefined)
+    <div class="grid md:grid-cols-2 gap-4">
+      <template
+        v-for="item of [
+          { id: 'firstname', label: 'Prénom', placeholder: 'John' },
+          { id: 'lastname', label: 'Nom de famille', placeholder: 'Doe' },
+        ]"
+        :key="item.id"
+      >
+        <VeeField
+          v-slot="{ field, componentField, errors }"
+          :name="item.id"
+          :validate-on-blur="!isFieldDirty"
+        >
+          <Field :data-invalid="!!errors.length">
+            <div class="space-y-2">
+              <FieldLabel :for="field.name">{{ item.label }} *</FieldLabel>
+              <Input
+                :id="field.name"
+                v-bind="componentField"
+                :placeholder="item.placeholder"
+                :aria-invalid="!!errors.length"
+                required
+              />
+              <FieldError v-if="errors.length" :errors="errors" />
+            </div>
+          </Field>
+        </VeeField>
+      </template>
+
+      <VeeField v-slot="{ field, errors }" name="gender">
+        <Field :data-invalid="!!errors.length">
+          <div class="space-y-2">
+            <FieldContent>
+              <FieldLabel :for="field.name">Sexe *</FieldLabel>
+            </FieldContent>
+            <Select
+              :model-value="field.value"
+              @update:model-value="field.onChange"
+              @blur="field.onBlur"
+              required
+            >
+              <SelectTrigger :id="field.name" class="w-full" :aria-invalid="!!errors.length">
+                <SelectValue placeholder="Sélectionnez un genre" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectItem v-for="gender of GENDERS" :value="gender.id">
+                    {{ gender.label }}
+                  </SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+            <FieldError v-if="errors.length" :errors="errors" />
+          </div>
+        </Field>
+      </VeeField>
+
+      <VeeField v-slot="{ field, errors, setValue }" name="age">
+        <Field :data-invalid="!!errors.length">
+          <div class="space-y-2">
+            <FieldLabel :for="field.name">Âge *</FieldLabel>
+            <NumberField
+              :id="field.name"
+              :min="16"
+              :max="120"
+              :model-value="field.value ?? null"
+              @update:model-value="
+                (v) => {
+                  if (v) {
+                    setValue(v)
+                  } else {
+                    setValue(undefined)
+                  }
                 }
-              }
-            "
-            required
-          >
-            <NumberFieldContent>
-              <NumberFieldDecrement />
-              <FormControl>
-                <NumberFieldInput />
-              </FormControl>
-              <NumberFieldIncrement />
-            </NumberFieldContent>
-          </NumberField>
-          <FormMessage />
-        </div>
-      </FormItem>
-    </FormField>
-  </div>
+              "
+              required
+            >
+              <NumberFieldContent>
+                <NumberFieldDecrement />
+                <NumberFieldInput :id="field.name" :aria-invalid="!!errors.length" />
+                <NumberFieldIncrement />
+              </NumberFieldContent>
+            </NumberField>
+            <FieldError v-if="errors.length" :errors="errors" />
+          </div>
+        </Field>
+      </VeeField>
+    </div>
 
-  <FormField v-slot="{ componentField }" name="ethnicCommunity">
-    <FormItem>
-      <div class="space-y-2">
-        <FormLabel>Êtes-vous membre d'une communauté ethnique spécifique ?</FormLabel>
-        <Select v-bind="componentField">
-          <FormControl>
-            <SelectTrigger class="w-full">
+    <VeeField v-slot="{ field, errors }" name="ethnicCommunity">
+      <Field :data-invalid="!!errors.length">
+        <div class="space-y-2">
+          <FieldContent>
+            <FieldLabel :for="field.name">
+              Êtes-vous membre d'une communauté ethnique spécifique ?
+            </FieldLabel>
+          </FieldContent>
+          <Select
+            :model-value="field.value"
+            @update:model-value="field.onChange"
+            @blur="field.onBlur"
+          >
+            <SelectTrigger :id="field.name" class="w-full" :aria-invalid="!!errors.length">
               <SelectValue placeholder="Sélectionner une communauté" />
             </SelectTrigger>
-          </FormControl>
-          <SelectContent>
-            <SelectGroup>
-              <SelectItem v-for="community of LOCAL_ETHNICS_COMMUNITIES" :value="community.id">
-                {{ community.label }}
-              </SelectItem>
-            </SelectGroup>
-          </SelectContent>
-        </Select>
-        <FormMessage />
-      </div>
-    </FormItem>
-  </FormField>
+            <SelectContent>
+              <SelectGroup>
+                <SelectItem v-for="community of LOCAL_ETHNICS_COMMUNITIES" :value="community.id">
+                  {{ community.label }}
+                </SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+          <FieldError v-if="errors.length" :errors="errors" />
+        </div>
+      </Field>
+    </VeeField>
 
-  <FormField v-slot="{ componentField }" name="occupation" :validate-on-blur="!isFieldDirty">
-    <FormItem>
-      <div class="space-y-2">
-        <FormLabel>Activité / Emploi</FormLabel>
-        <FormControl>
-          <Input v-bind="componentField" placeholder="Votre activité ou travail" />
-        </FormControl>
-        <FormMessage />
-      </div>
-    </FormItem>
-  </FormField>
+    <VeeField v-slot="{ field, errors }" name="occupation" :validate-on-blur="!isFieldDirty">
+      <Field :data-invalid="!!errors.length">
+        <div class="space-y-2">
+          <FieldLabel :for="field.name">Activité / Emploi</FieldLabel>
+          <Input
+            :id="field.name"
+            v-bind="field"
+            placeholder="Votre activité ou travail"
+            :aria-invalid="!!errors.length"
+          />
+          <FieldError v-if="errors.length" :errors="errors" />
+        </div>
+      </Field>
+    </VeeField>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -178,13 +204,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/shared/components/ui/select'
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/shared/components/ui/form'
 import { Users } from 'lucide-vue-next'
 import {
   NumberField,
@@ -194,8 +213,9 @@ import {
   NumberFieldInput,
 } from '@/shared/components/ui/number-field'
 import { Input } from '@/shared/components/ui/input'
-import { useFormContext } from 'vee-validate'
+import { Field as VeeField, useFormContext } from 'vee-validate'
 import type { RegisterParishionerFormValues } from '@/features/register-parishioner/types/parishioner_form.types'
+import { Field, FieldContent, FieldError, FieldLabel } from '@/shared/components/ui/field'
 
 const { isFieldDirty } = useFormContext<RegisterParishionerFormValues>()
 </script>

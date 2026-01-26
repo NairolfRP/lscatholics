@@ -1,25 +1,27 @@
 <template>
-  <form @submit="onSubmit">
-    <Card class="p-6">
-      <CardHeader>
-        <CardTitle class="text-2xl font-semibold text-gray-900"> Faire un don </CardTitle>
-      </CardHeader>
-      <CardContent class="space-y-6">
-        <DonationAmountSection :predefined-amounts="predefinedAmounts" />
+  <Card class="p-6">
+    <CardHeader>
+      <CardTitle class="text-2xl font-semibold text-gray-900"> Faire un don </CardTitle>
+    </CardHeader>
+    <CardContent class="space-y-6">
+      <form id="donation-form" @submit="onSubmit">
+        <FieldGroup>
+          <DonationAmountSection :predefined-amounts="predefinedAmounts" />
 
-        <div class="space-y-4 pt-4 border-t">
-          <DonationPersonalInfoSection />
-          <DonationAddressSection />
-        </div>
+          <div class="space-y-4 pt-4 border-t">
+            <DonationPersonalInfoSection />
+            <DonationAddressSection />
+          </div>
 
-        <DonationOptionsSection />
-      </CardContent>
+          <DonationOptionsSection />
+        </FieldGroup>
+      </form>
+    </CardContent>
 
-      <CardFooter class="pt-6">
-        <DonationSubmitButton :is-submitting="isSubmitting" :amount="values.amount" />
-      </CardFooter>
-    </Card>
-  </form>
+    <CardFooter class="pt-6">
+      <DonationSubmitButton :is-submitting="isSubmitting" :amount="values.amount" />
+    </CardFooter>
+  </Card>
 </template>
 
 <script setup lang="ts">
@@ -32,6 +34,7 @@ import DonationOptionsSection from '@/features/donation/components/form/Donation
 import DonationSubmitButton from '@/features/donation/components/form/DonationSubmitButton.vue'
 import { useDonationSubmit } from '@/features/donation/composables/use_donation_submit'
 import { usePaymentPopup } from '@/features/donation/composables/use_payment_popup'
+import { FieldGroup } from '@/shared/components/ui/field'
 
 const { handleSubmit, isSubmitting, values, predefinedAmounts, setErrors, resetForm } =
   useDonationForm()

@@ -51,35 +51,15 @@
       </div>
       <div v-else class="md:container mx-auto px-4">
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <article v-for="article in articles.data" :key="article.id" class="group">
-            <Link route="news.single" :params="{ slug: article.slug }">
-              <Card class="card-hover h-full">
-                <CardHeader>
-                  <div class="uppercase font-bold text-primary text-sm">
-                    {{ article.category || 'Archidiocèse' }}
-                  </div>
-                  <CardTitle
-                    class="font-bold text-xl group-hover:text-catholic-gold transition-colors mb-1"
-                  >
-                    {{ article.title }}
-                  </CardTitle>
-                  <span class="text-base font-normal">
-                    <time :datetime="article.publishedAt">{{
-                      formatDate(article.publishedAt)
-                    }}</time>
-                  </span>
-                </CardHeader>
-                <CardFooter class="px-6">
-                  <CardAction class="flex">
-                    <Button variant="link" size="sm" class="text-catholic-gold">
-                      Lire la suite
-                      <ArrowRight class="w-3 h-3 ml-1" />
-                    </Button>
-                  </CardAction>
-                </CardFooter>
-              </Card>
-            </Link>
-          </article>
+          <ArticleCard
+            v-for="article in articles.data"
+            :key="article.id"
+            :title="article.title"
+            :slug="article.slug"
+            :category="article.category"
+            :published-at="article.publishedAt"
+            class="group"
+          />
         </div>
 
         <div class="mt-12 flex justify-center">
@@ -118,7 +98,6 @@
 <script setup lang="ts">
 import PageBanner from '@/shared/components/layout/PageBanner.vue'
 import { Button } from '@/shared/components/ui/button'
-import { Card, CardAction, CardFooter, CardHeader, CardTitle } from '@/shared/components/ui/card'
 import {
   Pagination,
   PaginationContent,
@@ -129,16 +108,14 @@ import {
   PaginationPrevious,
 } from '@/shared/components/ui/pagination'
 import Head from '@/shared/components/AppHead.vue'
-import { ArrowRight } from 'lucide-vue-next'
 import type { InferPageProps } from '@adonisjs/inertia/types'
 import type NewsController from '#news/controllers/news_controller'
 import { Alert, AlertDescription, AlertTitle } from '@/shared/components/ui/alert'
 import { CircleAlert } from 'lucide-vue-next'
 import { router } from '@inertiajs/vue3'
 import { tuyau } from '@/lib/tuyau'
-import { Link } from '@tuyau/inertia/vue'
-import { formatDate } from '@/lib/utils'
 import { Typography } from '@/shared/components/ui/typography'
+import ArticleCard from '@/shared/components/ArticleCard.vue'
 
 const { selectedCategory, categories, articles } = defineProps<{
   articles: InferPageProps<NewsController, 'index'>['articles']

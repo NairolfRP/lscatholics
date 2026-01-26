@@ -7,3 +7,15 @@ corerage/
 tmp/
 *.min.js
 renovate.json
+inertia/assets/images
+inertia/assets/favicon
+public/
+
+# Images
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.svg
+*.webp
+*.avif

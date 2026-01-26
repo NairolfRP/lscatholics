@@ -1,16 +1,20 @@
 <template>
-  <FormField v-slot="{ value }" name="district">
-    <FormItem>
-      <FormLabel>District {{ values.address ? '*' : '' }}</FormLabel>
-      <Select :model-value="value" @update:model-value="handleDistrictChange">
-        <FormControl>
-          <SelectTrigger class="w-full">
-            <SelectValue placeholder="Sélectionnez un district" />
-          </SelectTrigger>
-        </FormControl>
-        <SelectContent>
+  <VeeField v-slot="{ field, errors }" name="district">
+    <Field :data-invalid="!!errors.length">
+      <FieldContent>
+        <FieldLabel :for="field.name">District {{ values.address ? '*' : '' }}</FieldLabel>
+      </FieldContent>
+      <Select
+        :model-value="field.value"
+        @update:model-value="handleDistrictChange"
+        @blur="field.onBlur"
+      >
+        <SelectTrigger :id="field.name" class="w-full" :aria-invalid="!!errors.length">
+          <SelectValue placeholder="Sélectionnez un district" />
+        </SelectTrigger>
+        <SelectContent position="item-aligned">
           <SelectGroup>
-            <SelectItem value="null" :disabled="!value"> N/A </SelectItem>
+            <SelectItem value="null" :disabled="!field.value"> N/A </SelectItem>
           </SelectGroup>
           <SelectSeparator />
           <SelectGroup>
@@ -36,9 +40,9 @@
           </SelectGroup>
         </SelectContent>
       </Select>
-      <FormMessage />
-    </FormItem>
-  </FormField>
+      <FieldError v-if="errors.length" :errors="errors" />
+    </Field>
+  </VeeField>
 </template>
 
 <script setup lang="ts">
@@ -47,13 +51,6 @@ import {
   getNorthDistricts,
   GTA5DistrictId,
 } from '#shared/constants/districts.constants'
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/shared/components/ui/form'
 import {
   Select,
   SelectContent,
@@ -64,10 +61,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/shared/components/ui/select'
-import { useFormValues, useSetFieldValue } from 'vee-validate'
+import { Field as VeeField, useFormValues, useSetFieldValue } from 'vee-validate'
 import { computed } from 'vue'
 import { DonationFormValues } from '@/features/donation/types/donation.types'
 import { AcceptableValue } from 'reka-ui'
+import { Field, FieldContent, FieldError, FieldLabel } from '@/shared/components/ui/field'
 
 const values = useFormValues<DonationFormValues>()
 const setFieldValue = useSetFieldValue<DonationFormValues['district']>('district')

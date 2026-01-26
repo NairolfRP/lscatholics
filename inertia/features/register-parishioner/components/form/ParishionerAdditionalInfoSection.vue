@@ -1,33 +1,32 @@
 <template>
-  <FormField v-slot="{ componentField }" name="message">
-    <FormItem>
+  <VeeField v-slot="{ field, errors }" name="message">
+    <Field :data-invalid="!!errors.length">
       <div class="space-y-4">
-        <FormLabel class="text-lg font-semibold text-gray-900">
+        <FieldLabel :for="field.name" class="text-lg font-semibold text-gray-900">
           Informations complémentaires
-        </FormLabel>
+        </FieldLabel>
         <div class="space-y-2">
-          <FormControl>
-            <Textarea v-bind="componentField" placeholder="Écrire ici..." :rows="4" :max="300" />
-          </FormControl>
-          <FormDescription>
+          <Textarea
+            :id="field.name"
+            v-bind="field"
+            placeholder="Écrire ici..."
+            :rows="4"
+            :max="300"
+            :aria-invalid="!!errors.length"
+          />
+          <FieldDescription>
             Facultatif. Vous pouvez ajouter tout ce que vous avez envie de nous transmettre : à
             propos de vous, de votre foyer, de vos besoins, ...
-          </FormDescription>
-          <FormMessage />
+          </FieldDescription>
+          <FieldError v-if="errors.length" :errors="errors" />
         </div>
       </div>
-    </FormItem>
-  </FormField>
+    </Field>
+  </VeeField>
 </template>
 
 <script setup lang="ts">
-import {
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/shared/components/ui/form'
 import { Textarea } from '@/shared/components/ui/textarea'
+import { Field as VeeField } from 'vee-validate'
+import { Field, FieldDescription, FieldError, FieldLabel } from '@/shared/components/ui/field'
 </script>

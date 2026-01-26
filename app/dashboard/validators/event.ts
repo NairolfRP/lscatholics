@@ -1,5 +1,6 @@
 import vine from '@vinejs/vine'
 import { DateTime } from 'luxon'
+import { noHtmlTags } from '#core/validators/rules/no_html_tags_rule'
 
 export const createEventValidator = vine.compile(
   vine.object({
@@ -10,7 +11,7 @@ export const createEventValidator = vine.compile(
       .regex(/^[a-z0-9-]+$/)
       .optional(),
     description: vine.string().trim().minLength(10).maxLength(255),
-    content: vine.string().trim().minLength(10),
+    content: vine.string().trim().minLength(10).use(noHtmlTags()),
     location: vine.string().trim().minLength(5),
     parishId: vine.number().nonNegative().optional(),
     coverImageUrl: vine.string().url().optional(),
@@ -41,7 +42,7 @@ export const updateEventValidator = vine.compile(
       .regex(/^[a-z0-9-]+$/)
       .optional(),
     description: vine.string().trim().minLength(10).maxLength(255).optional(),
-    content: vine.string().trim().minLength(10).optional(),
+    content: vine.string().trim().minLength(10).use(noHtmlTags()).optional(),
     location: vine.string().trim().minLength(5).optional(),
     parishId: vine.number().nonNegative().optional(),
     coverImageUrl: vine.string().url().optional(),
