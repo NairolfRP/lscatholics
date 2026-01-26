@@ -18,19 +18,22 @@ interface Props {
 
 const props = defineProps<Props>()
 
-// Fonction pour générer un ID à partir d'un texte (slug)
+marked.setOptions({
+  breaks: true,
+  gfm: true,
+})
+
 function generateId(text: string): string {
   return text
     .toLowerCase()
     .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '') // Supprimer les accents
-    .replace(/[^\w\s-]/g, '') // Supprimer les caractères spéciaux
-    .replace(/\s+/g, '-') // Remplacer les espaces par des tirets
-    .replace(/-+/g, '-') // Éviter les tirets multiples
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^\w\s-]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-')
     .trim()
 }
 
-// Fonction pour extraire le texte brut d'un token (pour les IDs)
 function extractText(tokens: Token[]): string {
   return tokens
     .map((token) => {
@@ -42,7 +45,6 @@ function extractText(tokens: Token[]): string {
     .join('')
 }
 
-// Fonction pour rendre un token Markdown en VNode avec nos composants
 function renderToken(token: Token) {
   switch (token.type) {
     case 'heading': {
@@ -87,7 +89,7 @@ function renderToken(token: Token) {
         Typography,
         {
           variant: 'p',
-          class: 'mb-4',
+          class: 'mb-4 leading-7',
         },
         { default: () => renderTokens(token.tokens || []) }
       )
@@ -130,7 +132,6 @@ function renderToken(token: Token) {
       return h('em', { class: 'italic' }, renderTokens(token.tokens || []))
 
     case 'link':
-      // Vérifier si c'est un lien externe
       const isExternal = token.href.startsWith('http://') || token.href.startsWith('https://')
       return h(
         LinkText,
@@ -191,11 +192,9 @@ function renderToken(token: Token) {
       return ''
 
     case 'text':
-      // Pour le texte avec tokens (ex: texte avec gras/italique à l'intérieur)
       if ('tokens' in token && token.tokens) {
         return renderTokens(token.tokens as Token[])
       }
-      // Texte brut
       return token.text || ''
 
     case 'br':
@@ -205,7 +204,6 @@ function renderToken(token: Token) {
       return h('del', { class: 'line-through' }, renderTokens(token.tokens || []))
 
     default:
-      // Fallback pour les types non gérés
       if ('text' in token) {
         return token.text || ''
       }
@@ -213,12 +211,10 @@ function renderToken(token: Token) {
   }
 }
 
-// Fonction pour rendre un tableau de tokens
 function renderTokens(tokens: Token[]): (VNode | string)[] {
   return tokens.map((token) => renderToken(token)).flat()
 }
 
-// Parser le Markdown et créer les VNodes
 const contentNodes = computed(() => {
   if (!props.content) return []
 
@@ -228,7 +224,6 @@ const contentNodes = computed(() => {
 </script>
 
 <style scoped>
-/* Styles additionnels si nécessaire */
 .markdown-content :deep(img) {
   max-width: 100%;
   height: auto;
@@ -239,7 +234,6 @@ const contentNodes = computed(() => {
   overflow-x: auto;
 }
 
-/* Support pour les checkbox dans les listes */
 .markdown-content :deep(input[type='checkbox']) {
   margin-right: 0.5em;
 }

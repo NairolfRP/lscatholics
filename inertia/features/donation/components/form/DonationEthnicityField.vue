@@ -1,9 +1,11 @@
 <template>
-  <FormField v-slot="{ value, setValue }" name="ethnicity" class="space-y-1.5">
-    <FormItem>
-      <FormLabel>Ethnie</FormLabel>
+  <VeeField v-slot="{ field, errors, setValue }" name="ethnicity" class="space-y-1.5">
+    <Field :data-invalid="!!errors.length">
+      <FieldContent>
+        <FieldLabel :for="field.name">Ethnie</FieldLabel>
+      </FieldContent>
       <Select
-        :model-value="value"
+        :model-value="field.value"
         @update:model-value="
           (v) => {
             if (v !== 'null') {
@@ -13,15 +15,14 @@
             }
           }
         "
+        @blur="field.onBlur"
       >
-        <FormControl>
-          <SelectTrigger class="w-full">
-            <SelectValue placeholder="Sélectionnez une ethnie" />
-          </SelectTrigger>
-        </FormControl>
+        <SelectTrigger :id="field.name" class="w-full" :aria-invalid="!!errors.length">
+          <SelectValue placeholder="Sélectionnez une ethnie" />
+        </SelectTrigger>
         <SelectContent>
           <SelectGroup>
-            <SelectItem value="null" :disabled="!value"> N/A </SelectItem>
+            <SelectItem value="null" :disabled="!field.value"> N/A </SelectItem>
             <SelectSeparator />
             <SelectItem v-for="ethnicGroup of ETHNIC_GROUPS" :value="ethnicGroup.id">
               {{ ethnicGroup.label }}
@@ -29,20 +30,13 @@
           </SelectGroup>
         </SelectContent>
       </Select>
-      <FormMessage />
-    </FormItem>
-  </FormField>
+      <FieldError v-if="errors.length" :errors="errors" />
+    </Field>
+  </VeeField>
 </template>
 
 <script setup lang="ts">
 import { ETHNIC_GROUPS, EthnicGroupId } from '#shared/constants/ethnicity.constants'
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/shared/components/ui/form'
 import {
   Select,
   SelectContent,
@@ -52,4 +46,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/shared/components/ui/select'
+import { Field as VeeField } from 'vee-validate'
+import { Field, FieldContent, FieldError, FieldLabel } from '@/shared/components/ui/field'
 </script>

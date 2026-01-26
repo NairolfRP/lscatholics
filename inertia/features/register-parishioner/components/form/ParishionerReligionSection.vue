@@ -5,16 +5,21 @@
       Paroisse et religion
     </h3>
     <div class="grid md:grid-cols-2 gap-4">
-      <FormField v-slot="{ componentField }" name="baptized">
-        <FormItem>
+      <VeeField v-slot="{ field, errors }" name="baptized">
+        <Field :data-invalid="!!errors.length">
           <div class="space-y-2">
-            <FormLabel>Êtes-vous baptisé ? *</FormLabel>
-            <Select v-bind="componentField" required>
-              <FormControl>
-                <SelectTrigger class="w-full">
-                  <SelectValue placeholder="Sélectionnez une réponse" />
-                </SelectTrigger>
-              </FormControl>
+            <FieldContent>
+              <FieldLabel :for="field.name">Êtes-vous baptisé ? *</FieldLabel>
+            </FieldContent>
+            <Select
+              :model-value="field.value"
+              @update:model-value="field.onChange"
+              @blur="field.onBlur"
+              required
+            >
+              <SelectTrigger :id="field.name" class="w-full" :aria-invalid="!!errors.length">
+                <SelectValue placeholder="Sélectionnez une réponse" />
+              </SelectTrigger>
               <SelectContent>
                 <SelectItem
                   v-for="option in [
@@ -29,21 +34,26 @@
                 </SelectItem>
               </SelectContent>
             </Select>
-            <FormMessage />
+            <FieldError v-if="errors.length" :errors="errors" />
           </div>
-        </FormItem>
-      </FormField>
+        </Field>
+      </VeeField>
 
-      <FormField v-slot="{ componentField }" name="religion">
-        <FormItem>
+      <VeeField v-slot="{ field, errors }" name="religion">
+        <Field :data-invalid="!!errors.length">
           <div class="space-y-2">
-            <FormLabel>Religion *</FormLabel>
-            <Select v-bind="componentField" required>
-              <FormControl>
-                <SelectTrigger class="w-full">
-                  <SelectValue placeholder="Sélectionnez une réponse" />
-                </SelectTrigger>
-              </FormControl>
+            <FieldContent>
+              <FieldLabel :for="field.name">Religion *</FieldLabel>
+            </FieldContent>
+            <Select
+              :model-value="field.value"
+              @update:model-value="field.onChange"
+              @blur="field.onBlur"
+              required
+            >
+              <SelectTrigger :id="field.name" class="w-full" :aria-invalid="!!errors.length">
+                <SelectValue placeholder="Sélectionnez une réponse" />
+              </SelectTrigger>
               <SelectContent>
                 <SelectItem
                   v-for="religion in CATHOLIC_OR_OTHER"
@@ -54,35 +64,40 @@
                 </SelectItem>
               </SelectContent>
             </Select>
-            <FormMessage />
+            <FieldError v-if="errors.length" :errors="errors" />
           </div>
-        </FormItem>
-      </FormField>
+        </Field>
+      </VeeField>
 
-      <FormField v-slot="{ componentField }" name="parish">
-        <FormItem>
+      <VeeField v-slot="{ field, errors }" name="parish">
+        <Field :data-invalid="!!errors.length">
           <div class="space-y-2">
-            <FormLabel>Paroisse *</FormLabel>
-            <Select v-bind="componentField" required>
-              <FormControl>
-                <SelectTrigger class="w-full">
-                  <SelectValue placeholder="Sélectionnez une paroisse" />
-                </SelectTrigger>
-              </FormControl>
+            <FieldContent>
+              <FieldLabel :for="field.name">Paroisse *</FieldLabel>
+            </FieldContent>
+            <Select
+              :model-value="field.value"
+              @update:model-value="field.onChange"
+              @blur="field.onBlur"
+              required
+            >
+              <SelectTrigger class="w-full" :aria-invalid="!!errors.length">
+                <SelectValue :id="field.name" placeholder="Sélectionnez une paroisse" />
+              </SelectTrigger>
               <SelectContent>
                 <SelectItem v-for="parish in parishes" :key="parish.id" :value="parish.id">
                   {{ parish.name }}
                 </SelectItem>
               </SelectContent>
             </Select>
-            <FormDescription>
+            <FieldError v-if="errors.length" :errors="errors" />
+            <FieldDescription>
               Indiquez une paroisse de l'archidiocèse. En général, on indique la paroisse la plus
               proche de son domicile.
-            </FormDescription>
-            <FormMessage />
+            </FieldDescription>
           </div>
-        </FormItem>
-      </FormField>
+        </Field>
+      </VeeField>
     </div>
   </div>
 </template>
@@ -97,13 +112,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/shared/components/ui/select'
-import {
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/shared/components/ui/form'
 import { Church } from 'lucide-vue-next'
+import { Field as VeeField } from 'vee-validate'
+import {
+  Field,
+  FieldContent,
+  FieldDescription,
+  FieldError,
+  FieldLabel,
+} from '@/shared/components/ui/field'
 </script>

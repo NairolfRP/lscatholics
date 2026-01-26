@@ -1,10 +1,10 @@
 <template>
-  <FormField v-slot="{ value, setValue }" name="age">
-    <FormItem>
+  <VeeField v-slot="{ field, errors, setValue }" name="age">
+    <Field :data-invalid="!!errors.length">
       <NumberField
         id="age"
         :min="0"
-        :model-value="value"
+        :model-value="field.value"
         @update:model-value="
           (v) => {
             if (v) {
@@ -15,28 +15,19 @@
           }
         "
       >
-        <FormLabel>Âge</FormLabel>
+        <FieldLabel :for="field.name">Âge</FieldLabel>
         <NumberFieldContent>
           <NumberFieldDecrement />
-          <FormControl>
-            <NumberFieldInput />
-          </FormControl>
+          <NumberFieldInput :aria-invalid="!!errors.length" />
           <NumberFieldIncrement />
         </NumberFieldContent>
       </NumberField>
-      <FormMessage />
-    </FormItem>
-  </FormField>
+      <FieldError v-if="errors.length" :errors="errors" />
+    </Field>
+  </VeeField>
 </template>
 
 <script setup lang="ts">
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/shared/components/ui/form'
 import {
   NumberField,
   NumberFieldContent,
@@ -44,4 +35,6 @@ import {
   NumberFieldIncrement,
   NumberFieldInput,
 } from '@/shared/components/ui/number-field'
+import { Field as VeeField } from 'vee-validate'
+import { Field, FieldError, FieldLabel } from '@/shared/components/ui/field'
 </script>
