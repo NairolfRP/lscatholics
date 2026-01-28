@@ -14,7 +14,9 @@ const allyConfig = defineConfig({
   discord: services.discord({
     clientId: env.get('DISCORD_CLIENT_ID'),
     clientSecret: env.get('DISCORD_CLIENT_SECRET'),
-    callbackUrl: app.inProduction ? 'https://archls.infos.st/api/auth/callback/discord' : '',
+    callbackUrl: app.inProduction
+      ? 'https://archls.infos.st/api/auth/callback/discord'
+      : 'http://localhost:3333/api/auth/callback/discord',
     scopes: ['identify'],
   }),
 })
