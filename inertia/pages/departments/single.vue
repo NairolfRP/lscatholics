@@ -89,7 +89,7 @@
                     Téléphone
                   </Typography>
                   <span class="flex items-center gap-2">
-                    <Phone class="size-4" /> {{ member.phone || 'N/A' }}
+                    <Phone class="size-4" /> {{ member.phone || '700' }}
                   </span>
                 </CardContent>
               </Card>
