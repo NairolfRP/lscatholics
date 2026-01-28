@@ -3,13 +3,15 @@ import type { HttpContext } from '@adonisjs/core/http'
 export default class DepartmentsController {
   private allowedDepartments = [
     'office-of-the-archbishop',
-    'catholic-charities',
-    'chancellor',
-    'communications',
-    'financial-services',
-    'human-resources',
-    'general-counsel',
     'moderator-of-the-curia',
+    'chancellor',
+    'safety',
+    'communications',
+    'general-services',
+    'human-resources',
+    'financial-services',
+    'general-counsel',
+    'catholic-charities',
   ]
 
   index({ inertia }: HttpContext) {
