@@ -48,8 +48,8 @@ importers:
         specifier: ^2.0.1
         version: 2.0.1(@adonisjs/ally@5.1.1(@adonisjs/core@6.19.3(@adonisjs/assembler@7.8.2(typescript@5.9.3))(@vinejs/vine@4.2.0)(edge.js@6.4.0)))(@adonisjs/core@6.19.3(@adonisjs/assembler@7.8.2(typescript@5.9.3))(@vinejs/vine@4.2.0)(edge.js@6.4.0))
       '@inertiajs/vue3':
-        specifier: ^2.3.11
-        version: 2.3.11(vue@3.5.27(typescript@5.9.3))
+        specifier: ^2.3.12
+        version: 2.3.13(vue@3.5.27(typescript@5.9.3))
       '@internationalized/date':
         specifier: ^3.10.1
         version: 3.10.1
@@ -70,7 +70,7 @@ importers:
         version: 0.4.2(@adonisjs/core@6.19.3(@adonisjs/assembler@7.8.2(typescript@5.9.3))(@vinejs/vine@4.2.0)(edge.js@6.4.0))
       '@tuyau/inertia':
         specifier: ^0.0.15
-        version: 0.0.15(@inertiajs/vue3@2.3.11(vue@3.5.27(typescript@5.9.3)))(@tuyau/client@0.2.10)(vue@3.5.27(typescript@5.9.3))
+        version: 0.0.15(@inertiajs/vue3@2.3.13(vue@3.5.27(typescript@5.9.3)))(@tuyau/client@0.2.10)(vue@3.5.27(typescript@5.9.3))
       '@vee-validate/zod':
         specifier: ^4.15.1
         version: 4.15.1(vue@3.5.27(typescript@5.9.3))(zod@4.3.6)
@@ -102,8 +102,8 @@ importers:
         specifier: ^1.9.4
         version: 1.9.4
       lucide-vue-next:
-        specifier: ^0.562.0
-        version: 0.562.0(vue@3.5.27(typescript@5.9.3))
+        specifier: ^0.563.0
+        version: 0.563.0(vue@3.5.27(typescript@5.9.3))
       luxon:
         specifier: ^3.7.2
         version: 3.7.2
@@ -1095,11 +1095,11 @@ packages:
     resolution: {integrity: sha512-bV0Tgo9K4hfPCek+aMAn81RppFKv2ySDQeMoSZuvTASywNTnVJCArCZE2FWqpvIatKu7VMRLWlR1EazvVhDyhQ==}
     engines: {node: '>=18.18'}
 
-  '@inertiajs/core@2.3.11':
-    resolution: {integrity: sha512-PJV5t38CzncLqlXnox0jo2HZbEZhtS3ssHy6/CZqXwzH7HgctunU8JvfN6v7SgDUvBk+rP5k/I3dfztGeJO0hQ==}
+  '@inertiajs/core@2.3.13':
+    resolution: {integrity: sha512-qMHRnb59k/HehXw/WfQt5kPV0k9RapfFcWJZINJnYMwfHDEJ21iNVZjsJHmDN7yWdZmG1Dxi9FP4xarWWgdosQ==}
 
-  '@inertiajs/vue3@2.3.11':
-    resolution: {integrity: sha512-AyLlEtyoXncrg3sSHogO5HsXy9UdNN+0R5/g4oaoQzGLt45I+YuE45brG9X8/C1jfDkn/sI+SBMCqC0H4B2Gfw==}
+  '@inertiajs/vue3@2.3.13':
+    resolution: {integrity: sha512-e3uAc4Em6GrUo/51IXmckXyv7GTX0QacTGyP80NVXYhcgUJOH/lp+fzLbAhaiTSoG+4zuT/aKMAJRmXXX6CEGg==}
     peerDependencies:
       vue: ^3.0.0
 
@@ -4531,8 +4531,8 @@ packages:
     engines: {node: '>=8'}
     hasBin: true
 
-  laravel-precognition@1.0.0:
-    resolution: {integrity: sha512-hvXPT7dayCQAidxnsY0hab9Q+Y2rsh7xRpH9uiFtXN8Dekc3tIZt+NrxrOZ9N5SwHBmRBze/Bv+ElfXac0kD6g==}
+  laravel-precognition@1.0.1:
+    resolution: {integrity: sha512-BYaDUjEclKbxuQTG9yZnRjjD7ag1Xh+8hGOXmcrw91/vpbIOJ8cSFADTI0kvwetIr3AM1vOJzYwaoA9+KHhLwA==}
 
   launch-editor@2.11.1:
     resolution: {integrity: sha512-SEET7oNfgSaB6Ym0jufAdCeo3meJVeCaaDyzRygy0xsp2BFKCprcfHljTq4QkzTLUxEKkFK6OK4811YM2oSrRg==}
@@ -4688,8 +4688,8 @@ packages:
     resolution: {integrity: sha512-Jo6dJ04CmSjuznwJSS3pUeWmd/H0ffTlkXXgwZi+eq1UCmqQwCh+eLsYOYCwY991i2Fah4h1BEMCx4qThGbsiA==}
     engines: {node: '>=10'}
 
-  lucide-vue-next@0.562.0:
-    resolution: {integrity: sha512-LN0BLGKMFulv0lnfK29r14DcngRUhIqdcaL0zXTt2o0oS9odlrjCGaU3/X9hIihOjjN8l8e+Y9G/famcNYaI7Q==}
+  lucide-vue-next@0.563.0:
+    resolution: {integrity: sha512-zsE/lCKtmaa7bGfhSpN84br1K9YoQ5pCN+2oKWjQQG3Lo6ufUUKBuHSjNFI6RvUevxaajNXb8XwFUKeTXG3sIA==}
     peerDependencies:
       vue: '>=3.0.1'
 
@@ -7731,21 +7731,21 @@ snapshots:
 
   '@humanwhocodes/retry@0.4.3': {}
 
-  '@inertiajs/core@2.3.11':
+  '@inertiajs/core@2.3.13':
     dependencies:
       '@types/lodash-es': 4.17.12
       axios: 1.13.2
-      laravel-precognition: 1.0.0
+      laravel-precognition: 1.0.1
       lodash-es: 4.17.23
       qs: 6.14.1
     transitivePeerDependencies:
       - debug
 
-  '@inertiajs/vue3@2.3.11(vue@3.5.27(typescript@5.9.3))':
+  '@inertiajs/vue3@2.3.13(vue@3.5.27(typescript@5.9.3))':
     dependencies:
-      '@inertiajs/core': 2.3.11
+      '@inertiajs/core': 2.3.13
       '@types/lodash-es': 4.17.12
-      laravel-precognition: 1.0.0
+      laravel-precognition: 1.0.1
       lodash-es: 4.17.23
       vue: 3.5.27(typescript@5.9.3)
     transitivePeerDependencies:
@@ -9093,11 +9093,11 @@ snapshots:
       '@tuyau/utils': 0.0.9
       ts-morph: 26.0.0
 
-  '@tuyau/inertia@0.0.15(@inertiajs/vue3@2.3.11(vue@3.5.27(typescript@5.9.3)))(@tuyau/client@0.2.10)(vue@3.5.27(typescript@5.9.3))':
+  '@tuyau/inertia@0.0.15(@inertiajs/vue3@2.3.13(vue@3.5.27(typescript@5.9.3)))(@tuyau/client@0.2.10)(vue@3.5.27(typescript@5.9.3))':
     dependencies:
       '@tuyau/client': 0.2.10
     optionalDependencies:
-      '@inertiajs/vue3': 2.3.11(vue@3.5.27(typescript@5.9.3))
+      '@inertiajs/vue3': 2.3.13(vue@3.5.27(typescript@5.9.3))
       vue: 3.5.27(typescript@5.9.3)
 
   '@tuyau/utils@0.0.7': {}
@@ -11626,7 +11626,7 @@ snapshots:
       winston: 3.17.0
     optional: true
 
-  laravel-precognition@1.0.0:
+  laravel-precognition@1.0.1:
     dependencies:
       axios: 1.13.2
       lodash-es: 4.17.23
@@ -11809,7 +11809,7 @@ snapshots:
       yallist: 4.0.0
     optional: true
 
-  lucide-vue-next@0.562.0(vue@3.5.27(typescript@5.9.3)):
+  lucide-vue-next@0.563.0(vue@3.5.27(typescript@5.9.3)):
     dependencies:
       vue: 3.5.27(typescript@5.9.3)
 
@@ -12060,7 +12060,7 @@ snapshots:
   netlify@13.3.5:
     dependencies:
       '@netlify/open-api': 2.37.0
-      lodash-es: 4.17.21
+      lodash-es: 4.17.23
       micro-api-client: 3.3.0
       node-fetch: 3.3.2
       p-wait-for: 5.0.2
