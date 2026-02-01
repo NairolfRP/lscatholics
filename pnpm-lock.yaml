@@ -15,8 +15,8 @@ importers:
         specifier: ^5.1.1
         version: 5.1.1(@adonisjs/core@6.19.3(@adonisjs/assembler@7.8.2(typescript@5.9.3))(@vinejs/vine@4.2.0)(edge.js@6.4.0))
       '@adonisjs/auth':
-        specifier: ^9.5.1
-        version: 9.5.1(a7f6cd6dabbdf6b1c2491e68969dc763)
+        specifier: ^9.6.0
+        version: 9.6.0(a7f6cd6dabbdf6b1c2491e68969dc763)
       '@adonisjs/bouncer':
         specifier: ^3.1.6
         version: 3.1.6(@adonisjs/core@6.19.3(@adonisjs/assembler@7.8.2(typescript@5.9.3))(@vinejs/vine@4.2.0)(edge.js@6.4.0))(edge.js@6.4.0)
@@ -257,8 +257,8 @@ packages:
     peerDependencies:
       typescript: ^4.0.0 || ^5.0.0
 
-  '@adonisjs/auth@9.5.1':
-    resolution: {integrity: sha512-rDTSJaeK5DSc+VoicQeLaC7AgO5uQPE/1fuWeZoRgQSv/EIbo4dAxNjTThd33vvz5LgTKV8ug0O2mTi4rpIRCw==}
+  '@adonisjs/auth@9.6.0':
+    resolution: {integrity: sha512-v7wHlY606TwqnWWU5SIMJV0ZcNhjH2LeBLb764eCFVgeNEEdv8konhRcABqTTNADrHr1ANVuV7PymN9gzgG63w==}
     engines: {node: '>=18.16.0'}
     peerDependencies:
       '@adonisjs/core': ^6.11.0
@@ -6921,7 +6921,7 @@ snapshots:
     transitivePeerDependencies:
       - babel-plugin-macros
 
-  '@adonisjs/auth@9.5.1(a7f6cd6dabbdf6b1c2491e68969dc763)':
+  '@adonisjs/auth@9.6.0(a7f6cd6dabbdf6b1c2491e68969dc763)':
     dependencies:
       '@adonisjs/core': 6.19.3(@adonisjs/assembler@7.8.2(typescript@5.9.3))(@vinejs/vine@4.2.0)(edge.js@6.4.0)
       '@adonisjs/presets': 2.6.4(@adonisjs/assembler@7.8.2(typescript@5.9.3))(@adonisjs/core@6.19.3(@adonisjs/assembler@7.8.2(typescript@5.9.3))(@vinejs/vine@4.2.0)(edge.js@6.4.0))
@@ -12060,7 +12060,7 @@ snapshots:
   netlify@13.3.5:
     dependencies:
       '@netlify/open-api': 2.37.0
-      lodash-es: 4.17.21
+      lodash-es: 4.17.23
       micro-api-client: 3.3.0
       node-fetch: 3.3.2
       p-wait-for: 5.0.2
