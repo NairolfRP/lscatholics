@@ -94,12 +94,12 @@ export default class JobsController {
       postedAt = DateTime.now()
     }
 
-    const updatedArticle = {
+    const updatedJob = {
       ...payload,
       postedAt,
     }
 
-    await job.merge(updatedArticle).save()
+    await job.merge(updatedJob).save()
 
     return response.redirect().toRoute('dashboard.dashboard_jobs.show', { id: job.id })
   }
