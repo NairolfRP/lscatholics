@@ -5,7 +5,7 @@ import { createJobValidator, updatedJobValidator } from '#dashboard/validators/j
 
 export default class JobsController {
   async index({ inertia, request, bouncer }: HttpContext) {
-    await bouncer.authorize('userAbility', 'viewArticles')
+    await bouncer.authorize('userAbility', 'viewJobs')
 
     const search = request.input('search', '')
     let page = request.input('page', 1)
@@ -35,12 +35,12 @@ export default class JobsController {
   }
 
   async create({ inertia, bouncer }: HttpContext) {
-    await bouncer.authorize('userAbility', 'createArticles')
+    await bouncer.authorize('userAbility', 'createJobs')
     return inertia.render('dashboard/jobs/create')
   }
 
   async store({ request, response, bouncer }: HttpContext) {
-    await bouncer.authorize('userAbility', 'createArticles')
+    await bouncer.authorize('userAbility', 'createJobs')
 
     const payload = await request.validateUsing(createJobValidator)
 
@@ -63,7 +63,7 @@ export default class JobsController {
   }
 
   async show({ inertia, params, bouncer }: HttpContext) {
-    await bouncer.authorize('userAbility', 'viewArticles')
+    await bouncer.authorize('userAbility', 'viewJobs')
 
     const job = await Job.findOrFail(params.id)
 
@@ -73,7 +73,7 @@ export default class JobsController {
   }
 
   async edit({ inertia, params, bouncer }: HttpContext) {
-    await bouncer.authorize('userAbility', 'editArticles')
+    await bouncer.authorize('userAbility', 'editJobs')
 
     const job = await Job.findOrFail(params.id)
 
@@ -83,7 +83,7 @@ export default class JobsController {
   }
 
   async update({ request, response, params, bouncer }: HttpContext) {
-    await bouncer.authorize('userAbility', 'editArticles')
+    await bouncer.authorize('userAbility', 'editJobs')
 
     const job = await Job.findOrFail(params.id)
     const payload = await request.validateUsing(updatedJobValidator)
@@ -105,7 +105,7 @@ export default class JobsController {
   }
 
   async destroy({ response, session, params, bouncer }: HttpContext) {
-    await bouncer.authorize('userAbility', 'deleteArticles')
+    await bouncer.authorize('userAbility', 'deleteJobs')
 
     const job = await Job.findOrFail(params.id)
     await job.delete()

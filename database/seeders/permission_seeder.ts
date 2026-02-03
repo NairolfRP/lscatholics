@@ -41,6 +41,21 @@ export default class extends BaseSeeder {
         slug: 'manageUsers',
         description: 'Can manage users and permissions',
       },
+      {
+        name: 'Create Job Offer',
+        slug: 'createJobs',
+        description: 'Can create new jobs',
+      },
+      {
+        name: 'Edit Job Offer',
+        slug: 'editJobs',
+        description: 'Can edit existing jobs',
+      },
+      {
+        name: 'Delete Job Offer',
+        slug: 'deleteJobs',
+        description: 'Can delete jobs',
+      },
     ])
   }
 }
