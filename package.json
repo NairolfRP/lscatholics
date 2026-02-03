@@ -20,6 +20,7 @@
   "type": "module",
   "license": "LGPL-3.0-only",
   "scripts": {
+    "deploy-build": "pnpm install && NODE_ENV=production node ace build && cd build && pnpm install --prod && NODE_ENV=production node ace migration:run --force && NODE_ENV=production node ace db:seed",
     "start": "node bin/server.js",
     "build": "node ace build",
     "dev": "node ace serve --hmr",
