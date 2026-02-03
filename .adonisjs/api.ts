@@ -213,7 +213,7 @@ type DashboardJobsCreateGetHead = {
 }
 type DashboardJobsPost = {
   request: MakeTuyauRequest<
-    InferInput<(typeof import('../app/dashboard/validators/article.ts'))['createArticleValidator']>
+    InferInput<(typeof import('../app/dashboard/validators/job.ts'))['createJobValidator']>
   >
   response: MakeTuyauResponse<
     import('../app/dashboard/controllers/jobs_controller.ts').default['store'],
@@ -236,7 +236,7 @@ type DashboardJobsIdEditGetHead = {
 }
 type DashboardJobsIdPutPatch = {
   request: MakeTuyauRequest<
-    InferInput<(typeof import('../app/dashboard/validators/article.ts'))['updatedArticleValidator']>
+    InferInput<(typeof import('../app/dashboard/validators/job.ts'))['updatedJobValidator']>
   >
   response: MakeTuyauResponse<
     import('../app/dashboard/controllers/jobs_controller.ts').default['update'],
