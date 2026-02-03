@@ -3,7 +3,9 @@ import Permission from '#auth/models/permission'
 
 export default class extends BaseSeeder {
   async run() {
-    await Permission.createMany([
+    const uniqueKey = 'name'
+
+    await Permission.updateOrCreateMany(uniqueKey, [
       {
         name: 'Dashboard Access',
         slug: 'dashboardAccess',
