@@ -197,6 +197,59 @@ type DashboardEventsIdDelete = {
     false
   >
 }
+type DashboardJobsGetHead = {
+  request: unknown
+  response: MakeTuyauResponse<
+    import('../app/dashboard/controllers/jobs_controller.ts').default['index'],
+    false
+  >
+}
+type DashboardJobsCreateGetHead = {
+  request: unknown
+  response: MakeTuyauResponse<
+    import('../app/dashboard/controllers/jobs_controller.ts').default['create'],
+    false
+  >
+}
+type DashboardJobsPost = {
+  request: MakeTuyauRequest<
+    InferInput<(typeof import('../app/dashboard/validators/article.ts'))['createArticleValidator']>
+  >
+  response: MakeTuyauResponse<
+    import('../app/dashboard/controllers/jobs_controller.ts').default['store'],
+    true
+  >
+}
+type DashboardJobsIdGetHead = {
+  request: unknown
+  response: MakeTuyauResponse<
+    import('../app/dashboard/controllers/jobs_controller.ts').default['show'],
+    false
+  >
+}
+type DashboardJobsIdEditGetHead = {
+  request: unknown
+  response: MakeTuyauResponse<
+    import('../app/dashboard/controllers/jobs_controller.ts').default['edit'],
+    false
+  >
+}
+type DashboardJobsIdPutPatch = {
+  request: MakeTuyauRequest<
+    InferInput<(typeof import('../app/dashboard/validators/article.ts'))['updatedArticleValidator']>
+  >
+  response: MakeTuyauResponse<
+    import('../app/dashboard/controllers/jobs_controller.ts').default['update'],
+    true
+  >
+}
+type DashboardJobsIdDelete = {
+  request: unknown
+  response: MakeTuyauResponse<
+    import('../app/dashboard/controllers/jobs_controller.ts').default['destroy'],
+    false
+  >
+}
 type ContactGetHead = {
   request: unknown
   response: MakeTuyauResponse<
@@ -323,6 +376,20 @@ type RegisterParishionerPost = {
     true
   >
 }
+type JobsGetHead = {
+  request: unknown
+  response: MakeTuyauResponse<
+    import('../app/pages/controllers/jobs_controller.ts').default['index'],
+    false
+  >
+}
+type JobsIdGetHead = {
+  request: unknown
+  response: MakeTuyauResponse<
+    import('../app/pages/controllers/jobs_controller.ts').default['single'],
+    false
+  >
+}
 export interface ApiDefinition {
   'api': {
     payment: {
@@ -443,6 +510,30 @@ export interface ApiDefinition {
         $delete: DashboardEventsIdDelete
       }
     }
+    jobs: {
+      '$url': {}
+      '$get': DashboardJobsGetHead
+      '$head': DashboardJobsGetHead
+      'create': {
+        $url: {}
+        $get: DashboardJobsCreateGetHead
+        $head: DashboardJobsCreateGetHead
+      }
+      '$post': DashboardJobsPost
+      ':id': {
+        $url: {}
+        $get: DashboardJobsIdGetHead
+        $head: DashboardJobsIdGetHead
+        edit: {
+          $url: {}
+          $get: DashboardJobsIdEditGetHead
+          $head: DashboardJobsIdEditGetHead
+        }
+        $put: DashboardJobsIdPutPatch
+        $patch: DashboardJobsIdPutPatch
+        $delete: DashboardJobsIdDelete
+      }
+    }
   }
   'contact': {
     $url: {}
@@ -515,6 +606,16 @@ export interface ApiDefinition {
     $get: RegisterParishionerGetHead
     $head: RegisterParishionerGetHead
     $post: RegisterParishionerPost
+  }
+  'jobs': {
+    '$url': {}
+    '$get': JobsGetHead
+    '$head': JobsGetHead
+    ':slug': {
+      $url: {}
+      $get: JobsIdGetHead
+      $head: JobsIdGetHead
+    }
   }
 }
 const routes = [
@@ -688,6 +789,55 @@ const routes = [
   },
   {
     params: [],
+    name: 'dashboard.dashboard_jobs.index',
+    path: '/dashboard/jobs',
+    method: ['GET', 'HEAD'],
+    types: {} as DashboardJobsGetHead,
+  },
+  {
+    params: [],
+    name: 'dashboard.dashboard_jobs.create',
+    path: '/dashboard/jobs/create',
+    method: ['GET', 'HEAD'],
+    types: {} as DashboardJobsCreateGetHead,
+  },
+  {
+    params: [],
+    name: 'dashboard.dashboard_jobs.store',
+    path: '/dashboard/jobs',
+    method: ['POST'],
+    types: {} as DashboardJobsPost,
+  },
+  {
+    params: ['id'],
+    name: 'dashboard.dashboard_jobs.show',
+    path: '/dashboard/jobs/:id',
+    method: ['GET', 'HEAD'],
+    types: {} as DashboardJobsIdGetHead,
+  },
+  {
+    params: ['id'],
+    name: 'dashboard.dashboard_jobs.edit',
+    path: '/dashboard/jobs/:id/edit',
+    method: ['GET', 'HEAD'],
+    types: {} as DashboardJobsIdEditGetHead,
+  },
+  {
+    params: ['id'],
+    name: 'dashboard.dashboard_jobs.update',
+    path: '/dashboard/jobs/:id',
+    method: ['PUT', 'PATCH'],
+    types: {} as DashboardJobsIdPutPatch,
+  },
+  {
+    params: ['id'],
+    name: 'dashboard.dashboard_jobs.destroy',
+    path: '/dashboard/jobs/:id',
+    method: ['DELETE'],
+    types: {} as DashboardJobsIdDelete,
+  },
+  {
+    params: [],
     name: 'home',
     path: '/',
     method: ['GET', 'HEAD'],
@@ -838,7 +988,14 @@ const routes = [
     name: 'jobs.index',
     path: '/jobs',
     method: ['GET', 'HEAD'],
-    types: {} as unknown,
+    types: {} as JobsGetHead,
+  },
+  {
+    params: ['slug'],
+    name: 'jobs.single',
+    path: '/jobs/:slug',
+    method: ['GET', 'HEAD'],
+    types: {} as JobsIdGetHead,
   },
   {
     params: [],

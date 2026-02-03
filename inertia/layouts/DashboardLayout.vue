@@ -119,7 +119,16 @@
 <script setup lang="ts">
 import { computed, watch } from 'vue'
 import { Link } from '@inertiajs/vue3'
-import { Calendar, FileText, LayoutDashboard, LogOut, Menu, Settings, Users } from 'lucide-vue-next'
+import {
+  BriefcaseBusiness,
+  Calendar,
+  FileText,
+  LayoutDashboard,
+  LogOut,
+  Menu,
+  Settings,
+  Users,
+} from 'lucide-vue-next'
 import { Button } from '@/shared/components/ui/button'
 import { Sheet, SheetContent, SheetTrigger } from '@/shared/components/ui/sheet'
 import {
@@ -164,6 +173,12 @@ const menuItems = computed(() =>
       icon: Calendar,
       route: 'dashboard.dashboard_events.index' as const,
       permission: 'manageEvents',
+    },
+    {
+      label: "Offres d'emplois",
+      icon: BriefcaseBusiness,
+      route: 'dashboard.dashboard_jobs.index' as const,
+      permission: 'viewArticles',
     },
     {
       label: 'Utilisateurs',

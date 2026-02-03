@@ -211,3 +211,16 @@ export const getDepartmentBySlug = (slug: string) => {
 
   return dep
 }
+
+export const getDepartmentTitleById = (id: string) => {
+  const result = DEPARTMENTS.find((d) => d.id === id)
+
+  if (!result) return null
+
+  return {
+    long: result.title,
+    short: result.shortTitle,
+  }
+}
+
+export const getAllDepartmentsIDs = () => DEPARTMENTS.map((d) => d.id)

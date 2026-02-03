@@ -11,6 +11,7 @@ const ServicesController = () => import('#pages/controllers/services_controller'
 const DonateController = () => import('#pages/controllers/donate_controller')
 const RegisterParishionerController = () =>
   import('#pages/controllers/register_parishioners_controller')
+const JobsController = () => import('#pages/controllers/jobs_controller')
 
 router.get('/', [HomeController, 'index']).as('home')
 
@@ -62,6 +63,10 @@ router.on('/catholic-charities').renderInertia('catholic-charities').as('chariti
 
 router.on('/vocations').renderInertia('vocations').as('vocations')
 
-router.on('/jobs').renderInertia('jobs').as('jobs.index')
+router.get('/jobs', [JobsController, 'index']).as('jobs.index')
+router
+  .get('/jobs/:slug', [JobsController, 'single'])
+  .where('slug', router.matchers.slug())
+  .as('jobs.single')
 
 router.on('daily-readings').renderInertia('readings').as('dailyReadings')
