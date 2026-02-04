@@ -16,7 +16,7 @@ export default class RoleSeeder extends BaseSeeder {
 
     const rolePermissionsUniqueKey = ['roleId', 'permissionId'] as Array<'roleId' | 'permissionId'>
     const adminRoleId = roles[0].id
-    const adminPermissions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    const adminPermissions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
 
     await RolePermission.updateOrCreateMany(
       rolePermissionsUniqueKey,
