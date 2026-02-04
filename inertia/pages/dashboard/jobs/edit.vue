@@ -44,7 +44,12 @@ const onSubmit = (values: Record<string, any>) => {
         id: props.job.id,
       },
     }),
-    values
+    values,
+    {
+      onError: (res: Record<string, any>) => {
+        form.setErrors(res)
+      },
+    }
   )
 }
 </script>

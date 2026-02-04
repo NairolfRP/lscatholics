@@ -1,6 +1,7 @@
 import vine from '@vinejs/vine'
 import { DateTime } from 'luxon'
 import { getEmploymentTypes } from '#shared/constants/employment.constants'
+import Job from '#pages/models/job'
 
 export const createJobValidator = vine.create(
   vine.object({
@@ -9,7 +10,9 @@ export const createJobValidator = vine.create(
       .string()
       .trim()
       .regex(/^[a-z0-9-]+$/)
-      .optional(),
+      .minLength(3)
+      .maxLength(255)
+      .unique({ table: 'job_offers', column: 'slug' }),
     summary: vine.string().trim().minLength(10).maxLength(1500).optional(),
     reportsTo: vine.string().trim().minLength(3),
     department: vine.string(),
@@ -31,31 +34,41 @@ export const createJobValidator = vine.create(
   })
 )
 
-export const updatedJobValidator = vine.create(
-  vine.object({
-    title: vine.string().trim().minLength(3).maxLength(255).optional(),
-    slug: vine
-      .string()
-      .trim()
-      .regex(/^[a-z0-9-]+$/)
-      .optional(),
-    summary: vine.string().trim().minLength(10).maxLength(1500).optional(),
-    reportsTo: vine.string().trim().minLength(3).optional(),
-    department: vine.string().optional(),
-    responsibilities: vine.array(vine.string().trim().minLength(1)).minLength(1).optional(),
-    requirements: vine.array(vine.string().trim().minLength(1)).optional(),
-    salary: vine.number().withoutDecimals().nonNegative().optional(),
-    employmentType: vine.enum(getEmploymentTypes).optional(),
-    isActive: vine.boolean().optional(),
-    postedAt: vine
-      .date({ formats: { utc: true } })
-      .nullable()
-      .optional()
-      .transform((v) => (v ? DateTime.fromJSDate(v) : undefined)),
-    expiresAt: vine
-      .date({ formats: { utc: true } })
-      .nullable()
-      .optional()
-      .transform((v) => (v ? DateTime.fromJSDate(v) : undefined)),
-  })
-)
+export const updatedJobValidator = ({ currentSlug }: { currentSlug: string }) => {
+  return vine.create(
+    vine.object({
+      title: vine.string().trim().minLength(3).maxLength(255).optional(),
+      slug: vine
+        .string()
+        .trim()
+        .regex(/^[a-z0-9-]+$/)
+        .minLength(3)
+        .maxLength(255)
+        .unique(async (_, value) => {
+          if (value === currentSlug) return true
+
+          const row = await Job.findBy('slug', value)
+          return !row
+        })
+        .optional(),
+      summary: vine.string().trim().minLength(10).maxLength(1500).optional(),
+      reportsTo: vine.string().trim().minLength(3).optional(),
+      department: vine.string().optional(),
+      responsibilities: vine.array(vine.string().trim().minLength(1)).minLength(1).optional(),
+      requirements: vine.array(vine.string().trim().minLength(1)).optional(),
+      salary: vine.number().withoutDecimals().nonNegative().optional(),
+      employmentType: vine.enum(getEmploymentTypes).optional(),
+      isActive: vine.boolean().optional(),
+      postedAt: vine
+        .date({ formats: { utc: true } })
+        .nullable()
+        .optional()
+        .transform((v) => (v ? DateTime.fromJSDate(v) : undefined)),
+      expiresAt: vine
+        .date({ formats: { utc: true } })
+        .nullable()
+        .optional()
+        .transform((v) => (v ? DateTime.fromJSDate(v) : undefined)),
+    })
+  )
+}

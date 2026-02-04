@@ -86,7 +86,7 @@ export default class JobsController {
     await bouncer.authorize('userAbility', 'editJobs')
 
     const job = await Job.findOrFail(params.id)
-    const payload = await request.validateUsing(updatedJobValidator)
+    const payload = await request.validateUsing(updatedJobValidator({ currentSlug: job.slug }))
 
     let postedAt: Job['postedAt'] = payload.postedAt || null
 
