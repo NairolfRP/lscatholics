@@ -43,31 +43,11 @@
                 <SelectValue placeholder="Sélectionnez un district" />
               </SelectTrigger>
               <SelectContent>
-                <SelectGroup>
+                <!-- <SelectGroup>
                   <SelectItem value="null" :disabled="!field.value"> N/A </SelectItem>
-                </SelectGroup>
+                </SelectGroup> --->
                 <SelectSeparator />
-                <SelectGroup>
-                  <SelectLabel>Los Santos</SelectLabel>
-                  <SelectItem
-                    v-for="lsDistrict of sortedLSDistricts"
-                    :key="lsDistrict.id"
-                    :value="lsDistrict.id"
-                  >
-                    {{ lsDistrict.label }}
-                  </SelectItem>
-                </SelectGroup>
-                <SelectSeparator />
-                <SelectGroup>
-                  <SelectLabel>Autre ville/district</SelectLabel>
-                  <SelectItem
-                    v-for="northDistrict of sortedNorthDistricts"
-                    :key="northDistrict.id"
-                    :value="northDistrict.id"
-                  >
-                    {{ northDistrict.label }}
-                  </SelectItem>
-                </SelectGroup>
+                <DistrictSelectGroups />
               </SelectContent>
             </Select>
             <FieldError v-if="errors.length" :errors="errors" />
@@ -79,17 +59,10 @@
 </template>
 
 <script setup lang="ts">
-import {
-  getLSDistricts,
-  getNorthDistricts,
-  GTA5DistrictId,
-} from '#shared/constants/districts.constants'
+import { GTA5DistrictId } from '#shared/constants/districts.constants'
 import {
   Select,
   SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
   SelectSeparator,
   SelectTrigger,
   SelectValue,
@@ -99,7 +72,6 @@ import { Input } from '@/shared/components/ui/input'
 import { Field as VeeField, useFormContext } from 'vee-validate'
 import type { RegisterParishionerFormValues } from '@/features/register-parishioner/types/parishioner_form.types'
 import type { AcceptableValue } from 'reka-ui'
-import { computed } from 'vue'
 import {
   Field,
   FieldContent,
@@ -107,18 +79,11 @@ import {
   FieldError,
   FieldLabel,
 } from '@/shared/components/ui/field'
+import { DistrictSelectGroups } from '@/shared/components/forms/district-select'
 
 const { isFieldDirty, setFieldValue } = useFormContext<RegisterParishionerFormValues>()
 
 const handleDistrictChange = (v: AcceptableValue) => {
   setFieldValue('district', (v as GTA5DistrictId) ?? undefined)
 }
-
-const sortedLSDistricts = computed(() =>
-  getLSDistricts().toSorted((a, b) => a.label.localeCompare(b.label))
-)
-
-const sortedNorthDistricts = computed(() =>
-  getNorthDistricts().toSorted((a, b) => a.label.localeCompare(b.label))
-)
 </script>
