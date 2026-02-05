@@ -14,7 +14,7 @@
         </SelectTrigger>
         <SelectContent position="item-aligned">
           <SelectGroup>
-            <SelectItem value="null" :disabled="!field.value"> N/A </SelectItem>
+            <SelectItem value="none" :disabled="!field.value"> N/A </SelectItem>
           </SelectGroup>
           <SelectSeparator />
           <SelectGroup>
@@ -79,6 +79,8 @@ const sortedNorthDistricts = computed(() =>
 )
 
 const handleDistrictChange = (v: AcceptableValue) => {
-  setFieldValue((v as GTA5DistrictId) ?? undefined)
+  const newValue = v && v !== 'none' ? (v as GTA5DistrictId) : undefined
+
+  setFieldValue(newValue)
 }
 </script>
