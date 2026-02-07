@@ -291,8 +291,8 @@ const form = useForm({
   flyerUrl: props.event.flyerUrl || '',
   registrationRequired: props.event.registrationRequired,
   maxParticipants: props.event.maxParticipants || undefined,
-  startDate: new Date(props.event.startDate) || undefined,
-  endDate: new Date(props.event.endDate) || undefined,
+  startDate: props.event.startDate ? new Date(props.event.startDate) : undefined,
+  endDate: props.event.endDate ? new Date(props.event.endDate) : undefined,
 })
 
 const submit = () => {
