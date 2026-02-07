@@ -130,7 +130,7 @@
                 <div class="grid gap-4 md:grid-cols-2">
                   <div class="space-y-2">
                     <Label for="startDate">Date de début *</Label>
-                    <Input id="startDate" v-model="form.startDate" type="datetime-local" required />
+                    <DateTimePicker id="startDate" v-model="form.startDate" required />
                     <p v-if="form.errors.startDate" class="text-sm text-red-600">
                       {{ form.errors.startDate }}
                     </p>
@@ -138,7 +138,7 @@
 
                   <div class="space-y-2">
                     <Label for="endDate">Date de fin</Label>
-                    <Input id="endDate" v-model="form.endDate" type="datetime-local" />
+                    <DateTimePicker id="endDate" v-model="form.endDate" />
                     <p v-if="form.errors.endDate" class="text-sm text-red-600">
                       {{ form.errors.endDate }}
                     </p>
@@ -254,6 +254,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/shared/components/ui/select'
+import { DateTimePicker } from '@/shared/components/ui/datetime-picker'
 
 const form = useForm({
   title: '',
@@ -266,8 +267,8 @@ const form = useForm({
   flyerUrl: '',
   registrationRequired: false,
   maxParticipants: undefined as number | undefined,
-  startDate: '',
-  endDate: '',
+  startDate: undefined as Date | undefined,
+  endDate: undefined as Date | undefined,
 })
 
 const submit = () => {
