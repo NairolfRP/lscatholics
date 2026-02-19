@@ -5,6 +5,8 @@ import { DateTime } from 'luxon'
 export default class EventsController {
   async index({ inertia, logger }: HttpContext) {
     try {
+      const now = DateTime.now().toSQL()
+
       const data = await Event.query()
         .select(
           'id',
@@ -17,8 +19,13 @@ export default class EventsController {
           'max_participants',
           'start_date'
         )
+        .where((query) => {
+          query.whereNotNull('end_date').where('end_date', '>=', now)
+        })
+        .orWhere((query) => {
+          query.whereNull('end_date').where('start_date', '>=', now)
+        })
         .orderBy('start_date', 'asc')
-        .limit(4)
 
       return inertia.render('events/all', {
         events: data as Array<{
