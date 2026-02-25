@@ -1,6 +1,7 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import Job from '#pages/models/job'
 import { DateTime } from 'luxon'
+import { Exception } from '@adonisjs/core/exceptions'
 
 type JobOffer = {
   id: number
@@ -105,7 +106,7 @@ export default class JobsController {
     }
   }
 
-  async single({ params, response, inertia }: HttpContext) {
+  async single({ params, inertia }: HttpContext) {
     const { slug } = params
 
     const job = await Job.findByOrFail('slug', slug)
@@ -113,8 +114,7 @@ export default class JobsController {
     await job.checkAndDeactivate()
 
     if (!job.isActive && job.postedAt && job.postedAt > DateTime.now()) {
-      response.status(404)
-      return inertia.render('errors/not_found')
+      throw new Exception('Not found', { status: 404 })
     }
 
     return inertia.render('jobs/single', {
