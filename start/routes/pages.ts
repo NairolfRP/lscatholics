@@ -12,6 +12,7 @@ const DonateController = () => import('#pages/controllers/donate_controller')
 const RegisterParishionerController = () =>
   import('#pages/controllers/register_parishioners_controller')
 const JobsController = () => import('#pages/controllers/jobs_controller')
+const JobApplicationsController = () => import('#pages/controllers/job_applications_controller')
 
 router.get('/', [HomeController, 'index']).as('home')
 
@@ -68,5 +69,14 @@ router
   .get('/jobs/:slug', [JobsController, 'single'])
   .where('slug', router.matchers.slug())
   .as('jobs.single')
+
+router
+  .group(() => {
+    router.get('/', [JobApplicationsController, 'index']).as('jobs.application')
+    router.post('/', [JobApplicationsController, 'submit']).as('jobs.application_submit')
+  })
+  .prefix('/employment-application/:slug')
+  .where('slug', router.matchers.slug())
+  .use(middleware.auth())
 
 router.on('daily-readings').renderInertia('readings').as('dailyReadings')

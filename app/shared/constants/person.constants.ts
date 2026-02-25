@@ -267,3 +267,44 @@ export const householdRoleIds = () => {
 export const getHouseholdRoleLabelById = (id: string) => {
   return HOUSEHOLD_ROLES.find((r) => r.id === id)?.label || id
 }
+
+export const SCHOOL_LEVELS = [
+  { id: 'none', label: 'Aucun' },
+  { id: 'highSchoolDiploma', label: "Diplôme d'études secondaires (High School Diploma)" },
+  { id: 'someCollege', label: 'Études universitaires sans diplôme' },
+  { id: 'associateDegree', label: "Grade d'Associé (Associate Degree)" },
+  { id: 'bachelorsDegree', label: 'Premier cycle universitaire (Licence / Bachelor’s Degree)' },
+  { id: 'mastersDegree', label: 'Deuxième cycle universitaire (Master’s Degree)' },
+  { id: 'doctoralDegree', label: 'Doctorat' },
+] as const satisfies Array<{ id: string; label: string }>
+
+export const getSchoolLevelsIds = () => {
+  return SCHOOL_LEVELS.map((l) => l.id)
+}
+
+export const getSchoolLevelLabelById = (id: string) => {
+  return SCHOOL_LEVELS.find((l) => l.id === id)?.label || id
+}
+
+export const SPOKEN_LANGUAGES = [
+  { id: 'spanish', label: 'Espagnol' },
+  { id: 'french', label: 'Français' },
+  { id: 'portuguese', label: 'Portugais' },
+  { id: 'italian', label: 'Italien' },
+  { id: 'latin', label: 'Latin' },
+  { id: 'vietnamese', label: 'Vietnamien' },
+  { id: 'tagalog', label: 'Tagalog (Filipino)' },
+  { id: 'polish', label: 'Polonais' },
+  { id: 'german', label: 'Allemand' },
+  { id: 'korean', label: 'Coréen' },
+  { id: 'chinese', label: 'Chinois (mandarin)' },
+  { id: 'other', label: 'Autre' },
+] as const satisfies Array<{ id: string; label: string }>
+
+export const getSpokenLanguagesIds = () => {
+  return SPOKEN_LANGUAGES.map((l) => l.id)
+}
+
+export const getSpokenLanguagesLabelById = (id: string) => {
+  return SPOKEN_LANGUAGES.find((l) => l.id === id)?.label || id
+}

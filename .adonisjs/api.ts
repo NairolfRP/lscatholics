@@ -235,12 +235,10 @@ type DashboardJobsIdEditGetHead = {
   >
 }
 type DashboardJobsIdPutPatch = {
-  request: MakeTuyauRequest<
-    InferInput<(typeof import('../app/dashboard/validators/job.ts'))['updatedJobValidator']>
-  >
+  request: unknown
   response: MakeTuyauResponse<
     import('../app/dashboard/controllers/jobs_controller.ts').default['update'],
-    true
+    false
   >
 }
 type DashboardJobsIdDelete = {
@@ -387,6 +385,20 @@ type JobsIdGetHead = {
   request: unknown
   response: MakeTuyauResponse<
     import('../app/pages/controllers/jobs_controller.ts').default['single'],
+    false
+  >
+}
+type EmploymentapplicationIdGetHead = {
+  request: unknown
+  response: MakeTuyauResponse<
+    import('../app/pages/controllers/job_applications_controller.ts').default['index'],
+    false
+  >
+}
+type EmploymentapplicationIdPost = {
+  request: unknown
+  response: MakeTuyauResponse<
+    import('../app/pages/controllers/job_applications_controller.ts').default['submit'],
     false
   >
 }
@@ -615,6 +627,14 @@ export interface ApiDefinition {
       $url: {}
       $get: JobsIdGetHead
       $head: JobsIdGetHead
+    }
+  }
+  'employment-application': {
+    ':slug': {
+      $url: {}
+      $get: EmploymentapplicationIdGetHead
+      $head: EmploymentapplicationIdGetHead
+      $post: EmploymentapplicationIdPost
     }
   }
 }
@@ -996,6 +1016,20 @@ const routes = [
     path: '/jobs/:slug',
     method: ['GET', 'HEAD'],
     types: {} as JobsIdGetHead,
+  },
+  {
+    params: ['slug'],
+    name: 'jobs.application',
+    path: '/employment-application/:slug',
+    method: ['GET', 'HEAD'],
+    types: {} as EmploymentapplicationIdGetHead,
+  },
+  {
+    params: ['slug'],
+    name: 'jobs.application_submit',
+    path: '/employment-application/:slug',
+    method: ['POST'],
+    types: {} as EmploymentapplicationIdPost,
   },
   {
     params: [],

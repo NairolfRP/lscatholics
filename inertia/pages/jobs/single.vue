@@ -155,7 +155,7 @@
             </CardContent>
           </Card>
 
-          <Card class="overflow-hidden">
+          <Card v-if="canApply" class="overflow-hidden">
             <CardHeader>
               <CardTitle class="text-lg">Postuler</CardTitle>
             </CardHeader>
@@ -164,11 +164,12 @@
                 Envoyez votre CV au Département des Ressources Humaines.
               </Typography>
 
-              <Button variant="default" class="w-full" as-child>
-                <LinkText class="no-underline" href="#" external>
+              <Button v-if="user" variant="default" class="w-full" as-child>
+                <Link class="no-underline" route="jobs.application" :params="{ slug: offer.slug }">
                   Soumettre ma candidature
-                </LinkText>
+                </Link>
               </Button>
+              <AuthentificationRequiredAlert v-else text="pour déposer une candidature." />
 
               <Separator />
 
@@ -213,14 +214,18 @@ import {
   MoveLeft,
 } from 'lucide-vue-next'
 import { Card, CardContent, CardHeader, CardTitle } from '@/shared/components/ui/card'
-import { LinkText } from '@/shared/components/ui/LinkText'
 import { Button } from '@/shared/components/ui/button'
 import { Separator } from '@/shared/components/ui/separator'
 import { Badge } from '@/shared/components/ui/badge'
 import { Link } from '@tuyau/inertia/vue'
+import AuthentificationRequiredAlert from '@/shared/components/AuthentificationRequiredAlert.vue'
+import { useUser } from '@/shared/composables/use_user'
+
+const user = useUser()
 
 const props = defineProps<{
   offer: Job & { postedAt: string; expiresAt?: string }
+  isExpired: boolean
 }>()
 
 const getEmploymentTypeLabel = (type: string): string => {
@@ -244,4 +249,6 @@ const formatSalary = (salary: number): string => {
 
   return formatted.replace(/,/g, ' ').replace('$', '') + '$/semaine'
 }
+
+const canApply = props.offer.isActive && !props.isExpired
 </script>

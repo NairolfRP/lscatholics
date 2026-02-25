@@ -74,4 +74,6 @@ export default await Env.create(new URL('../', import.meta.url), {
   DONATE_PUBLIC_NOTIFICATION_WEBHOOK: Env.schema.string.optional(),
 
   DISCORD_PARISHIONER_REGISTRATION: Env.schema.string.optional(),
+
+  DISCORD_EMPLOYMENT_APPLICATION_WEBHOOK: Env.schema.string.optional(),
 })

@@ -23,7 +23,7 @@ type DiscordEmbedAuthor = {
   proxy_icon_url?: string
 }
 
-type DiscordEmbedField = {
+export type DiscordEmbedField = {
   name: string
   value: string
   inline?: boolean
