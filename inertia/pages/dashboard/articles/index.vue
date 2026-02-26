@@ -8,7 +8,7 @@
         <p class="text-gray-500 dark:text-gray-400">Gérez les articles de votre site</p>
       </div>
       <Button as-child>
-        <Link :href="tuyau.$url('dashboard.dashboard_articles.create')">
+        <Link :href="urlFor('dashboard.dashboard_articles.create')">
           <Plus class="mr-2 h-4 w-4" />
           Nouvel article
         </Link>
@@ -18,7 +18,7 @@
     <Card>
       <CardHeader>
         <CardTitle>Liste des articles</CardTitle>
-        <CardDescription> {{ articles.meta.total }} article(s) au total </CardDescription>
+        <CardDescription> {{ articles.metadata.total }} article(s) au total </CardDescription>
       </CardHeader>
       <CardContent class="flex flex-col gap-4">
         <Input v-model="search" placeholder="Rechercher..." />
@@ -36,11 +36,7 @@
               <TableRow v-for="article in articles.data" :key="article.id">
                 <TableCell class="font-medium">
                   <Link
-                    :href="
-                      tuyau.$url('dashboard.dashboard_articles.show', {
-                        params: { id: article.id },
-                      })
-                    "
+                    :href="urlFor('dashboard.dashboard_articles.show', { id: article.id })"
                     class="hover:underline"
                   >
                     {{ article.title }}
@@ -65,17 +61,11 @@
                     }}
                   </Badge>
                 </TableCell>
-                <TableCell>{{ formatDate(article.createdAt) }}</TableCell>
+                <TableCell>{{ article.createdAt ? formatDate(article.createdAt) : '' }}</TableCell>
                 <TableCell class="text-right">
                   <div class="flex justify-end gap-2">
                     <Button variant="ghost" size="icon" as-child>
-                      <Link
-                        :href="
-                          tuyau.$url('dashboard.dashboard_articles.edit', {
-                            params: { id: article.id },
-                          })
-                        "
-                      >
+                      <Link :href="urlFor('dashboard.dashboard_articles.edit', { id: article.id })">
                         <Edit class="h-4 w-4" />
                       </Link>
                     </Button>
@@ -89,8 +79,8 @@
           </Table>
           <Pagination
             v-slot="{ page }"
-            :items-per-page="articles.meta.per_page"
-            :total="articles.meta.total"
+            :items-per-page="articles.metadata.perPage"
+            :total="articles.metadata.total"
             @update:page="handleChangePage"
           >
             <PaginationContent v-slot="{ items }">
@@ -120,7 +110,7 @@
 <script setup lang="ts">
 import { Head, Link, router } from '@inertiajs/vue3'
 import { Button } from '@/shared/components/ui/button'
-import { tuyau } from '@/lib/tuyau'
+import { urlFor } from '@/client'
 import {
   Card,
   CardContent,
@@ -150,34 +140,30 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from '@/shared/components/ui/pagination'
+import { Data } from '@generated/data'
+import type { InertiaProps } from '@/types'
 
-interface Article {
-  id: number
-  title: string
-  status: 'draft' | 'published' | 'archived'
-  createdAt: string
-}
-
-interface Props {
+type PageProps = InertiaProps<{
   articles: {
-    data: Article[]
-    meta: {
+    data: Data.News[]
+    metadata: {
       total: number
-      per_page: number
-      current_page: number
-      last_page: number
+      perPage: number
+      currentPage: number
+      lastPage: number
+      firstPage: number
     }
   }
   filters: { search: string }
-}
+}>
 
-const props = defineProps<Props>()
+const props = defineProps<PageProps>()
 
 const search = ref(props.filters.search)
 
 const performSearch = useDebounceFn(() => {
   router.get(
-    tuyau.$url('dashboard.dashboard_articles.index'),
+    urlFor('dashboard.dashboard_articles.index'),
     { search: search.value || undefined },
     { preserveState: true, preserveScroll: true }
   )
@@ -185,7 +171,7 @@ const performSearch = useDebounceFn(() => {
 
 const handleChangePage = useDebounceFn((page: number) => {
   router.get(
-    tuyau.$url('dashboard.dashboard_articles.index'),
+    urlFor('dashboard.dashboard_articles.index'),
     { search: search.value || undefined, page: !page || page <= 1 ? undefined : page },
     { preserveState: true, preserveScroll: true }
   )
@@ -193,7 +179,7 @@ const handleChangePage = useDebounceFn((page: number) => {
 
 const deleteArticle = (id: number) => {
   if (confirm('Êtes-vous sûr de vouloir supprimer cet article ?')) {
-    router.delete(tuyau.$url('dashboard.dashboard_articles.destroy', { params: { id } }))
+    router.delete(urlFor('dashboard.dashboard_articles.destroy', { id }))
   }
 }
 

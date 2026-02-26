@@ -7,7 +7,7 @@
       <div class="flex h-full flex-col">
         <!-- Logo -->
         <div class="flex h-16 items-center border-b px-6">
-          <Link :href="tuyau.$url('home')" class="flex items-center gap-2">
+          <Link :href="urlFor('home')" class="flex items-center gap-2">
             <span class="text-xl font-bold">LS Catholics</span>
           </Link>
         </div>
@@ -17,10 +17,10 @@
           <Link
             v-for="item in menuItems"
             :key="item.route"
-            :href="tuyau.$has(item.route) ? tuyau.$url(item.route as any) : '#'"
+            :href="hasRoute(item.route) ? urlFor(item.route as any) : '#'"
             class="flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors"
             :class="[
-              tuyau.$current(item.route + '*')
+              isCurrentRoute(item.route + '*')
                 ? 'bg-gray-100 text-gray-900 dark:bg-gray-700 dark:text-white'
                 : 'text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700/50',
             ]"
@@ -48,14 +48,14 @@
               <DropdownMenuLabel>Mon compte</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem as-child>
-                <Link :href="tuyau.$url('profile')">
+                <Link :href="urlFor('profile')">
                   <Settings class="mr-2 h-4 w-4" />
                   Paramètres
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem as-child>
-                <Link :href="tuyau.$url('logout')" method="post" class="text-destructive">
+                <Link :href="urlFor('logout')" method="post" class="text-destructive">
                   <LogOut class="mr-2 h-4 w-4 text-inherit" />
                   Déconnexion
                 </Link>
@@ -79,7 +79,7 @@
         <SheetContent side="left" class="w-64 p-0">
           <div class="flex h-full flex-col">
             <div class="flex h-16 items-center border-b px-6">
-              <Link :href="tuyau.$url('home')" class="flex items-center gap-2">
+              <Link :href="urlFor('home')" class="flex items-center gap-2">
                 <span class="text-xl font-bold">LS Catholics</span>
               </Link>
             </div>
@@ -87,10 +87,10 @@
               <Link
                 v-for="item in menuItems"
                 :key="item.route"
-                :href="tuyau.$has(item.route) ? tuyau.$url(item.route as any) : '#'"
+                :href="hasRoute(item.route) ? urlFor(item.route as any) : '#'"
                 class="flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors"
                 :class="[
-                  tuyau.$current(item.route + '*')
+                  isCurrentRoute(item.route + '*')
                     ? 'bg-gray-100 text-gray-900'
                     : 'text-gray-700 hover:bg-gray-50',
                 ]"
@@ -140,7 +140,7 @@ import {
   DropdownMenuTrigger,
 } from '@/shared/components/ui/dropdown-menu'
 import { Avatar, AvatarFallback } from '@/shared/components/ui/avatar'
-import { tuyau } from '@/lib/tuyau'
+import { hasRoute, isCurrentRoute, urlFor } from '@/client'
 import { useUser } from '@/shared/composables/use_user'
 import { usePageProps } from '@/shared/composables/use_page_props'
 import { toast } from 'vue-sonner'

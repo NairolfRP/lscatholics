@@ -48,7 +48,7 @@
               </Button>
             </template>
             <Button type="button" variant="outline" as-child>
-              <Link :href="tuyau.$url('dashboard.dashboard_jobs.index')"> Annuler </Link>
+              <Link :href="urlFor('dashboard.dashboard_jobs.index')"> Annuler </Link>
             </Button>
           </div>
         </Field>
@@ -59,7 +59,7 @@
 
 <script setup lang="ts">
 import { Field as VeeField, useFormContext } from 'vee-validate'
-import { tuyau } from '@/lib/tuyau'
+import { urlFor } from '@/client'
 import { Card, CardContent, CardHeader, CardTitle } from '@/shared/components/ui/card'
 import { Field, FieldContent, FieldError, FieldLabel } from '@/shared/components/ui/field'
 import JobDashboardDatesFields from '@/features/jobs/components/form/dashboard/JobDashboardDatesFields.vue'

@@ -45,7 +45,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/shared/components/ui/dropdown-menu'
-import { tuyau } from '@/lib/tuyau'
+import { urlFor } from '@/client'
 import { router } from '@inertiajs/vue3'
 import { toast } from 'vue-sonner'
 import SwitchCharacter from '@/shared/components/SwitchCharacter.vue'
@@ -67,10 +67,10 @@ const openSwitchCharacter = () => {
 const handleMenuAction = (action: string) => {
   switch (action) {
     case 'settings':
-      router.visit(tuyau.$url('profile'))
+      router.visit(urlFor('profile'))
       break
     case 'logout':
-      router.post(tuyau.$url('logout'), undefined, {
+      router.post(urlFor('logout'), undefined, {
         preserveScroll: true,
         onSuccess: () => {
           toast.success('Déconnecté avec succès. A très bientôt !')

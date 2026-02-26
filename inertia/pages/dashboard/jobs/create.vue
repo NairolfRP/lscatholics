@@ -4,7 +4,7 @@
   <div class="space-y-6">
     <div class="flex items-center gap-4">
       <Button variant="ghost" size="icon" as-child>
-        <Link :href="tuyau.$url('dashboard.dashboard_jobs.index')">
+        <Link :href="urlFor('dashboard.dashboard_jobs.index')">
           <ArrowLeft class="h-4 w-4" />
         </Link>
       </Button>
@@ -21,15 +21,15 @@
 import { Head, Link, router } from '@inertiajs/vue3'
 import { Button } from '@/shared/components/ui/button'
 import { ArrowLeft } from 'lucide-vue-next'
-import { tuyau } from '@/lib/tuyau'
+import { hasRoute, urlFor } from '@/client'
 import { useDashboardCreateJobForm } from '@/features/jobs/composables/dashboard/use_dashboard_job_form'
 import JobDashboardForm from '@/features/jobs/components/form/dashboard/JobDashboardForm.vue'
 
 const form = useDashboardCreateJobForm()
 
 const onSubmit = (values: Record<string, any>) => {
-  if (!tuyau.$has('dashboard.dashboard_jobs.store')) return
+  if (!hasRoute('dashboard.dashboard_jobs.store')) return
 
-  router.post(tuyau.$url('dashboard.dashboard_jobs.store'), values)
+  router.post(urlFor('dashboard.dashboard_jobs.store'), values)
 }
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <a :href="tuyau.$url('signIn')">
+  <a :href="urlFor('signIn')">
     <Button
       variant="ghost"
       aria-label="Se connecter"
@@ -14,5 +14,5 @@
 <script lang="ts" setup>
 import { Button } from '@/shared/components/ui/button'
 import { LogIn } from 'lucide-vue-next'
-import { tuyau } from '@/lib/tuyau'
+import { urlFor } from '@/client'
 </script>

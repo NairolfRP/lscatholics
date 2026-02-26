@@ -1,5 +1,5 @@
 import { test } from '@japa/runner'
-import { createDonateFormValidator } from '#pages/validators/donate'
+import { createDonateFormValidator } from '#validators/donate'
 
 test.group('Donate Form Validator', () => {
   test('should validate complete valid donation form', async ({ assert }) => {

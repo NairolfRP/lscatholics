@@ -13,13 +13,19 @@
   </Head>
   <article>
     <header>
-      <PageBanner :bg-image="event.coverImageUrl" py="16" align="text-left">
+      <PageBanner :bg-image="event.coverImageUrl || undefined" py="16" align="text-left">
         <div class="flex flex-col gap-5 text-left">
           <Typography variant="h1" class="md:text-5xl font-bold uppercase">
             {{ event.title }}
           </Typography>
           <p class="text-xl font-bold opacity-90">
-            {{ formatDate(new Date(event.startDate), 'DD MMMM @ HH:mm', { locales: 'fr-FR' }) }}
+            {{
+              event.startDate
+                ? formatDate(new Date(event.startDate), 'DD MMMM @ HH:mm', {
+                    locales: 'fr-FR',
+                  })
+                : 'Date inconnue'
+            }}
             <span v-if="event.endDate">
               -
               {{ formatDate(new Date(event.endDate), 'DD MMMM @ HH:mm', { locales: 'fr-FR' }) }}
@@ -44,7 +50,13 @@
             <dl>
               <dt class="text-primary uppercase text-sm font-bold">Début</dt>
               <dd class="text-sm">
-                {{ formatDate(new Date(event.startDate), 'DD MMM HH:mm:ss', { locales: 'fr-FR' }) }}
+                {{
+                  event.startDate
+                    ? formatDate(new Date(event.startDate), 'DD MMM HH:mm:ss', {
+                        locales: 'fr-FR',
+                      })
+                    : 'Date inconnue'
+                }}
               </dd>
             </dl>
             <dl v-if="event.endDate">
@@ -83,28 +95,21 @@
 
 <script setup lang="ts">
 import Head from '@/shared/components/AppHead.vue'
-import { Link } from '@tuyau/inertia/vue'
+import { Link } from '@adonisjs/inertia/vue'
 import PageBanner from '@/shared/components/layout/PageBanner.vue'
 import { formatDate } from '@vueuse/core'
 import { Button } from '@/shared/components/ui/button'
 import { ArrowLeft } from 'lucide-vue-next'
 import { Typography } from '@/shared/components/ui/typography'
 import { MarkdownContent } from '@/shared/components/ui/markdown'
+import type { InertiaProps } from '@/types'
+import type { Data } from '@generated/data'
 
-const { event } = defineProps<{
-  event: {
-    title: string
-    description: string
-    content: string
-    location: string
-    coverImageUrl?: string
-    flyerUrl?: string
-    registrationRequired?: boolean
-    maxParticipants?: number
-    startDate: string
-    endDate?: string
-  }
-}>()
+type PageProps = InertiaProps<{
+  event: Data.Event.Variants['publicDetails']
+}>
+
+const { event } = defineProps<PageProps>()
 </script>
 <style scoped>
 .article-content {

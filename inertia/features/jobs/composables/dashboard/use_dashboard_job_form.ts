@@ -1,7 +1,7 @@
-import type Job from '#pages/models/job'
 import { useForm } from 'vee-validate'
 import { toTypedSchema } from '@vee-validate/zod'
 import { createJobOfferSchema } from '@/features/jobs/schemas/dashboard/create_job_offer.schema'
+import type { Data } from '@generated/data'
 
 export const useDashboardCreateJobForm = () => {
   return useForm({
@@ -16,7 +16,7 @@ export const useDashboardCreateJobForm = () => {
 }
 
 export function useDashboardEditJobForm(
-  job: Omit<Job, 'createdAt' | 'updatedAt'> & { postedAt?: string; expiresAt?: string }
+  job: Omit<Data.Job.Variants['allFields'], 'createdAt' | 'updatedAt'>
 ) {
   return useForm({
     validationSchema: toTypedSchema(createJobOfferSchema),

@@ -6,8 +6,14 @@
     "module": "ESNext",
     "jsxImportSource": "vue",
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./*"],
+      "@generated/*": ["../.adonisjs/client/*"]
     }
   },
-  "include": ["./**/*.ts", "./**/*.vue"]
+  "include": [
+    "./**/*.ts",
+    "./**/*.vue",
+    "../.adonisjs/client/**/*.ts",
+    "../.adonisjs/server/**/*.ts"
+  ]
 }

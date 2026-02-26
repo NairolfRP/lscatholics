@@ -1,4 +1,8 @@
+import { indexEntities } from '@adonisjs/core'
+import { indexPages } from '@adonisjs/inertia'
 import { defineConfig } from '@adonisjs/core/app'
+import { indexPolicies } from '@adonisjs/bouncer'
+import { generateRegistry } from '@tuyau/core/hooks'
 
 export default defineConfig({
   /*
@@ -28,8 +32,9 @@ export default defineConfig({
   commands: [
     () => import('@adonisjs/core/commands'),
     () => import('@adonisjs/lucid/commands'),
-    () => import('@tuyau/core/commands'),
-    () => import('@adonisjs-community/modules/commands'),
+    () => import('@adonisjs/session/commands'),
+    () => import('@adonisjs/inertia/commands'),
+    //() => import('@adonisjs-community/modules/commands'),
     () => import('@adonisjs/bouncer/commands'),
   ],
 
@@ -55,14 +60,14 @@ export default defineConfig({
     () => import('@adonisjs/vite/vite_provider'),
     () => import('@adonisjs/shield/shield_provider'),
     () => import('@adonisjs/static/static_provider'),
-    () => import('@adonisjs/cors/cors_provider'),
     () => import('@adonisjs/lucid/database_provider'),
-    () => import('@adonisjs/auth/auth_provider'),
+    () => import('@adonisjs/cors/cors_provider'),
     () => import('@adonisjs/inertia/inertia_provider'),
-    () => import('@tuyau/core/tuyau_provider'),
+    () => import('@adonisjs/auth/auth_provider'),
     () => import('@adonisjs/ally/ally_provider'),
-    () => import('#core/providers/app_provider'),
     () => import('@adonisjs/bouncer/bouncer_provider'),
+    () => import('#providers/api_provider'),
+    () => import('#providers/app_provider'),
   ],
 
   /*
@@ -73,7 +78,11 @@ export default defineConfig({
   | List of modules to import before starting the application.
   |
   */
-  preloads: [() => import('#start/routes'), () => import('#start/kernel')],
+  preloads: [
+    () => import('#start/routes'),
+    () => import('#start/kernel'),
+    () => import('#start/validator'),
+  ],
 
   /*
   |--------------------------------------------------------------------------
@@ -95,6 +104,11 @@ export default defineConfig({
         files: ['tests/functional/**/*.spec.{ts,js}'],
         name: 'functional',
         timeout: 30000,
+      },
+      {
+        files: ['tests/browser/**/*.spec.{ts,js}'],
+        name: 'browser',
+        timeout: 300000,
       },
     ],
     forceExit: false,
@@ -120,8 +134,15 @@ export default defineConfig({
     },
   ],
 
-  assetsBundler: false,
   hooks: {
-    onBuildStarting: [() => import('@adonisjs/vite/build_hook')],
+    init: [
+      indexEntities({
+        transformers: { enabled: true, withSharedProps: true },
+      }),
+      indexPages({ framework: 'vue3' }),
+      generateRegistry(),
+      indexPolicies(),
+    ],
+    buildStarting: [() => import('@adonisjs/vite/build_hook')],
   },
 })

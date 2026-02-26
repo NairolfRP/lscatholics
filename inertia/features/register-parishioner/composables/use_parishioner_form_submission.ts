@@ -1,7 +1,7 @@
 import { usePageProps } from '@/shared/composables/use_page_props'
 import { useErrors } from '@/shared/composables/use_errors'
 import { router } from '@inertiajs/vue3'
-import { tuyau } from '@/lib/tuyau'
+import { urlFor } from '@/client'
 import { toast } from 'vue-sonner'
 import type { FormContext } from 'vee-validate'
 import type { RegisterParishionerFormValues } from '@/features/register-parishioner/types/parishioner_form.types'
@@ -11,7 +11,7 @@ export function useParishionerFormSubmission(form: FormContext<RegisterParishion
   const errors = useErrors()
 
   const onSubmit = form.handleSubmit((formValues) => {
-    router.post(tuyau['register-parishioner'].$url(), formValues, {
+    router.post(urlFor('registerParishioner.submit'), formValues, {
       preserveScroll: true,
       preserveState: true,
       onSuccess: () => {

@@ -113,17 +113,19 @@ import { Badge } from '@/shared/components/ui/badge'
 import { Button } from '@/shared/components/ui/button'
 import { Card, CardContent } from '@/shared/components/ui/card'
 import Head from '@/shared/components/AppHead.vue'
-import { Link } from '@tuyau/inertia/vue'
+import { Link } from '@adonisjs/inertia/vue'
 import { ArrowRight, CircleAlert, Clock, MapPin } from 'lucide-vue-next'
-import type { InferPageProps } from '@adonisjs/inertia/types'
-import type EventsController from '#events/controllers/events_controller'
 import { Alert, AlertDescription, AlertTitle } from '@/shared/components/ui/alert'
 import { Typography } from '@/shared/components/ui/typography'
+import type { InertiaProps } from '@/types'
+import type { Data } from '@generated/data'
 
-const { events } = defineProps<{
-  events: InferPageProps<EventsController, 'index'>['events']
-  error: InferPageProps<EventsController, 'index'>['error']
-}>()
+type PageProps = InertiaProps<{
+  events: Data.Event.Variants['publicList'][]
+  error: boolean
+}>
+
+const { events } = defineProps<PageProps>()
 
 const formatDay = (date: Date): string => {
   return date.getDate().toString()

@@ -1,8 +1,8 @@
 import { test } from '@japa/runner'
 import nock from 'nock'
 import { DateTime } from 'luxon'
-import User from '#auth/models/user'
-import { DiscordTokenService } from '#auth/services/discord_token_service'
+import User from '#models/user'
+import { DiscordTokenService } from '#services/discord_token_service'
 import { HttpContextFactory } from '@adonisjs/core/factories/http'
 import testUtils from '@adonisjs/core/services/test_utils'
 

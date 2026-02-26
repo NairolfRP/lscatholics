@@ -1,10 +1,10 @@
 import { test } from '@japa/runner'
 import { DateTime } from 'luxon'
-import User from '#auth/models/user'
+import User from '#models/user'
 import testUtils from '@adonisjs/core/services/test_utils'
 import nock from 'nock'
 import sinon from 'sinon'
-import { DiscordTokenService } from '#auth/services/discord_token_service'
+import { DiscordTokenService } from '#services/discord_token_service'
 
 test.group('Profile - Show', (group) => {
   group.each.setup(() => testUtils.db().truncate())

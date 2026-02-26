@@ -32,17 +32,17 @@
           </Alert>
         </div>
 
-        <div v-else-if="offers?.length" class="space-y-8">
+        <div v-else-if="offers.data?.length" class="space-y-8">
           <div class="flex items-center justify-between">
             <p class="text-sm text-muted-foreground">
-              <span class="font-semibold text-foreground">{{ offersMeta.total }}</span>
-              {{ offersMeta.total > 1 ? 'offres trouvées' : 'offre trouvée' }}
+              <span class="font-semibold text-foreground">{{ offers.metadata.total }}</span>
+              {{ offers.metadata.total > 1 ? 'offres trouvées' : 'offre trouvée' }}
             </p>
           </div>
 
           <div class="grid sm:grid-cols-2 gap-6">
             <ArticleCard
-              v-for="job in offers"
+              v-for="job in offers.data"
               :key="job.id"
               route="jobs.single"
               :slug="job.slug"
@@ -63,7 +63,7 @@
             </WhenVisible>
           </ClientOnly>
 
-          <div v-if="!hasMorePages && offersMeta.total > 6" class="text-center py-8">
+          <div v-if="!hasMorePages && offers.metadata.total > 6" class="text-center py-8">
             <p class="text-sm text-muted-foreground">Vous avez vu toutes les offres disponibles</p>
           </div>
         </div>
@@ -93,8 +93,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { CircleAlert, Loader2, Briefcase, X } from 'lucide-vue-next'
-import type { InferPageProps } from '@adonisjs/inertia/types'
-import type JobsController from '#pages/controllers/jobs_controller'
 import Head from '@/shared/components/AppHead.vue'
 import { WhenVisible } from '@inertiajs/vue3'
 import ClientOnly from '@/shared/components/ClientOnly.vue'
@@ -108,31 +106,43 @@ import { useJobFilters } from '@/features/jobs/composables/use_job_filters'
 import JobActiveFilters from '@/features/jobs/components/JobActiveFilters.vue'
 import JobFilters from '@/features/jobs/components/JobFilters.vue'
 import JobFiltersMobile from '@/features/jobs/components/JobFiltersMobile.vue'
+import type { InertiaProps } from '@/types'
+import type { Data } from '@generated/data'
 
-const props = defineProps<{
-  offers: InferPageProps<JobsController, 'index'>['offers']
-  offersMeta: InferPageProps<JobsController, 'index'>['offersMeta']
+type PageProps = InertiaProps<{
+  offers: {
+    data: Data.Job.Variants['publicSummaryDetails'][]
+    metadata: {
+      total: number
+      perPage: number
+      currentPage: number
+      lastPage: number
+      firstPage: number
+    }
+  }
   filters: {
     search?: string
     departments?: string[]
     employmentTypes?: string[]
   }
   queryError?: boolean
-}>()
+}>
+
+const props = defineProps<PageProps>()
 
 const { hasActiveFilters, clearAllFilters } = useJobFilters(props.filters)
 
 const hasMorePages = computed(() => {
-  const { currentPage, lastPage } = props.offersMeta
+  const { currentPage, lastPage } = props.offers.metadata
   return currentPage < lastPage
 })
 
 const whenVisibleParams = computed(() => ({
-  only: ['offers', 'offersMeta', 'filters'],
+  only: ['offers', 'filters'],
   preserveUrl: true,
   data: {
     ...props.filters,
-    page: props.offersMeta.currentPage + 1,
+    page: props.offers.metadata.currentPage + 1,
   },
 }))
 </script>

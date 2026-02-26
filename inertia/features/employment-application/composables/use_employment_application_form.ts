@@ -1,7 +1,7 @@
 import { useForm } from 'vee-validate'
 import { useCurrentCharacter } from '@/shared/composables/use_current_character'
 import { router } from '@inertiajs/vue3'
-import { tuyau } from '@/lib/tuyau'
+import { urlFor } from '@/client'
 import { toast } from 'vue-sonner'
 import { toTypedSchema } from '@vee-validate/zod'
 import { employmentApplicationSchema } from '@/features/employment-application/schemas/employment_application.schema'
@@ -24,33 +24,25 @@ export function useEmploymentApplicationForm({ slug }: UseEmploymentApplicationF
   })
 
   const onSubmit = form.handleSubmit((data) => {
-    router.post(
-      tuyau.$url('jobs.application_submit', {
-        params: {
-          slug,
-        },
-      }),
-      data,
-      {
-        preserveScroll: true,
-        preserveState: true,
-        onSuccess: () => {
-          toast.success('Succès', {
-            description:
-              "Votre demande d'emploi a été enregistrée avec succès. Vous recevrez très bientôt une réponse du Département des Ressources Humaines.",
+    router.post(urlFor('jobs.application_submit', { slug }), data, {
+      preserveScroll: true,
+      preserveState: true,
+      onSuccess: () => {
+        toast.success('Succès', {
+          description:
+            "Votre demande d'emploi a été enregistrée avec succès. Vous recevrez très bientôt une réponse du Département des Ressources Humaines.",
+        })
+        form.resetForm()
+      },
+      onError: (errors) => {
+        if ('E_EMPLOYMENT_APPLICATION' in errors) {
+          return toast.error('Échec', {
+            description: errors.E_EMPLOYMENT_APPLICATION,
           })
-          form.resetForm()
-        },
-        onError: (errors) => {
-          if ('E_EMPLOYMENT_APPLICATION' in errors) {
-            return toast.error('Échec', {
-              description: errors.E_EMPLOYMENT_APPLICATION,
-            })
-          }
-          form.setErrors(errors)
-        },
-      }
-    )
+        }
+        form.setErrors(errors)
+      },
+    })
   })
 
   const onReset = () => {

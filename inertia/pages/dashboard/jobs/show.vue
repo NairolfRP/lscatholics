@@ -5,26 +5,26 @@
     <div class="flex items-center justify-between">
       <div class="flex items-center gap-4">
         <Button variant="ghost" size="icon" as-child>
-          <Link :href="tuyau.$url('dashboard.dashboard_jobs.index')">
+          <Link :href="urlFor('dashboard.dashboard_jobs.index')">
             <ArrowLeft class="h-4 w-4" />
           </Link>
         </Button>
         <div>
           <h1 class="text-3xl font-bold tracking-tight">{{ job.title }}</h1>
           <p class="text-gray-500 dark:text-gray-400">
-            {{ formatDate(job.postedAt) }}
+            {{ job.postedAt ? formatDate(job.postedAt) : '' }}
           </p>
         </div>
       </div>
       <div class="flex gap-2">
         <Button variant="outline" as-child>
-          <Link :href="tuyau.$url('jobs.single', { params: { slug: job.slug } })" target="_blank">
+          <Link :href="urlFor('jobs.single', { slug: job.slug })" target="_blank">
             <Eye class="mr-2 h-4 w-4" />
             Voir
           </Link>
         </Button>
         <Button as-child>
-          <Link :href="tuyau.$url('dashboard.dashboard_jobs.edit', { params: { id: job.id } })">
+          <Link :href="urlFor('dashboard.dashboard_jobs.edit', { id: job.id })">
             <Edit class="mr-2 h-4 w-4" />
             Modifier
           </Link>
@@ -114,14 +114,14 @@
             <div>
               <p class="font-medium text-gray-500 dark:text-gray-400">URL</p>
               <code class="text-xs bg-gray-100 px-2 py-1 rounded dark:bg-gray-800">
-                {{ tuyau.$url('jobs.single', { params: { slug: job.slug } }) }}
+                {{ urlFor('jobs.single', { slug: job.slug }) }}
               </code>
             </div>
             <div>
               <p class="font-medium text-gray-500 dark:text-gray-400">Créée le</p>
-              <p>{{ formatDate(job.createdAt) }}</p>
+              <p>{{ job.createdAt ? formatDate(job.createdAt) : 'Date inconnue' }}</p>
             </div>
-            <div>
+            <div v-if="job.updatedAt">
               <p class="font-medium text-gray-500 dark:text-gray-400">Modifiée le</p>
               <p>{{ formatDate(job.updatedAt) }}</p>
             </div>
@@ -137,16 +137,17 @@ import { Button } from '@/shared/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/shared/components/ui/card'
 import { Badge } from '@/shared/components/ui/badge'
 import { ArrowLeft, Edit, Eye } from 'lucide-vue-next'
-import { tuyau } from '@/lib/tuyau'
-import type Job from '#pages/models/job'
+import { urlFor } from '@/client'
 import { Typography } from '@/shared/components/ui/typography'
 import { getDepartmentTitleById } from '@/shared/constants/departments.constants'
+import type { Data } from '@generated/data'
+import type { InertiaProps } from '@/types'
 
-interface Props {
-  job: Job & { postedAt: string; expiresAt: string; createdAt: string; updatedAt: string }
-}
+type PageProps = InertiaProps<{
+  job: Data.Job.Variants['allFields']
+}>
 
-defineProps<Props>()
+defineProps<PageProps>()
 
 const getEmploymentTypeLabel = (type: string): string => {
   const types: Record<string, string> = {

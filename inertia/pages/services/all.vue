@@ -50,7 +50,7 @@ import Head from '@/shared/components/AppHead.vue'
 import PageBanner from '@/shared/components/layout/PageBanner.vue'
 import { Card, CardContent, CardFooter } from '@/shared/components/ui/card'
 import { Heart, ArrowRight } from 'lucide-vue-next'
-import { Link } from '@tuyau/inertia/vue'
+import { Link } from '@adonisjs/inertia/vue'
 import { SERVICES } from '#shared/constants/services.constants'
 import { cn } from '@/lib/utils'
 </script>

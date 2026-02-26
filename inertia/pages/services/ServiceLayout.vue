@@ -34,7 +34,7 @@
 </template>
 <script lang="ts" setup>
 import Head from '@/shared/components/AppHead.vue'
-import { Link } from '@tuyau/inertia/vue'
+import { Link } from '@adonisjs/inertia/vue'
 import PageBanner from '@/shared/components/layout/PageBanner.vue'
 import { Button } from '@/shared/components/ui/button'
 import { ChevronLeft } from 'lucide-vue-next'

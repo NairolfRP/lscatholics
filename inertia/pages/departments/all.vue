@@ -29,5 +29,5 @@ import { Typography } from '@/shared/components/ui/typography'
 import { Card, CardContent, CardHeader, CardTitle } from '@/shared/components/ui/card'
 import { DEPARTMENTS } from '@/shared/constants/departments.constants'
 import Head from '@/shared/components/AppHead.vue'
-import { Link } from '@tuyau/inertia/vue'
+import { Link } from '@adonisjs/inertia/vue'
 </script>

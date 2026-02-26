@@ -197,7 +197,6 @@
 </template>
 
 <script lang="ts" setup>
-import type Job from '#pages/models/job'
 import Head from '@/shared/components/AppHead.vue'
 import { Typography } from '@/shared/components/ui/typography'
 import { formatDate } from '@/lib/utils'
@@ -217,16 +216,19 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/shared/components/ui
 import { Button } from '@/shared/components/ui/button'
 import { Separator } from '@/shared/components/ui/separator'
 import { Badge } from '@/shared/components/ui/badge'
-import { Link } from '@tuyau/inertia/vue'
+import { Link } from '@adonisjs/inertia/vue'
 import AuthentificationRequiredAlert from '@/shared/components/AuthentificationRequiredAlert.vue'
 import { useUser } from '@/shared/composables/use_user'
+import type { InertiaProps } from '@/types'
+import type { Data } from '@generated/data'
+
+type PageProps = InertiaProps<{
+  offer: Data.Job.Variants['allFields']
+}>
 
 const user = useUser()
 
-const props = defineProps<{
-  offer: Job & { postedAt: string; expiresAt?: string }
-  isExpired: boolean
-}>()
+const props = defineProps<PageProps>()
 
 const getEmploymentTypeLabel = (type: string): string => {
   const types: Record<string, string> = {
@@ -250,5 +252,5 @@ const formatSalary = (salary: number): string => {
   return formatted.replace(/,/g, ' ').replace('$', '') + '$/semaine'
 }
 
-const canApply = props.offer.isActive && !props.isExpired
+const canApply = props.offer.isActive
 </script>

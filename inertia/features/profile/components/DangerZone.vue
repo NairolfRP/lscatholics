@@ -25,7 +25,7 @@
             <TriangleAlert />
             <AlertTitle>Cette action sera immédiate et irréversible.</AlertTitle>
           </Alert>
-          <form id="deleteUserForm" @submit.prevent="form.delete(tuyau.$url('deleteUser'))">
+          <form id="deleteUserForm" @submit.prevent="form.delete(urlFor('deleteUser'))">
             <Input
               type="text"
               v-model="form.username"
@@ -53,7 +53,7 @@
 </template>
 
 <script setup lang="ts">
-import { tuyau } from '@/lib/tuyau'
+import { urlFor } from '@/client'
 import {
   Card,
   CardDescription,

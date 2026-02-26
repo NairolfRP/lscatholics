@@ -56,7 +56,7 @@ import {
 import { Label } from '@/shared/components/ui/label'
 import type { GTAWorldCharacter } from '@gtaw-oauth-providers/adonisjs-ally'
 import { computed, ref, watch } from 'vue'
-import { tuyau } from '@/lib/tuyau'
+import { urlFor } from '@/client'
 import { LoaderCircle } from 'lucide-vue-next'
 import { Alert, AlertDescription, AlertTitle } from '@/shared/components/ui/alert'
 import { RadioGroup, RadioGroupItem } from '@/shared/components/ui/radio-group'
@@ -92,7 +92,7 @@ const handleSwitchCharacter = (characterId: number | undefined) => {
   }
 
   router.patch(
-    tuyau.$url('switchCharacter'),
+    urlFor('switchCharacter'),
     { characterId },
     {
       preserveScroll: true,
@@ -112,7 +112,7 @@ const fetchCharacters = async () => {
   error.value = null
 
   try {
-    const response = await fetch(tuyau.$url('listCharacters'), {
+    const response = await fetch(urlFor('listCharacters'), {
       headers: {
         'Accept': 'application/json',
         'X-Requested-With': 'XMLHttpRequest',

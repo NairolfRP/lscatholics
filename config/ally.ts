@@ -1,6 +1,6 @@
 import env from '#start/env'
 import { defineConfig, services } from '@adonisjs/ally'
-import { InferSocialProviders } from '@adonisjs/ally/types'
+import type { InferSocialProviders } from '@adonisjs/ally/types'
 import { GTAWDriver } from '@gtaw-oauth-providers/adonisjs-ally'
 import app from '@adonisjs/core/services/app'
 

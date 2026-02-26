@@ -1,6 +1,6 @@
 import factory from '@adonisjs/lucid/factories'
-import News from '#news/models/news'
-import { categories } from '#news/controllers/news_controller'
+import News from '#models/news'
+import { categories } from '#controllers/news_controller'
 import { DateTime } from 'luxon'
 
 export const NewsFactory = factory

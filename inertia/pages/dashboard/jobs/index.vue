@@ -8,7 +8,7 @@
         <p class="text-gray-500 dark:text-gray-400">Gérez les offres d'emplois</p>
       </div>
       <Button as-child>
-        <Link :href="tuyau.$url('dashboard.dashboard_jobs.create')">
+        <Link :href="urlFor('dashboard.dashboard_jobs.create')">
           <Plus class="mr-2 h-4 w-4" />
           Nouvelle offre
         </Link>
@@ -18,7 +18,7 @@
     <Card>
       <CardHeader>
         <CardTitle>Liste des offres d'emplois</CardTitle>
-        <CardDescription> {{ jobs.meta.total }} offre(s) au total </CardDescription>
+        <CardDescription> {{ jobs.metadata.total }} offre(s) au total </CardDescription>
       </CardHeader>
       <CardContent class="flex flex-col gap-4">
         <Input v-model="search" placeholder="Rechercher..." />
@@ -36,17 +36,13 @@
               <TableRow v-for="job in jobs.data" :key="job.id">
                 <TableCell class="font-medium">
                   <Link
-                    :href="
-                      tuyau.$url('dashboard.dashboard_jobs.show', {
-                        params: { id: job.id },
-                      })
-                    "
+                    :href="urlFor('dashboard.dashboard_jobs.show', { id: job.id })"
                     class="hover:underline"
                   >
                     {{ job.title }}
                   </Link>
                 </TableCell>
-                <TableCell>{{ formatDate(job.postedAt) }}</TableCell>
+                <TableCell>{{ job.postedAt ? formatDate(job.postedAt) : '' }}</TableCell>
                 <TableCell>
                   <Badge :variant="job.isActive ? 'default' : 'destructive'">
                     {{ job.isActive ? 'Actif' : 'Fermée' }}
@@ -56,13 +52,7 @@
                 <TableCell class="text-right">
                   <div class="flex justify-end gap-2">
                     <Button variant="ghost" size="icon" as-child>
-                      <Link
-                        :href="
-                          tuyau.$url('dashboard.dashboard_jobs.edit', {
-                            params: { id: job.id },
-                          })
-                        "
-                      >
+                      <Link :href="urlFor('dashboard.dashboard_jobs.edit', { id: job.id })">
                         <Edit class="h-4 w-4" />
                       </Link>
                     </Button>
@@ -76,8 +66,8 @@
           </Table>
           <Pagination
             v-slot="{ page }"
-            :items-per-page="jobs.meta.per_page"
-            :total="jobs.meta.total"
+            :items-per-page="jobs.metadata.perPage"
+            :total="jobs.metadata.total"
             @update:page="handleChangePage"
           >
             <PaginationContent v-slot="{ items }">
@@ -107,7 +97,7 @@
 <script setup lang="ts">
 import { Head, Link, router } from '@inertiajs/vue3'
 import { Button } from '@/shared/components/ui/button'
-import { tuyau } from '@/lib/tuyau'
+import { urlFor } from '@/client'
 import {
   Card,
   CardContent,
@@ -137,34 +127,30 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from '@/shared/components/ui/pagination'
+import type { InertiaProps } from '@/types'
+import { Data } from '@generated/data'
 
-interface Job {
-  id: number
-  title: string
-  isActive: boolean
-  postedAt: string
-}
-
-interface Props {
+type PageProps = InertiaProps<{
   jobs: {
-    data: Job[]
-    meta: {
+    data: Data.Job[]
+    metadata: {
       total: number
-      per_page: number
-      current_page: number
-      last_page: number
+      perPage: number
+      currentPage: number
+      lastPage: number
+      firstPage: number
     }
   }
   filters: { search: string }
-}
+}>
 
-const props = defineProps<Props>()
+const props = defineProps<PageProps>()
 
 const search = ref(props.filters.search)
 
 const performSearch = useDebounceFn(() => {
   router.get(
-    tuyau.$url('dashboard.dashboard_jobs.index'),
+    urlFor('dashboard.dashboard_jobs.index'),
     { search: search.value || undefined },
     { preserveState: true, preserveScroll: true }
   )
@@ -172,7 +158,7 @@ const performSearch = useDebounceFn(() => {
 
 const handleChangePage = useDebounceFn((page: number) => {
   router.get(
-    tuyau.$url('dashboard.dashboard_jobs.index'),
+    urlFor('dashboard.dashboard_jobs.index'),
     { search: search.value || undefined, page: !page || page <= 1 ? undefined : page },
     { preserveState: true, preserveScroll: true }
   )
@@ -180,7 +166,7 @@ const handleChangePage = useDebounceFn((page: number) => {
 
 const deleteJob = (id: number) => {
   if (confirm('Êtes-vous sûr de vouloir supprimer cette offre ?')) {
-    router.delete(tuyau.$url('dashboard.dashboard_jobs.destroy', { params: { id } }))
+    router.delete(urlFor('dashboard.dashboard_jobs.destroy', { id }))
   }
 }
 

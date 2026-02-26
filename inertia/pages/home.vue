@@ -162,25 +162,25 @@
             <AlertDescription>{{ posts.error }}</AlertDescription>
           </Alert>
 
-          <div v-else-if="props.posts?.data?.length === 0" class="italic text-center">
+          <div v-else-if="posts.data?.length === 0" class="italic text-center">
             Aucun article pour le moment !
           </div>
 
           <div v-else class="grid md:grid-cols-3 gap-8 items-stretch">
             <ArticleCard
-              v-for="article in props.posts.data"
+              v-for="article in posts.data"
               :key="`home-recent-post-${article.id}`"
               :title="article.title"
               :slug="article.slug"
               :category="article.category"
-              :published-at="article.publishedAt"
+              :published-at="article.publishedAt || ''"
               class="group"
             />
           </div>
         </WhenVisible>
       </ClientOnly>
 
-      <div v-if="props.posts?.data?.length > 0" class="text-center mt-8">
+      <div v-if="posts?.data?.length > 0" class="text-center mt-8">
         <Link route="news.index" as-child>
           <Button variant="default" size="lg" class="cursor-pointer">
             Voir toutes les actualités
@@ -301,29 +301,23 @@ import { ARCHDIOCESAN_HISTORY_START_DATE } from '@/shared/constants/archdiocese.
 import { computed } from 'vue'
 import HomepageBanner from '@/assets/images/cathedral-mass-with-cardinal.png'
 import PageBanner from '@/shared/components/layout/PageBanner.vue'
-import { Link } from '@tuyau/inertia/vue'
+import { Link } from '@adonisjs/inertia/vue'
 import { Alert, AlertDescription } from '@/shared/components/ui/alert'
 import { Skeleton } from '@/shared/components/ui/skeleton'
 import ClientOnly from '@/shared/components/ClientOnly.vue'
 import ArticleCard from '@/shared/components/ArticleCard.vue'
+import type { Data } from '@generated/data'
+import type { InertiaProps } from '@/types'
 
-type Post = {
-  id: number
-  slug: string
-  title: string
-  category?: string
-  publishedAt: string
-}
-
-type Props = {
+type PageProps = InertiaProps<{
   posts?: {
-    data: Post[]
+    data: Data.News.Variants['homePosts'][]
     error?: string
   }
-}
+}>
 
-const props = withDefaults(defineProps<Props>(), {
-  posts: () => ({ data: [] as Post[] }),
+const props = withDefaults(defineProps<PageProps>(), {
+  posts: () => ({ data: [] as Data.News.Variants['homePosts'][], error: '' }),
 })
 
 const now = new Date()

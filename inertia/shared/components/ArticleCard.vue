@@ -28,18 +28,18 @@
   </article>
 </template>
 <script setup lang="ts">
-import { formatDate } from '@/lib/utils'
 import { Card, CardAction, CardFooter, CardHeader, CardTitle } from '@/shared/components/ui/card'
 import { ArrowRight } from 'lucide-vue-next'
-import { Link } from '@tuyau/inertia/vue'
+import { Link } from '@adonisjs/inertia/vue'
 import { Button } from '@/shared/components/ui/button'
+import { formatDate } from '@/lib/utils'
 
 type Props = {
   route?: string
   slug: string
   category?: string
   title: string
-  publishedAt: string
+  publishedAt?: string
 }
 
 withDefaults(defineProps<Props>(), {

@@ -1,14 +1,14 @@
 import { router } from '@inertiajs/vue3'
 import { toast } from 'vue-sonner'
-import { tuyau } from '@/lib/tuyau'
-import { DonationFormValues } from '@/features/donation/types/donation.types'
+import { urlFor } from '@/client'
+import type { DonationFormValues } from '@/features/donation/types/donation.types'
 
 export function useDonationSubmit(setErrors: (errors: any) => void, resetForm: () => void) {
   const submitDonation = (
     formValues: DonationFormValues,
     openPayment: (url: string, onSuccess: () => void) => void
   ) => {
-    router.post(tuyau.donate.$url(), formValues, {
+    router.post(urlFor('donate.submit'), formValues, {
       preserveScroll: true,
       preserveState: true,
       onSuccess: (page) => {

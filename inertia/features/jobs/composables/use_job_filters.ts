@@ -1,7 +1,7 @@
 import { computed, ref } from 'vue'
 import { router } from '@inertiajs/vue3'
 import type { EmploymentType } from '#shared/constants/employment.constants'
-import { tuyau } from '@/lib/tuyau'
+import { urlFor } from '@/client'
 
 interface JobFilters {
   search: string
@@ -42,7 +42,7 @@ export function useJobFilters(initialFilters?: Partial<JobFilters>) {
         params.employmentTypes = filters.value.employmentTypes.join(',')
       }
 
-      router.get(tuyau.$url('jobs.index'), params, {
+      router.get(urlFor('jobs.index'), params, {
         preserveState: true,
         preserveScroll: true,
         only: ['offers', 'offersMeta', 'filters'],

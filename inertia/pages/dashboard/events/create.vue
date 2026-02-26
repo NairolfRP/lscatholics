@@ -5,7 +5,7 @@
     <div class="space-y-6">
       <div class="flex items-center gap-4">
         <Button variant="ghost" size="icon" as-child>
-          <Link :href="tuyau.$url('dashboard.dashboard_events.index')">
+          <Link :href="urlFor('dashboard.dashboard_events.index')">
             <ArrowLeft class="h-4 w-4" />
           </Link>
         </Button>
@@ -175,7 +175,7 @@
                     Créer l'événement
                   </Button>
                   <Button type="button" variant="outline" as-child>
-                    <Link :href="tuyau.$url('dashboard.dashboard_events.index')"> Annuler </Link>
+                    <Link :href="urlFor('dashboard.dashboard_events.index')"> Annuler </Link>
                   </Button>
                 </div>
               </CardContent>
@@ -242,7 +242,7 @@ import { Input } from '@/shared/components/ui/input'
 import { Label } from '@/shared/components/ui/label'
 import { Textarea } from '@/shared/components/ui/textarea'
 import { ArrowLeft } from 'lucide-vue-next'
-import { tuyau } from '@/lib/tuyau'
+import { urlFor } from '@/client'
 import { MarkdownTextarea } from '@/shared/components/ui/markdown'
 import { parishes } from '@/shared/constants/parishes.constants'
 import { Checkbox } from '@/shared/components/ui/checkbox'
@@ -272,7 +272,7 @@ const form = useForm({
 })
 
 const submit = () => {
-  form.post(tuyau.$url('dashboard.dashboard_events.store'))
+  form.post(urlFor('dashboard.dashboard_events.store'))
 }
 
 const generateSlug = () => {

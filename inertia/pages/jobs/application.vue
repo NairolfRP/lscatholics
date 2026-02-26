@@ -71,8 +71,6 @@
   </div>
 </template>
 <script setup lang="ts">
-import type { InferPageProps } from '@adonisjs/inertia/types'
-import type JobApplicationsController from '#pages/controllers/job_applications_controller'
 import { Typography } from '@/shared/components/ui/typography'
 import Head from '@/shared/components/AppHead.vue'
 import PageBanner from '@/shared/components/layout/PageBanner.vue'
@@ -93,15 +91,20 @@ import EmploymentApplicationOOCSection from '@/features/employment-application/c
 import EmploymentApplicationPersonalInformationsSection from '@/features/employment-application/components/form/EmploymentApplicationPersonalInformationsSection.vue'
 import EmploymentApplicationDeclarationSection from '@/features/employment-application/components/form/EmploymentApplicationDeclarationSection.vue'
 import EmploymentApplicationEducationSkillsSection from '@/features/employment-application/components/form/EmploymentApplicationEducationSkillsSection.vue'
+import type { InertiaProps } from '@/types'
+import type { Data } from '@generated/data'
+
+type PageProps = InertiaProps<{
+  job: Data.Job.Variants['employmentApplication']
+  isExpired: boolean
+}>
 
 const formId = computed(() => `employment-application-${props.job.slug}`)
 
 const sectionTitleClasses = 'border-b mb-3'
 const sectionClasses = 'mb-5'
 
-const props = defineProps<{
-  job: InferPageProps<JobApplicationsController, 'index'>['job']
-}>()
+const props = defineProps<PageProps>()
 
 const { onSubmit, onReset, values } = useEmploymentApplicationForm({ slug: props.job.slug })
 </script>

@@ -1,5 +1,5 @@
 import factory from '@adonisjs/lucid/factories'
-import Job from '#pages/models/job'
+import Job from '#models/job'
 import { DateTime } from 'luxon'
 
 const EMPLOYMENT_TYPES = ['full_time', 'part_time', 'temporary', 'occasional', 'contract']

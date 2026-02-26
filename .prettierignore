@@ -1,8 +1,8 @@
-build
+.adonisjs
 node_modules
+build
 .pnpm-store/
 dist/
-build/
 corerage/
 tmp/
 *.min.js

@@ -1,5 +1,5 @@
 import factory from '@adonisjs/lucid/factories'
-import Event from '#events/models/event'
+import Event from '#models/event'
 import { DateTime } from 'luxon'
 
 export const EventFactory = factory

@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -9,9 +8,11 @@
       Archidiocèse de Los Santos
     </title>
 
-    <script defer src="https://cloud.umami.is/script.js" data-website-id="e8a449db-c0bf-4343-a356-d64be7ac238f"></script>
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="e8a449db-c0bf-4343-a356-d64be7ac238f">
+      
+    </script>
 
-    @vite(['inertia/app/app.ts', `inertia/pages/${page.component}.vue`])
+    @vite(['inertia/app.ts'])
     @inertiaHead()
     @stack('dumper')
   </head>
@@ -19,5 +20,4 @@
   <body>
     @inertia()
   </body>
-
 </html>
