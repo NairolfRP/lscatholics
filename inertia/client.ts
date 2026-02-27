@@ -27,8 +27,6 @@ export const isCurrentRoute = (routeName: string) => {
   const page = usePage()
   const current = page.props.currentRoute as string | undefined
 
-  console.log(current)
-
   if (!current) return false
 
   if (routeName.endsWith('*')) {
