@@ -3,6 +3,7 @@
   <VeeField v-slot="{ field, errors }" type="checkbox" name="anonymous">
     <Field orientation="horizontal" :data-invalid="!!errors.length">
       <Checkbox
+        :id="field.name"
         :model-value="field.value"
         :aria-invalid="!!errors.length"
         @update:model-value="field.onChange"
