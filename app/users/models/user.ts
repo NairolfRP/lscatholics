@@ -1,17 +1,11 @@
-import { DateTime } from 'luxon'
-import { BaseModel, column, hasMany, manyToMany } from '@adonisjs/lucid/orm'
+import { hasMany, manyToMany } from '@adonisjs/lucid/orm'
 import Account from '#users/models/account'
 import type { HasMany, ManyToMany } from '@adonisjs/lucid/types/relations'
 import Post from '#posts/models/post'
 import Role from '#roles/models/role'
+import { UserSchema } from '#database/schema'
 
-export default class User extends BaseModel {
-  @column({ isPrimary: true })
-  declare id: number
-
-  @column()
-  declare name: string
-
+export default class User extends UserSchema {
   @hasMany(() => Account)
   declare accounts: HasMany<typeof Account>
 
@@ -19,12 +13,6 @@ export default class User extends BaseModel {
     foreignKey: 'authorId',
   })
   declare articles: HasMany<typeof Post>
-
-  @column.dateTime({ autoCreate: true })
-  declare createdAt: DateTime
-
-  @column.dateTime({ autoCreate: true, autoUpdate: true })
-  declare updatedAt: DateTime | null
 
   @manyToMany(() => Role, {
     pivotTable: 'user_roles',

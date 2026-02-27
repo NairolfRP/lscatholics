@@ -1,45 +1,12 @@
-import { DateTime } from 'luxon'
-import { BaseModel, beforeSave, belongsTo, column } from '@adonisjs/lucid/orm'
+import { beforeSave, belongsTo } from '@adonisjs/lucid/orm'
 import User from '#users/models/user'
 import type { BelongsTo } from '@adonisjs/lucid/types/relations'
 import encryption from '@adonisjs/core/services/encryption'
+import { AccountSchema } from '#database/schema'
 
-export default class Account extends BaseModel {
-  @column({ isPrimary: true })
-  declare id: number
-
-  @column()
-  declare userId: number
-
-  @column()
-  declare providerId: string
-
-  @column()
-  declare accountId: string
-
-  @column()
-  declare accessToken: string | null
-
-  @column()
-  declare refreshToken: string | null
-
-  @column.dateTime()
-  declare accessTokenExpiresAt: DateTime | null
-
-  @column.dateTime()
-  declare refreshTokenExpiresAt: DateTime | null
-
-  @column()
-  declare scope: string | null
-
+export default class Account extends AccountSchema {
   @belongsTo(() => User)
   declare user: BelongsTo<typeof User>
-
-  @column.dateTime({ autoCreate: true })
-  declare createdAt: DateTime
-
-  @column.dateTime({ autoCreate: true, autoUpdate: true })
-  declare updatedAt: DateTime
 
   @beforeSave()
   public static async encryptTokens(account: Account) {

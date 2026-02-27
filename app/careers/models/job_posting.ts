@@ -1,26 +1,9 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column, scope } from '@adonisjs/lucid/orm'
+import { column, scope } from '@adonisjs/lucid/orm'
+import { JobPostingSchema } from '#database/schema'
 
-export default class JobPosting extends BaseModel {
+export default class JobPosting extends JobPostingSchema {
   public static table = 'job_postings'
-
-  @column({ isPrimary: true })
-  declare id: number
-
-  @column()
-  declare slug: string
-
-  @column()
-  declare title: string
-
-  @column()
-  declare summary: string | null
-
-  @column()
-  declare reportsTo: string | null
-
-  @column()
-  declare department: string
 
   @column({
     prepare: (value) => JSON.stringify(value ?? []),
@@ -33,27 +16,6 @@ export default class JobPosting extends BaseModel {
     consume: (value) => (value ? JSON.parse(value) : null),
   })
   declare requirements: string[]
-
-  @column()
-  declare salary: number | null
-
-  @column()
-  declare employmentType: string
-
-  @column()
-  declare isActive: boolean
-
-  @column.dateTime()
-  declare postedAt: DateTime | null
-
-  @column.dateTime()
-  declare expiresAt: DateTime | null
-
-  @column.dateTime({ autoCreate: true })
-  declare createdAt: DateTime
-
-  @column.dateTime({ autoCreate: true, autoUpdate: true })
-  declare updatedAt: DateTime
 
   async checkAndDeactivate(): Promise<boolean> {
     if (this.isActive && this.expiresAt && this.expiresAt < DateTime.now()) {

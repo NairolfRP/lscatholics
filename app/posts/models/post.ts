@@ -1,48 +1,16 @@
 import { DateTime } from 'luxon'
-import { BaseModel, beforeCreate, belongsTo, column } from '@adonisjs/lucid/orm'
+import { beforeCreate, belongsTo, column } from '@adonisjs/lucid/orm'
 import User from '#users/models/user'
 import type { BelongsTo } from '@adonisjs/lucid/types/relations'
+import { NewsSchema } from '#database/schema'
 
-export default class Post extends BaseModel {
+export default class Post extends NewsSchema {
   public static table = 'news'
 
   public static routeLookupKey = 'slug'
 
-  @column({ isPrimary: true })
-  declare id: number
-
-  @column()
-  declare title: string
-
-  @column()
-  declare slug: string
-
-  @column()
-  declare category: string
-
-  @column()
-  declare content: string
-
-  @column()
-  declare excerpt: string | null
-
-  @column()
-  declare coverImageUrl: string | null
-
   @column()
   declare status: 'draft' | 'published' | 'archived'
-
-  @column.dateTime()
-  declare publishedAt: DateTime | null
-
-  @column()
-  declare authorId: number | null
-
-  @column.dateTime({ autoCreate: true })
-  declare createdAt: DateTime
-
-  @column.dateTime({ autoCreate: true, autoUpdate: true })
-  declare updatedAt: DateTime
 
   @belongsTo(() => User, {
     foreignKey: 'authorId',
