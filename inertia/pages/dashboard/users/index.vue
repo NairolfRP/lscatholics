@@ -133,9 +133,9 @@ import { Typography } from '@/shared/components/ui/typography'
 import { Button } from '@/shared/components/ui/button'
 import { Badge } from '@/shared/components/ui/badge'
 import { useUser } from '@/shared/composables/use_user'
+import { usePageProps } from '@/shared/composables/use_page_props'
 
 type PageProps = InertiaProps<{
-  permissions: string[]
   users: {
     data: Data.Users.User.Variants['withRoles'][]
     metadata: {
@@ -150,6 +150,9 @@ type PageProps = InertiaProps<{
 }>
 
 const props = defineProps<PageProps>()
+const page = usePageProps<{ permissions: string[] }>()
+
+const permissions = page.value.permissions
 
 const user = useUser()
 
@@ -172,7 +175,7 @@ const handleChangePage = useDebounceFn((page: number) => {
 }, 300)
 
 const deleteUser = (id: number) => {
-  if (user.value?.id === id || !props.permissions.includes('deleteUsers')) return
+  if (user.value?.id === id || !permissions.includes('deleteUsers')) return
   if (
     confirm(
       "Attention. La suppression est définitive, immédiate et sensible. Assurez-vous d'avoir de bonnes raisons. Êtes-vous sûr de vouloir supprimer cet utilisateur ?"

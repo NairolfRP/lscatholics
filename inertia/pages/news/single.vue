@@ -9,7 +9,7 @@
 
     <meta v-if="post.publishedAt" property="article:published_time" :content="post.publishedAt" />
     <meta v-if="post.updatedAt" property="article:modified_time" :content="post.updatedAt" />
-    <meta property="article:section" :content="post.category" />
+    <meta v-if="post.category" property="article:section" :content="post.category" />
   </Head>
   <article>
     <header>

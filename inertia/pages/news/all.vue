@@ -56,7 +56,7 @@
             :key="article.id"
             :title="article.title"
             :slug="article.slug"
-            :category="article.category"
+            :category="article.category || undefined"
             :published-at="article.publishedAt || undefined"
             class="group"
           />
