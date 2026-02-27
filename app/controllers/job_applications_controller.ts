@@ -53,7 +53,7 @@ export default class JobApplicationsController {
     const payload = await request.validateUsing(createEmploymentApplicationValidator)
 
     const jobTitle = job.title
-    const characterFullName = `${payload.firstname} ${payload.middleName} ${payload.lastname}`
+    const characterFullName = `${payload.firstname}${payload.middleName ? ' ' + payload.middleName + ' ' : ' '}${payload.lastname}`
     const districtLabel = getDistrictLabelById(payload.district)
     const employmentSourceLabel = payload.applicationSource.type
       ? getApplicationSourceLabel(payload.applicationSource.type)
