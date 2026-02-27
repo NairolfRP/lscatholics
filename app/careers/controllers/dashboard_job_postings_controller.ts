@@ -9,7 +9,7 @@ import JobPostingTransformer from '#careers/transformers/job_posting_transformer
 
 export default class DashboardJobPostingsController {
   async index({ inertia, request, bouncer }: HttpContext) {
-    await bouncer.authorize('userAbility', 'viewJobs')
+    await bouncer.with('CareersJobPostingPolicy').authorize('viewDashboard')
 
     const search = request.input('search', '')
     let page = request.input('page', 1)
@@ -39,12 +39,12 @@ export default class DashboardJobPostingsController {
   }
 
   async create({ inertia, bouncer }: HttpContext) {
-    await bouncer.authorize('userAbility', 'createJobs')
+    await bouncer.with('CareersJobPostingPolicy').authorize('create')
     return inertia.render('dashboard/jobs/create', {})
   }
 
   async store({ request, response, bouncer }: HttpContext) {
-    await bouncer.authorize('userAbility', 'createJobs')
+    await bouncer.with('CareersJobPostingPolicy').authorize('create')
 
     const payload = await request.validateUsing(createDashboardJobPostingValidator)
 
@@ -67,7 +67,7 @@ export default class DashboardJobPostingsController {
   }
 
   async show({ inertia, params, bouncer }: HttpContext) {
-    await bouncer.authorize('userAbility', 'viewJobs')
+    await bouncer.with('CareersJobPostingPolicy').authorize('viewDashboard')
 
     const job = await JobPosting.findOrFail(params.id)
 
@@ -77,7 +77,7 @@ export default class DashboardJobPostingsController {
   }
 
   async edit({ inertia, params, bouncer }: HttpContext) {
-    await bouncer.authorize('userAbility', 'editJobs')
+    await bouncer.with('CareersJobPostingPolicy').authorize('edit')
 
     const job = await JobPosting.findOrFail(params.id)
 
@@ -87,7 +87,7 @@ export default class DashboardJobPostingsController {
   }
 
   async update({ request, response, params, bouncer }: HttpContext) {
-    await bouncer.authorize('userAbility', 'editJobs')
+    await bouncer.with('CareersJobPostingPolicy').authorize('edit')
 
     const job = await JobPosting.findOrFail(params.id)
     const payload = await request.validateUsing(
@@ -111,7 +111,7 @@ export default class DashboardJobPostingsController {
   }
 
   async destroy({ response, session, params, bouncer }: HttpContext) {
-    await bouncer.authorize('userAbility', 'deleteJobs')
+    await bouncer.with('CareersJobPostingPolicy').authorize('delete')
 
     const job = await JobPosting.findOrFail(params.id)
     await job.delete()

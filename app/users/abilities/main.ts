@@ -17,18 +17,6 @@ import type User from '#users/models/user'
 import type { HttpContext } from '@adonisjs/core/http'
 import factionConfig from '#config/faction'
 
-/**
- * Delete the following ability to start from
- * scratch
- */
-export const editUser = Bouncer.ability(() => {
-  return true
-})
-
-export const userAbility = Bouncer.ability((_user: User, permission: string) => {
-  return _user.hasPermission(permission)
-})
-
 export const dashboardAccessAbility = Bouncer.ability(async (_user: User, ctx: HttpContext) => {
   try {
     const currentCharacter = await ctx.characters.getCurrentCharacter()

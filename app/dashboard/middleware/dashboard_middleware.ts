@@ -1,6 +1,5 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import type { NextFn } from '@adonisjs/core/types/http'
-import { dashboardAccessAbility } from '#users/abilities/main'
 
 export default class DashboardMiddleware {
   async handle(ctx: HttpContext, next: NextFn) {
@@ -13,7 +12,7 @@ export default class DashboardMiddleware {
       })
     }
 
-    if (await bouncer.denies(dashboardAccessAbility, ctx)) {
+    if (await bouncer.with('DashboardPolicy').denies('access', ctx)) {
       return response.redirect().toRoute('home')
     }
 

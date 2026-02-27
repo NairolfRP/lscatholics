@@ -8,7 +8,7 @@ import ScheduledEventTransformer from '#scheduled_events/transformers/scheduled_
 
 export default class DashboardScheduledEventsController {
   async index({ inertia, request, bouncer }: HttpContext) {
-    await bouncer.authorize('userAbility', 'manageEvents')
+    await bouncer.with('ScheduledEventPolicy').authorize('viewDashboard')
 
     let page = request.input('page', 1)
     const limit = request.input('limit', 10)
@@ -29,13 +29,13 @@ export default class DashboardScheduledEventsController {
   }
 
   async create({ inertia, bouncer }: HttpContext) {
-    await bouncer.authorize('userAbility', 'manageEvents')
+    await bouncer.with('ScheduledEventPolicy').authorize('create')
 
     return inertia.render('dashboard/events/create', {})
   }
 
   async store({ request, response, bouncer }: HttpContext) {
-    await bouncer.authorize('userAbility', 'manageEvents')
+    await bouncer.with('ScheduledEventPolicy').authorize('create')
 
     const payload = await request.validateUsing(createDashboardScheduledEventValidator)
 
@@ -45,7 +45,7 @@ export default class DashboardScheduledEventsController {
   }
 
   async show({ inertia, params, bouncer }: HttpContext) {
-    await bouncer.authorize('userAbility', 'manageEvents')
+    await bouncer.with('ScheduledEventPolicy').authorize('viewDashboard')
 
     const event = await ScheduledEvent.findOrFail(params.id)
 
@@ -55,7 +55,7 @@ export default class DashboardScheduledEventsController {
   }
 
   async edit({ inertia, params, bouncer }: HttpContext) {
-    await bouncer.authorize('userAbility', 'manageEvents')
+    await bouncer.with('ScheduledEventPolicy').authorize('edit')
 
     const event = await ScheduledEvent.findOrFail(params.id)
 
@@ -65,7 +65,7 @@ export default class DashboardScheduledEventsController {
   }
 
   async update({ request, response, params, bouncer }: HttpContext) {
-    await bouncer.authorize('userAbility', 'manageEvents')
+    await bouncer.with('ScheduledEventPolicy').authorize('edit')
 
     const event = await ScheduledEvent.findOrFail(params.id)
     const payload = await request.validateUsing(updateDashboardScheduledEventValidator)
@@ -76,7 +76,7 @@ export default class DashboardScheduledEventsController {
   }
 
   async destroy({ response, params, session, bouncer }: HttpContext) {
-    await bouncer.authorize('userAbility', 'manageEvents')
+    await bouncer.with('ScheduledEventPolicy').authorize('delete')
 
     const event = await ScheduledEvent.findOrFail(params.id)
     await event.delete()

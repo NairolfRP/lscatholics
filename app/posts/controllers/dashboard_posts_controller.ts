@@ -11,7 +11,7 @@ import PostTransformer from '#posts/transformers/post_transformer'
 
 export default class DashboardPostsController {
   async index({ inertia, request, bouncer }: HttpContext) {
-    await bouncer.authorize('userAbility', 'viewArticles')
+    await bouncer.with('PostPolicy').authorize('viewDashboard')
 
     const search = request.input('search', '')
     let page = request.input('page', 1)
@@ -41,12 +41,12 @@ export default class DashboardPostsController {
   }
 
   async create({ inertia, bouncer }: HttpContext) {
-    await bouncer.authorize('userAbility', 'createArticles')
+    await bouncer.with('PostPolicy').authorize('create')
     return inertia.render('dashboard/articles/create', {})
   }
 
   async store({ request, response, auth, bouncer }: HttpContext) {
-    await bouncer.authorize('userAbility', 'createArticles')
+    await bouncer.with('PostPolicy').authorize('create')
 
     const payload = await request.validateUsing(createDashboardPostValidator)
 
@@ -77,7 +77,7 @@ export default class DashboardPostsController {
   }
 
   async show({ inertia, params, bouncer }: HttpContext) {
-    await bouncer.authorize('userAbility', 'viewArticles')
+    await bouncer.with('PostPolicy').authorize('viewDashboard')
 
     const article = await Post.findOrFail(params.id)
     await article.loadOnce('author')
@@ -88,7 +88,7 @@ export default class DashboardPostsController {
   }
 
   async edit({ inertia, params, bouncer }: HttpContext) {
-    await bouncer.authorize('userAbility', 'editArticles')
+    await bouncer.with('PostPolicy').authorize('edit')
 
     const article = await Post.findOrFail(params.id)
 
@@ -100,7 +100,7 @@ export default class DashboardPostsController {
   }
 
   async update({ request, response, params, bouncer }: HttpContext) {
-    await bouncer.authorize('userAbility', 'editArticles')
+    await bouncer.with('PostPolicy').authorize('edit')
 
     const article = await Post.findOrFail(params.id)
     const payload = await request.validateUsing(updatedDashboardPostValidator)
@@ -129,7 +129,7 @@ export default class DashboardPostsController {
   }
 
   async destroy({ response, session, params, bouncer }: HttpContext) {
-    await bouncer.authorize('userAbility', 'deleteArticles')
+    await bouncer.with('PostPolicy').authorize('delete')
 
     const article = await Post.findOrFail(params.id)
     await article.delete()
