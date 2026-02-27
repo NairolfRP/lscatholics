@@ -80,7 +80,7 @@ export default class DashboardPostsController {
     await bouncer.authorize('userAbility', 'viewArticles')
 
     const article = await Post.findOrFail(params.id)
-    await article.load('author')
+    await article.loadOnce('author')
 
     return inertia.render('dashboard/articles/show', {
       article: PostTransformer.transform(article).useVariant('allFields'),
@@ -91,6 +91,8 @@ export default class DashboardPostsController {
     await bouncer.authorize('userAbility', 'editArticles')
 
     const article = await Post.findOrFail(params.id)
+
+    await article.loadOnce('author')
 
     return inertia.render('dashboard/articles/edit', {
       article: PostTransformer.transform(article).useVariant('allFields'),
