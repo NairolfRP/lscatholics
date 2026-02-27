@@ -10,6 +10,7 @@ router
       .resource('events', controllers.scheduledEvents.DashboardScheduledEvents)
       .as('dashboard.events')
     router.resource('jobs', controllers.careers.DashboardJobPostings).as('dashboard.jobs')
+    router.resource('users', controllers.users.DashboardUsers).as('dashboard.users')
   })
   .prefix('dashboard')
   .use(middleware.auth())

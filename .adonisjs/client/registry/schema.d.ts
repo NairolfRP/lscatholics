@@ -370,6 +370,83 @@ export interface Registry {
       response: ExtractResponse<Awaited<ReturnType<import('#app/careers/controllers/dashboard_job_postings_controller').default['destroy']>>>
     }
   }
+  'dashboard.dashboard_users.index': {
+    methods: ["GET","HEAD"]
+    pattern: '/dashboard/users'
+    types: {
+      body: {}
+      paramsTuple: []
+      params: {}
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#app/users/controllers/dashboard_users_controller').default['index']>>>
+    }
+  }
+  'dashboard.dashboard_users.create': {
+    methods: ["GET","HEAD"]
+    pattern: '/dashboard/users/create'
+    types: {
+      body: {}
+      paramsTuple: []
+      params: {}
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#app/users/controllers/dashboard_users_controller').default['create']>>>
+    }
+  }
+  'dashboard.dashboard_users.store': {
+    methods: ["POST"]
+    pattern: '/dashboard/users'
+    types: {
+      body: {}
+      paramsTuple: []
+      params: {}
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#app/users/controllers/dashboard_users_controller').default['store']>>>
+    }
+  }
+  'dashboard.dashboard_users.show': {
+    methods: ["GET","HEAD"]
+    pattern: '/dashboard/users/:id'
+    types: {
+      body: {}
+      paramsTuple: [ParamValue]
+      params: { id: ParamValue }
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#app/users/controllers/dashboard_users_controller').default['show']>>>
+    }
+  }
+  'dashboard.dashboard_users.edit': {
+    methods: ["GET","HEAD"]
+    pattern: '/dashboard/users/:id/edit'
+    types: {
+      body: {}
+      paramsTuple: [ParamValue]
+      params: { id: ParamValue }
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#app/users/controllers/dashboard_users_controller').default['edit']>>>
+    }
+  }
+  'dashboard.dashboard_users.update': {
+    methods: ["PUT","PATCH"]
+    pattern: '/dashboard/users/:id'
+    types: {
+      body: ExtractBody<InferInput<(typeof import('#users/validators/dashboard_users').updateDashboardUserValidator)>>
+      paramsTuple: [ParamValue]
+      params: { id: ParamValue }
+      query: ExtractQuery<InferInput<(typeof import('#users/validators/dashboard_users').updateDashboardUserValidator)>>
+      response: ExtractResponse<Awaited<ReturnType<import('#app/users/controllers/dashboard_users_controller').default['update']>>>
+    }
+  }
+  'dashboard.dashboard_users.destroy': {
+    methods: ["DELETE"]
+    pattern: '/dashboard/users/:id'
+    types: {
+      body: {}
+      paramsTuple: [ParamValue]
+      params: { id: ParamValue }
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#app/users/controllers/dashboard_users_controller').default['destroy']>>>
+    }
+  }
   'home': {
     methods: ["GET","HEAD"]
     pattern: '/'

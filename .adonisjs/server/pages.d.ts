@@ -26,6 +26,8 @@ declare module '@adonisjs/inertia/types' {
     'dashboard/jobs/edit': ExtractProps<(typeof import('../../inertia/pages/dashboard/jobs/edit.vue'))['default']>
     'dashboard/jobs/index': ExtractProps<(typeof import('../../inertia/pages/dashboard/jobs/index.vue'))['default']>
     'dashboard/jobs/show': ExtractProps<(typeof import('../../inertia/pages/dashboard/jobs/show.vue'))['default']>
+    'dashboard/users/edit': ExtractProps<(typeof import('../../inertia/pages/dashboard/users/edit.vue'))['default']>
+    'dashboard/users/index': ExtractProps<(typeof import('../../inertia/pages/dashboard/users/index.vue'))['default']>
     'departments/all': ExtractProps<(typeof import('../../inertia/pages/departments/all.vue'))['default']>
     'departments/single': ExtractProps<(typeof import('../../inertia/pages/departments/single.vue'))['default']>
     'donate': ExtractProps<(typeof import('../../inertia/pages/donate.vue'))['default']>

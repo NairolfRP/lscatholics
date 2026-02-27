@@ -204,6 +204,48 @@ const routes = {
     tokens: [{"old":"/dashboard/jobs/:id","type":0,"val":"dashboard","end":""},{"old":"/dashboard/jobs/:id","type":0,"val":"jobs","end":""},{"old":"/dashboard/jobs/:id","type":1,"val":"id","end":""}],
     types: placeholder as Registry['dashboard.dashboard_jobs.destroy']['types'],
   },
+  'dashboard.dashboard_users.index': {
+    methods: ["GET","HEAD"],
+    pattern: '/dashboard/users',
+    tokens: [{"old":"/dashboard/users","type":0,"val":"dashboard","end":""},{"old":"/dashboard/users","type":0,"val":"users","end":""}],
+    types: placeholder as Registry['dashboard.dashboard_users.index']['types'],
+  },
+  'dashboard.dashboard_users.create': {
+    methods: ["GET","HEAD"],
+    pattern: '/dashboard/users/create',
+    tokens: [{"old":"/dashboard/users/create","type":0,"val":"dashboard","end":""},{"old":"/dashboard/users/create","type":0,"val":"users","end":""},{"old":"/dashboard/users/create","type":0,"val":"create","end":""}],
+    types: placeholder as Registry['dashboard.dashboard_users.create']['types'],
+  },
+  'dashboard.dashboard_users.store': {
+    methods: ["POST"],
+    pattern: '/dashboard/users',
+    tokens: [{"old":"/dashboard/users","type":0,"val":"dashboard","end":""},{"old":"/dashboard/users","type":0,"val":"users","end":""}],
+    types: placeholder as Registry['dashboard.dashboard_users.store']['types'],
+  },
+  'dashboard.dashboard_users.show': {
+    methods: ["GET","HEAD"],
+    pattern: '/dashboard/users/:id',
+    tokens: [{"old":"/dashboard/users/:id","type":0,"val":"dashboard","end":""},{"old":"/dashboard/users/:id","type":0,"val":"users","end":""},{"old":"/dashboard/users/:id","type":1,"val":"id","end":""}],
+    types: placeholder as Registry['dashboard.dashboard_users.show']['types'],
+  },
+  'dashboard.dashboard_users.edit': {
+    methods: ["GET","HEAD"],
+    pattern: '/dashboard/users/:id/edit',
+    tokens: [{"old":"/dashboard/users/:id/edit","type":0,"val":"dashboard","end":""},{"old":"/dashboard/users/:id/edit","type":0,"val":"users","end":""},{"old":"/dashboard/users/:id/edit","type":1,"val":"id","end":""},{"old":"/dashboard/users/:id/edit","type":0,"val":"edit","end":""}],
+    types: placeholder as Registry['dashboard.dashboard_users.edit']['types'],
+  },
+  'dashboard.dashboard_users.update': {
+    methods: ["PUT","PATCH"],
+    pattern: '/dashboard/users/:id',
+    tokens: [{"old":"/dashboard/users/:id","type":0,"val":"dashboard","end":""},{"old":"/dashboard/users/:id","type":0,"val":"users","end":""},{"old":"/dashboard/users/:id","type":1,"val":"id","end":""}],
+    types: placeholder as Registry['dashboard.dashboard_users.update']['types'],
+  },
+  'dashboard.dashboard_users.destroy': {
+    methods: ["DELETE"],
+    pattern: '/dashboard/users/:id',
+    tokens: [{"old":"/dashboard/users/:id","type":0,"val":"dashboard","end":""},{"old":"/dashboard/users/:id","type":0,"val":"users","end":""},{"old":"/dashboard/users/:id","type":1,"val":"id","end":""}],
+    types: placeholder as Registry['dashboard.dashboard_users.destroy']['types'],
+  },
   'home': {
     methods: ["GET","HEAD"],
     pattern: '/',

@@ -48,6 +48,15 @@ export interface ApiDefinition {
       update: typeof routes['dashboard.dashboard_jobs.update']
       destroy: typeof routes['dashboard.dashboard_jobs.destroy']
     }
+    dashboardUsers: {
+      index: typeof routes['dashboard.dashboard_users.index']
+      create: typeof routes['dashboard.dashboard_users.create']
+      store: typeof routes['dashboard.dashboard_users.store']
+      show: typeof routes['dashboard.dashboard_users.show']
+      edit: typeof routes['dashboard.dashboard_users.edit']
+      update: typeof routes['dashboard.dashboard_users.update']
+      destroy: typeof routes['dashboard.dashboard_users.destroy']
+    }
   }
   home: typeof routes['home']
   contact: typeof routes['contact'] & {

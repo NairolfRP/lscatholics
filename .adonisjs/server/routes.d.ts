@@ -37,6 +37,13 @@ export type ScannedRoutes = {
     'dashboard.dashboard_jobs.edit': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'dashboard.dashboard_jobs.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'dashboard.dashboard_jobs.destroy': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'dashboard.dashboard_users.index': { paramsTuple?: []; params?: {} }
+    'dashboard.dashboard_users.create': { paramsTuple?: []; params?: {} }
+    'dashboard.dashboard_users.store': { paramsTuple?: []; params?: {} }
+    'dashboard.dashboard_users.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'dashboard.dashboard_users.edit': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'dashboard.dashboard_users.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'dashboard.dashboard_users.destroy': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'home': { paramsTuple?: []; params?: {} }
     'contact': { paramsTuple?: []; params?: {} }
     'contact.submit': { paramsTuple?: []; params?: {} }
@@ -86,6 +93,10 @@ export type ScannedRoutes = {
     'dashboard.dashboard_jobs.create': { paramsTuple?: []; params?: {} }
     'dashboard.dashboard_jobs.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'dashboard.dashboard_jobs.edit': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'dashboard.dashboard_users.index': { paramsTuple?: []; params?: {} }
+    'dashboard.dashboard_users.create': { paramsTuple?: []; params?: {} }
+    'dashboard.dashboard_users.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'dashboard.dashboard_users.edit': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'home': { paramsTuple?: []; params?: {} }
     'contact': { paramsTuple?: []; params?: {} }
     'news.index': { paramsTuple?: []; params?: {} }
@@ -131,6 +142,10 @@ export type ScannedRoutes = {
     'dashboard.dashboard_jobs.create': { paramsTuple?: []; params?: {} }
     'dashboard.dashboard_jobs.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'dashboard.dashboard_jobs.edit': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'dashboard.dashboard_users.index': { paramsTuple?: []; params?: {} }
+    'dashboard.dashboard_users.create': { paramsTuple?: []; params?: {} }
+    'dashboard.dashboard_users.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'dashboard.dashboard_users.edit': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'home': { paramsTuple?: []; params?: {} }
     'contact': { paramsTuple?: []; params?: {} }
     'news.index': { paramsTuple?: []; params?: {} }
@@ -161,12 +176,14 @@ export type ScannedRoutes = {
     'dashboard.dashboard_articles.destroy': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'dashboard.dashboard_events.destroy': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'dashboard.dashboard_jobs.destroy': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'dashboard.dashboard_users.destroy': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
   }
   POST: {
     'logout': { paramsTuple?: []; params?: {} }
     'dashboard.dashboard_articles.store': { paramsTuple?: []; params?: {} }
     'dashboard.dashboard_events.store': { paramsTuple?: []; params?: {} }
     'dashboard.dashboard_jobs.store': { paramsTuple?: []; params?: {} }
+    'dashboard.dashboard_users.store': { paramsTuple?: []; params?: {} }
     'contact.submit': { paramsTuple?: []; params?: {} }
     'donate.submit': { paramsTuple?: []; params?: {} }
     'registerParishioner.submit': { paramsTuple?: []; params?: {} }
@@ -177,11 +194,13 @@ export type ScannedRoutes = {
     'dashboard.dashboard_articles.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'dashboard.dashboard_events.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'dashboard.dashboard_jobs.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'dashboard.dashboard_users.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
   }
   PUT: {
     'dashboard.dashboard_articles.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'dashboard.dashboard_events.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'dashboard.dashboard_jobs.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'dashboard.dashboard_users.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
   }
 }
 declare module '@adonisjs/core/types/http' {

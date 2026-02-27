@@ -76,6 +76,12 @@ export default class User extends UserSchema {
     delete this.$extras.permissionsCache
   }
 
+  getHighestRole() {
+    return this.roles.reduce((best, role) =>
+      role.hierarchyOrder < best.hierarchyOrder ? role : best
+    )
+  }
+
   async assignRole(roleId: number): Promise<void> {
     await (this as User).related('roles').attach([roleId])
     this.clearPermissionsCache()
