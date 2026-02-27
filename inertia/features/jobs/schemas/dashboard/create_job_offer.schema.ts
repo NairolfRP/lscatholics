@@ -27,3 +27,5 @@ export const createJobOfferSchema = z.object({
   postedAt: z.date(),
   expiresAt: z.date().optional(),
 })
+
+export type CreateJobOfferData = z.Infer<typeof createJobOfferSchema>

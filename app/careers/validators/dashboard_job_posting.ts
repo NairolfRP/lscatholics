@@ -11,7 +11,7 @@ export const createDashboardJobPostingValidator = vine.create(
       .regex(/^[a-z0-9-]+$/)
       .minLength(3)
       .maxLength(255)
-      .unique({ table: 'job_offers', column: 'slug' }),
+      .unique({ table: 'job_postings', column: 'slug' }),
     summary: vine.string().trim().minLength(10).maxLength(1500).optional(),
     reportsTo: vine.string().trim().minLength(3),
     department: vine.string(),
