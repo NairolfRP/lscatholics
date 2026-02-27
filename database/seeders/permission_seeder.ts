@@ -1,9 +1,11 @@
 import { BaseSeeder } from '@adonisjs/lucid/seeders'
-import Permission from '#auth/models/permission'
+import Permission from '#roles/models/permission'
 
 export default class extends BaseSeeder {
   async run() {
-    await Permission.createMany([
+    const uniqueKey = 'name'
+
+    await Permission.updateOrCreateMany(uniqueKey, [
       {
         name: 'Dashboard Access',
         slug: 'dashboardAccess',
@@ -38,6 +40,31 @@ export default class extends BaseSeeder {
         name: 'Manage Users',
         slug: 'manageUsers',
         description: 'Can manage users and permissions',
+      },
+      {
+        name: 'Delete Users',
+        slug: 'deleteUsers',
+        description: 'Can delete users',
+      },
+      {
+        name: 'View Job Offers',
+        slug: 'viewJobs',
+        description: 'Can view new jobs in dashboard',
+      },
+      {
+        name: 'Create Job Offer',
+        slug: 'createJobs',
+        description: 'Can create new jobs',
+      },
+      {
+        name: 'Edit Job Offer',
+        slug: 'editJobs',
+        description: 'Can edit existing jobs',
+      },
+      {
+        name: 'Delete Job Offer',
+        slug: 'deleteJobs',
+        description: 'Can delete jobs',
       },
     ])
   }

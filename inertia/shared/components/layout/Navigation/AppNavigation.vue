@@ -82,7 +82,7 @@ import {
 } from '@/shared/components/ui/navigation-menu'
 import { HandHeart } from 'lucide-vue-next'
 import NavigationLink from '@/shared/components/NavigationLink.vue'
-import { Link } from '@tuyau/inertia/vue'
+import { Link } from '@adonisjs/inertia/vue'
 import { Button } from '@/shared/components/ui/button'
 import { cn } from '@/lib/utils'
 import { ref } from 'vue'

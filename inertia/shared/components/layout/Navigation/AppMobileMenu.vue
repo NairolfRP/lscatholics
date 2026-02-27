@@ -104,16 +104,15 @@ import {
 } from '@/shared/components/ui/sheet'
 import { HandHeart, House, Menu } from 'lucide-vue-next'
 import { Button } from '@/shared/components/ui/button'
-import { useRouter } from '@tuyau/inertia/vue'
+import { router } from '@inertiajs/vue3'
 import { ref } from 'vue'
-
-const router = useRouter()
+import { urlFor } from '@/client'
 
 const mobileMenuOpen = ref<boolean>(false)
 const toggleMobileMenu = () => (mobileMenuOpen.value = !mobileMenuOpen)
 
 const handleNavigate = (route: string, routeParams?: Record<string, any>) => {
-  router.visit({ route: route as never, params: routeParams as never })
+  router.visit(urlFor(route as any, routeParams))
   toggleMobileMenu()
 }
 </script>

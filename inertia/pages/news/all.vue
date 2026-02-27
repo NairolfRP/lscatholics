@@ -56,8 +56,8 @@
             :key="article.id"
             :title="article.title"
             :slug="article.slug"
-            :category="article.category"
-            :published-at="article.publishedAt"
+            :category="article.category || undefined"
+            :published-at="article.publishedAt || undefined"
             class="group"
           />
         </div>
@@ -108,21 +108,32 @@ import {
   PaginationPrevious,
 } from '@/shared/components/ui/pagination'
 import Head from '@/shared/components/AppHead.vue'
-import type { InferPageProps } from '@adonisjs/inertia/types'
-import type NewsController from '#news/controllers/news_controller'
 import { Alert, AlertDescription, AlertTitle } from '@/shared/components/ui/alert'
 import { CircleAlert } from 'lucide-vue-next'
 import { router } from '@inertiajs/vue3'
-import { tuyau } from '@/lib/tuyau'
+import { urlFor } from '@/client'
 import { Typography } from '@/shared/components/ui/typography'
 import ArticleCard from '@/shared/components/ArticleCard.vue'
+import type { InertiaProps } from '@/types'
+import type { Data } from '@generated/data'
 
-const { selectedCategory, categories, articles } = defineProps<{
-  articles: InferPageProps<NewsController, 'index'>['articles']
-  selectedCategory: InferPageProps<NewsController, 'index'>['selectedCategory']
-  categories: InferPageProps<NewsController, 'index'>['categories']
+type PageProps = InertiaProps<{
+  articles: {
+    data: Data.Posts.Post.Variants['publicList'][]
+    metadata: {
+      total: number
+      perPage: number
+      currentPage: number
+      lastPage: number
+      firstPage: number
+    }
+  }
+  selectedCategory: string
+  categories: Array<{ id: string; name: string; color: string }>
   error: boolean
-}>()
+}>
+
+const { selectedCategory, categories, articles } = defineProps<PageProps>()
 
 const {
   total: totalItems,
@@ -130,11 +141,11 @@ const {
   currentPage: page,
   firstPage,
   lastPage,
-} = articles.meta
+} = articles.metadata
 
 const handleCategoryChange = (categoryId?: string) => {
   router.get(
-    tuyau.newsroom.$url(),
+    urlFor('news.index'),
     {
       category: categoryId,
     },
@@ -149,7 +160,7 @@ const handlePageChange = (newPage?: number) => {
   const p = Math.max(firstPage, Math.min(newPage || 1, lastPage))
 
   router.get(
-    tuyau.newsroom.$url(),
+    urlFor('news.index'),
     {
       page: p,
       category: selectedCategory,

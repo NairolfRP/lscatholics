@@ -1,6 +1,6 @@
 import { HttpContext } from '@adonisjs/core/http'
-import CharacterService from '#auth/services/character_service'
-import { FactionService } from '#auth/services/faction_service'
+import CharacterService from '#characters/services/character_service'
+import { FactionService } from '#characters/services/faction_service'
 
 declare module '@adonisjs/core/http' {
   export interface HttpContext {

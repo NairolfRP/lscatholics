@@ -1,26 +1,29 @@
 import type { HttpContext } from '@adonisjs/core/http'
+import { Exception } from '@adonisjs/core/exceptions'
 
 export default class DepartmentsController {
   private allowedDepartments = [
     'office-of-the-archbishop',
-    'catholic-charities',
-    'chancellor',
-    'communications',
-    'financial-services',
-    'human-resources',
-    'general-counsel',
     'moderator-of-the-curia',
+    'chancellor',
+    'safety',
+    'communications',
+    'general-services',
+    'human-resources',
+    'financial-services',
+    'general-counsel',
+    'catholic-charities',
   ]
 
   index({ inertia }: HttpContext) {
-    return inertia.render('departments/all')
+    return inertia.render('departments/all', {})
   }
 
-  single({ response, inertia, params }: HttpContext) {
+  single({ inertia, params }: HttpContext) {
     const slug = params.slug as string
 
     if (!this.allowedDepartments.includes(slug)) {
-      response.redirect().toRoute('departments.index')
+      throw new Exception('Not found', { status: 404 })
     }
 
     return inertia.render('departments/single', {

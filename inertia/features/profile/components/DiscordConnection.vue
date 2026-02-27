@@ -73,7 +73,7 @@
         </div>
 
         <Button v-else class="bg-[#5865F2] hover:bg-[#4752C4] text-white" as-child>
-          <a :href="tuyau.api.auth.redirect.discord.$url()">
+          <a :href="urlFor('discord.redirect')">
             <svg
               class="w-4 h-4 mr-2"
               viewBox="0 0 24 24"
@@ -105,7 +105,7 @@ import {
 import { Button } from '@/shared/components/ui/button'
 import { router } from '@inertiajs/vue3'
 import { toast } from 'vue-sonner'
-import { tuyau } from '@/lib/tuyau'
+import { urlFor } from '@/client'
 import { usePageProps } from '@/shared/composables/use_page_props'
 import { Avatar, AvatarFallback, AvatarImage } from '@/shared/components/ui/avatar'
 import { computed } from 'vue'
@@ -116,7 +116,7 @@ const props = usePageProps<{ discordUser?: { id: number; username: string; avata
 const discordUser = computed(() => props.value.discordUser)
 
 const unlinkDiscord = () => {
-  router.delete(tuyau.$url('discord.unlink'), {
+  router.delete(urlFor('discord.unlink'), {
     preserveScroll: true,
     only: ['discordUser'],
     onSuccess: () => {

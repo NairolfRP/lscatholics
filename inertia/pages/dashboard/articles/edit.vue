@@ -4,7 +4,7 @@
   <div class="space-y-6">
     <div class="flex items-center gap-4">
       <Button variant="ghost" size="icon" as-child>
-        <Link :href="tuyau.$url('dashboard.dashboard_articles.index')">
+        <Link :href="urlFor('dashboard.dashboard_articles.index')">
           <ArrowLeft class="h-4 w-4" />
         </Link>
       </Button>
@@ -110,7 +110,7 @@
                   Mettre à jour
                 </Button>
                 <Button type="button" variant="outline" as-child>
-                  <Link :href="tuyau.$url('dashboard.dashboard_articles.index')"> Annuler </Link>
+                  <Link :href="urlFor('dashboard.dashboard_articles.index')"> Annuler </Link>
                 </Button>
               </div>
             </CardContent>
@@ -164,34 +164,25 @@ import {
   SelectValue,
 } from '@/shared/components/ui/select'
 import { ArrowLeft } from 'lucide-vue-next'
-import { tuyau } from '@/lib/tuyau'
+import { urlFor } from '@/client'
 import { MarkdownTextarea } from '@/shared/components/ui/markdown'
 import { DateTimePicker } from '@/shared/components/ui/datetime-picker'
 import { computed, watch } from 'vue'
+import type { InertiaProps } from '@/types'
+import { Data } from '@generated/data'
 
-type Article = {
-  id: number
-  title: string
-  slug: string
-  excerpt: string
-  content: string
-  status: 'draft' | 'published'
-  coverImageUrl: string | null
-  publishedAt: string | null
-}
+type PageProps = InertiaProps<{
+  article: Data.Posts.Post.Variants['allFields']
+}>
 
-type Props = {
-  article: Article
-}
-
-const props = defineProps<Props>()
+const props = defineProps<PageProps>()
 
 const form = useForm({
-  title: props.article.title,
-  slug: props.article.slug,
-  excerpt: props.article.excerpt,
-  content: props.article.content,
-  status: props.article.status,
+  title: props.article.title || '',
+  slug: props.article.slug || '',
+  excerpt: props.article.excerpt || '',
+  content: props.article.content || '',
+  status: props.article.status || '',
   coverImageUrl: props.article.coverImageUrl || '',
   publishedAt: (props.article.publishedAt
     ? new Date(props.article.publishedAt)
@@ -199,7 +190,7 @@ const form = useForm({
 })
 
 const submit = () => {
-  form.put(tuyau.$url('dashboard.dashboard_articles.update', { params: { id: props.article.id } }))
+  form.put(urlFor('dashboard.dashboard_articles.update', { id: props.article.id }))
 }
 
 const status = computed(() => form.status)

@@ -1,6 +1,6 @@
 import env from '#start/env'
 import { defineConfig, services } from '@adonisjs/ally'
-import { InferSocialProviders } from '@adonisjs/ally/types'
+import type { InferSocialProviders } from '@adonisjs/ally/types'
 import { GTAWDriver } from '@gtaw-oauth-providers/adonisjs-ally'
 import app from '@adonisjs/core/services/app'
 
@@ -14,7 +14,9 @@ const allyConfig = defineConfig({
   discord: services.discord({
     clientId: env.get('DISCORD_CLIENT_ID'),
     clientSecret: env.get('DISCORD_CLIENT_SECRET'),
-    callbackUrl: app.inProduction ? 'https://archls.infos.st/api/auth/callback/discord' : '',
+    callbackUrl: app.inProduction
+      ? 'https://archls.infos.st/api/auth/callback/discord'
+      : 'http://localhost:3333/api/auth/callback/discord',
     scopes: ['identify'],
   }),
 })

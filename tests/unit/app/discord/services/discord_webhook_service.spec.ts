@@ -1,7 +1,7 @@
 import { test } from '@japa/runner'
 import nock from 'nock'
 import {
-  DiscordWebhookOptions,
+  type DiscordWebhookOptions,
   DiscordWebhookService,
 } from '#discord/services/discord_webhook_service'
 import DiscordWebhookException from '#discord/exceptions/discord_webhook_exception'

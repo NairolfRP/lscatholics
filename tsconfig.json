@@ -8,5 +8,6 @@
     },
     "types": ["hot-hook/import-meta"]
   },
+  "references": [{ "path": "./tsconfig.inertia.json" }],
   "exclude": ["inertia/**/*", "node_modules", "build"]
 }

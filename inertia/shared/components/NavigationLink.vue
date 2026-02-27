@@ -28,7 +28,7 @@
 </template>
 
 <script setup lang="ts">
-import { Link } from '@tuyau/inertia/vue'
+import { Link } from '@adonisjs/inertia/vue'
 
 interface Props {
   route?: string

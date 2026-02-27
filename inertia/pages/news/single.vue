@@ -7,13 +7,13 @@
     <meta head-key="og:type" property="og:type" content="article" />
     <meta head-key="twitter:card" name="twitter:card" content="summary_large_image" />
 
-    <meta property="article:published_time" :content="post.publishedAt" />
-    <meta property="article:modified_time" :content="post.updatedAt" />
-    <meta property="article:section" :content="post.category" />
+    <meta v-if="post.publishedAt" property="article:published_time" :content="post.publishedAt" />
+    <meta v-if="post.updatedAt" property="article:modified_time" :content="post.updatedAt" />
+    <meta v-if="post.category" property="article:section" :content="post.category" />
   </Head>
   <article>
     <header>
-      <PageBanner :bg-image="post.coverImageUrl" py="16">
+      <PageBanner :bg-image="post.coverImageUrl || undefined" py="16">
         <div class="flex flex-col gap-5">
           <Typography variant="h1" class="md:text-5xl font-bold mb-4">
             {{ post.title }}
@@ -30,7 +30,9 @@
         <div class="article-content">
           <div class="flex flex-col mb-10">
             <span class="font-bold uppercase">Pour diffusion immédiate</span>
-            <time :datetime="post.publishedAt">{{ formatDate(post.publishedAt) }}</time>
+            <time v-if="post.publishedAt" :datetime="post.publishedAt">{{
+              formatDate(post.publishedAt)
+            }}</time>
           </div>
           <MarkdownContent :content="post.content" class="prose text-justify" />
         </div>
@@ -45,20 +47,14 @@ import PageBanner from '@/shared/components/layout/PageBanner.vue'
 import { formatDate } from '@/lib/utils'
 import { Typography } from '@/shared/components/ui/typography'
 import { MarkdownContent } from '@/shared/components/ui/markdown'
+import type { InertiaProps } from '@/types'
+import type { Data } from '@generated/data'
 
-const { post } = defineProps<{
-  post: {
-    slug: string
-    title: string
-    excerpt: string
-    coverImageUrl?: string
-    category: string
-    content: string
-    publishedAt: string
-    updatedAt: string
-    status: string
-  }
-}>()
+type PageProps = InertiaProps<{
+  post: Data.Posts.Post.Variants['publicDetails']
+}>
+
+const { post } = defineProps<PageProps>()
 </script>
 <style scoped>
 .article-content {

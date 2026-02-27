@@ -2,12 +2,12 @@
 import type { AnchorHTMLAttributes } from 'vue'
 import { cn } from '@/lib/utils'
 import { type InertiaLinkProps, Link } from '@inertiajs/vue3'
-import { tuyau } from '@/lib/tuyau'
-import type { Api } from '@tuyau/inertia/types'
-import type { QueryParameters } from '@tuyau/client'
+import { urlFor } from '@/client'
+import type { InferRoutes, QueryParameters } from '@tuyau/core/types'
+import type { registry } from '@generated/registry'
 
 type BaseProps = {
-  route?: Api['routes'][number]['name']
+  route?: keyof InferRoutes<typeof registry>
   params?: {
     params: readonly [string | number]
     query?: QueryParameters
@@ -28,7 +28,7 @@ const props = defineProps<Props>()
   <component
     :is="props.external ? 'a' : Link"
     v-bind="props"
-    :href="!props.external && props.route ? tuyau.$url(props.route, props.params) : props.href"
+    :href="!props.external && props.route ? urlFor(props.route as any, props.params) : props.href"
     :class="cn('font-medium text-primary underline underline-offset-4 cursor-pointer', props.class)"
   >
     <slot />

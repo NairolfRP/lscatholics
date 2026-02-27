@@ -95,7 +95,7 @@
 
 <script setup lang="ts">
 import { MapPin, Phone } from 'lucide-vue-next'
-import { Link } from '@tuyau/inertia/vue'
+import { Link } from '@adonisjs/inertia/vue'
 import { FOOTER_MENU_ITEMS } from '@/shared/constants/menu.constants'
 import { LinkText } from '@/shared/components/ui/LinkText'
 import { ARCHDIOCESE_SOCIAL_MEDIAS } from '@/shared/constants/social.constants'

@@ -1,4 +1,4 @@
-import { cva, VariantProps } from 'class-variance-authority'
+import { cva, type VariantProps } from 'class-variance-authority'
 
 export { default as Typography } from '@/shared/components/ui/typography/Typography.vue'
 

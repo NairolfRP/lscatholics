@@ -1,5 +1,5 @@
 import { test } from '@japa/runner'
-import { PaymentService } from '#core/services/payment_service'
+import { PaymentService } from '#billing/services/payment_service'
 import hash from '@adonisjs/core/services/hash'
 import fleecaConfig from '#config/fleeca'
 import nock from 'nock'
@@ -51,7 +51,7 @@ test.group('Payment Service', (group) => {
     hash.fake()
 
     sinon.stub(hash, 'make').resolves(mockSessionId)
-    sinon.stub(encryption, 'encrypt').returns(mockEncryptedData)
+    sinon.stub(encryption, 'encrypt').returns(mockEncryptedData as any)
 
     nock(fleecaBaseUrl)
       .get(`/gateway_token/generateToken?price=${amount}&type=0`)

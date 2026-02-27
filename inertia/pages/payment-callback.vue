@@ -25,18 +25,19 @@
 </template>
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue'
+import type { InertiaProps } from '@/types'
 
-type Props = {
-  success?: boolean
+type PageProps = InertiaProps<{
+  success: boolean
   title: string
-  message: string
+  message?: string
   error?: string
-  amount: number
-  source: string
-  metadata: Record<string, any>
-}
+  amount?: number
+  source?: string
+  metadata?: Record<string, any>
+}>
 
-const props = defineProps<Props>()
+const props = defineProps<PageProps>()
 
 const countdown = ref(3)
 

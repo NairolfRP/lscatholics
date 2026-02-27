@@ -8,7 +8,7 @@
         <p class="text-gray-500 dark:text-gray-400">Gérez les événements de votre communauté</p>
       </div>
       <Button as-child>
-        <Link :href="tuyau.$url('dashboard.dashboard_events.create')">
+        <Link :href="urlFor('dashboard.dashboard_events.create')">
           <Plus class="mr-2 h-4 w-4" />
           Nouvel événement
         </Link>
@@ -20,7 +20,7 @@
         <div class="flex items-center justify-between">
           <div>
             <CardTitle>Liste des événements</CardTitle>
-            <CardDescription> {{ events.meta.total }} événement(s) au total </CardDescription>
+            <CardDescription> {{ events.metadata.total }} événement(s) au total </CardDescription>
           </div>
         </div>
       </CardHeader>
@@ -40,9 +40,7 @@
               <TableRow v-for="event in events.data" :key="event.id">
                 <TableCell class="font-medium">
                   <Link
-                    :href="
-                      tuyau.$url('dashboard.dashboard_events.show', { params: { id: event.id } })
-                    "
+                    :href="urlFor('dashboard.dashboard_events.show', { id: event.id })"
                     class="hover:underline"
                   >
                     {{ event.title }}
@@ -54,7 +52,7 @@
                 <TableCell>
                   <div class="flex items-center gap-2">
                     <CalendarIcon class="h-4 w-4 text-gray-400" />
-                    {{ formatDate(event.startDate) }}
+                    {{ event.startDate ? formatDate(event.startDate) : 'Date inconnue' }}
                   </div>
                 </TableCell>
                 <TableCell>
@@ -65,13 +63,7 @@
                 <TableCell class="text-right">
                   <div class="flex justify-end gap-2">
                     <Button variant="ghost" size="icon" as-child>
-                      <Link
-                        :href="
-                          tuyau.$url('dashboard.dashboard_events.edit', {
-                            params: { id: event.id },
-                          })
-                        "
-                      >
+                      <Link :href="urlFor('dashboard.dashboard_events.edit', { id: event.id })">
                         <Edit class="h-4 w-4" />
                       </Link>
                     </Button>
@@ -86,8 +78,8 @@
 
           <Pagination
             v-slot="{ page }"
-            :items-per-page="events.meta.per_page"
-            :total="events.meta.total"
+            :items-per-page="events.metadata.perPage"
+            :total="events.metadata.total"
             @update:page="handleChangePage"
           >
             <PaginationContent v-slot="{ items }">
@@ -117,7 +109,7 @@
 <script lang="ts" setup>
 import { Head, Link, router } from '@inertiajs/vue3'
 import { Button } from '@/shared/components/ui/button'
-import { tuyau } from '@/lib/tuyau'
+import { urlFor } from '@/client'
 import {
   Card,
   CardContent,
@@ -144,32 +136,27 @@ import {
 } from '@/shared/components/ui/pagination'
 import { Typography } from '@/shared/components/ui/typography'
 import { useDebounceFn } from '@vueuse/core'
+import type { InertiaProps } from '@/types'
+import { Data } from '@generated/data'
 
-interface Event {
-  id: number
-  title: string
-  location: string | null
-  startDate: string
-  maxParticipants: number | null
-}
-
-interface Props {
+type PageProps = InertiaProps<{
   events: {
-    data: Event[]
-    meta: {
+    data: Data.ScheduledEvents.ScheduledEvent[]
+    metadata: {
       total: number
-      per_page: number
-      current_page: number
-      last_page: number
+      perPage: number
+      currentPage: number
+      lastPage: number
+      firstPage: number
     }
   }
-}
+}>
 
-defineProps<Props>()
+defineProps<PageProps>()
 
 const handleChangePage = useDebounceFn((page: number) => {
   router.get(
-    tuyau.$url('dashboard.dashboard_events.index'),
+    urlFor('dashboard.dashboard_events.index'),
     { page: !page || page <= 1 ? undefined : page },
     { preserveState: true, preserveScroll: true }
   )
@@ -177,7 +164,7 @@ const handleChangePage = useDebounceFn((page: number) => {
 
 const deleteEvent = (id: number) => {
   if (confirm('Êtes-vous sûr de vouloir supprimer cet événement ?')) {
-    router.delete(tuyau.$url('dashboard.dashboard_events.destroy', { params: { id } }))
+    router.delete(urlFor('dashboard.dashboard_events.destroy', { id }))
   }
 }
 

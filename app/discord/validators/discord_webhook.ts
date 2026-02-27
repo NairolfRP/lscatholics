@@ -1,5 +1,5 @@
 import vine from '@vinejs/vine'
-import { DiscordFlag } from '#discord/interfaces/entities/discord_flags'
+import { DiscordFlag } from '#discord/types/interfaces/entities/discord_flags'
 import { discordEmbedSchema } from '#discord/validators/discord_embed'
 
 export const createDiscordWebhookUrlValidator = vine.compile(

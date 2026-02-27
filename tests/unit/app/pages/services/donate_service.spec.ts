@@ -1,10 +1,10 @@
 import { test } from '@japa/runner'
 import sinon from 'sinon'
-import { DonateService } from '#pages/services/donate_service'
+import { DonateService } from '#donate/services/donate_service'
 import { DiscordWebhookService } from '#discord/services/discord_webhook_service'
 import env from '#start/env'
-import { Mock } from 'node:test'
-import type { DonateMetadata } from '#pages/validators/donate'
+import type { Mock } from 'node:test'
+import type { DonateMetadata } from '#donate/validators/donate'
 
 test.group('Donate service', (group) => {
   let service: DonateService

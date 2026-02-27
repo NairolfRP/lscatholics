@@ -1,9 +1,9 @@
 import type { HttpContext } from '@adonisjs/core/http'
-import Account from '#auth/models/account'
-import User from '#auth/models/user'
+import Account from '#users/models/account'
+import User from '#users/models/user'
 import { DateTime } from 'luxon'
 import db from '@adonisjs/lucid/services/db'
-import { createDeleteUserConfirmationValidator } from '#auth/validators/delete_user_confirmation'
+import { createDeleteUserConfirmationValidator } from '#users/validators/delete_user_confirmation'
 
 export default class AuthController {
   async redirectToProvider({ ally }: HttpContext) {

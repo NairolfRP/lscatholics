@@ -129,18 +129,22 @@ import { Input } from '@/shared/components/ui/input'
 import { Field as VeeField, useForm } from 'vee-validate'
 import { watch } from 'vue'
 import { router } from '@inertiajs/vue3'
-import { tuyau } from '@/lib/tuyau'
+import { urlFor } from '@/client'
 import { toast } from 'vue-sonner'
 import { useCurrentCharacter } from '@/shared/composables/use_current_character'
-import { usePageProps } from '@/shared/composables/use_page_props'
 import { useErrors } from '@/shared/composables/use_errors'
-import type { InferPageProps } from '@adonisjs/inertia/types'
-import type ContactController from '#contact/controllers/contact_controller'
 import { toTypedSchema } from '@vee-validate/zod'
 import { contactSchema } from '@/features/contact/schemas/contact.schema'
 import { Field, FieldError, FieldLabel } from '@/shared/components/ui/field'
+import type { InertiaProps } from '@/types'
+import type { CONTACT_SUBJECTS } from '#shared/constants/contact_subjects'
+import { usePageProps } from '@/shared/composables/use_page_props'
 
-const props = usePageProps<{ subjects: InferPageProps<ContactController, 'index'>['subjects'] }>()
+type PageProps = InertiaProps<{
+  subjects: typeof CONTACT_SUBJECTS
+}>
+
+const props = usePageProps<PageProps>()
 const errors = useErrors()
 
 const currentCharacter = useCurrentCharacter()
@@ -167,7 +171,7 @@ watch(
 )
 
 const submitForm = handleSubmit((values) => {
-  router.post(tuyau.contact.$url(), values, {
+  router.post(urlFor('contact.submit'), values, {
     preserveScroll: true,
     onSuccess: () => {
       if (props.value.success) {
