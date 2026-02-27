@@ -16,9 +16,7 @@ export const urlFor = client.urlFor
  */
 export const hasRoute = (route: string) => {
   try {
-    const url = urlFor(route as any)
-
-    return !!url
+    return route in registry.routes
   } catch {
     return false
   }
