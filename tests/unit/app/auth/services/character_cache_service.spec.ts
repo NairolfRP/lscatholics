@@ -1,6 +1,6 @@
 import { test } from '@japa/runner'
-import { CharacterCacheService } from '#services/character_cache_service'
-import type { Character } from '#types/character'
+import { CharacterCacheService } from '#characters/services/character_cache_service'
+import type { Character } from '#characters/types/character'
 import { DateTime } from 'luxon'
 
 const mockCharacters: Character[] = [

@@ -1,5 +1,5 @@
 import { test } from '@japa/runner'
-import { PaymentService } from '#services/payment_service'
+import { PaymentService } from '#billing/services/payment_service'
 import hash from '@adonisjs/core/services/hash'
 import fleecaConfig from '#config/fleeca'
 import nock from 'nock'

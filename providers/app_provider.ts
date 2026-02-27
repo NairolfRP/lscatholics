@@ -1,6 +1,6 @@
 import type { ApplicationService } from '@adonisjs/core/types'
-import { CharacterCacheService } from '#services/character_cache_service'
-import { FactionCacheService } from '#services/faction_cache_service'
+import { CharacterCacheService } from '#characters/services/character_cache_service'
+import { FactionCacheService } from '#characters/services/faction_cache_service'
 
 export default class AppProvider {
   constructor(protected app: ApplicationService) {}
@@ -22,7 +22,7 @@ export default class AppProvider {
    * The container bindings have booted
    */
   async boot() {
-    await import('#extensions/http_context_extension')
+    await import('#core/extensions/http_context_extension')
   }
 
   /**

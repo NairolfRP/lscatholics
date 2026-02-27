@@ -132,7 +132,7 @@ import { Data } from '@generated/data'
 
 type PageProps = InertiaProps<{
   jobs: {
-    data: Data.Job[]
+    data: Data.Careers.JobPosting[]
     metadata: {
       total: number
       perPage: number

@@ -16,7 +16,7 @@ export const useDashboardCreateJobForm = () => {
 }
 
 export function useDashboardEditJobForm(
-  job: Omit<Data.Job.Variants['allFields'], 'createdAt' | 'updatedAt'>
+  job: Omit<Data.Careers.JobPosting.Variants['allFields'], 'createdAt' | 'updatedAt'>
 ) {
   return useForm({
     validationSchema: toTypedSchema(createJobOfferSchema),

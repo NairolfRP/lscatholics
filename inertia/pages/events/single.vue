@@ -106,7 +106,7 @@ import type { InertiaProps } from '@/types'
 import type { Data } from '@generated/data'
 
 type PageProps = InertiaProps<{
-  event: Data.Event.Variants['publicDetails']
+  event: Data.ScheduledEvents.ScheduledEvent.Variants['publicDetails']
 }>
 
 const { event } = defineProps<PageProps>()

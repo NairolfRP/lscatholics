@@ -144,7 +144,7 @@ import type { Data } from '@generated/data'
 import type { InertiaProps } from '@/types'
 
 type PageProps = InertiaProps<{
-  job: Data.Job.Variants['allFields']
+  job: Data.Careers.JobPosting.Variants['allFields']
 }>
 
 defineProps<PageProps>()

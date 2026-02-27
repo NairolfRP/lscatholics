@@ -42,7 +42,7 @@ export type ScannedRoutes = {
     'contact.submit': { paramsTuple?: []; params?: {} }
     'news.index': { paramsTuple?: []; params?: {} }
     'news.single': { paramsTuple: [ParamValue]; params: {'slug': ParamValue} }
-    'events.index': { paramsTuple?: []; params?: {} }
+    'scheduled_events.index': { paramsTuple?: []; params?: {} }
     'find.events': { paramsTuple?: []; params?: {} }
     'event': { paramsTuple: [ParamValue]; params: {'slug': ParamValue} }
     'find.parishes': { paramsTuple?: []; params?: {} }
@@ -90,7 +90,7 @@ export type ScannedRoutes = {
     'contact': { paramsTuple?: []; params?: {} }
     'news.index': { paramsTuple?: []; params?: {} }
     'news.single': { paramsTuple: [ParamValue]; params: {'slug': ParamValue} }
-    'events.index': { paramsTuple?: []; params?: {} }
+    'scheduled_events.index': { paramsTuple?: []; params?: {} }
     'find.events': { paramsTuple?: []; params?: {} }
     'event': { paramsTuple: [ParamValue]; params: {'slug': ParamValue} }
     'find.parishes': { paramsTuple?: []; params?: {} }
@@ -135,7 +135,7 @@ export type ScannedRoutes = {
     'contact': { paramsTuple?: []; params?: {} }
     'news.index': { paramsTuple?: []; params?: {} }
     'news.single': { paramsTuple: [ParamValue]; params: {'slug': ParamValue} }
-    'events.index': { paramsTuple?: []; params?: {} }
+    'scheduled_events.index': { paramsTuple?: []; params?: {} }
     'find.events': { paramsTuple?: []; params?: {} }
     'event': { paramsTuple: [ParamValue]; params: {'slug': ParamValue} }
     'find.parishes': { paramsTuple?: []; params?: {} }

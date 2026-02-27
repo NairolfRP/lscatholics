@@ -111,7 +111,7 @@ import type { Data } from '@generated/data'
 
 type PageProps = InertiaProps<{
   offers: {
-    data: Data.Job.Variants['publicSummaryDetails'][]
+    data: Data.Careers.JobPosting.Variants['publicSummaryDetails'][]
     metadata: {
       total: number
       perPage: number

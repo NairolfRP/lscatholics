@@ -137,11 +137,40 @@ export default defineConfig({
   hooks: {
     init: [
       indexEntities({
-        transformers: { enabled: true, withSharedProps: true },
+        controllers: {
+          enabled: true,
+          source: './app',
+          glob: ['**/controllers/**/*.ts'],
+          importAlias: '#app',
+        },
+        transformers: {
+          enabled: true,
+          withSharedProps: true,
+          source: './app',
+          glob: ['**/transformers/**/*.ts'],
+          inertiaMiddlewareImportPath: '#core/middleware/inertia_middleware',
+          importAlias: '#app',
+        },
+        events: {
+          enabled: true,
+          source: './app',
+          glob: ['**/events/**/*.ts'],
+          importAlias: '#app',
+        },
+        listeners: {
+          enabled: true,
+          source: './app',
+          glob: ['**/listeners/**/*.ts'],
+          importAlias: '#app',
+        },
       }),
       indexPages({ framework: 'vue3' }),
       generateRegistry(),
-      indexPolicies(),
+      indexPolicies({
+        source: './app',
+        glob: ['**/policies/**/*.ts'],
+        importAlias: '#app',
+      }),
     ],
     buildStarting: [() => import('@adonisjs/vite/build_hook')],
   },

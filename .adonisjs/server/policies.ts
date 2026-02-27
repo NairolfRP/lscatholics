@@ -1,4 +1,4 @@
 export const policies = {
-  MainPolicy: () => import('#policies/main'),
+  CoreMainPolicy: () => import('#app/core/policies/main'),
 }
 

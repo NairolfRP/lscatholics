@@ -145,7 +145,7 @@ import type { InertiaProps } from '@/types'
 
 type PageProps = InertiaProps<{
   articles: {
-    data: Data.News[]
+    data: Data.Posts.Post[]
     metadata: {
       total: number
       perPage: number

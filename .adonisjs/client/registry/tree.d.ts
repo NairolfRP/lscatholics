@@ -57,8 +57,8 @@ export interface ApiDefinition {
     index: typeof routes['news.index']
     single: typeof routes['news.single']
   }
-  events: {
-    index: typeof routes['events.index']
+  scheduledEvents: {
+    index: typeof routes['scheduled_events.index']
   }
   find: {
     events: typeof routes['find.events']

@@ -141,7 +141,7 @@ import { Data } from '@generated/data'
 
 type PageProps = InertiaProps<{
   events: {
-    data: Data.Event[]
+    data: Data.ScheduledEvents.ScheduledEvent[]
     metadata: {
       total: number
       perPage: number

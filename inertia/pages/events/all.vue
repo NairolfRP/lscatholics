@@ -121,7 +121,7 @@ import type { InertiaProps } from '@/types'
 import type { Data } from '@generated/data'
 
 type PageProps = InertiaProps<{
-  events: Data.Event.Variants['publicList'][]
+  events: Data.ScheduledEvents.ScheduledEvent.Variants['publicList'][]
   error: boolean
 }>
 

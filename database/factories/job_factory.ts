@@ -1,5 +1,5 @@
 import factory from '@adonisjs/lucid/factories'
-import Job from '#models/job'
+import JobPosting from '#careers/models/job_posting'
 import { DateTime } from 'luxon'
 
 const EMPLOYMENT_TYPES = ['full_time', 'part_time', 'temporary', 'occasional', 'contract']
@@ -49,7 +49,7 @@ function pickRandom<T>(arr: T[], min = 2, max = 5): T[] {
 }
 
 export const JobFactory = factory
-  .define(Job, async ({ faker }) => {
+  .define(JobPosting, async ({ faker }) => {
     const title = faker.person.jobTitle()
 
     return {

@@ -2,47 +2,50 @@ import router from '@adonisjs/core/services/router'
 import { middleware } from '#start/kernel'
 import { controllers } from '#generated/controllers'
 
-router.get('/', [controllers.Home, 'index']).as('home')
+router.get('/', [controllers.pages.Home, 'index']).as('home')
 
-router.get('/contact', [controllers.Contact, 'index']).as('contact')
-router.post('/contact', [controllers.Contact, 'submit']).use(middleware.auth()).as('contact.submit')
-
-router.get('/newsroom', [controllers.News, 'index']).as('news.index')
+router.get('/contact', [controllers.pages.Contact, 'index']).as('contact')
 router
-  .get('/newsroom/:slug', [controllers.News, 'single'])
+  .post('/contact', [controllers.pages.Contact, 'submit'])
+  .use(middleware.auth())
+  .as('contact.submit')
+
+router.get('/newsroom', [controllers.posts.Posts, 'index']).as('news.index')
+router
+  .get('/newsroom/:slug', [controllers.posts.Posts, 'single'])
   .where('slug', router.matchers.slug())
   .as('news.single')
 
-router.get('/find', [controllers.Events, 'index'])
-router.get('/find/events', [controllers.Events, 'index']).as('find.events')
+router.get('/find', [controllers.scheduledEvents.ScheduledEvents, 'index'])
+router.get('/find/events', [controllers.scheduledEvents.ScheduledEvents, 'index']).as('find.events')
 router
-  .get('/event/:slug', [controllers.Events, 'single'])
+  .get('/event/:slug', [controllers.scheduledEvents.ScheduledEvents, 'single'])
   .where('slug', router.matchers.slug())
   .as('event')
 
-router.get('/find/parishes', [controllers.Parishes, 'parishes']).as('find.parishes')
+router.get('/find/parishes', [controllers.pages.Parishes, 'parishes']).as('find.parishes')
 
 router.on('/about').renderInertia('about_us', {}).as('about-us')
 
 router.on('/archbishop').renderInertia('archbishop', {}).as('archbishop.index')
 
-router.get('/departments', [controllers.Departments, 'index']).as('departments.index')
+router.get('/departments', [controllers.pages.Departments, 'index']).as('departments.index')
 router
-  .get('/department/:slug', [controllers.Departments, 'single'])
+  .get('/department/:slug', [controllers.pages.Departments, 'single'])
   .where('slug', router.matchers.slug())
   .as('departments.single')
 
-router.get('/services', [controllers.Services, 'index']).as('services.index')
-router.get('/services/:slug', [controllers.Services, 'single']).as('services.single')
+router.get('/services', [controllers.pages.Services, 'index']).as('services.index')
+router.get('/services/:slug', [controllers.pages.Services, 'single']).as('services.single')
 
-router.get('/donate', [controllers.Donate, 'index']).as('donate.index')
-router.post('/donate', [controllers.Donate, 'submit']).as('donate.submit')
+router.get('/donate', [controllers.donate.Donate, 'index']).as('donate.index')
+router.post('/donate', [controllers.donate.Donate, 'submit']).as('donate.submit')
 
 router
-  .get('/register-parishioner', [controllers.RegisterParishioners, 'index'])
+  .get('/register-parishioner', [controllers.pages.RegisterParishioners, 'index'])
   .as('registerParishioner.index')
 router
-  .post('/register-parishioner', [controllers.RegisterParishioners, 'submit'])
+  .post('/register-parishioner', [controllers.pages.RegisterParishioners, 'submit'])
   .as('registerParishioner.submit')
   .use(middleware.auth())
 
@@ -52,16 +55,16 @@ router.on('/catholic-charities').renderInertia('catholic-charities', {}).as('cha
 
 router.on('/vocations').renderInertia('vocations', {}).as('vocations')
 
-router.get('/jobs', [controllers.Jobs, 'index']).as('jobs.index')
+router.get('/jobs', [controllers.careers.JobPostings, 'index']).as('jobs.index')
 router
-  .get('/jobs/:slug', [controllers.Jobs, 'single'])
+  .get('/jobs/:slug', [controllers.careers.JobPostings, 'single'])
   .where('slug', router.matchers.slug())
   .as('jobs.single')
 
 router
   .group(() => {
-    router.get('/', [controllers.JobApplications, 'index']).as('jobs.application')
-    router.post('/', [controllers.JobApplications, 'submit']).as('jobs.application_submit')
+    router.get('/', [controllers.careers.JobApplications, 'index']).as('jobs.application')
+    router.post('/', [controllers.careers.JobApplications, 'submit']).as('jobs.application_submit')
   })
   .prefix('/employment-application/:slug')
   .where('slug', router.matchers.slug())

@@ -311,13 +311,13 @@ import type { InertiaProps } from '@/types'
 
 type PageProps = InertiaProps<{
   posts?: {
-    data: Data.News.Variants['homePosts'][]
+    data: Data.Posts.Post.Variants['homePosts'][]
     error?: string
   }
 }>
 
 const props = withDefaults(defineProps<PageProps>(), {
-  posts: () => ({ data: [] as Data.News.Variants['homePosts'][], error: '' }),
+  posts: () => ({ data: [] as Data.Posts.Post.Variants['homePosts'][], error: '' }),
 })
 
 const now = new Date()

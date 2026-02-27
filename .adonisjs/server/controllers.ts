@@ -4,23 +4,43 @@
  */
 
 export const controllers = {
-  Auth: () => import('#controllers/auth_controller'),
-  Characters: () => import('#controllers/characters_controller'),
-  Contact: () => import('#controllers/contact_controller'),
-  DashboardArticles: () => import('#controllers/dashboard_articles_controller'),
-  DashboardEvents: () => import('#controllers/dashboard_events_controller'),
-  DashboardJobs: () => import('#controllers/dashboard_jobs_controller'),
-  DashboardPages: () => import('#controllers/dashboard_pages_controller'),
-  Departments: () => import('#controllers/departments_controller'),
-  Donate: () => import('#controllers/donate_controller'),
-  Events: () => import('#controllers/events_controller'),
-  Home: () => import('#controllers/home_controller'),
-  JobApplications: () => import('#controllers/job_applications_controller'),
-  Jobs: () => import('#controllers/jobs_controller'),
-  News: () => import('#controllers/news_controller'),
-  Parishes: () => import('#controllers/parishes_controller'),
-  Payments: () => import('#controllers/payments_controller'),
-  Profile: () => import('#controllers/profile_controller'),
-  RegisterParishioners: () => import('#controllers/register_parishioners_controller'),
-  Services: () => import('#controllers/services_controller'),
+  auth: {
+    Auth: () => import('#app/auth/controllers/auth_controller'),
+  },
+  billing: {
+    Payments: () => import('#app/billing/controllers/payments_controller'),
+  },
+  careers: {
+    DashboardJobPostings: () => import('#app/careers/controllers/dashboard_job_postings_controller'),
+    JobApplications: () => import('#app/careers/controllers/job_applications_controller'),
+    JobPostings: () => import('#app/careers/controllers/job_postings_controller'),
+  },
+  characters: {
+    Characters: () => import('#app/characters/controllers/characters_controller'),
+  },
+  dashboard: {
+    Dashboard: () => import('#app/dashboard/controllers/dashboard_controller'),
+  },
+  donate: {
+    Donate: () => import('#app/donate/controllers/donate_controller'),
+  },
+  pages: {
+    Contact: () => import('#app/pages/controllers/contact_controller'),
+    Departments: () => import('#app/pages/controllers/departments_controller'),
+    Home: () => import('#app/pages/controllers/home_controller'),
+    Parishes: () => import('#app/pages/controllers/parishes_controller'),
+    RegisterParishioners: () => import('#app/pages/controllers/register_parishioners_controller'),
+    Services: () => import('#app/pages/controllers/services_controller'),
+  },
+  posts: {
+    DashboardPosts: () => import('#app/posts/controllers/dashboard_posts_controller'),
+    Posts: () => import('#app/posts/controllers/posts_controller'),
+  },
+  scheduledEvents: {
+    DashboardScheduledEvents: () => import('#app/scheduled_events/controllers/dashboard_scheduled_events_controller'),
+    ScheduledEvents: () => import('#app/scheduled_events/controllers/scheduled_events_controller'),
+  },
+  users: {
+    Profile: () => import('#app/users/controllers/profile_controller'),
+  },
 }

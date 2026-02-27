@@ -4,10 +4,12 @@ import { controllers } from '#generated/controllers'
 
 router
   .group(() => {
-    router.get('/', [controllers.DashboardPages, 'index']).as('index')
-    router.resource('articles', controllers.DashboardArticles).as('dashboard.articles')
-    router.resource('events', controllers.DashboardEvents).as('dashboard.events')
-    router.resource('jobs', controllers.DashboardJobs).as('dashboard.jobs')
+    router.get('/', [controllers.dashboard.Dashboard, 'index']).as('index')
+    router.resource('articles', controllers.posts.DashboardPosts).as('dashboard.articles')
+    router
+      .resource('events', controllers.scheduledEvents.DashboardScheduledEvents)
+      .as('dashboard.events')
+    router.resource('jobs', controllers.careers.DashboardJobPostings).as('dashboard.jobs')
   })
   .prefix('dashboard')
   .use(middleware.auth())

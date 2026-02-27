@@ -1,10 +1,10 @@
 import factory from '@adonisjs/lucid/factories'
-import News from '#models/news'
-import { categories } from '#controllers/news_controller'
+import Post from '#posts/models/post'
+import { categories } from '#posts/controllers/posts_controller'
 import { DateTime } from 'luxon'
 
 export const NewsFactory = factory
-  .define(News, async ({ faker }) => {
+  .define(Post, async ({ faker }) => {
     return {
       title: faker.lorem.sentence().substring(0, 255),
       slug: faker.lorem.slug(),

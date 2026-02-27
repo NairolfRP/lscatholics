@@ -223,7 +223,7 @@ import type { InertiaProps } from '@/types'
 import type { Data } from '@generated/data'
 
 type PageProps = InertiaProps<{
-  offer: Data.Job.Variants['allFields']
+  offer: Data.Careers.JobPosting.Variants['allFields']
 }>
 
 const user = useUser()

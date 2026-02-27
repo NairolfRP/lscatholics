@@ -172,7 +172,7 @@ import type { InertiaProps } from '@/types'
 import { Data } from '@generated/data'
 
 type PageProps = InertiaProps<{
-  article: Data.News.Variants['allFields']
+  article: Data.Posts.Post.Variants['allFields']
 }>
 
 const props = defineProps<PageProps>()

@@ -95,7 +95,7 @@ import type { InertiaProps } from '@/types'
 import type { Data } from '@generated/data'
 
 type PageProps = InertiaProps<{
-  job: Data.Job.Variants['employmentApplication']
+  job: Data.Careers.JobPosting.Variants['employmentApplication']
   isExpired: boolean
 }>
 

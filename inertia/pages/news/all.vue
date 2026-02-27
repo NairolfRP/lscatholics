@@ -119,7 +119,7 @@ import type { Data } from '@generated/data'
 
 type PageProps = InertiaProps<{
   articles: {
-    data: Data.News.Variants['publicList'][]
+    data: Data.Posts.Post.Variants['publicList'][]
     metadata: {
       total: number
       perPage: number

@@ -15,7 +15,7 @@ export interface Registry {
       paramsTuple: [ParamValue]
       params: { token: ParamValue }
       query: {}
-      response: ExtractResponse<Awaited<ReturnType<import('#controllers/payments_controller').default['callback']>>>
+      response: ExtractResponse<Awaited<ReturnType<import('#app/billing/controllers/payments_controller').default['callback']>>>
     }
   }
   'signIn': {
@@ -26,7 +26,7 @@ export interface Registry {
       paramsTuple: []
       params: {}
       query: {}
-      response: ExtractResponse<Awaited<ReturnType<import('#controllers/auth_controller').default['redirectToProvider']>>>
+      response: ExtractResponse<Awaited<ReturnType<import('#app/auth/controllers/auth_controller').default['redirectToProvider']>>>
     }
   }
   'auth.handle_callback': {
@@ -37,18 +37,18 @@ export interface Registry {
       paramsTuple: []
       params: {}
       query: {}
-      response: ExtractResponse<Awaited<ReturnType<import('#controllers/auth_controller').default['handleCallback']>>>
+      response: ExtractResponse<Awaited<ReturnType<import('#app/auth/controllers/auth_controller').default['handleCallback']>>>
     }
   }
   'deleteUser': {
     methods: ["DELETE"]
     pattern: '/api/auth/delete-user'
     types: {
-      body: ExtractBody<InferInput<(typeof import('#validators/delete_user_confirmation').createDeleteUserConfirmationValidator)>>
+      body: ExtractBody<InferInput<(typeof import('#users/validators/delete_user_confirmation').createDeleteUserConfirmationValidator)>>
       paramsTuple: []
       params: {}
-      query: ExtractQuery<InferInput<(typeof import('#validators/delete_user_confirmation').createDeleteUserConfirmationValidator)>>
-      response: ExtractResponse<Awaited<ReturnType<import('#controllers/auth_controller').default['deleteUser']>>>
+      query: ExtractQuery<InferInput<(typeof import('#users/validators/delete_user_confirmation').createDeleteUserConfirmationValidator)>>
+      response: ExtractResponse<Awaited<ReturnType<import('#app/auth/controllers/auth_controller').default['deleteUser']>>>
     }
   }
   'logout': {
@@ -59,7 +59,7 @@ export interface Registry {
       paramsTuple: []
       params: {}
       query: {}
-      response: ExtractResponse<Awaited<ReturnType<import('#controllers/auth_controller').default['logout']>>>
+      response: ExtractResponse<Awaited<ReturnType<import('#app/auth/controllers/auth_controller').default['logout']>>>
     }
   }
   'listCharacters': {
@@ -70,7 +70,7 @@ export interface Registry {
       paramsTuple: []
       params: {}
       query: {}
-      response: ExtractResponse<Awaited<ReturnType<import('#controllers/characters_controller').default['listCharacters']>>>
+      response: ExtractResponse<Awaited<ReturnType<import('#app/characters/controllers/characters_controller').default['listCharacters']>>>
     }
   }
   'switchCharacter': {
@@ -81,7 +81,7 @@ export interface Registry {
       paramsTuple: []
       params: {}
       query: {}
-      response: ExtractResponse<Awaited<ReturnType<import('#controllers/characters_controller').default['switchCharacter']>>>
+      response: ExtractResponse<Awaited<ReturnType<import('#app/characters/controllers/characters_controller').default['switchCharacter']>>>
     }
   }
   'discord.redirect': {
@@ -92,7 +92,7 @@ export interface Registry {
       paramsTuple: []
       params: {}
       query: {}
-      response: ExtractResponse<Awaited<ReturnType<import('#controllers/auth_controller').default['redirectToDiscord']>>>
+      response: ExtractResponse<Awaited<ReturnType<import('#app/auth/controllers/auth_controller').default['redirectToDiscord']>>>
     }
   }
   'auth.handle_discord_callback': {
@@ -103,7 +103,7 @@ export interface Registry {
       paramsTuple: []
       params: {}
       query: {}
-      response: ExtractResponse<Awaited<ReturnType<import('#controllers/auth_controller').default['handleDiscordCallback']>>>
+      response: ExtractResponse<Awaited<ReturnType<import('#app/auth/controllers/auth_controller').default['handleDiscordCallback']>>>
     }
   }
   'discord.unlink': {
@@ -114,7 +114,7 @@ export interface Registry {
       paramsTuple: []
       params: {}
       query: {}
-      response: ExtractResponse<Awaited<ReturnType<import('#controllers/auth_controller').default['unlinkDiscord']>>>
+      response: ExtractResponse<Awaited<ReturnType<import('#app/auth/controllers/auth_controller').default['unlinkDiscord']>>>
     }
   }
   'profile': {
@@ -125,7 +125,7 @@ export interface Registry {
       paramsTuple: []
       params: {}
       query: {}
-      response: ExtractResponse<Awaited<ReturnType<import('#controllers/profile_controller').default['show']>>>
+      response: ExtractResponse<Awaited<ReturnType<import('#app/users/controllers/profile_controller').default['show']>>>
     }
   }
   'dashboard.index': {
@@ -136,7 +136,7 @@ export interface Registry {
       paramsTuple: []
       params: {}
       query: {}
-      response: ExtractResponse<Awaited<ReturnType<import('#controllers/dashboard_pages_controller').default['index']>>>
+      response: ExtractResponse<Awaited<ReturnType<import('#app/dashboard/controllers/dashboard_controller').default['index']>>>
     }
   }
   'dashboard.dashboard_articles.index': {
@@ -147,7 +147,7 @@ export interface Registry {
       paramsTuple: []
       params: {}
       query: {}
-      response: ExtractResponse<Awaited<ReturnType<import('#controllers/dashboard_articles_controller').default['index']>>>
+      response: ExtractResponse<Awaited<ReturnType<import('#app/posts/controllers/dashboard_posts_controller').default['index']>>>
     }
   }
   'dashboard.dashboard_articles.create': {
@@ -158,18 +158,18 @@ export interface Registry {
       paramsTuple: []
       params: {}
       query: {}
-      response: ExtractResponse<Awaited<ReturnType<import('#controllers/dashboard_articles_controller').default['create']>>>
+      response: ExtractResponse<Awaited<ReturnType<import('#app/posts/controllers/dashboard_posts_controller').default['create']>>>
     }
   }
   'dashboard.dashboard_articles.store': {
     methods: ["POST"]
     pattern: '/dashboard/articles'
     types: {
-      body: ExtractBody<InferInput<(typeof import('#validators/dashboard_article').createDashboardArticleValidator)>>
+      body: ExtractBody<InferInput<(typeof import('#posts/validators/dashboard_post').createDashboardPostValidator)>>
       paramsTuple: []
       params: {}
-      query: ExtractQuery<InferInput<(typeof import('#validators/dashboard_article').createDashboardArticleValidator)>>
-      response: ExtractResponse<Awaited<ReturnType<import('#controllers/dashboard_articles_controller').default['store']>>>
+      query: ExtractQuery<InferInput<(typeof import('#posts/validators/dashboard_post').createDashboardPostValidator)>>
+      response: ExtractResponse<Awaited<ReturnType<import('#app/posts/controllers/dashboard_posts_controller').default['store']>>>
     }
   }
   'dashboard.dashboard_articles.show': {
@@ -180,7 +180,7 @@ export interface Registry {
       paramsTuple: [ParamValue]
       params: { id: ParamValue }
       query: {}
-      response: ExtractResponse<Awaited<ReturnType<import('#controllers/dashboard_articles_controller').default['show']>>>
+      response: ExtractResponse<Awaited<ReturnType<import('#app/posts/controllers/dashboard_posts_controller').default['show']>>>
     }
   }
   'dashboard.dashboard_articles.edit': {
@@ -191,18 +191,18 @@ export interface Registry {
       paramsTuple: [ParamValue]
       params: { id: ParamValue }
       query: {}
-      response: ExtractResponse<Awaited<ReturnType<import('#controllers/dashboard_articles_controller').default['edit']>>>
+      response: ExtractResponse<Awaited<ReturnType<import('#app/posts/controllers/dashboard_posts_controller').default['edit']>>>
     }
   }
   'dashboard.dashboard_articles.update': {
     methods: ["PUT","PATCH"]
     pattern: '/dashboard/articles/:id'
     types: {
-      body: ExtractBody<InferInput<(typeof import('#validators/dashboard_article').updatedDashboardArticleValidator)>>
+      body: ExtractBody<InferInput<(typeof import('#posts/validators/dashboard_post').updatedDashboardPostValidator)>>
       paramsTuple: [ParamValue]
       params: { id: ParamValue }
-      query: ExtractQuery<InferInput<(typeof import('#validators/dashboard_article').updatedDashboardArticleValidator)>>
-      response: ExtractResponse<Awaited<ReturnType<import('#controllers/dashboard_articles_controller').default['update']>>>
+      query: ExtractQuery<InferInput<(typeof import('#posts/validators/dashboard_post').updatedDashboardPostValidator)>>
+      response: ExtractResponse<Awaited<ReturnType<import('#app/posts/controllers/dashboard_posts_controller').default['update']>>>
     }
   }
   'dashboard.dashboard_articles.destroy': {
@@ -213,7 +213,7 @@ export interface Registry {
       paramsTuple: [ParamValue]
       params: { id: ParamValue }
       query: {}
-      response: ExtractResponse<Awaited<ReturnType<import('#controllers/dashboard_articles_controller').default['destroy']>>>
+      response: ExtractResponse<Awaited<ReturnType<import('#app/posts/controllers/dashboard_posts_controller').default['destroy']>>>
     }
   }
   'dashboard.dashboard_events.index': {
@@ -224,7 +224,7 @@ export interface Registry {
       paramsTuple: []
       params: {}
       query: {}
-      response: ExtractResponse<Awaited<ReturnType<import('#controllers/dashboard_events_controller').default['index']>>>
+      response: ExtractResponse<Awaited<ReturnType<import('#app/scheduled_events/controllers/dashboard_scheduled_events_controller').default['index']>>>
     }
   }
   'dashboard.dashboard_events.create': {
@@ -235,18 +235,18 @@ export interface Registry {
       paramsTuple: []
       params: {}
       query: {}
-      response: ExtractResponse<Awaited<ReturnType<import('#controllers/dashboard_events_controller').default['create']>>>
+      response: ExtractResponse<Awaited<ReturnType<import('#app/scheduled_events/controllers/dashboard_scheduled_events_controller').default['create']>>>
     }
   }
   'dashboard.dashboard_events.store': {
     methods: ["POST"]
     pattern: '/dashboard/events'
     types: {
-      body: ExtractBody<InferInput<(typeof import('#validators/dashboard_event').createDashboardEventValidator)>>
+      body: ExtractBody<InferInput<(typeof import('#scheduled_events/validators/dashboard_scheduled_event').createDashboardScheduledEventValidator)>>
       paramsTuple: []
       params: {}
-      query: ExtractQuery<InferInput<(typeof import('#validators/dashboard_event').createDashboardEventValidator)>>
-      response: ExtractResponse<Awaited<ReturnType<import('#controllers/dashboard_events_controller').default['store']>>>
+      query: ExtractQuery<InferInput<(typeof import('#scheduled_events/validators/dashboard_scheduled_event').createDashboardScheduledEventValidator)>>
+      response: ExtractResponse<Awaited<ReturnType<import('#app/scheduled_events/controllers/dashboard_scheduled_events_controller').default['store']>>>
     }
   }
   'dashboard.dashboard_events.show': {
@@ -257,7 +257,7 @@ export interface Registry {
       paramsTuple: [ParamValue]
       params: { id: ParamValue }
       query: {}
-      response: ExtractResponse<Awaited<ReturnType<import('#controllers/dashboard_events_controller').default['show']>>>
+      response: ExtractResponse<Awaited<ReturnType<import('#app/scheduled_events/controllers/dashboard_scheduled_events_controller').default['show']>>>
     }
   }
   'dashboard.dashboard_events.edit': {
@@ -268,18 +268,18 @@ export interface Registry {
       paramsTuple: [ParamValue]
       params: { id: ParamValue }
       query: {}
-      response: ExtractResponse<Awaited<ReturnType<import('#controllers/dashboard_events_controller').default['edit']>>>
+      response: ExtractResponse<Awaited<ReturnType<import('#app/scheduled_events/controllers/dashboard_scheduled_events_controller').default['edit']>>>
     }
   }
   'dashboard.dashboard_events.update': {
     methods: ["PUT","PATCH"]
     pattern: '/dashboard/events/:id'
     types: {
-      body: ExtractBody<InferInput<(typeof import('#validators/dashboard_event').updateDashboardEventValidator)>>
+      body: ExtractBody<InferInput<(typeof import('#scheduled_events/validators/dashboard_scheduled_event').updateDashboardScheduledEventValidator)>>
       paramsTuple: [ParamValue]
       params: { id: ParamValue }
-      query: ExtractQuery<InferInput<(typeof import('#validators/dashboard_event').updateDashboardEventValidator)>>
-      response: ExtractResponse<Awaited<ReturnType<import('#controllers/dashboard_events_controller').default['update']>>>
+      query: ExtractQuery<InferInput<(typeof import('#scheduled_events/validators/dashboard_scheduled_event').updateDashboardScheduledEventValidator)>>
+      response: ExtractResponse<Awaited<ReturnType<import('#app/scheduled_events/controllers/dashboard_scheduled_events_controller').default['update']>>>
     }
   }
   'dashboard.dashboard_events.destroy': {
@@ -290,7 +290,7 @@ export interface Registry {
       paramsTuple: [ParamValue]
       params: { id: ParamValue }
       query: {}
-      response: ExtractResponse<Awaited<ReturnType<import('#controllers/dashboard_events_controller').default['destroy']>>>
+      response: ExtractResponse<Awaited<ReturnType<import('#app/scheduled_events/controllers/dashboard_scheduled_events_controller').default['destroy']>>>
     }
   }
   'dashboard.dashboard_jobs.index': {
@@ -301,7 +301,7 @@ export interface Registry {
       paramsTuple: []
       params: {}
       query: {}
-      response: ExtractResponse<Awaited<ReturnType<import('#controllers/dashboard_jobs_controller').default['index']>>>
+      response: ExtractResponse<Awaited<ReturnType<import('#app/careers/controllers/dashboard_job_postings_controller').default['index']>>>
     }
   }
   'dashboard.dashboard_jobs.create': {
@@ -312,18 +312,18 @@ export interface Registry {
       paramsTuple: []
       params: {}
       query: {}
-      response: ExtractResponse<Awaited<ReturnType<import('#controllers/dashboard_jobs_controller').default['create']>>>
+      response: ExtractResponse<Awaited<ReturnType<import('#app/careers/controllers/dashboard_job_postings_controller').default['create']>>>
     }
   }
   'dashboard.dashboard_jobs.store': {
     methods: ["POST"]
     pattern: '/dashboard/jobs'
     types: {
-      body: ExtractBody<InferInput<(typeof import('#validators/dashboard_job').createDashboardJobValidator)>>
+      body: ExtractBody<InferInput<(typeof import('#careers/validators/dashboard_job_posting').createDashboardJobPostingValidator)>>
       paramsTuple: []
       params: {}
-      query: ExtractQuery<InferInput<(typeof import('#validators/dashboard_job').createDashboardJobValidator)>>
-      response: ExtractResponse<Awaited<ReturnType<import('#controllers/dashboard_jobs_controller').default['store']>>>
+      query: ExtractQuery<InferInput<(typeof import('#careers/validators/dashboard_job_posting').createDashboardJobPostingValidator)>>
+      response: ExtractResponse<Awaited<ReturnType<import('#app/careers/controllers/dashboard_job_postings_controller').default['store']>>>
     }
   }
   'dashboard.dashboard_jobs.show': {
@@ -334,7 +334,7 @@ export interface Registry {
       paramsTuple: [ParamValue]
       params: { id: ParamValue }
       query: {}
-      response: ExtractResponse<Awaited<ReturnType<import('#controllers/dashboard_jobs_controller').default['show']>>>
+      response: ExtractResponse<Awaited<ReturnType<import('#app/careers/controllers/dashboard_job_postings_controller').default['show']>>>
     }
   }
   'dashboard.dashboard_jobs.edit': {
@@ -345,18 +345,18 @@ export interface Registry {
       paramsTuple: [ParamValue]
       params: { id: ParamValue }
       query: {}
-      response: ExtractResponse<Awaited<ReturnType<import('#controllers/dashboard_jobs_controller').default['edit']>>>
+      response: ExtractResponse<Awaited<ReturnType<import('#app/careers/controllers/dashboard_job_postings_controller').default['edit']>>>
     }
   }
   'dashboard.dashboard_jobs.update': {
     methods: ["PUT","PATCH"]
     pattern: '/dashboard/jobs/:id'
     types: {
-      body: ExtractBody<InferInput<(typeof import('#validators/dashboard_job').updatedDashboardJobValidator)>>
+      body: ExtractBody<InferInput<(typeof import('#careers/validators/dashboard_job_posting').updatedDashboardJobPostingValidator)>>
       paramsTuple: [ParamValue]
       params: { id: ParamValue }
-      query: ExtractQuery<InferInput<(typeof import('#validators/dashboard_job').updatedDashboardJobValidator)>>
-      response: ExtractResponse<Awaited<ReturnType<import('#controllers/dashboard_jobs_controller').default['update']>>>
+      query: ExtractQuery<InferInput<(typeof import('#careers/validators/dashboard_job_posting').updatedDashboardJobPostingValidator)>>
+      response: ExtractResponse<Awaited<ReturnType<import('#app/careers/controllers/dashboard_job_postings_controller').default['update']>>>
     }
   }
   'dashboard.dashboard_jobs.destroy': {
@@ -367,7 +367,7 @@ export interface Registry {
       paramsTuple: [ParamValue]
       params: { id: ParamValue }
       query: {}
-      response: ExtractResponse<Awaited<ReturnType<import('#controllers/dashboard_jobs_controller').default['destroy']>>>
+      response: ExtractResponse<Awaited<ReturnType<import('#app/careers/controllers/dashboard_job_postings_controller').default['destroy']>>>
     }
   }
   'home': {
@@ -378,7 +378,7 @@ export interface Registry {
       paramsTuple: []
       params: {}
       query: {}
-      response: ExtractResponse<Awaited<ReturnType<import('#controllers/home_controller').default['index']>>>
+      response: ExtractResponse<Awaited<ReturnType<import('#app/pages/controllers/home_controller').default['index']>>>
     }
   }
   'contact': {
@@ -389,18 +389,18 @@ export interface Registry {
       paramsTuple: []
       params: {}
       query: {}
-      response: ExtractResponse<Awaited<ReturnType<import('#controllers/contact_controller').default['index']>>>
+      response: ExtractResponse<Awaited<ReturnType<import('#app/pages/controllers/contact_controller').default['index']>>>
     }
   }
   'contact.submit': {
     methods: ["POST"]
     pattern: '/contact'
     types: {
-      body: ExtractBody<InferInput<(typeof import('#validators/contact_validation').createContactValidator)>>
+      body: ExtractBody<InferInput<(typeof import('#pages/validators/contact_validation').createContactValidator)>>
       paramsTuple: []
       params: {}
-      query: ExtractQuery<InferInput<(typeof import('#validators/contact_validation').createContactValidator)>>
-      response: ExtractResponse<Awaited<ReturnType<import('#controllers/contact_controller').default['submit']>>>
+      query: ExtractQuery<InferInput<(typeof import('#pages/validators/contact_validation').createContactValidator)>>
+      response: ExtractResponse<Awaited<ReturnType<import('#app/pages/controllers/contact_controller').default['submit']>>>
     }
   }
   'news.index': {
@@ -410,8 +410,8 @@ export interface Registry {
       body: {}
       paramsTuple: []
       params: {}
-      query: ExtractQueryForGet<InferInput<(typeof import('#validators/news').createNewsSearchParamsValidator)>>
-      response: ExtractResponse<Awaited<ReturnType<import('#controllers/news_controller').default['index']>>>
+      query: ExtractQueryForGet<InferInput<(typeof import('#posts/validators/post').createPostSearchParamsValidator)>>
+      response: ExtractResponse<Awaited<ReturnType<import('#app/posts/controllers/posts_controller').default['index']>>>
     }
   }
   'news.single': {
@@ -422,10 +422,10 @@ export interface Registry {
       paramsTuple: [ParamValue]
       params: { slug: ParamValue }
       query: {}
-      response: ExtractResponse<Awaited<ReturnType<import('#controllers/news_controller').default['single']>>>
+      response: ExtractResponse<Awaited<ReturnType<import('#app/posts/controllers/posts_controller').default['single']>>>
     }
   }
-  'events.index': {
+  'scheduled_events.index': {
     methods: ["GET","HEAD"]
     pattern: '/find'
     types: {
@@ -433,7 +433,7 @@ export interface Registry {
       paramsTuple: []
       params: {}
       query: {}
-      response: ExtractResponse<Awaited<ReturnType<import('#controllers/events_controller').default['index']>>>
+      response: ExtractResponse<Awaited<ReturnType<import('#app/scheduled_events/controllers/scheduled_events_controller').default['index']>>>
     }
   }
   'find.events': {
@@ -444,7 +444,7 @@ export interface Registry {
       paramsTuple: []
       params: {}
       query: {}
-      response: ExtractResponse<Awaited<ReturnType<import('#controllers/events_controller').default['index']>>>
+      response: ExtractResponse<Awaited<ReturnType<import('#app/scheduled_events/controllers/scheduled_events_controller').default['index']>>>
     }
   }
   'event': {
@@ -455,7 +455,7 @@ export interface Registry {
       paramsTuple: [ParamValue]
       params: { slug: ParamValue }
       query: {}
-      response: ExtractResponse<Awaited<ReturnType<import('#controllers/events_controller').default['single']>>>
+      response: ExtractResponse<Awaited<ReturnType<import('#app/scheduled_events/controllers/scheduled_events_controller').default['single']>>>
     }
   }
   'find.parishes': {
@@ -466,7 +466,7 @@ export interface Registry {
       paramsTuple: []
       params: {}
       query: {}
-      response: ExtractResponse<Awaited<ReturnType<import('#controllers/parishes_controller').default['parishes']>>>
+      response: ExtractResponse<Awaited<ReturnType<import('#app/pages/controllers/parishes_controller').default['parishes']>>>
     }
   }
   'about-us': {
@@ -499,7 +499,7 @@ export interface Registry {
       paramsTuple: []
       params: {}
       query: {}
-      response: ExtractResponse<Awaited<ReturnType<import('#controllers/departments_controller').default['index']>>>
+      response: ExtractResponse<Awaited<ReturnType<import('#app/pages/controllers/departments_controller').default['index']>>>
     }
   }
   'departments.single': {
@@ -510,7 +510,7 @@ export interface Registry {
       paramsTuple: [ParamValue]
       params: { slug: ParamValue }
       query: {}
-      response: ExtractResponse<Awaited<ReturnType<import('#controllers/departments_controller').default['single']>>>
+      response: ExtractResponse<Awaited<ReturnType<import('#app/pages/controllers/departments_controller').default['single']>>>
     }
   }
   'services.index': {
@@ -521,7 +521,7 @@ export interface Registry {
       paramsTuple: []
       params: {}
       query: {}
-      response: ExtractResponse<Awaited<ReturnType<import('#controllers/services_controller').default['index']>>>
+      response: ExtractResponse<Awaited<ReturnType<import('#app/pages/controllers/services_controller').default['index']>>>
     }
   }
   'services.single': {
@@ -531,8 +531,8 @@ export interface Registry {
       body: {}
       paramsTuple: [ParamValue]
       params: { slug: ParamValue }
-      query: ExtractQueryForGet<InferInput<(typeof import('#validators/service_slug').createServiceSlugValidator)>>
-      response: ExtractResponse<Awaited<ReturnType<import('#controllers/services_controller').default['single']>>>
+      query: ExtractQueryForGet<InferInput<(typeof import('#pages/validators/service_slug').createServiceSlugValidator)>>
+      response: ExtractResponse<Awaited<ReturnType<import('#app/pages/controllers/services_controller').default['single']>>>
     }
   }
   'donate.index': {
@@ -543,18 +543,18 @@ export interface Registry {
       paramsTuple: []
       params: {}
       query: {}
-      response: ExtractResponse<Awaited<ReturnType<import('#controllers/donate_controller').default['index']>>>
+      response: ExtractResponse<Awaited<ReturnType<import('#app/donate/controllers/donate_controller').default['index']>>>
     }
   }
   'donate.submit': {
     methods: ["POST"]
     pattern: '/donate'
     types: {
-      body: ExtractBody<InferInput<(typeof import('#validators/donate').createDonateFormValidator)>>
+      body: ExtractBody<InferInput<(typeof import('#donate/validators/donate').createDonateFormValidator)>>
       paramsTuple: []
       params: {}
-      query: ExtractQuery<InferInput<(typeof import('#validators/donate').createDonateFormValidator)>>
-      response: ExtractResponse<Awaited<ReturnType<import('#controllers/donate_controller').default['submit']>>>
+      query: ExtractQuery<InferInput<(typeof import('#donate/validators/donate').createDonateFormValidator)>>
+      response: ExtractResponse<Awaited<ReturnType<import('#app/donate/controllers/donate_controller').default['submit']>>>
     }
   }
   'registerParishioner.index': {
@@ -565,18 +565,18 @@ export interface Registry {
       paramsTuple: []
       params: {}
       query: {}
-      response: ExtractResponse<Awaited<ReturnType<import('#controllers/register_parishioners_controller').default['index']>>>
+      response: ExtractResponse<Awaited<ReturnType<import('#app/pages/controllers/register_parishioners_controller').default['index']>>>
     }
   }
   'registerParishioner.submit': {
     methods: ["POST"]
     pattern: '/register-parishioner'
     types: {
-      body: ExtractBody<InferInput<(typeof import('#validators/register_parishioner').createRegisterParishionerValidator)>>
+      body: ExtractBody<InferInput<(typeof import('#pages/validators/register_parishioner').createRegisterParishionerValidator)>>
       paramsTuple: []
       params: {}
-      query: ExtractQuery<InferInput<(typeof import('#validators/register_parishioner').createRegisterParishionerValidator)>>
-      response: ExtractResponse<Awaited<ReturnType<import('#controllers/register_parishioners_controller').default['submit']>>>
+      query: ExtractQuery<InferInput<(typeof import('#pages/validators/register_parishioner').createRegisterParishionerValidator)>>
+      response: ExtractResponse<Awaited<ReturnType<import('#app/pages/controllers/register_parishioners_controller').default['submit']>>>
     }
   }
   'privacy': {
@@ -620,7 +620,7 @@ export interface Registry {
       paramsTuple: []
       params: {}
       query: {}
-      response: ExtractResponse<Awaited<ReturnType<import('#controllers/jobs_controller').default['index']>>>
+      response: ExtractResponse<Awaited<ReturnType<import('#app/careers/controllers/job_postings_controller').default['index']>>>
     }
   }
   'jobs.single': {
@@ -631,7 +631,7 @@ export interface Registry {
       paramsTuple: [ParamValue]
       params: { slug: ParamValue }
       query: {}
-      response: ExtractResponse<Awaited<ReturnType<import('#controllers/jobs_controller').default['single']>>>
+      response: ExtractResponse<Awaited<ReturnType<import('#app/careers/controllers/job_postings_controller').default['single']>>>
     }
   }
   'jobs.application': {
@@ -642,18 +642,18 @@ export interface Registry {
       paramsTuple: [ParamValue]
       params: { slug: ParamValue }
       query: {}
-      response: ExtractResponse<Awaited<ReturnType<import('#controllers/job_applications_controller').default['index']>>>
+      response: ExtractResponse<Awaited<ReturnType<import('#app/careers/controllers/job_applications_controller').default['index']>>>
     }
   }
   'jobs.application_submit': {
     methods: ["POST"]
     pattern: '/employment-application/:slug'
     types: {
-      body: ExtractBody<InferInput<(typeof import('#validators/employment_application').createEmploymentApplicationValidator)>>
+      body: ExtractBody<InferInput<(typeof import('#careers/validators/employment_application').createEmploymentApplicationValidator)>>
       paramsTuple: [ParamValue]
       params: { slug: ParamValue }
-      query: ExtractQuery<InferInput<(typeof import('#validators/employment_application').createEmploymentApplicationValidator)>>
-      response: ExtractResponse<Awaited<ReturnType<import('#controllers/job_applications_controller').default['submit']>>>
+      query: ExtractQuery<InferInput<(typeof import('#careers/validators/employment_application').createEmploymentApplicationValidator)>>
+      response: ExtractResponse<Awaited<ReturnType<import('#app/careers/controllers/job_applications_controller').default['submit']>>>
     }
   }
   'dailyReadings': {

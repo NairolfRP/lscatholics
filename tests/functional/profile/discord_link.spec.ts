@@ -1,5 +1,5 @@
 import { test } from '@japa/runner'
-import User from '#models/user'
+import User from '#users/models/user'
 import { DateTime } from 'luxon'
 import testUtils from '@adonisjs/core/services/test_utils'
 import nock from 'nock'

@@ -234,11 +234,11 @@ const routes = {
     tokens: [{"old":"/newsroom/:slug","type":0,"val":"newsroom","end":""},{"old":"/newsroom/:slug","type":1,"val":"slug","end":""}],
     types: placeholder as Registry['news.single']['types'],
   },
-  'events.index': {
+  'scheduled_events.index': {
     methods: ["GET","HEAD"],
     pattern: '/find',
     tokens: [{"old":"/find","type":0,"val":"find","end":""}],
-    types: placeholder as Registry['events.index']['types'],
+    types: placeholder as Registry['scheduled_events.index']['types'],
   },
   'find.events': {
     methods: ["GET","HEAD"],

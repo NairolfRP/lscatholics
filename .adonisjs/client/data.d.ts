@@ -6,28 +6,36 @@
 /// <reference path="./manifest.d.ts" />
 import type { InferData, InferVariants } from '@adonisjs/core/types/transformers'
 import type { InferSharedProps } from '@adonisjs/inertia/types'
-import type EventTransformer from '#transformers/event_transformer'
-import type JobTransformer from '#transformers/job_transformer'
-import type NewsTransformer from '#transformers/news_transformer'
-import type UserTransformer from '#transformers/user_transformer'
-import type InertiaMiddleware from '#middleware/inertia_middleware'
+import type CareersJobPostingTransformer from '#app/careers/transformers/job_posting_transformer'
+import type PostsPostTransformer from '#app/posts/transformers/post_transformer'
+import type ScheduledEventsScheduledEventTransformer from '#app/scheduled_events/transformers/scheduled_event_transformer'
+import type UsersUserTransformer from '#app/users/transformers/user_transformer'
+import type InertiaMiddleware from '#core/middleware/inertia_middleware'
 
 export namespace Data {
-  export type Event = InferData<EventTransformer>
-  export namespace Event {
-    export type Variants = InferVariants<EventTransformer>
+  export namespace Careers {
+    export type JobPosting = InferData<CareersJobPostingTransformer>
+    export namespace JobPosting {
+      export type Variants = InferVariants<CareersJobPostingTransformer>
+    }
   }
-  export type Job = InferData<JobTransformer>
-  export namespace Job {
-    export type Variants = InferVariants<JobTransformer>
+  export namespace Posts {
+    export type Post = InferData<PostsPostTransformer>
+    export namespace Post {
+      export type Variants = InferVariants<PostsPostTransformer>
+    }
   }
-  export type News = InferData<NewsTransformer>
-  export namespace News {
-    export type Variants = InferVariants<NewsTransformer>
+  export namespace ScheduledEvents {
+    export type ScheduledEvent = InferData<ScheduledEventsScheduledEventTransformer>
+    export namespace ScheduledEvent {
+      export type Variants = InferVariants<ScheduledEventsScheduledEventTransformer>
+    }
   }
-  export type User = InferData<UserTransformer>
-  export namespace User {
-    export type Variants = InferVariants<UserTransformer>
+  export namespace Users {
+    export type User = InferData<UsersUserTransformer>
+    export namespace User {
+      export type Variants = InferVariants<UsersUserTransformer>
+    }
   }
   export type SharedProps = InferSharedProps<InertiaMiddleware>
 }
