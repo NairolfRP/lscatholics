@@ -16,7 +16,9 @@ export default class JobApplicationsController {
       .select('id', 'slug', 'title')
       .where('slug', slug)
       .andWhere('is_active', true)
-      .andWhere('expires_at', '>', DateTime.now().toSQL())
+      .andWhere((query) => {
+        query.where('expires_at', '>', DateTime.now().toSQL()).orWhereNull('expires_at')
+      })
       .first()
     if (!job) throw new Exception('Job offer not found or expired', { status: 404 })
     return job
