@@ -11,6 +11,7 @@ export default class RoleSeeder extends BaseSeeder {
         slug: 'admin',
         name: 'Admin',
         description: 'Application administrator with full access',
+        hierarchyOrder: 1,
       },
     ])
 

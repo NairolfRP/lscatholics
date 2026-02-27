@@ -125,7 +125,7 @@ export class RolePermissionSchema extends BaseModel {
 }
 
 export class RoleSchema extends BaseModel {
-  static $columns = ['id', 'slug', 'name', 'description', 'createdAt', 'updatedAt'] as const
+  static $columns = ['id', 'slug', 'name', 'description', 'createdAt', 'updatedAt', 'hierarchyOrder'] as const
   $columns = RoleSchema.$columns
   @column({ isPrimary: true })
   declare id: number
@@ -139,6 +139,8 @@ export class RoleSchema extends BaseModel {
   declare createdAt: DateTime | null
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare updatedAt: DateTime | null
+  @column()
+  declare hierarchyOrder: number
 }
 
 export class ScheduledEventSchema extends BaseModel {
