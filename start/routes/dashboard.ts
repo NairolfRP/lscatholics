@@ -1,15 +1,16 @@
 import router from '@adonisjs/core/services/router'
 import { middleware } from '#start/kernel'
-
-const DashboardController = () => import('#dashboard/controllers/pages_controller')
-const DashboardArticlesController = () => import('#dashboard/controllers/articles_controller')
-const DashboardEventsController = () => import('#dashboard/controllers/events_controller')
+import { controllers } from '#generated/controllers'
 
 router
   .group(() => {
-    router.get('/', [DashboardController, 'index']).as('index')
-    router.resource('articles', DashboardArticlesController).as('dashboard.articles')
-    router.resource('events', DashboardEventsController).as('dashboard.events')
+    router.get('/', [controllers.dashboard.Dashboard, 'index']).as('index')
+    router.resource('articles', controllers.posts.DashboardPosts).as('dashboard.articles')
+    router
+      .resource('events', controllers.scheduledEvents.DashboardScheduledEvents)
+      .as('dashboard.events')
+    router.resource('jobs', controllers.careers.DashboardJobPostings).as('dashboard.jobs')
+    router.resource('users', controllers.users.DashboardUsers).as('dashboard.users')
   })
   .prefix('dashboard')
   .use(middleware.auth())

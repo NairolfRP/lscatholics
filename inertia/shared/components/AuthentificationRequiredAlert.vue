@@ -4,7 +4,7 @@
     <AlertDescription>
       <span>
         Vous devez vous
-        <LinkText :href="tuyau.$url('signIn')" class="text-info-foreground" external
+        <LinkText :href="urlFor('signIn')" class="text-info-foreground" external
           >connecter</LinkText
         >
         {{ props.text || 'pour utiliser cette fonctionnalité.' }}
@@ -17,7 +17,7 @@
 import { Alert, AlertDescription } from '@/shared/components/ui/alert'
 import { LogIn } from 'lucide-vue-next'
 import { LinkText } from '@/shared/components/ui/LinkText'
-import { tuyau } from '@/lib/tuyau'
+import { urlFor } from '@/client'
 
 type Props = {
   text?: string

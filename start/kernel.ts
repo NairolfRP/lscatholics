@@ -27,7 +27,7 @@ server.use([
   () => import('@adonisjs/static/static_middleware'),
   () => import('@adonisjs/cors/cors_middleware'),
   () => import('@adonisjs/vite/vite_middleware'),
-  () => import('@adonisjs/inertia/inertia_middleware'),
+  () => import('#core/middleware/inertia_middleware'),
 ])
 
 /**
@@ -39,6 +39,7 @@ router.use([
   () => import('@adonisjs/session/session_middleware'),
   () => import('@adonisjs/shield/shield_middleware'),
   () => import('@adonisjs/auth/initialize_auth_middleware'),
+  () => import('#auth/middleware/silent_auth_middleware'),
   () => import('#core/middleware/security_headers_middleware'),
   () => import('#core/middleware/initialize_bouncer_middleware'),
   () => import('#core/middleware/intended_url_middleware'),
@@ -49,7 +50,7 @@ router.use([
  * the routes or the routes group.
  */
 export const middleware = router.named({
-  dashboard: () => import('#dashboard/middlewares/dashboard_middleware'),
+  dashboard: () => import('#dashboard/middleware/dashboard_middleware'),
   guest: () => import('#auth/middleware/guest_middleware'),
   auth: () => import('#auth/middleware/auth_middleware'),
 })

@@ -1,16 +1,15 @@
 import { defineConfig } from 'vite'
-import { getDirname } from '@adonisjs/core/helpers'
-import inertia from '@adonisjs/inertia/client'
 import vue from '@vitejs/plugin-vue'
 import tailwindcss from '@tailwindcss/vite'
 import adonisjs from '@adonisjs/vite/client'
+import inertia from '@adonisjs/inertia/vite'
 
 export default defineConfig({
   plugins: [
-    inertia({ ssr: { enabled: true, entrypoint: 'inertia/app/ssr.ts' } }),
     vue(),
+    inertia({ ssr: { enabled: true, entrypoint: 'inertia/ssr.ts' } }),
     tailwindcss(),
-    adonisjs({ entrypoints: ['inertia/app/app.ts'], reload: ['resources/views/**/*.edge'] }),
+    adonisjs({ entrypoints: ['inertia/app.ts'], reload: ['resources/views/**/*.edge'] }),
   ],
 
   /**
@@ -19,8 +18,15 @@ export default defineConfig({
    */
   resolve: {
     alias: {
-      '@/': `${getDirname(import.meta.url)}/inertia/`,
-      '#shared/': `${getDirname(import.meta.url)}/app/shared/`,
+      '@/': `${import.meta.dirname}/inertia/`,
+      '#shared/': `${import.meta.dirname}/app/shared/`,
+      '@generated': `${import.meta.dirname}/.adonisjs/client/`,
+    },
+  },
+
+  server: {
+    watch: {
+      ignored: ['**/storage/**', '**/tmp/**'],
     },
   },
 })

@@ -5,7 +5,7 @@
     <div class="space-y-6">
       <div class="flex items-center gap-4">
         <Button variant="ghost" size="icon" as-child>
-          <Link :href="tuyau.$url('dashboard.dashboard_events.index')">
+          <Link :href="urlFor('dashboard.dashboard_events.index')">
             <ArrowLeft class="h-4 w-4" />
           </Link>
         </Button>
@@ -130,7 +130,7 @@
                 <div class="grid gap-4 md:grid-cols-2">
                   <div class="space-y-2">
                     <Label for="startDate">Date de début *</Label>
-                    <Input id="startDate" v-model="form.startDate" type="datetime-local" required />
+                    <DateTimePicker id="startDate" v-model="form.startDate" required />
                     <p v-if="form.errors.startDate" class="text-sm text-red-600">
                       {{ form.errors.startDate }}
                     </p>
@@ -138,7 +138,7 @@
 
                   <div class="space-y-2">
                     <Label for="endDate">Date de fin</Label>
-                    <Input id="endDate" v-model="form.endDate" type="datetime-local" />
+                    <DateTimePicker id="endDate" v-model="form.endDate" />
                     <p v-if="form.errors.endDate" class="text-sm text-red-600">
                       {{ form.errors.endDate }}
                     </p>
@@ -175,7 +175,7 @@
                     Créer l'événement
                   </Button>
                   <Button type="button" variant="outline" as-child>
-                    <Link :href="tuyau.$url('dashboard.dashboard_events.index')"> Annuler </Link>
+                    <Link :href="urlFor('dashboard.dashboard_events.index')"> Annuler </Link>
                   </Button>
                 </div>
               </CardContent>
@@ -242,7 +242,7 @@ import { Input } from '@/shared/components/ui/input'
 import { Label } from '@/shared/components/ui/label'
 import { Textarea } from '@/shared/components/ui/textarea'
 import { ArrowLeft } from 'lucide-vue-next'
-import { tuyau } from '@/lib/tuyau'
+import { urlFor } from '@/client'
 import { MarkdownTextarea } from '@/shared/components/ui/markdown'
 import { parishes } from '@/shared/constants/parishes.constants'
 import { Checkbox } from '@/shared/components/ui/checkbox'
@@ -254,6 +254,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/shared/components/ui/select'
+import { DateTimePicker } from '@/shared/components/ui/datetime-picker'
 
 const form = useForm({
   title: '',
@@ -266,12 +267,12 @@ const form = useForm({
   flyerUrl: '',
   registrationRequired: false,
   maxParticipants: undefined as number | undefined,
-  startDate: '',
-  endDate: '',
+  startDate: undefined as Date | undefined,
+  endDate: undefined as Date | undefined,
 })
 
 const submit = () => {
-  form.post(tuyau.$url('dashboard.dashboard_events.store'))
+  form.post(urlFor('dashboard.dashboard_events.store'))
 }
 
 const generateSlug = () => {

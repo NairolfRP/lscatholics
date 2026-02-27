@@ -1,8 +1,9 @@
-build
+database/schema.ts
+.adonisjs
 node_modules
+build
 .pnpm-store/
 dist/
-build/
 corerage/
 tmp/
 *.min.js

@@ -4,7 +4,7 @@ import {
   getIndividualSacramentLabelById,
   getMaritalStatusLabelById,
 } from '#shared/constants/person.constants'
-import { RegisterParishionerPayload } from '#pages/validators/register_parishioner'
+import type { RegisterParishionerPayload } from '#pages/validators/register_parishioner'
 import {
   getLocalEthnicCommunityDiscordTag,
   getLocalEthnicCommunityLabelById,

@@ -24,7 +24,7 @@
 
 <script setup lang="ts">
 import Logo from '@/assets/images/logo.png'
-import { Link } from '@tuyau/inertia/vue'
+import { Link } from '@adonisjs/inertia/vue'
 import AppNavigation from '@/shared/components/layout/Navigation/AppNavigation.vue'
 import AppMobileMenu from '@/shared/components/layout/Navigation/AppMobileMenu.vue'
 import UserAccountMenu from '@/shared/components/auth/UserAccountMenu.vue'

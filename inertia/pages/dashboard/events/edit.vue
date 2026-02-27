@@ -5,7 +5,7 @@
     <div class="space-y-6">
       <div class="flex items-center gap-4">
         <Button variant="ghost" size="icon" as-child>
-          <Link :href="tuyau.$url('dashboard.dashboard_events.index')">
+          <Link :href="urlFor('dashboard.dashboard_events.index')">
             <ArrowLeft class="h-4 w-4" />
           </Link>
         </Button>
@@ -177,7 +177,7 @@
                     Modifier l'événement
                   </Button>
                   <Button type="button" variant="outline" as-child>
-                    <Link :href="tuyau.$url('dashboard.dashboard_events.index')"> Annuler </Link>
+                    <Link :href="urlFor('dashboard.dashboard_events.index')"> Annuler </Link>
                   </Button>
                 </div>
               </CardContent>
@@ -244,7 +244,7 @@ import { Input } from '@/shared/components/ui/input'
 import { Label } from '@/shared/components/ui/label'
 import { Textarea } from '@/shared/components/ui/textarea'
 import { ArrowLeft } from 'lucide-vue-next'
-import { tuyau } from '@/lib/tuyau'
+import { urlFor } from '@/client'
 import { MarkdownTextarea } from '@/shared/components/ui/markdown'
 import { parishes } from '@/shared/constants/parishes.constants'
 import { Checkbox } from '@/shared/components/ui/checkbox'
@@ -257,28 +257,14 @@ import {
   SelectValue,
 } from '@/shared/components/ui/select'
 import { DateTimePicker } from '@/shared/components/ui/datetime-picker'
+import type { InertiaProps } from '@/types'
+import type { Data } from '@generated/data'
 
-type Event = {
-  id: number
-  title: string
-  slug: string
-  description: string
-  content: string
-  location: string
-  parishId: number | null
-  coverImageUrl: string | null
-  flyerUrl: string | null
-  registrationRequired: boolean
-  maxParticipants: number | null
-  startDate: string
-  endDate: string
-}
+type PageProps = InertiaProps<{
+  event: Data.ScheduledEvents.ScheduledEvent.Variants['allFields']
+}>
 
-type Props = {
-  event: Event
-}
-
-const props = defineProps<Props>()
+const props = defineProps<PageProps>()
 
 const form = useForm({
   title: props.event.title,
@@ -291,12 +277,12 @@ const form = useForm({
   flyerUrl: props.event.flyerUrl || '',
   registrationRequired: props.event.registrationRequired,
   maxParticipants: props.event.maxParticipants || undefined,
-  startDate: new Date(props.event.startDate) || undefined,
-  endDate: new Date(props.event.endDate) || undefined,
+  startDate: props.event.startDate ? new Date(props.event.startDate) : undefined,
+  endDate: props.event.endDate ? new Date(props.event.endDate) : undefined,
 })
 
 const submit = () => {
-  form.put(tuyau.$url('dashboard.dashboard_events.update', { params: { id: props.event.id } }))
+  form.put(urlFor('dashboard.dashboard_events.update', { id: props.event.id }))
 }
 
 const generateSlug = () => {

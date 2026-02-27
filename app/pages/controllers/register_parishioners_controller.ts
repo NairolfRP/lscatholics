@@ -5,7 +5,7 @@ import { RegisterParishionerService } from '#pages/services/register_parishioner
 
 export default class RegisterParishionersController {
   index({ inertia }: HttpContext) {
-    return inertia.render('register-parishioner')
+    return inertia.render('register-parishioner', {})
   }
 
   async submit({ request, logger, response, session }: HttpContext) {

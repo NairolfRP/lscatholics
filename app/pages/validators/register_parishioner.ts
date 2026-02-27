@@ -12,7 +12,7 @@ import {
   individualSacramentIds,
 } from '#shared/constants/person.constants'
 import { getLocalEthnicsCommunitiesIds } from '#shared/constants/ethnicity.constants'
-import { Infer } from '@vinejs/vine/types'
+import type { Infer } from '@vinejs/vine/types'
 
 const phoneRule = vine.createRule(async (value, _options, field) => {
   if (typeof value !== 'string') return

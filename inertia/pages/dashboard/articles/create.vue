@@ -4,7 +4,7 @@
   <div class="space-y-6">
     <div class="flex items-center gap-4">
       <Button variant="ghost" size="icon" as-child>
-        <Link :href="tuyau.$url('dashboard.dashboard_articles.index')">
+        <Link :href="urlFor('dashboard.dashboard_articles.index')">
           <ArrowLeft class="h-4 w-4" />
         </Link>
       </Button>
@@ -106,7 +106,7 @@
                   {{ form.status === 'published' ? 'Publier' : 'Enregistrer' }}
                 </Button>
                 <Button type="button" variant="outline" as-child>
-                  <Link :href="tuyau.$url('dashboard.dashboard_articles.index')"> Annuler </Link>
+                  <Link :href="urlFor('dashboard.dashboard_articles.index')"> Annuler </Link>
                 </Button>
               </div>
             </CardContent>
@@ -160,7 +160,7 @@ import {
   SelectValue,
 } from '@/shared/components/ui/select'
 import { ArrowLeft } from 'lucide-vue-next'
-import { tuyau } from '@/lib/tuyau'
+import { hasRoute, urlFor } from '@/client'
 import { MarkdownTextarea } from '@/shared/components/ui/markdown'
 
 const form = useForm({
@@ -173,9 +173,9 @@ const form = useForm({
 })
 
 const submit = () => {
-  if (!tuyau.$has('dashboard.dashboard_articles.store')) return
+  if (!hasRoute('dashboard.dashboard_articles.store')) return
 
-  form.post(tuyau.$url('dashboard.dashboard_articles.store'))
+  form.post(urlFor('dashboard.dashboard_articles.store'))
 }
 
 const generateSlug = () => {

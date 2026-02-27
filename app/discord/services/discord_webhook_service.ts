@@ -1,7 +1,7 @@
-import type { DiscordAllowedMentions } from '#discord/interfaces/entities/discord_allowed_mentions'
-import type { DiscordEmbed } from '#discord/interfaces/entities/discord_embed'
-import { DiscordFlag } from '#discord/interfaces/entities/discord_flags'
-import type { DiscordPoll } from '#discord/interfaces/entities/discord_poll'
+import type { DiscordAllowedMentions } from '#discord/types/interfaces/entities/discord_allowed_mentions'
+import type { DiscordEmbed } from '#discord/types/interfaces/entities/discord_embed'
+import type { DiscordFlag } from '#discord/types/interfaces/entities/discord_flags'
+import type { DiscordPoll } from '#discord/types/interfaces/entities/discord_poll'
 import {
   createDiscordWebhookUrlValidator,
   createDiscordWebhookValidator,
@@ -25,12 +25,14 @@ type DiscordWebhookServiceInitProps = {
 }
 
 export type DiscordWebhookOptions = {
+  waitServerConfirmation?: boolean
   username?: string
   avatarUrl?: string
   allowedMentions?: DiscordAllowedMentions
   flags?: (typeof DiscordFlag)[]
   tts?: boolean
   thread?: {
+    id?: string | number
     name?: string
     tags?: string[]
   }
@@ -39,12 +41,45 @@ export type DiscordWebhookOptions = {
 export type WebhookExecutionResult = {
   success: boolean
   error?: string
+  data?: {
+    type: number
+    content: string
+    mention_roles: string[]
+    attachments: any[]
+    embeds: DiscordEmbed[]
+    timestamp: string
+    edited_timestamp: string | null
+    flags: number
+    components: any[]
+    id: string
+    channel_id: string
+    author: {
+      id: string
+      username: string
+      avatar: string | null
+      discriminator: string
+      public_flags: number
+      flags: number
+      bot: boolean
+      global_name: string | null
+      clan: string | null
+      primary_guild: string | null
+    }
+    pinned: boolean
+    mention_everyone: boolean
+    tts: boolean
+    webhook_id: boolean
+    position: number
+  }
 }
 
 export class DiscordWebhookService {
   private readonly url: string
   private readonly timeout: number
   private readonly retries: number
+
+  private threadId: number | string | undefined
+  private waitServerConfirmation: boolean = false
 
   private attachments: Record<string, any>[] = []
   private allowedMentions: DiscordAllowedMentions | undefined
@@ -104,8 +139,18 @@ export class DiscordWebhookService {
   }
 
   public setOptions(options: DiscordWebhookOptions) {
-    const { username, avatarUrl, allowedMentions, flags, tts = false, thread } = options
+    const {
+      waitServerConfirmation,
+      username,
+      avatarUrl,
+      allowedMentions,
+      flags,
+      tts = false,
+      thread,
+    } = options
 
+    this.waitServerConfirmation = waitServerConfirmation || false
+    this.threadId = thread?.id
     this.username = username
     this.avatarUrl = avatarUrl
     this.allowedMentions = allowedMentions
@@ -204,7 +249,7 @@ export class DiscordWebhookService {
 
     for (let attempt = 1; attempt <= this.retries; attempt++) {
       try {
-        await this.executeWithTimeout()
+        const result = await this.executeWithTimeout()
 
         this.lastExecutionTime = new Date()
 
@@ -217,7 +262,7 @@ export class DiscordWebhookService {
           'Discord webhook executed successfully'
         )
 
-        return { success: true }
+        return result
       } catch (e) {
         lastError = e as Error
 
@@ -256,18 +301,23 @@ export class DiscordWebhookService {
     return this.lastExecutionTime ? { timestamp: this.lastExecutionTime } : null
   }
 
-  private async executeWithTimeout(): Promise<void> {
+  private async executeWithTimeout(): Promise<{
+    success: boolean
+    data?: WebhookExecutionResult['data']
+  }> {
+    const url = this.buildFetchUrl()
     const payload = await this.buildPayload()
 
     const controller = new AbortController()
     const timeoutId = setTimeout(() => controller.abort(), this.timeout)
 
     try {
-      const response = await fetch(this.url, {
+      const response = await fetch(url, {
         method: 'POST',
         body: JSON.stringify(payload),
         headers: {
           'Content-Type': 'application/json',
+          'Accept': 'application/json',
         },
         signal: controller.signal,
       })
@@ -284,6 +334,14 @@ export class DiscordWebhookService {
 
         throw new DiscordWebhookException(errorMessage)
       }
+
+      if (!this.waitServerConfirmation) {
+        return { success: true }
+      }
+
+      const data = (await response.json()) as WebhookExecutionResult['data']
+
+      return { success: true, data }
     } catch (e) {
       if (e instanceof TypeError && e.message.includes('aborted')) {
         throw new DiscordWebhookException(`Request timeout after ${this.timeout}ms`)
@@ -292,6 +350,20 @@ export class DiscordWebhookService {
     } finally {
       clearTimeout(timeoutId)
     }
+  }
+
+  private buildFetchUrl() {
+    const url = new URL(this.url)
+
+    if (this.waitServerConfirmation) {
+      url.searchParams.set('wait', 'true')
+    }
+
+    if (this.threadId !== undefined) {
+      url.searchParams.set('thread_id', String(this.threadId))
+    }
+
+    return url.toString()
   }
 
   private async buildPayload() {

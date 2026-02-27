@@ -1,9 +1,9 @@
 import factory from '@adonisjs/lucid/factories'
-import Event from '#events/models/event'
+import ScheduledEvent from '#scheduled_events/models/scheduled_event'
 import { DateTime } from 'luxon'
 
 export const EventFactory = factory
-  .define(Event, async ({ faker }) => {
+  .define(ScheduledEvent, async ({ faker }) => {
     const title = faker.lorem.words({ min: 2, max: 6 })
     const slug = faker.helpers.slugify(title).toLowerCase()
     const startDate = faker.date.future({ years: 1 })

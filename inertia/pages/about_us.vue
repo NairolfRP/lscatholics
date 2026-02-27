@@ -196,7 +196,7 @@ import PageBanner from '@/shared/components/layout/PageBanner.vue'
 import BannerImage from '@/assets/images/olacathedral-cross.png'
 import { Typography } from '@/shared/components/ui/typography'
 import { LinkText } from '@/shared/components/ui/LinkText'
-import { Link } from '@tuyau/inertia/vue'
+import { Link } from '@adonisjs/inertia/vue'
 </script>
 
 <style scoped>
