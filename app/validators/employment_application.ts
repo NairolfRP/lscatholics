@@ -16,6 +16,7 @@ import {
   validateAllStatements,
   validateEndDateWithContext,
 } from '#validators/rules/employment_application_rules'
+import type { Infer } from '@vinejs/vine/types'
 
 export const createEmploymentApplicationValidator = vine.create(
   vine.object({
@@ -96,3 +97,5 @@ export const createEmploymentApplicationValidator = vine.create(
     motivationsOOC: vine.string().trim().maxLength(1500).optional(),
   })
 )
+
+export type EmploymentApplication = Infer<typeof createEmploymentApplicationValidator>
