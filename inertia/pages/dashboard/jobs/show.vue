@@ -69,6 +69,13 @@
                 <li>{{ requirement }}</li>
               </Typography>
             </div>
+
+            <div v-if="!!job.skills.length" class="rounded-lg bg-gray-50 p-4 dark:bg-gray-800">
+              <Typography variant="h2">Profil recherché</Typography>
+              <Typography v-for="skill in job.skills" variant="list">
+                <li>{{ skill }}</li>
+              </Typography>
+            </div>
           </CardContent>
         </Card>
       </div>

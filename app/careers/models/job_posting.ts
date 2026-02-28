@@ -17,6 +17,12 @@ export default class JobPosting extends JobPostingSchema {
   })
   declare requirements: string[]
 
+  @column({
+    prepare: (value) => JSON.stringify(value ?? []),
+    consume: (value) => (value ? JSON.parse(value) : null),
+  })
+  declare skills: string[]
+
   async checkAndDeactivate(): Promise<boolean> {
     if (this.isActive && this.expiresAt && this.expiresAt < DateTime.now()) {
       this.isActive = false

@@ -21,6 +21,10 @@ export const createJobOfferSchema = z.object({
     .array(z.string().trim())
     .transform((arr) => arr.filter((v) => v && v.length > 0))
     .optional(),
+  skills: z
+    .array(z.string().trim())
+    .transform((arr) => arr.filter((v) => v && v.length > 0))
+    .optional(),
   salary: z.int().nonnegative(),
   employmentType: z.enum(getEmploymentTypes),
   isActive: z.boolean(),
