@@ -98,7 +98,6 @@
 </template>
 
 <script setup lang="ts">
-import { InertiaProps } from '@/types'
 import { Data } from '@generated/data'
 import { ref, watch } from 'vue'
 import { useDebounceFn } from '@vueuse/core'
@@ -135,7 +134,7 @@ import { Badge } from '@/shared/components/ui/badge'
 import { useUser } from '@/shared/composables/use_user'
 import { usePageProps } from '@/shared/composables/use_page_props'
 
-type PageProps = InertiaProps<{
+type PageProps = {
   users: {
     data: Data.Users.User.Variants['withRoles'][]
     metadata: {
@@ -147,7 +146,7 @@ type PageProps = InertiaProps<{
     }
   }
   filters: { search: string }
-}>
+}
 
 const props = defineProps<PageProps>()
 const page = usePageProps<{ permissions: string[] }>()

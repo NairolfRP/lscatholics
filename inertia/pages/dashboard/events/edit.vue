@@ -257,12 +257,11 @@ import {
   SelectValue,
 } from '@/shared/components/ui/select'
 import { DateTimePicker } from '@/shared/components/ui/datetime-picker'
-import type { InertiaProps } from '@/types'
 import type { Data } from '@generated/data'
 
-type PageProps = InertiaProps<{
+type PageProps = {
   event: Data.ScheduledEvents.ScheduledEvent.Variants['allFields']
-}>
+}
 
 const props = defineProps<PageProps>()
 

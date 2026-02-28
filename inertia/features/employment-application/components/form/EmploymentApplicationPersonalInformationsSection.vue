@@ -222,6 +222,7 @@
           v-bind="field"
           placeholder="Jane Doe"
           :aria-invalid="!!errors.length"
+          :maxlength="100"
         />
         <FieldError v-if="errors.length" :errors="errors" />
       </Field>

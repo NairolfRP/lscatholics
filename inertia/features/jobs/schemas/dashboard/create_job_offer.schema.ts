@@ -10,7 +10,7 @@ export const createJobOfferSchema = z.object({
     .slugify()
     .regex(/^[a-z0-9-]+$/)
     .optional(),
-  summary: z.string().trim().min(10).max(1500).optional(),
+  summary: z.string().trim().max(1500).optional(),
   reportsTo: z.string().min(3),
   department: z.enum(getAllDepartmentsIDs()),
   responsibilities: z

@@ -41,6 +41,8 @@ export const employmentApplicationSchema = z.object({
         .string({
           error: 'Valeur invalide.',
         })
+        .trim()
+        .max(100, { error: 'Vous ne devez pas dépasser 100 caractères' })
         .optional(),
     })
     .refine(

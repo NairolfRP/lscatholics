@@ -102,12 +102,11 @@ import { Button } from '@/shared/components/ui/button'
 import { ArrowLeft } from 'lucide-vue-next'
 import { Typography } from '@/shared/components/ui/typography'
 import { MarkdownContent } from '@/shared/components/ui/markdown'
-import type { InertiaProps } from '@/types'
 import type { Data } from '@generated/data'
 
-type PageProps = InertiaProps<{
+type PageProps = {
   event: Data.ScheduledEvents.ScheduledEvent.Variants['publicDetails']
-}>
+}
 
 const { event } = defineProps<PageProps>()
 </script>

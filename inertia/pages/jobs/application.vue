@@ -91,13 +91,12 @@ import EmploymentApplicationOOCSection from '@/features/employment-application/c
 import EmploymentApplicationPersonalInformationsSection from '@/features/employment-application/components/form/EmploymentApplicationPersonalInformationsSection.vue'
 import EmploymentApplicationDeclarationSection from '@/features/employment-application/components/form/EmploymentApplicationDeclarationSection.vue'
 import EmploymentApplicationEducationSkillsSection from '@/features/employment-application/components/form/EmploymentApplicationEducationSkillsSection.vue'
-import type { InertiaProps } from '@/types'
 import type { Data } from '@generated/data'
 
-type PageProps = InertiaProps<{
+type PageProps = {
   job: Data.Careers.JobPosting.Variants['employmentApplication']
   isExpired: boolean
-}>
+}
 
 const formId = computed(() => `employment-application-${props.job.slug}`)
 

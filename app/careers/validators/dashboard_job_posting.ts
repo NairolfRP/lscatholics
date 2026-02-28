@@ -12,7 +12,7 @@ export const createDashboardJobPostingValidator = vine.create(
       .minLength(3)
       .maxLength(255)
       .unique({ table: 'job_postings', column: 'slug' }),
-    summary: vine.string().trim().minLength(10).maxLength(1500).optional(),
+    summary: vine.string().trim().maxLength(1500).optional(),
     reportsTo: vine.string().trim().minLength(3),
     department: vine.string(),
     responsibilities: vine.array(vine.string().trim().minLength(1)).minLength(1),
@@ -49,7 +49,7 @@ export const updatedDashboardJobPostingValidator = ({ currentSlug }: { currentSl
           return !row
         })
         .optional(),
-      summary: vine.string().trim().minLength(10).maxLength(1500).optional(),
+      summary: vine.string().trim().maxLength(1500).nullable().optional(),
       reportsTo: vine.string().trim().minLength(3).optional(),
       department: vine.string().optional(),
       responsibilities: vine.array(vine.string().trim().minLength(1)).minLength(1).optional(),

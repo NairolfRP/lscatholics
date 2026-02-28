@@ -36,7 +36,12 @@ export const createEmploymentApplicationValidator = vine.create(
 
     applicationSource: vine.object({
       type: vine.enum(getApplicationSourcesIds()).optional(),
-      employeeReferral: vine.string().optional().requiredWhen('type', '=', 'employeeReferral'),
+      employeeReferral: vine
+        .string()
+        .trim()
+        .maxLength(100)
+        .optional()
+        .requiredWhen('type', '=', 'employeeReferral'),
     }),
 
     education: vine.object({

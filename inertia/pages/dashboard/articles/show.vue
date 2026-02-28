@@ -108,11 +108,10 @@ import { ArrowLeft, Edit, Eye } from 'lucide-vue-next'
 import { urlFor } from '@/client'
 import { MarkdownContent } from '@/shared/components/ui/markdown'
 import type { Data } from '@generated/data'
-import type { InertiaProps } from '@/types'
 
-type PageProps = InertiaProps<{
+type PageProps = {
   article: Data.Posts.Post.Variants['allFields']
-}>
+}
 
 defineProps<PageProps>()
 

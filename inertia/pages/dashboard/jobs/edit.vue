@@ -26,12 +26,11 @@ import { ArrowLeft } from 'lucide-vue-next'
 import { hasRoute, urlFor } from '@/client'
 import JobDashboardForm from '@/features/jobs/components/form/dashboard/JobDashboardForm.vue'
 import { useDashboardEditJobForm } from '@/features/jobs/composables/dashboard/use_dashboard_job_form'
-import type { InertiaProps } from '@/types'
 import type { Data } from '@generated/data'
 
-type PageProps = InertiaProps<{
+type PageProps = {
   job: Data.Careers.JobPosting.Variants['allFields']
-}>
+}
 
 const props = defineProps<PageProps>()
 
