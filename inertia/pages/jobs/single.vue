@@ -27,7 +27,7 @@
 
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 xl:gap-12">
       <div class="col-span-1 lg:col-span-8">
-        <Card class="p-6 md:p-8 xl:p-10">
+        <Card class="sm:p-6 md:p-8 xl:p-10">
           <CardContent class="space-y-10">
             <Typography>
               L'Archidiocèse de Los Santos est le plus grand diocèse catholique des États-Unis, avec
