@@ -98,7 +98,6 @@
 </template>
 
 <script setup lang="ts">
-import type { InertiaProps } from '@/types'
 import type { Data } from '@generated/data'
 import {
   Select,
@@ -127,11 +126,11 @@ import {
   CardTitle,
 } from '@/shared/components/ui/card'
 
-type PageProps = InertiaProps<{
+type PageProps = {
   itemUser: Data.Users.User.Variants['withRoles']
   rolesList: Data.Roles.Role.Variants['minimalDetails'][]
   editorHighestRole: Data.Roles.Role.Variants['minimalDetails']
-}>
+}
 
 const props = defineProps<PageProps>()
 

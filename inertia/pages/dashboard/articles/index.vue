@@ -141,9 +141,8 @@ import {
   PaginationPrevious,
 } from '@/shared/components/ui/pagination'
 import { Data } from '@generated/data'
-import type { InertiaProps } from '@/types'
 
-type PageProps = InertiaProps<{
+type PageProps = {
   articles: {
     data: Data.Posts.Post[]
     metadata: {
@@ -155,7 +154,7 @@ type PageProps = InertiaProps<{
     }
   }
   filters: { search: string }
-}>
+}
 
 const props = defineProps<PageProps>()
 

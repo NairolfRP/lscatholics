@@ -307,14 +307,13 @@ import { Skeleton } from '@/shared/components/ui/skeleton'
 import ClientOnly from '@/shared/components/ClientOnly.vue'
 import ArticleCard from '@/shared/components/ArticleCard.vue'
 import type { Data } from '@generated/data'
-import type { InertiaProps } from '@/types'
 
-type PageProps = InertiaProps<{
+type PageProps = {
   posts?: {
     data: Data.Posts.Post.Variants['homePosts'][]
     error?: string
   }
-}>
+}
 
 const props = withDefaults(defineProps<PageProps>(), {
   posts: () => ({ data: [] as Data.Posts.Post.Variants['homePosts'][], error: '' }),

@@ -168,12 +168,11 @@ import { urlFor } from '@/client'
 import { MarkdownTextarea } from '@/shared/components/ui/markdown'
 import { DateTimePicker } from '@/shared/components/ui/datetime-picker'
 import { computed, watch } from 'vue'
-import type { InertiaProps } from '@/types'
 import { Data } from '@generated/data'
 
-type PageProps = InertiaProps<{
+type PageProps = {
   article: Data.Posts.Post.Variants['allFields']
-}>
+}
 
 const props = defineProps<PageProps>()
 

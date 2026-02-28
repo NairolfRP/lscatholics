@@ -106,10 +106,9 @@ import { useJobFilters } from '@/features/jobs/composables/use_job_filters'
 import JobActiveFilters from '@/features/jobs/components/JobActiveFilters.vue'
 import JobFilters from '@/features/jobs/components/JobFilters.vue'
 import JobFiltersMobile from '@/features/jobs/components/JobFiltersMobile.vue'
-import type { InertiaProps } from '@/types'
 import type { Data } from '@generated/data'
 
-type PageProps = InertiaProps<{
+type PageProps = {
   offers: {
     data: Data.Careers.JobPosting.Variants['publicSummaryDetails'][]
     metadata: {
@@ -126,7 +125,7 @@ type PageProps = InertiaProps<{
     employmentTypes?: string[]
   }
   queryError?: boolean
-}>
+}
 
 const props = defineProps<PageProps>()
 

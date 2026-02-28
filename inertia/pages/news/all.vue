@@ -114,10 +114,9 @@ import { router } from '@inertiajs/vue3'
 import { urlFor } from '@/client'
 import { Typography } from '@/shared/components/ui/typography'
 import ArticleCard from '@/shared/components/ArticleCard.vue'
-import type { InertiaProps } from '@/types'
 import type { Data } from '@generated/data'
 
-type PageProps = InertiaProps<{
+type PageProps = {
   articles: {
     data: Data.Posts.Post.Variants['publicList'][]
     metadata: {
@@ -131,7 +130,7 @@ type PageProps = InertiaProps<{
   selectedCategory: string
   categories: Array<{ id: string; name: string; color: string }>
   error: boolean
-}>
+}
 
 const { selectedCategory, categories, articles } = defineProps<PageProps>()
 

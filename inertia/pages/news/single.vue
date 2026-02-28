@@ -47,12 +47,11 @@ import PageBanner from '@/shared/components/layout/PageBanner.vue'
 import { formatDate } from '@/lib/utils'
 import { Typography } from '@/shared/components/ui/typography'
 import { MarkdownContent } from '@/shared/components/ui/markdown'
-import type { InertiaProps } from '@/types'
 import type { Data } from '@generated/data'
 
-type PageProps = InertiaProps<{
+type PageProps = {
   post: Data.Posts.Post.Variants['publicDetails']
-}>
+}
 
 const { post } = defineProps<PageProps>()
 </script>

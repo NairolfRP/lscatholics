@@ -240,12 +240,11 @@ import { Badge } from '@/shared/components/ui/badge'
 import { Link } from '@adonisjs/inertia/vue'
 import AuthentificationRequiredAlert from '@/shared/components/AuthentificationRequiredAlert.vue'
 import { useUser } from '@/shared/composables/use_user'
-import type { InertiaProps } from '@/types'
 import type { Data } from '@generated/data'
 
-type PageProps = InertiaProps<{
+type PageProps = {
   offer: Data.Careers.JobPosting.Variants['allFields']
-}>
+}
 
 const user = useUser()
 

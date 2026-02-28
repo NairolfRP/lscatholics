@@ -151,11 +151,10 @@ import { urlFor } from '@/client'
 import { Typography } from '@/shared/components/ui/typography'
 import { getDepartmentTitleById } from '@/shared/constants/departments.constants'
 import type { Data } from '@generated/data'
-import type { InertiaProps } from '@/types'
 
-type PageProps = InertiaProps<{
+type PageProps = {
   job: Data.Careers.JobPosting.Variants['allFields']
-}>
+}
 
 defineProps<PageProps>()
 
