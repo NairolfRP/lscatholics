@@ -45,9 +45,12 @@
           </CardHeader>
           <CardContent class="space-y-4">
             <div class="rounded-lg bg-gray-50 p-4 dark:bg-gray-800 space-y-6">
-              <div v-if="job.summary">
+              <div>
                 <Typography variant="h2">Description</Typography>
-                <Typography class="text-sm font-medium text-gray-700 dark:text-gray-300">
+                <Typography
+                  v-if="job.summary"
+                  class="whitespace-pre-line text-sm font-medium text-gray-700 dark:text-gray-300"
+                >
                   {{ job.summary }}
                 </Typography>
               </div>

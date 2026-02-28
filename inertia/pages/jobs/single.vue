@@ -37,11 +37,14 @@
               ainsi que ses hôpitaux.
             </Typography>
 
-            <div v-if="offer.summary">
+            <div>
               <Typography variant="h2" class="font-semibold mb-4 pb-3 border-b-2 border-muted">
                 Description du poste
               </Typography>
-              <Typography class="text-base md:text-lg">
+              <Typography
+                v-if="offer.summary"
+                class="whitespace-pre-line leading-relaxed text-base md:text-lg"
+              >
                 {{ offer.summary }}
               </Typography>
             </div>
