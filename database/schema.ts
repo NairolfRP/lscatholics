@@ -35,7 +35,7 @@ export class AccountSchema extends BaseModel {
 }
 
 export class JobPostingSchema extends BaseModel {
-  static $columns = ['id', 'slug', 'title', 'summary', 'reportsTo', 'department', 'responsibilities', 'requirements', 'salary', 'employmentType', 'isActive', 'postedAt', 'expiresAt', 'createdAt', 'updatedAt'] as const
+  static $columns = ['id', 'slug', 'title', 'summary', 'reportsTo', 'department', 'responsibilities', 'requirements', 'salary', 'employmentType', 'isActive', 'postedAt', 'expiresAt', 'createdAt', 'updatedAt', 'skills'] as const
   $columns = JobPostingSchema.$columns
   @column({ isPrimary: true })
   declare id: number
@@ -67,6 +67,8 @@ export class JobPostingSchema extends BaseModel {
   declare createdAt: DateTime | null
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare updatedAt: DateTime | null
+  @column()
+  declare skills: any | null
 }
 
 export class NewsSchema extends BaseModel {

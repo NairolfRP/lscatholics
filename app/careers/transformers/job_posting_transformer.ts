@@ -16,6 +16,7 @@ export default class JobPostingTransformer extends BaseTransformer<JobPosting> {
       'department',
       'responsibilities',
       'requirements',
+      'skills',
       'salary',
       'employmentType',
       'isActive',

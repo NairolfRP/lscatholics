@@ -79,6 +79,24 @@
                 </li>
               </Typography>
             </div>
+
+            <div v-if="offer.skills && offer.skills.length > 0">
+              <Typography variant="h2" class="mb-4 pb-3 border-b-2 border-muted">
+                Profil recherché
+              </Typography>
+              <Typography variant="list" class="space-y-3 ml-0">
+                <li
+                  v-for="(skill, index) in offer.skills"
+                  :key="`skill-${index}`"
+                  class="flex items-center gap-3 opacity-90 leading-relaxed font-medium"
+                >
+                  <span class="text-primary shrink-0">
+                    <BadgeCheck class="size-5" />
+                  </span>
+                  <span>{{ skill }}</span>
+                </li>
+              </Typography>
+            </div>
           </CardContent>
         </Card>
       </div>
