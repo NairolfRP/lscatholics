@@ -88,18 +88,23 @@
           </Card>
         </Link>
 
-        <Card class="text-center hover:shadow-lg transition-shadow">
-          <CardContent class="p-6">
-            <div
-              class="size-12 bg-catholic-blue text-white rounded-full flex items-center justify-center mx-auto mb-4"
-            >
-              <BookOpen class="size-6" />
-            </div>
-            <h3 class="font-semibold mb-2">Ressources</h3>
-            <p class="text-sm text-gray-600 mb-4">Prières, méditations et enseignements</p>
-            <Button variant="outline" size="sm">Explorer</Button>
-          </CardContent>
-        </Card>
+        <a
+          :href="SOCIAL_DISCORD.url"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="block h-full"
+        >
+          <Card
+            class="h-full bg-[#5865F2] text-[#E0E3FF] text-center cursor-pointer card-hover transition-shadow"
+          >
+            <CardContent class="flex flex-col justify-center h-full p-6">
+              <div class="size-12 flex items-center justify-center mx-auto mb-4">
+                <Discord class="size-12" />
+              </div>
+              <h3 class="font-bold mb-2">(( Rejoindre notre serveur Discord ))</h3>
+            </CardContent>
+          </Card>
+        </a>
       </div>
     </div>
   </section>
@@ -295,7 +300,7 @@
 import { WhenVisible } from '@inertiajs/vue3'
 import { Button } from '@/shared/components/ui/button'
 import { Card, CardContent } from '@/shared/components/ui/card'
-import { BookOpen, Calendar, CircleAlert, Heart, MapPin, NotebookPen } from 'lucide-vue-next'
+import { Calendar, CircleAlert, Heart, MapPin, NotebookPen } from 'lucide-vue-next'
 import { formatNumber, yearsBetween } from '@/lib/utils'
 import { ARCHDIOCESAN_HISTORY_START_DATE } from '@/shared/constants/archdiocese.constants'
 import { computed } from 'vue'
@@ -307,6 +312,8 @@ import { Skeleton } from '@/shared/components/ui/skeleton'
 import ClientOnly from '@/shared/components/ClientOnly.vue'
 import ArticleCard from '@/shared/components/ArticleCard.vue'
 import type { Data } from '@generated/data'
+import Discord from '@/shared/components/svg/Discord.vue'
+import { SOCIAL_DISCORD } from '@/shared/constants/social.constants'
 
 type PageProps = {
   posts?: {
