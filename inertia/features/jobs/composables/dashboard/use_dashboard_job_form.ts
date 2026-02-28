@@ -9,6 +9,7 @@ export const useDashboardCreateJobForm = () => {
     initialValues: {
       responsibilities: ['', ''],
       requirements: ['', ''],
+      skills: ['', ''],
       isActive: true,
       postedAt: new Date(Date.now()),
     },
@@ -28,6 +29,7 @@ export function useDashboardEditJobForm(
       department: job?.department || '',
       responsibilities: job?.responsibilities || [],
       requirements: job?.requirements || [],
+      skills: job?.skills || [],
       salary: job?.salary || undefined,
       employmentType: job?.employmentType || '',
       isActive: !!job?.isActive,

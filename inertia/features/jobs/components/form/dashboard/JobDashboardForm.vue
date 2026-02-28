@@ -93,6 +93,8 @@
             <JobDashboardResponsibilitiesField />
 
             <JobDashboardRequirementsField />
+
+            <JobDashboardSkillsField />
           </CardContent>
         </Card>
       </div>
@@ -137,6 +139,7 @@ import JobDashboardRequirementsField from '@/features/jobs/components/form/dashb
 import JobDashboardAffiliationFields from '@/features/jobs/components/form/dashboard/JobDashboardAffiliationFields.vue'
 import JobDashboardFormSidebar from '@/features/jobs/components/form/dashboard/JobDashboardFormSidebar.vue'
 import JobDashboardTitleSlugFields from '@/features/jobs/components/form/dashboard/JobDashboardTitleSlugFields.vue'
+import JobDashboardSkillsField from '@/features/jobs/components/form/dashboard/JobDashboardSkillsField.vue'
 
 const props = withDefaults(
   defineProps<{
