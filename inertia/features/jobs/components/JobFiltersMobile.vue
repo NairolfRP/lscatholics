@@ -9,7 +9,7 @@
         </Badge>
       </Button>
     </SheetTrigger>
-    <SheetContent side="left" class="w-full sm:max-w-md overflow-y-auto">
+    <SheetContent side="left" class="z-100 w-full px-5 pb-20 sm:max-w-md overflow-y-auto">
       <SheetHeader>
         <SheetTitle>Filtres de recherche</SheetTitle>
         <SheetDescription> Affinez votre recherche d'offres d'emploi </SheetDescription>
