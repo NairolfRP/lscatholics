@@ -27,7 +27,7 @@
 
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 xl:gap-12">
       <div class="col-span-1 lg:col-span-8">
-        <Card class="p-6 md:p-8 xl:p-10">
+        <Card class="sm:p-6 md:p-8 xl:p-10">
           <CardContent class="space-y-10">
             <Typography>
               L'Archidiocèse de Los Santos est le plus grand diocèse catholique des États-Unis, avec
@@ -37,11 +37,14 @@
               ainsi que ses hôpitaux.
             </Typography>
 
-            <div v-if="offer.summary">
+            <div>
               <Typography variant="h2" class="font-semibold mb-4 pb-3 border-b-2 border-muted">
                 Description du poste
               </Typography>
-              <Typography class="text-base md:text-lg">
+              <Typography
+                v-if="offer.summary"
+                class="whitespace-pre-line leading-relaxed text-base md:text-lg"
+              >
                 {{ offer.summary }}
               </Typography>
             </div>
@@ -237,12 +240,11 @@ import { Badge } from '@/shared/components/ui/badge'
 import { Link } from '@adonisjs/inertia/vue'
 import AuthentificationRequiredAlert from '@/shared/components/AuthentificationRequiredAlert.vue'
 import { useUser } from '@/shared/composables/use_user'
-import type { InertiaProps } from '@/types'
 import type { Data } from '@generated/data'
 
-type PageProps = InertiaProps<{
+type PageProps = {
   offer: Data.Careers.JobPosting.Variants['allFields']
-}>
+}
 
 const user = useUser()
 

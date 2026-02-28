@@ -25,9 +25,8 @@
 </template>
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue'
-import type { InertiaProps } from '@/types'
 
-type PageProps = InertiaProps<{
+type PageProps = {
   success: boolean
   title: string
   message?: string
@@ -35,7 +34,7 @@ type PageProps = InertiaProps<{
   amount?: number
   source?: string
   metadata?: Record<string, any>
-}>
+}
 
 const props = defineProps<PageProps>()
 

@@ -136,10 +136,9 @@ import {
 } from '@/shared/components/ui/pagination'
 import { Typography } from '@/shared/components/ui/typography'
 import { useDebounceFn } from '@vueuse/core'
-import type { InertiaProps } from '@/types'
 import { Data } from '@generated/data'
 
-type PageProps = InertiaProps<{
+type PageProps = {
   events: {
     data: Data.ScheduledEvents.ScheduledEvent[]
     metadata: {
@@ -150,7 +149,7 @@ type PageProps = InertiaProps<{
       firstPage: number
     }
   }
-}>
+}
 
 defineProps<PageProps>()
 

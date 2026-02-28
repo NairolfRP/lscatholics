@@ -117,13 +117,12 @@ import { Link } from '@adonisjs/inertia/vue'
 import { ArrowRight, CircleAlert, Clock, MapPin } from 'lucide-vue-next'
 import { Alert, AlertDescription, AlertTitle } from '@/shared/components/ui/alert'
 import { Typography } from '@/shared/components/ui/typography'
-import type { InertiaProps } from '@/types'
 import type { Data } from '@generated/data'
 
-type PageProps = InertiaProps<{
+type PageProps = {
   events: Data.ScheduledEvents.ScheduledEvent.Variants['publicList'][]
   error: boolean
-}>
+}
 
 const { events } = defineProps<PageProps>()
 

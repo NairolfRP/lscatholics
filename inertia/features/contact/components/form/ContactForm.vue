@@ -136,13 +136,12 @@ import { useErrors } from '@/shared/composables/use_errors'
 import { toTypedSchema } from '@vee-validate/zod'
 import { contactSchema } from '@/features/contact/schemas/contact.schema'
 import { Field, FieldError, FieldLabel } from '@/shared/components/ui/field'
-import type { InertiaProps } from '@/types'
 import type { CONTACT_SUBJECTS } from '#shared/constants/contact_subjects'
 import { usePageProps } from '@/shared/composables/use_page_props'
 
-type PageProps = InertiaProps<{
+type PageProps = {
   subjects: typeof CONTACT_SUBJECTS
-}>
+}
 
 const props = usePageProps<PageProps>()
 const errors = useErrors()

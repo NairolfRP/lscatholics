@@ -122,12 +122,11 @@ import { ArrowLeft, Edit, Eye } from 'lucide-vue-next'
 import { urlFor } from '@/client'
 import { MarkdownContent } from '@/shared/components/ui/markdown'
 import { parishes } from '@/shared/constants/parishes.constants'
-import type { InertiaProps } from '@/types'
 import type { Data } from '@generated/data'
 
-type PageProps = InertiaProps<{
+type PageProps = {
   event: Data.ScheduledEvents.ScheduledEvent.Variants['allFields']
-}>
+}
 
 defineProps<PageProps>()
 
