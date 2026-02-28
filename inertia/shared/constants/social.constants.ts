@@ -21,35 +21,43 @@ export const SOCIAL_MEDIAS_COLORS_CLASSES = {
   github: 'bg-[#181717] hover:bg-[#4752c4]',
 }
 
+export const SOCIAL_FACEBROWSER: SocialMedia = {
+  id: 'facebrowser',
+  title: 'Suivre LSCatholics sur Facebrowser',
+  colorClasses: SOCIAL_MEDIAS_COLORS_CLASSES.facebrowser,
+  url: 'https://facebrowser.gta.world/pages/LSCatholics',
+  icon: Facebrowser,
+}
+
+export const SOCIAL_YOUTUBE: SocialMedia = {
+  id: 'youtube',
+  title: "Chaîne youtube de l\'Archidiocèse de Los Santos",
+  colorClasses: SOCIAL_MEDIAS_COLORS_CLASSES.youtube,
+  url: 'https://www.youtube.com/@lscatholics',
+  icon: Youtube,
+}
+
+export const SOCIAL_DISCORD: SocialMedia = {
+  id: 'discord',
+  title: '(( Serveur discord de LS Catholcis ))',
+  colorClasses: SOCIAL_MEDIAS_COLORS_CLASSES.discord,
+  url: 'https://discord.gg/CXVKwfP6cs',
+  icon: Discord,
+}
+
+export const SOCIAL_GITHUB: SocialMedia = {
+  id: 'github',
+  title: "(( Code source de l'applciation web LSCatholics ))",
+  colorClasses: SOCIAL_MEDIAS_COLORS_CLASSES.github,
+  url: 'https://github.com/NairolfRP/lscatholics',
+  icon: Github,
+  isOOC: true,
+  footerOnly: true,
+}
+
 export const ARCHDIOCESE_SOCIAL_MEDIAS: SocialMedia[] = [
-  {
-    id: 'facebrowser',
-    title: 'Suivre LSCatholics sur Facebrowser',
-    colorClasses: SOCIAL_MEDIAS_COLORS_CLASSES.facebrowser,
-    url: 'https://facebrowser.gta.world/pages/LSCatholics',
-    icon: Facebrowser,
-  },
-  {
-    id: 'youtube',
-    title: "Chaîne youtube de l\'Archidiocèse de Los Santos",
-    colorClasses: SOCIAL_MEDIAS_COLORS_CLASSES.youtube,
-    url: 'https://www.youtube.com/@lscatholics',
-    icon: Youtube,
-  },
-  {
-    id: 'discord',
-    title: '(( Serveur discord de LS Catholcis ))',
-    colorClasses: SOCIAL_MEDIAS_COLORS_CLASSES.discord,
-    url: 'https://discord.gg/CXVKwfP6cs',
-    icon: Discord,
-  },
-  {
-    id: 'github',
-    title: "(( Code source de l'applciation web LSCatholics ))",
-    colorClasses: SOCIAL_MEDIAS_COLORS_CLASSES.github,
-    url: 'https://github.com/NairolfRP/lscatholics',
-    icon: Github,
-    isOOC: true,
-    footerOnly: true,
-  },
+  SOCIAL_FACEBROWSER,
+  SOCIAL_YOUTUBE,
+  SOCIAL_DISCORD,
+  SOCIAL_GITHUB,
 ]
