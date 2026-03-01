@@ -8,8 +8,6 @@ export const validateEndDateWithContext = vine.createRule((value: any, _options,
   const endDateStr = value
 
   if (isCurrentPosition === false && startDateStr && endDateStr) {
-    console.log({ startDateStr, endDateStr })
-
     const start = new Date(`${startDateStr}-01`)
     const end = new Date(`${endDateStr}-01`)
 

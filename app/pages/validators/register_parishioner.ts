@@ -5,6 +5,8 @@ import {
   firstnameLastnameSchema,
   genderSchema,
   maritalStatusSchema,
+  optionalPhoneSchema,
+  requiredPhoneSchema,
 } from '#core/validators/common'
 import {
   catholicOrOtherIds,
@@ -13,37 +15,6 @@ import {
 } from '#shared/constants/person.constants'
 import { getLocalEthnicsCommunitiesIds } from '#shared/constants/ethnicity.constants'
 import type { Infer } from '@vinejs/vine/types'
-
-const phoneRule = vine.createRule(async (value, _options, field) => {
-  if (typeof value !== 'string') return
-
-  if (!value || value.trim() === '') {
-    field.report('Le numéro de téléphone doit contenir entre 3 et 8 chiffres.', 'phone', field)
-    return
-  }
-
-  const digitsOnly = value.replace(/\s/g, '')
-  if (!/^\d{3,8}$/.test(digitsOnly)) {
-    field.report('Le numéro de téléphone doit contenir entre 3 et 8 chiffres.', 'phone', field)
-  }
-})
-
-const emergencyPhoneRule = vine.createRule((value, _options, field) => {
-  if (typeof value !== 'string') return
-
-  if (!value || value.trim() === '') {
-    return
-  }
-
-  const digitsOnly = value.replace(/\s/g, '')
-  if (!/^\d{3,8}$/.test(digitsOnly)) {
-    field.report(
-      "Le numéro de téléphone d'urgence doit contenir entre 3 et 8 chiffres.",
-      'emergencyPhone',
-      field
-    )
-  }
-})
 
 const registerParishionerSchema = vine.object({
   //recordType: vine.enum(['new', 'update']),
@@ -60,9 +31,9 @@ const registerParishionerSchema = vine.object({
 
   occupation: vine.string().trim().maxLength(200).optional(),
 
-  phone: vine.string().use(phoneRule()),
+  phone: requiredPhoneSchema,
 
-  emergencyPhone: vine.string().optional().use(emergencyPhoneRule()),
+  emergencyPhone: optionalPhoneSchema,
 
   address: vine.string().trim().minLength(10).maxLength(60),
 

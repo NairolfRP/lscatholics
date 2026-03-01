@@ -1,13 +1,17 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import { inject } from '@adonisjs/core'
 import { PaymentService } from '#billing/services/payment_service'
-import { PaymentSessionData } from '#billing/types/payment'
+import { FleecaValidationResponse, PaymentResult, PaymentSessionData } from '#billing/types/payment'
 import { DonateService } from '#donate/services/donate_service'
 import type { Logger } from '@adonisjs/core/logger'
+import { DonateMetadata } from '#donate/validators/donate'
 
 @inject()
 export default class PaymentsController {
-  constructor(private paymentService: PaymentService) {}
+  constructor(
+    private readonly paymentService: PaymentService,
+    private readonly donateService: DonateService
+  ) {}
 
   async callback({ inertia, response, session, params, logger }: HttpContext) {
     try {
@@ -82,39 +86,26 @@ export default class PaymentsController {
     })
   }
 
-  private async handleSuccessfulPayment(result: any, logger: Logger): Promise<void> {
+  private async handleSuccessfulPayment(
+    result: PaymentResult<FleecaValidationResponse>,
+    logger: Logger
+  ): Promise<void> {
     const { sessionData } = result
-    logger.info(
+    logger.debug(
       { source: sessionData.source, amount: sessionData.amount },
       `Processing successful payment`
     )
-
-    try {
-      switch (sessionData.source) {
-        case 'donation':
-          await this.processDonation(sessionData, result.transactionData)
-          break
-        default:
-          logger.warn({ source: sessionData.source }, `Unknown payment source`)
-          throw new Error(`Unsupported payment source: ${sessionData.source}`)
-      }
-    } catch (error) {
-      logger.error('Error handling successful payment:', error)
-    }
-  }
-
-  private async processDonation(sessionData: any, _transactionData: any): Promise<void> {
-    try {
-      const discordService = new DonateService()
-
-      const promises: Promise<any>[] = [
-        discordService.sendPrivateDonateNotification(sessionData.metadata),
-        discordService.sendPublicDonateNotification(sessionData.metadata),
-      ]
-
-      await Promise.all(promises)
-    } catch (error) {
-      throw error
+    switch (sessionData.source) {
+      case 'donation':
+        const donateMetadata = sessionData.metadata as DonateMetadata
+        await Promise.all([
+          this.donateService.sendPrivateDonateNotification(donateMetadata),
+          this.donateService.sendPublicDonateNotification(donateMetadata),
+        ])
+        break
+      default:
+        logger.warn({ source: sessionData.source }, `Unknown payment source`)
+        throw new Error(`Unsupported payment source: ${sessionData.source}`)
     }
   }
 }

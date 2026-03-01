@@ -1,6 +1,7 @@
 <template>
   <VeeField v-slot="{ field, errors, setValue }" name="age">
     <Field :data-invalid="!!errors.length">
+      <FieldLabel :for="field.name">Âge</FieldLabel>
       <NumberField
         id="age"
         :min="0"
@@ -15,7 +16,6 @@
           }
         "
       >
-        <FieldLabel :for="field.name">Âge</FieldLabel>
         <NumberFieldContent>
           <NumberFieldDecrement />
           <NumberFieldInput :aria-invalid="!!errors.length" />

@@ -10,7 +10,7 @@
   >
     <div
       v-if="isVisible"
-      class="fixed bottom-0 right-0 pb-3 pr-5 z-50"
+      class="fixed bottom-0 right-0 pb-[calc(0.75rem+env(safe-area-inset-bottom))] pr-[calc(1.25rem+env(safe-area-inset-right))] z-50"
       role="region"
       aria-label="Scroll to top"
     >

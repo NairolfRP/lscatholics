@@ -15,9 +15,15 @@ export const genderSchema = vine.enum(genderIds())
 
 export const addressSchema = vine.string().trim().minLength(10).maxLength(255)
 
-export const phoneSchema = vine
+export const requiredPhoneSchema = vine
   .string()
   .use(phoneRule())
+  .transform((value) => value.replace(/\s/g, ''))
+
+export const optionalPhoneSchema = vine
+  .string()
+  .optional()
+  .use(phoneRule({ required: false }))
   .transform((value) => value.replace(/\s/g, ''))
 
 export const yesNoSchema = vine

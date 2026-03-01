@@ -10,6 +10,15 @@
     <DropdownMenuContent class="w-56 mr-10 z-99">
       <DropdownMenuLabel>Mon compte - {{ user!.name }}</DropdownMenuLabel>
       <DropdownMenuSeparator />
+      <template v-if="user!.canAccessDashboard">
+        <DropdownMenuGroup>
+          <DropdownMenuItem @click="handleMenuAction('dashboard')">
+            <Lock />
+            <span>Tableau de bord</span>
+          </DropdownMenuItem>
+        </DropdownMenuGroup>
+        <DropdownMenuSeparator />
+      </template>
       <DropdownMenuGroup>
         <DropdownMenuItem @click="openSwitchCharacter">
           <ArrowRightLeft />
@@ -32,7 +41,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ArrowRightLeft, LogOut, Settings, User } from 'lucide-vue-next'
+import { ArrowRightLeft, Lock, LogOut, Settings, User } from 'lucide-vue-next'
 import { Button } from '@/shared/components/ui/button'
 import { computed, ref } from 'vue'
 import { useUser } from '@/shared/composables/use_user'
@@ -66,6 +75,9 @@ const openSwitchCharacter = () => {
 
 const handleMenuAction = (action: string) => {
   switch (action) {
+    case 'dashboard':
+      router.visit(urlFor('dashboard.index'))
+      break
     case 'settings':
       router.visit(urlFor('profile'))
       break

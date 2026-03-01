@@ -1,7 +1,22 @@
 <template>
-  <header class="fixed top-0 left-0 right-0 z-99 text-primary-foreground">
+  <header
+    :class="
+      cn(
+        'fixed top-0 left-0 right-0 z-99 text-primary-foreground pt-safe pl-safe pr-safe transition-all duration-500 ease-in-out',
+        {
+          'bg-catholic-purple/70 backdrop-blur-md shadow-md': isScrolled,
+          'bg-transparent': !isScrolled,
+        }
+      )
+    "
+  >
     <div
-      class="absolute top-0 left-0 w-full h-30 bg-linear-to-b from-black/50 to-transparent -z-10"
+      :class="
+        cn(
+          'absolute top-0 left-0 w-full h-30 bg-linear-to-b from-black/50 to-transparent -z-10 transition-opacity duration-500',
+          { 'opacity-0': isScrolled, 'opacity-100': !isScrolled }
+        )
+      "
     ></div>
     <div class="flex w-full justify-between align-middle items-center lg:py-5 lg:px-10">
       <h1>
@@ -30,6 +45,13 @@ import AppMobileMenu from '@/shared/components/layout/Navigation/AppMobileMenu.v
 import UserAccountMenu from '@/shared/components/auth/UserAccountMenu.vue'
 import LoginButton from '@/shared/components/auth/LoginButton.vue'
 import { useUser } from '@/shared/composables/use_user'
+import { cn } from '@/lib/utils'
+import { computed } from 'vue'
+import { useWindowScroll } from '@vueuse/core'
 
 const user = useUser()
+
+const SCROLL_THRESHOLD = 50
+const { y } = useWindowScroll()
+const isScrolled = computed(() => y.value > SCROLL_THRESHOLD)
 </script>
