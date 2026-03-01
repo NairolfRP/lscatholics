@@ -13,6 +13,5 @@ router
     router.resource('users', controllers.users.DashboardUsers).as('dashboard.users')
   })
   .prefix('dashboard')
-  .use(middleware.auth())
   .use(middleware.dashboard())
   .as('dashboard')
