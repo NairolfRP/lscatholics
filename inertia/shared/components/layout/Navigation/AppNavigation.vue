@@ -147,7 +147,7 @@ const getSubmenuClasses = (count: number): string => {
 .nav-trigger-button[data-state='open'],
 .nav-trigger-button[data-state='open']:hover,
 .nav-trigger-button[data-state='open']:focus {
-  background-color: inherit;
+  background-color: transparent;
   color: var(--accent);
 }
 

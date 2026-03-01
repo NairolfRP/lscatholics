@@ -2,7 +2,7 @@
   <div class="min-h-screen bg-gray-50 dark:bg-gray-900">
     <!-- Sidebar Desktop -->
     <aside
-      class="fixed left-0 top-0 z-40 h-screen w-64 border-r bg-white dark:bg-gray-800 hidden lg:block pl-safe"
+      class="fixed left-0 top-0 z-40 h-dvh w-64 border-r bg-white dark:bg-gray-800 hidden lg:block pl-safe"
     >
       <div class="flex h-full flex-col">
         <!-- Logo -->
@@ -201,6 +201,6 @@ const userInitials = computed(() => {
 const success = computed(() => pageProps.value.success)
 
 watch(success, (message) => {
-  toast.success(message)
+  if (message) toast.success(message)
 })
 </script>

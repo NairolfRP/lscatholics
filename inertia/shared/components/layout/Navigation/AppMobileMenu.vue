@@ -109,7 +109,7 @@ import { ref } from 'vue'
 import { urlFor } from '@/client'
 
 const mobileMenuOpen = ref<boolean>(false)
-const toggleMobileMenu = () => (mobileMenuOpen.value = !mobileMenuOpen)
+const toggleMobileMenu = () => (mobileMenuOpen.value = !mobileMenuOpen.value)
 
 const handleNavigate = (route: string, routeParams?: Record<string, any>) => {
   router.visit(urlFor(route as any, routeParams))
