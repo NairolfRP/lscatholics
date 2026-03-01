@@ -5,20 +5,22 @@ export default class DashboardMiddleware {
   async handle(ctx: HttpContext, next: NextFn) {
     const { bouncer, inertia, response, auth } = ctx
     if (auth.user) {
-      await auth.user.load((loader) => {
-        loader.load('roles', (rolesQuery) => {
-          rolesQuery.preload('permissions')
+      if (!auth.user.$preloaded.roles) {
+        await auth.user.load((loader) => {
+          loader.load('roles', (rolesQuery) => {
+            rolesQuery.preload('permissions')
+          })
         })
-      })
-    }
+      }
 
-    if (await bouncer.with('DashboardPolicy').denies('access', ctx)) {
-      return response.redirect().toRoute('home')
-    }
+      if (await bouncer.with('DashboardPolicy').denies('access', ctx)) {
+        return response.redirect().toRoute('home')
+      }
 
-    inertia.share({
-      permissions: async () => ((await auth.user!.getPermissions()) || []) as string[],
-    })
+      const permissions = (await auth.user.getPermissions()) as string[]
+
+      inertia.share({ permissions })
+    }
 
     return await next()
   }
