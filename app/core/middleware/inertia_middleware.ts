@@ -37,9 +37,7 @@ export default class InertiaMiddleware extends BaseInertiaMiddleware {
         success: session?.flashMessages.get('success'),
       }),
       user: ctx.inertia.always(
-        auth?.user
-          ? UserTransformer.transform(auth.user).useVariant('userWithCurrentCharacter')
-          : undefined
+        auth?.user ? UserTransformer.transform(auth.user).useVariant('sharedProp') : undefined
       ),
     }
   }
