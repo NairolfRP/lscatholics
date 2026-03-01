@@ -1,9 +1,8 @@
 import { test } from '@japa/runner'
 import { CharacterCacheService } from '#characters/services/character_cache_service'
-import type { Character } from '#characters/types/character'
-import { DateTime } from 'luxon'
+import type { GTAWorldCharacter } from '@gtaw-oauth-providers/adonisjs-ally'
 
-const mockCharacters: Character[] = [
+const mockCharacters: GTAWorldCharacter[] = [
   {
     id: 1,
     firstname: 'John',
@@ -35,10 +34,9 @@ test.group('Character Cache Service', (group) => {
 
     cacheService.cacheCharacters(userId, mockCharacters)
 
-    const fetchFn = async () => mockCharacters
-    const cachedCharacters = await cacheService.getCachedUserCharacters(userId, fetchFn)
+    const result = await cacheService.getCachedUserCharacters(userId, async () => [])
 
-    assert.deepEqual(cachedCharacters, mockCharacters)
+    assert.deepEqual(result, mockCharacters)
   })
 
   test('should return fresh data when cache is expired', async ({ assert }) => {
@@ -46,18 +44,9 @@ test.group('Character Cache Service', (group) => {
     const oldCharacters = [mockCharacters[0]]
     const newCharacters = mockCharacters
 
-    cacheService.cacheCharacters(userId, oldCharacters)
+    cacheService.cacheCharacters(userId, oldCharacters, -1)
 
-    const cacheKey = `user_characters:${userId}`
-    const expiredEntry = {
-      data: oldCharacters,
-      timestamp: DateTime.now().minus({ minutes: 10 }),
-      ttl: 5 * 60,
-    }
-    cacheService['cache'].set(cacheKey, expiredEntry)
-
-    const fetchFn = async () => newCharacters
-    const result = await cacheService.getCachedUserCharacters(userId, fetchFn)
+    const result = await cacheService.getCachedUserCharacters(userId, async () => newCharacters)
 
     assert.deepEqual(result, newCharacters)
   })
@@ -69,23 +58,19 @@ test.group('Character Cache Service', (group) => {
     cacheService.invalidateUserCharacters(userId)
 
     let fetchCalled = false
-    const fetchFn = async () => {
+    await cacheService.getCachedUserCharacters(userId, async () => {
       fetchCalled = true
       return mockCharacters
-    }
+    })
 
-    await cacheService.getCachedUserCharacters(userId, fetchFn)
-
-    assert.isTrue(fetchCalled, 'Fetch function should be called after cache invalidation')
+    assert.isTrue(fetchCalled)
   })
 
   test('should correctly identify if character is owned by user', async ({ assert }) => {
     const userId = 'user123'
-    const characterId = 1
-
     const fetchFn = async () => mockCharacters
 
-    const isOwned = await cacheService.isCharacterOwnedByUser(userId, characterId, fetchFn)
+    const isOwned = await cacheService.isCharacterOwnedByUser(userId, 1, fetchFn)
     const isNotOwned = await cacheService.isCharacterOwnedByUser(userId, 999, fetchFn)
 
     assert.isTrue(isOwned)
@@ -93,25 +78,15 @@ test.group('Character Cache Service', (group) => {
   })
 
   test('should cleanup expired entries', async ({ assert }) => {
-    const userId1 = 'user1'
-    const userId2 = 'user2'
-
-    cacheService.cacheCharacters(userId1, mockCharacters)
-    cacheService.cacheCharacters(userId2, mockCharacters)
-
-    const expiredEntry = {
-      data: mockCharacters,
-      timestamp: DateTime.now().minus({ minutes: 10 }),
-      ttl: 5 * 60,
-    }
-    cacheService['cache'].set(`user_characters:${userId1}`, expiredEntry)
+    cacheService.cacheCharacters('user1', mockCharacters, -1)
+    cacheService.cacheCharacters('user2', mockCharacters)
 
     cacheService.cleanupExpired()
 
     const stats = cacheService.getStats()
-    assert.equal(stats.totalEntries, 1, 'Should have 1 entry after cleanup')
-    assert.equal(stats.validEntries, 1, 'Should have 1 valid entry')
-    assert.equal(stats.expiredEntries, 0, 'Should have 0 expired entries')
+    assert.equal(stats.total, 1)
+    assert.equal(stats.valid, 1)
+    assert.equal(stats.expired, 0)
   })
 
   test('should clear all cache entries', async ({ assert }) => {
@@ -120,7 +95,6 @@ test.group('Character Cache Service', (group) => {
 
     cacheService.clear()
 
-    const stats = cacheService.getStats()
-    assert.equal(stats.totalEntries, 0)
+    assert.equal(cacheService.getStats().total, 0)
   })
 })

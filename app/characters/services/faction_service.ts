@@ -181,15 +181,6 @@ export class FactionService {
     return factionCache.isCacheValid(this.ctx.auth.user.id.toString())
   }
 
-  async getCacheAge(): Promise<number | null> {
-    if (!this.ctx.auth.user) {
-      return null
-    }
-
-    const factionCache = await this.getFactionCacheService()
-    return factionCache.getCacheAge(this.ctx.auth.user.id.toString())
-  }
-
   async getCacheStats() {
     const factionCache = await this.getFactionCacheService()
     return factionCache.getStats()
