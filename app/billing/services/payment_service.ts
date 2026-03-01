@@ -144,33 +144,28 @@ export class PaymentService {
     metadata: Record<string, any> = {},
     session: any
   ): Promise<{ paymentUrl: string; sessionId: string }> {
-    try {
-      this.validatePaymentParameters(amount, source)
+    this.validatePaymentParameters(amount, source)
 
-      const gatewayToken = await this.generateGatewayToken({ price: amount })
-      const sessionId = await hash.make(`${source}_${amount}_${Date.now()}_${Math.random()}`)
+    const [gatewayToken, sessionId] = await Promise.all([
+      this.generateGatewayToken({ price: amount }),
+      hash.make(`${source}_${amount}_${Date.now()}_${Math.random()}`),
+    ])
 
-      const sessionData: PaymentSessionData = {
-        sessionId,
-        token: gatewayToken,
-        source,
-        amount,
-        metadata,
-        createdAt: new Date(),
-        expiresAt: new Date(Date.now() + fleecaConfig.sessionTTL * 1000),
-      }
+    const sessionData: PaymentSessionData = {
+      sessionId,
+      token: gatewayToken,
+      source,
+      amount,
+      metadata,
+      createdAt: new Date(),
+      expiresAt: new Date(Date.now() + fleecaConfig.sessionTTL * 1000),
+    }
 
-      this.storeSessionData(session, sessionData)
+    this.storeSessionData(session, sessionData)
 
-      return {
-        paymentUrl: this.buildGatewayUrl(gatewayToken),
-        sessionId,
-      }
-    } catch (err) {
-      logger.error({ err, source, amount }, 'Error generating payment URL')
-      throw err instanceof PaymentException
-        ? err
-        : PaymentException.create('URL_GENERATION_ERROR', err)
+    return {
+      paymentUrl: this.buildGatewayUrl(gatewayToken),
+      sessionId,
     }
   }
 
