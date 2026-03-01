@@ -84,9 +84,6 @@ function setupPopupCloseDetection(popup: Window, handler: (e: MessageEvent) => v
     if (popup.closed) {
       clearInterval(checkClosed)
       window.removeEventListener('message', handler)
-      toast.info('Paiement annulé', {
-        description: 'La fenêtre de paiement a été fermée',
-      })
     }
   }, 1000)
 }
