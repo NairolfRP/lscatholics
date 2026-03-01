@@ -3,6 +3,7 @@ import nock from 'nock'
 import fleecaConfig from '#config/fleeca'
 import sinon from 'sinon'
 import encryption from '@adonisjs/core/services/encryption'
+import { DonateService } from '#donate/services/donate_service'
 
 test.group('Api payment fleeca callback', (group) => {
   let fleecaBaseUrl: string
@@ -49,10 +50,13 @@ test.group('Api payment fleeca callback', (group) => {
         anonymous: false,
       },
       createdAt: new Date(),
-      expiresAt: new Date(),
+      expiresAt: new Date(Date.now() + 60 * 60_000),
     }
 
     sinon.stub(encryption, 'decrypt').returns(JSON.stringify(mockSessionData))
+
+    sinon.stub(DonateService.prototype, 'sendPrivateDonateNotification').resolves()
+    sinon.stub(DonateService.prototype, 'sendPublicDonateNotification').resolves()
 
     nock(fleecaBaseUrl)
       .post(`/gateway_token/${token}`, { token })
@@ -62,9 +66,7 @@ test.group('Api payment fleeca callback', (group) => {
       .get(`/api/payment/fleeca/callback/${token}`)
       .withInertia()
       .withSession({
-        payment_data: {
-          ...mockSessionData,
-        },
+        payment_data: mockSessionData,
       })
 
     response.assertStatus(200)
@@ -91,7 +93,7 @@ test.group('Api payment fleeca callback', (group) => {
     })
   })
 
-  test('should handle unknown payment source', async ({ client, assert }) => {
+  test('should return error page for unknown payment source', async ({ client, assert }) => {
     const token = 'valid-token'
     const mockValidationResponse = {
       token,
@@ -111,7 +113,7 @@ test.group('Api payment fleeca callback', (group) => {
       amount: 1000,
       metadata: {},
       createdAt: new Date(),
-      expiresAt: new Date(),
+      expiresAt: new Date(Date.now() + 60 * 60_000),
     }
 
     sinon.stub(encryption, 'decrypt').returns(JSON.stringify(mockSessionData))
@@ -124,15 +126,13 @@ test.group('Api payment fleeca callback', (group) => {
       .get(`/api/payment/fleeca/callback/${token}`)
       .withInertia()
       .withSession({
-        payment_data: {
-          ...mockSessionData,
-        },
+        payment_data: mockSessionData,
       })
 
     response.assertStatus(200)
     response
-      .assertInertiaComponent('home')
-      .assertInertiaPropsContains({ success: 'Votre paiement de $1000 a été traité avec succès.' })
+      .assertInertiaComponent('payment-callback')
+      .assertInertiaPropsContains({ success: false, title: 'Erreur de paiement' })
     assert.isTrue(nock.isDone())
   })
 })
