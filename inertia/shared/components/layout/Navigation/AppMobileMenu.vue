@@ -6,7 +6,7 @@
       </Button>
     </SheetTrigger>
     <SheetContent
-      class="bg-primary-500 text-primary-foreground z-100 w-full h-full pb-20 overflow-y-scroll"
+      class="bg-primary-500 text-primary-foreground z-100 w-full h-full pb-20 overflow-y-scroll pt-safe pl-safe pr-safe"
     >
       <SheetHeader>
         <SheetTitle><img alt="Logo" :src="Logo" class="w-20 h-20" /></SheetTitle>

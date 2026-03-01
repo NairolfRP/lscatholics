@@ -2,11 +2,14 @@
   <div class="min-h-screen bg-gray-50 dark:bg-gray-900">
     <!-- Sidebar Desktop -->
     <aside
-      class="fixed left-0 top-0 z-40 h-screen w-64 border-r bg-white dark:bg-gray-800 hidden lg:block"
+      class="fixed left-0 top-0 z-40 h-screen w-64 border-r bg-white dark:bg-gray-800 hidden lg:block pl-safe"
     >
       <div class="flex h-full flex-col">
         <!-- Logo -->
-        <div class="flex h-16 items-center border-b px-6">
+        <div
+          class="flex h-16 items-center border-b px-6 pt-safe"
+          style="height: calc(4rem + env(safe-area-inset-top))"
+        >
           <Link :href="urlFor('home')" class="flex items-center gap-2">
             <span class="text-xl font-bold">LS Catholics</span>
           </Link>
@@ -68,7 +71,8 @@
 
     <!-- Mobile Header -->
     <header
-      class="sticky top-0 z-30 flex h-16 items-center gap-4 border-b bg-white px-4 lg:hidden dark:bg-gray-800"
+      class="sticky top-0 z-30 flex h-16 items-center gap-4 border-b bg-white px-4 lg:hidden dark:bg-gray-800 pt-safe pl-[calc(1rem+env(safe-area-inset-left))] pr-safe"
+      style="height: calc(4rem + env(safe-area-inset-top))"
     >
       <Sheet>
         <SheetTrigger as-child>
@@ -106,7 +110,7 @@
     </header>
 
     <!-- Main Content -->
-    <main class="lg:pl-64">
+    <main class="lg:pl-64 pb-safe">
       <div class="p-6 lg:p-8">
         <slot />
       </div>

@@ -1,5 +1,5 @@
 <template>
-  <header class="fixed top-0 left-0 right-0 z-99 text-primary-foreground">
+  <header class="fixed top-0 left-0 right-0 z-99 text-primary-foreground pt-safe pl-safe pr-safe">
     <div
       class="absolute top-0 left-0 w-full h-30 bg-linear-to-b from-black/50 to-transparent -z-10"
     ></div>
