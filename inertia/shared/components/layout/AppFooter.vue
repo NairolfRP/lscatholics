@@ -1,5 +1,5 @@
 <template>
-  <footer class="bg-catholic-purple text-white px-5 laptop:px-20">
+  <footer class="bg-catholic-purple text-white px-5 laptop:px-20 pb-safe">
     <!-- Main Footer -->
     <div class="container mx-auto py-12">
       <div class="grid mobile:grid-cols-2 md:grid-cols-4 gap-8">

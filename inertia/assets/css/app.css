@@ -2,6 +2,7 @@
 
 @import 'tailwindcss';
 @import 'tw-animate-css';
+@import './tailwindcss-safe-area.css';
 
 @custom-variant dark (&:is(.dark *));
 
@@ -240,7 +241,7 @@
   --sidebar-ring: oklch(0.5771 0.2152 27.325);
   --radius: 0rem;
   --font-sans: 'Inter', ui-sans-serif, sans-serif, system-ui;
-  --font-serif: 'Crimson' Text, ui-serif, serif;
+  --font-serif: 'Crimson Text', ui-serif, serif;
   --font-mono: 'Geist Mono', ui-monospace, monospace;
   --shadow-color: #000000;
   --shadow-opacity: 0.1;

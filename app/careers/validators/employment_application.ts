@@ -4,7 +4,7 @@ import {
   districtSchema,
   firstnameLastnameSchema,
   genderSchema,
-  phoneSchema,
+  requiredPhoneSchema,
 } from '#core/validators/common'
 import {
   getApplicantStatementsIds,
@@ -29,7 +29,7 @@ export const createEmploymentApplicationValidator = vine.create(
 
     district: districtSchema,
     address: addressSchema,
-    phone: phoneSchema,
+    phone: requiredPhoneSchema,
 
     isPracticingCatholic: vine.boolean(),
     isLegalUSWorker: vine.boolean(),

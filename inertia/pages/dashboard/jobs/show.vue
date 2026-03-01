@@ -55,7 +55,7 @@
                 </Typography>
               </div>
 
-              <div v-if="!!job.responsibilities.length">
+              <div v-if="!!job.responsibilities?.length">
                 <Typography variant="h3">Fonctions essentielles</Typography>
                 <Typography v-for="responsability in job.responsibilities" variant="list">
                   <li>{{ responsability }}</li>
@@ -64,7 +64,7 @@
             </div>
 
             <div
-              v-if="!!job.requirements.length"
+              v-if="!!job.requirements?.length"
               class="rounded-lg bg-gray-50 p-4 dark:bg-gray-800"
             >
               <Typography variant="h2">Conditions requises</Typography>
@@ -73,7 +73,7 @@
               </Typography>
             </div>
 
-            <div v-if="!!job.skills.length" class="rounded-lg bg-gray-50 p-4 dark:bg-gray-800">
+            <div v-if="!!job.skills?.length" class="rounded-lg bg-gray-50 p-4 dark:bg-gray-800">
               <Typography variant="h2">Profil recherché</Typography>
               <Typography v-for="skill in job.skills" variant="list">
                 <li>{{ skill }}</li>
