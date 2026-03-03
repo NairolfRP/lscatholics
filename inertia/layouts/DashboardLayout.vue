@@ -20,10 +20,14 @@
           <Link
             v-for="item in menuItems"
             :key="item.route"
-            :href="hasRoute(item.route) ? urlFor(item.route as any) : '#'"
+            :href="
+              hasRoute(item.route.replace('*', ''))
+                ? urlFor(item.route.replace('*', '') as any)
+                : '#'
+            "
             class="flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors"
             :class="[
-              isCurrentRoute(item.route + '*')
+              isCurrentRoute(item.route)
                 ? 'bg-gray-100 text-gray-900 dark:bg-gray-700 dark:text-white'
                 : 'text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700/50',
             ]"
@@ -91,10 +95,14 @@
               <Link
                 v-for="item in menuItems"
                 :key="item.route"
-                :href="hasRoute(item.route) ? urlFor(item.route as any) : '#'"
+                :href="
+                  hasRoute(item.route.replace('*', ''))
+                    ? urlFor(item.route.replace('*', '') as any)
+                    : '#'
+                "
                 class="flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors"
                 :class="[
-                  isCurrentRoute(item.route + '*')
+                  isCurrentRoute(item.route)
                     ? 'bg-gray-100 text-gray-900'
                     : 'text-gray-700 hover:bg-gray-50',
                 ]"
@@ -169,25 +177,25 @@ const menuItems = computed(() =>
     {
       label: 'Articles',
       icon: FileText,
-      route: 'dashboard.dashboard_articles.index' as const,
+      route: 'dashboard.dashboard_articles.index*' as const,
       permission: 'viewArticles',
     },
     {
       label: 'Événements',
       icon: Calendar,
-      route: 'dashboard.dashboard_events.index' as const,
+      route: 'dashboard.dashboard_events.index*' as const,
       permission: 'manageEvents',
     },
     {
       label: "Offres d'emplois",
       icon: BriefcaseBusiness,
-      route: 'dashboard.dashboard_jobs.index' as const,
+      route: 'dashboard.dashboard_jobs.index*' as const,
       permission: 'viewArticles',
     },
     {
       label: 'Utilisateurs',
       icon: Users,
-      route: 'dashboard.dashboard_users.index' as const,
+      route: 'dashboard.dashboard_users.index*' as const,
       permission: 'manageUsers',
     },
   ].filter((item) => !item.permission || hasPermission(item.permission))

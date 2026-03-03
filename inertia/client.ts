@@ -23,13 +23,21 @@ export const hasRoute = (route: string) => {
 }
 export const isCurrentRoute = (routeName: string) => {
   const page = usePage()
-  const current = page.props.currentRoute as string | undefined
+  const current = page.props.currentRoute as keyof typeof registry.routes | undefined
 
   if (!current) return false
 
   if (routeName.endsWith('*')) {
-    const prefix = routeName.replace('*', '')
-    return current.startsWith(prefix)
+    const routeWithoutAsterisk = routeName.replace('*', '')
+
+    if (current === routeWithoutAsterisk) return true
+
+    const prefix = registry.routes[routeWithoutAsterisk as keyof typeof registry.routes]?.pattern
+    const currentPattern = registry.routes[current]?.pattern?.replace(/\/:[^/]+/g, '')
+
+    if (!prefix || !currentPattern) return false
+
+    return currentPattern.startsWith(prefix)
   }
 
   return current === routeName
