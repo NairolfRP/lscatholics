@@ -141,7 +141,7 @@ const getSubmenuClasses = (count: number): string => {
 }
 </script>
 
-<style scoped>
+<style>
 .nav-trigger-button:hover,
 .nav-trigger-button:focus,
 .nav-trigger-button[data-state='open'],
