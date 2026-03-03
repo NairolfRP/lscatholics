@@ -5,18 +5,21 @@ import AppLayout from '@/layouts/AppLayout.vue'
 import { QueryClient, VueQueryPlugin } from '@tanstack/vue-query'
 import { TuyauProvider } from '@adonisjs/inertia/vue'
 import { client } from '@/client'
+import { resolvePageComponent } from '@adonisjs/inertia/helpers'
 
 export default function render(page: any) {
   return createInertiaApp({
     page,
     render: renderToString,
-    resolve: (name) => {
-      const pages = import.meta.glob<DefineComponent>('./pages/**/*.vue', { eager: true })
-      let resolvedPage = pages[`./pages/${name}.vue`]
+    resolve: async (name) => {
+      const pageComponent = await resolvePageComponent(
+        `./pages/${name}.vue`,
+        import.meta.glob<DefineComponent>('./pages/**/*.vue', { eager: true })
+      )
 
-      resolvedPage.default.layout = resolvedPage.default.layout || AppLayout
+      pageComponent.default.layout = pageComponent.default.layout || AppLayout
 
-      return resolvedPage
+      return pageComponent
     },
 
     setup({ App, props, plugin }) {
@@ -30,7 +33,9 @@ export default function render(page: any) {
         },
       })
 
-      return createSSRApp(h(TuyauProvider, { client }, { default: () => h(App, props) }))
+      return createSSRApp({
+        render: () => h(TuyauProvider, { client }, { default: () => h(App, props) }),
+      })
         .use(plugin)
         .use(VueQueryPlugin, { queryClient })
     },
