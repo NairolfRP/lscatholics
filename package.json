@@ -2,6 +2,11 @@
   "name": "lscatholics",
   "version": "2.0.0",
   "private": true,
+  "type": "module",
+  "license": "LGPL-3.0-only",
+  "engines": {
+    "node": ">=24.0.0"
+  },
   "description": "A web application for a Catholic Church roleplay project",
   "homepage": "https://github.com/NairolfRP/lscatholics#readme",
   "bugs": "https://github.com/NairolfRP/lscatholics/issues",
@@ -17,8 +22,6 @@
     "type": "git",
     "url": "git+https://github.com/NairolfRP/lscatholics.git"
   },
-  "type": "module",
-  "license": "LGPL-3.0-only",
   "scripts": {
     "deploy-build": "pnpm install && NODE_ENV=production node ace build && cd build && pnpm install --prod && NODE_ENV=production node ace migration:run --force && NODE_ENV=production node ace db:seed",
     "start": "node bin/server.js",
