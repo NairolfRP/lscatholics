@@ -1,9 +1,9 @@
-import DashboardLayout from '@/layouts/DashboardLayout.vue'
 import '@/assets/css/app.css'
-import { createSSRApp, type DefineComponent, h } from 'vue'
+import { createApp, type DefineComponent, h } from 'vue'
 import { createInertiaApp, router } from '@inertiajs/vue3'
 import { resolvePageComponent } from '@adonisjs/inertia/helpers'
 import AppLayout from '@/layouts/AppLayout.vue'
+import DashboardLayout from '@/layouts/DashboardLayout.vue'
 import { hydrate, QueryClient, VueQueryPlugin } from '@tanstack/vue-query'
 import { toast } from 'vue-sonner'
 import { client } from '@/client'
@@ -16,19 +16,17 @@ createInertiaApp({
 
   title: (title) => (title ? `${title} - ${appName}` : appName),
 
-  resolve: (name) => {
-    const page = resolvePageComponent(
+  resolve: async (name) => {
+    const pageComponent = await resolvePageComponent(
       `./pages/${name}.vue`,
       import.meta.glob<DefineComponent>('./pages/**/*.vue')
     )
 
-    page.then((module) => {
-      if (module.default.layout === undefined) {
-        module.default.layout = name.startsWith('dashboard/') ? DashboardLayout : AppLayout
-      }
-    })
+    if (pageComponent.default.layout === undefined) {
+      pageComponent.default.layout = name.startsWith('dashboard/') ? DashboardLayout : AppLayout
+    }
 
-    return page
+    return pageComponent
   },
 
   setup({ el, App, props, plugin }) {
@@ -46,7 +44,7 @@ createInertiaApp({
       hydrate(queryClient, props.initialPage.props.dehydratedState)
     }
 
-    createSSRApp({ render: () => h(TuyauProvider, { client }, { default: () => h(App, props) }) })
+    createApp({ render: () => h(TuyauProvider, { client }, { default: () => h(App, props) }) })
       .use(plugin)
       .use(VueQueryPlugin, { queryClient })
       .mount(el)
