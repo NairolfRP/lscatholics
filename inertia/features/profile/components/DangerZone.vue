@@ -76,8 +76,6 @@ import {
 import { useUser } from '@/shared/composables/use_user'
 import { useErrors } from '@/shared/composables/use_errors'
 import { useForm } from '@inertiajs/vue3'
-import { watch } from 'vue'
-import { toast } from 'vue-sonner'
 
 const user = useUser()
 
@@ -85,11 +83,5 @@ const errors = useErrors()
 
 const form = useForm({
   username: '',
-})
-
-watch(errors, (err) => {
-  if (err?.E_DELETE_USER) {
-    toast.error(err.E_DELETE_USER)
-  }
 })
 </script>

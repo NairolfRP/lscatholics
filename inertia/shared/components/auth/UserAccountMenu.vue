@@ -87,11 +87,6 @@ const handleMenuAction = (action: string) => {
         onSuccess: () => {
           toast.success('Déconnecté avec succès. A très bientôt !')
         },
-        onError: (err) => {
-          toast.error(err.E_LOGOUT, {
-            duration: 10_000,
-          })
-        },
       })
       break
   }

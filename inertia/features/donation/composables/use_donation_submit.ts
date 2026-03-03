@@ -38,6 +38,4 @@ function handleSubmitError(err: any, setErrors: (errors: any) => void) {
       description: 'Veuillez corriger les erreurs dans le formulaire',
     })
   }
-
-  toast.error('Échec', { description: err.E_DONATE_ERROR })
 }

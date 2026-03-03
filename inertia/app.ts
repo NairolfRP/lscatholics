@@ -1,11 +1,10 @@
 import '@/assets/css/app.css'
 import { createApp, type DefineComponent, h } from 'vue'
-import { createInertiaApp, router } from '@inertiajs/vue3'
+import { createInertiaApp } from '@inertiajs/vue3'
 import { resolvePageComponent } from '@adonisjs/inertia/helpers'
 import AppLayout from '@/layouts/AppLayout.vue'
 import DashboardLayout from '@/layouts/DashboardLayout.vue'
 import { hydrate, QueryClient, VueQueryPlugin } from '@tanstack/vue-query'
-import { toast } from 'vue-sonner'
 import { client } from '@/client'
 import { TuyauProvider } from '@adonisjs/inertia/vue'
 
@@ -49,13 +48,4 @@ createInertiaApp({
       .use(VueQueryPlugin, { queryClient })
       .mount(el)
   },
-})
-
-router.on('navigate', (event) => {
-  const errors = event.detail.page.props.errors
-
-  const E_AUTHENTIFICATION_FAILED = errors?.E_AUTHENTIFICATION_FAILED
-  if (E_AUTHENTIFICATION_FAILED) {
-    toast.error(E_AUTHENTIFICATION_FAILED)
-  }
 })

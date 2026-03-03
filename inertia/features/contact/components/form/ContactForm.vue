@@ -177,12 +177,9 @@ const submitForm = handleSubmit((values) => {
         resetForm()
         return toast.success(props.value.success || 'Submitted!')
       }
-      toast.error(errors.value.CONTACT_ERROR || 'An error occured')
     },
     onError: (err) => {
-      if (err) {
-        return toast.error('Veuillez corriger les erreurs dans le formulaire')
-      }
+      setErrors(err)
     },
   })
 })

@@ -126,11 +126,11 @@
   </div>
 
   <ScrollToTopButton />
-  <Toaster richColors />
+  <Toaster position="top-center" close-button richColors />
 </template>
 <script setup lang="ts">
 import { computed, watch } from 'vue'
-import { Link } from '@inertiajs/vue3'
+import { Link, usePage } from '@inertiajs/vue3'
 import {
   BriefcaseBusiness,
   Calendar,
@@ -153,17 +153,16 @@ import {
 } from '@/shared/components/ui/dropdown-menu'
 import { Avatar, AvatarFallback } from '@/shared/components/ui/avatar'
 import { hasRoute, isCurrentRoute, urlFor } from '@/client'
-import { useUser } from '@/shared/composables/use_user'
-import { usePageProps } from '@/shared/composables/use_page_props'
 import { toast } from 'vue-sonner'
 import { Toaster } from '@/shared/components/ui/sonner'
 import ScrollToTopButton from '@/shared/components/ScrollToTopButton.vue'
+import type { Data } from '@generated/data'
 
-const user = useUser()
-const pageProps = usePageProps()
+const page = usePage<Data.SharedProps>()
+const user = page.props.user
 
 const hasPermission = (permission: string) => {
-  return (pageProps.value.permissions as string[]).some((p) => p === permission)
+  return (page.props.permissions as string[]).some((p) => p === permission)
 }
 
 const menuItems = computed(() =>
@@ -202,13 +201,28 @@ const menuItems = computed(() =>
 )
 
 const userInitials = computed(() => {
-  const names = user.value!.name!.split(' ')
+  const names = user!.name!.split(' ')
   return names.length > 1 ? `${names[0][0]}${names[1][0]}` : names[0][0]
 })
 
-const success = computed(() => pageProps.value.success)
+watch(
+  () => page.url,
+  () => toast.dismiss()
+)
 
-watch(success, (message) => {
-  if (message) toast.success(message)
-})
+watch(
+  () => page.props.flash.success,
+  (message) => {
+    if (message) toast.success(message)
+  },
+  { immediate: true }
+)
+
+watch(
+  () => page.props.flash.error,
+  (error) => {
+    if (error) toast.error(error)
+  },
+  { immediate: true }
+)
 </script>

@@ -35,11 +35,6 @@ export function useEmploymentApplicationForm({ slug }: UseEmploymentApplicationF
         form.resetForm()
       },
       onError: (errors) => {
-        if ('E_EMPLOYMENT_APPLICATION' in errors) {
-          return toast.error('Échec', {
-            description: errors.E_EMPLOYMENT_APPLICATION,
-          })
-        }
         form.setErrors(errors)
       },
     })

@@ -138,15 +138,6 @@ const fetchCharacters = async () => {
 }
 
 watch(
-  () => errors,
-  (err) => {
-    if (err.value.E_SWITCH_CHARACTER) {
-      toast.error(err.value.E_SWITCH_CHARACTER)
-    }
-  }
-)
-
-watch(
   () => props.open,
   (newValue, oldValue) => {
     if (newValue && !oldValue) {

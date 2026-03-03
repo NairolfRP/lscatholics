@@ -24,16 +24,7 @@ export function useParishionerFormSubmission(form: FormContext<RegisterParishion
         toast.error(errors.value.E_REGISTER_PARISHIONER_ERROR || 'Une erreur est survenue.')
       },
       onError: (err) => {
-        if (err) {
-          if (!('E_REGISTER_PARISHIONER_ERROR' in err)) {
-            form.setErrors(err)
-            return toast.error('Champs invalides', {
-              description: 'Veuillez corriger les erreurs dans le formulaire',
-            })
-          }
-
-          toast.error('Échec', { description: err.E_REGISTER_PARISHIONER_ERROR })
-        }
+        form.setErrors(err)
       },
     })
   })
