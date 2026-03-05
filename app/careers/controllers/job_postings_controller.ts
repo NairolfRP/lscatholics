@@ -55,7 +55,7 @@ export default class JobPostingsController {
       )
 
       return inertia.render('jobs/all', {
-        offers: page === 1 ? formattedOffers : inertia.merge(formattedOffers),
+        offers: inertia.deepMerge(formattedOffers),
         filters: {
           search,
           departments,
