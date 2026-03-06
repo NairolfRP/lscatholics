@@ -124,9 +124,9 @@ export default class CharacterService {
     const raw = this.ctx.session.get(this.#CURRENT_CHARACTER_SESSION_KEY)
 
     try {
-      const currentCharater = await createCharacterSessionValidator.validate(raw)
+      const currentCharacter = await createCharacterSessionValidator.validate(raw)
 
-      if (this.isStale(currentCharater.selectedAt)) {
+      if (this.isStale(currentCharacter.selectedAt)) {
         const characters = await this.getUserCharacters()
 
         if (!characters) {
@@ -137,9 +137,9 @@ export default class CharacterService {
         const newCurrentCharacter = characters.at(0) as Character
 
         if (
-          newCurrentCharacter.id !== currentCharater.id &&
-          newCurrentCharacter.firstname !== currentCharater.data.firstname &&
-          newCurrentCharacter.lastname !== currentCharater.data.lastname
+          newCurrentCharacter.id !== currentCharacter.id &&
+          newCurrentCharacter.firstname !== currentCharacter.data.firstname &&
+          newCurrentCharacter.lastname !== currentCharacter.data.lastname
         ) {
           this.setCurrentCharacter(newCurrentCharacter)
         }
@@ -147,7 +147,7 @@ export default class CharacterService {
         return newCurrentCharacter
       }
 
-      return currentCharater.data
+      return currentCharacter.data
     } catch (err) {
       this.ctx.logger.warn({ err }, 'Invalid session character data, clearing')
       this.ctx.session.forget(this.#CURRENT_CHARACTER_SESSION_KEY)
