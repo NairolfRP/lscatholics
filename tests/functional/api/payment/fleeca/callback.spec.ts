@@ -58,9 +58,7 @@ test.group('Api payment fleeca callback', (group) => {
     sinon.stub(DonateService.prototype, 'sendPrivateDonateNotification').resolves()
     sinon.stub(DonateService.prototype, 'sendPublicDonateNotification').resolves()
 
-    nock(fleecaBaseUrl)
-      .post(`/gateway_token/${token}`, { token })
-      .reply(200, mockValidationResponse)
+    nock(fleecaBaseUrl).post(`/gateway_token/${token}`).reply(200, mockValidationResponse)
 
     const response = await client
       .get(`/api/payment/fleeca/callback/${token}`)
@@ -118,9 +116,7 @@ test.group('Api payment fleeca callback', (group) => {
 
     sinon.stub(encryption, 'decrypt').returns(JSON.stringify(mockSessionData))
 
-    nock(fleecaBaseUrl)
-      .post(`/gateway_token/${token}`, { token })
-      .reply(200, mockValidationResponse)
+    nock(fleecaBaseUrl).post(`/gateway_token/${token}`).reply(200, mockValidationResponse)
 
     const response = await client
       .get(`/api/payment/fleeca/callback/${token}`)

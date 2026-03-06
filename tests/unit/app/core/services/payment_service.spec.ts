@@ -11,13 +11,14 @@ test.group('Payment Service', (group) => {
   let mockSession: any
   let fleecaBaseUrl: string
   let originalServer: (typeof fleecaConfig)['server']
+  let sandbox: sinon.SinonSandbox
 
   group.setup(() => {
-    paymentService = new PaymentService()
-
     originalServer = fleecaConfig.server
     fleecaBaseUrl =
       fleecaConfig.server === 'fr' ? 'https://fleeca.gta.world' : 'https://banking.gta.world'
+
+    sandbox = sinon.createSandbox()
 
     mockSession = {
       put: sinon.fake(),
@@ -30,6 +31,10 @@ test.group('Payment Service', (group) => {
     }
   })
 
+  group.each.setup(() => {
+    paymentService = new PaymentService()
+  })
+
   group.teardown(() => {
     nock.cleanAll()
     nock.restore()
@@ -38,6 +43,7 @@ test.group('Payment Service', (group) => {
 
   group.each.teardown(() => {
     sinon.restore()
+    sandbox.restore()
   })
 
   test('should generate valid payment URL and session', async ({ assert }) => {
@@ -151,9 +157,7 @@ test.group('Payment Service', (group) => {
     mockSession.get.returns('encrypted-session-data')
     sinon.stub(encryption, 'decrypt').returns(JSON.stringify(mockSessionData))
 
-    nock(fleecaBaseUrl)
-      .post(`/gateway_token/${token}`, { token })
-      .reply(200, mockValidationResponse)
+    nock(fleecaBaseUrl).post(`/gateway_token/${token}`).reply(200, mockValidationResponse)
 
     const result = await paymentService.processPaymentCallback(token, mockSession)
 
@@ -186,9 +190,8 @@ test.group('Payment Service', (group) => {
       expiresAt: new Date(Date.now() - 1000), // Expired 1 second ago
     }
 
-    mockSession.get.returns('encrypted-session-data')
-    sinon.stub(paymentService as any, 'getSessionData').resolves(expiredSessionData)
-    sinon.stub(paymentService as any, 'validateToken').resolves()
+    mockSession.get.withArgs('payment_data').returns('encrypted-session-data')
+    sandbox.stub(encryption, 'decrypt').returns(JSON.stringify(expiredSessionData))
 
     await assert.rejects(
       () => paymentService.processPaymentCallback(token, mockSession),
@@ -221,12 +224,10 @@ test.group('Payment Service', (group) => {
       token_created_at: new Date().toISOString(),
     }
 
-    mockSession.get.returns('encrypted-session-data')
-    sinon.stub(paymentService as any, 'getSessionData').resolves(mockSessionData)
+    mockSession.get.withArgs('payment_data').returns('encrypted-session-data')
+    sandbox.stub(encryption, 'decrypt').returns(JSON.stringify(mockSessionData))
 
-    nock(fleecaBaseUrl)
-      .post(`/gateway_token/${token}`, { token })
-      .reply(200, mockValidationResponse)
+    nock(fleecaBaseUrl).post(`/gateway_token/${token}`).reply(200, mockValidationResponse)
 
     await assert.rejects(
       () => paymentService.processPaymentCallback(token, mockSession),
@@ -259,12 +260,10 @@ test.group('Payment Service', (group) => {
       token_created_at: new Date().toISOString(),
     }
 
-    mockSession.get.returns('encrypted-session-data')
-    sinon.stub(paymentService as any, 'getSessionData').resolves(mockSessionData)
+    mockSession.get.withArgs('payment_data').returns('encrypted-session-data')
+    sandbox.stub(encryption, 'decrypt').returns(JSON.stringify(mockSessionData))
 
-    nock(fleecaBaseUrl)
-      .post(`/gateway_token/${token}`, { token })
-      .reply(200, mockValidationResponse)
+    nock(fleecaBaseUrl).post(`/gateway_token/${token}`).reply(200, mockValidationResponse)
 
     await assert.rejects(
       () => paymentService.processPaymentCallback(token, mockSession),
@@ -297,12 +296,10 @@ test.group('Payment Service', (group) => {
       token_created_at: new Date().toISOString(),
     }
 
-    mockSession.get.returns('encrypted-session-data')
-    sinon.stub(paymentService as any, 'getSessionData').resolves(mockSessionData)
+    mockSession.get.withArgs('payment_data').returns('encrypted-session-data')
+    sandbox.stub(encryption, 'decrypt').returns(JSON.stringify(mockSessionData))
 
-    nock(fleecaBaseUrl)
-      .post(`/gateway_token/${token}`, { token })
-      .reply(200, mockValidationResponse)
+    nock(fleecaBaseUrl).post(`/gateway_token/${token}`).reply(200, mockValidationResponse)
 
     await assert.rejects(
       () => paymentService.processPaymentCallback(token, mockSession),
@@ -324,9 +321,10 @@ test.group('Payment Service', (group) => {
     }
 
     mockSession.get.returns('encrypted-session-data')
-    sinon.stub(paymentService as any, 'getSessionData').resolves(mockSessionData)
+    mockSession.get.withArgs('payment_data').returns('encrypted-session-data')
+    sandbox.stub(encryption, 'decrypt').returns(JSON.stringify(mockSessionData))
 
-    nock(fleecaBaseUrl).post(`/gateway_token/${token}`, { token }).reply(404, { message: '' })
+    nock(fleecaBaseUrl).post(`/gateway_token/${token}`).reply(404, { message: '' })
 
     await assert.rejects(
       () => paymentService.processPaymentCallback(token, mockSession),
@@ -339,8 +337,7 @@ test.group('Payment Service', (group) => {
   test('should handle network timeout', async ({ assert }) => {
     const token = 'valid-token'
 
-    ;(paymentService as any).RETRY_DELAY_MS = 0
-    ;(paymentService as any).MAX_RETRIES = 3
+    paymentService = new PaymentService({ maxRetries: 3, retryDelayMs: 0 })
 
     const mockSessionData = {
       sessionId: 'test-session',
@@ -351,11 +348,11 @@ test.group('Payment Service', (group) => {
       expiresAt: new Date(Date.now() + 3600000),
     }
 
-    mockSession.get.returns('encrypted-session-data')
-    sinon.stub(paymentService as any, 'getSessionData').resolves(mockSessionData)
+    mockSession.get.withArgs('payment_data').returns('encrypted-session-data')
+    sandbox.stub(encryption, 'decrypt').returns(JSON.stringify(mockSessionData))
 
     nock(fleecaBaseUrl)
-      .post(`/gateway_token/${token}`, { token })
+      .post(`/gateway_token/${token}`)
       .times(3)
       .replyWithError({ code: 'ETIMEDOUT' })
 

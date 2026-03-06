@@ -7,9 +7,13 @@ import sinon from 'sinon'
 import { DiscordTokenService } from '#discord/services/discord_token_service'
 
 test.group('Profile - Show', (group) => {
+  let discordTokenService: DiscordTokenService
+
   group.each.setup(() => testUtils.db().truncate())
 
   group.setup(() => {
+    discordTokenService = new DiscordTokenService()
+
     if (!nock.isActive()) {
       nock.activate()
     }
@@ -61,7 +65,7 @@ test.group('Profile - Show', (group) => {
       accessTokenExpiresAt: DateTime.now().plus({ hours: 1 }),
     })
 
-    sinon.stub(DiscordTokenService, 'getValidAccessToken').resolves('valid_token')
+    sinon.stub(discordTokenService, 'getValidAccessToken').resolves('valid_token')
 
     nock('https://discord.com/api')
       .get(`/users/@me`)

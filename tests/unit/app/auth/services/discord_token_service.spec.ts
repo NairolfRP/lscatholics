@@ -7,9 +7,13 @@ import { HttpContextFactory } from '@adonisjs/core/factories/http'
 import testUtils from '@adonisjs/core/services/test_utils'
 
 test.group('DiscordTokenService - getValidAccessToken', (group) => {
+  let discordTokenService: DiscordTokenService
+
   group.each.setup(() => testUtils.db().truncate())
 
   group.setup(() => {
+    discordTokenService = new DiscordTokenService()
+
     if (!nock.isActive()) {
       nock.activate()
     }
@@ -32,7 +36,7 @@ test.group('DiscordTokenService - getValidAccessToken', (group) => {
     })
 
     const ctx = new HttpContextFactory().create()
-    const token = await DiscordTokenService.getValidAccessToken(ctx, account)
+    const token = await discordTokenService.getValidAccessToken(ctx, account)
 
     assert.equal(token, 'valid_token')
   })
@@ -65,7 +69,7 @@ test.group('DiscordTokenService - getValidAccessToken', (group) => {
       })
 
     const ctx = new HttpContextFactory().create()
-    const token = await DiscordTokenService.getValidAccessToken(ctx, account)
+    const token = await discordTokenService.getValidAccessToken(ctx, account)
 
     assert.equal(token, 'new_access_token')
 
@@ -103,7 +107,7 @@ test.group('DiscordTokenService - getValidAccessToken', (group) => {
       })
 
     const ctx = new HttpContextFactory().create()
-    const token = await DiscordTokenService.getValidAccessToken(ctx, account)
+    const token = await discordTokenService.getValidAccessToken(ctx, account)
 
     assert.equal(token, 'refreshed_token')
     assert.isTrue(nock.isDone())
@@ -133,7 +137,7 @@ test.group('DiscordTokenService - getValidAccessToken', (group) => {
       })
 
     const ctx = new HttpContextFactory().create()
-    const token = await DiscordTokenService.getValidAccessToken(ctx, account)
+    const token = await discordTokenService.getValidAccessToken(ctx, account)
 
     assert.isNull(token)
     assert.isTrue(nock.isDone())
@@ -151,7 +155,7 @@ test.group('DiscordTokenService - getValidAccessToken', (group) => {
     })
 
     const ctx = new HttpContextFactory().create()
-    const token = await DiscordTokenService.getValidAccessToken(ctx, account)
+    const token = await discordTokenService.getValidAccessToken(ctx, account)
 
     assert.isNull(token)
   })
@@ -170,7 +174,7 @@ test.group('DiscordTokenService - getValidAccessToken', (group) => {
     nock('https://discord.com/api/v10').post('/oauth2/token').reply(500)
 
     const ctx = new HttpContextFactory().create()
-    const token = await DiscordTokenService.getValidAccessToken(ctx, account)
+    const token = await discordTokenService.getValidAccessToken(ctx, account)
 
     assert.isNull(token)
     assert.isTrue(nock.isDone())
@@ -178,7 +182,13 @@ test.group('DiscordTokenService - getValidAccessToken', (group) => {
 })
 
 test.group('DiscordTokenService - refreshAccessToken', (group) => {
-  group.each.setup(() => testUtils.db().truncate())
+  let discordTokenService: DiscordTokenService
+
+  group.each.setup(async () => {
+    await testUtils.db().truncate()
+
+    discordTokenService = new DiscordTokenService()
+  })
 
   group.setup(() => {
     if (!nock.isActive()) {
@@ -219,7 +229,7 @@ test.group('DiscordTokenService - refreshAccessToken', (group) => {
       })
 
     const ctx = new HttpContextFactory().create()
-    const token = await DiscordTokenService.refreshAccessToken(ctx, account)
+    const token = await discordTokenService.refreshAccessToken(ctx, account)
 
     assert.equal(token, 'new_access_token')
 

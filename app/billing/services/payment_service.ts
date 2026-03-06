@@ -14,8 +14,19 @@ import type { HeadersInit } from '#shared/types/utils.types'
 import type { HttpContext } from '@adonisjs/core/http'
 
 export class PaymentService {
-  readonly #MAX_RETRIES = 3
-  readonly #RETRY_DELAY_MS = 1000
+  readonly #MAX_RETRIES: number = 3
+  readonly #RETRY_DELAY_MS: number = 1000
+
+  constructor({
+    maxRetries = 3,
+    retryDelayMs = 1000,
+  }: {
+    maxRetries?: number
+    retryDelayMs?: number
+  } = {}) {
+    this.#MAX_RETRIES = maxRetries
+    this.#RETRY_DELAY_MS = retryDelayMs
+  }
 
   /**
    * Generate Fleeca payment URL with encrypted session data
