@@ -6,35 +6,39 @@ type CacheEntry<T> = {
 }
 
 export class TtlCache<T> {
-  private readonly store = new Map<string, CacheEntry<T>>()
-  private cleanupTimer?: NodeJS.Timeout
+  readonly #store = new Map<string, CacheEntry<T>>()
+  #cleanupTimer?: NodeJS.Timeout
 
-  constructor(
-    private readonly ttlMs: number,
-    private readonly cleanupIntervalMs: number = 60_000,
-    private readonly label: string = 'TtlCache'
-  ) {
-    this.startCleanup()
+  readonly #ttlMs: number
+  readonly #cleanupIntervalMs: number
+  readonly #label: string
+
+  constructor(ttlMs: number, cleanupIntervalMs: number = 60_000, label: string = 'TtlCache') {
+    this.#ttlMs = ttlMs
+    this.#cleanupIntervalMs = cleanupIntervalMs
+    this.#label = label
+
+    this.#startCleanup()
   }
 
   get(key: string): T | undefined {
-    const entry = this.store.get(key)
+    const entry = this.#store.get(key)
     if (!entry) return undefined
 
     if (Date.now() > entry.expiresAt) {
-      this.store.delete(key)
+      this.#store.delete(key)
       return undefined
     }
 
     return entry.data
   }
 
-  set(key: string, data: T, ttlMs = this.ttlMs): void {
-    this.store.set(key, { data, expiresAt: Date.now() + ttlMs })
+  set(key: string, data: T, ttlMs = this.#ttlMs): void {
+    this.#store.set(key, { data, expiresAt: Date.now() + ttlMs })
   }
 
   delete(key: string): boolean {
-    return this.store.delete(key)
+    return this.#store.delete(key)
   }
 
   has(key: string): boolean {
@@ -59,29 +63,29 @@ export class TtlCache<T> {
     const now = Date.now()
     let deleted = 0
 
-    for (const [key, entry] of this.store) {
+    for (const [key, entry] of this.#store) {
       if (now > entry.expiresAt) {
-        this.store.delete(key)
+        this.#store.delete(key)
         deleted++
       }
     }
 
     if (deleted > 0) {
-      logger.debug(`[${this.label}] cleanup: ${deleted} expired entries removed`)
+      logger.debug(`[${this.#label}] cleanup: ${deleted} expired entries removed`)
     }
   }
 
   stop(): void {
-    clearInterval(this.cleanupTimer)
-    this.cleanupTimer = undefined
+    clearInterval(this.#cleanupTimer)
+    this.#cleanupTimer = undefined
   }
 
   clear(): void {
-    this.store.clear()
+    this.#store.clear()
   }
 
   get size(): number {
-    return this.store.size
+    return this.#store.size
   }
 
   stats(): { total: number; valid: number; expired: number } {
@@ -89,16 +93,16 @@ export class TtlCache<T> {
     let valid = 0
     let expired = 0
 
-    for (const entry of this.store.values()) {
+    for (const entry of this.#store.values()) {
       if (now <= entry.expiresAt) valid++
       else expired++
     }
 
-    return { total: this.store.size, valid, expired }
+    return { total: this.#store.size, valid, expired }
   }
 
-  private startCleanup(): void {
-    this.cleanupTimer = setInterval(() => this.cleanup(), this.cleanupIntervalMs)
-    this.cleanupTimer.unref?.()
+  #startCleanup(): void {
+    this.#cleanupTimer = setInterval(() => this.cleanup(), this.#cleanupIntervalMs)
+    this.#cleanupTimer.unref?.()
   }
 }

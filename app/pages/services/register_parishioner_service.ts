@@ -13,7 +13,7 @@ import { DiscordWebhookService } from '#discord/services/discord_webhook_service
 import { getDistrictLabelById } from '#shared/constants/districts.constants'
 
 export class RegisterParishionerService {
-  private static formatFamilyMembers(members: RegisterParishionerPayload['familyMembers']): string {
+  #formatFamilyMembers(members: RegisterParishionerPayload['familyMembers']): string {
     if (!members || members.length === 0) return 'Aucun membre'
 
     return members
@@ -25,7 +25,7 @@ export class RegisterParishionerService {
       .join('\n')
   }
 
-  private static formatOOCInfo(sacraments?: string[], additionalInfo?: string): string | null {
+  #formatOOCInfo(sacraments?: string[], additionalInfo?: string): string | null {
     if (!sacraments?.length && !additionalInfo) return null
 
     let content = ''
@@ -48,7 +48,7 @@ export class RegisterParishionerService {
     return content
   }
 
-  private static getParishName(parishId: number): string {
+  #getParishName(parishId: number): string {
     const parishes: Record<number, string> = {
       1: 'Cathédrale Notre-Dame-des-Saints',
       2: 'Église du Bon Pasteur',
@@ -57,7 +57,7 @@ export class RegisterParishionerService {
     return parishes[parishId] || 'N/A'
   }
 
-  static async register(
+  async register(
     webhookUrl: string | undefined,
     payload: RegisterParishionerPayload
   ): Promise<{ success: boolean; error?: string }> {
@@ -141,7 +141,7 @@ export class RegisterParishionerService {
           },
           {
             name: 'Paroisse',
-            value: this.getParishName(payload.parish),
+            value: this.#getParishName(payload.parish),
           },
         ],
         timestamp: new Date().toISOString(),
@@ -157,11 +157,11 @@ export class RegisterParishionerService {
       if (payload.familyMembers && payload.familyMembers.length > 0) {
         discordWebhook.addEmbed({
           title: `Membres du foyer (${payload.familyMembers.length})`,
-          description: this.formatFamilyMembers(payload.familyMembers),
+          description: this.#formatFamilyMembers(payload.familyMembers),
         })
       }
 
-      const oocContent = this.formatOOCInfo(
+      const oocContent = this.#formatOOCInfo(
         payload.characterSacraments,
         payload.oocAdditionalInformation
       )

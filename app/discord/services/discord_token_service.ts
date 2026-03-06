@@ -12,7 +12,7 @@ type DiscordTokenResponse = {
 }
 
 export class DiscordTokenService {
-  static async getValidAccessToken(ctx: HttpContext, account: Account): Promise<string | null> {
+  async getValidAccessToken(ctx: HttpContext, account: Account): Promise<string | null> {
     const expiresAt = account.accessTokenExpiresAt
     const needsRefresh = !expiresAt || expiresAt.diffNow('minutes').minutes < 5
 
@@ -23,10 +23,7 @@ export class DiscordTokenService {
     return await this.refreshAccessToken(ctx, account)
   }
 
-  static async refreshAccessToken(
-    { logger }: HttpContext,
-    account: Account
-  ): Promise<string | null> {
+  async refreshAccessToken({ logger }: HttpContext, account: Account): Promise<string | null> {
     try {
       const refreshToken = account.getDecryptedRefreshToken()
 

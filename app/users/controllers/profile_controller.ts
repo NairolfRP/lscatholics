@@ -1,7 +1,11 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import { DiscordTokenService } from '#discord/services/discord_token_service'
+import { inject } from '@adonisjs/core'
 
+@inject()
 export default class ProfileController {
+  constructor(protected discordTokenService: DiscordTokenService) {}
+
   async show(ctx: HttpContext) {
     const { inertia, auth, ally, logger } = ctx
 
@@ -18,7 +22,10 @@ export default class ProfileController {
 
       if (discordAccount) {
         try {
-          const accessToken = await DiscordTokenService.getValidAccessToken(ctx, discordAccount)
+          const accessToken = await this.discordTokenService.getValidAccessToken(
+            ctx,
+            discordAccount
+          )
 
           if (accessToken) {
             const allyUser = await ally.use('discord').userFromToken(accessToken)

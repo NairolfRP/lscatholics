@@ -5,13 +5,9 @@ import app from '@adonisjs/core/services/app'
 
 @inject()
 export class FactionService {
-  private readonly BASE_URL = 'https://ucp-fr.gta.world'
+  readonly #BASE_URL = 'https://ucp-fr.gta.world'
 
   constructor(protected ctx: HttpContext) {}
-
-  private async getFactionCacheService() {
-    return await app.container.make('factionCache')
-  }
 
   async getCharacterFactions(characterId: number): Promise<CharacterFaction | null> {
     try {
@@ -31,50 +27,21 @@ export class FactionService {
     const userId = this.ctx.auth.user.id.toString()
 
     try {
-      const factionCache = await this.getFactionCacheService()
+      const factionCache = await this.#getFactionCacheService()
 
       if (forceRefresh) {
-        return await factionCache.forceRefresh(userId, () => this.fetchFactionsFromAPI())
+        return await factionCache.forceRefresh(userId, () => this.#fetchFactionsFromAPI())
       }
 
-      return await factionCache.getCachedUserFactions(userId, () => this.fetchFactionsFromAPI())
+      return await factionCache.getCachedUserFactions(userId, () => this.#fetchFactionsFromAPI())
     } catch (error) {
       this.ctx.logger.error({ err: error }, `Failed to get factions for user ${userId}`)
       throw error
     }
   }
 
-  /*async isCurrentCharacterAdmin(): Promise<boolean> {
-    const currentCharacter = await this.ctx.characters.getCurrentCharacter()
-
-    if (!currentCharacter) {
-      return false
-    }
-
-    const faction = await this.getCharacterFactionsForSecurity(currentCharacter.id)
-
-    return faction ? this.isAdminFaction(faction.factionId) : false
-  }*/
-
-  private async getCharacterFactionsForSecurity(
-    characterId: number
-  ): Promise<CharacterFaction | null> {
-    if (!this.ctx.auth.user) {
-      return null
-    }
-
-    const userId = this.ctx.auth.user.id.toString()
-    const factionCache = await this.getFactionCacheService()
-
-    const allFactions = await factionCache.getCachedUserFactions(userId, () =>
-      this.fetchFactionsFromAPI()
-    )
-
-    return allFactions.find((f) => f.characterId === characterId) || null
-  }
-
   async characterHasFaction(characterId: number, factionId: number): Promise<boolean> {
-    const faction = await this.getCharacterFactionsForSecurity(characterId)
+    const faction = await this.#getCharacterFactionsForSecurity(characterId)
     return faction?.factionId === factionId
   }
 
@@ -83,7 +50,7 @@ export class FactionService {
     factionId: number,
     minRank: number
   ): Promise<boolean> {
-    const faction = await this.getCharacterFactionsForSecurity(characterId)
+    const faction = await this.#getCharacterFactionsForSecurity(characterId)
 
     if (!faction || faction.factionId !== factionId) {
       return false
@@ -112,7 +79,59 @@ export class FactionService {
     return this.getAllUserFactions(true)
   }
 
-  private async fetchFactionsFromAPI(): Promise<CharacterFaction[]> {
+  async invalidateCache(): Promise<void> {
+    if (this.ctx.auth.user) {
+      const factionCache = await this.#getFactionCacheService()
+      factionCache.invalidateUserFactions(this.ctx.auth.user.id.toString())
+    }
+  }
+
+  /*async isCurrentCharacterAdmin(): Promise<boolean> {
+  const currentCharacter = await this.ctx.characters.getCurrentCharacter()
+
+  if (!currentCharacter) {
+    return false
+  }
+
+  const faction = await this.#getCharacterFactionsForSecurity(currentCharacter.id)
+
+  return faction ? this.isAdminFaction(faction.factionId) : false
+}*/
+
+  async isCacheValid(): Promise<boolean> {
+    if (!this.ctx.auth.user) {
+      return false
+    }
+
+    const factionCache = await this.#getFactionCacheService()
+    return factionCache.isCacheValid(this.ctx.auth.user.id.toString())
+  }
+
+  async getCacheStats() {
+    const factionCache = await this.#getFactionCacheService()
+    return factionCache.getStats()
+  }
+
+  async #getFactionCacheService() {
+    return await app.container.make('factionCache')
+  }
+
+  async #getCharacterFactionsForSecurity(characterId: number): Promise<CharacterFaction | null> {
+    if (!this.ctx.auth.user) {
+      return null
+    }
+
+    const userId = this.ctx.auth.user.id.toString()
+    const factionCache = await this.#getFactionCacheService()
+
+    const allFactions = await factionCache.getCachedUserFactions(userId, () =>
+      this.#fetchFactionsFromAPI()
+    )
+
+    return allFactions.find((f) => f.characterId === characterId) || null
+  }
+
+  async #fetchFactionsFromAPI(): Promise<CharacterFaction[]> {
     const user = this.ctx.auth.user!
 
     await user.loadOnce('accounts')
@@ -131,7 +150,7 @@ export class FactionService {
       throw new Error('No access token available')
     }
 
-    const response = await fetch(`${this.BASE_URL}/api/factions`, {
+    const response = await fetch(`${this.#BASE_URL}/api/factions`, {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${accessToken}`,
@@ -148,10 +167,10 @@ export class FactionService {
       data: CharacterFactionsResponse
     }
 
-    return this.remapAPIResponse(responseBody.data)
+    return this.#remapAPIResponse(responseBody.data)
   }
 
-  private remapAPIResponse(response: CharacterFactionsResponse): CharacterFaction[] {
+  #remapAPIResponse(response: CharacterFactionsResponse): CharacterFaction[] {
     const newData: CharacterFaction[] = []
     for (const [key, value] of Object.entries(response)) {
       newData.push({
@@ -163,26 +182,5 @@ export class FactionService {
       })
     }
     return newData
-  }
-
-  async invalidateCache(): Promise<void> {
-    if (this.ctx.auth.user) {
-      const factionCache = await this.getFactionCacheService()
-      factionCache.invalidateUserFactions(this.ctx.auth.user.id.toString())
-    }
-  }
-
-  async isCacheValid(): Promise<boolean> {
-    if (!this.ctx.auth.user) {
-      return false
-    }
-
-    const factionCache = await this.getFactionCacheService()
-    return factionCache.isCacheValid(this.ctx.auth.user.id.toString())
-  }
-
-  async getCacheStats() {
-    const factionCache = await this.getFactionCacheService()
-    return factionCache.getStats()
   }
 }
