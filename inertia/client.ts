@@ -11,17 +11,15 @@ export const client = createTuyau({
 
 export const urlFor = client.urlFor
 
-/**
- * Temporary utilities - waiting for the ‘has’ and ‘current’ properties to be added back to Tuyau
- */
-export const hasRoute = (route: string) => {
-  try {
-    return route in registry.routes
-  } catch {
-    return false
+export const currentRoute = () => client.current()
+
+export const isCurrentRoute = (
+  routeName: keyof typeof registry.routes,
+  options?: {
+    params?: Record<string, any>
+    query?: Record<string, any>
   }
-}
-export const isCurrentRoute = (routeName: string) => {
+) => {
   const page = usePage()
   const current = page.props.currentRoute as keyof typeof registry.routes | undefined
 
@@ -40,5 +38,9 @@ export const isCurrentRoute = (routeName: string) => {
     return currentPattern.startsWith(prefix)
   }
 
-  return current === routeName
+  return client.current(routeName, options)
+}
+
+export const hasRoute = (routeName: string) => {
+  return client.has(routeName as any)
 }

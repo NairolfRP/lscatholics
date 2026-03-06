@@ -118,7 +118,7 @@
     "@libsql/sqlite3": "^0.3.1",
     "@tanstack/vue-query": "^5.92.9",
     "@tanstack/vue-table": "^8.21.3",
-    "@tuyau/core": "^1.0.0",
+    "@tuyau/core": "^1.1.0",
     "@vee-validate/zod": "^4.15.1",
     "@vinejs/vine": "^4.3.0",
     "@vue/server-renderer": "^3.5.29",
