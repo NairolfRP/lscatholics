@@ -201,8 +201,14 @@ export class PaymentService {
     }
   }
 
-  #storeSessionData(session: any, sessionData: PaymentSessionData): void {
-    const encryptedData = encryption.encrypt(JSON.stringify(sessionData))
+  #storeSessionData(session: HttpContext['session'], sessionData: PaymentSessionData): void {
+    const serializable = {
+      ...sessionData,
+      createdAt: sessionData.createdAt.toISOString(),
+      expiresAt: sessionData.expiresAt.toISOString(),
+    }
+
+    const encryptedData = encryption.encrypt(JSON.stringify(serializable))
     session.put('payment_data', encryptedData)
   }
 
