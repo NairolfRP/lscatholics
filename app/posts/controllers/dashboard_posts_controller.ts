@@ -95,7 +95,7 @@ export default class DashboardPostsController {
     await article.loadOnce('author')
 
     return inertia.render('dashboard/articles/edit', {
-      article: PostTransformer.transform(article).useVariant('allFields'),
+      post: PostTransformer.transform(article).useVariant('allFields'),
     })
   }
 
