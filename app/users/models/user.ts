@@ -41,28 +41,10 @@ export default class User extends UserSchema {
       return this.$extras.permissionsCache
     }
 
-    if (this.$preloaded.roles) {
-      const permissions = new Set<string>()
-
-      for (const role of this.roles) {
-        if (role.$preloaded.permissions) {
-          for (const permission of role.permissions) {
-            permissions.add(permission.slug)
-          }
-        }
-      }
-
-      if (permissions.size > 0) {
-        this.$extras.permissionsCache = Array.from(permissions)
-        return this.$extras.permissionsCache
-      }
-    }
-
-    const roles = await (this as User).related('roles').query().preload('permissions')
+    const rolesWithPermissions = await this.#loadRolesWithPermissions()
 
     const permissions = new Set<string>()
-
-    for (const role of roles) {
+    for (const role of rolesWithPermissions) {
       for (const permission of role.permissions) {
         permissions.add(permission.slug)
       }
@@ -95,5 +77,21 @@ export default class User extends UserSchema {
   async syncRoles(roleIds: number[]): Promise<void> {
     await (this as User).related('roles').sync(roleIds)
     this.clearPermissionsCache()
+  }
+
+  /**
+   * Returns roles with their permissions
+   * Uses the existing preload only if permissions are already loaded for each role.
+   * Otherwise, reloads from the database.
+   */
+  async #loadRolesWithPermissions(): Promise<Role[]> {
+    if (this.$preloaded.roles) {
+      const rolesHavePermissions = this.roles.every((role) => role.$preloaded.permissions)
+      if (rolesHavePermissions) {
+        return this.roles
+      }
+    }
+
+    return (this as User).related('roles').query().preload('permissions')
   }
 }
