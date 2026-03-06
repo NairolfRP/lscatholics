@@ -21,7 +21,9 @@ export default class DashboardPostsController {
       page = 1
     }
 
-    let query = Post.query().select('id', 'title', 'createdAt', 'status', 'authorId')
+    let query = Post.query()
+      .select('id', 'title', 'createdAt', 'status', 'authorId')
+      .preload('author')
 
     if (search) {
       query = query.where((builder) => {
