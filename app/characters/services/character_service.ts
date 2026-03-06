@@ -4,6 +4,7 @@ import type { Character, CurrentCharacter } from '#characters/types/character'
 import { GTAWorldCharacter } from '@gtaw-oauth-providers/adonisjs-ally'
 import app from '@adonisjs/core/services/app'
 import type User from '#users/models/user'
+import { createCharacterSessionValidator } from '#characters/validators/character'
 
 @inject()
 export default class CharacterService {
@@ -120,36 +121,38 @@ export default class CharacterService {
   }
 
   async getCurrentCharacter(): Promise<Character | null> {
-    const currentCharater = this.ctx.session.get(
-      this.CURRENT_CHARACTER_SESSION_KEY
-    ) as CurrentCharacter | null
+    const raw = this.ctx.session.get(this.CURRENT_CHARACTER_SESSION_KEY)
 
-    if (!currentCharater) {
+    try {
+      const currentCharater = await createCharacterSessionValidator.validate(raw)
+
+      if (this.isStale(currentCharater.selectedAt)) {
+        const characters = await this.getUserCharacters()
+
+        if (!characters) {
+          this.ctx.auth.use('web').logout()
+          return null
+        }
+
+        const newCurrentCharacter = characters.at(0) as Character
+
+        if (
+          newCurrentCharacter.id !== currentCharater.id &&
+          newCurrentCharacter.firstname !== currentCharater.data.firstname &&
+          newCurrentCharacter.lastname !== currentCharater.data.lastname
+        ) {
+          this.setCurrentCharacter(newCurrentCharacter)
+        }
+
+        return newCurrentCharacter
+      }
+
+      return currentCharater.data
+    } catch (err) {
+      this.ctx.logger.warn({ err }, 'Invalid session character data, clearing')
+      this.ctx.session.forget(this.CURRENT_CHARACTER_SESSION_KEY)
       return null
     }
-
-    if (this.isStale(currentCharater.selectedAt)) {
-      const characters = await this.getUserCharacters()
-
-      if (!characters) {
-        this.ctx.auth.use('web').logout()
-        return null
-      }
-
-      const newCurrentCharacter = characters.at(0) as Character
-
-      if (
-        newCurrentCharacter.id !== currentCharater.id &&
-        newCurrentCharacter.firstname !== currentCharater.data.firstname &&
-        newCurrentCharacter.lastname !== currentCharater.data.lastname
-      ) {
-        this.setCurrentCharacter(newCurrentCharacter)
-      }
-
-      return newCurrentCharacter
-    }
-
-    return currentCharater.data
   }
 
   async updateCurrentCharacter(updatedCharacrer: Character) {
