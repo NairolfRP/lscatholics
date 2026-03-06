@@ -1,31 +1,31 @@
 <template>
-  <Head :title="article.title" />
+  <Head :title="post.title" />
 
   <div class="space-y-6">
     <div class="flex items-center justify-between">
       <div class="flex items-center gap-4">
         <Button variant="ghost" size="icon" as-child>
-          <Link :href="urlFor('dashboard.dashboard_articles.index')">
+          <Link :href="urlFor('dashboard.dashboard_posts.index')">
             <ArrowLeft class="h-4 w-4" />
           </Link>
         </Button>
         <div>
-          <h1 class="text-3xl font-bold tracking-tight">{{ article.title }}</h1>
+          <h1 class="text-3xl font-bold tracking-tight">{{ post.title }}</h1>
           <p class="text-gray-500 dark:text-gray-400">
-            Par {{ article.author?.name || 'un auteur inconnu' }} ·
-            {{ article.createdAt ? formatDate(article.createdAt) : '' }}
+            Par {{ post.author?.name || 'un auteur inconnu' }} ·
+            {{ post.createdAt ? formatDate(post.createdAt) : '' }}
           </p>
         </div>
       </div>
       <div class="flex gap-2">
         <Button variant="outline" as-child>
-          <Link :href="urlFor('news.single', { slug: article.slug })" target="_blank">
+          <Link :href="urlFor('news.single', { slug: post.slug })" target="_blank">
             <Eye class="mr-2 h-4 w-4" />
             Voir
           </Link>
         </Button>
         <Button as-child>
-          <Link :href="urlFor('dashboard.dashboard_articles.edit', { id: article.id })">
+          <Link :href="urlFor('dashboard.dashboard_posts.edit', { id: post.id })">
             <Edit class="mr-2 h-4 w-4" />
             Modifier
           </Link>
@@ -39,31 +39,24 @@
           <CardHeader>
             <div class="flex items-center justify-between">
               <CardTitle>Contenu</CardTitle>
-              <Badge :variant="article.status === 'published' ? 'default' : 'secondary'">
-                {{ article.status === 'published' ? 'Publié' : 'Brouillon' }}
+              <Badge :variant="post.status === 'published' ? 'default' : 'secondary'">
+                {{ post.status === 'published' ? 'Publié' : 'Brouillon' }}
               </Badge>
             </div>
           </CardHeader>
           <CardContent class="space-y-4">
-            <div
-              v-if="article.coverImageUrl"
-              class="aspect-video w-full overflow-hidden rounded-lg"
-            >
-              <img
-                :src="article.coverImageUrl"
-                :alt="article.title"
-                class="h-full w-full object-cover"
-              />
+            <div v-if="post.coverImageUrl" class="aspect-video w-full overflow-hidden rounded-lg">
+              <img :src="post.coverImageUrl" :alt="post.title" class="h-full w-full object-cover" />
             </div>
 
-            <div v-if="article.excerpt" class="rounded-lg bg-gray-50 p-4 dark:bg-gray-800">
+            <div v-if="post.excerpt" class="rounded-lg bg-gray-50 p-4 dark:bg-gray-800">
               <p class="text-sm font-medium text-gray-700 dark:text-gray-300">
-                {{ article.excerpt }}
+                {{ post.excerpt }}
               </p>
             </div>
 
             <div class="prose prose-gray max-w-none dark:prose-invert">
-              <MarkdownContent :content="article.content" />
+              <MarkdownContent :content="post.content" />
             </div>
           </CardContent>
         </Card>
@@ -78,20 +71,20 @@
             <div>
               <p class="font-medium text-gray-500 dark:text-gray-400">URL</p>
               <code class="text-xs bg-gray-100 px-2 py-1 rounded dark:bg-gray-800">
-                {{ urlFor('news.single', { slug: article.slug }) }}
+                {{ urlFor('news.single', { slug: post.slug }) }}
               </code>
             </div>
             <div>
               <p class="font-medium text-gray-500 dark:text-gray-400">Auteur</p>
-              <p>{{ article.author?.name || 'Inconnu' }}</p>
+              <p>{{ post.author?.name || 'Inconnu' }}</p>
             </div>
             <div>
               <p class="font-medium text-gray-500 dark:text-gray-400">Créé le</p>
-              <p>{{ article.createdAt ? formatDate(article.createdAt) : 'Date inconnue' }}</p>
+              <p>{{ post.createdAt ? formatDate(post.createdAt) : 'Date inconnue' }}</p>
             </div>
             <div>
               <p class="font-medium text-gray-500 dark:text-gray-400">Modifié le</p>
-              <p>{{ article.updatedAt ? formatDate(article.updatedAt) : 'Jamais' }}</p>
+              <p>{{ post.updatedAt ? formatDate(post.updatedAt) : 'Jamais' }}</p>
             </div>
           </CardContent>
         </Card>
@@ -110,7 +103,7 @@ import { MarkdownContent } from '@/shared/components/ui/markdown'
 import type { Data } from '@generated/data'
 
 type PageProps = {
-  article: Data.Posts.Post.Variants['allFields']
+  post: Data.Posts.Post.Variants['allFields']
 }
 
 defineProps<PageProps>()

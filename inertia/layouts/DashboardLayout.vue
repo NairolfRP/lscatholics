@@ -176,7 +176,7 @@ const menuItems = computed(() =>
     {
       label: 'Articles',
       icon: FileText,
-      route: 'dashboard.dashboard_articles.index*' as const,
+      route: 'dashboard.dashboard_posts.index*' as const,
       permission: 'viewArticles',
     },
     {

@@ -38,7 +38,7 @@ import { FileText, Calendar, Users } from 'lucide-vue-next'
 
 interface Props {
   stats: {
-    articles: number
+    posts: number
     events: number
     users: number
   }
@@ -49,7 +49,7 @@ defineProps<Props>()
 const statsAttributes = [
   {
     label: 'Articles',
-    value: 'articles' as const,
+    value: 'posts' as const,
     icon: FileText,
     color: 'text-blue-600',
   },

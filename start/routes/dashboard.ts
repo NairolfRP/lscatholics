@@ -5,7 +5,7 @@ import { controllers } from '#generated/controllers'
 router
   .group(() => {
     router.get('/', [controllers.dashboard.Dashboard, 'index']).as('index')
-    router.resource('articles', controllers.posts.DashboardPosts).as('dashboard.articles')
+    router.resource('posts', controllers.posts.DashboardPosts).as('dashboard.posts')
     router
       .resource('events', controllers.scheduledEvents.DashboardScheduledEvents)
       .as('dashboard.events')

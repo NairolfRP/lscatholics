@@ -21,14 +21,14 @@ export interface ApiDefinition {
   profile: typeof routes['profile']
   dashboard: {
     index: typeof routes['dashboard.index']
-    dashboardArticles: {
-      index: typeof routes['dashboard.dashboard_articles.index']
-      create: typeof routes['dashboard.dashboard_articles.create']
-      store: typeof routes['dashboard.dashboard_articles.store']
-      show: typeof routes['dashboard.dashboard_articles.show']
-      edit: typeof routes['dashboard.dashboard_articles.edit']
-      update: typeof routes['dashboard.dashboard_articles.update']
-      destroy: typeof routes['dashboard.dashboard_articles.destroy']
+    dashboardPosts: {
+      index: typeof routes['dashboard.dashboard_posts.index']
+      create: typeof routes['dashboard.dashboard_posts.create']
+      store: typeof routes['dashboard.dashboard_posts.store']
+      show: typeof routes['dashboard.dashboard_posts.show']
+      edit: typeof routes['dashboard.dashboard_posts.edit']
+      update: typeof routes['dashboard.dashboard_posts.update']
+      destroy: typeof routes['dashboard.dashboard_posts.destroy']
     }
     dashboardEvents: {
       index: typeof routes['dashboard.dashboard_events.index']

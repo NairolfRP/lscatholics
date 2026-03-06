@@ -173,12 +173,12 @@
 
           <div v-else class="grid md:grid-cols-3 gap-8 items-stretch">
             <ArticleCard
-              v-for="article in posts.data"
-              :key="`home-recent-post-${article.id}`"
-              :title="article.title"
-              :slug="article.slug"
-              :category="article.category || undefined"
-              :published-at="article.publishedAt || ''"
+              v-for="post in posts.data"
+              :key="`home-recent-post-${post.id}`"
+              :title="post.title"
+              :slug="post.slug"
+              :category="post.category || undefined"
+              :published-at="post.publishedAt || ''"
               class="group"
             />
           </div>

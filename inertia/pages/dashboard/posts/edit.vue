@@ -4,7 +4,7 @@
   <div class="space-y-6">
     <div class="flex items-center gap-4">
       <Button variant="ghost" size="icon" as-child>
-        <Link :href="urlFor('dashboard.dashboard_articles.index')">
+        <Link :href="urlFor('dashboard.dashboard_posts.index')">
           <ArrowLeft class="h-4 w-4" />
         </Link>
       </Button>

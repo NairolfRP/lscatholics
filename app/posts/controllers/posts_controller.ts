@@ -67,14 +67,14 @@ export default class PostsController {
       }
 
       return inertia.render('news/all', {
-        articles: PostTransformer.paginate(data.all(), data.getMeta()).useVariant('publicList'),
+        posts: PostTransformer.paginate(data.all(), data.getMeta()).useVariant('publicList'),
         selectedCategory: category ?? '',
         categories,
         error: false,
       })
     } catch (e) {
       return inertia.render('news/all', {
-        articles: {
+        posts: {
           metadata: {
             total: 0,
             perPage: 0,

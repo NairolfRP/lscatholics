@@ -139,7 +139,7 @@
                 Mettre à jour
               </Button>
               <Button type="button" variant="outline" as-child>
-                <Link :href="urlFor('dashboard.dashboard_articles.index')"> Annuler </Link>
+                <Link :href="urlFor('dashboard.dashboard_posts.index')"> Annuler </Link>
               </Button>
             </div>
           </CardContent>
@@ -232,9 +232,9 @@ const form = useForm({
 })
 
 const onSubmit = form.handleSubmit((values) => {
-  if (!hasRoute('dashboard.dashboard_articles.update')) return
+  if (!hasRoute('dashboard.dashboard_posts.update')) return
 
-  router.put(urlFor('dashboard.dashboard_articles.update', { id: props.post.id }), values, {
+  router.put(urlFor('dashboard.dashboard_posts.update', { id: props.post.id }), values, {
     preserveScroll: true,
     preserveState: true,
     onError(err) {

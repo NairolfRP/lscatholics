@@ -13,10 +13,6 @@ declare module '@adonisjs/inertia/types' {
     'archbishop': ExtractProps<(typeof import('../../inertia/pages/archbishop.vue'))['default']>
     'catholic-charities': ExtractProps<(typeof import('../../inertia/pages/catholic-charities.vue'))['default']>
     'contact': ExtractProps<(typeof import('../../inertia/pages/contact.vue'))['default']>
-    'dashboard/articles/create': ExtractProps<(typeof import('../../inertia/pages/dashboard/articles/create.vue'))['default']>
-    'dashboard/articles/edit': ExtractProps<(typeof import('../../inertia/pages/dashboard/articles/edit.vue'))['default']>
-    'dashboard/articles/index': ExtractProps<(typeof import('../../inertia/pages/dashboard/articles/index.vue'))['default']>
-    'dashboard/articles/show': ExtractProps<(typeof import('../../inertia/pages/dashboard/articles/show.vue'))['default']>
     'dashboard/events/create': ExtractProps<(typeof import('../../inertia/pages/dashboard/events/create.vue'))['default']>
     'dashboard/events/edit': ExtractProps<(typeof import('../../inertia/pages/dashboard/events/edit.vue'))['default']>
     'dashboard/events/index': ExtractProps<(typeof import('../../inertia/pages/dashboard/events/index.vue'))['default']>
@@ -26,6 +22,10 @@ declare module '@adonisjs/inertia/types' {
     'dashboard/jobs/edit': ExtractProps<(typeof import('../../inertia/pages/dashboard/jobs/edit.vue'))['default']>
     'dashboard/jobs/index': ExtractProps<(typeof import('../../inertia/pages/dashboard/jobs/index.vue'))['default']>
     'dashboard/jobs/show': ExtractProps<(typeof import('../../inertia/pages/dashboard/jobs/show.vue'))['default']>
+    'dashboard/posts/create': ExtractProps<(typeof import('../../inertia/pages/dashboard/posts/create.vue'))['default']>
+    'dashboard/posts/edit': ExtractProps<(typeof import('../../inertia/pages/dashboard/posts/edit.vue'))['default']>
+    'dashboard/posts/index': ExtractProps<(typeof import('../../inertia/pages/dashboard/posts/index.vue'))['default']>
+    'dashboard/posts/show': ExtractProps<(typeof import('../../inertia/pages/dashboard/posts/show.vue'))['default']>
     'dashboard/users/edit': ExtractProps<(typeof import('../../inertia/pages/dashboard/users/edit.vue'))['default']>
     'dashboard/users/index': ExtractProps<(typeof import('../../inertia/pages/dashboard/users/index.vue'))['default']>
     'departments/all': ExtractProps<(typeof import('../../inertia/pages/departments/all.vue'))['default']>

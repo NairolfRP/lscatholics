@@ -44,7 +44,7 @@
         </Alert>
       </div>
       <div
-        v-else-if="!articles.data || articles.data.length === 0"
+        v-else-if="!posts.data || posts.data.length === 0"
         class="w-full text-center mx-auto font-medium italic"
       >
         Aucun article trouvé
@@ -52,12 +52,12 @@
       <div v-else class="md:container mx-auto px-4">
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           <ArticleCard
-            v-for="article in articles.data"
-            :key="article.id"
-            :title="article.title"
-            :slug="article.slug"
-            :category="article.category || undefined"
-            :published-at="article.publishedAt || undefined"
+            v-for="post in posts.data"
+            :key="post.id"
+            :title="post.title"
+            :slug="post.slug"
+            :category="post.category || undefined"
+            :published-at="post.publishedAt || undefined"
             class="group"
           />
         </div>
@@ -117,7 +117,7 @@ import ArticleCard from '@/shared/components/ArticleCard.vue'
 import type { Data } from '@generated/data'
 
 type PageProps = {
-  articles: {
+  posts: {
     data: Data.Posts.Post.Variants['publicList'][]
     metadata: {
       total: number
@@ -132,7 +132,7 @@ type PageProps = {
   error: boolean
 }
 
-const { selectedCategory, categories, articles } = defineProps<PageProps>()
+const { selectedCategory, categories, posts } = defineProps<PageProps>()
 
 const {
   total: totalItems,
@@ -140,7 +140,7 @@ const {
   currentPage: page,
   firstPage,
   lastPage,
-} = articles.metadata
+} = posts.metadata
 
 const handleCategoryChange = (categoryId?: string) => {
   router.get(
@@ -150,7 +150,7 @@ const handleCategoryChange = (categoryId?: string) => {
     },
     {
       preserveScroll: true,
-      only: ['articles', 'selectedCategory', 'error'],
+      only: ['posts', 'selectedCategory', 'error'],
     }
   )
 }
@@ -166,7 +166,7 @@ const handlePageChange = (newPage?: number) => {
     },
     {
       preserveScroll: true,
-      only: ['articles', 'selectedCategory', 'error'],
+      only: ['posts', 'selectedCategory', 'error'],
     }
   )
 }

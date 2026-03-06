@@ -132,7 +132,7 @@
                 {{ form.values.status === 'published' ? 'Publier' : 'Enregistrer' }}
               </Button>
               <Button type="button" variant="outline" as-child>
-                <Link :href="urlFor('dashboard.dashboard_articles.index')"> Annuler </Link>
+                <Link :href="urlFor('dashboard.dashboard_posts.index')"> Annuler </Link>
               </Button>
             </div>
           </CardContent>
@@ -205,9 +205,9 @@ const form = useForm({
 })
 
 const onSubmit = form.handleSubmit((values) => {
-  if (!hasRoute('dashboard.dashboard_articles.store')) return
+  if (!hasRoute('dashboard.dashboard_posts.store')) return
 
-  router.post(urlFor('dashboard.dashboard_articles.store'), values, {
+  router.post(urlFor('dashboard.dashboard_posts.store'), values, {
     preserveScroll: true,
     preserveState: true,
     onSuccess() {

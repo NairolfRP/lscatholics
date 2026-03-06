@@ -8,14 +8,14 @@ export default class HomeController {
       // @ts-ignore
       posts: inertia.optional(async () => {
         try {
-          const articles = await Post.query()
+          const posts = await Post.query()
             .select('id', 'slug', 'title', 'excerpt', 'cover_image_url', 'category', 'publishedAt')
             .where('status', 'published')
             .orderBy('publishedAt', 'desc')
             .limit(3)
 
           return {
-            data: PostTransformer.transform(articles).useVariant('homePosts'),
+            data: PostTransformer.transform(posts).useVariant('homePosts'),
           }
         } catch (error) {
           logger.error({ err: error }, 'Failed to get recent posts')

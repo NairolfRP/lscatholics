@@ -8,7 +8,7 @@
         <p class="text-gray-500 dark:text-gray-400">Gérez les articles de votre site</p>
       </div>
       <Button as-child>
-        <Link :href="urlFor('dashboard.dashboard_articles.create')">
+        <Link :href="urlFor('dashboard.dashboard_posts.create')">
           <Plus class="mr-2 h-4 w-4" />
           Nouvel article
         </Link>
@@ -18,11 +18,11 @@
     <Card>
       <CardHeader>
         <CardTitle>Liste des articles</CardTitle>
-        <CardDescription> {{ articles.metadata.total }} article(s) au total </CardDescription>
+        <CardDescription> {{ posts.metadata.total }} article(s) au total</CardDescription>
       </CardHeader>
       <CardContent class="flex flex-col gap-4">
         <Input v-model="search" placeholder="Rechercher..." />
-        <template v-if="articles.data.length > 0">
+        <template v-if="posts.data.length > 0">
           <Table>
             <TableHeader>
               <TableRow>
@@ -33,43 +33,43 @@
               </TableRow>
             </TableHeader>
             <TableBody>
-              <TableRow v-for="article in articles.data" :key="article.id">
+              <TableRow v-for="post in posts.data" :key="post.id">
                 <TableCell class="font-medium">
                   <Link
-                    :href="urlFor('dashboard.dashboard_articles.show', { id: article.id })"
+                    :href="urlFor('dashboard.dashboard_posts.show', { id: post.id })"
                     class="hover:underline"
                   >
-                    {{ article.title }}
+                    {{ post.title }}
                   </Link>
                 </TableCell>
                 <TableCell>
                   <Badge
                     :variant="
-                      article.status === 'published'
+                      post.status === 'published'
                         ? 'default'
-                        : article.status === 'draft'
+                        : post.status === 'draft'
                           ? 'secondary'
                           : 'outline'
                     "
                   >
                     {{
-                      article.status === 'published'
+                      post.status === 'published'
                         ? 'Publié'
-                        : article.status === 'draft'
+                        : post.status === 'draft'
                           ? 'Brouillon'
                           : 'Archivé'
                     }}
                   </Badge>
                 </TableCell>
-                <TableCell>{{ article.createdAt ? formatDate(article.createdAt) : '' }}</TableCell>
+                <TableCell>{{ post.createdAt ? formatDate(post.createdAt) : '' }}</TableCell>
                 <TableCell class="text-right">
                   <div class="flex justify-end gap-2">
                     <Button variant="ghost" size="icon" as-child>
-                      <Link :href="urlFor('dashboard.dashboard_articles.edit', { id: article.id })">
+                      <Link :href="urlFor('dashboard.dashboard_posts.edit', { id: post.id })">
                         <Edit class="h-4 w-4" />
                       </Link>
                     </Button>
-                    <Button variant="ghost" size="icon" @click="deleteArticle(article.id)">
+                    <Button variant="ghost" size="icon" @click="deletePost(post.id)">
                       <Trash2 class="h-4 w-4 text-red-600" />
                     </Button>
                   </div>
@@ -79,8 +79,8 @@
           </Table>
           <Pagination
             v-slot="{ page }"
-            :items-per-page="articles.metadata.perPage"
-            :total="articles.metadata.total"
+            :items-per-page="posts.metadata.perPage"
+            :total="posts.metadata.total"
             @update:page="handleChangePage"
           >
             <PaginationContent v-slot="{ items }">
@@ -143,7 +143,7 @@ import {
 import { Data } from '@generated/data'
 
 type PageProps = {
-  articles: {
+  posts: {
     data: Data.Posts.Post[]
     metadata: {
       total: number
@@ -162,7 +162,7 @@ const search = ref(props.filters.search)
 
 const performSearch = useDebounceFn(() => {
   router.get(
-    urlFor('dashboard.dashboard_articles.index'),
+    urlFor('dashboard.dashboard_posts.index'),
     { search: search.value || undefined },
     { preserveState: true, preserveScroll: true }
   )
@@ -170,15 +170,15 @@ const performSearch = useDebounceFn(() => {
 
 const handleChangePage = useDebounceFn((page: number) => {
   router.get(
-    urlFor('dashboard.dashboard_articles.index'),
+    urlFor('dashboard.dashboard_posts.index'),
     { search: search.value || undefined, page: !page || page <= 1 ? undefined : page },
     { preserveState: true, preserveScroll: true }
   )
 }, 300)
 
-const deleteArticle = (id: number) => {
+const deletePost = (id: number) => {
   if (confirm('Êtes-vous sûr de vouloir supprimer cet article ?')) {
-    router.delete(urlFor('dashboard.dashboard_articles.destroy', { id }))
+    router.delete(urlFor('dashboard.dashboard_posts.destroy', { id }))
   }
 }
 

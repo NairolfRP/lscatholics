@@ -18,13 +18,13 @@ export default class Post extends NewsSchema {
   declare author: BelongsTo<typeof User>
 
   @beforeCreate()
-  static async assignSlugIfEmpty(article: Post) {
-    if (article.status === 'published' && !article.publishedAt) {
-      article.publishedAt = DateTime.fromJSDate(new Date())
+  static async assignSlugIfEmpty(post: Post) {
+    if (post.status === 'published' && !post.publishedAt) {
+      post.publishedAt = DateTime.fromJSDate(new Date())
     }
 
-    if (!article.slug) {
-      article.slug = article.title
+    if (!post.slug) {
+      post.slug = post.title
         .toLowerCase()
         .normalize('NFD')
         .replace(/[\u0300-\u036f]/g, '')

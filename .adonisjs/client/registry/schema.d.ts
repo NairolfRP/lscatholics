@@ -139,9 +139,9 @@ export interface Registry {
       response: ExtractResponse<Awaited<ReturnType<import('#app/dashboard/controllers/dashboard_controller').default['index']>>>
     }
   }
-  'dashboard.dashboard_articles.index': {
+  'dashboard.dashboard_posts.index': {
     methods: ["GET","HEAD"]
-    pattern: '/dashboard/articles'
+    pattern: '/dashboard/posts'
     types: {
       body: {}
       paramsTuple: []
@@ -150,9 +150,9 @@ export interface Registry {
       response: ExtractResponse<Awaited<ReturnType<import('#app/posts/controllers/dashboard_posts_controller').default['index']>>>
     }
   }
-  'dashboard.dashboard_articles.create': {
+  'dashboard.dashboard_posts.create': {
     methods: ["GET","HEAD"]
-    pattern: '/dashboard/articles/create'
+    pattern: '/dashboard/posts/create'
     types: {
       body: {}
       paramsTuple: []
@@ -161,9 +161,9 @@ export interface Registry {
       response: ExtractResponse<Awaited<ReturnType<import('#app/posts/controllers/dashboard_posts_controller').default['create']>>>
     }
   }
-  'dashboard.dashboard_articles.store': {
+  'dashboard.dashboard_posts.store': {
     methods: ["POST"]
-    pattern: '/dashboard/articles'
+    pattern: '/dashboard/posts'
     types: {
       body: ExtractBody<InferInput<(typeof import('#posts/validators/dashboard_post').createDashboardPostValidator)>>
       paramsTuple: []
@@ -172,9 +172,9 @@ export interface Registry {
       response: ExtractResponse<Awaited<ReturnType<import('#app/posts/controllers/dashboard_posts_controller').default['store']>>>
     }
   }
-  'dashboard.dashboard_articles.show': {
+  'dashboard.dashboard_posts.show': {
     methods: ["GET","HEAD"]
-    pattern: '/dashboard/articles/:id'
+    pattern: '/dashboard/posts/:id'
     types: {
       body: {}
       paramsTuple: [ParamValue]
@@ -183,9 +183,9 @@ export interface Registry {
       response: ExtractResponse<Awaited<ReturnType<import('#app/posts/controllers/dashboard_posts_controller').default['show']>>>
     }
   }
-  'dashboard.dashboard_articles.edit': {
+  'dashboard.dashboard_posts.edit': {
     methods: ["GET","HEAD"]
-    pattern: '/dashboard/articles/:id/edit'
+    pattern: '/dashboard/posts/:id/edit'
     types: {
       body: {}
       paramsTuple: [ParamValue]
@@ -194,9 +194,9 @@ export interface Registry {
       response: ExtractResponse<Awaited<ReturnType<import('#app/posts/controllers/dashboard_posts_controller').default['edit']>>>
     }
   }
-  'dashboard.dashboard_articles.update': {
+  'dashboard.dashboard_posts.update': {
     methods: ["PUT","PATCH"]
-    pattern: '/dashboard/articles/:id'
+    pattern: '/dashboard/posts/:id'
     types: {
       body: ExtractBody<InferInput<(typeof import('#posts/validators/dashboard_post').updatedDashboardPostValidator)>>
       paramsTuple: [ParamValue]
@@ -205,9 +205,9 @@ export interface Registry {
       response: ExtractResponse<Awaited<ReturnType<import('#app/posts/controllers/dashboard_posts_controller').default['update']>>>
     }
   }
-  'dashboard.dashboard_articles.destroy': {
+  'dashboard.dashboard_posts.destroy': {
     methods: ["DELETE"]
-    pattern: '/dashboard/articles/:id'
+    pattern: '/dashboard/posts/:id'
     types: {
       body: {}
       paramsTuple: [ParamValue]
