@@ -65,7 +65,7 @@ export class PaymentService {
         throw PaymentException.create('SESSION_NOT_FOUND')
       }
 
-      if (new Date() > sessionData.expiresAt) {
+      if (new Date() > new Date(sessionData.expiresAt)) {
         this.cancelPayment(session)
         throw PaymentException.create('SESSION_EXPIRED')
       }
