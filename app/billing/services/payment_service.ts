@@ -76,7 +76,7 @@ export class PaymentService {
         throw PaymentException.create('SESSION_NOT_FOUND')
       }
 
-      if (new Date() > new Date(sessionData.expiresAt)) {
+      if (new Date() > sessionData.expiresAt) {
         this.cancelPayment(session)
         throw PaymentException.create('SESSION_EXPIRED')
       }
@@ -221,7 +221,12 @@ export class PaymentService {
 
     try {
       const decrypted = encryption.decrypt(encryptedData) as string
-      return JSON.parse(decrypted)
+      const parsed = JSON.parse(decrypted)
+      return {
+        ...parsed,
+        createdAt: new Date(parsed.createdAt),
+        expiresAt: new Date(parsed.expiresAt),
+      }
     } catch (error) {
       logger.error({ err: error }, 'Failed to decrypt session data')
       this.cancelPayment(session)
