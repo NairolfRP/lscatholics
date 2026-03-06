@@ -11,6 +11,7 @@ import logger from '@adonisjs/core/services/logger'
 import PaymentException from '#billing/exceptions/payment_exception'
 import app from '@adonisjs/core/services/app'
 import type { HeadersInit } from '#shared/types/utils.types'
+import type { HttpContext } from '@adonisjs/core/http'
 
 export class PaymentService {
   readonly #MAX_RETRIES = 3
@@ -194,7 +195,7 @@ export class PaymentService {
     session.put('payment_data', encryptedData)
   }
 
-  async #getSessionData(session: any): Promise<PaymentSessionData | null> {
+  async #getSessionData(session: HttpContext['session']): Promise<PaymentSessionData | null> {
     const encryptedData = session.get('payment_data')
 
     if (!encryptedData) {
