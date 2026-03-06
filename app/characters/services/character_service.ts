@@ -129,22 +129,29 @@ export default class CharacterService {
       if (this.isStale(currentCharacter.selectedAt)) {
         const characters = await this.getUserCharacters()
 
-        if (!characters) {
-          this.ctx.auth.use('web').logout()
+        if (!characters || characters.length === 0) {
+          await this.ctx.auth.use('web').logout()
           return null
         }
 
-        const newCurrentCharacter = characters.at(0) as Character
+        const reselectedCharacter = characters.find((c) => c.id === currentCharacter.id)
 
-        if (
-          newCurrentCharacter.id !== currentCharacter.id &&
-          newCurrentCharacter.firstname !== currentCharacter.data.firstname &&
-          newCurrentCharacter.lastname !== currentCharacter.data.lastname
-        ) {
+        if (!reselectedCharacter) {
+          const newCurrentCharacter = characters[0]
+
           this.setCurrentCharacter(newCurrentCharacter)
+
+          return newCurrentCharacter
         }
 
-        return newCurrentCharacter
+        if (
+          reselectedCharacter.firstname !== currentCharacter.data.firstname ||
+          reselectedCharacter.lastname !== currentCharacter.data.lastname
+        ) {
+          this.setCurrentCharacter(reselectedCharacter)
+        }
+
+        return reselectedCharacter
       }
 
       return currentCharacter.data
