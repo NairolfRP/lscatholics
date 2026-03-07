@@ -11,27 +11,3 @@
 | templates.
 |
 */
-
-import { Bouncer } from '@adonisjs/bouncer'
-import type User from '#users/models/user'
-import type { HttpContext } from '@adonisjs/core/http'
-import factionConfig from '#config/faction'
-
-export const dashboardAccessAbility = Bouncer.ability(async (_user: User, ctx: HttpContext) => {
-  try {
-    const currentCharacter = await ctx.characters.getCurrentCharacter()
-
-    if (!currentCharacter) {
-      throw new Error('Failed to determine current character')
-    }
-
-    return await ctx.factions.characterHasMinRank(
-      currentCharacter.id,
-      factionConfig.factionId,
-      factionConfig.minimalRankDashboardAccess
-    )
-  } catch (err) {
-    ctx.logger.error({ err }, 'Failed to check ability for dashboard access')
-    return false
-  }
-})
