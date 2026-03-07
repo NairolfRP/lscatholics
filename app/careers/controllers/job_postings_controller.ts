@@ -5,7 +5,7 @@ import { Exception } from '@adonisjs/core/exceptions'
 import JobPostingTransformer from '#careers/transformers/job_posting_transformer'
 
 export default class JobPostingsController {
-  async index({ request, inertia }: HttpContext) {
+  async index({ request, response, inertia }: HttpContext) {
     let page = Math.max(1, Number(request.input('page', 1)) || 1)
     const perPage = Math.min(Math.max(1, Number(request.input('perPage', 10)) || 10), 50)
 
@@ -25,7 +25,16 @@ export default class JobPostingsController {
       const total = await JobPosting.query().count('* as count').where('is_active', true)
       const lastPage = Math.max(1, Math.ceil(Number(total[0].$extras.count) / perPage))
 
-      if (page > lastPage) page = 1
+      if (page > lastPage) {
+        return response
+          .redirect()
+          .withQs({
+            ...(search ? { search } : {}),
+            ...(departments.length > 0 ? { departments: departments.join(',') } : {}),
+            ...(employmentTypes.length > 0 ? { employmentTypes: employmentTypes.join(',') } : {}),
+          })
+          .toRoute('jobs.index')
+      }
 
       const query = JobPosting.query()
         .select('id', 'slug', 'title', 'department', 'posted_at')
