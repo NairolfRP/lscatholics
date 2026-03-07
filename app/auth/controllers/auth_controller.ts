@@ -10,7 +10,15 @@ export default class AuthController {
     return ally.use('gtaw').redirect()
   }
 
-  async handleCallback({ ally, auth, characters, response, session, logger }: HttpContext) {
+  async handleCallback({
+    ally,
+    auth,
+    characters,
+    response,
+    session,
+    logger,
+    redirectToIntended,
+  }: HttpContext) {
     const gtaw = ally.use('gtaw')
 
     if (gtaw.accessDenied()) {
@@ -103,10 +111,9 @@ export default class AuthController {
         E_AUTHENTIFICATION_FAILED:
           "Une erreur est survenue lors de l'authentification de votre compte.",
       })
-    } finally {
-      const intendedUrl = session.pull('url.intended', '/')
-      response.redirect(intendedUrl)
     }
+
+    return redirectToIntended()
   }
 
   async redirectToDiscord({ ally }: HttpContext) {
