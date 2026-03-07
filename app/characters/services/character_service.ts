@@ -77,6 +77,11 @@ export default class CharacterService {
       throw new Error('Failed to fetch user from Oauth API.')
     }
 
+    if (!userFromApi.original.character || userFromApi.original.character.length === 0) {
+      await this.ctx.auth.use('web').logout()
+      throw new Error('No characters found on GTA World account.')
+    }
+
     const isSameOwner =
       Number(account.accountId) === Number(userFromApi.original.character[0].memberid)
 
