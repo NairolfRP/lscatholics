@@ -24,7 +24,10 @@ HttpContext.instanceProperty('setIntendedUrl', function (this: HttpContext, url:
   this.session.put(INTENDED_URL_SESSION_KEY, url)
 })
 
-HttpContext.instanceProperty('redirectToIntended', function (this: HttpContext, fallback: string) {
-  const url = this.session.pull(INTENDED_URL_SESSION_KEY, fallback)
-  this.response.redirect().toPath(url)
-})
+HttpContext.instanceProperty(
+  'redirectToIntended',
+  function (this: HttpContext, fallback: string = '/') {
+    const url = this.session.pull(INTENDED_URL_SESSION_KEY, fallback)
+    this.response.redirect().toPath(url)
+  }
+)
