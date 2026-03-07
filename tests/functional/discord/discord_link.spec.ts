@@ -5,7 +5,7 @@ import testUtils from '@adonisjs/core/services/test_utils'
 import nock from 'nock'
 
 test.group('Profile - Discord Link', (group) => {
-  group.each.setup(() => testUtils.db().truncate())
+  group.each.setup(() => testUtils.db().wrapInGlobalTransaction())
 
   group.setup(() => {
     if (!nock.isActive()) {

@@ -9,7 +9,7 @@ import testUtils from '@adonisjs/core/services/test_utils'
 test.group('DiscordTokenService - getValidAccessToken', (group) => {
   let discordTokenService: DiscordTokenService
 
-  group.each.setup(() => testUtils.db().truncate())
+  group.each.setup(() => testUtils.db().wrapInGlobalTransaction())
 
   group.setup(() => {
     discordTokenService = new DiscordTokenService()
@@ -185,7 +185,7 @@ test.group('DiscordTokenService - refreshAccessToken', (group) => {
   let discordTokenService: DiscordTokenService
 
   group.each.setup(async () => {
-    await testUtils.db().truncate()
+    await testUtils.db().wrapInGlobalTransaction()
 
     discordTokenService = new DiscordTokenService()
   })

@@ -9,7 +9,7 @@ import { DiscordTokenService } from '#discord/services/discord_token_service'
 test.group('Profile - Show', (group) => {
   let discordTokenService: DiscordTokenService
 
-  group.each.setup(() => testUtils.db().truncate())
+  group.each.setup(() => testUtils.db().wrapInGlobalTransaction())
 
   group.setup(() => {
     discordTokenService = new DiscordTokenService()

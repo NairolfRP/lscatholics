@@ -3,7 +3,7 @@ import Post from '#posts/models/post'
 import { categories } from '#posts/controllers/posts_controller'
 import { DateTime } from 'luxon'
 
-export const NewsFactory = factory
+export const PostFactory = factory
   .define(Post, async ({ faker }) => {
     return {
       title: faker.lorem.sentence().substring(0, 255),
