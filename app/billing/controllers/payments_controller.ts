@@ -81,8 +81,8 @@ export default class PaymentsController {
     return inertia.render('payment-callback', {
       //@ts-ignore
       success: false,
-      error: error.message,
       title: error.title,
+      message: error.message,
     })
   }
 

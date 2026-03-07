@@ -14,7 +14,7 @@
       <div v-else class="space-y-4">
         <div class="text-6xl">❌</div>
         <h2 class="text-2xl font-bold text-red-600">{{ title }}</h2>
-        <p class="text-gray-600">{{ error }}</p>
+        <p class="text-gray-600">{{ message }}</p>
         <div class="text-sm text-gray-500">
           Fermeture automatique dans <span class="font-mono">{{ countdown }}</span
           >s...
@@ -29,8 +29,7 @@ import { onMounted, ref } from 'vue'
 type PageProps = {
   success: boolean
   title: string
-  message?: string
-  error?: string
+  message: string
   amount?: number
   source?: string
   metadata?: Record<string, any>
@@ -67,7 +66,7 @@ const sendMessageToParent = () => {
     : {
         type: 'PAYMENT_ERROR',
         title: props.title,
-        message: props.error,
+        message: props.message,
       }
 
   window.opener.postMessage(messageData, window.location.origin)

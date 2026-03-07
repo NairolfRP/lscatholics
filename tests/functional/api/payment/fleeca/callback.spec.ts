@@ -86,7 +86,7 @@ test.group('Api payment fleeca callback', (group) => {
     response.assertInertiaComponent('payment-callback')
     response.assertInertiaPropsContains({
       success: false,
-      error: "Le paiement n'a pas pu être vérifié",
+      message: "Le paiement n'a pas pu être vérifié",
       title: 'Erreur de paiement',
     })
   })
