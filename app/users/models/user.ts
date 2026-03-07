@@ -59,6 +59,7 @@ export default class User extends UserSchema {
   }
 
   getHighestRole() {
+    if (!this.roles || this.roles.length === 0) return null
     return this.roles.reduce((best, role) =>
       role.hierarchyOrder < best.hierarchyOrder ? role : best
     )

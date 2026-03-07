@@ -54,7 +54,9 @@ export default class DashboardUsersController {
     return inertia.render('dashboard/users/edit', {
       itemUser: UserTransformer.transform(user).useVariant('withRoles'),
       rolesList: RoleTransformer.transform(rolesList).useVariant('minimalDetails'),
-      editorHighestRole: RoleTransformer.transform(editorHighestRole).useVariant('minimalDetails'),
+      editorHighestRole: editorHighestRole
+        ? RoleTransformer.transform(editorHighestRole).useVariant('minimalDetails')
+        : null,
     })
   }
 

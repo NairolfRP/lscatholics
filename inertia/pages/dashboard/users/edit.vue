@@ -58,7 +58,10 @@
                         v-for="role in rolesList"
                         :key="role.id"
                         :value="role.id"
-                        :disabled="role.hierarchyOrder <= editorHighestRole.hierarchyOrder"
+                        :disabled="
+                          !editorHighestRole ||
+                          role.hierarchyOrder <= editorHighestRole.hierarchyOrder
+                        "
                       >
                         {{ role.name }}
                       </SelectItem>
