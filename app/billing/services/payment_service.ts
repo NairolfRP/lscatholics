@@ -35,7 +35,7 @@ export class PaymentService {
     source: string,
     amount: number,
     metadata: Record<string, any> = {},
-    session: any
+    session: HttpContext['session']
   ): Promise<{ paymentUrl: string; sessionId: string }> {
     this.#validatePaymentParameters(amount, source)
 
@@ -67,7 +67,7 @@ export class PaymentService {
    */
   async processPaymentCallback(
     token: string,
-    session: any
+    session: HttpContext['session']
   ): Promise<PaymentResult<FleecaValidationResponse>> {
     try {
       const sessionData = await this.#getSessionData(session)
@@ -100,7 +100,7 @@ export class PaymentService {
     }
   }
 
-  cancelPayment(session: any): void {
+  cancelPayment(session: HttpContext['session']): void {
     session.forget('payment_data')
   }
 
