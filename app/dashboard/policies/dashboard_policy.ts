@@ -7,13 +7,13 @@ import { Exception } from '@adonisjs/core/exceptions'
 
 export default class DashboardPolicy extends BasePolicy {
   async access(_user: User, ctx: HttpContext): Promise<AuthorizerResponse> {
+    const currentCharacter = await ctx.characters.getCurrentCharacter()
+
+    if (!currentCharacter) {
+      throw new Exception('Failed to determine current character', { status: 500 })
+    }
+
     try {
-      const currentCharacter = await ctx.characters.getCurrentCharacter()
-
-      if (!currentCharacter) {
-        throw new Exception('Failed to determine current character', { status: 500 })
-      }
-
       return await ctx.factions.characterHasMinRank(
         currentCharacter.id,
         factionConfig.factionId,
