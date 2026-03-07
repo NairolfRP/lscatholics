@@ -63,7 +63,6 @@ import { RadioGroup, RadioGroupItem } from '@/shared/components/ui/radio-group'
 import { useUser } from '@/shared/composables/use_user'
 import { router } from '@inertiajs/vue3'
 import { toast } from 'vue-sonner'
-import { useErrors } from '@/shared/composables/use_errors'
 
 type Props = {
   open?: boolean
@@ -76,7 +75,6 @@ const props = defineProps<Props>()
 const emit = defineEmits<Emits>()
 
 const user = useUser()
-const errors = useErrors()
 
 const loading = ref<boolean>(false)
 const error = ref<string | null>(null)

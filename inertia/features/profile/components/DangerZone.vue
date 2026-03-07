@@ -74,12 +74,9 @@ import {
   DialogTrigger,
 } from '@/shared/components/ui/dialog'
 import { useUser } from '@/shared/composables/use_user'
-import { useErrors } from '@/shared/composables/use_errors'
 import { useForm } from '@inertiajs/vue3'
 
 const user = useUser()
-
-const errors = useErrors()
 
 const form = useForm({
   username: '',
