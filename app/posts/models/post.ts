@@ -24,12 +24,14 @@ export default class Post extends NewsSchema {
     }
 
     if (!post.slug) {
-      post.slug = post.title
+      const base = post.title
         .toLowerCase()
         .normalize('NFD')
         .replace(/[\u0300-\u036f]/g, '')
         .replace(/[^a-z0-9]+/g, '-')
         .replace(/^-+|-+$/g, '')
+
+      post.slug = await Post.generateUniqueSlug(base)
     }
   }
 
@@ -50,5 +52,14 @@ export default class Post extends NewsSchema {
       .where('status', 'draft')
       .where('authorId', user.id)
       .orderBy('createdAt', 'desc')
+  }
+
+  static async generateUniqueSlug(base: string): Promise<string> {
+    let slug = base
+    let i = 2
+    while (await Post.findBy('slug', slug)) {
+      slug = `${base}-${i++}`
+    }
+    return slug
   }
 }
