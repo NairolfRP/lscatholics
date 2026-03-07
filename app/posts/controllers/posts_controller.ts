@@ -56,6 +56,7 @@ export default class PostsController {
         data = await Post.query()
           .select(...columns)
           .where('category', category)
+          .where('status', 'published')
           .orderBy('publishedAt', 'desc')
           .paginate(page, limit)
       } else {
@@ -107,9 +108,10 @@ export default class PostsController {
         'status'
       )
       .where('slug', slug)
+      .andWhere('status', 'published')
       .first()
 
-    if (!post || post.status !== 'published') {
+    if (!post) {
       throw new Exception('Not found', { status: 404 })
     }
 
