@@ -2,7 +2,12 @@ import type { CharacterFaction } from '#characters/types/faction'
 import { TtlCache } from '#core/services/ttl_cache'
 
 export class FactionCacheService {
-  readonly #cache = new TtlCache<CharacterFaction[]>(5 * 60_000, 60_000, 'FactionCache')
+  readonly #cache = new TtlCache<CharacterFaction[]>({
+    ttlMs: 5 * 60_000,
+    cleanupIntervalMs: 60_000,
+    label: 'FactionCache',
+    maxSize: 2000,
+  })
 
   #key(userId: string): string {
     return `user_factions:${userId}`

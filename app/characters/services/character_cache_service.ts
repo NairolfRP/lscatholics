@@ -2,7 +2,12 @@ import type { Character } from '#characters/types/character'
 import { TtlCache } from '#core/services/ttl_cache'
 
 export class CharacterCacheService {
-  #cache = new TtlCache<Character[]>(5 * 60_000, 10 * 60_000, 'CharacterCache')
+  #cache = new TtlCache<Character[]>({
+    ttlMs: 5 * 60_000,
+    cleanupIntervalMs: 10 * 60_000,
+    label: 'CharacterCache',
+    maxSize: 2000,
+  })
 
   #key(userId: string): string {
     return `user_characters:${userId}`
