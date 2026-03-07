@@ -4,7 +4,7 @@ import { PaymentService } from '#billing/services/payment_service'
 import { FleecaValidationResponse, PaymentResult, PaymentSessionData } from '#billing/types/payment'
 import { DonateService } from '#donate/services/donate_service'
 import type { Logger } from '@adonisjs/core/logger'
-import { DonateMetadata } from '#donate/validators/donate'
+import type { DonateMetadata } from '#donate/types/donate'
 
 @inject()
 export default class PaymentsController {

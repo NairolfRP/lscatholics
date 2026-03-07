@@ -4,7 +4,7 @@ import { DonateService } from '#donate/services/donate_service'
 import { DiscordWebhookService } from '#discord/services/discord_webhook_service'
 import env from '#start/env'
 import type { Mock } from 'node:test'
-import type { DonateMetadata } from '#donate/validators/donate'
+import type { DonateMetadata } from '#donate/types/donate'
 
 test.group('Donate service', (group) => {
   let service: DonateService

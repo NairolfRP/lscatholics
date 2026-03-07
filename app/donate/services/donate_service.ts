@@ -1,11 +1,11 @@
-import type { DonateMetadata } from '#donate/validators/donate'
+import type { DonateMetadata, DonationNotificationData } from '#donate/types/donate'
 import env from '#start/env'
 import { DiscordWebhookService } from '#discord/services/discord_webhook_service'
 import { getEthnicLabelById } from '#shared/constants/ethnicity.constants'
 import { getDistrictLabelById } from '#shared/constants/districts.constants'
 
 export class DonateService {
-  async sendPrivateDonateNotification(metadata: Omit<DonateMetadata, 'fleecaConfirmation'>) {
+  async sendPrivateDonateNotification(metadata: DonationNotificationData) {
     const {
       amount,
       firstname,
