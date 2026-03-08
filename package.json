@@ -129,7 +129,7 @@
     "dompurify": "^3.3.2",
     "edge.js": "^6.5.0",
     "leaflet": "^1.9.4",
-    "lucide-vue-next": "^0.575.0",
+    "lucide-vue-next": "^0.577.0",
     "luxon": "^3.7.2",
     "marked": "^17.0.4",
     "reflect-metadata": "^0.2.2",
