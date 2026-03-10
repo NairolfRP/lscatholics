@@ -22,10 +22,10 @@ test.group('JobApplications - index', (group) => {
 
     response.assertStatus(200)
     response.assertInertiaComponent('jobs/application')
-    response.assertInertiaPropsContains({ isExpired: false })
+    response.assertInertiaPropsContains({ job: { id: job.id, slug: job.slug, title: job.title } })
   })
 
-  test('isExpired is false for a job expiring in the future', async ({ client }) => {
+  test('displays the application form for a job expiring in the future', async ({ client }) => {
     const user = await UserFactory.create()
     const job = await JobFactory.merge({
       isActive: true,
@@ -37,7 +37,11 @@ test.group('JobApplications - index', (group) => {
       .loginAs(user)
       .withInertia()
 
-    response.assertInertiaPropsContains({ isExpired: false })
+    response.assertStatus(200)
+
+    response.assertInertiaComponent('jobs/application')
+
+    response.assertInertiaPropsContains({ job: { id: job.id, slug: job.slug, title: job.title } })
   })
 
   test('returns 404 for an expired job', async ({ client }) => {

@@ -41,7 +41,7 @@ export const controllers = {
     ScheduledEvents: () => import('#app/scheduled_events/controllers/scheduled_events_controller'),
   },
   users: {
+    Account: () => import('#app/users/controllers/account_controller'),
     DashboardUsers: () => import('#app/users/controllers/dashboard_users_controller'),
-    Profile: () => import('#app/users/controllers/profile_controller'),
   },
 }

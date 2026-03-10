@@ -9,20 +9,20 @@ roleplay activities within the County of Los Santos.
 This project is built with the following technologies:
 
 - **[TypeScript](https://www.typescriptlang.org/)** - Full stack type safety
-- **[AdonisJS](https://adonisjs.com/)** - NodeJS Backend framework
-- **[Inertia.js](https://inertiajs.com/)** - Server-driven frontend
-- **[Vue.js 3.0](https://vuejs.org/)** - Frontend framework
-- **[TaildwindCSS](https://tailwindcss.com/)** - For the style
-- **[Shadcn/vue](https://www.shadcn-vue.com/)** - UI components
-- **SQLite ([Turso](https://turso.tech/)**) - Database
+- **[AdonisJS v7](https://adonisjs.com/)** - NodeJS Backend framework
+- **[Inertia.js v2](https://inertiajs.com/)** - Server-driven frontend
+- **[React 19](https://react.dev)** - Frontend framework
+- **[shadcn/ui](https://ui.shadcn.com/)** - UI Components
+- **[Tailwind CSS v4](https://tailwindcss.com)** - Utility-first CSS framework
+- **[Turso](https://turso.tech/)** - SQLite Database
 
 ## 📦 Installation
 
 ### Prerequisites
 
-- [Node.js](https://nodejs.org) (LTS recommended)
-- SQLite (Turso CLI or instance recommended)
-- [Pnpm](https://pnpm.io) (package manager)
+- [Node.js](https://nodejs.org) ≥ 24.x
+- [Turso CLI](https://docs.turso.tech/cli/introduction)
+- [Pnpm](https://pnpm.io)
 
 ### Setup
 
@@ -40,19 +40,14 @@ This project is built with the following technologies:
 - Copy `.env.example` to `.env`
 - Set up database credentials and other necessary configurations
 
-4. Run database migrations:
+4. Run database migrations and seeders:
    ```sh
-   node ace migration:run
+   pnpm db:migrate && pnpm db:seed
    ```
 5. Start the development server:
    ```sh
    pnpm dev
    ```
-
-## 🛠 Development
-
-- **Backend (AdonisJS)**: Located in the root directory
-- **Frontend (React/InertiaJS)**: Located in the `inertia/` directory
 
 ## 🔗 Links
 

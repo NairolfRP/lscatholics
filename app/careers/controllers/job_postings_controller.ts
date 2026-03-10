@@ -63,8 +63,10 @@ export default class JobPostingsController {
         'publicSummaryDetails'
       )
 
-      return inertia.render('jobs/all', {
-        offers: inertia.deepMerge(formattedOffers),
+      const isLoadingMore = Number(request.input('page', 1)) > 1
+
+      return inertia.render('jobs/index', {
+        offers: isLoadingMore ? inertia.deepMerge(formattedOffers) : formattedOffers,
         filters: {
           search,
           departments,
@@ -72,7 +74,7 @@ export default class JobPostingsController {
         },
       })
     } catch {
-      return inertia.render('jobs/all', {
+      return inertia.render('jobs/index', {
         queryError: true,
         offers: {
           data: [],

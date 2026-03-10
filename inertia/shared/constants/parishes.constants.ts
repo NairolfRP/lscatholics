@@ -41,6 +41,8 @@ export const parishes = [
   },
 ] as const satisfies Parish[]
 
+export type ParishId = (typeof parishes)[number]['id']
+
 export const parishesIds = () => {
   return parishes.map((p) => p.id)
 }

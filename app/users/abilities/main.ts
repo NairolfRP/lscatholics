@@ -11,3 +11,5 @@
 | templates.
 |
 */
+
+export const abilities = {}

@@ -7,18 +7,19 @@ import {
   Hand,
   Handshake,
   Heart,
+  type LucideIcon,
   Mic,
   Shield,
   Skull,
-} from 'lucide-vue-next'
-import type { Component } from 'vue'
+} from 'lucide-react'
+import type { JSX } from 'react'
 
 export type Service = {
   id: string
   title: string
   description: string
   slug: string
-  icon?: string | Component
+  icon?: SVGElement | JSX.Element | LucideIcon
   iconClasses?: string
 }
 

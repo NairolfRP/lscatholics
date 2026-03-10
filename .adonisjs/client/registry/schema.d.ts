@@ -43,18 +43,6 @@ export interface Registry {
       errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#app/auth/controllers/auth_controller').default['handleCallback']>>>
     }
   }
-  'deleteUser': {
-    methods: ["DELETE"]
-    pattern: '/api/auth/delete-user'
-    types: {
-      body: ExtractBody<InferInput<(typeof import('#users/validators/delete_user_confirmation').createDeleteUserConfirmationValidator)>>
-      paramsTuple: []
-      params: {}
-      query: ExtractQuery<InferInput<(typeof import('#users/validators/delete_user_confirmation').createDeleteUserConfirmationValidator)>>
-      response: ExtractResponse<Awaited<ReturnType<import('#app/auth/controllers/auth_controller').default['deleteUser']>>>
-      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#app/auth/controllers/auth_controller').default['deleteUser']>>> | { status: 422; response: { errors: SimpleError[] } }
-    }
-  }
   'logout': {
     methods: ["POST"]
     pattern: '/api/auth/logout'
@@ -65,30 +53,6 @@ export interface Registry {
       query: {}
       response: ExtractResponse<Awaited<ReturnType<import('#app/auth/controllers/auth_controller').default['logout']>>>
       errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#app/auth/controllers/auth_controller').default['logout']>>>
-    }
-  }
-  'listCharacters': {
-    methods: ["GET","HEAD"]
-    pattern: '/api/auth/list-characters'
-    types: {
-      body: {}
-      paramsTuple: []
-      params: {}
-      query: {}
-      response: ExtractResponse<Awaited<ReturnType<import('#app/characters/controllers/characters_controller').default['listCharacters']>>>
-      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#app/characters/controllers/characters_controller').default['listCharacters']>>>
-    }
-  }
-  'switchCharacter': {
-    methods: ["PATCH"]
-    pattern: '/api/auth/current-character'
-    types: {
-      body: {}
-      paramsTuple: []
-      params: {}
-      query: {}
-      response: ExtractResponse<Awaited<ReturnType<import('#app/characters/controllers/characters_controller').default['switchCharacter']>>>
-      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#app/characters/controllers/characters_controller').default['switchCharacter']>>>
     }
   }
   'discord.redirect': {
@@ -127,16 +91,52 @@ export interface Registry {
       errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#app/auth/controllers/auth_controller').default['unlinkDiscord']>>>
     }
   }
-  'profile': {
+  'account.settings': {
     methods: ["GET","HEAD"]
-    pattern: '/profile'
+    pattern: '/account/settings'
     types: {
       body: {}
       paramsTuple: []
       params: {}
       query: {}
-      response: ExtractResponse<Awaited<ReturnType<import('#app/users/controllers/profile_controller').default['show']>>>
-      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#app/users/controllers/profile_controller').default['show']>>>
+      response: ExtractResponse<Awaited<ReturnType<import('#app/users/controllers/account_controller').default['edit']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#app/users/controllers/account_controller').default['edit']>>>
+    }
+  }
+  'account.delete': {
+    methods: ["DELETE"]
+    pattern: '/account/delete'
+    types: {
+      body: ExtractBody<InferInput<(typeof import('#users/validators/delete_user_confirmation').createDeleteUserConfirmationValidator)>>
+      paramsTuple: []
+      params: {}
+      query: ExtractQuery<InferInput<(typeof import('#users/validators/delete_user_confirmation').createDeleteUserConfirmationValidator)>>
+      response: ExtractResponse<Awaited<ReturnType<import('#app/users/controllers/account_controller').default['delete']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#app/users/controllers/account_controller').default['delete']>>> | { status: 422; response: { errors: SimpleError[] } }
+    }
+  }
+  'characters.list': {
+    methods: ["GET","HEAD"]
+    pattern: '/user/characters'
+    types: {
+      body: {}
+      paramsTuple: []
+      params: {}
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#app/characters/controllers/characters_controller').default['index']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#app/characters/controllers/characters_controller').default['index']>>>
+    }
+  }
+  'characters.current': {
+    methods: ["PATCH"]
+    pattern: '/user/characters/current'
+    types: {
+      body: {}
+      paramsTuple: []
+      params: {}
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#app/characters/controllers/characters_controller').default['updateCurrent']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#app/characters/controllers/characters_controller').default['updateCurrent']>>>
     }
   }
   'dashboard.index': {

@@ -9,5 +9,6 @@
 
 import './routes/auth.js'
 import './routes/api.js'
+import './routes/user.js'
 import './routes/dashboard.js'
 import './routes/pages.js'

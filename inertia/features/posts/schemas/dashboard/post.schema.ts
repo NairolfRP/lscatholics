@@ -19,7 +19,6 @@ export const createPostSchema = z.object({
   excerpt: z
     .string()
     .trim()
-    .min(10, { error: "L'extrait doit comporter au moins 10 caractères." })
     .max(150, { error: "L'extrait ne doit pas dépasser 150 caractères." })
     .optional(),
   content: z
@@ -42,3 +41,7 @@ export const createPostSchema = z.object({
 })
 
 export const editPostSchema = createPostSchema
+
+export type CreatePostSchema = z.Infer<typeof createPostSchema>
+
+export type EditPostSchema = z.Infer<typeof editPostSchema>

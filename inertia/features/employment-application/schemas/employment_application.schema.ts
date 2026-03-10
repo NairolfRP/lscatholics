@@ -15,12 +15,139 @@ import {
 } from '#shared/constants/employment.constants'
 import { getSchoolLevelsIds, getSpokenLanguagesIds } from '#shared/constants/person.constants'
 import { schoolLevelsWithoutFieldOfStudy } from '@/features/employment-application/constants/employment_application_form.constants'
+import { yearMonthSchema } from '@/shared/schemas/dates.schema'
+
+// ─── Application Source ───────────────────────────────────────────────────────
+
+const applicationSourceSchema = z
+  .object({
+    type: z.enum(getApplicationSourcesIds(), { error: 'Valeur invalide.' }).optional(),
+    employeeReferral: z
+      .string({ error: 'Valeur invalide.' })
+      .trim()
+      .max(100, { error: 'Vous ne devez pas dépasser 100 caractères' })
+      .optional(),
+  })
+  .refine((data) => data.type !== 'employeeReferral' || !!data.employeeReferral, {
+    message: "Le nom de l'employé référent est requis.",
+    path: ['employeeReferral'],
+  })
+
+// ─── Education ────────────────────────────────────────────────────────────────
+
+const educationSchema = z
+  .object({
+    highestLevel: z.enum(getSchoolLevelsIds(), {
+      error: (issue) =>
+        issue.input === undefined
+          ? "Vous devez indiquer votre plus haut niveau d'éducation."
+          : 'Valeur invalide.',
+    }),
+    fieldOfStudy: z
+      .string()
+      .trim()
+      .max(100, { error: 'Vous ne devez pas dépasser 100 caractères' })
+      .optional(),
+  })
+  .refine(
+    (data) =>
+      schoolLevelsWithoutFieldOfStudy.includes(data.highestLevel) || Boolean(data.fieldOfStudy),
+    {
+      message: "Vous devez préciser le domaine d'études.",
+      path: ['fieldOfStudy'],
+    }
+  )
+
+// ─── Professional Experience ──────────────────────────────────────────────────
+
+const baseExperienceFields = {
+  companyName: z
+    .string()
+    .trim()
+    .min(1, { error: 'Le nom de la compagnie est requis' })
+    .max(100, { error: 'Le nom de la compagnie ne peut pas dépasser 100 caractères' }),
+
+  position: z
+    .string()
+    .trim()
+    .min(1, { error: 'Le poste est requis' })
+    .max(100, { error: 'Le poste ne peut pas dépasser 100 caractères' }),
+
+  startDate: yearMonthSchema,
+}
+
+const currentPositionSchema = z.object({
+  ...baseExperienceFields,
+  isCurrentPosition: z.literal(true),
+})
+
+const pastPositionSchema = z
+  .object({
+    ...baseExperienceFields,
+    isCurrentPosition: z.literal(false),
+    endDate: yearMonthSchema,
+    reasonForLeaving: z
+      .string()
+      .trim()
+      .min(1, { error: "La raison du départ est requise si vous n'occupez plus ce poste" })
+      .max(255, { error: 'La raison du départ ne peut pas dépasser 255 caractères' }),
+  })
+  .refine(
+    (data) => {
+      const start = new Date(data.startDate + '-01')
+      const end = new Date(data.endDate + '-01')
+      return Number.isNaN(start.getTime()) || Number.isNaN(end.getTime()) || end >= start
+    },
+    {
+      message: 'La date de fin doit être postérieure à la date de début',
+      path: ['endDate'],
+    }
+  )
+
+const professionalExperienceSchema = z
+  .array(z.discriminatedUnion('isCurrentPosition', [currentPositionSchema, pastPositionSchema]))
+  .max(3, 'Vous ne pouvez pas ajouter plus de 3 expériences professionnelles')
+
+// ─── Applicant Declaration ────────────────────────────────────────────────────
+
+const applicantDeclarationSchema = z.array(z.enum(getApplicantStatementsIds())).refine(
+  (value) => {
+    const requiredIds = getApplicantStatementsIds()
+    return value.length === requiredIds.length && requiredIds.every((id) => value.includes(id))
+  },
+  {
+    error: 'Vous devez comprendre et accepter (cocher) toutes les clauses de la déclaration.',
+  }
+)
+
+// ─── Discord Username ─────────────────────────────────────────────────────────
+
+const discordUsernameSchema = z
+  .string({
+    error: (issue) =>
+      issue.input === undefined
+        ? "Vous devez indiquer votre nom d'utilisateur Discord."
+        : 'Valeur invalide.',
+  })
+  .min(2, { error: "Un nom d'utilisateur discord doit contenir au moins 2 caractères." })
+  .max(32, { error: "Un nom d'utilisateur Discord ne peut pas dépasser 32 caractères." })
+  .refine(
+    (value) =>
+      value === value.toLowerCase() && /^[a-z0-9._]+$/.test(value) && !value.includes('..'),
+    {
+      error:
+        "Ce n'est pas un nom d'utilisateur valide. Vérifiez que vous indiquez bien le nom d'utilisateur, et non le nom d'affichage.",
+    }
+  )
+
+// ─── Main Schema ──────────────────────────────────────────────────────────────
 
 export const employmentApplicationSchema = z.object({
   firstname: firstnameSchema,
   lastname: lastnameSchema,
   middleName: middleNameSchema,
   gender: genderSchema,
+
   age: z
     .int({
       error: (issue) => (issue.input === undefined ? "L'âge est requis." : 'Valeur invalide.'),
@@ -34,7 +161,8 @@ export const employmentApplicationSchema = z.object({
 
   isPracticingCatholic: yesNoSchema,
   isLegalUSWorker: yesNoSchema,
-  applicationSource: z
+
+  applicationSource: applicationSourceSchema /*z
     .object({
       type: z.enum(getApplicationSourcesIds(), { error: 'Valeur invalide.' }).optional(),
       employeeReferral: z
@@ -56,9 +184,9 @@ export const employmentApplicationSchema = z.object({
         message: "Le nom de l'employé référent est requis.",
         path: ['employeeReferral'],
       }
-    ),
+    )*/,
 
-  education: z
+  education: educationSchema /*z
     .object({
       highestLevel: z.enum(getSchoolLevelsIds(), {
         error: (issue) =>
@@ -82,12 +210,13 @@ export const employmentApplicationSchema = z.object({
         message: "Vous devez préciser le domaine d'études.",
         path: ['fieldOfStudy'],
       }
-    ),
+    )*/,
+
   spokenLanguages: z
     .array(z.enum(getSpokenLanguagesIds()), { error: 'Valeurs invalides.' })
     .optional(),
 
-  professionalExperience: z
+  professionalExperience: professionalExperienceSchema /*z
     .array(
       z
         .object({
@@ -178,11 +307,12 @@ export const employmentApplicationSchema = z.object({
           }
         })
     )
-    .max(3, 'Vous ne pouvez pas ajouter plus de 3 expériences professionnelles'),
+    .max(3, 'Vous ne pouvez pas ajouter plus de 3 expériences professionnelles')*/,
 
   hasDriverLicense: yesNoSchema,
 
-  applicantDeclaration: z.array(z.enum(getApplicantStatementsIds())).refine(
+  applicantDeclaration:
+    applicantDeclarationSchema /*z.array(z.enum(getApplicantStatementsIds())).refine(
     (value) => {
       const requiredIds = getApplicantStatementsIds()
       return value.length === requiredIds.length && requiredIds.every((id) => value.includes(id))
@@ -190,9 +320,9 @@ export const employmentApplicationSchema = z.object({
     {
       error: 'Vous devez comprendre et accepter (cocher) toutes les clauses de la déclaration.',
     }
-  ),
+  )*/,
 
-  discordUsername: z
+  discordUsername: discordUsernameSchema /*z
     .string({
       error: (issue) =>
         issue.input === undefined
@@ -212,7 +342,7 @@ export const employmentApplicationSchema = z.object({
     .refine((value) => !value.includes('..'), {
       error:
         "Ce n'est pas un nom d'utilisateur valide. Vérifiez que vous indiquez bien le nom d'utilisateur, et non le nom d'affichage.",
-    }),
+    })*/,
 
   motivationsOOC: z
     .string()

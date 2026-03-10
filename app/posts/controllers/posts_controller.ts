@@ -67,14 +67,14 @@ export default class PostsController {
           .paginate(page, limit)
       }
 
-      return inertia.render('news/all', {
+      return inertia.render('posts/index', {
         posts: PostTransformer.paginate(data.all(), data.getMeta()).useVariant('publicList'),
         selectedCategory: category ?? '',
         categories,
         error: false,
       })
     } catch (e) {
-      return inertia.render('news/all', {
+      return inertia.render('posts/index', {
         posts: {
           metadata: {
             total: 0,
@@ -115,7 +115,7 @@ export default class PostsController {
       throw new Exception('Not found', { status: 404 })
     }
 
-    return inertia.render('news/single', {
+    return inertia.render('posts/single', {
       post: PostTransformer.transform(post).useVariant('publicDetails'),
     })
   }

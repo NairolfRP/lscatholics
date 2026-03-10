@@ -1,65 +1,68 @@
 import '@adonisjs/inertia/types'
 
-import type { VNodeProps, AllowedComponentProps, ComponentInstance } from 'vue'
+import type React from 'react'
+import type { Prettify } from '@adonisjs/core/types/common'
 
-type ExtractProps<T> = Omit<
-  ComponentInstance<T>['$props'],
-  keyof VNodeProps | keyof AllowedComponentProps
->
+type ExtractProps<T> =
+  T extends React.FC<infer Props>
+    ? Prettify<Omit<Props, 'children'>>
+    : T extends React.Component<infer Props>
+      ? Prettify<Omit<Props, 'children'>>
+      : never
 
 declare module '@adonisjs/inertia/types' {
   export interface InertiaPages {
-    'about_us': ExtractProps<(typeof import('../../inertia/pages/about_us.vue'))['default']>
-    'archbishop': ExtractProps<(typeof import('../../inertia/pages/archbishop.vue'))['default']>
-    'catholic-charities': ExtractProps<(typeof import('../../inertia/pages/catholic-charities.vue'))['default']>
-    'contact': ExtractProps<(typeof import('../../inertia/pages/contact.vue'))['default']>
-    'dashboard/events/create': ExtractProps<(typeof import('../../inertia/pages/dashboard/events/create.vue'))['default']>
-    'dashboard/events/edit': ExtractProps<(typeof import('../../inertia/pages/dashboard/events/edit.vue'))['default']>
-    'dashboard/events/index': ExtractProps<(typeof import('../../inertia/pages/dashboard/events/index.vue'))['default']>
-    'dashboard/events/show': ExtractProps<(typeof import('../../inertia/pages/dashboard/events/show.vue'))['default']>
-    'dashboard/index': ExtractProps<(typeof import('../../inertia/pages/dashboard/index.vue'))['default']>
-    'dashboard/jobs/create': ExtractProps<(typeof import('../../inertia/pages/dashboard/jobs/create.vue'))['default']>
-    'dashboard/jobs/edit': ExtractProps<(typeof import('../../inertia/pages/dashboard/jobs/edit.vue'))['default']>
-    'dashboard/jobs/index': ExtractProps<(typeof import('../../inertia/pages/dashboard/jobs/index.vue'))['default']>
-    'dashboard/jobs/show': ExtractProps<(typeof import('../../inertia/pages/dashboard/jobs/show.vue'))['default']>
-    'dashboard/posts/create': ExtractProps<(typeof import('../../inertia/pages/dashboard/posts/create.vue'))['default']>
-    'dashboard/posts/edit': ExtractProps<(typeof import('../../inertia/pages/dashboard/posts/edit.vue'))['default']>
-    'dashboard/posts/index': ExtractProps<(typeof import('../../inertia/pages/dashboard/posts/index.vue'))['default']>
-    'dashboard/posts/show': ExtractProps<(typeof import('../../inertia/pages/dashboard/posts/show.vue'))['default']>
-    'dashboard/users/edit': ExtractProps<(typeof import('../../inertia/pages/dashboard/users/edit.vue'))['default']>
-    'dashboard/users/index': ExtractProps<(typeof import('../../inertia/pages/dashboard/users/index.vue'))['default']>
-    'departments/all': ExtractProps<(typeof import('../../inertia/pages/departments/all.vue'))['default']>
-    'departments/single': ExtractProps<(typeof import('../../inertia/pages/departments/single.vue'))['default']>
-    'donate': ExtractProps<(typeof import('../../inertia/pages/donate.vue'))['default']>
-    'errors/not_found': ExtractProps<(typeof import('../../inertia/pages/errors/not_found.vue'))['default']>
-    'errors/server_error': ExtractProps<(typeof import('../../inertia/pages/errors/server_error.vue'))['default']>
-    'events/all': ExtractProps<(typeof import('../../inertia/pages/events/all.vue'))['default']>
-    'events/single': ExtractProps<(typeof import('../../inertia/pages/events/single.vue'))['default']>
-    'home': ExtractProps<(typeof import('../../inertia/pages/home.vue'))['default']>
-    'jobs/all': ExtractProps<(typeof import('../../inertia/pages/jobs/all.vue'))['default']>
-    'jobs/application': ExtractProps<(typeof import('../../inertia/pages/jobs/application.vue'))['default']>
-    'jobs/single': ExtractProps<(typeof import('../../inertia/pages/jobs/single.vue'))['default']>
-    'news/all': ExtractProps<(typeof import('../../inertia/pages/news/all.vue'))['default']>
-    'news/single': ExtractProps<(typeof import('../../inertia/pages/news/single.vue'))['default']>
-    'parishes': ExtractProps<(typeof import('../../inertia/pages/parishes.vue'))['default']>
-    'payment-callback': ExtractProps<(typeof import('../../inertia/pages/payment-callback.vue'))['default']>
-    'privacy': ExtractProps<(typeof import('../../inertia/pages/privacy.vue'))['default']>
-    'profile': ExtractProps<(typeof import('../../inertia/pages/profile.vue'))['default']>
-    'readings': ExtractProps<(typeof import('../../inertia/pages/readings.vue'))['default']>
-    'register-parishioner': ExtractProps<(typeof import('../../inertia/pages/register-parishioner.vue'))['default']>
-    'services/all': ExtractProps<(typeof import('../../inertia/pages/services/all.vue'))['default']>
-    'services/anointing-of-the-sick': ExtractProps<(typeof import('../../inertia/pages/services/anointing-of-the-sick.vue'))['default']>
-    'services/benediction': ExtractProps<(typeof import('../../inertia/pages/services/benediction.vue'))['default']>
-    'services/christian-initiation': ExtractProps<(typeof import('../../inertia/pages/services/christian-initiation.vue'))['default']>
-    'services/conference-predication': ExtractProps<(typeof import('../../inertia/pages/services/conference-predication.vue'))['default']>
-    'services/confession': ExtractProps<(typeof import('../../inertia/pages/services/confession.vue'))['default']>
-    'services/exorcism': ExtractProps<(typeof import('../../inertia/pages/services/exorcism.vue'))['default']>
-    'services/funerals': ExtractProps<(typeof import('../../inertia/pages/services/funerals.vue'))['default']>
-    'services/marriage': ExtractProps<(typeof import('../../inertia/pages/services/marriage.vue'))['default']>
-    'services/mediation': ExtractProps<(typeof import('../../inertia/pages/services/mediation.vue'))['default']>
-    'services/offer-a-mass': ExtractProps<(typeof import('../../inertia/pages/services/offer-a-mass.vue'))['default']>
-    'services/quinceanera': ExtractProps<(typeof import('../../inertia/pages/services/quinceanera.vue'))['default']>
-    'services/ServiceLayout': ExtractProps<(typeof import('../../inertia/pages/services/ServiceLayout.vue'))['default']>
-    'vocations': ExtractProps<(typeof import('../../inertia/pages/vocations.vue'))['default']>
+    'about-us': ExtractProps<(typeof import('../../inertia/pages/about-us.tsx'))['default']>
+    'account/settings': ExtractProps<(typeof import('../../inertia/pages/account/settings.tsx'))['default']>
+    'archbishop': ExtractProps<(typeof import('../../inertia/pages/archbishop.tsx'))['default']>
+    'catholic-charities': ExtractProps<(typeof import('../../inertia/pages/catholic-charities.tsx'))['default']>
+    'contact': ExtractProps<(typeof import('../../inertia/pages/contact.tsx'))['default']>
+    'dashboard/events/create': ExtractProps<(typeof import('../../inertia/pages/dashboard/events/create.tsx'))['default']>
+    'dashboard/events/edit': ExtractProps<(typeof import('../../inertia/pages/dashboard/events/edit.tsx'))['default']>
+    'dashboard/events/index': ExtractProps<(typeof import('../../inertia/pages/dashboard/events/index.tsx'))['default']>
+    'dashboard/events/show': ExtractProps<(typeof import('../../inertia/pages/dashboard/events/show.tsx'))['default']>
+    'dashboard/index': ExtractProps<(typeof import('../../inertia/pages/dashboard/index.tsx'))['default']>
+    'dashboard/jobs/create': ExtractProps<(typeof import('../../inertia/pages/dashboard/jobs/create.tsx'))['default']>
+    'dashboard/jobs/edit': ExtractProps<(typeof import('../../inertia/pages/dashboard/jobs/edit.tsx'))['default']>
+    'dashboard/jobs/index': ExtractProps<(typeof import('../../inertia/pages/dashboard/jobs/index.tsx'))['default']>
+    'dashboard/jobs/show': ExtractProps<(typeof import('../../inertia/pages/dashboard/jobs/show.tsx'))['default']>
+    'dashboard/posts/create': ExtractProps<(typeof import('../../inertia/pages/dashboard/posts/create.tsx'))['default']>
+    'dashboard/posts/edit': ExtractProps<(typeof import('../../inertia/pages/dashboard/posts/edit.tsx'))['default']>
+    'dashboard/posts/index': ExtractProps<(typeof import('../../inertia/pages/dashboard/posts/index.tsx'))['default']>
+    'dashboard/posts/show': ExtractProps<(typeof import('../../inertia/pages/dashboard/posts/show.tsx'))['default']>
+    'dashboard/users/edit': ExtractProps<(typeof import('../../inertia/pages/dashboard/users/edit.tsx'))['default']>
+    'dashboard/users/index': ExtractProps<(typeof import('../../inertia/pages/dashboard/users/index.tsx'))['default']>
+    'departments/index': ExtractProps<(typeof import('../../inertia/pages/departments/index.tsx'))['default']>
+    'departments/single': ExtractProps<(typeof import('../../inertia/pages/departments/single.tsx'))['default']>
+    'donate': ExtractProps<(typeof import('../../inertia/pages/donate.tsx'))['default']>
+    'errors/not-found': ExtractProps<(typeof import('../../inertia/pages/errors/not-found.tsx'))['default']>
+    'errors/server-error': ExtractProps<(typeof import('../../inertia/pages/errors/server-error.tsx'))['default']>
+    'home': ExtractProps<(typeof import('../../inertia/pages/home.tsx'))['default']>
+    'jobs/application': ExtractProps<(typeof import('../../inertia/pages/jobs/application.tsx'))['default']>
+    'jobs/index': ExtractProps<(typeof import('../../inertia/pages/jobs/index.tsx'))['default']>
+    'jobs/single': ExtractProps<(typeof import('../../inertia/pages/jobs/single.tsx'))['default']>
+    'parishes': ExtractProps<(typeof import('../../inertia/pages/parishes.tsx'))['default']>
+    'payment-callback': ExtractProps<(typeof import('../../inertia/pages/payment-callback.tsx'))['default']>
+    'posts/index': ExtractProps<(typeof import('../../inertia/pages/posts/index.tsx'))['default']>
+    'posts/single': ExtractProps<(typeof import('../../inertia/pages/posts/single.tsx'))['default']>
+    'privacy': ExtractProps<(typeof import('../../inertia/pages/privacy.tsx'))['default']>
+    'readings': ExtractProps<(typeof import('../../inertia/pages/readings.tsx'))['default']>
+    'register-parishioner': ExtractProps<(typeof import('../../inertia/pages/register-parishioner.tsx'))['default']>
+    'scheduled_events/index': ExtractProps<(typeof import('../../inertia/pages/scheduled_events/index.tsx'))['default']>
+    'scheduled_events/single': ExtractProps<(typeof import('../../inertia/pages/scheduled_events/single.tsx'))['default']>
+    'services/all': ExtractProps<(typeof import('../../inertia/pages/services/all.tsx'))['default']>
+    'services/anointing-of-the-sick': ExtractProps<(typeof import('../../inertia/pages/services/anointing-of-the-sick.tsx'))['default']>
+    'services/benediction': ExtractProps<(typeof import('../../inertia/pages/services/benediction.tsx'))['default']>
+    'services/christian-initiation': ExtractProps<(typeof import('../../inertia/pages/services/christian-initiation.tsx'))['default']>
+    'services/conference-predication': ExtractProps<(typeof import('../../inertia/pages/services/conference-predication.tsx'))['default']>
+    'services/confession': ExtractProps<(typeof import('../../inertia/pages/services/confession.tsx'))['default']>
+    'services/exorcism': ExtractProps<(typeof import('../../inertia/pages/services/exorcism.tsx'))['default']>
+    'services/funerals': ExtractProps<(typeof import('../../inertia/pages/services/funerals.tsx'))['default']>
+    'services/marriage': ExtractProps<(typeof import('../../inertia/pages/services/marriage.tsx'))['default']>
+    'services/mediation': ExtractProps<(typeof import('../../inertia/pages/services/mediation.tsx'))['default']>
+    'services/offer-a-mass': ExtractProps<(typeof import('../../inertia/pages/services/offer-a-mass.tsx'))['default']>
+    'services/quinceanera': ExtractProps<(typeof import('../../inertia/pages/services/quinceanera.tsx'))['default']>
+    'services/service-layout': ExtractProps<(typeof import('../../inertia/pages/services/service-layout.tsx'))['default']>
+    'vocations': ExtractProps<(typeof import('../../inertia/pages/vocations.tsx'))['default']>
   }
 }

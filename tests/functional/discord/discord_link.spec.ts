@@ -120,7 +120,7 @@ test.group('Profile - Discord Link', (group) => {
       .withEncryptedCookie('discord_oauth_state', 'valid_state')
       .loginAs(user)
 
-    response.assertRedirectsTo('/profile')
+    response.assertRedirectsTo('/account/settings')
 
     const account = await user.related('accounts').query().where('provider_id', 'discord').first()
 
@@ -243,7 +243,7 @@ test.group('Profile - Discord Link', (group) => {
       .withEncryptedCookie('discord_oauth_state', 'valid_state')
       .loginAs(user)
 
-    response.assertRedirectsTo('/profile')
+    response.assertRedirectsTo('/account/settings')
 
     await account.refresh()
 

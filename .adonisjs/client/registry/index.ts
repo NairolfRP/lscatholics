@@ -24,29 +24,11 @@ const routes = {
     tokens: [{"old":"/api/auth/callback/gtaw","type":0,"val":"api","end":""},{"old":"/api/auth/callback/gtaw","type":0,"val":"auth","end":""},{"old":"/api/auth/callback/gtaw","type":0,"val":"callback","end":""},{"old":"/api/auth/callback/gtaw","type":0,"val":"gtaw","end":""}],
     types: placeholder as Registry['auth.handle_callback']['types'],
   },
-  'deleteUser': {
-    methods: ["DELETE"],
-    pattern: '/api/auth/delete-user',
-    tokens: [{"old":"/api/auth/delete-user","type":0,"val":"api","end":""},{"old":"/api/auth/delete-user","type":0,"val":"auth","end":""},{"old":"/api/auth/delete-user","type":0,"val":"delete-user","end":""}],
-    types: placeholder as Registry['deleteUser']['types'],
-  },
   'logout': {
     methods: ["POST"],
     pattern: '/api/auth/logout',
     tokens: [{"old":"/api/auth/logout","type":0,"val":"api","end":""},{"old":"/api/auth/logout","type":0,"val":"auth","end":""},{"old":"/api/auth/logout","type":0,"val":"logout","end":""}],
     types: placeholder as Registry['logout']['types'],
-  },
-  'listCharacters': {
-    methods: ["GET","HEAD"],
-    pattern: '/api/auth/list-characters',
-    tokens: [{"old":"/api/auth/list-characters","type":0,"val":"api","end":""},{"old":"/api/auth/list-characters","type":0,"val":"auth","end":""},{"old":"/api/auth/list-characters","type":0,"val":"list-characters","end":""}],
-    types: placeholder as Registry['listCharacters']['types'],
-  },
-  'switchCharacter': {
-    methods: ["PATCH"],
-    pattern: '/api/auth/current-character',
-    tokens: [{"old":"/api/auth/current-character","type":0,"val":"api","end":""},{"old":"/api/auth/current-character","type":0,"val":"auth","end":""},{"old":"/api/auth/current-character","type":0,"val":"current-character","end":""}],
-    types: placeholder as Registry['switchCharacter']['types'],
   },
   'discord.redirect': {
     methods: ["GET","HEAD"],
@@ -66,11 +48,29 @@ const routes = {
     tokens: [{"old":"/api/auth/unlink/discord","type":0,"val":"api","end":""},{"old":"/api/auth/unlink/discord","type":0,"val":"auth","end":""},{"old":"/api/auth/unlink/discord","type":0,"val":"unlink","end":""},{"old":"/api/auth/unlink/discord","type":0,"val":"discord","end":""}],
     types: placeholder as Registry['discord.unlink']['types'],
   },
-  'profile': {
+  'account.settings': {
     methods: ["GET","HEAD"],
-    pattern: '/profile',
-    tokens: [{"old":"/profile","type":0,"val":"profile","end":""}],
-    types: placeholder as Registry['profile']['types'],
+    pattern: '/account/settings',
+    tokens: [{"old":"/account/settings","type":0,"val":"account","end":""},{"old":"/account/settings","type":0,"val":"settings","end":""}],
+    types: placeholder as Registry['account.settings']['types'],
+  },
+  'account.delete': {
+    methods: ["DELETE"],
+    pattern: '/account/delete',
+    tokens: [{"old":"/account/delete","type":0,"val":"account","end":""},{"old":"/account/delete","type":0,"val":"delete","end":""}],
+    types: placeholder as Registry['account.delete']['types'],
+  },
+  'characters.list': {
+    methods: ["GET","HEAD"],
+    pattern: '/user/characters',
+    tokens: [{"old":"/user/characters","type":0,"val":"user","end":""},{"old":"/user/characters","type":0,"val":"characters","end":""}],
+    types: placeholder as Registry['characters.list']['types'],
+  },
+  'characters.current': {
+    methods: ["PATCH"],
+    pattern: '/user/characters/current',
+    tokens: [{"old":"/user/characters/current","type":0,"val":"user","end":""},{"old":"/user/characters/current","type":0,"val":"characters","end":""},{"old":"/user/characters/current","type":0,"val":"current","end":""}],
+    types: placeholder as Registry['characters.current']['types'],
   },
   'dashboard.index': {
     methods: ["GET","HEAD"],

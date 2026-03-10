@@ -10,15 +10,19 @@ export interface ApiDefinition {
     handleCallback: typeof routes['auth.handle_callback']
     handleDiscordCallback: typeof routes['auth.handle_discord_callback']
   }
-  deleteUser: typeof routes['deleteUser']
   logout: typeof routes['logout']
-  listCharacters: typeof routes['listCharacters']
-  switchCharacter: typeof routes['switchCharacter']
   discord: {
     redirect: typeof routes['discord.redirect']
     unlink: typeof routes['discord.unlink']
   }
-  profile: typeof routes['profile']
+  account: {
+    settings: typeof routes['account.settings']
+    delete: typeof routes['account.delete']
+  }
+  characters: {
+    list: typeof routes['characters.list']
+    current: typeof routes['characters.current']
+  }
   dashboard: {
     index: typeof routes['dashboard.index']
     dashboardPosts: {

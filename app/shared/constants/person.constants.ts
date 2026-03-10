@@ -3,11 +3,11 @@ type PersonalInformation = {
   label: string
 }
 
-interface CivilTitle extends PersonalInformation {
+interface CivilTitleProps extends PersonalInformation {
   abbr: string
 }
 
-export interface IndividualSacrament extends PersonalInformation {
+export interface IndividualSacramentProps extends PersonalInformation {
   required: string[]
 }
 
@@ -23,7 +23,7 @@ export type HouseholdRoleId =
   | 'sibling'
   | 'other'
 
-export interface HouseholdRole extends PersonalInformation {
+export interface HouseholdRoleProps extends PersonalInformation {
   id: HouseholdRoleId
 }
 
@@ -121,7 +121,9 @@ export const CIVIL_TITLES = [
     label: 'Sergent',
     abbr: 'Sgt.',
   },
-] as const satisfies CivilTitle[]
+] as const satisfies CivilTitleProps[]
+
+export type CivilTitle = (typeof CIVIL_TITLES)[number]['id']
 
 export const civilTitleIds = () => {
   return CIVIL_TITLES.map((t) => t.id)
@@ -158,6 +160,8 @@ export const MARITAL_STATUS = [
   },
 ] as const satisfies PersonalInformation[]
 
+export type MaritalStatus = (typeof MARITAL_STATUS)[number]['id']
+
 export const maritalStatusIds = () => {
   return MARITAL_STATUS.map((s) => s.id)
 }
@@ -176,6 +180,8 @@ export const GENDERS = [
   },
 ] as const satisfies PersonalInformation[]
 
+export type Gender = 'male' | 'female'
+
 export const genderIds = () => {
   return GENDERS.map((g) => g.id)
 }
@@ -191,11 +197,13 @@ export const CATHOLIC_OR_OTHER = [
   },
 ] as const satisfies PersonalInformation[]
 
+export type CatholicOrOther = 'catholic' | 'other'
+
 export const catholicOrOtherIds = () => {
   return CATHOLIC_OR_OTHER.map((c) => c.id)
 }
 
-export const INDIVIDUAL_SACRAMENTS: IndividualSacrament[] = [
+export const INDIVIDUAL_SACRAMENTS = [
   {
     id: 'baptism',
     label: 'Baptême',
@@ -211,7 +219,9 @@ export const INDIVIDUAL_SACRAMENTS: IndividualSacrament[] = [
     label: 'Confirmation',
     required: ['baptism', 'first_communion'],
   },
-]
+] satisfies IndividualSacramentProps[]
+
+export type IndividualSacrament = (typeof INDIVIDUAL_SACRAMENTS)[number]['id']
 
 export const individualSacramentIds = () => {
   return INDIVIDUAL_SACRAMENTS.map((s) => s.id)
@@ -258,7 +268,9 @@ export const HOUSEHOLD_ROLES = [
     id: 'other',
     label: 'Autre',
   },
-] satisfies HouseholdRole[]
+] satisfies HouseholdRoleProps[]
+
+export type HouseholdRole = (typeof HOUSEHOLD_ROLES)[number]['id']
 
 export const householdRoleIds = () => {
   return HOUSEHOLD_ROLES.map((r) => r.id)
@@ -286,6 +298,8 @@ export const getSchoolLevelLabelById = (id: string) => {
   return SCHOOL_LEVELS.find((l) => l.id === id)?.label || id
 }
 
+export type SchoolLevel = (typeof SCHOOL_LEVELS)[number]['id']
+
 export const SPOKEN_LANGUAGES = [
   { id: 'spanish', label: 'Espagnol' },
   { id: 'french', label: 'Français' },
@@ -307,4 +321,18 @@ export const getSpokenLanguagesIds = () => {
 
 export const getSpokenLanguagesLabelById = (id: string) => {
   return SPOKEN_LANGUAGES.find((l) => l.id === id)?.label || id
+}
+
+export type SpokenLanguage = (typeof SPOKEN_LANGUAGES)[number]['id']
+
+export const BAPTIZED_OPTIONS = [
+  { id: 'yes', label: 'Oui' },
+  { id: 'no', label: 'Non' },
+  { id: 'unsure', label: 'Je ne suis pas sûr' },
+] as const
+
+export type BaptizedOption = (typeof BAPTIZED_OPTIONS)[number]['id']
+
+export const getBaptizedOptionsIds = () => {
+  return BAPTIZED_OPTIONS.map((o) => o.id)
 }

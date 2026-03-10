@@ -56,7 +56,7 @@ export default class DashboardUsersController {
       rolesList: RoleTransformer.transform(rolesList).useVariant('minimalDetails'),
       editorHighestRole: editorHighestRole
         ? RoleTransformer.transform(editorHighestRole).useVariant('minimalDetails')
-        : null,
+        : undefined,
     })
   }
 

@@ -32,14 +32,14 @@ test.group('Profile - Show', (group) => {
   test('displays profile page for authenticated user', async ({ client }) => {
     const user = await User.create({ name: 'Test User' })
 
-    const response = await client.get('/profile').loginAs(user).withInertia()
+    const response = await client.get('/account/settings').loginAs(user).withInertia()
 
     response.assertStatus(200)
-    response.assertInertiaComponent('profile')
+    response.assertInertiaComponent('account/settings')
   })
 
   test('redirects unauthenticated users', async ({ client }) => {
-    const response = await client.get('/profile')
+    const response = await client.get('/account/settings')
 
     response.assertRedirectsTo('/')
   })
@@ -47,7 +47,7 @@ test.group('Profile - Show', (group) => {
   test('shows null when no Discord account linked', async ({ client }) => {
     const user = await User.create({ name: 'Test User' })
 
-    const response = await client.get('/profile').loginAs(user).withInertia()
+    const response = await client.get('/account/settings').loginAs(user).withInertia()
 
     response.assertInertiaPropsContains({
       discordUser: null,
@@ -78,7 +78,7 @@ test.group('Profile - Show', (group) => {
         avatar: 'avatar_url',
       })
 
-    const response = await client.get('/profile').loginAs(user).withInertia()
+    const response = await client.get('/account/settings').loginAs(user).withInertia()
 
     response.assertStatus(200)
     response.assertInertiaPropsContains({
@@ -105,7 +105,7 @@ test.group('Profile - Show', (group) => {
       accessTokenExpiresAt: DateTime.now().minus({ hours: 1 }),
     })
 
-    await client.get('/profile').loginAs(user).withInertia()
+    await client.get('/account/settings').loginAs(user).withInertia()
 
     const account = await user.related('accounts').query().where('provider_id', 'discord').first()
 
@@ -123,9 +123,9 @@ test.group('Profile - Show', (group) => {
       accessTokenExpiresAt: DateTime.now().plus({ hours: 1 }),
     })
 
-    const response = await client.get('/profile').loginAs(user).withInertia()
+    const response = await client.get('/account/settings').loginAs(user).withInertia()
 
     response.assertStatus(200)
-    response.assertInertiaComponent('profile')
+    response.assertInertiaComponent('account/settings')
   })
 })

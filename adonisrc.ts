@@ -164,7 +164,7 @@ export default defineConfig({
           importAlias: '#app',
         },
       }),
-      indexPages({ framework: 'vue3' }),
+      indexPages({ framework: 'react' }),
       generateRegistry(),
       indexPolicies({
         source: './app',
