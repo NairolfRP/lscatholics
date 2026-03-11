@@ -1,6 +1,5 @@
-'use client'
 import { Button } from '@/shared/components/ui/button'
-import { FallbackProps, getErrorMessage } from 'react-error-boundary'
+import { type FallbackProps, getErrorMessage } from 'react-error-boundary'
 import { AlertTriangle, RefreshCw, RotateCcw } from 'lucide-react'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from './ui/card'
 import { Separator } from '@/shared/components/ui/separator'
