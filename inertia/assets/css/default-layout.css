@@ -43,6 +43,13 @@
   color: var(--primary-foreground);
 }
 
+.mobile-navigation-item-title + div svg,
+.mobile-navigation-item-title svg:last-child {
+  width: 1em;
+  height: 1em;
+  color: var(--primary-foreground);
+}
+
 /**
  * Articles
  */
