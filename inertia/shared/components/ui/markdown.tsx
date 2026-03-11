@@ -3,7 +3,7 @@ import ReactMarkdown from 'react-markdown'
 import { Typography } from '@/shared/components/ui/typography'
 import { LinkText } from '@/shared/components/link-text'
 import { cn, slugify } from '@/lib/utils'
-import { type ComponentProps, lazy } from 'react'
+import { type ComponentProps, lazy, Suspense } from 'react'
 import type { PreviewType } from '@uiw/react-md-editor'
 import remarkBreaks from 'remark-breaks'
 
@@ -137,20 +137,22 @@ function MarkdownTextarea({
 }: MarkdownTextareaProps) {
   return (
     <div aria-invalid="true" className={cn(' relative w-full', className)}>
-      <MDEditor
-        id={id}
-        value={value}
-        onChange={(val) => onChange?.(val ?? '')}
-        preview={preview}
-        height={rows * 24}
-        textareaProps={{ placeholder, disabled }}
-        previewOptions={{
-          remarkPlugins: [remarkBreaks],
-          components: MarkdownComponents as any,
-          ...previewOptions,
-        }}
-        {...props}
-      />
+      <Suspense fallback={<div>Chargement...</div>}>
+        <MDEditor
+          id={id}
+          value={value}
+          onChange={(val) => onChange?.(val ?? '')}
+          preview={preview}
+          height={rows * 24}
+          textareaProps={{ placeholder, disabled }}
+          previewOptions={{
+            remarkPlugins: [remarkBreaks],
+            components: MarkdownComponents as any,
+            ...previewOptions,
+          }}
+          {...props}
+        />
+      </Suspense>
     </div>
   )
 }
