@@ -10,6 +10,8 @@ import { TuyauProvider } from '@adonisjs/inertia/react'
 import { resolvePageComponent } from '@adonisjs/inertia/helpers'
 import { hydrate, QueryClientProvider } from '@tanstack/react-query'
 import { ReactElement } from 'react'
+import { ErrorBoundary } from 'react-error-boundary'
+import { ErrorFallback } from '@/shared/components/error-fallback'
 
 const appName = import.meta.env.VITE_APP_NAME || 'Archidiocèse de Los Santos'
 
@@ -39,11 +41,13 @@ createInertiaApp({
     }
 
     createRoot(el).render(
-      <QueryClientProvider client={queryClient}>
-        <TuyauProvider client={client}>
-          <App {...props} />
-        </TuyauProvider>
-      </QueryClientProvider>
+      <ErrorBoundary FallbackComponent={ErrorFallback}>
+        <QueryClientProvider client={queryClient}>
+          <TuyauProvider client={client}>
+            <App {...props} />
+          </TuyauProvider>
+        </QueryClientProvider>
+      </ErrorBoundary>
     )
   },
 })
