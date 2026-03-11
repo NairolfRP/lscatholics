@@ -1,10 +1,17 @@
 import { Button } from '@/shared/components/ui/button'
-import { type FallbackProps, getErrorMessage } from 'react-error-boundary'
+import { type FallbackProps } from 'react-error-boundary'
 import { AlertTriangle, RefreshCw, RotateCcw } from 'lucide-react'
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from './ui/card'
+import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from './ui/card'
 import { Separator } from '@/shared/components/ui/separator'
+import { lazy, Suspense } from 'react'
 
 type Props = FallbackProps
+
+const ErrorDetails = import.meta.env.DEV
+  ? lazy(() =>
+      import('@/shared/components/error-details.dev').then((m) => ({ default: m.ErrorDetails }))
+    )
+  : null
 
 export function ErrorFallback({ error, resetErrorBoundary }: Props) {
   return (
@@ -30,21 +37,10 @@ export function ErrorFallback({ error, resetErrorBoundary }: Props) {
           </div>
         </CardHeader>
 
-        {import.meta.env.DEV && (
-          <>
-            <Separator />
-            <CardContent className="pt-4">
-              <details className="group rounded-md border bg-muted overflow-hidden">
-                <summary className="cursor-pointer px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted/80 transition-colors select-none list-none flex items-center justify-between">
-                  Détails de l'erreur
-                  <span className="text-xs group-open:rotate-180 transition-transform">▾</span>
-                </summary>
-                <pre className="px-3 py-2 text-xs text-muted-foreground overflow-auto max-h-40 border-t">
-                  {getErrorMessage(error)}
-                </pre>
-              </details>
-            </CardContent>
-          </>
+        {import.meta.env.DEV && ErrorDetails && (
+          <Suspense>
+            <ErrorDetails error={error} />
+          </Suspense>
         )}
 
         <Separator />
