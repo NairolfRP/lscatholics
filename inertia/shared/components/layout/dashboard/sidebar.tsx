@@ -81,7 +81,12 @@ export default function DashboardSidebar() {
       >
         <Sheet>
           <SheetTrigger asChild>
-            <Button variant="ghost" size="icon">
+            <Button
+              variant="ghost"
+              size="icon"
+              aria-label="Ouvrir le menu de navigation"
+              title="Ouvrir le menu"
+            >
               <Menu className="h-6 w-6" />
             </Button>
           </SheetTrigger>
@@ -92,7 +97,7 @@ export default function DashboardSidebar() {
                   <span className="text-xl font-bold">LS Catholics</span>
                 </Link>
               </div>
-              <nav className="flex-1 space-y-1 px-3 py-4">
+              <nav className="flex-1 space-y-1 px-3 py-4" aria-label="Menu principal">
                 <DashboardNavLinks />
               </nav>
             </div>

@@ -80,6 +80,8 @@ export function DiscordConnection() {
                     variant="ghost"
                     size="sm"
                     className="cursor-pointer text-destructive hover:text-destructive"
+                    aria-label="Supprimer la connexion Discord"
+                    title="Délier le compte Discord"
                   >
                     <Unlink /> Délier
                   </Button>
