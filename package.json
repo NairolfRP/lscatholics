@@ -5,7 +5,7 @@
   "type": "module",
   "license": "LGPL-3.0-only",
   "engines": {
-    "node": ">=24.0.0"
+    "node": ">=24.14.0"
   },
   "description": "A web application for a Catholic Church roleplay project",
   "homepage": "https://github.com/NairolfRP/lscatholics#readme",
@@ -79,14 +79,14 @@
     "@tailwindcss/vite": "^4.2.1",
     "@types/leaflet": "^1.9.21",
     "@types/luxon": "^3.7.1",
-    "@types/node": "^25.3.3",
+    "@types/node": "^25.4.0",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@types/sinon": "^21.0.0",
     "@vitejs/plugin-react": "^5.1.4",
     "babel-plugin-react-compiler": "^1.0.0",
     "better-sqlite3": "^12.6.2",
-    "eslint": "^10.0.2",
+    "eslint": "^10.0.3",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^7.0.1",
     "hot-hook": "^1.0.0",
@@ -106,20 +106,20 @@
     "@adonisjs/core": "^7.0.1",
     "@adonisjs/cors": "^3.0.0",
     "@adonisjs/inertia": "^4.1.0",
-    "@adonisjs/lucid": "^22.0.0",
+    "@adonisjs/lucid": "^22.1.1",
     "@adonisjs/session": "^8.0.0",
     "@adonisjs/shield": "^9.0.0",
     "@adonisjs/static": "^2.0.0",
     "@adonisjs/vite": "^5.1.0",
     "@fontsource-variable/inter": "^5.2.8",
-    "@gtaw-oauth-providers/adonisjs-ally": "^2.0.5",
+    "@gtaw-oauth-providers/adonisjs-ally": "^2.0.6",
     "@inertiajs/react": "^2.3.17",
     "@internationalized/date": "^3.12.0",
     "@libsql/sqlite3": "^0.3.1",
     "@tanstack/react-form": "^1.28.4",
     "@tanstack/react-query": "^5.90.21",
     "@tanstack/react-table": "^8.21.3",
-    "@tuyau/core": "^1.1.0",
+    "@tuyau/core": "^1.2.1",
     "@tuyau/react-query": "^1.0.0",
     "@vinejs/vine": "^4.3.0",
     "class-variance-authority": "^0.7.1",
@@ -153,5 +153,5 @@
     ]
   },
   "prettier": "@adonisjs/prettier-config",
-  "packageManager": "pnpm@10.30.3+sha512.c961d1e0a2d8e354ecaa5166b822516668b7f44cb5bd95122d590dd81922f606f5473b6d23ec4a5be05e7fcd18e8488d47d978bbe981872f1145d06e9a740017"
+  "packageManager": "pnpm@10.32.1+sha512.a706938f0e89ac1456b6563eab4edf1d1faf3368d1191fc5c59790e96dc918e4456ab2e67d613de1043d2e8c81f87303e6b40d4ffeca9df15ef1ad567348f2be"
 }
