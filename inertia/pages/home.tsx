@@ -1,4 +1,4 @@
-import HomepageBanner from '@/assets/images/cathedral-mass-with-cardinal.png'
+import HomepageBanner from '@/assets/images/cathedral-mass-with-cardinal.webp'
 import { WhenVisible } from '@inertiajs/react'
 import { Link } from '@adonisjs/inertia/react'
 import { Calendar, CircleAlert, Heart, MapPin, NotebookPen } from 'lucide-react'

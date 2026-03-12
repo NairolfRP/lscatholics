@@ -3,8 +3,8 @@ import { Button } from '@/shared/components/ui/button'
 import { Typography } from '@/shared/components/ui/typography'
 import HeroSection from '@/shared/components/layout/default/hero-section'
 import FacebrowserIcon from '@/shared/components/svg/facebrowser'
-import ArchbishopPortrait from '@/assets/images/cardinal_callahan_officiel_portrait.png'
-import CoatOfArms from '@/assets/images/cardinal_callahan_armoiries.png'
+import ArchbishopPortrait from '@/assets/images/cardinal_callahan_officiel_portrait.webp'
+import CoatOfArms from '@/assets/images/cardinal_callahan_armoiries.webp'
 
 export default function ArchbishopPage() {
   return (

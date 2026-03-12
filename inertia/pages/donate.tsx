@@ -1,5 +1,5 @@
 import { InertiaProps } from '@/types'
-import DonateHero from '@/assets/images/donate-background.png'
+import DonateHero from '@/assets/images/donate-background.webp'
 import Head from '@/shared/components/app-head'
 import HeroSection from '@/shared/components/layout/default/hero-section'
 import { Typography } from '@/shared/components/ui/typography'

@@ -1,5 +1,5 @@
-import ArchbishopPortrait from '@/assets/images/cardinal_callahan_officiel_portrait.png'
-import VicarGeneralPortrait from '@/assets/images/don-benedetti.png'
+import ArchbishopPortrait from '@/assets/images/cardinal_callahan_officiel_portrait.webp'
+import VicarGeneralPortrait from '@/assets/images/don-benedetti.webp'
 
 export type DepartmentStaff = {
   id: string

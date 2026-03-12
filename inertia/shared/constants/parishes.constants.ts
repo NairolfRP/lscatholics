@@ -1,7 +1,7 @@
 import type { Parish } from '@/shared/types'
 import Cathedral from '@/assets/images/olscathedral.webp'
-import RockfordHillsChurch from '@/assets/images/rockfordhills_church.png'
-import Iglesia from '@/assets/images/iglesia.png'
+import RockfordHillsChurch from '@/assets/images/rockfordhills_church.webp'
+import Iglesia from '@/assets/images/iglesia.webp'
 
 export const parishes = [
   {
