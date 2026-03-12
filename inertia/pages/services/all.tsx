@@ -2,10 +2,10 @@ import Head from '@/shared/components/app-head'
 import { Link } from '@adonisjs/inertia/react'
 import { ArrowRight, Heart } from 'lucide-react'
 import { Card, CardContent, CardFooter } from '@/shared/components/ui/card'
-import { SERVICES } from '#shared/constants/services.constants'
 import { urlFor } from '@/client'
 import { cn } from '@/lib/utils'
 import HeroSection from '@/shared/components/layout/default/hero-section'
+import { CHURCH_SERVICES } from '@/features/church-services/constants/church_services.constants'
 
 export default function ServicesPage() {
   return (
@@ -23,7 +23,7 @@ export default function ServicesPage() {
       <section className="py-16">
         <div className="container max-w-7xl mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {SERVICES.map((service) => (
+            {CHURCH_SERVICES.map((service) => (
               <Link key={service.id} href={urlFor('services.single', { slug: service.slug })}>
                 <Card className="flex justify-between h-full bg-primary/10 card-hover text-center">
                   <CardContent className="p-6">

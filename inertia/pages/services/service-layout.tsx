@@ -3,16 +3,16 @@ import { Link } from '@adonisjs/inertia/react'
 import Head from '@/shared/components/app-head'
 import { Button } from '@/shared/components/ui/button'
 import { urlFor } from '@/client'
-import { SERVICES } from '#shared/constants/services.constants'
 import HeroSection from '@/shared/components/layout/default/hero-section'
+import { CHURCH_SERVICES } from '@/features/church-services/constants/church_services.constants'
 
 type Props = {
-  serviceId: (typeof SERVICES)[number]['id']
+  serviceId: (typeof CHURCH_SERVICES)[number]['id']
   children: React.ReactNode
 }
 
 export default function ServiceLayout({ serviceId, children }: Props) {
-  const service = SERVICES.find((s) => s.id === serviceId)
+  const service = CHURCH_SERVICES.find((s) => s.id === serviceId)
 
   if (!service) return <p>Une erreur est survenue</p>
 
