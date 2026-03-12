@@ -104,7 +104,13 @@ export default function EventSinglePage({ event }: PageProps) {
                 )}
 
                 {event.flyerUrl && (
-                  <img src={event.flyerUrl} alt="Event Flyer" width={791} height={1024} />
+                  <img
+                    src={event.flyerUrl}
+                    alt="Event Flyer"
+                    width={791}
+                    height={1024}
+                    loading="lazy"
+                  />
                 )}
               </div>
             </div>

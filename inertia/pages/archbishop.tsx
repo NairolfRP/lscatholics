@@ -100,6 +100,7 @@ export default function ArchbishopPage() {
               src={CoatOfArms}
               alt="Armoiries du Cardinal Callahan"
               className="md:float-right max-h-90 md:max-h-70 mx-auto md:mx-0"
+              loading="lazy"
             />
 
             <Typography className="text-justify">

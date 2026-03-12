@@ -89,6 +89,7 @@ export default function AboutPage() {
                     src={MassImage}
                     alt="People of God praying at Christmas Mass 2025"
                     className="w-full h-auto object-cover"
+                    loading="lazy"
                   />
                 </div>
               </div>
@@ -141,6 +142,7 @@ export default function AboutPage() {
                     src={LaPlacitaImage}
                     alt="La Placita, first church of Los Santos"
                     className="w-full h-auto object-cover"
+                    loading="lazy"
                   />
                 </div>
               </div>
@@ -208,6 +210,7 @@ export default function AboutPage() {
                       src={StJuniperoImage}
                       alt="St. Junìpero Serra, San Andreas Catholic Missions Founder"
                       className="w-full h-auto object-cover"
+                      loading="lazy"
                     />
                   </div>
                 </div>

@@ -82,6 +82,7 @@ const MarkdownComponents: ReactMarkdownComponents = {
       alt={alt}
       title={title}
       className="my-6 rounded-lg shadow-md max-w-full h-auto"
+      loading="lazy"
     />
   ),
   hr: () => <hr className="my-8 border-border" />,

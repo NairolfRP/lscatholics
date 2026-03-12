@@ -63,6 +63,7 @@ export default function DepartmentSinglePage({ departmentSlug }: PageProps) {
                     src={page.director.image}
                     alt="Director image"
                     className="max-w-full h-auto md:w-[20%]"
+                    loading="lazy"
                   />
                 ) : (
                   <div className="bg-linear-to-b from-secondary to-yellow-800 h-70 w-[20%]" />
