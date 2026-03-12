@@ -16,6 +16,20 @@ export default defineConfig({
     adonisjs({ entrypoints: ['inertia/app.tsx'], reload: ['resources/views/**/*.edge'] }),
   ],
 
+  build: {
+    minify: 'esbuild',
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes('node_modules/react-dom')) return 'vendor-react'
+          if (id.includes('node_modules/@tanstack')) return 'vendor-tanstack'
+          if (id.includes('node_modules/zod')) return 'vendor-zod'
+          if (id.includes('node_modules/axios')) return 'vendor-axios'
+        },
+      },
+    },
+  },
+
   /**
    * Define aliases for importing modules from
    * your frontend code
