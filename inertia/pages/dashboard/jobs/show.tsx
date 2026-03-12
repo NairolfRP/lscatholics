@@ -43,7 +43,7 @@ const formatSalary = (salary: number): string => {
     maximumFractionDigits: 0,
   }).format(salary)
 
-  return formatted.replace(/,/g, ' ').replace('$', '') + '$/semaine'
+  return formatted.replace(/,/g, ' ').replace(/\$/g, '') + '$/semaine'
 }
 
 export default function DashboardShowJobPostingPage({ job }: PageProps) {
