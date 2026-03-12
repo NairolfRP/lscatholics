@@ -3,27 +3,12 @@ import ReactMarkdown from 'react-markdown'
 import { Typography } from '@/shared/components/ui/typography'
 import { LinkText } from '@/shared/components/link-text'
 import { cn, slugify } from '@/lib/utils'
-import { type ComponentProps, lazy, Suspense } from 'react'
-import type { PreviewType } from '@uiw/react-md-editor'
 import remarkBreaks from 'remark-breaks'
 
 type MarkdownContentProps = {
   content: string
   className?: string
 }
-
-type MarkdownTextareaProps = ComponentProps<typeof MDEditor> & {
-  id?: string
-  value?: string
-  onChange?: (value: string) => void
-  placeholder?: string
-  disabled?: boolean
-  className?: string
-  rows?: number
-  preview?: PreviewType
-}
-
-export const MDEditor = lazy(() => import('@uiw/react-md-editor'))
 
 function HeadingLink({
   children,
@@ -79,6 +64,11 @@ const MarkdownComponents: ReactMarkdownComponents = {
   strong: ({ children }) => <strong className="font-semibold">{children}</strong>,
   em: ({ children }) => <em className="italic">{children}</em>,
   a: ({ href, title, children }) => {
+    const isSafe = href?.startsWith('http') || href?.startsWith('/')
+    if (!isSafe) {
+      return <span>{children}</span>
+    }
+
     const isExternal = href?.startsWith('http://') || href?.startsWith('https://')
     return (
       <LinkText href={href ?? '#'} external={isExternal} title={title ?? undefined}>
@@ -123,38 +113,4 @@ function MarkdownContent({ content, className }: MarkdownContentProps) {
   )
 }
 
-function MarkdownTextarea({
-  id,
-  value = '',
-  onChange,
-  placeholder = 'Écrivez votre contenu en Markdown...',
-  disabled = false,
-  className,
-  rows = 10,
-  preview = 'live',
-  previewOptions,
-  ...props
-}: MarkdownTextareaProps) {
-  return (
-    <div aria-invalid="true" className={cn(' relative w-full', className)}>
-      <Suspense fallback={<div>Chargement...</div>}>
-        <MDEditor
-          id={id}
-          value={value}
-          onChange={(val) => onChange?.(val ?? '')}
-          preview={preview}
-          height={rows * 24}
-          textareaProps={{ placeholder, disabled }}
-          previewOptions={{
-            remarkPlugins: [remarkBreaks],
-            components: MarkdownComponents as any,
-            ...previewOptions,
-          }}
-          {...props}
-        />
-      </Suspense>
-    </div>
-  )
-}
-
-export { MarkdownContent, MarkdownTextarea }
+export { MarkdownContent }

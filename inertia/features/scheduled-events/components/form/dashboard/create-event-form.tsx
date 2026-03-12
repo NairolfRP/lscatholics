@@ -26,7 +26,7 @@ import {
 import { Button } from '@/shared/components/ui/button'
 import { Input } from '@/shared/components/ui/input'
 import { Textarea } from '@/shared/components/ui/textarea'
-import { MarkdownTextarea } from '@/shared/components/ui/markdown'
+import { MarkdownTextarea } from '@/shared/components/ui/markdown-textarea'
 import { Link } from '@adonisjs/inertia/react'
 import { serverErrorsFormConvertor } from '@/lib/utils'
 import { DASHBOARD_EVENT_FORMS_ID } from '@/features/scheduled-events/constants/dashboard_events.constants'
@@ -240,9 +240,9 @@ export function CreateEventForm() {
                             id={field.name}
                             value={field.state.value}
                             onChange={(v) => field.handleChange(v ?? '')}
+                            onBlur={field.handleBlur}
                             placeholder="Description de l'événement"
                             rows={12}
-                            preview="live"
                             aria-invalid={isInvalid}
                           />
                           {isInvalid && <FieldError errors={field.state.meta.errors} />}
