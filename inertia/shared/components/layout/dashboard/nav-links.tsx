@@ -65,7 +65,9 @@ export default function DashboardNavLinks() {
         <Link
           key={item.route}
           href={
-            hasRoute(item.route.replace('*', '')) ? urlFor(item.route.replace('*', '') as any) : '#'
+            hasRoute(item.route.replace(/\*/g, ''))
+              ? urlFor(item.route.replace(/\*/g, '') as any)
+              : '#'
           }
           className={navLinkClasses(item.route)}
         >
