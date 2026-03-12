@@ -45,7 +45,7 @@ function formatSalary(salary: number): string {
     })
       .format(salary)
       .replace(/,/g, ' ')
-      .replace('$', '') + '$/semaine'
+      .replace(/\$/g, '') + '$/semaine'
   )
 }
 
