@@ -16,76 +16,237 @@ export default function PrivacyPage() {
       <section className="container mx-auto max-w-7xl text-justify py-16">
         <Alert variant="info" className="mb-5">
           <AlertDescription>
-            Contrairement au reste du site, cette page n'est pas fictive.
+            Contrairement au reste de l'application, cette page n'est pas fictive. Elle décrit les
+            données réelles collectées et traitées par cette application.
           </AlertDescription>
         </Alert>
 
-        <Typography variant="h2">Informations collectées</Typography>
+        <Typography variant="h2">Préambule</Typography>
         <Typography className="not-first:mt-2">
-          Lors de l'utilisation de notre site, nous collectons uniquement les informations
-          nécessaires à l&apos;authentification des utilisateurs via l'API de{' '}
+          Cette application a été créée pour la faction{' '}
+          <span className="font-bold">Archidiocèse de Los Santos</span>, un projet de jeu de rôle
+          (roleplay) sur le serveur de jeu{' '}
           <LinkText external href="https://gta.world/" target="_blank">
             GTA World
           </LinkText>
-          . Après l'inscription, l'utilisateur peut aussi, de manière optionnelle, lier son compte
-          utilisateur{' '}
-          <LinkText external href="https://discord.com/" target="_blank">
-            Discord
+          . Il n'est ni affilié ni un produit officiel de la marque GTA World. Cette politique de
+          confidentialité explique comment nous collectons, utilisons et protégeons vos données
+          personnelles conformément au Règlement (UE) 2016/679 du 27 avril 2016 (RGPD) et à la Loi
+          informatique et Libertés du 6 janvier 1978.
+        </Typography>
+
+        <Typography variant="h2" className="mt-10">
+          1. Responsable du traitement
+        </Typography>
+        <Typography className="not-first:mt-2">
+          Le responsable du traitement de vos données est le créateur et développeur de cette
+          application. Pour toute question, vous pouvez le contacter via Discord :{' '}
+          <span className="font-bold">nairolf.rp</span> ou par{' '}
+          <LinkText
+            external
+            href="https://forum-fr.gta.world/profile/11040-nairolf/"
+            target="_blank"
+          >
+            messagerie privée
+          </LinkText>{' '}
+          sur le forum GTA World.
+        </Typography>
+
+        <Typography variant="h2" className="mt-10">
+          2. Données collectées
+        </Typography>
+        <Typography className="not-first:mt-2">
+          Notre application collecte les informations minimales et nécessaires pour son
+          fonctionnement :
+        </Typography>
+        <Typography variant="list" className="my-4">
+          <li>
+            <strong>Identifiants GTA World :</strong> Votre nom d'utilisateur, votre identifiant
+            unique et la liste de vos personnages en jeu, fournis lors de l'authentification via l'
+            <LinkText
+              external
+              href="https://forum.gta.world/en/topic/141258-gta-world-oauth-api-documentation-updated-march-1st-2025/"
+              target="_blank"
+            >
+              API de GTA World
+            </LinkText>
+          </li>
+          <li>
+            <strong>Tokens d'authentification :</strong> Tokens d'accès et de rafraîchissement
+            nécessaires pour maintenir votre session connectée
+          </li>
+          <li>
+            <strong>Données Discord (optionnelles) :</strong> Si vous choisissez de lier votre
+            compte Discord, nous collectons les informations minimales (identifiant et pseudonyme)
+          </li>
+        </Typography>
+
+        <Typography variant="h2" className="mt-10">
+          3. Tiers et Sous-Traitants
+        </Typography>
+        <Typography className="not-first:mt-2 font-bold">
+          Vos données personnelles ne sont jamais vendues, partagées, ni louées à des tiers à des
+          fins commerciales ou marketing.
+        </Typography>
+        <Typography className="not-first:mt-2">
+          Les seules entités ayant accès à vos données sont les partenaires techniques
+          indispensables au fonctionnement de l'application, listés ci-dessous :
+        </Typography>
+        <Typography variant="list" className="my-4">
+          <li>
+            <strong>
+              <LinkText external href="https://global.gta.world/privacy" target="_blank">
+                GTA World
+              </LinkText>
+            </strong>{' '}
+            : Fournisseur d'authentification OAuth. Vos identifiants et données de compte sont gérés
+            par leur API et infrastructure
+          </li>
+          <li>
+            <strong>
+              <LinkText external href="https://umami.is/privacy" target="_blank">
+                Umami Analytics
+              </LinkText>
+            </strong>{' '}
+            : Collecte des données analytiques anonymisées sur votre navigation (pas de collecte
+            d'informations personnelles)
+          </li>
+          <li>
+            <strong>
+              <LinkText external href="https://turso.tech/privacy-policy" target="_blank">
+                Turso
+              </LinkText>
+            </strong>{' '}
+            : Hébergeur de base de données qui stocke vos identifiants localement (infrastructure
+            chiffrée)
+          </li>
+          <li>
+            <strong>
+              <LinkText external href="https://render.com/privacy" target="_blank">
+                Render.com
+              </LinkText>
+            </strong>{' '}
+            : Hébergeur de l'application web
+          </li>
+        </Typography>
+        <Typography className="not-first:mt-2 mt-4">
+          <strong>Important :</strong> Consultez les politiques de confidentialité de ces tiers pour
+          comprendre comment ils traitent vos données.
+        </Typography>
+
+        <Typography variant="h2" className="mt-10">
+          4. Analyse avec Umami
+        </Typography>
+        <Typography className="not-first:mt-2">
+          Nous utilisons{' '}
+          <LinkText external href="https://umami.is/" target="_blank">
+            Umami
           </LinkText>
-          . Les données collectées sont les suivantes :
+          , un outil d'analytique respectueux de la vie privée. Umami collecte des données
+          anonymisées sur votre navigation (pages visitées, temps de visite, appareil){' '}
+          <strong>sans</strong> collecter d'informations personnelles identifiantes. Aucun cookie
+          n'est utilisé pour cela. Consultez la{' '}
+          <LinkText external href="https://umami.is/privacy" target="_blank">
+            politique de confidentialité d'Umami
+          </LinkText>{' '}
+          pour plus de détails.
+        </Typography>
+
+        <Typography variant="h2" className="mt-10">
+          5. Utilisation des données
+        </Typography>
+        <Typography className="not-first:mt-2">
+          Vos données sont utilisées exclusivement pour :
+        </Typography>
+        <Typography variant="list" className="my-4">
+          <li>Vous authentifier et maintenir votre session connectée</li>
+          <li>Gérer et personnaliser votre compte utilisateur</li>
+          <li>Identifier votre rôle et vos permissions</li>
+        </Typography>
+
+        <Typography variant="h2" className="mt-10">
+          6. Conservation des données
+        </Typography>
+        <Typography variant="list" className="not-first:mt-2">
+          <li>
+            <strong>Données d'authentification :</strong> Conservées tant que votre compte existe.
+            Vous pouvez demander la suppression de votre compte et de toutes vos données associées à
+            tout moment.
+          </li>
+          <li>
+            <strong>Tokens d'accès :</strong> Rafraîchis lors de chaque connexion. Les anciens
+            tokens expirent automatiquement après leur date d'expiration.
+          </li>
+        </Typography>
+
+        <Typography variant="h2" className="mt-10">
+          7. Sécurité des données
+        </Typography>
+        <Typography className="not-first:mt-2">
+          Nous mettrons en place les mesures de sécurité suivantes pour protéger vos données :
+        </Typography>
+        <Typography variant="list" className="my-4">
+          <li>Communications chiffrées en HTTPS/TLS</li>
+          <li>Base de données chiffrée chez Turso</li>
+          <li>Authentification OAuth2 sécurisée (délégation à GTA World)</li>
+          <li>Tokens d'authentification chiffrés avant stockage</li>
+        </Typography>
+        <Typography className="not-first:mt-2 mt-4">
+          Cependant, aucun système n'est 100% sécurisé. Nous vous recommandons de maintenir la
+          confidentialité de votre mot de passe GTA World et de ne pas le partager. En cas de doute,
+          changez votre mot de passe sur la plateforme de GTA World et révoquez les sessions
+          actives. Nous ne serons pas responsables des accès non autorisés résultant de la
+          compromission de vos identifiants GTA World.
+        </Typography>
+
+        <Typography variant="h2" className="mt-10">
+          8. Vos droits
+        </Typography>
+        <Typography className="not-first:mt-2">
+          Conformément aux réglementations européennes et françaises en vigueur, vous disposez d'un
+          droit d'accès, de rectification et d'effacement de vos données.
         </Typography>
         <Typography variant="list" className="my-4">
           <li>
-            <strong>Nom d'utilisateur :</strong> pseudonyme GTA World
+            <strong>Suppression immédiate</strong> : Vous pouvez à tout moment supprimer
+            instantanément votre compte et les données associées depuis vos paramètres de compte.
+            Cette action ne peut pas être annulée.
           </li>
           <li>
-            <strong>Identifiant unique :</strong> ID du compte GTA World
+            <strong>Accès aux données</strong> : Vous pouvez demander à voir quelles données nous
+            avons collectées sur vous.
+          </li>
+          <li>
+            <strong>Données GTA World :</strong> Pour les informations provenant de votre compte GTA
+            World, vous devez les gérer directement sur leur plateforme.
+          </li>
+          <li>
+            <strong>Autre demande :</strong> Pour toute question, contactez le responsable du
+            traitement mentionné ci-dessus (section 1).
           </li>
         </Typography>
+
+        <Typography variant="h2" className="mt-10">
+          9. Cookies et technologies similaires
+        </Typography>
         <Typography className="not-first:mt-2">
-          Ces informations sont utilisées exclusivement pour l'identification et la gestion des
-          comptes sur notre site.
+          Notre application utilise des cookies de session pour maintenir votre authentification et
+          votre connexion. Ces cookies sont nécessaires au fonctionnement de l'application et ne
+          contiennent pas d'informations personnelles sensibles au-delà de votre identifiant de
+          session.
         </Typography>
 
         <Typography variant="h2" className="mt-10">
-          Utilisation des Données
+          10. Modifications de cette politique
         </Typography>
         <Typography className="not-first:mt-2">
-          Les informations collectées servent uniquement à :
-        </Typography>
-        <Typography variant="list" className="my-4">
-          <li>Permettre l'accès sécurisé aux fonctionnalités du site</li>
-          <li>Gérer et maintenir votre compte utilisateur</li>
-        </Typography>
-        <Typography className="not-first:mt-2">
-          Aucune autre information n'est demandée ni stockée, et vos données ne sont jamais
-          partagées ni vendues à des tiers.
+          Cette politique de confidentialité peut être mise à jour à tout moment pour refléter les
+          changements de nos pratiques, de la législation ou des services tiers utilisés. La date de
+          dernière mise à jour est visible en bas de cette page.
         </Typography>
 
-        <Typography variant="h2" className="mt-10">
-          Cookies
-        </Typography>
-        <Typography className="not-first:mt-2">
-          Notre site utilise des cookies pour permettre une connexion sécurisée et maintenir la
-          session utilisateur. Ces cookies sont nécessaires au bon fonctionnement du site et ne
-          contiennent pas d'informations personnelles sensibles.
-        </Typography>
-
-        <Typography variant="h2" className="mt-10">
-          Suppression des Comptes
-        </Typography>
-        <Typography className="not-first:mt-2">
-          Vous avez la possibilité de supprimer votre compte à tout moment depuis les paramètres de
-          votre profil. La suppression de votre compte entraîne la suppression définitive de toutes
-          les informations associées (nom d'utilisateur et identifiant unique).
-        </Typography>
-
-        <Typography variant="h2" className="mt-10">
-          Modifications de cette Politique
-        </Typography>
-        <Typography className="not-first:mt-2">
-          Cette politique de confidentialité peut être mise à jour pour refléter les changements de
-          nos pratiques ou des exigences légales.
+        <Typography className="mt-10 text-sm text-gray-500">
+          <strong>Dernière mise à jour :</strong> 13 mars 2026
         </Typography>
       </section>
     </>
