@@ -34,7 +34,7 @@ export default function ArchbishopPage() {
                 />
 
                 <a
-                  href="https://facebrowser.gta.world/CardinalCallahan"
+                  href="https://face-fr.gta.world/profile/cardinalcallahan"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="mx-auto w-auto"

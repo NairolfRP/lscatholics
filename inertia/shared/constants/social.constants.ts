@@ -16,17 +16,17 @@ export type SocialMedia = {
 }
 
 export const SOCIAL_MEDIAS_COLORS_CLASSES = {
-  facebrowser: 'bg-red-400 hover:bg-red-500',
-  youtube: 'bg-red-600 hover:bg-red-700',
-  discord: 'bg-blue-600 hover:bg-blue-700',
-  github: 'bg-[#181717] hover:bg-[#4752c4]',
+  facebrowser: 'bg-[#F5A800] hover:bg-yellow-600 text-white',
+  youtube: 'bg-red-600 hover:bg-red-700 text-white',
+  discord: 'bg-blue-600 hover:bg-blue-700 text-white',
+  github: 'bg-[#181717] hover:bg-[#4752c4] text-white',
 }
 
 export const SOCIAL_FACEBROWSER: SocialMedia = {
   id: 'facebrowser',
   title: 'Suivre LSCatholics sur Facebrowser',
   colorClasses: SOCIAL_MEDIAS_COLORS_CLASSES.facebrowser,
-  url: 'https://facebrowser.gta.world/pages/LSCatholics',
+  url: 'https://face-fr.gta.world/page/lscatholics',
   icon: FacebrowserIcon,
 }
 
