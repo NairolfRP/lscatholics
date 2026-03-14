@@ -18,18 +18,20 @@ export default class Post extends NewsSchema {
   declare author: BelongsTo<typeof User>
 
   @beforeCreate()
-  static async assignSlugIfEmpty(article: Post) {
-    if (article.status === 'published' && !article.publishedAt) {
-      article.publishedAt = DateTime.fromJSDate(new Date())
+  static async assignSlugIfEmpty(post: Post) {
+    if (post.status === 'published' && !post.publishedAt) {
+      post.publishedAt = DateTime.fromJSDate(new Date())
     }
 
-    if (!article.slug) {
-      article.slug = article.title
+    if (!post.slug) {
+      const base = post.title
         .toLowerCase()
         .normalize('NFD')
         .replace(/[\u0300-\u036f]/g, '')
         .replace(/[^a-z0-9]+/g, '-')
         .replace(/^-+|-+$/g, '')
+
+      post.slug = await Post.generateUniqueSlug(base)
     }
   }
 
@@ -50,5 +52,14 @@ export default class Post extends NewsSchema {
       .where('status', 'draft')
       .where('authorId', user.id)
       .orderBy('createdAt', 'desc')
+  }
+
+  static async generateUniqueSlug(base: string): Promise<string> {
+    let slug = base
+    let i = 2
+    while (await Post.findBy('slug', slug)) {
+      slug = `${base}-${i++}`
+    }
+    return slug
   }
 }

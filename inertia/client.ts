@@ -1,6 +1,17 @@
 import { createTuyau } from '@tuyau/core/client'
 import { registry } from '@generated/registry'
-import { usePage } from '@inertiajs/vue3'
+import { QueryClient } from '@tanstack/react-query'
+import { createTuyauReactQueryClient } from '@tuyau/react-query'
+
+export const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 1000 * 60 * 5,
+      retry: 3,
+      refetchOnWindowFocus: false,
+    },
+  },
+})
 
 export const client = createTuyau({
   baseUrl: import.meta.env.VITE_APP_URL || 'http://localhost:3333',
@@ -8,29 +19,22 @@ export const client = createTuyau({
   headers: { Accept: 'application/json' },
   credentials: 'include',
 })
+export const api = createTuyauReactQueryClient({ client })
 
 export const urlFor = client.urlFor
 
-/**
- * Temporary utilities - waiting for the ‘has’ and ‘current’ properties to be added back to Tuyau
- */
-export const hasRoute = (route: string) => {
-  try {
-    return route in registry.routes
-  } catch {
-    return false
+export const currentRoute = () => client.current()
+
+export const isCurrentRoute = (
+  routeName: keyof typeof registry.routes,
+  options?: {
+    params?: Record<string, any>
+    query?: Record<string, any>
   }
+) => {
+  return client.current(routeName, options)
 }
-export const isCurrentRoute = (routeName: string) => {
-  const page = usePage()
-  const current = page.props.currentRoute as string | undefined
 
-  if (!current) return false
-
-  if (routeName.endsWith('*')) {
-    const prefix = routeName.replace('*', '')
-    return current.startsWith(prefix)
-  }
-
-  return current === routeName
+export const hasRoute = (routeName: string) => {
+  return client.has(routeName as any)
 }

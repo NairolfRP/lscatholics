@@ -2,8 +2,12 @@ import type { HttpContext } from '@adonisjs/core/http'
 import { createRegisterParishionerValidator } from '#pages/validators/register_parishioner'
 import env from '#start/env'
 import { RegisterParishionerService } from '#pages/services/register_parishioner_service'
+import { inject } from '@adonisjs/core'
 
+@inject()
 export default class RegisterParishionersController {
+  constructor(protected service: RegisterParishionerService) {}
+
   index({ inertia }: HttpContext) {
     return inertia.render('register-parishioner', {})
   }
@@ -14,7 +18,7 @@ export default class RegisterParishionersController {
     try {
       const webhookUrl = env.get('DISCORD_PARISHIONER_REGISTRATION')
 
-      const result = await RegisterParishionerService.register(webhookUrl, payload)
+      const result = await this.service.register(webhookUrl, payload)
 
       if (!result.success) {
         logger.error({ error: result.error }, 'Failed to register parishioner')

@@ -29,13 +29,13 @@ export default class ScheduledEventsController {
         })
         .orderBy('start_date', 'asc')
 
-      return inertia.render('events/all', {
+      return inertia.render('scheduled_events/index', {
         events: ScheduledEventTransformer.transform(data).useVariant('publicList'),
         error: false,
       })
     } catch (error) {
       logger.error({ err: error }, 'Failed to load events')
-      return inertia.render('events/all', {
+      return inertia.render('scheduled_events/index', {
         events: [],
         error: true,
       })
@@ -66,7 +66,7 @@ export default class ScheduledEventsController {
       throw new Exception('Not found', { status: 404 })
     }
 
-    return inertia.render('events/single', {
+    return inertia.render('scheduled_events/single', {
       event: ScheduledEventTransformer.transform(event).useVariant('publicDetails'),
     })
   }

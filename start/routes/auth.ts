@@ -6,20 +6,7 @@ router
   .group(() => {
     router.get('/redirect/gtaw', [controllers.auth.Auth, 'redirectToProvider']).as('signIn')
     router.get('/callback/gtaw', [controllers.auth.Auth, 'handleCallback'])
-    router
-      .delete('/delete-user', [controllers.auth.Auth, 'deleteUser'])
-      .use(middleware.auth())
-      .as('deleteUser')
     router.post('/logout', [controllers.auth.Auth, 'logout']).use(middleware.auth()).as('logout')
-
-    router
-      .get('/list-characters', [controllers.characters.Characters, 'listCharacters'])
-      .use(middleware.auth())
-      .as('listCharacters')
-    router
-      .patch('/current-character', [controllers.characters.Characters, 'switchCharacter'])
-      .use(middleware.auth())
-      .as('switchCharacter')
 
     router
       .get('/redirect/discord', [controllers.auth.Auth, 'redirectToDiscord'])
@@ -36,4 +23,11 @@ router
   })
   .prefix('api/auth')
 
-router.get('/profile', [controllers.users.Profile, 'show']).use(middleware.auth()).as('profile')
+router
+  .group(() => {
+    router.get('/settings', [controllers.users.Account, 'edit']).as('settings')
+    router.delete('/delete', [controllers.users.Account, 'delete']).as('delete')
+  })
+  .prefix('/account')
+  .use(middleware.auth())
+  .as('account')

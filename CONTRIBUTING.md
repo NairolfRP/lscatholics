@@ -14,9 +14,10 @@ Before getting started, make sure you have:
   - **TypeScript** for type-safe code
   - **AdonisJS** for backend development
   - **Inertia.js** to connect the backend to the frontend
-  - **Vue.js 3.0** with API composition (setup)
-  - **TailwindCSS** for the style
-  - **Shadcn/vue** for the UI components
+  - **React 19** with hooks and functional components
+  - **TailwindCSS v4** for styling
+  - **shadcn/ui** for UI components
+  - **@tanstack/react-form** and **Zod** for form handling and validation
   - **Conventional Commits** for commit messages ([Learn more here](https://www.conventionalcommits.org/en/v1.0.0/))
   - **ESLint** and **Prettier** for linting and code formatting
 

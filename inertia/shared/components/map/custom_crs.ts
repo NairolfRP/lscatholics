@@ -1,12 +1,11 @@
-import type { CRS, LatLng } from 'leaflet'
+import L, { type CRS, type LatLng } from 'leaflet'
 
 const centerX = 117.3
 const centerY = 172.8
 const scaleX = 0.02072
 const scaleY = 0.0205
 
-export async function getCustomCRS(): Promise<CRS> {
-  const L = await import('leaflet')
+export const CustomCRS: () => CRS = () => {
   return L.Util.extend({}, L.CRS.Simple, {
     projection: L.Projection.LonLat,
     scale: function (zoom: number) {
@@ -25,4 +24,4 @@ export async function getCustomCRS(): Promise<CRS> {
   })
 }
 
-export type GTAVCRS = ReturnType<typeof getCustomCRS>
+export type GTA5CRS = ReturnType<typeof CustomCRS>

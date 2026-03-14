@@ -1,4 +1,4 @@
-import * as abilities from '#users/abilities/main'
+import { abilities } from '#users/abilities/main'
 import { policies } from '#generated/policies'
 
 import { Bouncer } from '@adonisjs/bouncer'

@@ -29,11 +29,10 @@ export default class JobApplicationsController {
 
     const job = await this.fetchJob(slug)
 
-    const isExpired = !!(job.expiresAt && job.expiresAt >= DateTime.now())
+    //const isExpired = !!(job.expiresAt && job.expiresAt < DateTime.now())
 
     return inertia.render('jobs/application', {
       job: JobPostingTransformer.transform(job).useVariant('employmentApplication'),
-      isExpired,
     })
   }
 

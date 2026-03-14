@@ -32,7 +32,7 @@ export class ExcerptGenerator {
 
     cleaned = cleaned.replace(/^[-*_]{3,}$/gm, '')
 
-    cleaned = cleaned.replace(/<[^>]*>/g, '')
+    cleaned = cleaned.replace(/[<>]/g, '')
 
     cleaned = cleaned.replace(/\n\s*\n/g, '\n')
     cleaned = cleaned.replace(/\s+/g, ' ')

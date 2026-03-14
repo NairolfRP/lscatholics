@@ -6,9 +6,12 @@ import {
   genderSchema,
   lastnameSchema,
   maritalStatusSchema,
+  phoneSchema,
+  phoneSchemaOptional,
 } from '@/shared/schemas/common.schema'
 import {
   catholicOrOtherIds,
+  getBaptizedOptionsIds,
   householdRoleIds,
   individualSacramentIds,
 } from '#shared/constants/person.constants'
@@ -44,25 +47,8 @@ export const parishionerSchema = z.object({
     .string()
     .max(20, { error: "L'activité ne peut pas dépasser 200 caractères." })
     .optional(),
-  phone: z.string().refine(
-    (val) => {
-      if (!val || val.trim() === '') return false
-      const digitsOnly = val.replace(/\s/g, '')
-      return /^\d{3,8}$/.test(digitsOnly)
-    },
-    { error: 'Le numéro de téléphone doit contenir entre 3 et 8 chiffres.' }
-  ),
-  emergencyPhone: z
-    .string()
-    .optional()
-    .refine(
-      (val) => {
-        if (!val || val.trim() === '') return true
-        const digitsOnly = val.replace(/\s/g, '')
-        return /^\d{3,8}$/.test(digitsOnly)
-      },
-      { error: "Le numéro de téléphone d'urgence doit contenir entre 3 et 8 chiffres." }
-    ),
+  phone: phoneSchema,
+  emergencyPhone: phoneSchemaOptional,
   address: z
     .string({
       error: (issue) =>
@@ -72,7 +58,7 @@ export const parishionerSchema = z.object({
     .min(10, { error: "L'adresse doit contenir au minimum 10 caractères." })
     .max(60, { error: "L'adresse ne peut pas dépasser 60 caractères." }),
   district: districtSchema,
-  baptized: z.enum(['yes', 'no', 'unsure'], { error: 'Veuillez sélectionner une réponse valide.' }),
+  baptized: z.enum(getBaptizedOptionsIds(), { error: 'Veuillez sélectionner une réponse valide.' }),
   religion: z.enum(catholicOrOtherIds(), {
     error: 'Veuillez sélectionner une réponse valide.',
   }),

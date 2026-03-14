@@ -4,15 +4,16 @@ import type { Character, CurrentCharacter } from '#characters/types/character'
 import { GTAWorldCharacter } from '@gtaw-oauth-providers/adonisjs-ally'
 import app from '@adonisjs/core/services/app'
 import type User from '#users/models/user'
+import { createCharacterSessionValidator } from '#characters/validators/character'
 
 @inject()
 export default class CharacterService {
-  private readonly CURRENT_CHARACTER_SESSION_KEY = 'current_character'
-  private readonly MAX_AGE = 24 * 60 * 60 * 1000
+  readonly #CURRENT_CHARACTER_SESSION_KEY = 'current_character'
+  readonly #MAX_AGE = 24 * 60 * 60 * 1000
 
   constructor(protected ctx: HttpContext) {}
 
-  private async getCharacterCacheService() {
+  async #getCharacterCacheService() {
     return await app.container.make('characterCache')
   }
 
@@ -24,10 +25,10 @@ export default class CharacterService {
     const user = this.ctx.auth.user
 
     try {
-      const characterCache = await this.getCharacterCacheService()
+      const characterCache = await this.#getCharacterCacheService()
 
       return await characterCache.getCachedUserCharacters(user.id.toString(), () =>
-        this.fetchCharactersFromAPI()
+        this.#fetchCharactersFromAPI()
       )
     } catch (error) {
       this.ctx.logger.error(
@@ -45,12 +46,12 @@ export default class CharacterService {
       throw new Error('Cannot set user characters for undefined user.')
     }
 
-    const characterCache = await this.getCharacterCacheService()
+    const characterCache = await this.#getCharacterCacheService()
 
     characterCache.cacheCharacters(user.id.toString(), characters)
   }
 
-  private async fetchCharactersFromAPI(): Promise<GTAWorldCharacter[]> {
+  async #fetchCharactersFromAPI(): Promise<GTAWorldCharacter[]> {
     const user = this.ctx.auth.user!
 
     await user.loadOnce('accounts')
@@ -76,6 +77,11 @@ export default class CharacterService {
       throw new Error('Failed to fetch user from Oauth API.')
     }
 
+    if (!userFromApi.original.character || userFromApi.original.character.length === 0) {
+      await this.ctx.auth.use('web').logout()
+      throw new Error('No characters found on GTA World account.')
+    }
+
     const isSameOwner =
       Number(account.accountId) === Number(userFromApi.original.character[0].memberid)
 
@@ -97,10 +103,10 @@ export default class CharacterService {
 
     const userId = this.ctx.auth.user.id.toString()
 
-    const characterCache = await this.getCharacterCacheService()
+    const characterCache = await this.#getCharacterCacheService()
 
     return characterCache.isCharacterOwnedByUser(userId, characterId, () =>
-      this.fetchCharactersFromAPI()
+      this.#fetchCharactersFromAPI()
     )
   }
 
@@ -111,7 +117,7 @@ export default class CharacterService {
       selectedAt: Date.now(),
     }
 
-    this.ctx.session.put(this.CURRENT_CHARACTER_SESSION_KEY, currentCharacter)
+    this.ctx.session.put(this.#CURRENT_CHARACTER_SESSION_KEY, currentCharacter)
 
     this.ctx.logger.debug('Current character set for user id %s: %o', this.ctx.auth.user?.id, {
       characterId: character.id,
@@ -120,41 +126,50 @@ export default class CharacterService {
   }
 
   async getCurrentCharacter(): Promise<Character | null> {
-    const currentCharater = this.ctx.session.get(
-      this.CURRENT_CHARACTER_SESSION_KEY
-    ) as CurrentCharacter | null
+    const raw = this.ctx.session.get(this.#CURRENT_CHARACTER_SESSION_KEY)
 
-    if (!currentCharater) {
+    try {
+      const currentCharacter = await createCharacterSessionValidator.validate(raw)
+
+      if (this.isStale(currentCharacter.selectedAt)) {
+        const characters = await this.getUserCharacters()
+
+        if (!characters || characters.length === 0) {
+          await this.ctx.auth.use('web').logout()
+          return null
+        }
+
+        const reselectedCharacter = characters.find((c) => c.id === currentCharacter.id)
+
+        if (!reselectedCharacter) {
+          const newCurrentCharacter = characters[0]
+
+          this.setCurrentCharacter(newCurrentCharacter)
+
+          return newCurrentCharacter
+        }
+
+        if (
+          reselectedCharacter.firstname !== currentCharacter.data.firstname ||
+          reselectedCharacter.lastname !== currentCharacter.data.lastname
+        ) {
+          this.setCurrentCharacter(reselectedCharacter)
+        }
+
+        return reselectedCharacter
+      }
+
+      return currentCharacter.data
+    } catch (err) {
+      this.ctx.logger.warn({ err }, 'Invalid session character data, clearing')
+      this.ctx.session.forget(this.#CURRENT_CHARACTER_SESSION_KEY)
       return null
     }
-
-    if (this.isStale(currentCharater.selectedAt)) {
-      const characters = await this.getUserCharacters()
-
-      if (!characters) {
-        this.ctx.auth.use('web').logout()
-        return null
-      }
-
-      const newCurrentCharacter = characters.at(0) as Character
-
-      if (
-        newCurrentCharacter.id !== currentCharater.id &&
-        newCurrentCharacter.firstname !== currentCharater.data.firstname &&
-        newCurrentCharacter.lastname !== currentCharater.data.lastname
-      ) {
-        this.setCurrentCharacter(newCurrentCharacter)
-      }
-
-      return newCurrentCharacter
-    }
-
-    return currentCharater.data
   }
 
   async updateCurrentCharacter(updatedCharacrer: Character) {
     const current = this.ctx.session.get(
-      this.CURRENT_CHARACTER_SESSION_KEY
+      this.#CURRENT_CHARACTER_SESSION_KEY
     ) as CurrentCharacter | null
 
     if (!current || current.id !== updatedCharacrer.id) {
@@ -167,10 +182,10 @@ export default class CharacterService {
       selectedAt: Date.now(),
     }
 
-    this.ctx.session.put(this.CURRENT_CHARACTER_SESSION_KEY, updated)
+    this.ctx.session.put(this.#CURRENT_CHARACTER_SESSION_KEY, updated)
 
     if (this.ctx.auth.user) {
-      const characterCache = await this.getCharacterCacheService()
+      const characterCache = await this.#getCharacterCacheService()
       characterCache.invalidateUserCharacters(this.ctx.auth.user.id.toString())
     }
 
@@ -178,11 +193,11 @@ export default class CharacterService {
   }
 
   async clearCurrentCharacter() {
-    this.ctx.session.forget(this.CURRENT_CHARACTER_SESSION_KEY)
+    this.ctx.session.forget(this.#CURRENT_CHARACTER_SESSION_KEY)
     this.ctx.logger.debug(`Current character cleared for user %s`, this.ctx.auth.user?.id)
 
     if (this.ctx.auth.user) {
-      const characterCache = await this.getCharacterCacheService()
+      const characterCache = await this.#getCharacterCacheService()
       characterCache.invalidateUserCharacters(this.ctx.auth.user.id.toString())
     }
   }
@@ -193,18 +208,18 @@ export default class CharacterService {
   }
 
   private isStale(timestamp: number): boolean {
-    return Date.now() - timestamp > this.MAX_AGE
+    return Date.now() - timestamp > this.#MAX_AGE
   }
 
   async invalidateCache() {
     if (this.ctx.auth.user) {
-      const characterCache = await this.getCharacterCacheService()
+      const characterCache = await this.#getCharacterCacheService()
       characterCache.invalidateUserCharacters(this.ctx.auth.user.id.toString())
     }
   }
 
   async getCacheStats() {
-    const characterCache = await this.getCharacterCacheService()
+    const characterCache = await this.#getCharacterCacheService()
     return characterCache.getStats()
   }
 }

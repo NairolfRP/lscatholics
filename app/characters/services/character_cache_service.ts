@@ -2,25 +2,30 @@ import type { Character } from '#characters/types/character'
 import { TtlCache } from '#core/services/ttl_cache'
 
 export class CharacterCacheService {
-  private cache = new TtlCache<Character[]>(5 * 60_000, 10 * 60_000, 'CharacterCache')
+  #cache = new TtlCache<Character[]>({
+    ttlMs: 5 * 60_000,
+    cleanupIntervalMs: 10 * 60_000,
+    label: 'CharacterCache',
+    maxSize: 2000,
+  })
 
-  private key(userId: string): string {
+  #key(userId: string): string {
     return `user_characters:${userId}`
   }
 
   cacheCharacters(userId: string, characters: Character[], ttlMs?: number): void {
-    this.cache.set(this.key(userId), characters, ttlMs)
+    this.#cache.set(this.#key(userId), characters, ttlMs)
   }
 
   getCachedUserCharacters(
     userId: string,
     fetchFn: () => Promise<Character[]>
   ): Promise<Character[]> {
-    return this.cache.getOrFetch(this.key(userId), fetchFn)
+    return this.#cache.getOrFetch(this.#key(userId), fetchFn)
   }
 
   invalidateUserCharacters(userId: string): void {
-    this.cache.delete(this.key(userId))
+    this.#cache.delete(this.#key(userId))
   }
 
   async isCharacterOwnedByUser(
@@ -33,18 +38,18 @@ export class CharacterCacheService {
   }
 
   cleanupExpired(): void {
-    this.cache.cleanup()
+    this.#cache.cleanup()
   }
 
   stopCleanupInterval(): void {
-    this.cache.stop()
+    this.#cache.stop()
   }
 
   getStats() {
-    return this.cache.stats()
+    return this.#cache.stats()
   }
 
   clear(): void {
-    this.cache.clear()
+    this.#cache.clear()
   }
 }
