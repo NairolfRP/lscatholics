@@ -1,5 +1,4 @@
 import vine, { SimpleMessagesProvider } from '@vinejs/vine'
-import type { Infer } from '@vinejs/vine/types'
 import { getEthnicsGroupsIds } from '#shared/constants/ethnicity.constants'
 import { getDistrictIds } from '#shared/constants/districts.constants'
 
@@ -39,7 +38,7 @@ vine.messagesProvider = new SimpleMessagesProvider({
   'fleecaConfirmation.literal': '(( Vous devez cocher la confirmation pour continuer. ))',
 })
 
-const schema = vine.object({
+export const donateSchema = vine.object({
   amount: vine.number().min(200).withoutDecimals(),
   firstname: vine.string().minLength(1).maxLength(50),
   lastname: vine.string().minLength(1).maxLength(50),
@@ -59,6 +58,4 @@ const schema = vine.object({
   fleecaConfirmation: vine.literal(true),
 })
 
-export const createDonateFormValidator = vine.compile(schema)
-
-export type DonateMetadata = Infer<typeof schema>
+export const createDonateFormValidator = vine.create(donateSchema)

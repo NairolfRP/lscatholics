@@ -1,34 +1,35 @@
 import type { HttpContext } from '@adonisjs/core/http'
 
 export default class CharactersController {
-  async listCharacters({ characters, response }: HttpContext) {
+  async index({ characters: charactersService, response, logger }: HttpContext) {
     try {
-      const data = await characters.getUserCharacters()
+      const characters = await charactersService.getUserCharacters()
 
-      if (!data) {
-        return response.status(500).json({
-          error: 'Failed to list user characters',
+      if (!characters) {
+        return response.internalServerError({
+          message: 'Failed to list user characters',
           success: false,
         })
       }
 
       return response.json({
-        data,
+        characters,
         success: true,
       })
-    } catch {
+    } catch (err) {
+      logger.error({ err }, 'Failed to fetch characters')
       return response.internalServerError({
-        error: 'Failed to fetch characters',
+        message: 'Failed to fetch characters',
         success: false,
       })
     }
   }
 
-  async switchCharacter({ request, response, session, characters }: HttpContext) {
+  async updateCurrent({ request, response, session, characters }: HttpContext) {
     try {
-      const { characterId } = request.only(['characterId'])
+      const { id } = request.only(['id'])
 
-      const isOwned = await characters.isCharacterOwnedByUser(Number(characterId))
+      const isOwned = await characters.isCharacterOwnedByUser(Number(id))
       if (!isOwned) {
         session.flashErrors({
           E_SWITCH_CHARACTER: 'Ce personnage ne vous appartient pas',
@@ -37,7 +38,7 @@ export default class CharactersController {
       }
 
       const charactersList = await characters.getUserCharacters()
-      const character = charactersList?.find((c) => c.id === Number(characterId))
+      const character = charactersList?.find((c) => c.id === Number(id))
 
       if (!character) {
         session.flashErrors({

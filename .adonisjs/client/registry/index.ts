@@ -24,29 +24,11 @@ const routes = {
     tokens: [{"old":"/api/auth/callback/gtaw","type":0,"val":"api","end":""},{"old":"/api/auth/callback/gtaw","type":0,"val":"auth","end":""},{"old":"/api/auth/callback/gtaw","type":0,"val":"callback","end":""},{"old":"/api/auth/callback/gtaw","type":0,"val":"gtaw","end":""}],
     types: placeholder as Registry['auth.handle_callback']['types'],
   },
-  'deleteUser': {
-    methods: ["DELETE"],
-    pattern: '/api/auth/delete-user',
-    tokens: [{"old":"/api/auth/delete-user","type":0,"val":"api","end":""},{"old":"/api/auth/delete-user","type":0,"val":"auth","end":""},{"old":"/api/auth/delete-user","type":0,"val":"delete-user","end":""}],
-    types: placeholder as Registry['deleteUser']['types'],
-  },
   'logout': {
     methods: ["POST"],
     pattern: '/api/auth/logout',
     tokens: [{"old":"/api/auth/logout","type":0,"val":"api","end":""},{"old":"/api/auth/logout","type":0,"val":"auth","end":""},{"old":"/api/auth/logout","type":0,"val":"logout","end":""}],
     types: placeholder as Registry['logout']['types'],
-  },
-  'listCharacters': {
-    methods: ["GET","HEAD"],
-    pattern: '/api/auth/list-characters',
-    tokens: [{"old":"/api/auth/list-characters","type":0,"val":"api","end":""},{"old":"/api/auth/list-characters","type":0,"val":"auth","end":""},{"old":"/api/auth/list-characters","type":0,"val":"list-characters","end":""}],
-    types: placeholder as Registry['listCharacters']['types'],
-  },
-  'switchCharacter': {
-    methods: ["PATCH"],
-    pattern: '/api/auth/current-character',
-    tokens: [{"old":"/api/auth/current-character","type":0,"val":"api","end":""},{"old":"/api/auth/current-character","type":0,"val":"auth","end":""},{"old":"/api/auth/current-character","type":0,"val":"current-character","end":""}],
-    types: placeholder as Registry['switchCharacter']['types'],
   },
   'discord.redirect': {
     methods: ["GET","HEAD"],
@@ -66,11 +48,29 @@ const routes = {
     tokens: [{"old":"/api/auth/unlink/discord","type":0,"val":"api","end":""},{"old":"/api/auth/unlink/discord","type":0,"val":"auth","end":""},{"old":"/api/auth/unlink/discord","type":0,"val":"unlink","end":""},{"old":"/api/auth/unlink/discord","type":0,"val":"discord","end":""}],
     types: placeholder as Registry['discord.unlink']['types'],
   },
-  'profile': {
+  'account.settings': {
     methods: ["GET","HEAD"],
-    pattern: '/profile',
-    tokens: [{"old":"/profile","type":0,"val":"profile","end":""}],
-    types: placeholder as Registry['profile']['types'],
+    pattern: '/account/settings',
+    tokens: [{"old":"/account/settings","type":0,"val":"account","end":""},{"old":"/account/settings","type":0,"val":"settings","end":""}],
+    types: placeholder as Registry['account.settings']['types'],
+  },
+  'account.delete': {
+    methods: ["DELETE"],
+    pattern: '/account/delete',
+    tokens: [{"old":"/account/delete","type":0,"val":"account","end":""},{"old":"/account/delete","type":0,"val":"delete","end":""}],
+    types: placeholder as Registry['account.delete']['types'],
+  },
+  'characters.list': {
+    methods: ["GET","HEAD"],
+    pattern: '/user/characters',
+    tokens: [{"old":"/user/characters","type":0,"val":"user","end":""},{"old":"/user/characters","type":0,"val":"characters","end":""}],
+    types: placeholder as Registry['characters.list']['types'],
+  },
+  'characters.current': {
+    methods: ["PATCH"],
+    pattern: '/user/characters/current',
+    tokens: [{"old":"/user/characters/current","type":0,"val":"user","end":""},{"old":"/user/characters/current","type":0,"val":"characters","end":""},{"old":"/user/characters/current","type":0,"val":"current","end":""}],
+    types: placeholder as Registry['characters.current']['types'],
   },
   'dashboard.index': {
     methods: ["GET","HEAD"],
@@ -78,47 +78,47 @@ const routes = {
     tokens: [{"old":"/dashboard","type":0,"val":"dashboard","end":""}],
     types: placeholder as Registry['dashboard.index']['types'],
   },
-  'dashboard.dashboard_articles.index': {
+  'dashboard.dashboard_posts.index': {
     methods: ["GET","HEAD"],
-    pattern: '/dashboard/articles',
-    tokens: [{"old":"/dashboard/articles","type":0,"val":"dashboard","end":""},{"old":"/dashboard/articles","type":0,"val":"articles","end":""}],
-    types: placeholder as Registry['dashboard.dashboard_articles.index']['types'],
+    pattern: '/dashboard/posts',
+    tokens: [{"old":"/dashboard/posts","type":0,"val":"dashboard","end":""},{"old":"/dashboard/posts","type":0,"val":"posts","end":""}],
+    types: placeholder as Registry['dashboard.dashboard_posts.index']['types'],
   },
-  'dashboard.dashboard_articles.create': {
+  'dashboard.dashboard_posts.create': {
     methods: ["GET","HEAD"],
-    pattern: '/dashboard/articles/create',
-    tokens: [{"old":"/dashboard/articles/create","type":0,"val":"dashboard","end":""},{"old":"/dashboard/articles/create","type":0,"val":"articles","end":""},{"old":"/dashboard/articles/create","type":0,"val":"create","end":""}],
-    types: placeholder as Registry['dashboard.dashboard_articles.create']['types'],
+    pattern: '/dashboard/posts/create',
+    tokens: [{"old":"/dashboard/posts/create","type":0,"val":"dashboard","end":""},{"old":"/dashboard/posts/create","type":0,"val":"posts","end":""},{"old":"/dashboard/posts/create","type":0,"val":"create","end":""}],
+    types: placeholder as Registry['dashboard.dashboard_posts.create']['types'],
   },
-  'dashboard.dashboard_articles.store': {
+  'dashboard.dashboard_posts.store': {
     methods: ["POST"],
-    pattern: '/dashboard/articles',
-    tokens: [{"old":"/dashboard/articles","type":0,"val":"dashboard","end":""},{"old":"/dashboard/articles","type":0,"val":"articles","end":""}],
-    types: placeholder as Registry['dashboard.dashboard_articles.store']['types'],
+    pattern: '/dashboard/posts',
+    tokens: [{"old":"/dashboard/posts","type":0,"val":"dashboard","end":""},{"old":"/dashboard/posts","type":0,"val":"posts","end":""}],
+    types: placeholder as Registry['dashboard.dashboard_posts.store']['types'],
   },
-  'dashboard.dashboard_articles.show': {
+  'dashboard.dashboard_posts.show': {
     methods: ["GET","HEAD"],
-    pattern: '/dashboard/articles/:id',
-    tokens: [{"old":"/dashboard/articles/:id","type":0,"val":"dashboard","end":""},{"old":"/dashboard/articles/:id","type":0,"val":"articles","end":""},{"old":"/dashboard/articles/:id","type":1,"val":"id","end":""}],
-    types: placeholder as Registry['dashboard.dashboard_articles.show']['types'],
+    pattern: '/dashboard/posts/:id',
+    tokens: [{"old":"/dashboard/posts/:id","type":0,"val":"dashboard","end":""},{"old":"/dashboard/posts/:id","type":0,"val":"posts","end":""},{"old":"/dashboard/posts/:id","type":1,"val":"id","end":""}],
+    types: placeholder as Registry['dashboard.dashboard_posts.show']['types'],
   },
-  'dashboard.dashboard_articles.edit': {
+  'dashboard.dashboard_posts.edit': {
     methods: ["GET","HEAD"],
-    pattern: '/dashboard/articles/:id/edit',
-    tokens: [{"old":"/dashboard/articles/:id/edit","type":0,"val":"dashboard","end":""},{"old":"/dashboard/articles/:id/edit","type":0,"val":"articles","end":""},{"old":"/dashboard/articles/:id/edit","type":1,"val":"id","end":""},{"old":"/dashboard/articles/:id/edit","type":0,"val":"edit","end":""}],
-    types: placeholder as Registry['dashboard.dashboard_articles.edit']['types'],
+    pattern: '/dashboard/posts/:id/edit',
+    tokens: [{"old":"/dashboard/posts/:id/edit","type":0,"val":"dashboard","end":""},{"old":"/dashboard/posts/:id/edit","type":0,"val":"posts","end":""},{"old":"/dashboard/posts/:id/edit","type":1,"val":"id","end":""},{"old":"/dashboard/posts/:id/edit","type":0,"val":"edit","end":""}],
+    types: placeholder as Registry['dashboard.dashboard_posts.edit']['types'],
   },
-  'dashboard.dashboard_articles.update': {
+  'dashboard.dashboard_posts.update': {
     methods: ["PUT","PATCH"],
-    pattern: '/dashboard/articles/:id',
-    tokens: [{"old":"/dashboard/articles/:id","type":0,"val":"dashboard","end":""},{"old":"/dashboard/articles/:id","type":0,"val":"articles","end":""},{"old":"/dashboard/articles/:id","type":1,"val":"id","end":""}],
-    types: placeholder as Registry['dashboard.dashboard_articles.update']['types'],
+    pattern: '/dashboard/posts/:id',
+    tokens: [{"old":"/dashboard/posts/:id","type":0,"val":"dashboard","end":""},{"old":"/dashboard/posts/:id","type":0,"val":"posts","end":""},{"old":"/dashboard/posts/:id","type":1,"val":"id","end":""}],
+    types: placeholder as Registry['dashboard.dashboard_posts.update']['types'],
   },
-  'dashboard.dashboard_articles.destroy': {
+  'dashboard.dashboard_posts.destroy': {
     methods: ["DELETE"],
-    pattern: '/dashboard/articles/:id',
-    tokens: [{"old":"/dashboard/articles/:id","type":0,"val":"dashboard","end":""},{"old":"/dashboard/articles/:id","type":0,"val":"articles","end":""},{"old":"/dashboard/articles/:id","type":1,"val":"id","end":""}],
-    types: placeholder as Registry['dashboard.dashboard_articles.destroy']['types'],
+    pattern: '/dashboard/posts/:id',
+    tokens: [{"old":"/dashboard/posts/:id","type":0,"val":"dashboard","end":""},{"old":"/dashboard/posts/:id","type":0,"val":"posts","end":""},{"old":"/dashboard/posts/:id","type":1,"val":"id","end":""}],
+    types: placeholder as Registry['dashboard.dashboard_posts.destroy']['types'],
   },
   'dashboard.dashboard_events.index': {
     methods: ["GET","HEAD"],

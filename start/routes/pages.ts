@@ -25,7 +25,7 @@ router
 
 router.get('/find/parishes', [controllers.pages.Parishes, 'parishes']).as('find.parishes')
 
-router.on('/about').renderInertia('about_us', {}).as('about-us')
+router.on('/about').renderInertia('about-us', {}).as('about-us')
 
 router.on('/archbishop').renderInertia('archbishop', {}).as('archbishop.index')
 

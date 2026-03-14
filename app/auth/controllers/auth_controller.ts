@@ -3,14 +3,21 @@ import Account from '#users/models/account'
 import User from '#users/models/user'
 import { DateTime } from 'luxon'
 import db from '@adonisjs/lucid/services/db'
-import { createDeleteUserConfirmationValidator } from '#users/validators/delete_user_confirmation'
 
 export default class AuthController {
   async redirectToProvider({ ally }: HttpContext) {
     return ally.use('gtaw').redirect()
   }
 
-  async handleCallback({ ally, auth, characters, response, session, logger }: HttpContext) {
+  async handleCallback({
+    ally,
+    auth,
+    characters,
+    response,
+    session,
+    logger,
+    redirectToIntended,
+  }: HttpContext) {
     const gtaw = ally.use('gtaw')
 
     if (gtaw.accessDenied()) {
@@ -103,10 +110,9 @@ export default class AuthController {
         E_AUTHENTIFICATION_FAILED:
           "Une erreur est survenue lors de l'authentification de votre compte.",
       })
-    } finally {
-      const intendedUrl = session.pull('url.intended', '/')
-      response.redirect(intendedUrl)
     }
+
+    return redirectToIntended()
   }
 
   async redirectToDiscord({ ally }: HttpContext) {
@@ -149,7 +155,7 @@ export default class AuthController {
           accessTokenExpiresAt: DateTime.fromJSDate(discordUser.token.expiresAt),
           scope: discordUser.token.scope,
         })
-        return response.redirect().toRoute('profile')
+        return response.redirect().toRoute('account.settings')
       }
 
       if (userDiscordAccount.accountId !== discordUser.id) {
@@ -165,14 +171,14 @@ export default class AuthController {
 
       await userDiscordAccount.save()
 
-      return response.redirect().toRoute('profile')
+      return response.redirect().toRoute('account.settings')
     } catch (err) {
       logger.error({ err }, `Failed to link discord to user ${auth.user!.id}`)
       session.flashErrors({
         E_AUTHENTIFICATION_FAILED:
           'Une erreur est survenue lors de la connexion de votre compte Discord.',
       })
-      return response.redirect().toRoute('profile')
+      return response.redirect().toRoute('account.settings')
     }
   }
 
@@ -208,33 +214,6 @@ export default class AuthController {
           'Une erreur est survenue. Impossible de vous déconnecter. Contactez un administrateur du site ou supprimez vos cookies manuellement.',
       })
 
-      return response.redirect().back()
-    }
-  }
-
-  async deleteUser({ auth, characters, request, response, session, logger }: HttpContext) {
-    const user = auth.user!
-
-    await request.validateUsing(createDeleteUserConfirmationValidator(user.name))
-
-    try {
-      await user.delete()
-
-      await auth.use('web').logout()
-      await characters.clearCurrentCharacter()
-
-      session.flash('success', {
-        message:
-          'Votre compte et ses données associées ont définitivement été supprimées avec succès.',
-      })
-
-      return response.redirect('/')
-    } catch (error) {
-      logger.error({ err: error, user: user }, 'Failed to delete account')
-      session.flashErrors({
-        E_DELETE_USER:
-          "Une erreur s'est produite lors de la suppression du compte. Contactez un administrateur du site.",
-      })
       return response.redirect().back()
     }
   }

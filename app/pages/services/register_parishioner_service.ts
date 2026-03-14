@@ -11,53 +11,10 @@ import {
 } from '#shared/constants/ethnicity.constants'
 import { DiscordWebhookService } from '#discord/services/discord_webhook_service'
 import { getDistrictLabelById } from '#shared/constants/districts.constants'
+import { PARISHES_NAMES } from '#shared/constants/parishes.constants'
 
 export class RegisterParishionerService {
-  private static formatFamilyMembers(members: RegisterParishionerPayload['familyMembers']): string {
-    if (!members || members.length === 0) return 'Aucun membre'
-
-    return members
-      .map((m) => {
-        const npcTag = m.isNpc ? ' (( PNJ ))' : ''
-        const roleLabel = getHouseholdRoleLabelById(m.role)
-        return `* ${m.firstname} ${m.lastname} (${m.age} ans - ${roleLabel})${npcTag}`
-      })
-      .join('\n')
-  }
-
-  private static formatOOCInfo(sacraments?: string[], additionalInfo?: string): string | null {
-    if (!sacraments?.length && !additionalInfo) return null
-
-    let content = ''
-
-    if (additionalInfo) {
-      content += `**Qu'est-ce que le clergé de l'archidiocèse de Los Santos est censé savoir en RP sur votre personnage ?**\n>>> ${additionalInfo}\n\n`
-    }
-
-    if (sacraments?.length) {
-      const sacramentsLabels = sacraments
-        .map((s) => getIndividualSacramentLabelById(s))
-        .filter(Boolean)
-        .join(', ')
-
-      if (sacramentsLabels) {
-        content += `**Votre personnage a reçu les sacrements de...** :\n${sacramentsLabels}`
-      }
-    }
-
-    return content
-  }
-
-  private static getParishName(parishId: number): string {
-    const parishes: Record<number, string> = {
-      1: 'Cathédrale Notre-Dame-des-Saints',
-      2: 'Église du Bon Pasteur',
-      3: 'Eglise Nuestra Señora Reina de Los Santos',
-    }
-    return parishes[parishId] || 'N/A'
-  }
-
-  static async register(
+  async register(
     webhookUrl: string | undefined,
     payload: RegisterParishionerPayload
   ): Promise<{ success: boolean; error?: string }> {
@@ -141,7 +98,7 @@ export class RegisterParishionerService {
           },
           {
             name: 'Paroisse',
-            value: this.getParishName(payload.parish),
+            value: this.#getParishName(payload.parish),
           },
         ],
         timestamp: new Date().toISOString(),
@@ -157,11 +114,11 @@ export class RegisterParishionerService {
       if (payload.familyMembers && payload.familyMembers.length > 0) {
         discordWebhook.addEmbed({
           title: `Membres du foyer (${payload.familyMembers.length})`,
-          description: this.formatFamilyMembers(payload.familyMembers),
+          description: this.#formatFamilyMembers(payload.familyMembers),
         })
       }
 
-      const oocContent = this.formatOOCInfo(
+      const oocContent = this.#formatOOCInfo(
         payload.characterSacraments,
         payload.oocAdditionalInformation
       )
@@ -189,5 +146,44 @@ export class RegisterParishionerService {
         error: error instanceof Error ? error.message : 'Unknown error',
       }
     }
+  }
+
+  #formatFamilyMembers(members: RegisterParishionerPayload['familyMembers']): string {
+    if (!members || members.length === 0) return 'Aucun membre'
+
+    return members
+      .map((m) => {
+        const npcTag = m.isNpc ? ' (( PNJ ))' : ''
+        const roleLabel = getHouseholdRoleLabelById(m.role)
+        return `* ${m.firstname} ${m.lastname} (${m.age} ans - ${roleLabel})${npcTag}`
+      })
+      .join('\n')
+  }
+
+  #formatOOCInfo(sacraments?: string[], additionalInfo?: string): string | null {
+    if (!sacraments?.length && !additionalInfo) return null
+
+    let content = ''
+
+    if (additionalInfo) {
+      content += `**Qu'est-ce que le clergé de l'archidiocèse de Los Santos est censé savoir en RP sur votre personnage ?**\n>>> ${additionalInfo}\n\n`
+    }
+
+    if (sacraments?.length) {
+      const sacramentsLabels = sacraments
+        .map((s) => getIndividualSacramentLabelById(s))
+        .filter(Boolean)
+        .join(', ')
+
+      if (sacramentsLabels) {
+        content += `**Votre personnage a reçu les sacrements de...** :\n${sacramentsLabels}`
+      }
+    }
+
+    return content
+  }
+
+  #getParishName(parishId: keyof typeof PARISHES_NAMES): string {
+    return PARISHES_NAMES[parishId] || 'N/A'
   }
 }

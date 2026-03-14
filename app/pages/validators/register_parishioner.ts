@@ -15,6 +15,7 @@ import {
 } from '#shared/constants/person.constants'
 import { getLocalEthnicsCommunitiesIds } from '#shared/constants/ethnicity.constants'
 import type { Infer } from '@vinejs/vine/types'
+import { PARISHES_NAMES } from '#shared/constants/parishes.constants'
 
 const registerParishionerSchema = vine.object({
   //recordType: vine.enum(['new', 'update']),
@@ -43,7 +44,7 @@ const registerParishionerSchema = vine.object({
 
   religion: vine.enum(catholicOrOtherIds()),
 
-  parish: vine.number().withoutDecimals().nonNegative(),
+  parish: vine.enum(Object.keys(PARISHES_NAMES).map((k) => Number(k))),
 
   familyMembers: vine
     .array(

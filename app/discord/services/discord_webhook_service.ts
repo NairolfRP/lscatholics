@@ -74,44 +74,44 @@ export type WebhookExecutionResult = {
 }
 
 export class DiscordWebhookService {
-  private readonly url: string
-  private readonly timeout: number
-  private readonly retries: number
+  readonly #url: string
+  readonly #timeout: number
+  readonly #retries: number
 
-  private threadId: number | string | undefined
-  private waitServerConfirmation: boolean = false
+  #threadId: number | string | undefined
+  #waitServerConfirmation: boolean = false
 
-  private attachments: Record<string, any>[] = []
-  private allowedMentions: DiscordAllowedMentions | undefined
+  #attachments: Record<string, any>[] = []
+  #allowedMentions: DiscordAllowedMentions | undefined
 
-  private components: any[] = []
-  private content: string = ' '
-  private embeds: DiscordEmbed[] = []
-  private files: any | undefined
-  private flags: (typeof DiscordFlag)[] | undefined
+  #components: any[] = []
+  #content: string = ' '
+  #embeds: DiscordEmbed[] = []
+  #files: any | undefined
+  #flags: (typeof DiscordFlag)[] | undefined
 
-  private threadName: string | undefined
-  private threadTags: string[] = []
+  #threadName: string | undefined
+  #threadTags: string[] = []
 
-  private tts: boolean = false
-  private poll: DiscordPoll | undefined
+  #tts: boolean = false
+  #poll: DiscordPoll | undefined
 
-  private username: string | undefined
-  private avatarUrl: string | undefined
+  #username: string | undefined
+  #avatarUrl: string | undefined
 
   private constructor({
     url,
     timeout = DISCORD_LIMITS.REQUEST_TIMEOUT,
     retries = 3,
   }: DiscordWebhookServiceInitProps) {
-    this.url = url
-    this.timeout = timeout
-    this.retries = retries
+    this.#url = url
+    this.#timeout = timeout
+    this.#retries = retries
   }
 
   private lastExecutionTime: Date | null = null
 
-  public static async create({
+  static async create({
     url,
     timeout = DISCORD_LIMITS.REQUEST_TIMEOUT,
     retries = 3,
@@ -127,18 +127,18 @@ export class DiscordWebhookService {
     }
   }
 
-  public setContent(content: string) {
+  setContent(content: string) {
     if (content.length > DISCORD_LIMITS.MAX_CONTENT_LENGTH) {
       throw new DiscordWebhookException(
         `Content exceeds maximum length of ${DISCORD_LIMITS.MAX_CONTENT_LENGTH} characters`
       )
     }
 
-    this.content = content.trim()
+    this.#content = content.trim()
     return this
   }
 
-  public setOptions(options: DiscordWebhookOptions) {
+  setOptions(options: DiscordWebhookOptions) {
     const {
       waitServerConfirmation,
       username,
@@ -149,41 +149,41 @@ export class DiscordWebhookService {
       thread,
     } = options
 
-    this.waitServerConfirmation = waitServerConfirmation || false
-    this.threadId = thread?.id
-    this.username = username
-    this.avatarUrl = avatarUrl
-    this.allowedMentions = allowedMentions
-    this.flags = flags
-    this.tts = tts
+    this.#waitServerConfirmation = waitServerConfirmation || false
+    this.#threadId = thread?.id
+    this.#username = username
+    this.#avatarUrl = avatarUrl
+    this.#allowedMentions = allowedMentions
+    this.#flags = flags
+    this.#tts = tts
 
-    this.threadName = thread?.name
-    this.threadTags = thread?.tags || []
-
-    return this
-  }
-
-  public setPoll(poll: DiscordPoll) {
-    this.poll = poll
+    this.#threadName = thread?.name
+    this.#threadTags = thread?.tags || []
 
     return this
   }
 
-  public addEmbed(embed: DiscordEmbed) {
-    if (this.embeds.length >= DISCORD_LIMITS.MAX_EMBEDS) {
+  setPoll(poll: DiscordPoll) {
+    this.#poll = poll
+
+    return this
+  }
+
+  addEmbed(embed: DiscordEmbed) {
+    if (this.#embeds.length >= DISCORD_LIMITS.MAX_EMBEDS) {
       throw new DiscordWebhookException(
         `Cannot add more than ${DISCORD_LIMITS.MAX_EMBEDS} embeds to a single message`
       )
     }
 
-    this.validateEmbed(embed)
+    this.#validateEmbed(embed)
 
-    this.embeds.push({ ...embed })
+    this.#embeds.push({ ...embed })
 
     return this
   }
 
-  public addEmbeds(embeds: DiscordEmbed[]) {
+  addEmbeds(embeds: DiscordEmbed[]) {
     for (const embed of embeds) {
       this.addEmbed(embed)
     }
@@ -191,54 +191,54 @@ export class DiscordWebhookService {
     return this
   }
 
-  public addAttachment(attachment: Record<string, any>) {
-    this.attachments.push({ ...attachment })
+  addAttachment(attachment: Record<string, any>) {
+    this.#attachments.push({ ...attachment })
 
     return this
   }
 
-  public addComponent(component: any) {
-    this.components.push(component)
+  addComponent(component: any) {
+    this.#components.push(component)
 
     return this
   }
 
-  public clear(): this {
-    this.attachments = []
-    this.allowedMentions = undefined
-    this.threadTags = []
-    this.components = []
-    this.content = ''
-    this.embeds = []
-    this.files = undefined
-    this.flags = undefined
-    this.threadName = undefined
-    this.tts = false
-    this.poll = undefined
-    this.username = undefined
-    this.avatarUrl = undefined
+  clear(): this {
+    this.#attachments = []
+    this.#allowedMentions = undefined
+    this.#threadTags = []
+    this.#components = []
+    this.#content = ''
+    this.#embeds = []
+    this.#files = undefined
+    this.#flags = undefined
+    this.#threadName = undefined
+    this.#tts = false
+    this.#poll = undefined
+    this.#username = undefined
+    this.#avatarUrl = undefined
 
     return this
   }
 
-  public getEmbedCount(): number {
-    return this.embeds.length
+  getEmbedCount(): number {
+    return this.#embeds.length
   }
 
-  public getContentLength(): number {
-    return this.content.length
+  getContentLength(): number {
+    return this.#content.length
   }
 
-  public hasContent(): boolean {
+  hasContent(): boolean {
     return !!(
-      this.content.trim() ||
-      this.embeds.length > 0 ||
-      (this.attachments && this.attachments?.length > 0) ||
-      this.poll
+      this.#content.trim() ||
+      this.#embeds.length > 0 ||
+      (this.#attachments && this.#attachments?.length > 0) ||
+      this.#poll
     )
   }
 
-  public async execute(): Promise<WebhookExecutionResult> {
+  async execute(): Promise<WebhookExecutionResult> {
     if (!this.hasContent()) {
       const error = 'Discord Webhook cannot send empty message'
       logger.warn(error)
@@ -247,17 +247,17 @@ export class DiscordWebhookService {
 
     let lastError: Error | null = null
 
-    for (let attempt = 1; attempt <= this.retries; attempt++) {
+    for (let attempt = 1; attempt <= this.#retries; attempt++) {
       try {
-        const result = await this.executeWithTimeout()
+        const result = await this.#executeWithTimeout()
 
         this.lastExecutionTime = new Date()
 
         logger.info(
           {
             attempt,
-            contentLength: this.content.length,
-            embedCount: this.embeds.length,
+            contentLength: this.#content.length,
+            embedCount: this.#embeds.length,
           },
           'Discord webhook executed successfully'
         )
@@ -270,7 +270,7 @@ export class DiscordWebhookService {
           break
         }
 
-        if (attempt < this.retries) {
+        if (attempt < this.#retries) {
           const delay = Math.min(1000 * Math.pow(2, attempt - 1), 5000) // Exponential backoff, max 5s
           logger.warn(
             {
@@ -280,14 +280,14 @@ export class DiscordWebhookService {
             attempt,
             delay
           )
-          await this.sleep(delay)
+          await this.#sleep(delay)
         }
       }
     }
 
     const errorMessage = lastError?.message || 'Unknown error'
     logger.error(
-      { err: errorMessage, retries: this.retries },
+      { err: errorMessage, retries: this.#retries },
       'Discord webhook failed after all retries'
     )
 
@@ -297,19 +297,19 @@ export class DiscordWebhookService {
     }
   }
 
-  public getLastExecutionInfo(): { timestamp: Date } | null {
+  getLastExecutionInfo(): { timestamp: Date } | null {
     return this.lastExecutionTime ? { timestamp: this.lastExecutionTime } : null
   }
 
-  private async executeWithTimeout(): Promise<{
+  async #executeWithTimeout(): Promise<{
     success: boolean
     data?: WebhookExecutionResult['data']
   }> {
-    const url = this.buildFetchUrl()
-    const payload = await this.buildPayload()
+    const url = this.#buildFetchUrl()
+    const payload = await this.#buildPayload()
 
     const controller = new AbortController()
-    const timeoutId = setTimeout(() => controller.abort(), this.timeout)
+    const timeoutId = setTimeout(() => controller.abort(), this.#timeout)
 
     try {
       const response = await fetch(url, {
@@ -335,7 +335,7 @@ export class DiscordWebhookService {
         throw new DiscordWebhookException(errorMessage)
       }
 
-      if (!this.waitServerConfirmation) {
+      if (!this.#waitServerConfirmation) {
         return { success: true }
       }
 
@@ -344,7 +344,7 @@ export class DiscordWebhookService {
       return { success: true, data }
     } catch (e) {
       if (e instanceof TypeError && e.message.includes('aborted')) {
-        throw new DiscordWebhookException(`Request timeout after ${this.timeout}ms`)
+        throw new DiscordWebhookException(`Request timeout after ${this.#timeout}ms`)
       }
       throw e
     } finally {
@@ -352,36 +352,36 @@ export class DiscordWebhookService {
     }
   }
 
-  private buildFetchUrl() {
-    const url = new URL(this.url)
+  #buildFetchUrl() {
+    const url = new URL(this.#url)
 
-    if (this.waitServerConfirmation) {
+    if (this.#waitServerConfirmation) {
       url.searchParams.set('wait', 'true')
     }
 
-    if (this.threadId !== undefined) {
-      url.searchParams.set('thread_id', String(this.threadId))
+    if (this.#threadId !== undefined) {
+      url.searchParams.set('thread_id', String(this.#threadId))
     }
 
     return url.toString()
   }
 
-  private async buildPayload() {
+  async #buildPayload() {
     try {
       return await createDiscordWebhookValidator.validate({
-        content: this.content || undefined, // Send undefined instead of empty string
-        username: this.username,
-        avatar_url: this.avatarUrl,
-        tts: this.tts,
-        embeds: this.embeds.length > 0 ? this.embeds : undefined,
-        allowed_mentions: this.allowedMentions,
-        components: this.components.length > 0 ? this.components : undefined,
-        files: this.files,
-        attachments: this.attachments.length > 0 ? this.attachments : undefined,
-        flags: this.flags,
-        thread_name: this.threadName,
-        applied_tags: this.threadTags.length > 0 ? this.threadTags : undefined,
-        poll: this.poll,
+        content: this.#content || undefined,
+        username: this.#username,
+        avatar_url: this.#avatarUrl,
+        tts: this.#tts,
+        embeds: this.#embeds.length > 0 ? this.#embeds : undefined,
+        allowed_mentions: this.#allowedMentions,
+        components: this.#components.length > 0 ? this.#components : undefined,
+        files: this.#files,
+        attachments: this.#attachments.length > 0 ? this.#attachments : undefined,
+        flags: this.#flags,
+        thread_name: this.#threadName,
+        applied_tags: this.#threadTags.length > 0 ? this.#threadTags : undefined,
+        poll: this.#poll,
       })
     } catch (e) {
       if (e instanceof vineErrors.E_VALIDATION_ERROR) {
@@ -398,7 +398,7 @@ export class DiscordWebhookService {
     }
   }
 
-  private validateEmbed(embed: DiscordEmbed) {
+  #validateEmbed(embed: DiscordEmbed) {
     if (embed.title && embed.title.length > DISCORD_LIMITS.MAX_EMBED_TITLE_LENGTH) {
       throw new DiscordWebhookException(
         `Embed title exceeds maximum length of ${DISCORD_LIMITS.MAX_EMBED_TITLE_LENGTH} characters`
@@ -430,7 +430,7 @@ export class DiscordWebhookService {
     }
   }
 
-  private sleep(ms: number): Promise<void> {
+  #sleep(ms: number): Promise<void> {
     return new Promise((resolve) => setTimeout(resolve, ms))
   }
 }

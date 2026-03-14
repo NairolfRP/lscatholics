@@ -19,14 +19,14 @@
       "schedule": ["before 3am on sunday"]
     },
     {
-      "description": "Group Vue and Inertia dependencies",
+      "description": "Group Inertia and React dependencies",
       "matchPackageNames": [
-        "vue",
-        "@vue/**",
+        "react",
+        "react-dom",
         "@inertiajs/**",
-        "lucide-vue-next"
+        "lucide-react"
       ],
-      "groupName": "vue-inertia",
+      "groupName": "inertia-react",
       "schedule": ["before 3am on sunday"]
     },
     {
@@ -39,18 +39,11 @@
       "description": "Group TypeScript and tools",
       "matchPackageNames": [
         "typescript",
-        "ts-node",
         "@types/**",
         "@adonisjs/tsconfig"
       ],
       "groupName": "typescript",
       "schedule": ["before 3am on sunday"]
-    },
-    {
-      "description": "Limit SWC updates",
-      "matchPackageNames": ["@swc/core"],
-      "rangeStrategy": "pin",
-      "minimumReleaseAge": "7 days"
     },
     {
       "description": "Group Tailwind and plugins",
@@ -63,8 +56,8 @@
         "clsx",
         "luxon",
         "class-variance-authority",
-        "reka-ui",
-        "vue-sonner",
+        "radix-ui",
+        "sonner",
         "edge.js"
       ],
       "groupName": "utils"

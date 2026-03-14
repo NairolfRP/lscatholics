@@ -20,10 +20,10 @@ export const createDashboardScheduledEventValidator = vine.create(
       .optional()
       .transform((v) => Boolean(v)),
     maxParticipants: vine.number().positive().min(1).optional(),
-    startDate: vine.date({ formats: { utc: true } }).after('today'),
+    startDate: vine.date({ formats: { utc: true } }).afterOrEqual('today'),
     endDate: vine
       .date({ formats: { utc: true } })
-      .afterField('startDate')
+      .afterField('startDate', { compare: 'minute' })
       .optional(),
   })
 )
@@ -47,13 +47,10 @@ export const updateDashboardScheduledEventValidator = vine.create(
       .optional()
       .transform((v) => Boolean(v)),
     maxParticipants: vine.number().positive().min(1).optional(),
-    startDate: vine
-      .date({ formats: { utc: true } })
-      .after('today')
-      .optional(),
+    startDate: vine.date({ formats: { utc: true } }).optional(),
     endDate: vine
       .date({ formats: { utc: true } })
-      .afterField('startDate')
+      .afterField('startDate', { compare: 'minute' })
       .optional(),
   })
 )

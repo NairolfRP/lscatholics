@@ -14,22 +14,22 @@ export default class extends BaseSeeder {
       {
         name: 'View Articles',
         slug: 'viewArticles',
-        description: 'Can view articles in dashboard',
+        description: 'Can view posts in dashboard',
       },
       {
         name: 'Create Articles',
         slug: 'createArticles',
-        description: 'Can create new articles',
+        description: 'Can create new posts',
       },
       {
         name: 'Edit Articles',
         slug: 'editArticles',
-        description: 'Can edit existing articles',
+        description: 'Can edit existing posts',
       },
       {
         name: 'Delete Articles',
         slug: 'deleteArticles',
-        description: 'Can delete articles',
+        description: 'Can delete posts',
       },
       {
         name: 'Manage Events',

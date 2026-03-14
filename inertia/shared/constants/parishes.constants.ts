@@ -1,7 +1,7 @@
 import type { Parish } from '@/shared/types'
 import Cathedral from '@/assets/images/olscathedral.webp'
-import RockfordHillsChurch from '@/assets/images/rockfordhills_church.png'
-import Iglesia from '@/assets/images/iglesia.png'
+import RockfordHillsChurch from '@/assets/images/rockfordhills_church.webp'
+import Iglesia from '@/assets/images/iglesia.webp'
 
 export const parishes = [
   {
@@ -40,6 +40,8 @@ export const parishes = [
     isCathedral: false,
   },
 ] as const satisfies Parish[]
+
+export type ParishId = (typeof parishes)[number]['id']
 
 export const parishesIds = () => {
   return parishes.map((p) => p.id)

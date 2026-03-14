@@ -56,6 +56,7 @@ export default class PostsController {
         data = await Post.query()
           .select(...columns)
           .where('category', category)
+          .where('status', 'published')
           .orderBy('publishedAt', 'desc')
           .paginate(page, limit)
       } else {
@@ -66,15 +67,15 @@ export default class PostsController {
           .paginate(page, limit)
       }
 
-      return inertia.render('news/all', {
-        articles: PostTransformer.paginate(data.all(), data.getMeta()).useVariant('publicList'),
+      return inertia.render('posts/index', {
+        posts: PostTransformer.paginate(data.all(), data.getMeta()).useVariant('publicList'),
         selectedCategory: category ?? '',
         categories,
         error: false,
       })
     } catch (e) {
-      return inertia.render('news/all', {
-        articles: {
+      return inertia.render('posts/index', {
+        posts: {
           metadata: {
             total: 0,
             perPage: 0,
@@ -107,13 +108,14 @@ export default class PostsController {
         'status'
       )
       .where('slug', slug)
+      .andWhere('status', 'published')
       .first()
 
-    if (!post || post.status !== 'published') {
+    if (!post) {
       throw new Exception('Not found', { status: 404 })
     }
 
-    return inertia.render('news/single', {
+    return inertia.render('posts/single', {
       post: PostTransformer.transform(post).useVariant('publicDetails'),
     })
   }

@@ -1,0 +1,33 @@
+name: Send the changelog on Discord
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    if: github.event.release.target_commitish == 'prod'
+    steps:
+      - name: Send webhook
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        run: |
+          jq -n \
+            --arg version "${{ github.event.release.tag_name }}" \
+            --arg notes "${{ github.event.release.body }}" \
+            '{
+              embeds: [{
+                author: {
+                  name: "Los Santos Catholics",
+                  url: "https://archls.infos.st",
+                  icon_url: "https://i.imgur.com/zkPlrIe.png"
+                },
+                title: ("📋 Mise à jour " + $version),
+                url: "https://archls.infos.st",
+                description: $notes,
+                color: 16766720,
+                footer: { text: "archls.infos.st · Un bug ou un commentaire sur l'application ? N'hésite pas à le signaler à @nairolf.rp." },
+                timestamp: (now | todate)
+              }]
+            }' | curl --fail -H "Content-Type: application/json" -d @- "$DISCORD_WEBHOOK"

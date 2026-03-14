@@ -22,6 +22,7 @@ export default class InertiaMiddleware extends BaseInertiaMiddleware {
     const error: string | undefined = Object.keys(errorsBag)
       .filter((code) => code !== 'E_VALIDATION_ERROR')
       .map((code) => errorsBag[code])[0]
+    const success = session?.flashMessages.get('success') || ''
 
     /**
      * Data shared with all Inertia pages. Make sure you are using
@@ -34,7 +35,7 @@ export default class InertiaMiddleware extends BaseInertiaMiddleware {
       success: ctx.inertia.always(ctx.session?.flashMessages.get('success')),
       flash: ctx.inertia.always({
         error: error,
-        success: session?.flashMessages.get('success'),
+        success: success,
       }),
       user: ctx.inertia.always(
         auth?.user ? UserTransformer.transform(auth.user).useVariant('sharedProp') : undefined

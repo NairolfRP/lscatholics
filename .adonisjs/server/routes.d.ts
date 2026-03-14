@@ -7,22 +7,22 @@ export type ScannedRoutes = {
     'payment.callback': { paramsTuple: [ParamValue]; params: {'token': ParamValue} }
     'signIn': { paramsTuple?: []; params?: {} }
     'auth.handle_callback': { paramsTuple?: []; params?: {} }
-    'deleteUser': { paramsTuple?: []; params?: {} }
     'logout': { paramsTuple?: []; params?: {} }
-    'listCharacters': { paramsTuple?: []; params?: {} }
-    'switchCharacter': { paramsTuple?: []; params?: {} }
     'discord.redirect': { paramsTuple?: []; params?: {} }
     'auth.handle_discord_callback': { paramsTuple?: []; params?: {} }
     'discord.unlink': { paramsTuple?: []; params?: {} }
-    'profile': { paramsTuple?: []; params?: {} }
+    'account.settings': { paramsTuple?: []; params?: {} }
+    'account.delete': { paramsTuple?: []; params?: {} }
+    'characters.list': { paramsTuple?: []; params?: {} }
+    'characters.current': { paramsTuple?: []; params?: {} }
     'dashboard.index': { paramsTuple?: []; params?: {} }
-    'dashboard.dashboard_articles.index': { paramsTuple?: []; params?: {} }
-    'dashboard.dashboard_articles.create': { paramsTuple?: []; params?: {} }
-    'dashboard.dashboard_articles.store': { paramsTuple?: []; params?: {} }
-    'dashboard.dashboard_articles.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
-    'dashboard.dashboard_articles.edit': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
-    'dashboard.dashboard_articles.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
-    'dashboard.dashboard_articles.destroy': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'dashboard.dashboard_posts.index': { paramsTuple?: []; params?: {} }
+    'dashboard.dashboard_posts.create': { paramsTuple?: []; params?: {} }
+    'dashboard.dashboard_posts.store': { paramsTuple?: []; params?: {} }
+    'dashboard.dashboard_posts.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'dashboard.dashboard_posts.edit': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'dashboard.dashboard_posts.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'dashboard.dashboard_posts.destroy': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'dashboard.dashboard_events.index': { paramsTuple?: []; params?: {} }
     'dashboard.dashboard_events.create': { paramsTuple?: []; params?: {} }
     'dashboard.dashboard_events.store': { paramsTuple?: []; params?: {} }
@@ -76,15 +76,15 @@ export type ScannedRoutes = {
     'payment.callback': { paramsTuple: [ParamValue]; params: {'token': ParamValue} }
     'signIn': { paramsTuple?: []; params?: {} }
     'auth.handle_callback': { paramsTuple?: []; params?: {} }
-    'listCharacters': { paramsTuple?: []; params?: {} }
     'discord.redirect': { paramsTuple?: []; params?: {} }
     'auth.handle_discord_callback': { paramsTuple?: []; params?: {} }
-    'profile': { paramsTuple?: []; params?: {} }
+    'account.settings': { paramsTuple?: []; params?: {} }
+    'characters.list': { paramsTuple?: []; params?: {} }
     'dashboard.index': { paramsTuple?: []; params?: {} }
-    'dashboard.dashboard_articles.index': { paramsTuple?: []; params?: {} }
-    'dashboard.dashboard_articles.create': { paramsTuple?: []; params?: {} }
-    'dashboard.dashboard_articles.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
-    'dashboard.dashboard_articles.edit': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'dashboard.dashboard_posts.index': { paramsTuple?: []; params?: {} }
+    'dashboard.dashboard_posts.create': { paramsTuple?: []; params?: {} }
+    'dashboard.dashboard_posts.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'dashboard.dashboard_posts.edit': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'dashboard.dashboard_events.index': { paramsTuple?: []; params?: {} }
     'dashboard.dashboard_events.create': { paramsTuple?: []; params?: {} }
     'dashboard.dashboard_events.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
@@ -125,15 +125,15 @@ export type ScannedRoutes = {
     'payment.callback': { paramsTuple: [ParamValue]; params: {'token': ParamValue} }
     'signIn': { paramsTuple?: []; params?: {} }
     'auth.handle_callback': { paramsTuple?: []; params?: {} }
-    'listCharacters': { paramsTuple?: []; params?: {} }
     'discord.redirect': { paramsTuple?: []; params?: {} }
     'auth.handle_discord_callback': { paramsTuple?: []; params?: {} }
-    'profile': { paramsTuple?: []; params?: {} }
+    'account.settings': { paramsTuple?: []; params?: {} }
+    'characters.list': { paramsTuple?: []; params?: {} }
     'dashboard.index': { paramsTuple?: []; params?: {} }
-    'dashboard.dashboard_articles.index': { paramsTuple?: []; params?: {} }
-    'dashboard.dashboard_articles.create': { paramsTuple?: []; params?: {} }
-    'dashboard.dashboard_articles.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
-    'dashboard.dashboard_articles.edit': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'dashboard.dashboard_posts.index': { paramsTuple?: []; params?: {} }
+    'dashboard.dashboard_posts.create': { paramsTuple?: []; params?: {} }
+    'dashboard.dashboard_posts.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'dashboard.dashboard_posts.edit': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'dashboard.dashboard_events.index': { paramsTuple?: []; params?: {} }
     'dashboard.dashboard_events.create': { paramsTuple?: []; params?: {} }
     'dashboard.dashboard_events.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
@@ -170,17 +170,9 @@ export type ScannedRoutes = {
     'jobs.application': { paramsTuple: [ParamValue]; params: {'slug': ParamValue} }
     'dailyReadings': { paramsTuple?: []; params?: {} }
   }
-  DELETE: {
-    'deleteUser': { paramsTuple?: []; params?: {} }
-    'discord.unlink': { paramsTuple?: []; params?: {} }
-    'dashboard.dashboard_articles.destroy': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
-    'dashboard.dashboard_events.destroy': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
-    'dashboard.dashboard_jobs.destroy': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
-    'dashboard.dashboard_users.destroy': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
-  }
   POST: {
     'logout': { paramsTuple?: []; params?: {} }
-    'dashboard.dashboard_articles.store': { paramsTuple?: []; params?: {} }
+    'dashboard.dashboard_posts.store': { paramsTuple?: []; params?: {} }
     'dashboard.dashboard_events.store': { paramsTuple?: []; params?: {} }
     'dashboard.dashboard_jobs.store': { paramsTuple?: []; params?: {} }
     'dashboard.dashboard_users.store': { paramsTuple?: []; params?: {} }
@@ -189,15 +181,23 @@ export type ScannedRoutes = {
     'registerParishioner.submit': { paramsTuple?: []; params?: {} }
     'jobs.application_submit': { paramsTuple: [ParamValue]; params: {'slug': ParamValue} }
   }
+  DELETE: {
+    'discord.unlink': { paramsTuple?: []; params?: {} }
+    'account.delete': { paramsTuple?: []; params?: {} }
+    'dashboard.dashboard_posts.destroy': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'dashboard.dashboard_events.destroy': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'dashboard.dashboard_jobs.destroy': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'dashboard.dashboard_users.destroy': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+  }
   PATCH: {
-    'switchCharacter': { paramsTuple?: []; params?: {} }
-    'dashboard.dashboard_articles.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'characters.current': { paramsTuple?: []; params?: {} }
+    'dashboard.dashboard_posts.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'dashboard.dashboard_events.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'dashboard.dashboard_jobs.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'dashboard.dashboard_users.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
   }
   PUT: {
-    'dashboard.dashboard_articles.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'dashboard.dashboard_posts.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'dashboard.dashboard_events.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'dashboard.dashboard_jobs.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'dashboard.dashboard_users.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }

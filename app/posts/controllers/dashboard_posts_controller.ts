@@ -21,7 +21,9 @@ export default class DashboardPostsController {
       page = 1
     }
 
-    let query = Post.query().select('id', 'title', 'createdAt', 'status', 'authorId')
+    let query = Post.query()
+      .select('id', 'title', 'createdAt', 'status', 'authorId')
+      .preload('author')
 
     if (search) {
       query = query.where((builder) => {
@@ -32,17 +34,17 @@ export default class DashboardPostsController {
       })
     }
 
-    const articles = await query.orderBy('created_at', 'desc').paginate(page, limit)
+    const posts = await query.orderBy('created_at', 'desc').paginate(page, limit)
 
-    return inertia.render('dashboard/articles/index', {
-      articles: PostTransformer.paginate(articles.all(), articles.getMeta()),
+    return inertia.render('dashboard/posts/index', {
+      posts: PostTransformer.paginate(posts.all(), posts.getMeta()),
       filters: { search },
     })
   }
 
   async create({ inertia, bouncer }: HttpContext) {
     await bouncer.with('PostPolicy').authorize('create')
-    return inertia.render('dashboard/articles/create', {})
+    return inertia.render('dashboard/posts/create', {})
   }
 
   async store({ request, response, auth, bouncer }: HttpContext) {
@@ -62,80 +64,80 @@ export default class DashboardPostsController {
       publishedAt = DateTime.now()
     }
 
-    const newArticle: Partial<Post> = {
+    const newPost: Partial<Post> = {
       ...payload,
       excerpt,
       publishedAt,
     }
 
-    const article = await Post.create({
-      ...newArticle,
+    const post = await Post.create({
+      ...newPost,
       authorId: (auth.user! as User).id,
     })
 
-    return response.redirect().toRoute('dashboard.dashboard_articles.show', { id: article.id })
+    return response.redirect().toRoute('dashboard.dashboard_posts.show', { id: post.id })
   }
 
   async show({ inertia, params, bouncer }: HttpContext) {
     await bouncer.with('PostPolicy').authorize('viewDashboard')
 
-    const article = await Post.findOrFail(params.id)
-    await article.loadOnce('author')
+    const post = await Post.findOrFail(params.id)
+    await post.loadOnce('author')
 
-    return inertia.render('dashboard/articles/show', {
-      article: PostTransformer.transform(article).useVariant('allFields'),
+    return inertia.render('dashboard/posts/show', {
+      post: PostTransformer.transform(post).useVariant('allFields'),
     })
   }
 
   async edit({ inertia, params, bouncer }: HttpContext) {
     await bouncer.with('PostPolicy').authorize('edit')
 
-    const article = await Post.findOrFail(params.id)
+    const post = await Post.findOrFail(params.id)
 
-    await article.loadOnce('author')
+    await post.loadOnce('author')
 
-    return inertia.render('dashboard/articles/edit', {
-      article: PostTransformer.transform(article).useVariant('allFields'),
+    return inertia.render('dashboard/posts/edit', {
+      post: PostTransformer.transform(post).useVariant('allFields'),
     })
   }
 
   async update({ request, response, params, bouncer }: HttpContext) {
     await bouncer.with('PostPolicy').authorize('edit')
 
-    const article = await Post.findOrFail(params.id)
+    const post = await Post.findOrFail(params.id)
     const payload = await request.validateUsing(updatedDashboardPostValidator)
 
     const excerpt = payload.excerpt?.trim()
       ? payload.excerpt
-      : ExcerptGenerator.generate(payload.content || article.content, 150)
+      : ExcerptGenerator.generate(payload.content || post.content, 150)
 
-    const isStatusPublished = (payload.status || article.status) === 'published'
+    const isStatusPublished = (payload.status || post.status) === 'published'
 
-    let publishedAt = payload.publishedAt ? payload.publishedAt || article.publishedAt : null
+    let publishedAt = payload.publishedAt ? payload.publishedAt || post.publishedAt : null
 
-    if (isStatusPublished && !payload.publishedAt && !article.publishedAt) {
+    if (isStatusPublished && !payload.publishedAt && !post.publishedAt) {
       publishedAt = DateTime.now()
     }
 
-    const updatedArticle = {
+    const updatedPost = {
       ...payload,
       excerpt,
       publishedAt,
     }
 
-    await article.merge(updatedArticle).save()
+    await post.merge(updatedPost).save()
 
-    return response.redirect().toRoute('dashboard.dashboard_articles.show', { id: article.id })
+    return response.redirect().toRoute('dashboard.dashboard_posts.show', { id: post.id })
   }
 
   async destroy({ response, session, params, bouncer }: HttpContext) {
     await bouncer.with('PostPolicy').authorize('delete')
 
-    const article = await Post.findOrFail(params.id)
-    await article.delete()
+    const post = await Post.findOrFail(params.id)
+    await post.delete()
 
-    session.flash('success', `L'article '${article.title}' a été supprimé.`)
+    session.flash('success', `L'article '${post.title}' a été supprimé.`)
 
-    return response.redirect().toRoute('dashboard.dashboard_articles.index')
+    return response.redirect().toRoute('dashboard.dashboard_posts.index')
   }
 }

@@ -16,7 +16,7 @@ export default class DepartmentsController {
   ]
 
   index({ inertia }: HttpContext) {
-    return inertia.render('departments/all', {})
+    return inertia.render('departments/index', {})
   }
 
   single({ inertia, params }: HttpContext) {
