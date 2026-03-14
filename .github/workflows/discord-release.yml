@@ -12,14 +12,18 @@ jobs:
       - name: Send webhook
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          VERSION: ${{ github.event.release.tag_name }}
+          NOTES: ${{ github.event.release.body }}
+          FOOTER: "archls.infos.st · Un bug ou un commentaire sur l'application ? N'hésite pas à le signaler à @nairolf.rp."
         run: |
           jq -n \
-            --arg version "${{ github.event.release.tag_name }}" \
-            --arg notes "${{ github.event.release.body }}" \
+            --arg version "$VERSION" \
+            --arg notes "$NOTES" \
+            --arg footer "$FOOTER" \
             '{
               embeds: [{
                 author: {
-                  name: "Los Santos Catholics",
+                  name: "LS Catholics",
                   url: "https://archls.infos.st",
                   icon_url: "https://i.imgur.com/zkPlrIe.png"
                 },
@@ -27,7 +31,7 @@ jobs:
                 url: "https://archls.infos.st",
                 description: $notes,
                 color: 16766720,
-                footer: { text: "archls.infos.st · Un bug ou un commentaire sur l'application ? N'hésite pas à le signaler à @nairolf.rp." },
+                footer: { text: $footer },
                 timestamp: (now | todate)
               }]
             }' | curl --fail -H "Content-Type: application/json" -d @- "$DISCORD_WEBHOOK"
