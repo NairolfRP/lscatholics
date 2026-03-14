@@ -76,14 +76,16 @@
     "@japa/plugin-adonisjs": "^5.1.0",
     "@japa/runner": "^5.3.0",
     "@poppinss/ts-exec": "^1.4.4",
+    "@rolldown/plugin-babel": "^0.2.1",
     "@tailwindcss/vite": "^4.2.1",
+    "@types/babel__core": "^7.20.5",
     "@types/leaflet": "^1.9.21",
     "@types/luxon": "^3.7.1",
     "@types/node": "^25.5.0",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@types/sinon": "^21.0.0",
-    "@vitejs/plugin-react": "^5.2.0",
+    "@vitejs/plugin-react": "^6.0.1",
     "babel-plugin-react-compiler": "^1.0.0",
     "better-sqlite3": "^12.6.2",
     "eslint": "^10.0.3",
@@ -96,7 +98,7 @@
     "sinon": "^21.0.2",
     "tailwindcss": "^4.2.1",
     "typescript": "~5.9.3",
-    "vite": "^7.3.1",
+    "vite": "^8.0.0",
     "youch": "^4.1.0"
   },
   "dependencies": {
@@ -153,5 +155,10 @@
     ]
   },
   "prettier": "@adonisjs/prettier-config",
-  "packageManager": "pnpm@10.32.1+sha512.a706938f0e89ac1456b6563eab4edf1d1faf3368d1191fc5c59790e96dc918e4456ab2e67d613de1043d2e8c81f87303e6b40d4ffeca9df15ef1ad567348f2be"
+  "packageManager": "pnpm@10.32.1+sha512.a706938f0e89ac1456b6563eab4edf1d1faf3368d1191fc5c59790e96dc918e4456ab2e67d613de1043d2e8c81f87303e6b40d4ffeca9df15ef1ad567348f2be",
+  "pnpm": {
+    "overrides": {
+      "vite": "8.0.0"
+    }
+  }
 }
