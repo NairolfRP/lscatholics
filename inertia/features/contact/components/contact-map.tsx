@@ -1,4 +1,6 @@
 import { lazy } from 'react'
+import { Typography } from '@/shared/components/ui/typography'
+import { Container } from '@/shared/components/ui/container'
 
 const GTA5Map = lazy(() => import('@/shared/components/map/gta5-map'))
 const MapMarker = lazy(() => import('@/shared/components/map/map-marker'))
@@ -6,12 +8,19 @@ const MapMarker = lazy(() => import('@/shared/components/map/map-marker'))
 export default function ContactMap() {
   return (
     <section className="py-16 bg-gray-50">
-      <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold text-catholic-purple mb-8 text-center font-serif">
+      <Container size="fluid" className="mx-auto h-auto px-4">
+        <Typography
+          variant="h2"
+          className="border-none text-4xl font-bold text-catholic-purple mb-8 text-center"
+        >
           Nous trouver
-        </h2>
+        </Typography>
 
-        <GTA5Map className="aspect-video rounded-lg w-full" center={[-685.58, -765.889]} zoom={5}>
+        <GTA5Map
+          className="aspect-video rounded-lg w-full max-h-95"
+          center={[-685.58, -765.889]}
+          zoom={5}
+        >
           <MapMarker position={[-685.58, -765.889]}>
             <div className="p-2">
               <h4 className="font-bold">Tour de la Cathédrale Notre-Dame-des-Saints</h4>
@@ -21,7 +30,7 @@ export default function ContactMap() {
             </div>
           </MapMarker>
         </GTA5Map>
-      </div>
+      </Container>
     </section>
   )
 }

@@ -14,6 +14,7 @@ import { getDepartmentTitleById } from '@/shared/constants/departments.constants
 import { useJobFilters } from '@/features/jobs/hooks/use_job_filters'
 import type { Data } from '@generated/data'
 import type { InertiaProps } from '@/types'
+import { Container } from '@/shared/components/ui/container'
 
 type PageProps = InertiaProps<{
   offers: {
@@ -62,7 +63,7 @@ export default function JobsPage({ offers, filters: initialFilters, queryError }
         <p className="text-xl opacity-90">Travailler pour l'Archidiocèse de Los Santos</p>
       </HeroSection>
 
-      <div className="container mx-auto max-w-7xl px-4 py-16">
+      <Container spacing="md">
         <div className="lg:hidden mb-6">
           <JobFiltersMobile jobFilters={jobFilters} />
         </div>
@@ -156,7 +157,7 @@ export default function JobsPage({ offers, filters: initialFilters, queryError }
             )}
           </section>
         </div>
-      </div>
+      </Container>
     </>
   )
 }

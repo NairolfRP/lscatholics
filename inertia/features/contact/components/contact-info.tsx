@@ -3,14 +3,18 @@ import { Button } from '@/shared/components/ui/button'
 import { Card, CardContent } from '@/shared/components/ui/card'
 import { ARCHDIOCESE_SOCIAL_MEDIAS } from '@/shared/constants/social.constants'
 import { cn } from '@/lib/utils'
+import { Typography } from '@/shared/components/ui/typography'
 
 export default function ContactInfo() {
   return (
     <div className="space-y-8">
       <div>
-        <h2 className="text-2xl font-bold text-catholic-purple mb-6 font-serif">
+        <Typography
+          variant="h2"
+          className="border-none text-2xl font-bold text-catholic-purple mb-6"
+        >
           Informations de contact
-        </h2>
+        </Typography>
 
         <Card className="p-6">
           <CardContent className="space-y-6">

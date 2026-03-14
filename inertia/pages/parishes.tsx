@@ -8,6 +8,7 @@ import HeroSection from '@/shared/components/layout/default/hero-section'
 import type { MapMarkerHandle } from '@/shared/components/map/map-marker'
 import type { GTA5MapHandle } from '@/shared/components/map/gta5-map'
 import { MapFallback } from '@/shared/components/map/map-fallback'
+import { Container } from '@/shared/components/ui/container'
 
 const GTA5Map = lazy(() => import('@/shared/components/map/gta5-map'))
 const MapMarker = lazy(() => import('@/shared/components/map/map-marker'))
@@ -44,14 +45,23 @@ export default function ParishesPage() {
     <>
       <Head title="Nos Paroisses" />
 
-      <HeroSection bgColor="bg-linear-to-r from-catholic-purple to-catholic-blue" py="16">
-        <h1 className="text-4xl md:text-5xl font-bold mb-4 font-serif">Nos Paroisses</h1>
-        <p className="text-xl opacity-90">
+      <HeroSection
+        bgColor="bg-linear-to-r from-catholic-purple to-catholic-blue"
+        textColor="text-white"
+        py="16"
+      >
+        <Typography
+          variant="h2"
+          className="border-none text-inherit text-4xl md:text-5xl font-bold mb-4"
+        >
+          Nos Paroisses
+        </Typography>
+        <Typography className="text-inherit text-xl opacity-90">
           Découvrez les communautés de foi qui composent notre archidiocèse
-        </p>
+        </Typography>
       </HeroSection>
 
-      <section className="py-16">
+      <Container spacing="md">
         <div className="container max-w-7xl mx-auto px-4">
           <Typography variant="h2" className="pb-10 text-catholic-purple font-bold">
             Doyenné Notre-Dame-des-Saints
@@ -115,7 +125,7 @@ export default function ParishesPage() {
             </Suspense>
           </div>
         </div>
-      </section>
+      </Container>
     </>
   )
 }

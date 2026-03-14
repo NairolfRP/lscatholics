@@ -2,6 +2,7 @@ import Head from '@/shared/components/app-head'
 import { Alert, AlertDescription } from '@/shared/components/ui/alert'
 import { LinkText } from '@/shared/components/link-text'
 import HeroSection from '@/shared/components/layout/default/hero-section'
+import { Container } from '@/shared/components/ui/container'
 
 export default function PrivacyPage() {
   return (
@@ -12,7 +13,11 @@ export default function PrivacyPage() {
         <h1 className="text-4xl text-white font-bold">(( Politique de confidentialité ))</h1>
       </HeroSection>
 
-      <section className="container mx-auto max-w-prose px-10 sm:px-8 lg:px-0 prose prose-neutral dark:prose-invert text-justify py-16">
+      <Container
+        size="prose"
+        spacing="lg"
+        className="prose prose-neutral lg:prose-lg dark:prose-invert text-justify"
+      >
         <Alert variant="info" className="mb-5">
           <AlertDescription>
             Contrairement au reste de l'application, cette page n'est pas fictive. Elle décrit les
@@ -223,7 +228,7 @@ export default function PrivacyPage() {
         <p className="mt-10 text-sm text-gray-500">
           <strong>Dernière mise à jour :</strong> 13 mars 2026
         </p>
-      </section>
+      </Container>
     </>
   )
 }

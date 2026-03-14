@@ -24,6 +24,7 @@ import { EmploymentApplicationProfessionalExperienceFields } from '@/features/em
 import { EmploymentApplicationEducationFields } from '@/features/employment-application/components/form/fields/employment-application-education-fields'
 import { EmploymentApplicantDeclarationFields } from '@/features/employment-application/components/form/fields/employment-application-declaration-fields'
 import { EmploymentApplicationOOCFields } from '@/features/employment-application/components/form/fields/employment-application-ooc-fields'
+import { Container } from '@/shared/components/ui/container'
 
 type PageProps = InertiaProps<{
   job: Data.Careers.JobPosting.Variants['employmentApplication']
@@ -75,14 +76,16 @@ export default function EmploymentApplicationPage({ job, user }: PageProps) {
 
       <HeroSection py="16" bgColor="bg-linear-to-r from-primary to-catholic-blue/60">
         <div className="max-w-4xl">
-          <Typography variant="h1" className="md:text-4xl font-serif font-semibold mb-3">
+          <Typography variant="h1" className="text-inherit md:text-4xl font-semibold mb-3">
             Demande d'emploi
           </Typography>
-          <Typography variant="h2">{job.title}</Typography>
+          <Typography variant="h2" className="text-inherit">
+            {job.title}
+          </Typography>
         </div>
       </HeroSection>
 
-      <div className="container mx-auto max-w-5xl px-4 py-12 space-y-10">
+      <Container size="content" spacing="md" className="container mx-auto px-4 space-y-10">
         <Card className="w-full rounded-none">
           <CardHeader className="border-b space-y-3">
             <CardTitle className="text-2xl scroll-m-20 tracking-tight">
@@ -170,7 +173,7 @@ export default function EmploymentApplicationPage({ job, user }: PageProps) {
             </Field>
           </CardFooter>
         </Card>
-      </div>
+      </Container>
     </>
   )
 }

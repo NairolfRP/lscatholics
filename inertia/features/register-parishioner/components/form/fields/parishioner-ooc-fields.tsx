@@ -90,7 +90,7 @@ export const ParishionerOOCFields = withForm({
                     Cochez ce que votre personnage a bien reçu dans son histoire passée. Ça nous
                     permet de jouer nos archives et registres !
                   </p>
-                  <Typography variant="list" className="mt-0">
+                  <Typography variant="list" className="text-xs lg:text-xs mt-0">
                     <li>
                       Baptême : si votre personnage a été baptisé dans son histoire passée (par ex,
                       quand il était enfant)

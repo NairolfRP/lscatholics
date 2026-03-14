@@ -4,6 +4,14 @@ import Head from '@/shared/components/app-head'
 import { Typography } from '@/shared/components/ui/typography'
 import { Button } from '@/shared/components/ui/button'
 import { getReadingTypeLabel, liturgicalColor } from '@/shared/services/liturgy'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/shared/components/ui/card'
+import { Container } from '@/shared/components/ui/container'
 
 interface ReadingsMetadata {
   date: string
@@ -126,35 +134,35 @@ function parseContent(text: string): React.ReactNode {
 
 function ReadingCard({ lecture, multiMass = false }: { lecture: Reading; multiMass?: boolean }) {
   return (
-    <div className="bg-white rounded-lg shadow-md border border-gray-200 overflow-hidden">
-      <div className="bg-blue-50 px-6 py-4 border-b border-gray-200">
+    <Card className="pt-0 shadow-md">
+      <CardHeader className="bg-blue-50 px-6 py-4 border-b ">
         {getReadingTypeLabel(lecture.type) && (
-          <h3 className="text-xl font-semibold mb-4 text-blue-800">
+          <CardTitle className="text-xl font-semibold mb-4 text-blue-800">
             {getReadingTypeLabel(lecture.type)}
-          </h3>
+          </CardTitle>
         )}
-        {lecture.titre && (
-          <h4 className="text-base font-semibold italic text-blue-500">{lecture.titre}</h4>
-        )}
-        <p className={`text-blue-600 text-sm mt-1 ${!multiMass ? 'text-right' : ''}`}>
-          {lecture.ref}
-        </p>
-      </div>
-      <div className="p-6">
+        <CardDescription>
+          {lecture.titre && (
+            <h4 className="text-base font-semibold italic text-blue-500">{lecture.titre}</h4>
+          )}
+          <p className={`text-blue-600 text-sm mt-1 ${!multiMass ? 'text-right' : ''}`}>
+            {lecture.ref}
+          </p>
+        </CardDescription>
+      </CardHeader>
+      <CardContent className="p-6">
         {!multiMass && lecture.refrain_psalmique && (
-          <p className="mb-4">
+          <Typography className="mb-4">
             <strong>R/</strong>{' '}
             {parseInline(lecture.refrain_psalmique.replace(/<\/?p>/g, '').trim())}
-          </p>
+          </Typography>
         )}
         {!multiMass && lecture.verset_evangile && (
           <div>{parseContent(lecture.verset_evangile)}</div>
         )}
-        <div className="prose prose-lg max-w-none text-gray-700 leading-relaxed">
-          {parseContent(lecture.contenu)}
-        </div>
-      </div>
-    </div>
+        <Typography>{parseContent(lecture.contenu)}</Typography>
+      </CardContent>
+    </Card>
   )
 }
 
@@ -181,7 +189,7 @@ export default function DailyReadingsPage() {
     <>
       <Head title="Lectures du jour" />
 
-      <section className="container max-w-4xl mx-auto my-40 space-y-10 px-5">
+      <Container size="content" className="my-40 space-y-10">
         <Typography variant="h1">Lectures du jour</Typography>
 
         {data?.informations && liturgicalHeader && (
@@ -257,12 +265,14 @@ export default function DailyReadingsPage() {
 
             {(data.messes.length === 0 || data.messes[0].lectures.length === 0) && (
               <div className="text-center py-12">
-                <p className="text-gray-500">Aucune lecture disponible pour aujourd'hui.</p>
+                <Typography className="text-gray-500">
+                  Aucune lecture disponible pour aujourd'hui.
+                </Typography>
               </div>
             )}
           </div>
         )}
-      </section>
+      </Container>
     </>
   )
 }

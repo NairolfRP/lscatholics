@@ -5,6 +5,7 @@ import HeroSection from '@/shared/components/layout/default/hero-section'
 import { Typography } from '@/shared/components/ui/typography'
 import { DonateTabs } from '@/features/donate/components/donate-tabs'
 import { DonateSidebar } from '@/features/donate/components/donate-sidebar'
+import { Container } from '@/shared/components/ui/container'
 
 type PageProps = InertiaProps
 
@@ -19,7 +20,7 @@ export default function DonatePage({}: PageProps) {
         </Typography>
       </HeroSection>
 
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <Container className="px-4 sm:px-6 lg:px-8 py-8">
         <div className="text-center mb-12">
           <h2 className="text-4xl font-bold text-gray-900 mb-4">Aidez notre mission</h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
@@ -32,7 +33,7 @@ export default function DonatePage({}: PageProps) {
           <DonateTabs />
           <DonateSidebar />
         </div>
-      </section>
+      </Container>
     </>
   )
 }

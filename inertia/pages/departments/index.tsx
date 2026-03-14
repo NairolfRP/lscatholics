@@ -3,6 +3,7 @@ import { Link } from '@adonisjs/inertia/react'
 import { Typography } from '@/shared/components/ui/typography'
 import { Card, CardContent, CardHeader, CardTitle } from '@/shared/components/ui/card'
 import { DEPARTMENTS } from '@/shared/constants/departments.constants'
+import { Container } from '@/shared/components/ui/container'
 
 export default function DepartmentsPage() {
   const sorted = [...DEPARTMENTS].sort((a, b) => a.shortTitle.localeCompare(b.shortTitle))
@@ -10,7 +11,8 @@ export default function DepartmentsPage() {
   return (
     <>
       <Head title="Départements" />
-      <section className="container max-w-4xl mx-auto my-40 space-y-10 px-5">
+
+      <Container as="section" size="content" className="my-40 px-5 space-y-10 ">
         <Typography variant="h1">Départements (ordre alphabétique)</Typography>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {sorted.map((department) => (
@@ -28,7 +30,7 @@ export default function DepartmentsPage() {
             </Link>
           ))}
         </div>
-      </section>
+      </Container>
     </>
   )
 }

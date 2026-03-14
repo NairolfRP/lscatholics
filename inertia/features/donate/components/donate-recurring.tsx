@@ -5,9 +5,7 @@ export function DonateRecurring() {
   return (
     <Card className="p-6">
       <CardHeader>
-        <CardTitle className="text-2xl font-semibold text-gray-900">
-          Configurer un don périodique
-        </CardTitle>
+        <CardTitle className="text-2xl font-semibold">Configurer un don périodique</CardTitle>
       </CardHeader>
       <CardContent>
         <Typography>

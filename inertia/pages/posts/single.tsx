@@ -5,6 +5,7 @@ import { MarkdownContent } from '@/shared/components/ui/markdown'
 import { formatDate } from '@/lib/utils'
 import type { Data } from '@generated/data'
 import { InertiaProps } from '@/types'
+import { Container } from '@/shared/components/ui/container'
 
 type PageProps = InertiaProps<{
   post: Data.Posts.Post.Variants['publicDetails']
@@ -33,7 +34,7 @@ export default function NewsSinglePage({ post }: PageProps) {
           </HeroSection>
         </header>
 
-        <div className="max-w-prose mx-auto px-10 sm:px-8 lg:px-0 py-12 lg:py-16">
+        <Container size="prose" spacing="md">
           <div className="article-content">
             <div className="flex flex-col mb-10">
               <span className="font-bold uppercase">Pour diffusion immédiate</span>
@@ -43,7 +44,7 @@ export default function NewsSinglePage({ post }: PageProps) {
             </div>
             <MarkdownContent content={post.content} className="text-justify" />
           </div>
-        </div>
+        </Container>
       </article>
     </>
   )

@@ -15,6 +15,7 @@ import NotFoundPage from '@/pages/errors/not-found'
 import { cn } from '@/lib/utils'
 import DefaultBanner from '@/assets/images/cathedralTower.webp'
 import type { InertiaProps } from '@/types'
+import { Container } from '@/shared/components/ui/container'
 
 type PageProps = InertiaProps<{ departmentSlug: string }>
 
@@ -35,12 +36,14 @@ export default function DepartmentSinglePage({ departmentSlug }: PageProps) {
         bgColor={page?.bannerColor}
         align="text-left"
       >
-        <h1 className="text-4xl text-white font-bold">{department.title}</h1>
+        <Typography variant="h1" className="text-4xl text-white font-bold">
+          {department.title}
+        </Typography>
       </HeroSection>
 
-      <section className="container mx-auto max-w-7xl text-justify py-16 px-5 md:px-16">
+      <Container spacing="md" className="px-5 text-justify">
         <Typography>{page?.content || department.description}</Typography>
-      </section>
+      </Container>
 
       {hasTeamSection && (
         <section>
@@ -56,13 +59,13 @@ export default function DepartmentSinglePage({ departmentSlug }: PageProps) {
           </div>
 
           {page?.director && (
-            <div className="container mx-auto max-w-7xl pb-16 px-5 md:px-16">
+            <Container className="pb-16 px-5 md:px-16">
               <div className="flex flex-col md:flex-row flex-wrap items-center md:items-end gap-8 md:gap-15">
                 {page.director.image ? (
                   <img
                     src={page.director.image}
                     alt="Director image"
-                    className="max-w-full h-auto md:w-[20%]"
+                    className="max-w-1/2 h-auto md:w-[20%]"
                     loading="lazy"
                   />
                 ) : (
@@ -88,10 +91,10 @@ export default function DepartmentSinglePage({ departmentSlug }: PageProps) {
                   </div>
                 </div>
               </div>
-            </div>
+            </Container>
           )}
 
-          <div className="container mx-auto max-w-7xl pb-16 px-5 md:px-16">
+          <Container className="pb-16 px-5 md:px-16">
             <div className="flex flex-col gap-12">
               {page?.teams?.map((team) => (
                 <div key={team.title}>
@@ -139,7 +142,7 @@ export default function DepartmentSinglePage({ departmentSlug }: PageProps) {
                 </div>
               ))}
             </div>
-          </div>
+          </Container>
         </section>
       )}
     </>

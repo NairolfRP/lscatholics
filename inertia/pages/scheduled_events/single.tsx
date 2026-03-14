@@ -9,6 +9,7 @@ import HeroSection from '@/shared/components/layout/default/hero-section'
 import { MarkdownContent } from '@/shared/components/ui/markdown'
 import type { Data } from '@generated/data'
 import type { InertiaProps } from '@/types'
+import { Container } from '@/shared/components/ui/container'
 
 type PageProps = InertiaProps<{
   event: Data.ScheduledEvents.ScheduledEvent.Variants['publicDetails']
@@ -48,74 +49,74 @@ export default function EventSinglePage({ event }: PageProps) {
           </HeroSection>
         </header>
 
-        <div className="container mx-auto px-4 py-12 lg:py-16">
-          <div className="max-w-7xl mx-auto">
-            <Link route="find.events">
-              <Button className="mb-10 cursor-pointer" size="lg">
-                <ArrowLeft /> Tous les événements
-              </Button>
-            </Link>
+        <Container size="wide" spacing="md">
+          <Link route="find.events">
+            <Button className="mb-10 cursor-pointer" size="lg">
+              <ArrowLeft /> Tous les événements
+            </Button>
+          </Link>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-10">
-              <div className="article-content">
-                <MarkdownContent content={event.content} className="prose text-justify" />
-              </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-10">
+            <div className="article-content">
+              <MarkdownContent
+                content={event.content}
+                className="prose prose-neutral prose-lg text-justify"
+              />
+            </div>
 
-              <div className="space-y-3">
-                <Typography variant="h3" className="font-bold">
-                  Détails
-                </Typography>
+            <div className="space-y-3">
+              <Typography variant="h3" className="font-bold">
+                Détails
+              </Typography>
 
+              <dl>
+                <dt className="text-primary uppercase text-sm font-bold">Début</dt>
+                <dd className="text-sm">
+                  {event.startDate ? formatDetailDate(event.startDate) : 'Date inconnue'}
+                </dd>
+              </dl>
+
+              {event.endDate && (
                 <dl>
-                  <dt className="text-primary uppercase text-sm font-bold">Début</dt>
-                  <dd className="text-sm">
-                    {event.startDate ? formatDetailDate(event.startDate) : 'Date inconnue'}
-                  </dd>
+                  <dt className="text-primary uppercase text-sm font-bold">Fin</dt>
+                  <dd className="text-sm">{formatDetailDate(event.endDate)}</dd>
                 </dl>
+              )}
 
-                {event.endDate && (
-                  <dl>
-                    <dt className="text-primary uppercase text-sm font-bold">Fin</dt>
-                    <dd className="text-sm">{formatDetailDate(event.endDate)}</dd>
-                  </dl>
-                )}
+              {event.location && (
+                <dl>
+                  <dt className="text-primary uppercase text-sm font-bold">Lieu</dt>
+                  <dd className="text-sm">{event.location}</dd>
+                </dl>
+              )}
 
-                {event.location && (
-                  <dl>
-                    <dt className="text-primary uppercase text-sm font-bold">Lieu</dt>
-                    <dd className="text-sm">{event.location}</dd>
-                  </dl>
-                )}
+              {event.registrationRequired && (
+                <dl>
+                  <dt className="text-primary uppercase text-sm font-bold">Inscription requise</dt>
+                  <dd className="text-sm">Oui</dd>
+                </dl>
+              )}
 
-                {event.registrationRequired && (
-                  <dl>
-                    <dt className="text-primary uppercase text-sm font-bold">
-                      Inscription requise
-                    </dt>
-                    <dd className="text-sm">Oui</dd>
-                  </dl>
-                )}
+              {event.registrationRequired && event.maxParticipants && (
+                <dl>
+                  <dt className="text-primary uppercase text-sm font-bold">Nombre de places</dt>
+                  <dd className="text-sm">{event.maxParticipants}</dd>
+                </dl>
+              )}
 
-                {event.registrationRequired && event.maxParticipants && (
-                  <dl>
-                    <dt className="text-primary uppercase text-sm font-bold">Nombre de places</dt>
-                    <dd className="text-sm">{event.maxParticipants}</dd>
-                  </dl>
-                )}
-
-                {event.flyerUrl && (
+              {event.flyerUrl && (
+                <a href={event.flyerUrl} target="_blank">
                   <img
                     src={event.flyerUrl}
                     alt="Event Flyer"
-                    width={791}
-                    height={1024}
+                    className="max-h-1/2"
                     loading="lazy"
                   />
-                )}
-              </div>
+                </a>
+              )}
             </div>
           </div>
-        </div>
+        </Container>
       </article>
     </>
   )

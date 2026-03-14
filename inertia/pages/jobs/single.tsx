@@ -22,6 +22,7 @@ import { formatDate } from '@/lib/utils'
 import { urlFor } from '@/client'
 import type { Data } from '@generated/data'
 import HeroSection from '@/shared/components/layout/default/hero-section'
+import { Container } from '@/shared/components/ui/container'
 
 type PageProps = {
   offer: Data.Careers.JobPosting.Variants['allFields']
@@ -59,7 +60,7 @@ export default function JobSinglePage({ offer }: PageProps) {
 
       <HeroSection py="16" bgColor="bg-muted" textColor="text-black">
         <div className="max-w-4xl">
-          <Typography variant="h1" className="md:text-4xl font-serif font-semibold mb-3">
+          <Typography variant="h1" className="md:text-4xl font-semibold mb-3">
             {offer.title}
           </Typography>
           <div className="flex flex-wrap items-center justify-center gap-4 text-base opacity-70">
@@ -80,7 +81,7 @@ export default function JobSinglePage({ offer }: PageProps) {
         </div>
       </HeroSection>
 
-      <div className="container mx-auto max-w-screen-2xl px-4 py-12 space-y-10">
+      <Container spacing="md" className="px-4 space-y-10">
         <Button asChild>
           <Link href={urlFor('jobs.index')}>
             <MoveLeft /> Consulter les autres offres d'emplois
@@ -88,7 +89,6 @@ export default function JobSinglePage({ offer }: PageProps) {
         </Button>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 xl:gap-12">
-          {/* Contenu principal */}
           <div className="col-span-1 lg:col-span-8">
             <Card className="sm:p-6 md:p-8 xl:p-10">
               <CardContent className="space-y-10">
@@ -178,7 +178,6 @@ export default function JobSinglePage({ offer }: PageProps) {
             </Card>
           </div>
 
-          {/* Sidebar */}
           <div className="col-span-1 lg:col-span-4">
             <div className="lg:sticky lg:top-6 space-y-6">
               <Card className="overflow-hidden pt-0">
@@ -303,7 +302,7 @@ export default function JobSinglePage({ offer }: PageProps) {
             </div>
           </div>
         </div>
-      </div>
+      </Container>
     </>
   )
 }

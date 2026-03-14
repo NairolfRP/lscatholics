@@ -5,6 +5,8 @@ import { Button } from '@/shared/components/ui/button'
 import { urlFor } from '@/client'
 import HeroSection from '@/shared/components/layout/default/hero-section'
 import { CHURCH_SERVICES } from '@/features/church-services/constants/church_services.constants'
+import { Typography } from '@/shared/components/ui/typography'
+import { Container } from '@/shared/components/ui/container'
 
 type Props = {
   serviceId: (typeof CHURCH_SERVICES)[number]['id']
@@ -23,22 +25,23 @@ export default function ServiceLayout({ serviceId, children }: Props) {
       <HeroSection
         bgColor={service.iconClasses ?? 'bg-linear-to-r from-catholic-blue to-catholic-blue/90'}
         py="16"
+        textColor="text-white"
       >
-        <h1 className="text-4xl md:text-5xl font-bold mb-4 font-serif">{service.title}</h1>
-        <p className="text-xl opacity-90">{service.description}</p>
+        <Typography variant="h1" className="text-inherit font-bold mb-4">
+          {service.title}
+        </Typography>
+        <Typography className="text-inherit text-xl opacity-90">{service.description}</Typography>
       </HeroSection>
 
-      <div className="container max-w-7xl mx-auto px-4 py-10">
+      <Container size="content" spacing="md" className="flex flex-col gap-15">
         <Link href={urlFor('services.index')}>
           <Button className="cursor-pointer">
             <ChevronLeft /> Retourner à la liste des services
           </Button>
         </Link>
-      </div>
 
-      <section className="pt-5 pb-16">
-        <div className="container max-w-7xl mx-auto px-4">{children}</div>
-      </section>
+        <section>{children}</section>
+      </Container>
     </>
   )
 }

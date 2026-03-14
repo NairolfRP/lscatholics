@@ -13,6 +13,7 @@ import HeroSection from '@/shared/components/layout/default/hero-section'
 import { Typography } from '@/shared/components/ui/typography'
 import { ParishionerBenefits } from '@/features/register-parishioner/components/parishioner-benefits'
 import { ParishionerForm } from '@/features/register-parishioner/components/form/parishioner-form'
+import { Container } from '@/shared/components/ui/container'
 
 type PageProps = InertiaProps
 
@@ -21,18 +22,18 @@ export default function RegisterParishionerPage({ user }: PageProps) {
     <>
       <Head title="S'enregistrer comme paroissien" />
 
-      <HeroSection py="16">
-        <Typography variant="h2" className="border-0 text-4xl font-bold mb-4 font-serif">
+      <HeroSection py="16" textColor="text-white">
+        <Typography variant="h2" className="text-inherit border-0 text-4xl font-bold mb-4">
           Bienvenue chez vous !
         </Typography>
-        <p className="text-xl opacity-90">
+        <Typography className="text-inherit text-xl opacity-90">
           Nous sommes ravis que vous vous intéressiez à rejoindre notre famille de familles.
           L'enregistrement aide les paroisses à mieux vous servir et vous permet de rester en
           contact avec elles.
-        </p>
+        </Typography>
       </HeroSection>
 
-      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <Container size="content" className="max-w-4xl px-5 lg:px-12 py-12">
         <ParishionerBenefits />
 
         <Card className="shadow-lg">
@@ -66,7 +67,7 @@ export default function RegisterParishionerPage({ user }: PageProps) {
             Des questions ? <LinkText route="contact">Contactez-nous</LinkText>
           </p>
         </div>
-      </section>
+      </Container>
     </>
   )
 }

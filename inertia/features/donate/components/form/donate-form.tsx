@@ -53,7 +53,7 @@ export function DonateForm() {
   return (
     <Card className="p-6">
       <CardHeader>
-        <CardTitle className="text-2xl font-semibold text-gray-900"> Faire un don </CardTitle>
+        <CardTitle className="text-2xl font-semibold"> Faire un don </CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
         <form id="donate-form" onSubmit={onSubmit}>

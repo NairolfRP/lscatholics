@@ -15,6 +15,8 @@ import type { Data } from '@generated/data'
 import type { InertiaProps } from '@/types'
 import HeroSection from '@/shared/components/layout/default/hero-section'
 import PostCard from '@/shared/components/post-card'
+import { Typography } from '@/shared/components/ui/typography'
+import { Container } from '@/shared/components/ui/container'
 
 type PageProps = InertiaProps<{
   posts?: {
@@ -32,14 +34,14 @@ export default function HomePage({ posts = { data: [], error: '' } }: PageProps)
     <>
       <HeroSection bgImage={HomepageBanner} height="min-h-[50vh]">
         <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-5xl md:text-6xl font-bold mb-6 font-serif">
+          <Typography variant="h1" className="text-5xl md:text-6xl font-bold mb-6 font-serif">
             Bienvenue sur le site de
             <span className="text-gradient block">l'Archidiocèse de Los Santos</span>
-          </h1>
-          <p className="text-xl md:text-2xl mb-8 opacity-90">
+          </Typography>
+          <Typography className="text-white text-xl md:text-2xl mb-8 opacity-90">
             Rejoignez-nous dans la prière, la communion et le service au sein de l'Église catholique
             à Los Santos
-          </p>
+          </Typography>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button size="lg" className="bg-catholic-gold hover:bg-yellow-600 text-white" asChild>
               <Link href={urlFor('find.events')}>
@@ -70,7 +72,7 @@ export default function HomePage({ posts = { data: [], error: '' } }: PageProps)
       </HeroSection>
 
       <section className="py-16 bg-gray-50">
-        <div className="container max-w-7xl mx-auto px-4">
+        <Container>
           <div className="grid md:grid-cols-3 gap-6">
             {/* <Card className="text-center hover:shadow-lg transition-shadow">
               <CardContent className="p-6">
@@ -135,17 +137,20 @@ export default function HomePage({ posts = { data: [], error: '' } }: PageProps)
               </Card>
             </a>
           </div>
-        </div>
+        </Container>
       </section>
 
       <section className="py-16 bg-catholic-purple text-white">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6 font-serif">
+        <Container className="text-center">
+          <Typography
+            variant="h2"
+            className="text-2xl md:text-4xl border-0 text-white font-bold mb-6"
+          >
             Rejoignez nos paroisses
-          </h2>
-          <p className="text-xl mb-8 opacity-90 max-w-2xl mx-auto">
+          </Typography>
+          <Typography className="text-lg md:text-xl text-white mb-8 opacity-90 max-w-2xl mx-auto">
             Découvrez la richesse de notre foi et participez à la vie de notre communauté
-          </p>
+          </Typography>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button
               variant="outline"
@@ -165,65 +170,66 @@ export default function HomePage({ posts = { data: [], error: '' } }: PageProps)
               </Link>
             </Button>
           </div>
-        </div>
+        </Container>
       </section>
 
-      <section className="py-16">
-        <div className="container mx-auto max-w-7xl px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-catholic-purple mb-4 font-serif">
-              Actualités de l'Archidiocèse
-            </h2>
-            <div className="w-24 h-1 bg-catholic-gold mx-auto cross-divider" />
-          </div>
-
-          <WhenVisible
-            data="posts"
-            fallback={
-              <div className="grid md:grid-cols-3 gap-8 items-stretch">
-                {Array.from({ length: 3 }).map((_, i) => (
-                  <div key={i} className="flex flex-col space-y-3 h-full">
-                    <Skeleton className="h-[400px] w-full rounded-xl" />
-                    <div className="space-y-2">
-                      <Skeleton className="h-4 w-full" />
-                      <Skeleton className="h-4 w-full" />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            }
+      <Container as="section" spacing="md">
+        <div className="text-center mb-12">
+          <Typography
+            variant="h2"
+            className="border-none text-3xl md:text-4xl font-bold text-catholic-purple mb-4 font-serif"
           >
-            {posts?.error ? (
-              <Alert variant="destructive">
-                <CircleAlert />
-                <AlertDescription>{posts.error}</AlertDescription>
-              </Alert>
-            ) : posts?.data?.length === 0 ? (
-              <div className="italic text-center">Aucun article pour le moment !</div>
-            ) : (
-              <div className="grid md:grid-cols-3 gap-8 items-stretch">
-                {posts?.data?.map((post) => (
-                  <PostCard
-                    key={`home-recent-post-${post.id}`}
-                    title={post.title}
-                    routeParams={{ slug: post.slug }}
-                    category={post.category ?? undefined}
-                    publishedAt={post.publishedAt ?? ''}
-                  />
-                ))}
-              </div>
-            )}
-          </WhenVisible>
+            Actualités de l'Archidiocèse
+          </Typography>
+          <div className="w-24 h-1 bg-catholic-gold mx-auto cross-divider" />
+        </div>
 
-          {(posts?.data?.length ?? 0) > 0 && (
-            <div className="text-center mt-8">
-              <Button variant="default" size="lg" className="cursor-pointer" asChild>
-                <Link href={urlFor('news.index')}>Voir toutes les actualités</Link>
-              </Button>
+        <WhenVisible
+          data="posts"
+          fallback={
+            <div className="grid md:grid-cols-3 gap-8 items-stretch">
+              {Array.from({ length: 3 }).map((_, i) => (
+                <div key={i} className="flex flex-col space-y-3 h-full">
+                  <Skeleton className="h-[400px] w-full rounded-xl" />
+                  <div className="space-y-2">
+                    <Skeleton className="h-4 w-full" />
+                    <Skeleton className="h-4 w-full" />
+                  </div>
+                </div>
+              ))}
+            </div>
+          }
+        >
+          {posts?.error ? (
+            <Alert variant="destructive">
+              <CircleAlert />
+              <AlertDescription>{posts.error}</AlertDescription>
+            </Alert>
+          ) : posts?.data?.length === 0 ? (
+            <div className="italic text-center">Aucun article pour le moment !</div>
+          ) : (
+            <div className="grid md:grid-cols-3 gap-8 items-stretch">
+              {posts?.data?.map((post) => (
+                <PostCard
+                  key={`home-recent-post-${post.id}`}
+                  title={post.title}
+                  routeParams={{ slug: post.slug }}
+                  category={post.category ?? undefined}
+                  publishedAt={post.publishedAt ?? ''}
+                />
+              ))}
             </div>
           )}
-        </div>
-      </section>
+        </WhenVisible>
+
+        {(posts?.data?.length ?? 0) > 0 && (
+          <div className="text-center mt-8">
+            <Button variant="default" size="lg" className="cursor-pointer" asChild>
+              <Link href={urlFor('news.index')}>Voir toutes les actualités</Link>
+            </Button>
+          </div>
+        )}
+      </Container>
 
       {/* <section className="py-16">
         <div className="container mx-auto px-4">
@@ -259,8 +265,8 @@ export default function HomePage({ posts = { data: [], error: '' } }: PageProps)
       </section> */}
 
       <section className="py-16 bg-catholic-gold text-white">
-        <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-4 gap-8 text-center">
+        <Container>
+          <div className="grid md:grid-cols-4 gap-13 md:gap-8 text-center">
             <div className="space-y-2">
               <div className="text-4xl font-bold text-green-700">288</div>
               <div className="text-sm text-gray-900 font-medium uppercase tracking-wide">
@@ -286,7 +292,7 @@ export default function HomePage({ posts = { data: [], error: '' } }: PageProps)
               </div>
             </div>
           </div>
-        </div>
+        </Container>
       </section>
 
       {/* <section className="py-16 bg-gray-50">

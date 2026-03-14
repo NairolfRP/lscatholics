@@ -10,6 +10,7 @@ import ContactMap from '@/features/contact/components/contact-map'
 import { Suspense } from 'react'
 import { MapFallback } from '@/shared/components/map/map-fallback'
 import ContactForm from '@/features/contact/components/form/contact-form'
+import { Container } from '@/shared/components/ui/container'
 
 type PageProps = InertiaProps<{
   subjects: typeof CONTACT_SUBJECTS
@@ -19,37 +20,38 @@ export default function ContactPage({ user }: PageProps) {
   return (
     <>
       <Head title="Contact" />
-      <HeroSection py="16">
-        <Typography variant="h1" className="text-4xl md:text-5xl font-bold mb-4 font-serif">
+      <HeroSection py="16" textColor="text-white">
+        <Typography variant="h1" className="text-inherit text-4xl md:text-5xl font-bold mb-4">
           Nous Contacter
         </Typography>
-        <p className="text-xl opacity-90">
+        <Typography className="text-inherit text-xl opacity-90">
           Nous sommes là pour vous. N'hésitez pas à nous appeler ou nous écrire pour poser vos
           questions et nous faire part de vos préoccupations et commentaires.
-        </p>
+        </Typography>
       </HeroSection>
 
-      <section className="container mx-auto px-4 py-12 lg:py-16">
-        <div className="max-w-4xl mx-auto">
-          <ContactSuccessAlert />
+      <Container size="content" spacing="md">
+        <ContactSuccessAlert />
 
-          <div className="grid md:grid-cols-2 gap-16">
-            <div className="flex flex-col gap-4">
-              <h2 className="text-2xl font-bold text-catholic-purple mb-6 font-serif">
-                Envoyez-nous un message
-              </h2>
+        <div className="grid md:grid-cols-2 gap-16">
+          <div className="flex flex-col gap-4">
+            <Typography
+              variant="h2"
+              className="border-none text-2xl font-bold text-catholic-purple mb-6"
+            >
+              Envoyez-nous un message
+            </Typography>
 
-              {!user ? (
-                <LoginAlert text="pour utiliser le formulaire de contact." />
-              ) : (
-                <ContactForm />
-              )}
-            </div>
-
-            <ContactInfo />
+            {!user ? (
+              <LoginAlert text="pour utiliser le formulaire de contact." />
+            ) : (
+              <ContactForm />
+            )}
           </div>
+
+          <ContactInfo />
         </div>
-      </section>
+      </Container>
 
       <Suspense fallback={<MapFallback />}>
         <ContactMap />
