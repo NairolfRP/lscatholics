@@ -33,17 +33,15 @@ export default function NewsSinglePage({ post }: PageProps) {
           </HeroSection>
         </header>
 
-        <div className="container mx-auto px-4 py-12 lg:py-16">
-          <div className="max-w-4xl mx-auto">
-            <div className="article-content">
-              <div className="flex flex-col mb-10">
-                <span className="font-bold uppercase">Pour diffusion immédiate</span>
-                {post.publishedAt && (
-                  <time dateTime={post.publishedAt}>{formatDate(post.publishedAt)}</time>
-                )}
-              </div>
-              <MarkdownContent content={post.content} className="prose text-justify" />
+        <div className="max-w-prose mx-auto px-10 sm:px-8 lg:px-0 py-12 lg:py-16">
+          <div className="article-content">
+            <div className="flex flex-col mb-10">
+              <span className="font-bold uppercase">Pour diffusion immédiate</span>
+              {post.publishedAt && (
+                <time dateTime={post.publishedAt}>{formatDate(post.publishedAt)}</time>
+              )}
             </div>
+            <MarkdownContent content={post.content} className="text-justify" />
           </div>
         </div>
       </article>

@@ -1,6 +1,5 @@
 import Head from '@/shared/components/app-head'
 import { Alert, AlertDescription } from '@/shared/components/ui/alert'
-import { Typography } from '@/shared/components/ui/typography'
 import { LinkText } from '@/shared/components/link-text'
 import HeroSection from '@/shared/components/layout/default/hero-section'
 
@@ -13,7 +12,7 @@ export default function PrivacyPage() {
         <h1 className="text-4xl text-white font-bold">(( Politique de confidentialité ))</h1>
       </HeroSection>
 
-      <section className="container mx-auto max-w-7xl text-justify py-16">
+      <section className="container mx-auto max-w-prose px-10 sm:px-8 lg:px-0 prose prose-neutral dark:prose-invert text-justify py-16">
         <Alert variant="info" className="mb-5">
           <AlertDescription>
             Contrairement au reste de l'application, cette page n'est pas fictive. Elle décrit les
@@ -21,8 +20,8 @@ export default function PrivacyPage() {
           </AlertDescription>
         </Alert>
 
-        <Typography variant="h2">Préambule</Typography>
-        <Typography className="not-first:mt-2">
+        <h2>Préambule</h2>
+        <p>
           Cette application a été créée pour la faction{' '}
           <span className="font-bold">Archidiocèse de Los Santos</span>, un projet de jeu de rôle
           (roleplay) sur le serveur de jeu{' '}
@@ -33,12 +32,10 @@ export default function PrivacyPage() {
           confidentialité explique comment nous collectons, utilisons et protégeons vos données
           personnelles conformément au Règlement (UE) 2016/679 du 27 avril 2016 (RGPD) et à la Loi
           informatique et Libertés du 6 janvier 1978.
-        </Typography>
+        </p>
 
-        <Typography variant="h2" className="mt-10">
-          1. Responsable du traitement
-        </Typography>
-        <Typography className="not-first:mt-2">
+        <h2>1. Responsable du traitement</h2>
+        <p>
           Le responsable du traitement de vos données est le créateur et développeur de cette
           application. Pour toute question, vous pouvez le contacter via Discord :{' '}
           <span className="font-bold">nairolf.rp</span> ou par{' '}
@@ -50,16 +47,14 @@ export default function PrivacyPage() {
             messagerie privée
           </LinkText>{' '}
           sur le forum GTA World.
-        </Typography>
+        </p>
 
-        <Typography variant="h2" className="mt-10">
-          2. Données collectées
-        </Typography>
-        <Typography className="not-first:mt-2">
+        <h2>2. Données collectées</h2>
+        <p>
           Notre application collecte les informations minimales et nécessaires pour son
           fonctionnement :
-        </Typography>
-        <Typography variant="list" className="my-4">
+        </p>
+        <ul>
           <li>
             <strong>Identifiants GTA World :</strong> Votre nom d'utilisateur, votre identifiant
             unique et la liste de vos personnages en jeu, fournis lors de l'authentification via l'
@@ -79,20 +74,18 @@ export default function PrivacyPage() {
             <strong>Données Discord (optionnelles) :</strong> Si vous choisissez de lier votre
             compte Discord, nous collectons les informations minimales (identifiant et pseudonyme)
           </li>
-        </Typography>
+        </ul>
 
-        <Typography variant="h2" className="mt-10">
-          3. Tiers et Sous-Traitants
-        </Typography>
-        <Typography className="not-first:mt-2 font-bold">
+        <h2>3. Tiers et Sous-Traitants</h2>
+        <p>
           Vos données personnelles ne sont jamais vendues, partagées, ni louées à des tiers à des
           fins commerciales ou marketing.
-        </Typography>
-        <Typography className="not-first:mt-2">
+        </p>
+        <p>
           Les seules entités ayant accès à vos données sont les partenaires techniques
           indispensables au fonctionnement de l'application, listés ci-dessous :
-        </Typography>
-        <Typography variant="list" className="my-4">
+        </p>
+        <ul>
           <li>
             <strong>
               <LinkText external href="https://global.gta.world/privacy" target="_blank">
@@ -128,16 +121,14 @@ export default function PrivacyPage() {
             </strong>{' '}
             : Hébergeur de l'application web
           </li>
-        </Typography>
-        <Typography className="not-first:mt-2 mt-4">
+        </ul>
+        <p>
           <strong>Important :</strong> Consultez les politiques de confidentialité de ces tiers pour
           comprendre comment ils traitent vos données.
-        </Typography>
+        </p>
 
-        <Typography variant="h2" className="mt-10">
-          4. Analyse avec Umami
-        </Typography>
-        <Typography className="not-first:mt-2">
+        <h2>4. Analyse avec Umami</h2>
+        <p>
           Nous utilisons{' '}
           <LinkText external href="https://umami.is/" target="_blank">
             Umami
@@ -150,24 +141,18 @@ export default function PrivacyPage() {
             politique de confidentialité d'Umami
           </LinkText>{' '}
           pour plus de détails.
-        </Typography>
+        </p>
 
-        <Typography variant="h2" className="mt-10">
-          5. Utilisation des données
-        </Typography>
-        <Typography className="not-first:mt-2">
-          Vos données sont utilisées exclusivement pour :
-        </Typography>
-        <Typography variant="list" className="my-4">
+        <h2>5. Utilisation des données</h2>
+        <p>Vos données sont utilisées exclusivement pour :</p>
+        <ul>
           <li>Vous authentifier et maintenir votre session connectée</li>
           <li>Gérer et personnaliser votre compte utilisateur</li>
           <li>Identifier votre rôle et vos permissions</li>
-        </Typography>
+        </ul>
 
-        <Typography variant="h2" className="mt-10">
-          6. Conservation des données
-        </Typography>
-        <Typography variant="list" className="not-first:mt-2">
+        <h2>6. Conservation des données</h2>
+        <ul>
           <li>
             <strong>Données d'authentification :</strong> Conservées tant que votre compte existe.
             Vous pouvez demander la suppression de votre compte et de toutes vos données associées à
@@ -177,36 +162,30 @@ export default function PrivacyPage() {
             <strong>Tokens d'accès :</strong> Rafraîchis lors de chaque connexion. Les anciens
             tokens expirent automatiquement après leur date d'expiration.
           </li>
-        </Typography>
+        </ul>
 
-        <Typography variant="h2" className="mt-10">
-          7. Sécurité des données
-        </Typography>
-        <Typography className="not-first:mt-2">
-          Nous mettrons en place les mesures de sécurité suivantes pour protéger vos données :
-        </Typography>
-        <Typography variant="list" className="my-4">
+        <h2>7. Sécurité des données</h2>
+        <p>Nous mettrons en place les mesures de sécurité suivantes pour protéger vos données :</p>
+        <ul>
           <li>Communications chiffrées en HTTPS/TLS</li>
           <li>Base de données chiffrée chez Turso</li>
           <li>Authentification OAuth2 sécurisée (délégation à GTA World)</li>
           <li>Tokens d'authentification chiffrés avant stockage</li>
-        </Typography>
-        <Typography className="not-first:mt-2 mt-4">
+        </ul>
+        <p>
           Cependant, aucun système n'est 100% sécurisé. Nous vous recommandons de maintenir la
           confidentialité de votre mot de passe GTA World et de ne pas le partager. En cas de doute,
           changez votre mot de passe sur la plateforme de GTA World et révoquez les sessions
           actives. Nous ne serons pas responsables des accès non autorisés résultant de la
           compromission de vos identifiants GTA World.
-        </Typography>
+        </p>
 
-        <Typography variant="h2" className="mt-10">
-          8. Vos droits
-        </Typography>
-        <Typography className="not-first:mt-2">
+        <h2>8. Vos droits</h2>
+        <p>
           Conformément aux réglementations européennes et françaises en vigueur, vous disposez d'un
           droit d'accès, de rectification et d'effacement de vos données.
-        </Typography>
-        <Typography variant="list" className="my-4">
+        </p>
+        <ul>
           <li>
             <strong>Suppression immédiate</strong> : Vous pouvez à tout moment supprimer
             instantanément votre compte et les données associées depuis vos paramètres de compte.
@@ -224,30 +203,26 @@ export default function PrivacyPage() {
             <strong>Autre demande :</strong> Pour toute question, contactez le responsable du
             traitement mentionné ci-dessus (section 1).
           </li>
-        </Typography>
+        </ul>
 
-        <Typography variant="h2" className="mt-10">
-          9. Cookies et technologies similaires
-        </Typography>
-        <Typography className="not-first:mt-2">
+        <h2>9. Cookies et technologies similaires</h2>
+        <p>
           Notre application utilise des cookies de session pour maintenir votre authentification et
           votre connexion. Ces cookies sont nécessaires au fonctionnement de l'application et ne
           contiennent pas d'informations personnelles sensibles au-delà de votre identifiant de
           session.
-        </Typography>
+        </p>
 
-        <Typography variant="h2" className="mt-10">
-          10. Modifications de cette politique
-        </Typography>
-        <Typography className="not-first:mt-2">
+        <h2>10. Modifications de cette politique</h2>
+        <p>
           Cette politique de confidentialité peut être mise à jour à tout moment pour refléter les
           changements de nos pratiques, de la législation ou des services tiers utilisés. La date de
           dernière mise à jour est visible en bas de cette page.
-        </Typography>
+        </p>
 
-        <Typography className="mt-10 text-sm text-gray-500">
+        <p className="mt-10 text-sm text-gray-500">
           <strong>Dernière mise à jour :</strong> 13 mars 2026
-        </Typography>
+        </p>
       </section>
     </>
   )
