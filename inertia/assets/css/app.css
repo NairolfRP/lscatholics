@@ -111,7 +111,7 @@
 
 :root {
   --background: oklch(1 0 0);
-  --foreground: oklch(0 0 0);
+  --foreground: oklch(0.2101 0.0318 264.66);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.3715 0 0);
   --popover: oklch(1 0 0);
