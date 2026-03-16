@@ -5,10 +5,10 @@ const encryptionConfig = defineConfig({
   default: 'legacy',
   list: {
     legacy: drivers.legacy({
-      keys: [env.get('APP_KEY').release()],
+      keys: [env.get('APP_KEY')],
     }),
     gcm: drivers.aes256gcm({
-      keys: [env.get('APP_KEY').release()],
+      keys: [env.get('APP_KEY')],
       id: 'gcm',
     }),
   },
