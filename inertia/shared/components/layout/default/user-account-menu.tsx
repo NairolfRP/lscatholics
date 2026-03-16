@@ -13,11 +13,11 @@ import {
   DropdownMenuTrigger,
 } from '@/shared/components/ui/dropdown-menu'
 import { urlFor } from '@/client'
-import { useUser } from '@/shared/hooks/use_user'
 import SwitchCharacterDialog from '@/shared/components/characters/switch-character-dialog'
+import { usePageProps } from '@/shared/hooks/use_page_props'
 
 export default function UserMenu() {
-  const user = useUser()
+  const { canAccessDashboard, user } = usePageProps()
   const [isSwitchCharacterOpen, setIsSwitchCharacterOpen] = useState(false)
 
   const characterName = (() => {
@@ -59,7 +59,7 @@ export default function UserMenu() {
           <DropdownMenuLabel>Mon compte - {user!.name}</DropdownMenuLabel>
           <DropdownMenuSeparator />
 
-          {user!.canAccessDashboard && (
+          {canAccessDashboard && (
             <>
               <DropdownMenuGroup>
                 <DropdownMenuItem onClick={() => handleMenuAction('dashboard')}>

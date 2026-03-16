@@ -37,8 +37,18 @@ export default class InertiaMiddleware extends BaseInertiaMiddleware {
         success: success,
       }),
       user: ctx.inertia.always(
-        auth?.user ? UserTransformer.transform(auth.user).useVariant('sharedProp') : undefined
+        auth?.user
+          ? UserTransformer.transform(auth.user).useVariant('userWithCurrentCharacter')
+          : undefined
       ),
+      canAccessDashboard: ctx.inertia.defer(async () => {
+        if (!auth?.user) return false
+        try {
+          return await ctx.bouncer.with('DashboardPolicy').allows('access', ctx)
+        } catch {
+          return false
+        }
+      }),
     }
   }
 

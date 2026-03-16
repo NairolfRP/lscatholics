@@ -152,6 +152,7 @@ export class FactionService {
 
     const response = await fetch(`${this.#BASE_URL}/api/factions`, {
       method: 'GET',
+      signal: AbortSignal.timeout(5_000),
       headers: {
         Authorization: `Bearer ${accessToken}`,
         Accept: 'application/json',

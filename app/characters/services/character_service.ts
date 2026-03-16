@@ -70,7 +70,12 @@ export default class CharacterService {
       throw new Error('No access token.')
     }
 
-    const userFromApi = await this.ctx.ally.use('gtaw').userFromToken(accessToken)
+    const userFromApi = await Promise.race([
+      this.ctx.ally.use('gtaw').userFromToken(accessToken),
+      new Promise<never>((_, reject) =>
+        setTimeout(() => reject(new Error('GTAW Ally userFromToken timed out after 5s')), 5_000)
+      ),
+    ])
 
     if (!userFromApi) {
       await this.ctx.auth.use('web').logout()
