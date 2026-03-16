@@ -39,10 +39,12 @@ export default class AppProvider {
    * Preparing to shutdown the app
    */
   async shutdown() {
-    const cacheService = await this.app.container.make('characterCache')
-    cacheService.stopCleanupInterval()
+    const [characterCache, factionCache] = await Promise.all([
+      this.app.container.make('characterCache'),
+      this.app.container.make('factionCache'),
+    ])
 
-    const factionCache = await this.app.container.make('factionCache')
+    characterCache.stopCleanupInterval()
     factionCache.stopCleanupInterval()
   }
 }
