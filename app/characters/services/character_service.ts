@@ -5,6 +5,7 @@ import { GTAWorldCharacter } from '@gtaw-oauth-providers/adonisjs-ally'
 import app from '@adonisjs/core/services/app'
 import type User from '#users/models/user'
 import { createCharacterSessionValidator } from '#characters/validators/character'
+import { CharacterCacheService } from '#characters/services/character_cache_service'
 
 @inject()
 export default class CharacterService {
@@ -14,7 +15,7 @@ export default class CharacterService {
   constructor(protected ctx: HttpContext) {}
 
   async #getCharacterCacheService() {
-    return await app.container.make('characterCache')
+    return await app.container.make(CharacterCacheService)
   }
 
   async getUserCharacters(): Promise<Character[] | undefined> {
