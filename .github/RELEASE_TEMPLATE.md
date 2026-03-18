@@ -1,8 +1,11 @@
 ✨ **Nouveautés**
+
 - ...
 
 🐛 **Corrections**
+
 - ...
 
 🔧 **Améliorations**
+
 - ...
