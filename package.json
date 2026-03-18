@@ -106,7 +106,7 @@
     "@adonisjs/bouncer": "^4.0.0",
     "@adonisjs/core": "^7.0.1",
     "@adonisjs/cors": "^3.0.0",
-    "@adonisjs/inertia": "^4.1.0",
+    "@adonisjs/inertia": "^4.1.1",
     "@adonisjs/lucid": "^22.1.1",
     "@adonisjs/session": "^8.0.0",
     "@adonisjs/shield": "^9.0.0",
