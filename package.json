@@ -120,7 +120,7 @@
     "@tanstack/react-form": "^1.28.5",
     "@tanstack/react-query": "^5.90.21",
     "@tanstack/react-table": "^8.21.3",
-    "@tuyau/core": "^1.2.1",
+    "@tuyau/core": "^1.2.2",
     "@tuyau/react-query": "^1.1.0",
     "@vinejs/vine": "^4.3.0",
     "class-variance-authority": "^0.7.1",
