@@ -187,6 +187,7 @@ export default class CharacterService {
     } catch (err) {
       this.ctx.logger.warn({ err }, 'Invalid session character data, clearing')
       this.ctx.session.forget(this.#CURRENT_CHARACTER_SESSION_KEY)
+      await this.ctx.auth.use('web').logout()
       return null
     }
   }
