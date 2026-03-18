@@ -143,7 +143,7 @@ export default class CharacterService {
 
     this.ctx.session.put(this.#CURRENT_CHARACTER_SESSION_KEY, currentCharacter)
 
-    this.ctx.logger.debug('Current character set for user id %s: %o', this.ctx.auth.user?.id, {
+    this.ctx.logger.debug('Current character set for user id %d: %o', this.ctx.auth.user?.id, {
       characterId: character.id,
       characterName: `${character.firstname} ${character.lastname}`,
     })
@@ -219,7 +219,7 @@ export default class CharacterService {
 
   async clearCurrentCharacter() {
     this.ctx.session.forget(this.#CURRENT_CHARACTER_SESSION_KEY)
-    this.ctx.logger.debug(`Current character cleared for user %s`, this.ctx.auth.user?.id)
+    this.ctx.logger.debug(`Current character cleared for user %d`, this.ctx.auth.user?.id)
 
     if (this.ctx.auth.user) {
       const characterCache = await this.#getCharacterCacheService()
