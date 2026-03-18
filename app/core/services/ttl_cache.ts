@@ -39,8 +39,6 @@ export class TtlCache<T> {
       this.#label = label
       this.#maxSize = 1000
     }
-
-    this.#startCleanup()
   }
 
   get(key: string): T | undefined {
@@ -56,6 +54,10 @@ export class TtlCache<T> {
   }
 
   set(key: string, data: T, ttlMs = this.#ttlMs): void {
+    if (!this.#cleanupTimer) {
+      this.#startCleanup()
+    }
+
     if (!this.#store.has(key) && this.#store.size >= this.#maxSize) {
       this.#evictOldest()
     }
