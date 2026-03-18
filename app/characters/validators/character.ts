@@ -8,6 +8,7 @@ export const createCharacterSessionValidator = vine.create(
       memberid: vine.number().nonNegative().min(0),
       firstname: vine.string().trim().minLength(1),
       lastname: vine.string().trim().minLength(1),
+      bankRoutingNumber: vine.string().trim(),
     }),
     selectedAt: vine.number().min(0),
   })

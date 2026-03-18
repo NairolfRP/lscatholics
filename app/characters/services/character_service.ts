@@ -1,7 +1,6 @@
 import { inject } from '@adonisjs/core'
 import { HttpContext } from '@adonisjs/core/http'
-import type { Character, CurrentCharacter } from '#characters/types/character'
-import { GTAWorldCharacter } from '@gtaw-oauth-providers/adonisjs-ally'
+import type { Character, CharacterFromApi, CurrentCharacter } from '#characters/types/character'
 import app from '@adonisjs/core/services/app'
 import type User from '#users/models/user'
 import { createCharacterSessionValidator } from '#characters/validators/character'
@@ -28,9 +27,11 @@ export default class CharacterService {
     try {
       const characterCache = await this.#getCharacterCacheService()
 
-      return await characterCache.getCachedUserCharacters(user.id.toString(), () =>
+      const characters = await characterCache.getCachedUserCharacters(user.id.toString(), () =>
         this.#fetchCharactersFromAPI()
       )
+
+      return characters.map((c) => this.#remapCharacterObject(c))
     } catch (error) {
       this.ctx.logger.error(
         { err: error },
@@ -52,7 +53,7 @@ export default class CharacterService {
     characterCache.cacheCharacters(user.id.toString(), characters)
   }
 
-  async #fetchCharactersFromAPI(): Promise<GTAWorldCharacter[]> {
+  async #fetchCharactersFromAPI(): Promise<Character[]> {
     const user = this.ctx.auth.user!
 
     await user.loadOnce('accounts')
@@ -99,7 +100,22 @@ export default class CharacterService {
       )
     }
 
-    return userFromApi.original.character
+    return (userFromApi.original.character as CharacterFromApi[]).map((c) =>
+      this.#remapCharacterObject(c)
+    )
+  }
+
+  #remapCharacterObject(character: CharacterFromApi | Character) {
+    if ('bank_routing_number' in character) {
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      const { bank_routing_number, ...other } = character
+      return {
+        ...other,
+        bankRoutingNumber: bank_routing_number,
+      }
+    }
+
+    return character
   }
 
   async isCharacterOwnedByUser(characterId: number): Promise<boolean> {
@@ -116,10 +132,12 @@ export default class CharacterService {
     )
   }
 
-  setCurrentCharacter(character: Character) {
+  setCurrentCharacter(
+    character: Character | (Omit<Character, 'bank_routing_number'> & { bankRoutingNumber: string })
+  ) {
     const currentCharacter: CurrentCharacter = {
       id: character.id,
-      data: character,
+      data: this.#remapCharacterObject(character),
       selectedAt: Date.now(),
     }
 
@@ -148,7 +166,7 @@ export default class CharacterService {
         const reselectedCharacter = characters.find((c) => c.id === currentCharacter.id)
 
         if (!reselectedCharacter) {
-          const newCurrentCharacter = characters[0]
+          const newCurrentCharacter = this.#remapCharacterObject(characters[0])
 
           this.setCurrentCharacter(newCurrentCharacter)
 
@@ -162,10 +180,10 @@ export default class CharacterService {
           this.setCurrentCharacter(reselectedCharacter)
         }
 
-        return reselectedCharacter
+        return this.#remapCharacterObject(reselectedCharacter)
       }
 
-      return currentCharacter.data
+      return this.#remapCharacterObject(currentCharacter.data)
     } catch (err) {
       this.ctx.logger.warn({ err }, 'Invalid session character data, clearing')
       this.ctx.session.forget(this.#CURRENT_CHARACTER_SESSION_KEY)
@@ -173,18 +191,18 @@ export default class CharacterService {
     }
   }
 
-  async updateCurrentCharacter(updatedCharacrer: Character) {
+  async updateCurrentCharacter(updatedCharacter: Character | CharacterFromApi) {
     const current = this.ctx.session.get(
       this.#CURRENT_CHARACTER_SESSION_KEY
     ) as CurrentCharacter | null
 
-    if (!current || current.id !== updatedCharacrer.id) {
+    if (!current || current.id !== updatedCharacter.id) {
       return false
     }
 
     const updated: CurrentCharacter = {
-      id: updatedCharacrer.id,
-      data: updatedCharacrer,
+      id: updatedCharacter.id,
+      data: this.#remapCharacterObject(updatedCharacter),
       selectedAt: Date.now(),
     }
 
