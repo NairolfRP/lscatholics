@@ -55,7 +55,7 @@ export default function HeroSection({
   return (
     <section
       className={cn(
-        'flex relative z-1',
+        'flex flex-col gap-7 items-center laptop:items-stretch laptop:flex-row laptop:gap-0 relative z-1',
         ...paddingClasses,
         height,
         textColor,
@@ -69,7 +69,7 @@ export default function HeroSection({
       <div className={cn('container mx-auto px-4 relative z-10', align, maxWidth)}>{children}</div>
 
       {corner && (
-        <div className="absolute bottom-8 right-8 bg-white/10 backdrop-blur-sm rounded-lg p-4 text-sm hidden lg:block">
+        <div className="block laptop:absolute laptop:bottom-8 laptop:right-8 bg-white/10 backdrop-blur-sm rounded-lg p-4 text-sm">
           {corner}
         </div>
       )}

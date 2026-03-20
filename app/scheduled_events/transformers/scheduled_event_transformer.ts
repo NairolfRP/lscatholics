@@ -55,4 +55,8 @@ export default class ScheduledEventTransformer extends BaseTransformer<Scheduled
       'startDate',
     ])
   }
+
+  home() {
+    return this.pick(this.resource, ['slug', 'title', 'startDate'])
+  }
 }

@@ -1,12 +1,12 @@
 import HomepageBanner from '@/assets/images/cathedral-mass-with-cardinal.webp'
 import { WhenVisible } from '@inertiajs/react'
 import { Link } from '@adonisjs/inertia/react'
-import { Calendar, CircleAlert, Heart, MapPin, NotebookPen } from 'lucide-react'
+import { Calendar, ChevronRight, CircleAlert, Heart, MapPin, NotebookPen } from 'lucide-react'
 import { Button } from '@/shared/components/ui/button'
 import { Card, CardContent } from '@/shared/components/ui/card'
 import { Alert, AlertDescription } from '@/shared/components/ui/alert'
 import { Skeleton } from '@/shared/components/ui/skeleton'
-import { formatNumber, yearsBetween } from '@/lib/utils'
+import { formatDate, formatNumber, yearsBetween } from '@/lib/utils'
 import { urlFor } from '@/client'
 import { ARCHDIOCESAN_HISTORY_START_DATE } from '@/shared/constants/archdiocese.constants'
 import { SOCIAL_DISCORD } from '@/shared/constants/social.constants'
@@ -19,20 +19,43 @@ import { Typography } from '@/shared/components/ui/typography'
 import { Container } from '@/shared/components/ui/container'
 
 type PageProps = InertiaProps<{
+  upcomingEvent?: Data.ScheduledEvents.ScheduledEvent.Variants['home']
   posts?: {
     data: Data.Posts.Post.Variants['homePosts'][]
     error?: string
   }
 }>
 
-export default function HomePage({ posts = { data: [], error: '' } }: PageProps) {
+export default function HomePage({ upcomingEvent, posts = { data: [], error: '' } }: PageProps) {
   const now = new Date()
   const yearsOfHistory = yearsBetween(ARCHDIOCESAN_HISTORY_START_DATE, now)
   const nbOfFaithful = formatNumber(4_349_267)
 
   return (
     <>
-      <HeroSection bgImage={HomepageBanner} height="min-h-[50vh]">
+      <HeroSection
+        bgImage={HomepageBanner}
+        height="min-h-[50vh]"
+        corner={
+          upcomingEvent ? (
+            <Link route="event" routeParams={{ slug: upcomingEvent.slug }}>
+              <div>
+                <h3 className="font-semibold mb-2">Prochain événement</h3>
+                <div className="space-y-1 text-xs">
+                  <div className="text-center">{formatDate(upcomingEvent.startDate!)}</div>
+
+                  <div className="font-bold">{upcomingEvent.title}</div>
+                  <div className="flex justify-end mt-4">
+                    <Button variant="ghost" size="sm">
+                      Voir plus <ChevronRight />
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </Link>
+          ) : undefined
+        }
+      >
         <div className="max-w-4xl mx-auto text-center">
           <Typography variant="h1" className="text-5xl md:text-6xl font-bold mb-6 font-serif">
             Bienvenue sur le site de
