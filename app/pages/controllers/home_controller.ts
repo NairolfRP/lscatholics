@@ -8,47 +8,52 @@ import ScheduledEventTransformer from '#scheduled_events/transformers/scheduled_
 export default class HomeController {
   async index({ inertia, logger }: HttpContext) {
     return inertia.render('home', {
-      upcomingEvent: inertia.defer(async () => {
-        try {
-          const now = DateTime.now().toSQL()
-          const nextEvent = await ScheduledEvent.query()
-            .select('slug', 'title', 'start_date')
-            .where('start_date', '>=', now)
-            .where((query) => {
-              query.where('end_date', '<', now).orWhereNull('end_date')
-            })
-            .orderBy('start_date', 'asc')
-            .first()
-
-          if (!nextEvent) return undefined
-
-          return ScheduledEventTransformer.transform(nextEvent).useVariant('home')
-        } catch (error) {
-          logger.error({ err: error }, 'Failed to get upcoming event')
-          return undefined
-        }
-      }),
+      upcomingEvent: inertia.defer(() => this.#getUpcomingEvent(logger)),
       // @ts-ignore
-      posts: inertia.optional(async () => {
-        try {
-          const posts = await Post.query()
-            .select('id', 'slug', 'title', 'excerpt', 'cover_image_url', 'category', 'publishedAt')
-            .where('status', 'published')
-            .orderBy('publishedAt', 'desc')
-            .limit(3)
-
-          return {
-            data: PostTransformer.transform(posts).useVariant('homePosts'),
-          }
-        } catch (error) {
-          logger.error({ err: error }, 'Failed to get recent posts')
-
-          return {
-            data: [],
-            error: 'Une erreur est survenue lors du chargement des récentes actualités',
-          }
-        }
-      }),
+      posts: inertia.optional(() => this.#getRecentPosts(logger)),
     })
+  }
+
+  async #getUpcomingEvent(logger: HttpContext['logger']) {
+    try {
+      const now = DateTime.now().toSQL()
+
+      const nextEvent = await ScheduledEvent.query()
+        .select('slug', 'title', 'start_date')
+        .where('start_date', '>=', now)
+        .where((query) => {
+          query.where('end_date', '<', now).orWhereNull('end_date')
+        })
+        .orderBy('start_date', 'asc')
+        .first()
+
+      if (!nextEvent) return undefined
+
+      return ScheduledEventTransformer.transform(nextEvent).useVariant('home')
+    } catch (error) {
+      logger.error({ err: error }, 'Failed to get upcoming event')
+      return undefined
+    }
+  }
+
+  async #getRecentPosts(logger: HttpContext['logger']) {
+    try {
+      const posts = await Post.query()
+        .select('id', 'slug', 'title', 'excerpt', 'cover_image_url', 'category', 'publishedAt')
+        .where('status', 'published')
+        .orderBy('publishedAt', 'desc')
+        .limit(3)
+
+      return {
+        data: PostTransformer.transform(posts).useVariant('homePosts'),
+      }
+    } catch (error) {
+      logger.error({ err: error }, 'Failed to get recent posts')
+
+      return {
+        data: [],
+        error: 'Une erreur est survenue lors du chargement des récentes actualités',
+      }
+    }
   }
 }
