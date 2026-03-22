@@ -1,173 +1,15 @@
-import { useMemo } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import Head from '@/shared/components/app-head'
 import { Typography } from '@/shared/components/ui/typography'
 import { Button } from '@/shared/components/ui/button'
-import { getReadingTypeLabel, liturgicalColor } from '@/shared/services/liturgy'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/shared/components/ui/card'
+import { liturgicalColor } from '@/shared/services/liturgy'
 import { Container } from '@/shared/components/ui/container'
-
-interface ReadingsMetadata {
-  date: string
-  zone: string
-  couleur: string
-  annee: string
-  temps_liturgique: string
-  semaine: string
-  jour: string
-  jour_liturgique_nom: string
-  fete: string
-  degre: string
-  ligne1: string
-  ligne2: string
-  ligne3: string
-  couleur2: string | null
-  couleur3: string | null
-}
-
-interface Reading {
-  type: string
-  refrain_psalmique: string | null
-  ref_refrain: string | null
-  titre: string | null
-  contenu: string
-  ref: string
-  intro_lue: string | null
-  verset_evangile: string | null
-  ref_verset: string | null
-}
-
-interface Mass {
-  nom: string
-  lectures: Reading[]
-}
-
-interface ReadingsResponse {
-  informations: ReadingsMetadata
-  messes: Mass[]
-}
-
-const READING_ORDER = ['lecture_1', 'psaume', 'lecture_2', 'evangile']
-
-function sortReadings(readings: Reading[]): Reading[] {
-  return READING_ORDER.map((v) => readings.find((r) => r.type === v) ?? null).filter(
-    Boolean
-  ) as Reading[]
-}
-
-function getLiturgicalHeader(info: ReadingsMetadata) {
-  const mainName = info.jour_liturgique_nom || info.ligne1 || ''
-  const subFeast = info.fete && info.fete !== mainName ? info.fete : null
-  const subDegree =
-    info.ligne3 ||
-    (info.degre && info.degre !== mainName && info.degre !== info.fete ? info.degre : null)
-
-  const weekday = info.date
-    ? new Intl.DateTimeFormat('fr-FR', { weekday: 'long' }).format(new Date(info.date))
-    : ''
-
-  return {
-    mainName,
-    subFeast,
-    subDegree,
-    couleur: info.couleur,
-    couleur2: info.couleur2,
-    dateInfo: { weekday, semaine: info.semaine, annee: info.annee },
-  }
-}
-
-function parseInline(text: string): React.ReactNode[] {
-  const parts = text.split(
-    /(<strong>[\s\S]*?<\/strong>|<em>[\s\S]*?<\/em>|<br\s?\/?>|\*\*[\s\S]*?\*\*|_[\s\S]*?_|R\/)/
-  )
-
-  return parts.map((part, i) => {
-    if (part === 'R/')
-      return (
-        <strong key={i} className="text-blue-600">
-          R/{' '}
-        </strong>
-      )
-    if (/^<strong>([\s\S]*?)<\/strong>$/.test(part)) {
-      const inner = part.replace(/^<strong>|<\/strong>$/g, '')
-      return <strong key={i}>{parseInline(inner)}</strong>
-    }
-    if (/^<em>([\s\S]*?)<\/em>$/.test(part)) {
-      const inner = part.replace(/^<em>|<\/em>$/g, '')
-      return <em key={i}>{parseInline(inner)}</em>
-    }
-    if (/^\*\*([\s\S]*?)\*\*$/.test(part)) {
-      const inner = part.replace(/^\*\*|\*\*$/g, '')
-      return <strong key={i}>{parseInline(inner)}</strong>
-    }
-    if (/^_([\s\S]*?)_$/.test(part)) {
-      const inner = part.replace(/^_|_$/g, '')
-      return <em key={i}>{parseInline(inner)}</em>
-    }
-    if (/<br\s?\/?>/.test(part)) return <br key={i} />
-    return part
-  })
-}
-
-function parseContent(text: string): React.ReactNode {
-  if (!text) return null
-
-  const cleaned = text.replace(/<p>/g, '\n').replace(/<\/p>/g, '\n').trim()
-  const paragraphs = cleaned.split(/\n{2,}/).filter(Boolean)
-
-  return (
-    <>
-      {paragraphs.map((paragraph, i) => (
-        <p key={i} className="mb-4">
-          {parseInline(paragraph.trim())}
-        </p>
-      ))}
-    </>
-  )
-}
-
-function ReadingCard({ lecture, multiMass = false }: { lecture: Reading; multiMass?: boolean }) {
-  return (
-    <Card className="pt-0 shadow-md">
-      <CardHeader className="bg-blue-50 px-6 py-4 border-b ">
-        {getReadingTypeLabel(lecture.type) && (
-          <CardTitle className="text-xl font-semibold mb-4 text-blue-800">
-            {getReadingTypeLabel(lecture.type)}
-          </CardTitle>
-        )}
-        <CardDescription>
-          {lecture.titre && (
-            <h4 className="text-base font-semibold italic text-blue-500">{lecture.titre}</h4>
-          )}
-          <p className={`text-blue-600 text-sm mt-1 ${!multiMass ? 'text-right' : ''}`}>
-            {lecture.ref}
-          </p>
-        </CardDescription>
-      </CardHeader>
-      <CardContent className="p-6">
-        {!multiMass && lecture.refrain_psalmique && (
-          <Typography className="mb-4">
-            <strong>R/</strong>{' '}
-            {parseInline(lecture.refrain_psalmique.replace(/<\/?p>/g, '').trim())}
-          </Typography>
-        )}
-        {!multiMass && lecture.verset_evangile && (
-          <div>{parseContent(lecture.verset_evangile)}</div>
-        )}
-        <Typography>{parseContent(lecture.contenu)}</Typography>
-      </CardContent>
-    </Card>
-  )
-}
+import type { AELFReadingsResponse } from '@/features/readings/types/readings.types'
+import { ReadingCard } from '@/features/readings/components/reading-card'
+import { getLiturgicalHeader, sortReadings } from '@/features/readings/services/readings_service'
 
 export default function DailyReadingsPage() {
-  const { isLoading, data, error, refetch } = useQuery<ReadingsResponse>({
+  const { isLoading, data, error, refetch } = useQuery<AELFReadingsResponse>({
     queryKey: ['daily-readings', new Date().toDateString()],
     queryFn: async () => {
       const today = new Date().toISOString().split('T')[0]
@@ -180,10 +22,7 @@ export default function DailyReadingsPage() {
     retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
   })
 
-  const liturgicalHeader = useMemo(
-    () => (data ? getLiturgicalHeader(data.informations) : null),
-    [data]
-  )
+  const liturgicalHeader = data ? getLiturgicalHeader(data.informations) : null
 
   return (
     <>
