@@ -35,7 +35,7 @@ export default class HttpExceptionHandler extends ExceptionHandler {
     return super.handle(error, ctx)
   }
 
-  protected context(ctx: HttpContext) {
+  protected async context(ctx: HttpContext) {
     return {
       /**
        * Include the unique request ID for tracking
@@ -44,11 +44,32 @@ export default class HttpExceptionHandler extends ExceptionHandler {
       requestId: ctx.request.id(),
 
       /**
+       * Request Url
+       */
+      url: ctx.request.url(true),
+
+      /**
+       * Request method
+       */
+      method: ctx.request.method(),
+
+      /**
        * Add the authenticated user's ID if available
        * to identify which user encountered the error
        */
-      userId: ctx.auth.user?.id,
-      currentCharacter: ctx.auth.user ? ctx.characters.getCurrentCharacter() : 'unauthenticated',
+      userId: ctx.auth?.user?.id ?? 'guest',
+
+      /**
+       * Current character, if authentificated user
+       */
+      currentCharacter: ctx.auth?.user
+        ? ctx.characters.getCurrentCharacter().then((c) => c?.id)
+        : 'unauthenticated',
+
+      /**
+       * Request IP - anonymized for privacy reasons
+       */
+      ip: ctx.request.ip().replace(/\.\d+$/, '.xxx'),
     }
   }
 
@@ -65,6 +86,10 @@ export default class HttpExceptionHandler extends ExceptionHandler {
      */
     await super.report(error, ctx)
 
+    const httpError = this.toHttpError(error)
+
+    if (!this.shouldReport(httpError)) return
+
     /**
      * Discord webhook reporting logic - only in production environment
      */
@@ -72,7 +97,20 @@ export default class HttpExceptionHandler extends ExceptionHandler {
 
     if (!webhookUrl || !app.inProduction) return
 
-    const reportContent = JSON.stringify(error, null, 4)
+    const context = await this.context(ctx)
+
+    const errorInfo = {
+      message: httpError?.message ?? 'Unknown error',
+      code: httpError.code,
+      status: httpError.status,
+      stack: httpError.stack?.split('\n').slice(0, 5).join('\n') ?? null,
+    }
+
+    const reportContent = [
+      `🔴 **[EXCEPTION]** \`${context.method} ${context.url}\``,
+      `> IP (anonymized): \`${context.ip}\` | User: \`${context.userId}\` | RequestID: \`${context.requestId}\``,
+      `\`\`\`json\n${JSON.stringify(errorInfo, null, 2)}\n\`\`\``,
+    ].join('\n')
 
     const discordWebhook = await DiscordWebhookService.create({ url: webhookUrl })
 
