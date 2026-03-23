@@ -1,6 +1,8 @@
 import app from '@adonisjs/core/services/app'
 import { ExceptionHandler, type HttpContext } from '@adonisjs/core/http'
 import type { StatusPageRange, StatusPageRenderer } from '@adonisjs/core/types/http'
+import env from '#start/env'
+import { DiscordWebhookService } from '#discord/services/discord_webhook_service'
 
 export default class HttpExceptionHandler extends ExceptionHandler {
   /**
@@ -33,6 +35,23 @@ export default class HttpExceptionHandler extends ExceptionHandler {
     return super.handle(error, ctx)
   }
 
+  protected context(ctx: HttpContext) {
+    return {
+      /**
+       * Include the unique request ID for tracking
+       * this specific request across logs
+       */
+      requestId: ctx.request.id(),
+
+      /**
+       * Add the authenticated user's ID if available
+       * to identify which user encountered the error
+       */
+      userId: ctx.auth.user?.id,
+      currentCharacter: ctx.auth.user ? ctx.characters.getCurrentCharacter() : 'unauthenticated',
+    }
+  }
+
   /**
    * The method is used to report error to the logging service or
    * the a third party error monitoring service.
@@ -40,6 +59,23 @@ export default class HttpExceptionHandler extends ExceptionHandler {
    * @note You should not attempt to send a response from this method.
    */
   async report(error: unknown, ctx: HttpContext) {
-    return super.report(error, ctx)
+    /**
+     * First call the parent report method to ensure
+     * the error is logged using the default behavior
+     */
+    await super.report(error, ctx)
+
+    /**
+     * Discord webhook reporting logic - only in production environment
+     */
+    const webhookUrl = env.get('ERROR_REPORTING_WEBHOOK')
+
+    if (!webhookUrl || !app.inProduction) return
+
+    const reportContent = JSON.stringify(error, null, 4)
+
+    const discordWebhook = await DiscordWebhookService.create({ url: webhookUrl })
+
+    await discordWebhook.setContent(reportContent).execute()
   }
 }

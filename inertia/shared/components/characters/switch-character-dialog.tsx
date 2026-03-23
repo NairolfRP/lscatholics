@@ -24,10 +24,19 @@ type Props = {
 
 export default function SwitchCharacterDialog({ open, onOpenChange }: Props) {
   const user = useUser()
-  const charactersQuery = useQuery(api.characters.list.queryOptions())
   const [selectedCharacterId, setSelectedCharacterId] = useState<number | undefined>(undefined)
 
+  const charactersQuery = useQuery({
+    ...api.characters.list.queryOptions(),
+    enabled: open === true,
+    staleTime: 5 * 60_000,
+    retry: 1,
+  })
+
   const currentCharacterId = user?.currentCharacter?.id
+  const otherCharacters = (charactersQuery.data?.characters ?? []).filter(
+    (c) => c.id !== currentCharacterId
+  )
 
   const handleSwitchCharacter = (characterId: number | undefined) => {
     if (characterId === undefined) return
@@ -41,10 +50,67 @@ export default function SwitchCharacterDialog({ open, onOpenChange }: Props) {
         onSuccess(page) {
           toast.success(page.props.success as string)
           setSelectedCharacterId(undefined)
-          router.reload()
+          router.reload({ only: ['user', 'canAccessDashboard'] })
           onOpenChange(false)
         },
       }
+    )
+  }
+
+  const renderContent = () => {
+    if (charactersQuery.isLoading) {
+      return (
+        <div className="flex justify-center py-4">
+          <LoaderCircle className="animate-spin size-6" />
+        </div>
+      )
+    }
+
+    if (charactersQuery.isError) {
+      return (
+        <Alert variant="destructive" className="my-4">
+          <AlertTitle>Échec</AlertTitle>
+          <AlertDescription>
+            L'affichage de la liste des personnages a échoué.
+            <Button
+              onClick={() => charactersQuery.refetch()}
+              variant="outline"
+              size="sm"
+              className="ml-2"
+            >
+              Réessayer
+            </Button>
+          </AlertDescription>
+        </Alert>
+      )
+    }
+
+    return (
+      <form
+        onSubmit={(e) => {
+          e.preventDefault()
+          handleSwitchCharacter(selectedCharacterId)
+        }}
+        className="grid items-start gap-4 px-4"
+      >
+        <RadioGroup
+          className="flex flex-col gap-6 mb-5"
+          value={selectedCharacterId?.toString()}
+          onValueChange={(val) => setSelectedCharacterId(Number(val))}
+        >
+          {otherCharacters.map((character) => (
+            <div key={character.id} className="flex items-center space-x-2">
+              <RadioGroupItem id={`${character.id}`} value={`${character.id}`} />
+              <Label htmlFor={`${character.id}`}>
+                {character.firstname} {character.lastname}
+              </Label>
+            </div>
+          ))}
+        </RadioGroup>
+        <Button type="submit" disabled={selectedCharacterId === undefined}>
+          Sélectionner le personnage
+        </Button>
+      </form>
     )
   }
 
@@ -59,56 +125,7 @@ export default function SwitchCharacterDialog({ open, onOpenChange }: Props) {
           </DialogDescription>
         </DialogHeader>
 
-        {charactersQuery.isLoading ? (
-          <div className="flex justify-center py-4">
-            <LoaderCircle className="animate-spin size-6" />
-          </div>
-        ) : charactersQuery.error ? (
-          <>
-            <Alert variant="destructive" className="my-4">
-              <AlertTitle>Erreur</AlertTitle>
-              <AlertDescription>
-                Une erreur est survenue lors de la récupération des personnages
-                <Button
-                  onClick={async () => await charactersQuery.refetch()}
-                  variant="outline"
-                  size="sm"
-                  className="ml-2 mx-auto"
-                >
-                  Réessayer
-                </Button>
-              </AlertDescription>
-            </Alert>
-          </>
-        ) : charactersQuery.data?.characters && charactersQuery.data?.characters?.length > 0 ? (
-          <form
-            onSubmit={(e) => {
-              e.preventDefault()
-              handleSwitchCharacter(selectedCharacterId)
-            }}
-            className="grid items-start gap-4 px-4"
-          >
-            <RadioGroup
-              className="flex flex-col gap-6 mb-5"
-              value={selectedCharacterId?.toString()}
-              onValueChange={(val) => setSelectedCharacterId(Number(val))}
-            >
-              {charactersQuery.data?.characters
-                ?.filter((c) => c.id !== currentCharacterId)
-                .map((character) => (
-                  <div key={character.id} className="flex items-center space-x-2">
-                    <RadioGroupItem id={`${character.id}`} value={`${character.id}`} />
-                    <Label htmlFor={`${character.id}`}>
-                      {character.firstname} {character.lastname}
-                    </Label>
-                  </div>
-                ))}
-            </RadioGroup>
-            <Button type="submit" disabled={selectedCharacterId === undefined}>
-              Sélectionner le personnage
-            </Button>
-          </form>
-        ) : null}
+        {renderContent()}
       </DialogContent>
     </Dialog>
   )

@@ -2,6 +2,7 @@ import { inject } from '@adonisjs/core'
 import { HttpContext } from '@adonisjs/core/http'
 import type { CharacterFaction, CharacterFactionsResponse } from '#characters/types/faction'
 import app from '@adonisjs/core/services/app'
+import { FactionCacheService } from '#characters/services/faction_cache_service'
 
 @inject()
 export class FactionService {
@@ -113,7 +114,7 @@ export class FactionService {
   }
 
   async #getFactionCacheService() {
-    return await app.container.make('factionCache')
+    return await app.container.make(FactionCacheService)
   }
 
   async #getCharacterFactionsForSecurity(characterId: number): Promise<CharacterFaction | null> {
@@ -152,6 +153,7 @@ export class FactionService {
 
     const response = await fetch(`${this.#BASE_URL}/api/factions`, {
       method: 'GET',
+      signal: AbortSignal.timeout(5_000),
       headers: {
         Authorization: `Bearer ${accessToken}`,
         Accept: 'application/json',

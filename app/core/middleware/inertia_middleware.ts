@@ -29,7 +29,6 @@ export default class InertiaMiddleware extends BaseInertiaMiddleware {
      * transformers for rich data-types like Models.
      */
     return {
-      currentRoute: ctx.inertia.always(ctx.route?.name), // temporary shared prop - waiting for the 'current' property to be added back to Tuyau
       url: ctx.inertia.always(ctx.request.completeUrl()),
       errors: ctx.inertia.always(this.getValidationErrors(ctx)),
       success: ctx.inertia.always(ctx.session?.flashMessages.get('success')),
@@ -38,8 +37,18 @@ export default class InertiaMiddleware extends BaseInertiaMiddleware {
         success: success,
       }),
       user: ctx.inertia.always(
-        auth?.user ? UserTransformer.transform(auth.user).useVariant('sharedProp') : undefined
+        auth?.user
+          ? UserTransformer.transform(auth.user).useVariant('userWithCurrentCharacter')
+          : undefined
       ),
+      canAccessDashboard: ctx.inertia.defer(async () => {
+        if (!auth?.user) return false
+        try {
+          return await ctx.bouncer.with('DashboardPolicy').allows('access', ctx)
+        } catch {
+          return false
+        }
+      }),
     }
   }
 

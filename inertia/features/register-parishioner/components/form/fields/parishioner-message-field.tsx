@@ -9,6 +9,7 @@ export const ParishionerMessageField = withForm({
     memberid: 0,
     firstname: '',
     lastname: '',
+    bankRoutingNumber: '',
   }),
   render: ({ form }) => (
     <form.AppField name="message">
