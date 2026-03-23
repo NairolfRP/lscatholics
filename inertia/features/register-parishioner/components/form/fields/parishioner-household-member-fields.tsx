@@ -26,6 +26,7 @@ export const ParishionerHouseholdMemberFields = withForm({
     memberid: 0,
     firstname: '',
     lastname: '',
+    bankRoutingNumber: '',
   }),
   props: {} as Props,
   render: ({ form, index, onRemove }) => (

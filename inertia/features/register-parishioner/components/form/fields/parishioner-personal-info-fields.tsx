@@ -41,6 +41,7 @@ export const ParishionerPersonalInfoFields = withForm({
     memberid: 0,
     firstname: '',
     lastname: '',
+    bankRoutingNumber: '',
   }),
   props: {
     characterId: 0,

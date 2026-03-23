@@ -15,6 +15,7 @@ export const ParishionerContactInfoFields = withForm({
     memberid: 0,
     firstname: '',
     lastname: '',
+    bankRoutingNumber: '',
   }),
   render: ({ form }) => (
     <div className="space-y-4">

@@ -3,18 +3,23 @@ import { CharacterCacheService } from '#characters/services/character_cache_serv
 import { FactionCacheService } from '#characters/services/faction_cache_service'
 
 export default class AppProvider {
+  #characterCache?: CharacterCacheService
+  #factionCache?: FactionCacheService
+
   constructor(protected app: ApplicationService) {}
 
   /**
    * Register bindings to the container
    */
   register() {
-    this.app.container.singleton('characterCache', function () {
-      return new CharacterCacheService()
+    this.app.container.singleton(CharacterCacheService, () => {
+      this.#characterCache = new CharacterCacheService()
+      return this.#characterCache
     })
 
-    this.app.container.singleton('factionCache', function () {
-      return new FactionCacheService()
+    this.app.container.singleton(FactionCacheService, () => {
+      this.#factionCache = new FactionCacheService()
+      return this.#factionCache
     })
   }
 
@@ -38,18 +43,8 @@ export default class AppProvider {
   /**
    * Preparing to shutdown the app
    */
-  async shutdown() {
-    const cacheService = await this.app.container.make('characterCache')
-    cacheService.stopCleanupInterval()
-
-    const factionCache = await this.app.container.make('factionCache')
-    factionCache.stopCleanupInterval()
-  }
-}
-
-declare module '@adonisjs/core/types' {
-  interface ContainerBindings {
-    characterCache: CharacterCacheService
-    factionCache: FactionCacheService
+  shutdown() {
+    this.#characterCache?.stopCleanupInterval()
+    this.#factionCache?.stopCleanupInterval()
   }
 }

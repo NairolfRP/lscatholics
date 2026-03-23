@@ -19,15 +19,6 @@ export default class UserTransformer extends BaseTransformer<User> {
     }
   }
 
-  @inject()
-  async sharedProp(ctx: HttpContext) {
-    const canAccessDashboard = await ctx.bouncer.with('DashboardPolicy').allows('access', ctx)
-    return {
-      ...(await this.userWithCurrentCharacter(ctx)),
-      canAccessDashboard,
-    }
-  }
-
   async withRoles() {
     return {
       ...this.toObject(),

@@ -1,19 +1,21 @@
 import { test } from '@japa/runner'
 import { CharacterCacheService } from '#characters/services/character_cache_service'
-import type { GTAWorldCharacter } from '@gtaw-oauth-providers/adonisjs-ally'
+import type { Character } from '#characters/types/character'
 
-const mockCharacters: GTAWorldCharacter[] = [
+const mockCharacters: Character[] = [
   {
     id: 1,
     firstname: 'John',
     lastname: 'Doe',
     memberid: 12345,
+    bankRoutingNumber: '123456789',
   },
   {
     id: 2,
     firstname: 'Jane',
     lastname: 'Smith',
     memberid: 12346,
+    bankRoutingNumber: '123456789',
   },
 ]
 

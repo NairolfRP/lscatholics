@@ -99,11 +99,12 @@ export default class AuthController {
 
       const currentCharacter = gtawUser.original.character.at(0)
 
+      await Promise.all([
+        auth.use('web').login(user),
+        characters.setUserCharacters(user, gtawUser.original.character),
+      ])
+
       characters.setCurrentCharacter(currentCharacter)
-
-      await auth.use('web').login(user)
-
-      await characters.setUserCharacters(user, gtawUser.original.character)
     } catch (err) {
       logger.error({ err }, 'Failed to authenticate user')
       session.flashErrors({
