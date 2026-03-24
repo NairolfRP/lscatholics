@@ -3,7 +3,6 @@ import { InertiaProps } from '@/types'
 import Head from '@/shared/components/app-head'
 import HeroSection from '@/shared/components/layout/default/hero-section'
 import { Typography } from '@/shared/components/ui/typography'
-import { ContactSuccessAlert } from '@/features/contact/components/form/contact-success-alert'
 import LoginAlert from '@/shared/components/auth/login-alert'
 import ContactInfo from '@/features/contact/components/contact-info'
 import ContactMap from '@/features/contact/components/contact-map'
@@ -31,8 +30,6 @@ export default function ContactPage({ user }: PageProps) {
       </HeroSection>
 
       <Container size="content" spacing="md">
-        <ContactSuccessAlert />
-
         <div className="grid md:grid-cols-2 gap-16">
           <div className="flex flex-col gap-4">
             <Typography

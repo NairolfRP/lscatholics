@@ -95,7 +95,7 @@ export default function SwitchCharacterDialog({ open, onOpenChange }: Props) {
       >
         <RadioGroup
           className="flex flex-col gap-6 mb-5"
-          value={selectedCharacterId?.toString()}
+          value={selectedCharacterId?.toString() ?? ''}
           onValueChange={(val) => setSelectedCharacterId(Number(val))}
         >
           {otherCharacters.map((character) => (

@@ -52,13 +52,14 @@ type PageProps = InertiaProps<{
 }>
 
 export default function DashboardPostsPage({ posts, filters }: PageProps) {
-  const [search] = useState<string>(filters.search ?? '')
+  const [search, setSearch] = useState<string>(filters.search ?? '')
 
   const handleSearch = useDebouncedCallback((v: string) => {
     router.get(
       urlFor('dashboard.dashboard_posts.index'),
-      { search: v },
+      { search: v || undefined },
       {
+        only: ['posts', 'filters'],
         preserveState: true,
         preserveScroll: true,
         replace: true,
@@ -117,7 +118,10 @@ export default function DashboardPostsPage({ posts, filters }: PageProps) {
           <CardContent className="flex flex-col gap-4">
             <Input
               value={search ?? ''}
-              onChange={(e) => handleSearch(e.target.value)}
+              onChange={(e) => {
+                setSearch(e.target.value)
+                handleSearch(e.target.value)
+              }}
               placeholder="Rechercher..."
             />
             {posts.data.length > 0 ? (
