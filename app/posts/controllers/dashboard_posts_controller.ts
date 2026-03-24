@@ -28,9 +28,9 @@ export default class DashboardPostsController {
     if (search) {
       query = query.where((builder) => {
         builder
-          .whereILike('title', `%${search}%`)
-          .orWhereILike('content', `%${search}%`)
-          .orWhereILike('excerpt', `%${search}%`)
+          .whereRaw('LOWER(title) LIKE ?', [`%${search.toLowerCase()}%`])
+          .orWhereRaw('LOWER(content) LIKE ?', [`%${search.toLowerCase()}%`])
+          .orWhereRaw('LOWER(excerpt) LIKE ?', [`%${search.toLowerCase()}%`])
       })
     }
 
