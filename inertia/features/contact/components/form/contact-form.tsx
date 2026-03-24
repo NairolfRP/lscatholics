@@ -60,7 +60,10 @@ export default function ContactForm() {
       }}
     >
       <FieldGroup>
-        <div key={currentCharacter?.id} className="grid md:grid-cols-2 gap-4">
+        <div
+          key={`current-character-${currentCharacter?.id}`}
+          className="grid md:grid-cols-2 gap-4"
+        >
           {(
             [
               { name: 'firstname', label: 'Prénom', placeholder: 'John' },
