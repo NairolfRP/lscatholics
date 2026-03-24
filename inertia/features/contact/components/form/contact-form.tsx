@@ -29,7 +29,7 @@ export default function ContactForm() {
   const currentCharacter = useCurrentCharacter()
 
   const form = useForm({
-    validators: { onSubmit: contactSchema },
+    validators: { onChange: contactSchema },
     defaultValues: {
       firstname: currentCharacter?.firstname ?? '',
       lastname: currentCharacter?.lastname ?? '',
@@ -60,7 +60,10 @@ export default function ContactForm() {
       }}
     >
       <FieldGroup>
-        <div key={currentCharacter?.id} className="grid md:grid-cols-2 gap-4">
+        <div
+          key={`current-character-${currentCharacter?.id}`}
+          className="grid md:grid-cols-2 gap-4"
+        >
           {(
             [
               { name: 'firstname', label: 'Prénom', placeholder: 'John' },
@@ -193,13 +196,13 @@ export default function ContactForm() {
       </FieldGroup>
 
       <form.Subscribe
-        selector={(state) => state.isSubmitting}
-        children={(isSubmitting) => (
+        selector={(state) => [state.canSubmit, state.isSubmitting]}
+        children={([canSubmit, isSubmitting]) => (
           <Button
             type="submit"
             size="lg"
             className="w-full bg-catholic-gold hover:bg-yellow-600 transition-all duration-200"
-            disabled={isSubmitting}
+            disabled={!canSubmit}
           >
             {isSubmitting ? (
               <>

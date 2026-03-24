@@ -31,7 +31,14 @@ export default function Layout({ children }: { children: ReactElement<Data.Share
         <Footer />
 
         <ScrollToTopButton />
-        <Toaster richColors />
+
+        <Toaster
+          position="top-right"
+          offset={{ top: 140, right: 16 }}
+          mobileOffset={{ top: 100 }}
+          richColors
+          closeButton
+        />
       </div>
     </>
   )
