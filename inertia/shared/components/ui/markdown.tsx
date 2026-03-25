@@ -69,9 +69,8 @@ const MarkdownComponents: ReactMarkdownComponents = {
       return <span>{children}</span>
     }
 
-    const isExternal = href?.startsWith('http://') || href?.startsWith('https://')
     return (
-      <LinkText href={href ?? '#'} external={isExternal} title={title ?? undefined}>
+      <LinkText href={href ?? '#'} title={title ?? undefined}>
         {children}
       </LinkText>
     )
