@@ -408,6 +408,18 @@ const routes = {
     tokens: [{"old":"/daily-readings","type":0,"val":"daily-readings","end":""}],
     types: placeholder as Registry['dailyReadings']['types'],
   },
+  'decrees.index': {
+    methods: ["GET","HEAD"],
+    pattern: '/decrees',
+    tokens: [{"old":"/decrees","type":0,"val":"decrees","end":""}],
+    types: placeholder as Registry['decrees.index']['types'],
+  },
+  'decrees.single': {
+    methods: ["GET","HEAD"],
+    pattern: '/decrees/:uid',
+    tokens: [{"old":"/decrees/:uid","type":0,"val":"decrees","end":""},{"old":"/decrees/:uid","type":1,"val":"uid","end":""}],
+    types: placeholder as Registry['decrees.single']['types'],
+  },
 } as const satisfies Record<string, AdonisEndpoint>
 
 export { routes }

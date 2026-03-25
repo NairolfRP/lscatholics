@@ -71,6 +71,8 @@ export type ScannedRoutes = {
     'jobs.application': { paramsTuple: [ParamValue]; params: {'slug': ParamValue} }
     'jobs.application_submit': { paramsTuple: [ParamValue]; params: {'slug': ParamValue} }
     'dailyReadings': { paramsTuple?: []; params?: {} }
+    'decrees.index': { paramsTuple?: []; params?: {} }
+    'decrees.single': { paramsTuple: [ParamValue]; params: {'uid': ParamValue} }
   }
   GET: {
     'payment.callback': { paramsTuple: [ParamValue]; params: {'token': ParamValue} }
@@ -120,6 +122,8 @@ export type ScannedRoutes = {
     'jobs.single': { paramsTuple: [ParamValue]; params: {'slug': ParamValue} }
     'jobs.application': { paramsTuple: [ParamValue]; params: {'slug': ParamValue} }
     'dailyReadings': { paramsTuple?: []; params?: {} }
+    'decrees.index': { paramsTuple?: []; params?: {} }
+    'decrees.single': { paramsTuple: [ParamValue]; params: {'uid': ParamValue} }
   }
   HEAD: {
     'payment.callback': { paramsTuple: [ParamValue]; params: {'token': ParamValue} }
@@ -169,6 +173,8 @@ export type ScannedRoutes = {
     'jobs.single': { paramsTuple: [ParamValue]; params: {'slug': ParamValue} }
     'jobs.application': { paramsTuple: [ParamValue]; params: {'slug': ParamValue} }
     'dailyReadings': { paramsTuple?: []; params?: {} }
+    'decrees.index': { paramsTuple?: []; params?: {} }
+    'decrees.single': { paramsTuple: [ParamValue]; params: {'uid': ParamValue} }
   }
   POST: {
     'logout': { paramsTuple?: []; params?: {} }

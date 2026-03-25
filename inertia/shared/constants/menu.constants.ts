@@ -28,11 +28,6 @@ export const MENU_ITEMS: MenuItem[] = [
         label: 'Départements',
         route: 'departments.index',
       },
-      /*{
-        id: 'administrative-handbook',
-        label: 'Manuel administratif',
-        href: '#',
-      },*/
       {
         id: 'privacy-policy',
         label: 'Politique de confidentialité',
@@ -54,6 +49,11 @@ export const MENU_ITEMS: MenuItem[] = [
     id: 'find',
     label: 'Trouver',
     children: [
+      {
+        id: 'decrees',
+        label: 'Décrets et lois',
+        href: 'decrees.index',
+      },
       {
         id: 'parishes',
         label: 'Liste des paroisses',

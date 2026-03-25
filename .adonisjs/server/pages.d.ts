@@ -32,6 +32,8 @@ declare module '@adonisjs/inertia/types' {
     'dashboard/posts/show': ExtractProps<(typeof import('../../inertia/pages/dashboard/posts/show.tsx'))['default']>
     'dashboard/users/edit': ExtractProps<(typeof import('../../inertia/pages/dashboard/users/edit.tsx'))['default']>
     'dashboard/users/index': ExtractProps<(typeof import('../../inertia/pages/dashboard/users/index.tsx'))['default']>
+    'decrees/index': ExtractProps<(typeof import('../../inertia/pages/decrees/index.tsx'))['default']>
+    'decrees/single': ExtractProps<(typeof import('../../inertia/pages/decrees/single.tsx'))['default']>
     'departments/index': ExtractProps<(typeof import('../../inertia/pages/departments/index.tsx'))['default']>
     'departments/single': ExtractProps<(typeof import('../../inertia/pages/departments/single.tsx'))['default']>
     'donate': ExtractProps<(typeof import('../../inertia/pages/donate.tsx'))['default']>

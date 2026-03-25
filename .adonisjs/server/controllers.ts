@@ -26,6 +26,7 @@ export const controllers = {
   },
   pages: {
     Contact: () => import('#app/pages/controllers/contact_controller'),
+    Decrees: () => import('#app/pages/controllers/decrees_controller'),
     Departments: () => import('#app/pages/controllers/departments_controller'),
     Home: () => import('#app/pages/controllers/home_controller'),
     Parishes: () => import('#app/pages/controllers/parishes_controller'),

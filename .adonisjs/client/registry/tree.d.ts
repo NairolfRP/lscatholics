@@ -110,4 +110,8 @@ export interface ApiDefinition {
     applicationSubmit: typeof routes['jobs.application_submit']
   }
   dailyReadings: typeof routes['dailyReadings']
+  decrees: {
+    index: typeof routes['decrees.index']
+    single: typeof routes['decrees.single']
+  }
 }

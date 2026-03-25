@@ -811,4 +811,28 @@ export interface Registry {
       errorResponse: unknown
     }
   }
+  'decrees.index': {
+    methods: ["GET","HEAD"]
+    pattern: '/decrees'
+    types: {
+      body: {}
+      paramsTuple: []
+      params: {}
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#app/pages/controllers/decrees_controller').default['index']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#app/pages/controllers/decrees_controller').default['index']>>>
+    }
+  }
+  'decrees.single': {
+    methods: ["GET","HEAD"]
+    pattern: '/decrees/:uid'
+    types: {
+      body: {}
+      paramsTuple: [ParamValue]
+      params: { uid: ParamValue }
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#app/pages/controllers/decrees_controller').default['single']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#app/pages/controllers/decrees_controller').default['single']>>>
+    }
+  }
 }

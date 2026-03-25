@@ -87,6 +87,7 @@
     "@vitejs/plugin-react": "^5.2.0",
     "babel-plugin-react-compiler": "^1.0.0",
     "better-sqlite3": "^12.8.0",
+    "discord-api-types": "^0.38.42",
     "eslint": "^10.1.0",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^7.0.1",
