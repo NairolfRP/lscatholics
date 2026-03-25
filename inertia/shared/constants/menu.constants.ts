@@ -52,7 +52,7 @@ export const MENU_ITEMS: MenuItem[] = [
       {
         id: 'decrees',
         label: 'Décrets et lois',
-        href: 'decrees.index',
+        route: 'decrees.index',
       },
       {
         id: 'parishes',
