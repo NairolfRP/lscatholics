@@ -30,7 +30,7 @@ export default function PrivacyPage() {
           Cette application a été créée pour la faction{' '}
           <span className="font-bold">Archidiocèse de Los Santos</span>, un projet de jeu de rôle
           (roleplay) sur le serveur de jeu{' '}
-          <LinkText external href="https://gta.world/" target="_blank">
+          <LinkText href="https://gta.world/" target="_blank">
             GTA World
           </LinkText>
           . Il n'est ni affilié ni un produit officiel de la marque GTA World. Cette politique de
@@ -44,11 +44,7 @@ export default function PrivacyPage() {
           Le responsable du traitement de vos données est le créateur et développeur de cette
           application. Pour toute question, vous pouvez le contacter via Discord :{' '}
           <span className="font-bold">nairolf.rp</span> ou par{' '}
-          <LinkText
-            external
-            href="https://forum-fr.gta.world/profile/11040-nairolf/"
-            target="_blank"
-          >
+          <LinkText href="https://forum-fr.gta.world/profile/11040-nairolf/" target="_blank">
             messagerie privée
           </LinkText>{' '}
           sur le forum GTA World.
@@ -64,7 +60,6 @@ export default function PrivacyPage() {
             <strong>Identifiants GTA World :</strong> Votre nom d'utilisateur, votre identifiant
             unique et la liste de vos personnages en jeu, fournis lors de l'authentification via l'
             <LinkText
-              external
               href="https://forum.gta.world/en/topic/141258-gta-world-oauth-api-documentation-updated-march-1st-2025/"
               target="_blank"
             >
@@ -93,7 +88,7 @@ export default function PrivacyPage() {
         <ul>
           <li>
             <strong>
-              <LinkText external href="https://global.gta.world/privacy" target="_blank">
+              <LinkText href="https://global.gta.world/privacy" target="_blank">
                 GTA World
               </LinkText>
             </strong>{' '}
@@ -102,7 +97,7 @@ export default function PrivacyPage() {
           </li>
           <li>
             <strong>
-              <LinkText external href="https://umami.is/privacy" target="_blank">
+              <LinkText href="https://umami.is/privacy" target="_blank">
                 Umami Analytics
               </LinkText>
             </strong>{' '}
@@ -111,7 +106,7 @@ export default function PrivacyPage() {
           </li>
           <li>
             <strong>
-              <LinkText external href="https://turso.tech/privacy-policy" target="_blank">
+              <LinkText href="https://turso.tech/privacy-policy" target="_blank">
                 Turso
               </LinkText>
             </strong>{' '}
@@ -120,7 +115,7 @@ export default function PrivacyPage() {
           </li>
           <li>
             <strong>
-              <LinkText external href="https://render.com/privacy" target="_blank">
+              <LinkText href="https://render.com/privacy" target="_blank">
                 Render.com
               </LinkText>
             </strong>{' '}
@@ -135,14 +130,14 @@ export default function PrivacyPage() {
         <h2>4. Analyse avec Umami</h2>
         <p>
           Nous utilisons{' '}
-          <LinkText external href="https://umami.is/" target="_blank">
+          <LinkText href="https://umami.is/" target="_blank">
             Umami
           </LinkText>
           , un outil d'analytique respectueux de la vie privée. Umami collecte des données
           anonymisées sur votre navigation (pages visitées, temps de visite, appareil){' '}
           <strong>sans</strong> collecter d'informations personnelles identifiantes. Aucun cookie
           n'est utilisé pour cela. Consultez la{' '}
-          <LinkText external href="https://umami.is/privacy" target="_blank">
+          <LinkText href="https://umami.is/privacy" target="_blank">
             politique de confidentialité d'Umami
           </LinkText>{' '}
           pour plus de détails.
