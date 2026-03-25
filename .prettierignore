@@ -20,3 +20,5 @@ public/
 *.svg
 *.webp
 *.avif
+
+pnpm-*.yaml
