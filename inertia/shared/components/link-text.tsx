@@ -1,31 +1,18 @@
 import { cn } from '@/lib/utils'
 import { Link } from '@adonisjs/inertia/react'
-import { urlFor } from '@/client'
-import type { InferRoutes, QueryParameters } from '@tuyau/core/types'
-import type { registry } from '@generated/registry'
-import type { AnchorHTMLAttributes } from 'react'
-import type { InertiaLinkProps } from '@inertiajs/react'
+import type { AnchorHTMLAttributes, ComponentProps, PropsWithChildren } from 'react'
 
-type BaseProps = {
-  route?: keyof InferRoutes<typeof registry>
-  params?: {
-    params: readonly [string | number]
-    query?: QueryParameters
-  }
-  className?: string
-  children?: React.ReactNode
-}
+type InertiaLinkProps = ComponentProps<typeof Link>
 
-type ExternalProps = AnchorHTMLAttributes<HTMLAnchorElement> & BaseProps & { external: true }
-type InternalProps = InertiaLinkProps & BaseProps & { external?: false | undefined }
+type ExternalProps = AnchorHTMLAttributes<HTMLAnchorElement> & { external: true }
+type InternalProps = InertiaLinkProps
 type Props = ExternalProps | InternalProps
 
-export function LinkText(props: Props) {
-  const { route, params, className, children, external, ...rest } = props
+export function LinkText(props: PropsWithChildren<Props>) {
+  const { className, children, ...rest } = props
 
-  const href = !external && route ? urlFor(route as any, params) : (props as ExternalProps).href
-
-  if (external) {
+  if (!('route' in props)) {
+    const href = (props as ExternalProps).href
     return (
       <a
         {...(rest as AnchorHTMLAttributes<HTMLAnchorElement>)}
@@ -43,7 +30,6 @@ export function LinkText(props: Props) {
   return (
     <Link
       {...(rest as InertiaLinkProps)}
-      href={href!}
       className={cn(
         'font-medium text-primary underline underline-offset-4 cursor-pointer',
         className
