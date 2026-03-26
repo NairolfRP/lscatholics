@@ -36,6 +36,7 @@ import {
 import { getPaginationItems } from '@/lib/utils'
 import { useDebouncedCallback } from 'use-debounce'
 import { useState } from 'react'
+import { ActionButton } from '@/shared/components/action-button'
 
 type PageProps = InertiaProps<{
   jobs: {
@@ -78,9 +79,7 @@ export default function DashboardJobPostingPage({ jobs, filters }: PageProps) {
   }, 300)
 
   const deleteJob = (id: number) => {
-    if (confirm('Êtes-vous sûr de vouloir supprimer cette offre ?')) {
-      router.delete(urlFor('dashboard.dashboard_jobs.destroy', { id }))
-    }
+    router.delete(urlFor('dashboard.dashboard_jobs.destroy', { id }))
   }
 
   const formatDate = (date: string) => {
@@ -163,9 +162,15 @@ export default function DashboardJobPostingPage({ jobs, filters }: PageProps) {
                                 <Edit className="h-4 w-4" />
                               </Link>
                             </Button>
-                            <Button variant="ghost" size="icon" onClick={() => deleteJob(job.id)}>
+                            <ActionButton
+                              variant="ghost"
+                              size="icon"
+                              areYouSureTitle="Êtes-vous sûr de vouloir supprimer cette offre ?"
+                              action={deleteJob.bind(null, job.id)}
+                              requireAreYouSure
+                            >
                               <Trash2 className="h-4 w-4 text-red-600" />
-                            </Button>
+                            </ActionButton>
                           </div>
                         </TableCell>
                       </TableRow>

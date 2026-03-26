@@ -36,6 +36,7 @@ import {
 import { getPaginationItems } from '@/lib/utils'
 import { useDebouncedCallback } from 'use-debounce'
 import { usePageProps } from '@/shared/hooks/use_page_props'
+import { ActionButton } from '@/shared/components/action-button'
 
 type PageProps = InertiaProps<{
   users: {
@@ -86,15 +87,14 @@ export default function DashboardUsersPage({ user, users, filters }: PageProps) 
     )
   }, 300)
 
-  const deleteUser = (id: number) => {
-    if (user?.id === id || !permissions.includes('deleteUsers')) return
-    if (
-      confirm(
-        "Attention. La suppression est définitive, immédiate et sensible. Assurez-vous d'avoir de bonnes raisons. Êtes-vous sûr de vouloir supprimer cet utilisateur ?"
-      )
-    ) {
-      router.delete(urlFor('dashboard.dashboard_users.destroy', { id }))
+  const deleteUser = async (id: number) => {
+    if (user?.id === id || !permissions.includes('deleteUsers')) {
+      return { error: true, message: "Vous n'êtes pas autorisé à faire cela." }
     }
+
+    router.delete(urlFor('dashboard.dashboard_users.destroy', { id }))
+
+    return { error: false }
   }
 
   return (
@@ -168,13 +168,16 @@ export default function DashboardUsersPage({ user, users, filters }: PageProps) 
                               </Link>
                             </Button>
                             {user?.id !== itemUser.id && permissions.includes('deleteUsers') ? (
-                              <Button
+                              <ActionButton
                                 variant="ghost"
                                 size="icon"
-                                onClick={() => deleteUser(itemUser.id)}
+                                areYouSureTitle={`Êtes-vous sûr de vouloir supprimer l'utilisateur « ${itemUser.name} » ?`}
+                                areYouSureDescription="Attention. La suppression est définitive, immédiate et sensible. Assurez-vous d'avoir de bonnes raisons."
+                                action={deleteUser.bind(null, itemUser.id)}
+                                requireAreYouSure
                               >
                                 <Trash2 className="h-4 w-4 text-red-600" />
-                              </Button>
+                              </ActionButton>
                             ) : null}
                           </div>
                         </TableCell>

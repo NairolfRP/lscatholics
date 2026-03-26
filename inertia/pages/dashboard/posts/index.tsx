@@ -36,6 +36,7 @@ import {
 import { getPaginationItems } from '@/lib/utils'
 import { useDebouncedCallback } from 'use-debounce'
 import { useState } from 'react'
+import { ActionButton } from '@/shared/components/action-button'
 
 type PageProps = InertiaProps<{
   posts: {
@@ -79,9 +80,7 @@ export default function DashboardPostsPage({ posts, filters }: PageProps) {
   }, 300)
 
   const deletePost = (id: number) => {
-    if (confirm('Êtes-vous sûr de vouloir supprimer cet article ?')) {
-      router.delete(urlFor('dashboard.dashboard_posts.destroy', { id }))
-    }
+    router.delete(urlFor('dashboard.dashboard_posts.destroy', { id }))
   }
 
   const formatDate = (date: string) => {
@@ -176,9 +175,15 @@ export default function DashboardPostsPage({ posts, filters }: PageProps) {
                                 <Edit className="h-4 w-4" />
                               </Link>
                             </Button>
-                            <Button variant="ghost" size="icon" onClick={() => deletePost(post.id)}>
+                            <ActionButton
+                              variant="ghost"
+                              size="icon"
+                              areYouSureTitle="Êtes-vous sûr de vouloir supprimer cet article ?"
+                              action={deletePost.bind(null, post.id)}
+                              requireAreYouSure
+                            >
                               <Trash2 className="h-4 w-4 text-red-600" />
-                            </Button>
+                            </ActionButton>
                           </div>
                         </TableCell>
                       </TableRow>
