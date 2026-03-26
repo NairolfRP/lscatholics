@@ -72,8 +72,8 @@ export default function Single({ title, description, timestamp, image, fields }:
           <MarkdownContent content={description} />
           {fields.length > 0 && (
             <Typography variant="list">
-              {fields.map((field) => (
-                <li>
+              {fields.map((field, i) => (
+                <li key={i}>
                   <strong>{field.name}</strong> : <MarkdownContent content={field.value} />
                 </li>
               ))}
