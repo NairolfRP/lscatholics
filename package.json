@@ -67,7 +67,7 @@
     "./data": "./.adonisjs/client/data.d.ts"
   },
   "devDependencies": {
-    "@adonisjs/assembler": "^8.2.0",
+    "@adonisjs/assembler": "^8.3.0",
     "@adonisjs/eslint-config": "^3.0.0",
     "@adonisjs/prettier-config": "^1.4.5",
     "@adonisjs/tsconfig": "^2.0.0",
@@ -130,7 +130,7 @@
     "date-fns": "^4.1.0",
     "edge.js": "^6.5.0",
     "leaflet": "^1.9.4",
-    "lucide-react": "^1.6.0",
+    "lucide-react": "^1.7.0",
     "luxon": "^3.7.2",
     "next-themes": "^0.4.6",
     "radix-ui": "^1.4.3",
