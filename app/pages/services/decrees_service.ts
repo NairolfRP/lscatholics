@@ -1,10 +1,5 @@
 import string from '@adonisjs/core/helpers/string'
-import env from '#start/env'
-import type { DiscordChannelMessages } from '#discord/types/interfaces/entities/discord_channel'
-import type {
-  DiscordChannelThreadsArchivedPublicResponse,
-  DiscordPublicThreadChannel,
-} from '#discord/types/interfaces/entities/discord_channel_threads'
+import DiscordChannelService from '#discord/services/discord_channel_service'
 
 const CATEGORY_TAGS = {
   '1253567271410864178': 'executive',
@@ -17,8 +12,6 @@ type Category = (typeof CATEGORY_TAGS)[keyof typeof CATEGORY_TAGS]
 type CategorizedThreads = Record<Category, Array<{ uid: string; title: string; tags: string[] }>>
 
 export default class DecreesService {
-  #BASE_URL = 'https://discord.com/api/v10'
-
   #channelId = '1253466164294582332'
 
   #ignoredTags = ['1253567595970301992', '1415400158560256111']
@@ -31,24 +24,11 @@ export default class DecreesService {
 
   async getDecrees() {
     try {
-      const url = `${this.#BASE_URL}/channels/${this.#channelId}/threads/archived/public`
+      const threads = await DiscordChannelService.create({
+        channelId: this.#channelId,
+      }).getArchivedPublicThreads()
 
-      const query = await fetch(url, {
-        headers: {
-          Authorization: `Bot ${env.get('DISCORD_BOT_TOKEN')}`,
-          Accept: 'application/json',
-        },
-      })
-
-      if (!query.ok) {
-        throw new Error(
-          `Failed to fetch decrees with status: ${query.status} - ${query.statusText}`
-        )
-      }
-
-      const res = (await query.json()) as DiscordChannelThreadsArchivedPublicResponse
-
-      return (res.threads as DiscordPublicThreadChannel[])
+      return threads
         .filter(({ applied_tags: tags = [] }) => {
           if (tags.some((t) => this.#ignoredTags.includes(t))) return false
           if (tags.some((t) => this.#enforceableTags.includes(t)))
@@ -70,22 +50,7 @@ export default class DecreesService {
 
   async getSingleDecree(threadId: string) {
     try {
-      const url = `${this.#BASE_URL}/channels/${threadId}/messages`
-
-      const query = await fetch(url, {
-        headers: {
-          Authorization: `Bot ${env.get('DISCORD_BOT_TOKEN')}`,
-          Accept: 'application/json',
-        },
-      })
-
-      if (!query.ok) {
-        throw new Error(
-          `Failed to fetch decree with thread id '${threadId}'. Status: ${query.status} - ${query.statusText}`
-        )
-      }
-
-      return (await query.json()) as DiscordChannelMessages
+      return await DiscordChannelService.create({ channelId: threadId }).getMessages()
     } catch {
       return null
     }
