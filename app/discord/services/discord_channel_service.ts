@@ -36,6 +36,14 @@ export default class DiscordChannelService {
     return await this.#fetch<DiscordChannelMessages>(`/channels/${channelId}/messages`)
   }
 
+  async getThread() {
+    return (await this.getChannel()) as DiscordPublicThreadChannel
+  }
+
+  async getThreadAndMessages() {
+    return Promise.all([this.getThread(), this.getMessages()])
+  }
+
   async getArchivedPublicThreads() {
     const channelId = this.channelId
 

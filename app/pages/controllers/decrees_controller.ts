@@ -16,22 +16,24 @@ export default class DecreesController {
     })
   }
 
-  async single({ params, inertia }: HttpContext) {
-    const { threadId } = params.uid as { threadId: string; slug: string }
-    const decree = await this.service.getSingleDecree(threadId)
+  async single({ params, inertia, response }: HttpContext) {
+    const { threadId, slug } = params.uid as { threadId: string; slug: string }
 
-    if (!decree) {
+    const data = await this.service.getSingleDecree(threadId)
+
+    if (!data) {
       throw new Exception('Decree not found', { status: 404 })
     }
 
-    const decreeEmbed = decree[0].embeds[0]
+    const { decree, metadata } = data
 
-    return inertia.render('decrees/single', {
-      title: decreeEmbed.title!,
-      description: decreeEmbed.description!,
-      timestamp: decreeEmbed.timestamp,
-      image: decreeEmbed.image?.url,
-      fields: decreeEmbed.fields ?? [],
-    })
+    if (slug !== decree.slug) {
+      return response
+        .redirect()
+        .status(301)
+        .toRoute('decrees.single', { uid: `${threadId}-${decree.slug}` })
+    }
+
+    return inertia.render('decrees/single', { decree, metadata })
   }
 }

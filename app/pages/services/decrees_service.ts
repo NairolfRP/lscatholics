@@ -50,7 +50,35 @@ export default class DecreesService {
 
   async getSingleDecree(threadId: string) {
     try {
-      return await DiscordChannelService.create({ channelId: threadId }).getMessages()
+      const [channel, messages] = await DiscordChannelService.create({
+        channelId: threadId,
+      }).getThreadAndMessages()
+
+      if (!channel || !messages || messages.length === 0 || messages[0].embeds.length === 0) {
+        throw new Error(
+          'Failed to get decree - probably an invalid thread id or the message is invalid (not embedded)'
+        )
+      }
+
+      const title = channel.name
+      const embed = messages[0].embeds[0]
+      const tags = channel.applied_tags ?? []
+
+      const isEnforceable = this.#isEnforceable(tags)
+      const isEnacted = isEnforceable ? this.#isEnacted(tags) : false
+      const isInEffect = isEnforceable ? this.#isInEffect(tags) : false
+
+      return {
+        decree: {
+          title,
+          slug: this.#slugify(title),
+          description: embed.description ?? '',
+          timestamp: embed.timestamp,
+          image: embed.image?.url,
+          fields: embed.fields ?? [],
+        },
+        metadata: { isEnforceable, isEnacted, isInEffect },
+      }
     } catch {
       return null
     }
@@ -76,5 +104,21 @@ export default class DecreesService {
       trim: true,
       strict: true,
     })
+  }
+
+  #isEnforceable(value: string | string[]) {
+    if (typeof value === 'string') {
+      return this.#enforceableTags.includes(value)
+    }
+
+    return value.some((tag) => this.#enforceableTags.includes(tag))
+  }
+
+  #isEnacted(tags: string[]) {
+    return tags.includes(this.#enactedTag)
+  }
+
+  #isInEffect(tags: string[]) {
+    return tags.includes(this.#effectiveTag)
   }
 }
