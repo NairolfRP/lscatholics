@@ -372,6 +372,12 @@ const routes = {
     tokens: [{"old":"/catholic-charities","type":0,"val":"catholic-charities","end":""}],
     types: placeholder as Registry['charities.index']['types'],
   },
+  'charities.program': {
+    methods: ["GET","HEAD"],
+    pattern: '/catholic-charities/program/:slug',
+    tokens: [{"old":"/catholic-charities/program/:slug","type":0,"val":"catholic-charities","end":""},{"old":"/catholic-charities/program/:slug","type":0,"val":"program","end":""},{"old":"/catholic-charities/program/:slug","type":1,"val":"slug","end":""}],
+    types: placeholder as Registry['charities.program']['types'],
+  },
   'vocations': {
     methods: ["GET","HEAD"],
     pattern: '/vocations',
@@ -407,6 +413,18 @@ const routes = {
     pattern: '/daily-readings',
     tokens: [{"old":"/daily-readings","type":0,"val":"daily-readings","end":""}],
     types: placeholder as Registry['dailyReadings']['types'],
+  },
+  'decrees.index': {
+    methods: ["GET","HEAD"],
+    pattern: '/decrees',
+    tokens: [{"old":"/decrees","type":0,"val":"decrees","end":""}],
+    types: placeholder as Registry['decrees.index']['types'],
+  },
+  'decrees.single': {
+    methods: ["GET","HEAD"],
+    pattern: '/decrees/:uid',
+    tokens: [{"old":"/decrees/:uid","type":0,"val":"decrees","end":""},{"old":"/decrees/:uid","type":1,"val":"uid","end":""}],
+    types: placeholder as Registry['decrees.single']['types'],
   },
 } as const satisfies Record<string, AdonisEndpoint>
 

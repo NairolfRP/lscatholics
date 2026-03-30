@@ -25,7 +25,9 @@ export const controllers = {
     Donate: () => import('#app/donate/controllers/donate_controller'),
   },
   pages: {
+    Charities: () => import('#app/pages/controllers/charities_controller'),
     Contact: () => import('#app/pages/controllers/contact_controller'),
+    Decrees: () => import('#app/pages/controllers/decrees_controller'),
     Departments: () => import('#app/pages/controllers/departments_controller'),
     Home: () => import('#app/pages/controllers/home_controller'),
     Parishes: () => import('#app/pages/controllers/parishes_controller'),

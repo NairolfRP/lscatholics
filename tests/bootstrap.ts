@@ -8,6 +8,7 @@ import { sessionApiClient } from '@adonisjs/session/plugins/api_client'
 import { inertiaApiClient } from '@adonisjs/inertia/plugins/api_client'
 import { shieldApiClient } from '@adonisjs/shield/plugins/api_client'
 import { authApiClient } from '@adonisjs/auth/plugins/api_client'
+import { dbAssertions } from '@adonisjs/lucid/plugins/db'
 
 /**
  * This file is imported by the "bin/test.ts" entrypoint file
@@ -20,6 +21,7 @@ import { authApiClient } from '@adonisjs/auth/plugins/api_client'
 export const plugins: Config['plugins'] = [
   assert(),
   pluginAdonisJS(app),
+  dbAssertions(app),
   apiClient(),
   inertiaApiClient(app),
   sessionApiClient(app),

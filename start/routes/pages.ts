@@ -51,7 +51,15 @@ router
 
 router.on('/privacy').renderInertia('privacy', {}).as('privacy')
 
-router.on('/catholic-charities').renderInertia('catholic-charities', {}).as('charities.index')
+router
+  .group(() => {
+    router.get('/', [controllers.pages.Charities, 'index']).as('charities.index')
+    router
+      .get('/program/:slug', [controllers.pages.Charities, 'showProgram'])
+      .where('slug', router.matchers.slug())
+      .as('charities.program')
+  })
+  .prefix('/catholic-charities')
 
 router.on('/vocations').renderInertia('vocations', {}).as('vocations')
 
@@ -71,3 +79,20 @@ router
   .use(middleware.auth())
 
 router.on('daily-readings').renderInertia('readings', {}).as('dailyReadings')
+
+router
+  .group(() => {
+    router.get('/', [controllers.pages.Decrees, 'index']).as('decrees.index')
+    router
+      .get('/:uid', [controllers.pages.Decrees, 'single'])
+      .where('uid', {
+        match: /^[\w\d_-]+$/,
+        cast(slug) {
+          const tokens = slug.split('-')
+          const threadId = tokens.shift()
+          return { threadId, slug: tokens.join('-') }
+        },
+      })
+      .as('decrees.single')
+  })
+  .prefix('decrees')

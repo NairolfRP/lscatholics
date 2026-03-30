@@ -63,7 +63,7 @@ export const DonateOptionsFields = withForm({
                 />
                 <FieldLabel htmlFor={field.name} className="inline font-normal">
                   (( Je confirme que je suis BIEN CONNECTÉ sur l'
-                  <LinkText href="https://fleeca.gta.world" target="_blank" external>
+                  <LinkText href="https://fleeca.gta.world" target="_blank">
                     application web Fleeca
                   </LinkText>{' '}
                   de GTA World. Dans le cas contraire, la redirection vers le paiement échouera et

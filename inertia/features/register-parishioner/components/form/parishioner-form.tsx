@@ -2,7 +2,6 @@ import { useAppForm } from '@/shared/hooks/form'
 import { registerParishionerFormOpts } from '@/features/register-parishioner/constants/form_opts'
 import { urlFor } from '@/client'
 import { router } from '@inertiajs/react'
-import { toast } from 'sonner'
 import { usePageProps } from '@/shared/hooks/use_page_props'
 import { serverErrorsFormConvertor } from '@/lib/utils'
 import { Button } from '@/shared/components/ui/button'
@@ -25,14 +24,8 @@ export function ParishionerForm() {
       router.post(urlFor('registerParishioner.submit'), value, {
         preserveScroll: true,
         preserveState: true,
-        onSuccess: (page) => {
-          if (page.props.success) {
-            form.reset()
-            return toast.success('Succès !', {
-              description: props.success || 'Soumis avec succès !',
-            })
-          }
-          toast.error(props.errors.E_REGISTER_PARISHIONER_ERROR || 'Une erreur est survenue.')
+        onSuccess: () => {
+          form.reset()
         },
         onError: (err) => {
           form.setErrorMap({

@@ -1,8 +1,7 @@
 import Head from '@/shared/components/app-head'
 import { Link } from '@adonisjs/inertia/react'
-import { ArrowRight, Heart } from 'lucide-react'
+import { ArrowRight, HandHelping, Heart } from 'lucide-react'
 import { Card, CardContent, CardFooter } from '@/shared/components/ui/card'
-import { urlFor } from '@/client'
 import { cn } from '@/lib/utils'
 import HeroSection from '@/shared/components/layout/default/hero-section'
 import { CHURCH_SERVICES } from '@/features/church-services/constants/church_services.constants'
@@ -23,8 +22,31 @@ export default function ServicesPage() {
       <section className="py-16">
         <div className="container max-w-7xl mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <Link route="charities.index">
+              <Card className="flex justify-between h-full bg-primary/10 card-hover text-center">
+                <CardContent className="p-6">
+                  <div
+                    className={cn(
+                      'size-12 bg-catholic-blue text-white rounded-full flex items-center justify-center mx-auto mb-4'
+                    )}
+                  >
+                    <HandHelping className="size-6" />
+                  </div>
+                  <h3 className="font-semibold mb-2">Charité et humanitaire</h3>
+                  <p className="text-sm text-gray-600 text-justify mb-4">
+                    A travers son bras social, Catholic Charities, l'archidiocèse propose des
+                    services pour soutenir les familles en difficulté et les personnes exclues, que
+                    ce soit humainement, matériellement ou financièrement.
+                  </p>
+                </CardContent>
+                <CardFooter className="flex gap-2 justify-end text-right text-gray-600 font-medium">
+                  Programmes de Catholic Charities <ArrowRight className="size-4" />
+                </CardFooter>
+              </Card>
+            </Link>
+
             {CHURCH_SERVICES.map((service) => (
-              <Link key={service.id} href={urlFor('services.single', { slug: service.slug })}>
+              <Link key={service.id} route="services.single" routeParams={{ slug: service.slug }}>
                 <Card className="flex justify-between h-full bg-primary/10 card-hover text-center">
                   <CardContent className="p-6">
                     <div
