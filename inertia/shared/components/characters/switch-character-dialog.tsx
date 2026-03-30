@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { LoaderCircle } from 'lucide-react'
 import { router } from '@inertiajs/react'
-import { toast } from 'sonner'
 import { Button } from '@/shared/components/ui/button'
 import {
   Dialog,
@@ -47,8 +46,7 @@ export default function SwitchCharacterDialog({ open, onOpenChange }: Props) {
       {
         preserveScroll: true,
         preserveState: true,
-        onSuccess(page) {
-          toast.success(page.props.success as string)
+        onSuccess() {
           setSelectedCharacterId(undefined)
           router.reload({ only: ['user', 'canAccessDashboard'] })
           onOpenChange(false)
