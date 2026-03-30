@@ -34,6 +34,7 @@ import {
 import { getPaginationItems } from '@/lib/utils'
 import { useDebouncedCallback } from 'use-debounce'
 import { useCallback } from 'react'
+import { ActionButton } from '@/shared/components/action-button'
 
 type PageProps = InertiaProps<{
   events: {
@@ -69,9 +70,7 @@ export default function DashboardEventsPage({ events }: PageProps) {
   }, 300)
 
   const deleteEvent = useCallback((id: number) => {
-    if (confirm('Êtes-vous sûr de vouloir supprimer cet événement ?')) {
-      router.delete(urlFor('dashboard.dashboard_events.destroy', { id }))
-    }
+    router.delete(urlFor('dashboard.dashboard_events.destroy', { id }))
   }, [])
 
   return (
@@ -146,13 +145,15 @@ export default function DashboardEventsPage({ events }: PageProps) {
                                 <Edit className="h-4 w-4" />
                               </Link>
                             </Button>
-                            <Button
+                            <ActionButton
                               variant="ghost"
                               size="icon"
-                              onClick={() => deleteEvent(event.id)}
+                              areYouSureTitle="Êtes-vous sûr de vouloir supprimer cet événement ?"
+                              action={deleteEvent.bind(null, event.id)}
+                              requireAreYouSure
                             >
                               <Trash2 className="h-4 w-4 text-red-600" />
-                            </Button>
+                            </ActionButton>
                           </div>
                         </TableCell>
                       </TableRow>

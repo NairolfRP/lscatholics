@@ -22,9 +22,7 @@ export default class RegisterParishionersController {
 
       if (!result.success) {
         logger.error({ error: result.error }, 'Failed to register parishioner')
-        session.flashErrors({
-          E_REGISTER_PARISHIONER_ERROR: "L'enregistrement a échoué. Réessayez plus tard.",
-        })
+        session.flash('error', "L'enregistrement a échoué. Réessayez plus tard.")
 
         return response.redirect().back()
       }
@@ -37,10 +35,10 @@ export default class RegisterParishionersController {
       return response.redirect().back()
     } catch (error) {
       logger.error({ err: error }, 'Error registering parishioner')
-      session.flashErrors({
-        E_REGISTER_PARISHIONER_ERROR:
-          "Un problème est survenu lors de l'enregistrement. Contactez un administrateur du site.",
-      })
+      session.flash(
+        'error',
+        "Un problème est survenu lors de l'enregistrement. Contactez un administrateur du site."
+      )
       return response.redirect().back()
     }
   }

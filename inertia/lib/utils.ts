@@ -85,3 +85,25 @@ export function serverErrorsFormConvertor(errors: Record<string, string>) {
     fields: formErrors,
   }
 }
+
+export function truncate(text: string, max = 160): string {
+  if (text.length <= max) return text
+  return text.slice(0, text.lastIndexOf(' ', max)) + '…'
+}
+
+export function stripMarkdown(text: string): string {
+  return text
+    .replace(/(\*{1,3}|_{1,3}|~~)(.*?)\1/g, '$2')
+    .replace(/`([^`]+)`/g, '$1')
+    .replace(/```[\s\S]*?```/g, '')
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+    .replace(/<[@#][!&]?\d+>/g, '')
+    .replace(/<a?:\w+:\d+>/g, '')
+    .replace(/^#{1,6}\s+/gm, '')
+    .replace(/\n+/g, ' ')
+    .trim()
+}
+
+export function toOgDescription(rawDescription: string): string {
+  return truncate(stripMarkdown(rawDescription))
+}

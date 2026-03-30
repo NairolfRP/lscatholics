@@ -25,6 +25,7 @@ import { EmploymentApplicationEducationFields } from '@/features/employment-appl
 import { EmploymentApplicantDeclarationFields } from '@/features/employment-application/components/form/fields/employment-application-declaration-fields'
 import { EmploymentApplicationOOCFields } from '@/features/employment-application/components/form/fields/employment-application-ooc-fields'
 import { Container } from '@/shared/components/ui/container'
+import { ActionButton } from '@/shared/components/action-button'
 
 type PageProps = InertiaProps<{
   job: Data.Careers.JobPosting.Variants['employmentApplication']
@@ -65,9 +66,7 @@ export default function EmploymentApplicationPage({ job, user }: PageProps) {
   }
 
   const handleReset = () => {
-    if (confirm('Êtes-vous sûr de vouloir réinitialiser le formulaire ?')) {
-      form.reset()
-    }
+    form.reset()
   }
 
   return (
@@ -154,9 +153,15 @@ export default function EmploymentApplicationPage({ job, user }: PageProps) {
 
           <CardFooter className="border-t">
             <Field orientation="horizontal">
-              <Button type="button" variant="outline" onClick={handleReset}>
+              <ActionButton
+                type="button"
+                variant="outline"
+                areYouSureTitle="Êtes-vous sûr de vouloir réinitialiser le formulaire ?"
+                action={handleReset}
+                requireAreYouSure
+              >
                 Réinitialiser
-              </Button>
+              </ActionButton>
               <form.Subscribe
                 selector={(state) => [state.canSubmit, state.isSubmitting, state.isValidating]}
               >

@@ -97,7 +97,6 @@ export default function Footer() {
                 className="text-inherit"
                 href="https://forum-fr.gta.world/profile/11040-nairolf/"
                 target="_blank"
-                external
               >
                 Nairolf
               </LinkText>{' '}

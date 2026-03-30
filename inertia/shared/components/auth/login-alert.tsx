@@ -14,7 +14,7 @@ export default function LoginAlert({ text }: Props) {
       <AlertDescription>
         <span>
           Vous devez vous{' '}
-          <LinkText href={urlFor('signIn')} className="text-info-foreground" external>
+          <LinkText href={urlFor('signIn')} className="text-info-foreground">
             connecter
           </LinkText>{' '}
           {text || 'pour utiliser cette fonctionnalité.'}

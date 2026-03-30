@@ -19,12 +19,13 @@ export default function DashboardLayout({ children }: Props) {
   }, [url])
 
   useEffect(() => {
-    if (flash?.success) toast.success(flash.success)
-  }, [flash?.success])
-
-  useEffect(() => {
-    if (flash?.error) toast.error(flash.error)
-  }, [flash?.error])
+    if (flash.error) {
+      toast.error(flash.error)
+    }
+    if (flash.success) {
+      toast.success(flash.success)
+    }
+  })
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">

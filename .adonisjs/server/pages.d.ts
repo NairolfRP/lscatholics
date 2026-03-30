@@ -15,7 +15,8 @@ declare module '@adonisjs/inertia/types' {
     'about-us': ExtractProps<(typeof import('../../inertia/pages/about-us.tsx'))['default']>
     'account/settings': ExtractProps<(typeof import('../../inertia/pages/account/settings.tsx'))['default']>
     'archbishop': ExtractProps<(typeof import('../../inertia/pages/archbishop.tsx'))['default']>
-    'catholic-charities': ExtractProps<(typeof import('../../inertia/pages/catholic-charities.tsx'))['default']>
+    'charities/index': ExtractProps<(typeof import('../../inertia/pages/charities/index.tsx'))['default']>
+    'charities/programs/show': ExtractProps<(typeof import('../../inertia/pages/charities/programs/show.tsx'))['default']>
     'contact': ExtractProps<(typeof import('../../inertia/pages/contact.tsx'))['default']>
     'dashboard/events/create': ExtractProps<(typeof import('../../inertia/pages/dashboard/events/create.tsx'))['default']>
     'dashboard/events/edit': ExtractProps<(typeof import('../../inertia/pages/dashboard/events/edit.tsx'))['default']>
@@ -32,6 +33,8 @@ declare module '@adonisjs/inertia/types' {
     'dashboard/posts/show': ExtractProps<(typeof import('../../inertia/pages/dashboard/posts/show.tsx'))['default']>
     'dashboard/users/edit': ExtractProps<(typeof import('../../inertia/pages/dashboard/users/edit.tsx'))['default']>
     'dashboard/users/index': ExtractProps<(typeof import('../../inertia/pages/dashboard/users/index.tsx'))['default']>
+    'decrees/index': ExtractProps<(typeof import('../../inertia/pages/decrees/index.tsx'))['default']>
+    'decrees/single': ExtractProps<(typeof import('../../inertia/pages/decrees/single.tsx'))['default']>
     'departments/index': ExtractProps<(typeof import('../../inertia/pages/departments/index.tsx'))['default']>
     'departments/single': ExtractProps<(typeof import('../../inertia/pages/departments/single.tsx'))['default']>
     'donate': ExtractProps<(typeof import('../../inertia/pages/donate.tsx'))['default']>
