@@ -372,6 +372,12 @@ const routes = {
     tokens: [{"old":"/catholic-charities","type":0,"val":"catholic-charities","end":""}],
     types: placeholder as Registry['charities.index']['types'],
   },
+  'charities.program': {
+    methods: ["GET","HEAD"],
+    pattern: '/catholic-charities/program/:slug',
+    tokens: [{"old":"/catholic-charities/program/:slug","type":0,"val":"catholic-charities","end":""},{"old":"/catholic-charities/program/:slug","type":0,"val":"program","end":""},{"old":"/catholic-charities/program/:slug","type":1,"val":"slug","end":""}],
+    types: placeholder as Registry['charities.program']['types'],
+  },
   'vocations': {
     methods: ["GET","HEAD"],
     pattern: '/vocations',

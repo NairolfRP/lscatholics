@@ -65,6 +65,7 @@ export type ScannedRoutes = {
     'registerParishioner.submit': { paramsTuple?: []; params?: {} }
     'privacy': { paramsTuple?: []; params?: {} }
     'charities.index': { paramsTuple?: []; params?: {} }
+    'charities.program': { paramsTuple: [ParamValue]; params: {'slug': ParamValue} }
     'vocations': { paramsTuple?: []; params?: {} }
     'jobs.index': { paramsTuple?: []; params?: {} }
     'jobs.single': { paramsTuple: [ParamValue]; params: {'slug': ParamValue} }
@@ -117,6 +118,7 @@ export type ScannedRoutes = {
     'registerParishioner.index': { paramsTuple?: []; params?: {} }
     'privacy': { paramsTuple?: []; params?: {} }
     'charities.index': { paramsTuple?: []; params?: {} }
+    'charities.program': { paramsTuple: [ParamValue]; params: {'slug': ParamValue} }
     'vocations': { paramsTuple?: []; params?: {} }
     'jobs.index': { paramsTuple?: []; params?: {} }
     'jobs.single': { paramsTuple: [ParamValue]; params: {'slug': ParamValue} }
@@ -168,6 +170,7 @@ export type ScannedRoutes = {
     'registerParishioner.index': { paramsTuple?: []; params?: {} }
     'privacy': { paramsTuple?: []; params?: {} }
     'charities.index': { paramsTuple?: []; params?: {} }
+    'charities.program': { paramsTuple: [ParamValue]; params: {'slug': ParamValue} }
     'vocations': { paramsTuple?: []; params?: {} }
     'jobs.index': { paramsTuple?: []; params?: {} }
     'jobs.single': { paramsTuple: [ParamValue]; params: {'slug': ParamValue} }

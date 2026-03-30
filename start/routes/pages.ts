@@ -51,7 +51,15 @@ router
 
 router.on('/privacy').renderInertia('privacy', {}).as('privacy')
 
-router.on('/catholic-charities').renderInertia('catholic-charities', {}).as('charities.index')
+router
+  .group(() => {
+    router.get('/', [controllers.pages.Charities, 'index']).as('charities.index')
+    router
+      .get('/program/:slug', [controllers.pages.Charities, 'showProgram'])
+      .where('slug', router.matchers.slug())
+      .as('charities.program')
+  })
+  .prefix('/catholic-charities')
 
 router.on('/vocations').renderInertia('vocations', {}).as('vocations')
 

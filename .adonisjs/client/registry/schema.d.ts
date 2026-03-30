@@ -735,8 +735,20 @@ export interface Registry {
       paramsTuple: []
       params: {}
       query: {}
-      response: unknown
-      errorResponse: unknown
+      response: ExtractResponse<Awaited<ReturnType<import('#app/pages/controllers/charities_controller').default['index']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#app/pages/controllers/charities_controller').default['index']>>>
+    }
+  }
+  'charities.program': {
+    methods: ["GET","HEAD"]
+    pattern: '/catholic-charities/program/:slug'
+    types: {
+      body: {}
+      paramsTuple: [ParamValue]
+      params: { slug: ParamValue }
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#app/pages/controllers/charities_controller').default['showProgram']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#app/pages/controllers/charities_controller').default['showProgram']>>>
     }
   }
   'vocations': {

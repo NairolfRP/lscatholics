@@ -101,6 +101,7 @@ export interface ApiDefinition {
   privacy: typeof routes['privacy']
   charities: {
     index: typeof routes['charities.index']
+    program: typeof routes['charities.program']
   }
   vocations: typeof routes['vocations']
   jobs: {
