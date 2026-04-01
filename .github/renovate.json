@@ -77,12 +77,6 @@
         "edge.js"
       ],
       "groupName": "utils"
-    },
-    {
-      "description": "Vulnerability alerts bypass minimumReleaseAge",
-      "matchIsVulnerabilityAlert": true,
-      "minimumReleaseAge": "1 day",
-      "labels": ["dependencies", "renovate", "security"]
     }
   ],
   "vulnerabilityAlerts": {
