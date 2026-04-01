@@ -1,2 +1,7 @@
+minimumReleaseAge: 4320
 onlyBuiltDependencies:
+  - esbuild
+  - "@libsql/sqlite3"
+  - "@swc/core"
   - better-sqlite3
+  - lightningcss

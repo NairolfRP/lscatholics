@@ -11,6 +11,12 @@
   ],
   "rangeStrategy": "bump",
   "labels": ["dependencies", "renovate"],
+  "minimumReleaseAge": "3 days",
+  "dependencyDashboard": true,
+  "timezone": "Europe/Paris",
+  "schedule": ["before 3am on monday"],
+  "prConcurrentLimit": 5,
+  "prHourlyLimit": 2,
   "packageRules": [
     {
       "description": "Group Adonis.Js dependencies",
@@ -27,13 +33,8 @@
         "lucide-react"
       ],
       "groupName": "inertia-react",
-      "schedule": ["before 3am on sunday"]
-    },
-    {
-      "description": "Group vite and plugins dependencies",
-      "matchPackageNames": ["vite", "@vitejs/**", "@tailwindcss/vite"],
-      "groupName": "vite",
-      "schedule": ["before 3am on sunday"]
+      "schedule": ["before 3am on sunday"],
+      "minimumReleaseAge": "5 days"
     },
     {
       "description": "Group TypeScript and tools",
@@ -43,6 +44,20 @@
         "@adonisjs/tsconfig"
       ],
       "groupName": "typescript",
+      "schedule": ["before 3am on sunday"],
+      "minimumReleaseAge": "5 days"
+    },
+    {
+      "description": "Group SQLite",
+      "matchPackageNames": ["@libsql/sqlite3", "better-sqlite3"],
+      "groupName": "libsql",
+      "schedule": ["before 3am on sunday"],
+      "minimumReleaseAge": "2 days"
+    },
+    {
+      "description": "Group vite and plugins dependencies",
+      "matchPackageNames": ["vite", "@vitejs/**", "@tailwindcss/vite"],
+      "groupName": "vite",
       "schedule": ["before 3am on sunday"]
     },
     {
@@ -53,6 +68,7 @@
     {
       "description": "Group decorative/utility dependencies",
       "matchPackageNames": [
+        "shadcn",
         "clsx",
         "luxon",
         "class-variance-authority",
@@ -61,14 +77,14 @@
         "edge.js"
       ],
       "groupName": "utils"
+    },
+    {
+      "description": "Vulnerability alerts bypass minimumReleaseAge",
+      "matchIsVulnerabilityAlert": true,
+      "minimumReleaseAge": "1 day",
+      "labels": ["dependencies", "renovate", "security"]
     }
   ],
-  "prConcurrentLimit": 5,
-  "prHourlyLimit": 2,
-  "minimumReleaseAge": "3 days",
-  "dependencyDashboard": true,
-  "timezone": "Europe/Paris",
-  "schedule": ["before 3am on monday"],
   "vulnerabilityAlerts": {
     "labels": ["security"],
     "automerge": false,
