@@ -1,4 +1,5 @@
 minimumReleaseAge: 4320
+strictPeerDependencies: true
 onlyBuiltDependencies:
   - esbuild
   - "@libsql/sqlite3"
