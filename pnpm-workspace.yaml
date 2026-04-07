@@ -6,3 +6,6 @@ onlyBuiltDependencies:
   - "@swc/core"
   - better-sqlite3
   - lightningcss
+minimumReleaseAgeExclude:
+  # Renovate security update: vite@7.3.2
+  - vite@7.3.2
