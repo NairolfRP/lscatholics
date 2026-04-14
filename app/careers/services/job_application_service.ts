@@ -21,7 +21,7 @@ export class JobApplicationService {
     }
 
     const characterFullName = `${payload.firstname}${payload.middleName ? ' ' + payload.middleName + ' ' : ' '}${payload.lastname}`
-    const discordWebhook = await DiscordWebhookService.create({ url: webhookUrl })
+    const discordWebhook = await DiscordWebhookService.create({ url: webhookUrl, retries: 5 })
 
     discordWebhook.setOptions({
       waitServerConfirmation: true,

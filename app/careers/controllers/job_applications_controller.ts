@@ -47,6 +47,11 @@ export default class JobApplicationsController {
     try {
       await this.applicationService.sendToDiscord(job, payload)
 
+      session.flash(
+        'success',
+        "Votre demande d'emploi a été enregistrée avec succès. Vous recevrez très bientôt une réponse du Département des Ressources Humaines."
+      )
+
       return response.redirect().toRoute('jobs.single', { slug: job.slug })
     } catch (err) {
       logger.error(

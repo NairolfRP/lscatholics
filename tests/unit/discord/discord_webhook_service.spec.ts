@@ -289,4 +289,171 @@ test.group('DiscordWebhookService', (group) => {
     assert.isFalse(result.success)
     assert.strictEqual(result.error, 'Discord Webhook cannot send empty message')
   })
+
+  // -------------------------
+  // clear()
+  // -------------------------
+
+  test('should reset service state after clear()', async ({ assert }) => {
+    const service = await discordWebhookService.create({ url: VALID_WEBHOOK_URL })
+
+    service.setContent('Hello')
+    service.addEmbed(SAMPLE_EMBED)
+
+    assert.isTrue(service.hasContent())
+    assert.strictEqual(service.getEmbedCount(), 1)
+
+    service.clear()
+
+    assert.isFalse(service.hasContent())
+    assert.strictEqual(service.getEmbedCount(), 0)
+    assert.strictEqual(service.getContentLength(), 0)
+  })
+
+  // -------------------------
+  // waitServerConfirmation
+  // -------------------------
+
+  test('should return discord message data when waitServerConfirmation is true', async ({
+    assert,
+  }) => {
+    const discordResponse = {
+      id: '111222333',
+      channel_id: '444555666',
+      content: 'Hello World',
+      type: 0,
+    }
+
+    nock('https://discord.com/api').post(`${WEBHOOK_PATH}?wait=true`).reply(200, discordResponse)
+
+    const service = await discordWebhookService.create({ url: VALID_WEBHOOK_URL })
+    service.setContent('Hello World').setOptions({ waitServerConfirmation: true })
+
+    const result = await service.execute()
+
+    assert.isTrue(result.success)
+    assert.equal(result.data?.id, '111222333')
+    assert.equal(result.data?.channel_id, '444555666')
+  })
+
+  // -------------------------
+  // getLastExecutionInfo()
+  // -------------------------
+
+  test('should return null before any execution', async ({ assert }) => {
+    const service = await discordWebhookService.create({ url: VALID_WEBHOOK_URL })
+
+    assert.isNull(service.getLastExecutionInfo())
+  })
+
+  test('should return timestamp after successful execution', async ({ assert }) => {
+    nock('https://discord.com/api').post(WEBHOOK_PATH).reply(204)
+
+    const service = await discordWebhookService.create({ url: VALID_WEBHOOK_URL })
+    service.setContent('Hello')
+
+    const before = new Date()
+    await service.execute()
+    const after = new Date()
+
+    const info = service.getLastExecutionInfo()
+
+    assert.isNotNull(info)
+    assert.instanceOf(info?.timestamp, Date)
+    assert.isTrue(info!.timestamp >= before && info!.timestamp <= after)
+  })
+
+  test('should not update lastExecutionInfo after failed execution', async ({ assert }) => {
+    nock('https://discord.com/api')
+      .post(WEBHOOK_PATH)
+      .times(3)
+      .reply(429, { message: 'Rate limited', retry_after: 0 })
+
+    const service = await discordWebhookService.create({ url: VALID_WEBHOOK_URL, retries: 3 })
+    service.setContent('Hello')
+
+    await service.execute()
+
+    assert.isNull(service.getLastExecutionInfo())
+  })
+
+  // -------------------------
+  // Rate limiting (429)
+  // -------------------------
+
+  test('should retry and succeed after 429 with retry_after in body', async ({ assert }) => {
+    nock('https://discord.com/api')
+      .post(WEBHOOK_PATH)
+      .twice()
+      .reply(429, { message: 'Rate limited', retry_after: 0 })
+
+    nock('https://discord.com/api').post(WEBHOOK_PATH).reply(204)
+
+    const service = await discordWebhookService.create({ url: VALID_WEBHOOK_URL, retries: 3 })
+    service.setContent('Hello')
+
+    const result = await service.execute()
+
+    assert.isTrue(result.success)
+  })
+
+  test('should retry and succeed after 429 with Retry-After header fallback', async ({
+    assert,
+  }) => {
+    nock('https://discord.com/api').post(WEBHOOK_PATH).reply(429, {}, { 'Retry-After': '0' })
+
+    nock('https://discord.com/api').post(WEBHOOK_PATH).reply(204)
+
+    const service = await discordWebhookService.create({ url: VALID_WEBHOOK_URL, retries: 3 })
+    service.setContent('Hello')
+
+    const result = await service.execute()
+
+    assert.isTrue(result.success)
+  })
+
+  test('should fail after exhausting all retries on 429', async ({ assert }) => {
+    nock('https://discord.com/api')
+      .post(WEBHOOK_PATH)
+      .times(3)
+      .reply(429, { message: 'Rate limited', retry_after: 0 })
+
+    const service = await discordWebhookService.create({ url: VALID_WEBHOOK_URL, retries: 3 })
+    service.setContent('Hello')
+
+    const result = await service.execute()
+
+    assert.isFalse(result.success)
+    assert.include(result.error, '429')
+  })
+
+  test('should include discord error message in error on 429', async ({ assert }) => {
+    nock('https://discord.com/api')
+      .post(WEBHOOK_PATH)
+      .times(3)
+      .reply(429, { message: 'You are being rate limited.', retry_after: 0 })
+
+    const service = await discordWebhookService.create({ url: VALID_WEBHOOK_URL, retries: 3 })
+    service.setContent('Hello')
+
+    const result = await service.execute()
+
+    assert.isFalse(result.success)
+    assert.include(result.error, 'You are being rate limited.')
+  })
+
+  test('should include discord error message in error on other HTTP errors', async ({ assert }) => {
+    nock('https://discord.com/api')
+      .post(WEBHOOK_PATH)
+      .times(3)
+      .reply(400, { message: 'Invalid form body' })
+
+    const service = await discordWebhookService.create({ url: VALID_WEBHOOK_URL, retries: 3 })
+    service.setContent('Hello')
+
+    const result = await service.execute()
+
+    assert.isFalse(result.success)
+    assert.include(result.error, 'Invalid form body')
+  }).timeout(10000)
 })

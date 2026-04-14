@@ -5,7 +5,6 @@ import { employmentApplicationFormOpts } from '@/features/employment-application
 import { urlFor } from '@/client'
 import { serverErrorsFormConvertor } from '@/lib/utils'
 import { router } from '@inertiajs/react'
-import { toast } from 'sonner'
 import Head from '@/shared/components/app-head'
 import HeroSection from '@/shared/components/layout/default/hero-section'
 import { Typography } from '@/shared/components/ui/typography'
@@ -44,13 +43,6 @@ export default function EmploymentApplicationPage({ job, user }: PageProps) {
       router.post(urlFor('jobs.application_submit', { slug: job.slug }), value, {
         preserveScroll: true,
         preserveState: true,
-        onSuccess: () => {
-          toast.success('Succès', {
-            description:
-              "Votre demande d'emploi a été enregistrée avec succès. Vous recevrez très bientôt une réponse du Département des Ressources Humaines.",
-          })
-          form.reset()
-        },
         onError: (err) => {
           form.setErrorMap({
             onSubmit: serverErrorsFormConvertor(err),
