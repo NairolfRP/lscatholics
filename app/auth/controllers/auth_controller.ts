@@ -5,19 +5,17 @@ import { DateTime } from 'luxon'
 import db from '@adonisjs/lucid/services/db'
 
 export default class AuthController {
-  async redirectToProvider({ ally }: HttpContext) {
-    return ally.use('gtaw').redirect()
+  async redirectToProvider({ ally, session, request }: HttpContext) {
+    const intended = request.input('intended')
+    if (intended) {
+      session.setIntendedUrl(intended)
+    }
+    return ally.use('gtaw').redirect((oauthRequest) => {
+      oauthRequest.param('intended', undefined)
+    })
   }
 
-  async handleCallback({
-    ally,
-    auth,
-    characters,
-    response,
-    session,
-    logger,
-    redirectToIntended,
-  }: HttpContext) {
+  async handleCallback({ ally, auth, characters, response, session, logger }: HttpContext) {
     const gtaw = ally.use('gtaw')
 
     if (gtaw.accessDenied()) {
@@ -113,7 +111,7 @@ export default class AuthController {
       })
     }
 
-    return redirectToIntended()
+    return response.redirect().withQs(false).toIntendedRoute('dashboard.index')
   }
 
   async redirectToDiscord({ ally }: HttpContext) {
@@ -179,7 +177,7 @@ export default class AuthController {
         E_AUTHENTIFICATION_FAILED:
           'Une erreur est survenue lors de la connexion de votre compte Discord.',
       })
-      return response.redirect().toRoute('account.settings')
+      return response.redirect().withQs(false).toRoute('account.settings')
     }
   }
 
@@ -202,11 +200,15 @@ export default class AuthController {
     }
   }
 
-  async logout({ auth, characters, response, session, logger }: HttpContext) {
+  async logout({ auth, characters, response, session, logger, request }: HttpContext) {
+    const intended = request.input('intended')
     try {
+      if (intended) {
+        session.setIntendedUrl(intended)
+      }
       await auth.use('web').logout()
       await characters.clearCurrentCharacter()
-      return response.redirect().back()
+      return response.redirect().withQs(false).toIntendedRoute('home')
     } catch (error) {
       logger.error({ err: error }, 'Failed to logout')
 
@@ -215,7 +217,7 @@ export default class AuthController {
           'Une erreur est survenue. Impossible de vous déconnecter. Contactez un administrateur du site ou supprimez vos cookies manuellement.',
       })
 
-      return response.redirect().back()
+      return response.redirect().withQs(false).back()
     }
   }
 }
