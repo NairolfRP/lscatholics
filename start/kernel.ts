@@ -42,7 +42,6 @@ router.use([
   () => import('#auth/middleware/silent_auth_middleware'),
   () => import('#core/middleware/security_headers_middleware'),
   () => import('#core/middleware/initialize_bouncer_middleware'),
-  () => import('#core/middleware/intended_url_middleware'),
 ])
 
 /**

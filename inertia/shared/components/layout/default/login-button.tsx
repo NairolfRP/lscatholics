@@ -1,10 +1,12 @@
 import { urlFor } from '@/client'
 import { Button } from '@/shared/components/ui/button'
 import { LogIn } from 'lucide-react'
+import { usePage } from '@inertiajs/react'
 
 export default function LoginButton() {
+  const page = usePage()
   return (
-    <a href={urlFor('signIn')}>
+    <a href={urlFor('signIn', {}, { qs: { intended: page.url } })}>
       <Button
         variant="ghost"
         aria-label="Se connecter"

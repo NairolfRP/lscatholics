@@ -5,19 +5,17 @@ import { DateTime } from 'luxon'
 import db from '@adonisjs/lucid/services/db'
 
 export default class AuthController {
-  async redirectToProvider({ ally }: HttpContext) {
-    return ally.use('gtaw').redirect()
+  async redirectToProvider({ ally, session, request }: HttpContext) {
+    const intended = request.input('intended')
+    if (intended) {
+      session.setIntendedUrl(intended)
+    }
+    return ally.use('gtaw').redirect((oauthRequest) => {
+      oauthRequest.param('intended', undefined)
+    })
   }
 
-  async handleCallback({
-    ally,
-    auth,
-    characters,
-    response,
-    session,
-    logger,
-    redirectToIntended,
-  }: HttpContext) {
+  async handleCallback({ ally, auth, characters, response, session, logger }: HttpContext) {
     const gtaw = ally.use('gtaw')
 
     if (gtaw.accessDenied()) {
@@ -107,13 +105,10 @@ export default class AuthController {
       characters.setCurrentCharacter(currentCharacter)
     } catch (err) {
       logger.error({ err }, 'Failed to authenticate user')
-      session.flashErrors({
-        E_AUTHENTIFICATION_FAILED:
-          "Une erreur est survenue lors de l'authentification de votre compte.",
-      })
+      session.flash('error', "Une erreur est survenue lors de l'authentification de votre compte.")
     }
 
-    return redirectToIntended()
+    return response.redirect().withQs(false).toIntendedRoute('home')
   }
 
   async redirectToDiscord({ ally }: HttpContext) {
@@ -175,11 +170,11 @@ export default class AuthController {
       return response.redirect().toRoute('account.settings')
     } catch (err) {
       logger.error({ err }, `Failed to link discord to user ${auth.user!.id}`)
-      session.flashErrors({
-        E_AUTHENTIFICATION_FAILED:
-          'Une erreur est survenue lors de la connexion de votre compte Discord.',
-      })
-      return response.redirect().toRoute('account.settings')
+      session.flash(
+        'error',
+        'Une erreur est survenue lors de la connexion de votre compte Discord.'
+      )
+      return response.redirect().withQs(false).toRoute('account.settings')
     }
   }
 
@@ -202,20 +197,25 @@ export default class AuthController {
     }
   }
 
-  async logout({ auth, characters, response, session, logger }: HttpContext) {
+  async logout({ auth, characters, response, session, logger, request }: HttpContext) {
+    const intended = request.input('intended')
     try {
+      if (intended) {
+        session.setIntendedUrl(intended)
+      }
       await auth.use('web').logout()
       await characters.clearCurrentCharacter()
-      return response.redirect().back()
+      session.flash('success', 'Déconnecté avec succès. A très bientôt !')
+      return response.redirect().withQs(false).toIntendedRoute('home')
     } catch (error) {
       logger.error({ err: error }, 'Failed to logout')
 
-      session.flashErrors({
-        E_LOGOUT:
-          'Une erreur est survenue. Impossible de vous déconnecter. Contactez un administrateur du site ou supprimez vos cookies manuellement.',
-      })
+      session.flash(
+        'error',
+        'Une erreur est survenue. Impossible de vous déconnecter. Contactez un administrateur du site ou supprimez vos cookies manuellement.'
+      )
 
-      return response.redirect().back()
+      return response.redirect().withQs(false).back()
     }
   }
 }

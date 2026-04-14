@@ -1,2 +1,14 @@
+minimumReleaseAge: 4320
+strictPeerDependencies: true
 onlyBuiltDependencies:
+  - esbuild
+  - "@libsql/sqlite3"
+  - "@swc/core"
   - better-sqlite3
+  - lightningcss
+minimumReleaseAgeExclude:
+  - nock@14.0.12
+  - "@inertiajs/core@2.3.21"
+  - "@inertiajs/react@2.3.21"
+  # Renovate security update: vite@7.3.2
+  - vite@7.3.2

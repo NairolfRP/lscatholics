@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { ArrowRightLeft, Lock, LogOut, Settings, User } from 'lucide-react'
-import { router } from '@inertiajs/react'
-import { toast } from 'sonner'
+import { router, usePage } from '@inertiajs/react'
 import { Button } from '@/shared/components/ui/button'
 import {
   DropdownMenu,
@@ -14,10 +13,11 @@ import {
 } from '@/shared/components/ui/dropdown-menu'
 import { urlFor } from '@/client'
 import SwitchCharacterDialog from '@/shared/components/characters/switch-character-dialog'
-import { usePageProps } from '@/shared/hooks/use_page_props'
+import type { Data } from '@generated/data'
 
 export default function UserMenu() {
-  const { canAccessDashboard, user } = usePageProps()
+  const page = usePage<Data.SharedProps>()
+  const { canAccessDashboard, user } = page.props
   const [isSwitchCharacterOpen, setIsSwitchCharacterOpen] = useState(false)
 
   const characterName = (() => {
@@ -35,12 +35,13 @@ export default function UserMenu() {
         router.visit(urlFor('account.settings'))
         break
       case 'logout':
-        router.post(urlFor('logout'), undefined, {
-          preserveScroll: true,
-          onSuccess: () => {
-            toast.success('Déconnecté avec succès. A très bientôt !')
-          },
-        })
+        router.post(
+          urlFor('logout'),
+          { intended: page.url },
+          {
+            preserveScroll: true,
+          }
+        )
         break
     }
   }
