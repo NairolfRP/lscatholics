@@ -22,9 +22,7 @@ export default class ContactController {
       const webhookUrl = env.get('DISCORD_CONTACT_WEBHOOK')
       if (!webhookUrl) {
         logger.error(undefined, '[CONTACT] Discord webhook URL not configured')
-        session.flashErrors({
-          CONTACT_ERROR: this.service.ERROR_MESSAGES.MISSING_WEBHOOK,
-        })
+        session.flash('error', this.service.ERROR_MESSAGES.MISSING_WEBHOOK)
 
         return response.redirect().back()
       }
@@ -32,9 +30,7 @@ export default class ContactController {
       const { success } = await this.service.sendToDiscord(payload, webhookUrl)
 
       if (!success) {
-        session.flashErrors({
-          CONTACT_ERROR: this.service.ERROR_MESSAGES.WEBHOOK_FAILED,
-        })
+        session.flash('error', this.service.ERROR_MESSAGES.WEBHOOK_FAILED)
 
         return response.redirect().back()
       }
@@ -44,9 +40,7 @@ export default class ContactController {
       return response.redirect().back()
     } catch (e) {
       logger.error({ err: e }, 'Unexpected error in contact submission')
-      session.flashErrors({
-        CONTACT_ERROR: this.service.ERROR_MESSAGES.WEBHOOK_FAILED,
-      })
+      session.flash('error', this.service.ERROR_MESSAGES.WEBHOOK_FAILED)
 
       return response.redirect().back()
     }

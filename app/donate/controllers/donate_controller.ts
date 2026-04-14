@@ -31,7 +31,7 @@ export default class DonateController {
       })
     } catch (error) {
       logger.error({ err: error }, 'Error creating a donation')
-      session.flashErrors({ E_DONATE_ERROR: 'Erreur lors de la création du paiement' })
+      session.flash('error', 'Erreur lors de la création du paiement')
       return response.redirect().back()
     }
   }
