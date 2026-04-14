@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { ArrowRightLeft, Lock, LogOut, Settings, User } from 'lucide-react'
 import { router, usePage } from '@inertiajs/react'
-import { toast } from 'sonner'
 import { Button } from '@/shared/components/ui/button'
 import {
   DropdownMenu,
@@ -41,9 +40,6 @@ export default function UserMenu() {
           { intended: page.url },
           {
             preserveScroll: true,
-            onSuccess: () => {
-              toast.success('Déconnecté avec succès. A très bientôt !')
-            },
           }
         )
         break

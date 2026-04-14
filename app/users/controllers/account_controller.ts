@@ -88,10 +88,10 @@ export default class AccountController {
       return response.redirect('/')
     } catch (error) {
       logger.error({ err: error, user: user }, 'Failed to delete account')
-      session.flashErrors({
-        E_DELETE_USER:
-          "Une erreur s'est produite lors de la suppression du compte. Contactez un administrateur du site.",
-      })
+      session.flash(
+        'error',
+        "Une erreur s'est produite lors de la suppression du compte. Contactez un administrateur du site."
+      )
       return response.redirect().back()
     }
   }

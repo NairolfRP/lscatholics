@@ -53,10 +53,10 @@ export default class JobApplicationsController {
         { err, userId: auth.user?.id, characterName: characterFullName },
         'Failed to process job application'
       )
-      session.flashErrors({
-        E_EMPLOYMENT_APPLICATION:
-          'Une erreur est survenue lors de la soumission de votre candidature. Veuillez réessayer plus tard.',
-      })
+      session.flash(
+        'error',
+        'Une erreur est survenue lors de la soumission de votre candidature. Veuillez réessayer plus tard.'
+      )
       response.redirect().back()
     }
   }

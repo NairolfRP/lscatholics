@@ -105,13 +105,10 @@ export default class AuthController {
       characters.setCurrentCharacter(currentCharacter)
     } catch (err) {
       logger.error({ err }, 'Failed to authenticate user')
-      session.flashErrors({
-        E_AUTHENTIFICATION_FAILED:
-          "Une erreur est survenue lors de l'authentification de votre compte.",
-      })
+      session.flash('error', "Une erreur est survenue lors de l'authentification de votre compte.")
     }
 
-    return response.redirect().withQs(false).toIntendedRoute('dashboard.index')
+    return response.redirect().withQs(false).toIntendedRoute('home')
   }
 
   async redirectToDiscord({ ally }: HttpContext) {
@@ -173,10 +170,10 @@ export default class AuthController {
       return response.redirect().toRoute('account.settings')
     } catch (err) {
       logger.error({ err }, `Failed to link discord to user ${auth.user!.id}`)
-      session.flashErrors({
-        E_AUTHENTIFICATION_FAILED:
-          'Une erreur est survenue lors de la connexion de votre compte Discord.',
-      })
+      session.flash(
+        'error',
+        'Une erreur est survenue lors de la connexion de votre compte Discord.'
+      )
       return response.redirect().withQs(false).toRoute('account.settings')
     }
   }
@@ -208,14 +205,15 @@ export default class AuthController {
       }
       await auth.use('web').logout()
       await characters.clearCurrentCharacter()
+      session.flash('success', 'Déconnecté avec succès. A très bientôt !')
       return response.redirect().withQs(false).toIntendedRoute('home')
     } catch (error) {
       logger.error({ err: error }, 'Failed to logout')
 
-      session.flashErrors({
-        E_LOGOUT:
-          'Une erreur est survenue. Impossible de vous déconnecter. Contactez un administrateur du site ou supprimez vos cookies manuellement.',
-      })
+      session.flash(
+        'error',
+        'Une erreur est survenue. Impossible de vous déconnecter. Contactez un administrateur du site ou supprimez vos cookies manuellement.'
+      )
 
       return response.redirect().withQs(false).back()
     }

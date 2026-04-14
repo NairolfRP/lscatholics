@@ -31,9 +31,7 @@ export default class CharactersController {
 
       const isOwned = await characters.isCharacterOwnedByUser(Number(id))
       if (!isOwned) {
-        session.flashErrors({
-          E_SWITCH_CHARACTER: 'Ce personnage ne vous appartient pas',
-        })
+        session.flash('error', 'Ce personnage ne vous appartient pas')
         return response.redirect().back()
       }
 
@@ -41,9 +39,7 @@ export default class CharactersController {
       const character = charactersList?.find((c) => c.id === Number(id))
 
       if (!character) {
-        session.flashErrors({
-          E_SWITCH_CHARACTER: 'Personnage introuvable',
-        })
+        session.flash('error', 'Personnage introuvable')
         return response.redirect().back()
       }
 
@@ -56,9 +52,7 @@ export default class CharactersController {
 
       return response.redirect().back()
     } catch {
-      session.flashErrors({
-        E_SWITCH_CHARACTER: 'Une erreur est survenue lors du changement de personnage',
-      })
+      session.flash('error', 'Une erreur est survenue lors du changement de personnage')
       return response.redirect().back()
     }
   }
