@@ -9,6 +9,7 @@ import {
 import { errors as vineErrors } from '@vinejs/vine'
 import DiscordWebhookException from '#discord/exceptions/discord_webhook_exception'
 import logger from '@adonisjs/core/services/logger'
+import type { RESTError, RESTRateLimit } from 'discord-api-types/v10'
 
 const DISCORD_LIMITS = {
   MAX_EMBEDS: 10,
@@ -271,7 +272,11 @@ export class DiscordWebhookService {
         }
 
         if (attempt < this.#retries) {
-          const delay = Math.min(1000 * Math.pow(2, attempt - 1), 5000) // Exponential backoff, max 5s
+          const delay =
+            e instanceof DiscordWebhookException && e.retryAfter !== undefined
+              ? e.retryAfter
+              : Math.min(1000 * Math.pow(2, attempt - 1), 5000)
+
           logger.warn(
             {
               error: e instanceof Error ? e.message : String(e),
@@ -324,15 +329,25 @@ export class DiscordWebhookService {
 
       if (!response.ok) {
         let errorMessage = `HTTP ${response.status}: ${response.statusText}`
+        let retryAfter: number | undefined
 
         try {
-          const errorData = (await response.json()) as { message: string | undefined }
-          if (errorData.message) {
+          if (response.status === 429) {
+            const errorData = (await response.json()) as RESTRateLimit
             errorMessage += ` - ${errorData.message}`
+            retryAfter = errorData.retry_after * 1000
+          } else {
+            const errorData = (await response.json()) as RESTError
+            if (errorData.message) errorMessage += ` - ${errorData.message}`
           }
         } catch {}
 
-        throw new DiscordWebhookException(errorMessage)
+        if (retryAfter === undefined) {
+          const retryHeader = response.headers.get('Retry-After')
+          if (retryHeader) retryAfter = Number.parseFloat(retryHeader) * 1000
+        }
+
+        throw new DiscordWebhookException(errorMessage, false, retryAfter)
       }
 
       if (!this.#waitServerConfirmation) {
