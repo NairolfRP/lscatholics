@@ -12,22 +12,9 @@ import PaymentException from '#billing/exceptions/payment_exception'
 import app from '@adonisjs/core/services/app'
 import type { HeadersInit } from '#shared/types/utils.types'
 import type { HttpContext } from '@adonisjs/core/http'
+import ky, { isHTTPError, isNetworkError, isTimeoutError } from 'ky'
 
 export class PaymentService {
-  readonly #MAX_RETRIES: number = 3
-  readonly #RETRY_DELAY_MS: number = 1000
-
-  constructor({
-    maxRetries = 3,
-    retryDelayMs = 1000,
-  }: {
-    maxRetries?: number
-    retryDelayMs?: number
-  } = {}) {
-    this.#MAX_RETRIES = maxRetries
-    this.#RETRY_DELAY_MS = retryDelayMs
-  }
-
   /**
    * Generate Fleeca payment URL with encrypted session data
    */
@@ -96,7 +83,11 @@ export class PaymentService {
       logger.error({ err }, 'Payment callback processing error')
       this.cancelPayment(session)
 
-      throw err instanceof PaymentException ? err : PaymentException.create('PROCESSING_ERROR', err)
+      if (err instanceof PaymentException) {
+        throw err
+      }
+
+      throw PaymentException.create('PROCESSING_ERROR', err)
     }
   }
 
@@ -120,47 +111,6 @@ export class PaymentService {
     return headers
   }
 
-  async #fetchWithRetry({
-    url,
-    options,
-    retries = this.#MAX_RETRIES,
-  }: {
-    url: string
-    options: RequestInit
-    retries?: number
-  }) {
-    for (let attempt = 0; attempt < retries; attempt++) {
-      try {
-        const response = await fetch(url, options)
-
-        if (response.ok) {
-          return response
-        }
-
-        if (response.status >= 400 && response.status < 500 && response.status !== 429) {
-          throw PaymentException.create('HTTP_CLIENT_ERROR')
-        }
-
-        throw new Error('Retryable error')
-      } catch (error) {
-        if (error instanceof PaymentException) throw error
-
-        const isLastAttempt = attempt === retries - 1
-        if (isLastAttempt) {
-          throw error instanceof PaymentException
-            ? error
-            : PaymentException.create('NETWORK_ERROR', error)
-        }
-
-        await new Promise((resolve) =>
-          setTimeout(resolve, this.#RETRY_DELAY_MS * Math.pow(2, attempt))
-        )
-      }
-    }
-
-    throw PaymentException.create('RETRY_ERROR')
-  }
-
   /**
    * Generate Fleeca Gateway Token
    */
@@ -178,15 +128,14 @@ export class PaymentService {
     try {
       const url = `${this.#getBaseUrl()}/gateway_token/generateToken?price=${price}&type=${type}`
 
-      const response = await this.#fetchWithRetry({
-        url,
-        options: {
-          method: 'GET',
+      const token = (await ky
+        .get(url, {
+          retry: {
+            limit: 3,
+          },
           headers: this.#getHeaders({ includeAuth: true }),
-        },
-      })
-
-      const token = (await response.text()) as FleecaGatewayToken
+        })
+        .text()) as FleecaGatewayToken
 
       if (!token?.trim()) {
         throw PaymentException.create('EMPTY_TOKEN')
@@ -195,9 +144,16 @@ export class PaymentService {
       return token
     } catch (err) {
       logger.error({ err, price, type }, 'Failed to generate Gateway Token')
-      throw err instanceof PaymentException
-        ? err
-        : PaymentException.create('TOKEN_GENERATION_ERROR', err)
+
+      if (isTimeoutError(err) || isNetworkError(err)) {
+        throw PaymentException.create('NETWORK_ERROR', err)
+      }
+
+      if (isHTTPError(err)) {
+        throw PaymentException.create('TOKEN_GENERATION_ERROR', err)
+      }
+
+      throw err
     }
   }
 
@@ -240,21 +196,19 @@ export class PaymentService {
   async #validateToken(token: string): Promise<FleecaValidationResponse> {
     try {
       const url = `${this.#getBaseUrl()}/gateway_token/${token}`
-      const response = await this.#fetchWithRetry({
-        url,
-        options: {
-          method: 'POST',
-          headers: {
-            Accept: 'application/json',
-          },
+
+      const response = await ky.post(url, {
+        timeout: fleecaConfig.timeout,
+        retry: {
+          methods: ['post'],
+          limit: 3,
+        },
+        headers: {
+          Accept: 'application/json',
         },
       })
 
-      if (!response.ok) {
-        throw PaymentException.create('VALIDATION_ERROR')
-      }
-
-      const data = (await response.json()) as FleecaValidationResponse
+      const data = await response.json<FleecaValidationResponse>()
 
       if (!data) {
         throw PaymentException.create('EMPTY_RESPONSE')
@@ -263,6 +217,11 @@ export class PaymentService {
       return data
     } catch (err) {
       logger.error({ err, token }, 'Token validation failed')
+
+      if (isTimeoutError(err) || isNetworkError(err)) {
+        throw PaymentException.create('NETWORK_ERROR', err)
+      }
+
       throw err instanceof PaymentException ? err : PaymentException.create('VALIDATION_ERROR', err)
     }
   }

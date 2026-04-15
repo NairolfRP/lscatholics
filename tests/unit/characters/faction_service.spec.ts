@@ -102,13 +102,13 @@ test.group('FactionService', (group) => {
   })
 
   test('getAllUserFactions() throws when API returns 500', async ({ assert }) => {
-    nock(GTAW_BASE_URL).get(GTAW_FACTIONS_PATH).reply(500, 'Internal Server Error')
+    nock(GTAW_BASE_URL).get(GTAW_FACTIONS_PATH).reply(500, 'Internal Server Error').persist()
 
     const ctx = makeCtx()
     const service = makeService(ctx)
 
     await assert.rejects(() => service.getAllUserFactions(), /Failed to fetch factions: 500/)
-  })
+  }).timeout(10000)
 
   test('getAllUserFactions() throws when no authenticated user', async ({ assert }) => {
     const ctx = makeCtx({ auth: { user: null } })

@@ -89,6 +89,9 @@ importers:
       edge.js:
         specifier: ^6.5.0
         version: 6.5.0
+      ky:
+        specifier: ^2.0.0
+        version: 2.0.0
       leaflet:
         specifier: ^1.9.4
         version: 1.9.4
@@ -4387,6 +4390,10 @@ packages:
   ky@1.14.3:
     resolution: {integrity: sha512-9zy9lkjac+TR1c2tG+mkNSVlyOpInnWdSMiue4F+kq8TwJSgv6o8jhLRg8Ho6SnZ9wOYUq/yozts9qQCfk7bIw==}
     engines: {node: '>=18'}
+
+  ky@2.0.0:
+    resolution: {integrity: sha512-KzI4Vz5AbZFAUFYGx28PCSfFWUo6/qj9Br/P6KRwDieE1xfdz0tIONepJcLw/1xLocN13GgvfJGasa+pfSkbHg==}
+    engines: {node: '>=22'}
 
   laravel-precognition@1.0.2:
     resolution: {integrity: sha512-0H08JDdMWONrL/N314fvsO3FATJwGGlFKGkMF3nNmizVFJaWs17816iM+sX7Rp8d5hUjYCx6WLfsehSKfaTxjg==}
@@ -10365,6 +10372,8 @@ snapshots:
       - supports-color
 
   ky@1.14.3: {}
+
+  ky@2.0.0: {}
 
   laravel-precognition@1.0.2:
     dependencies:

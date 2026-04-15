@@ -324,11 +324,17 @@ test.group('Payment Service', (group) => {
     mockSession.get.withArgs('payment_data').returns('encrypted-session-data')
     sandbox.stub(encryption, 'decrypt').returns(JSON.stringify(mockSessionData))
 
-    nock(fleecaBaseUrl).post(`/gateway_token/${token}`).reply(404, { message: '' })
+    nock(fleecaBaseUrl).post(`/gateway_token/${token}`).reply(
+      404,
+      { message: '' },
+      {
+        Accept: 'application/json',
+      }
+    )
 
     await assert.rejects(
       () => paymentService.processPaymentCallback(token, mockSession),
-      'Error occurred during the payment request'
+      'Error while validating the payment token'
     )
 
     assert.isTrue(nock.isDone())
@@ -337,7 +343,7 @@ test.group('Payment Service', (group) => {
   test('should handle network timeout', async ({ assert }) => {
     const token = 'valid-token'
 
-    paymentService = new PaymentService({ maxRetries: 3, retryDelayMs: 0 })
+    paymentService = new PaymentService()
 
     const mockSessionData = {
       sessionId: 'test-session',
@@ -351,10 +357,14 @@ test.group('Payment Service', (group) => {
     mockSession.get.withArgs('payment_data').returns('encrypted-session-data')
     sandbox.stub(encryption, 'decrypt').returns(JSON.stringify(mockSessionData))
 
+    sandbox.stub(fleecaConfig, 'timeout').value(500)
+
     nock(fleecaBaseUrl)
       .post(`/gateway_token/${token}`)
       .times(3)
-      .replyWithError({ code: 'ETIMEDOUT' })
+      .delay(2000)
+      .replyWithError('network timeout')
+      .persist()
 
     await assert.rejects(
       () => paymentService.processPaymentCallback(token, mockSession),
@@ -362,5 +372,5 @@ test.group('Payment Service', (group) => {
     )
 
     assert.isTrue(nock.isDone())
-  })
+  }).timeout(10000)
 })

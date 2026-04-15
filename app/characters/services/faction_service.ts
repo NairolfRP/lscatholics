@@ -3,6 +3,7 @@ import { HttpContext } from '@adonisjs/core/http'
 import type { CharacterFaction, CharacterFactionsResponse } from '#characters/types/faction'
 import app from '@adonisjs/core/services/app'
 import { FactionCacheService } from '#characters/services/faction_cache_service'
+import ky, { isHTTPError } from 'ky'
 
 @inject()
 export class FactionService {
@@ -151,25 +152,32 @@ export class FactionService {
       throw new Error('No access token available')
     }
 
-    const response = await fetch(`${this.#BASE_URL}/api/factions`, {
-      method: 'GET',
-      signal: AbortSignal.timeout(5_000),
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        Accept: 'application/json',
-      },
-    })
+    try {
+      const response = await ky
+        .get(`${this.#BASE_URL}/api/factions`, {
+          retry: {
+            limit: 3,
+          },
+          signal: AbortSignal.timeout(5_000),
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            Accept: 'application/json',
+          },
+        })
+        .json<{
+          requestId: string
+          data: CharacterFactionsResponse
+        }>()
 
-    if (!response.ok) {
-      throw new Error(`Failed to fetch factions: ${response.status} ${response.statusText}`)
+      return this.#remapAPIResponse(response.data)
+    } catch (error) {
+      if (isHTTPError(error)) {
+        throw new Error(
+          `Failed to fetch factions: ${error.response.status} ${error.response.statusText}`
+        )
+      }
+      throw error
     }
-
-    const responseBody = (await response.json()) as {
-      requestId: string
-      data: CharacterFactionsResponse
-    }
-
-    return this.#remapAPIResponse(responseBody.data)
   }
 
   #remapAPIResponse(response: CharacterFactionsResponse): CharacterFaction[] {

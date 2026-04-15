@@ -8,6 +8,7 @@ import type {
   DiscordChannel,
   DiscordChannelMessages,
 } from '#discord/types/interfaces/entities/discord_channel'
+import ky, { isHTTPError } from 'ky'
 
 type DiscordChannelProps = { channelId: string }
 
@@ -57,9 +58,14 @@ export default class DiscordChannelService {
   async #fetch<T>(path: string): Promise<T> {
     const url = `${this.#baseUrl}${path}`
     const headers = this.#getHeaders()
-    const res = await fetch(url, { headers })
-    if (!res.ok) throw new Error(`Discord API error: ${res.status} on ${path}`)
-    return (await res.json()) as Promise<T>
+    try {
+      return await ky.get(url, { retry: { limit: 3 }, headers }).json<Promise<T>>()
+    } catch (error) {
+      if (isHTTPError(error)) {
+        throw new Error(`Discord API error: ${error.response.status} on ${path}`)
+      }
+      throw error
+    }
   }
 
   #getHeaders(): HeadersInit {

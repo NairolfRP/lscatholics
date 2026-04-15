@@ -2,6 +2,7 @@ import type Account from '#users/models/account'
 import type { HttpContext } from '@adonisjs/core/http'
 import env from '#start/env'
 import { DateTime } from 'luxon'
+import ky, { isHTTPError } from 'ky'
 
 type DiscordTokenResponse = {
   token_type: string
@@ -31,38 +32,39 @@ export class DiscordTokenService {
         return null
       }
 
-      const response = await fetch('https://discord.com/api/v10/oauth2/token', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: new URLSearchParams({
-          client_id: env.get('DISCORD_CLIENT_ID'),
-          client_secret: env.get('DISCORD_CLIENT_SECRET'),
-          grant_type: 'refresh_token',
-          refresh_token: refreshToken,
-        }),
-      })
+      try {
+        const response = await ky.post('https://discord.com/api/v10/oauth2/token', {
+          json: {
+            client_id: env.get('DISCORD_CLIENT_ID'),
+            client_secret: env.get('DISCORD_CLIENT_SECRET'),
+            grant_type: 'refresh_token',
+            refresh_token: refreshToken,
+          },
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+        })
 
-      if (!response.ok) {
-        if (response.status === 400) {
-          return null
+        const data = await response.json<DiscordTokenResponse>()
+
+        account.merge({
+          accessToken: data.access_token,
+          accessTokenExpiresAt: DateTime.now().plus({ seconds: data.expires_in }),
+          refreshToken: data.refresh_token,
+          scope: data.scope,
+        })
+
+        await account.save()
+
+        return data.access_token
+      } catch (error) {
+        if (isHTTPError(error)) {
+          if (error.response.status === 400) return null
+
+          throw new Error(`Discord API error: ${error.response.status}`)
         }
-        throw new Error(`Discord API error: ${response.status}`)
+        throw error
       }
-
-      const data = (await response.json()) as DiscordTokenResponse
-
-      account.merge({
-        accessToken: data.access_token,
-        accessTokenExpiresAt: DateTime.now().plus({ seconds: data.expires_in }),
-        refreshToken: data.refresh_token,
-        scope: data.scope,
-      })
-
-      await account.save()
-
-      return data.access_token
     } catch (err) {
       logger.error({ err }, 'Failed to refresh Discord access token')
       return null
