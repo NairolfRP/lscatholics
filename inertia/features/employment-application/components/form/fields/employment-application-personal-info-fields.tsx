@@ -75,8 +75,8 @@ export const EmploymentApplicationPersonalInfoFields = withForm({
                 const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
                 return (
                   <Field data-invalid={isInvalid}>
-                    <FieldLabel htmlFor={field.name}>
-                      {item.label} {item.required && '*'}
+                    <FieldLabel required={item.required} htmlFor={field.name}>
+                      {item.label}
                     </FieldLabel>
                     <Input
                       id={field.name}
@@ -87,6 +87,7 @@ export const EmploymentApplicationPersonalInfoFields = withForm({
                       type="text"
                       placeholder={item.placeholder}
                       aria-invalid={isInvalid}
+                      required={item.required}
                     />
                     {isInvalid && <FieldError errors={field.state.meta.errors} />}
                   </Field>
@@ -104,7 +105,9 @@ export const EmploymentApplicationPersonalInfoFields = withForm({
               const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
               return (
                 <Field data-invalid={isInvalid} className="max-w-md">
-                  <FieldLabel htmlFor={field.name}>Âge *</FieldLabel>
+                  <FieldLabel required htmlFor={field.name}>
+                    Âge
+                  </FieldLabel>
                   <NumberField
                     id={field.name}
                     name={field.name}
@@ -114,6 +117,7 @@ export const EmploymentApplicationPersonalInfoFields = withForm({
                     aria-invalid={isInvalid}
                     min={16}
                     max={115}
+                    required
                   >
                     <NumberFieldContent>
                       <NumberFieldDecrement />
@@ -132,8 +136,8 @@ export const EmploymentApplicationPersonalInfoFields = withForm({
               const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
               return (
                 <FieldSet>
-                  <FieldLegend variant="label">
-                    Je suis un{field.state.value === 'female' ? 'e' : ''} *
+                  <FieldLegend required variant="label">
+                    Je suis un{field.state.value === 'female' ? 'e' : ''}
                   </FieldLegend>
                   <RadioGroup
                     name={field.name}
@@ -150,6 +154,7 @@ export const EmploymentApplicationPersonalInfoFields = withForm({
                             id={`${field.name}-${item.id}`}
                             value={item.id}
                             aria-invalid={isInvalid}
+                            required
                           />
                         </Field>
                       </FieldLabel>
@@ -170,7 +175,9 @@ export const EmploymentApplicationPersonalInfoFields = withForm({
               const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
               return (
                 <Field data-invalid={isInvalid}>
-                  <FieldLabel htmlFor={field.name}>Adresse *</FieldLabel>
+                  <FieldLabel required htmlFor={field.name}>
+                    Adresse
+                  </FieldLabel>
                   <Input
                     id={field.name}
                     name={field.name}
@@ -180,6 +187,7 @@ export const EmploymentApplicationPersonalInfoFields = withForm({
                     type="text"
                     placeholder="123 San Andreas Avenue"
                     aria-invalid={isInvalid}
+                    required
                   />
                   {isInvalid && <FieldError errors={field.state.meta.errors} />}
                 </Field>
@@ -193,12 +201,15 @@ export const EmploymentApplicationPersonalInfoFields = withForm({
               return (
                 <Field data-invalid={isInvalid}>
                   <FieldContent>
-                    <FieldLabel htmlFor={field.name}>District *</FieldLabel>
+                    <FieldLabel required htmlFor={field.name}>
+                      District
+                    </FieldLabel>
                   </FieldContent>
                   <Select
                     name={field.name}
                     value={field.state.value ?? ''}
                     onValueChange={(v: GTA5DistrictId) => field.handleChange(v)}
+                    required
                   >
                     <SelectTrigger id={field.name} className="w-full" aria-invalid={isInvalid}>
                       <SelectValue placeholder="Sélectionnez un district" />
@@ -222,7 +233,9 @@ export const EmploymentApplicationPersonalInfoFields = withForm({
               const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
               return (
                 <Field data-invalid={isInvalid}>
-                  <FieldLabel htmlFor={field.name}>Numéro de téléphone *</FieldLabel>
+                  <FieldLabel required htmlFor={field.name}>
+                    Numéro de téléphone
+                  </FieldLabel>
                   <Input
                     id={field.name}
                     name={field.name}
@@ -232,6 +245,7 @@ export const EmploymentApplicationPersonalInfoFields = withForm({
                     type="tel"
                     placeholder="12345678"
                     aria-invalid={isInvalid}
+                    required
                   />
                   {isInvalid && <FieldError errors={field.state.meta.errors} />}
                 </Field>
@@ -249,7 +263,9 @@ export const EmploymentApplicationPersonalInfoFields = withForm({
                 const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
                 return (
                   <FieldSet>
-                    <FieldLegend variant="label">{item.label} *</FieldLegend>
+                    <FieldLegend required variant="label">
+                      {item.label}
+                    </FieldLegend>
                     {'description' in item && item.description && (
                       <FieldDescription>{item.description}</FieldDescription>
                     )}
@@ -270,6 +286,7 @@ export const EmploymentApplicationPersonalInfoFields = withForm({
                               id={`${field.name}-${option.id}`}
                               value={option.id}
                               aria-invalid={isInvalid}
+                              required
                             />
                           </Field>
                         </FieldLabel>
@@ -337,7 +354,7 @@ export const EmploymentApplicationPersonalInfoFields = withForm({
                     const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
                     return (
                       <Field data-invalid={isInvalid}>
-                        <FieldLabel htmlFor={field.name}>
+                        <FieldLabel required htmlFor={field.name}>
                           Indiquez l'identité de l'employé
                         </FieldLabel>
                         <Input
@@ -349,6 +366,7 @@ export const EmploymentApplicationPersonalInfoFields = withForm({
                           placeholder="Jane Doe"
                           maxLength={100}
                           aria-invalid={isInvalid}
+                          required
                         />
                         {isInvalid && <FieldError errors={field.state.meta.errors} />}
                       </Field>

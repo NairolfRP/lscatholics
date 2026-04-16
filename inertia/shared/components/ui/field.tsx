@@ -6,6 +6,7 @@ import { cva, type VariantProps } from 'class-variance-authority'
 import { cn } from '@/lib/utils'
 import { Label } from '@/shared/components/ui/label'
 import { Separator } from '@/shared/components/ui/separator'
+import { AsteriskRequired } from '@/shared/components/ui/asterisk-required'
 
 function FieldSet({ className, ...props }: React.ComponentProps<'fieldset'>) {
   return (
@@ -21,11 +22,17 @@ function FieldSet({ className, ...props }: React.ComponentProps<'fieldset'>) {
   )
 }
 
+type FieldLegendProps =
+  | { variant?: 'legend'; required?: false }
+  | { variant?: 'label'; required?: boolean }
+
 function FieldLegend({
   className,
   variant = 'legend',
+  children,
+  required,
   ...props
-}: React.ComponentProps<'legend'> & { variant?: 'legend' | 'label' }) {
+}: FieldLegendProps & React.ComponentProps<'legend'>) {
   return (
     <legend
       data-slot="field-legend"
@@ -34,10 +41,14 @@ function FieldLegend({
         'mb-3 font-medium',
         'data-[variant=legend]:text-base',
         'data-[variant=label]:text-sm',
+        { 'flex items-center gap-2': required },
         className
       )}
       {...props}
-    />
+    >
+      {children}
+      {variant === 'label' && required ? <AsteriskRequired /> : null}
+    </legend>
   )
 }
 
@@ -101,18 +112,26 @@ function FieldContent({ className, ...props }: React.ComponentProps<'div'>) {
   )
 }
 
-function FieldLabel({ className, ...props }: React.ComponentProps<typeof Label>) {
+function FieldLabel({
+  required,
+  children,
+  className,
+  ...props
+}: React.ComponentProps<typeof Label> & { required?: boolean }) {
   return (
     <Label
       data-slot="field-label"
       className={cn(
-        'group/field-label peer/field-label flex w-fit gap-2 leading-snug group-data-[disabled=true]/field:opacity-50',
-        'has-[>[data-slot=field]]:w-full has-[>[data-slot=field]]:flex-col has-[>[data-slot=field]]:rounded-md has-[>[data-slot=field]]:border [&>*]:data-[slot=field]:p-4',
+        'group/field-label peer/field-label flex w-fit items-center gap-1 leading-snug group-data-[disabled=true]/field:opacity-50',
+        'has-[>[data-slot=field]]:w-full has-[>[data-slot=field]]:flex-col has-[>[data-slot=field]]:items-start has-[>[data-slot=field]]:gap-2 has-[>[data-slot=field]]:rounded-md has-[>[data-slot=field]]:border [&>*]:data-[slot=field]:p-4',
         'has-data-[state=checked]:border-primary has-data-[state=checked]:bg-primary/5 dark:has-data-[state=checked]:bg-primary/10',
         className
       )}
       {...props}
-    />
+    >
+      {children}
+      {required && <AsteriskRequired />}
+    </Label>
   )
 }
 

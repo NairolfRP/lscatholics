@@ -47,7 +47,9 @@ export const ParishionerReligionFields = withForm({
               return (
                 <Field data-invalid={isInvalid}>
                   <FieldContent>
-                    <FieldLabel htmlFor={field.name}>Êtes-vous baptisé ? *</FieldLabel>
+                    <FieldLabel required htmlFor={field.name}>
+                      Êtes-vous baptisé ?
+                    </FieldLabel>
                   </FieldContent>
                   <Select
                     name={field.name}
@@ -55,6 +57,7 @@ export const ParishionerReligionFields = withForm({
                     onValueChange={(v: BaptizedOption) => {
                       field.handleChange(v)
                     }}
+                    required
                   >
                     <SelectTrigger id={field.name} className="w-full" aria-invalid={isInvalid}>
                       <SelectValue placeholder="Sélectionnez une réponse" />
@@ -79,7 +82,9 @@ export const ParishionerReligionFields = withForm({
               return (
                 <Field data-invalid={isInvalid}>
                   <FieldContent>
-                    <FieldLabel htmlFor={field.name}>Religion *</FieldLabel>
+                    <FieldLabel required htmlFor={field.name}>
+                      Religion
+                    </FieldLabel>
                   </FieldContent>
                   <Select
                     name={field.name}
@@ -87,6 +92,7 @@ export const ParishionerReligionFields = withForm({
                     onValueChange={(v: CatholicOrOther) => {
                       field.handleChange(v)
                     }}
+                    required
                   >
                     <SelectTrigger id={field.name} className="w-full" aria-invalid={isInvalid}>
                       <SelectValue placeholder="Sélectionnez une réponse" />
@@ -111,7 +117,9 @@ export const ParishionerReligionFields = withForm({
               return (
                 <Field data-invalid={isInvalid}>
                   <FieldContent>
-                    <FieldLabel htmlFor={field.name}>Paroisse *</FieldLabel>
+                    <FieldLabel required htmlFor={field.name}>
+                      Paroisse
+                    </FieldLabel>
                   </FieldContent>
                   <Select
                     name={field.name}
@@ -119,6 +127,7 @@ export const ParishionerReligionFields = withForm({
                     onValueChange={(v) => {
                       field.handleChange(Number(v) as ParishId)
                     }}
+                    required
                   >
                     <SelectTrigger className="w-full" aria-invalid={isInvalid}>
                       <SelectValue id={field.name} placeholder="Sélectionnez une paroisse" />

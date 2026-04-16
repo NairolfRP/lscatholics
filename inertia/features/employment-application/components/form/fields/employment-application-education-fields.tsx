@@ -56,8 +56,8 @@ export const EmploymentApplicationEducationFields = withForm({
                   return (
                     <Field data-invalid={isInvalid}>
                       <FieldContent>
-                        <FieldLabel htmlFor={field.name}>
-                          Quel est votre plus haut niveau d'éducation ? *
+                        <FieldLabel required htmlFor={field.name}>
+                          Quel est votre plus haut niveau d'éducation ?
                         </FieldLabel>
                       </FieldContent>
                       <Select
@@ -66,6 +66,7 @@ export const EmploymentApplicationEducationFields = withForm({
                         onValueChange={(v: SchoolLevel) =>
                           field.handleChange(!v ? (undefined as unknown as SchoolLevel) : v)
                         }
+                        required
                       >
                         <SelectTrigger id={field.name} className="w-full" aria-invalid={isInvalid}>
                           <SelectValue id={field.name} placeholder="Sélectionnez un niveau" />
@@ -90,7 +91,9 @@ export const EmploymentApplicationEducationFields = withForm({
                     const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
                     return (
                       <Field data-invalid={isInvalid}>
-                        <FieldLabel htmlFor={field.name}>Domaine d'études *</FieldLabel>
+                        <FieldLabel required htmlFor={field.name}>
+                          Domaine d'études
+                        </FieldLabel>
                         <Input
                           id={field.name}
                           name={field.name}
@@ -99,6 +102,7 @@ export const EmploymentApplicationEducationFields = withForm({
                           onChange={(e) => field.handleChange(e.target.value)}
                           placeholder="Administration des affaires"
                           aria-invalid={isInvalid}
+                          required
                         />
                         {isInvalid && <FieldError errors={field.state.meta.errors} />}
                       </Field>
