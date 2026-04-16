@@ -1,7 +1,6 @@
 import { Loader2, Send } from 'lucide-react'
 import { router, usePage } from '@inertiajs/react'
 import { useForm } from '@tanstack/react-form'
-import { toast } from 'sonner'
 import {
   Select,
   SelectContent,
@@ -42,7 +41,6 @@ export default function ContactForm() {
         preserveScroll: true,
         onSuccess: () => {
           form.reset()
-          toast.success('Message envoyé !')
         },
         onError: (err) => {
           form.setErrorMap({ onSubmit: serverErrorsFormConvertor(err) })
