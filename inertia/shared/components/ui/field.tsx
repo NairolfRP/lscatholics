@@ -1,3 +1,5 @@
+'use client'
+
 import { useMemo } from 'react'
 import { cva, type VariantProps } from 'class-variance-authority'
 
@@ -127,11 +129,13 @@ function FieldTitle({ className, ...props }: React.ComponentProps<'div'>) {
   )
 }
 
-function FieldDescription({
+function FieldDescription<T extends React.ElementType = 'p'>({
   className,
-  as: Component = 'p',
+  as,
   ...props
-}: React.ComponentProps<'div'> & { as?: 'p' | 'div' }) {
+}: { as?: T } & React.ComponentProps<T>) {
+  const Component = as || 'p'
+
   return (
     <Component
       data-slot="field-description"
