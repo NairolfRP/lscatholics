@@ -1,7 +1,13 @@
-import {withForm} from "@/shared/hooks/form";
-import {volunteersFormOpts} from "@/features/volunteers/constants/form_opts";
-import {Field, FieldError, FieldLabel} from "@/shared/components/ui/field";
-import {NumberField, NumberFieldContent, NumberFieldDecrement, NumberFieldIncrement, NumberFieldInput} from "@/shared/components/ui/number-field";
+import { withForm } from '@/shared/hooks/form'
+import { volunteersFormOpts } from '@/features/volunteers/constants/form_opts'
+import { Field, FieldError, FieldLabel } from '@/shared/components/ui/field'
+import {
+  NumberField,
+  NumberFieldContent,
+  NumberFieldDecrement,
+  NumberFieldIncrement,
+  NumberFieldInput,
+} from '@/shared/components/ui/number-field'
 
 export const VolunteerApplicationAgeField = withForm({
   ...volunteersFormOpts(),

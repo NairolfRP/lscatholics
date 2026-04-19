@@ -1,10 +1,25 @@
-import {withForm} from "@/shared/hooks/form";
-import {volunteersFormOpts} from "@/features/volunteers/constants/form_opts";
-import {Typography} from "@/shared/components/ui/typography";
-import {Field, FieldContent, FieldError, FieldGroup, FieldLabel} from "@/shared/components/ui/field";
-import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/shared/components/ui/select";
-import {VOLUNTEER_APPLICATION_REQUIRED_HOURS, VolunteerApplicationRequiredHours} from "#shared/constants/volunteers.constants";
-import {Input} from "@/shared/components/ui/input";
+import { withForm } from '@/shared/hooks/form'
+import { volunteersFormOpts } from '@/features/volunteers/constants/form_opts'
+import { Typography } from '@/shared/components/ui/typography'
+import {
+  Field,
+  FieldContent,
+  FieldError,
+  FieldGroup,
+  FieldLabel,
+} from '@/shared/components/ui/field'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/shared/components/ui/select'
+import {
+  VOLUNTEER_APPLICATION_REQUIRED_HOURS,
+  VolunteerApplicationRequiredHours,
+} from '#shared/constants/volunteers.constants'
+import { Input } from '@/shared/components/ui/input'
 
 export const VolunteerApplicationRequiredHoursFields = withForm({
   ...volunteersFormOpts(),

@@ -1,8 +1,16 @@
-import {withForm} from "@/shared/hooks/form";
-import {volunteersFormOpts} from "@/features/volunteers/constants/form_opts";
-import {Field, FieldContent, FieldError, FieldLabel} from "@/shared/components/ui/field";
-import {Select, SelectContent, SelectGroup, SelectItem, SelectSeparator, SelectTrigger, SelectValue} from "@/shared/components/ui/select";
-import {ETHNIC_GROUPS, EthnicGroupId} from "#shared/constants/ethnicity.constants";
+import { withForm } from '@/shared/hooks/form'
+import { volunteersFormOpts } from '@/features/volunteers/constants/form_opts'
+import { Field, FieldContent, FieldError, FieldLabel } from '@/shared/components/ui/field'
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectSeparator,
+  SelectTrigger,
+  SelectValue,
+} from '@/shared/components/ui/select'
+import { ETHNIC_GROUPS, EthnicGroupId } from '#shared/constants/ethnicity.constants'
 
 export const VolunteerApplicationAdditionalInfoFields = withForm({
   ...volunteersFormOpts(),
