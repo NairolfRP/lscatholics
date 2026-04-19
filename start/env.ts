@@ -78,5 +78,7 @@ export default await Env.create(new URL('../', import.meta.url), {
 
   DISCORD_EMPLOYMENT_APPLICATION_WEBHOOK: Env.schema.string.optional(),
 
+  DISCORD_VOLUNTEER_APPLICATION_WEBHOOK: Env.schema.string.optional(),
+
   ERROR_REPORTING_WEBHOOK: Env.schema.string.optionalWhen(!app.inProduction),
 })

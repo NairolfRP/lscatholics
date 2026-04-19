@@ -115,4 +115,8 @@ export interface ApiDefinition {
     index: typeof routes['decrees.index']
     single: typeof routes['decrees.single']
   }
+  volunteers: {
+    index: typeof routes['volunteers.index']
+    submit: typeof routes['volunteers.submit']
+  }
 }

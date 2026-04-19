@@ -426,6 +426,18 @@ const routes = {
     tokens: [{"old":"/decrees/:uid","type":0,"val":"decrees","end":""},{"old":"/decrees/:uid","type":1,"val":"uid","end":""}],
     types: placeholder as Registry['decrees.single']['types'],
   },
+  'volunteers.index': {
+    methods: ["GET","HEAD"],
+    pattern: '/volunteers',
+    tokens: [{"old":"/volunteers","type":0,"val":"volunteers","end":""}],
+    types: placeholder as Registry['volunteers.index']['types'],
+  },
+  'volunteers.submit': {
+    methods: ["POST"],
+    pattern: '/volunteers',
+    tokens: [{"old":"/volunteers","type":0,"val":"volunteers","end":""}],
+    types: placeholder as Registry['volunteers.submit']['types'],
+  },
 } as const satisfies Record<string, AdonisEndpoint>
 
 export { routes }

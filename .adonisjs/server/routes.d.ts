@@ -74,6 +74,8 @@ export type ScannedRoutes = {
     'dailyReadings': { paramsTuple?: []; params?: {} }
     'decrees.index': { paramsTuple?: []; params?: {} }
     'decrees.single': { paramsTuple: [ParamValue]; params: {'uid': ParamValue} }
+    'volunteers.index': { paramsTuple?: []; params?: {} }
+    'volunteers.submit': { paramsTuple?: []; params?: {} }
   }
   GET: {
     'payment.callback': { paramsTuple: [ParamValue]; params: {'token': ParamValue} }
@@ -126,6 +128,7 @@ export type ScannedRoutes = {
     'dailyReadings': { paramsTuple?: []; params?: {} }
     'decrees.index': { paramsTuple?: []; params?: {} }
     'decrees.single': { paramsTuple: [ParamValue]; params: {'uid': ParamValue} }
+    'volunteers.index': { paramsTuple?: []; params?: {} }
   }
   HEAD: {
     'payment.callback': { paramsTuple: [ParamValue]; params: {'token': ParamValue} }
@@ -178,6 +181,7 @@ export type ScannedRoutes = {
     'dailyReadings': { paramsTuple?: []; params?: {} }
     'decrees.index': { paramsTuple?: []; params?: {} }
     'decrees.single': { paramsTuple: [ParamValue]; params: {'uid': ParamValue} }
+    'volunteers.index': { paramsTuple?: []; params?: {} }
   }
   POST: {
     'logout': { paramsTuple?: []; params?: {} }
@@ -189,6 +193,7 @@ export type ScannedRoutes = {
     'donate.submit': { paramsTuple?: []; params?: {} }
     'registerParishioner.submit': { paramsTuple?: []; params?: {} }
     'jobs.application_submit': { paramsTuple: [ParamValue]; params: {'slug': ParamValue} }
+    'volunteers.submit': { paramsTuple?: []; params?: {} }
   }
   DELETE: {
     'discord.unlink': { paramsTuple?: []; params?: {} }

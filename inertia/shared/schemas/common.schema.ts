@@ -86,6 +86,21 @@ export const districtSchema = z.enum(getDistrictIds(), {
   error: 'Veuillez sélectionner un district valide.',
 })
 
+const preprocessedAge = (schema: any) => {
+  return z.preprocess((val) => {
+    if (val === '' || val === null || val === undefined) return undefined
+    const num = Number(val)
+    return Number.isNaN(num) ? undefined : num
+  }, schema)
+}
+
+export const ageSchema = preprocessedAge(
+  z
+    .int({ error: "L'âge doit être un nombre entier." })
+    .min(16, { error: "L'âge minimum pour s'enregistrer est de 16 ans." })
+    .max(120, { error: "L'âge ne peut pas dépasser 120 ans." })
+)
+
 export const civilTitleSchema = z.enum(civilTitleIds(), {
   error: 'Veuillez sélectionner un titre de civilité valide.',
 })

@@ -847,4 +847,28 @@ export interface Registry {
       errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#app/pages/controllers/decrees_controller').default['single']>>>
     }
   }
+  'volunteers.index': {
+    methods: ["GET","HEAD"]
+    pattern: '/volunteers'
+    types: {
+      body: {}
+      paramsTuple: []
+      params: {}
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#app/pages/controllers/volunteers_controller').default['index']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#app/pages/controllers/volunteers_controller').default['index']>>>
+    }
+  }
+  'volunteers.submit': {
+    methods: ["POST"]
+    pattern: '/volunteers'
+    types: {
+      body: ExtractBody<InferInput<(typeof import('#pages/validators/volunteer_application').createVolunteerApplicationValidator)>>
+      paramsTuple: []
+      params: {}
+      query: ExtractQuery<InferInput<(typeof import('#pages/validators/volunteer_application').createVolunteerApplicationValidator)>>
+      response: ExtractResponse<Awaited<ReturnType<import('#app/pages/controllers/volunteers_controller').default['submit']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#app/pages/controllers/volunteers_controller').default['submit']>>> | { status: 422; response: { errors: SimpleError[] } }
+    }
+  }
 }
