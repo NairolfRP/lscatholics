@@ -9,14 +9,14 @@ export const firstnameSchema = z
   })
   .trim()
   .min(1, { error: 'Le prénom ne peut pas être vide.' })
-  .max(50, 'Le prénom ne peut pas dépasser 50 caractères.')
+  .max(30, 'Le prénom ne peut pas dépasser 30 caractères.')
 
 export const middleNameSchema = z
   .string({
     error: 'Valeur invalide.',
   })
   .trim()
-  .max(50, 'Le deuxième prénom ne peut pas dépasser 50 caractères.')
+  .max(30, 'Le deuxième prénom ne peut pas dépasser 30 caractères.')
   .optional()
 
 export const lastnameSchema = z
@@ -26,7 +26,7 @@ export const lastnameSchema = z
   })
   .trim()
   .min(1, { error: 'Le nom de famille ne peut pas être vide.' })
-  .max(50, 'Le nom de famille ne peut pas dépasser 50 caractères.')
+  .max(30, 'Le nom de famille ne peut pas dépasser 30 caractères.')
 
 export const ethnicitySchema = z.enum(getEthnicsGroupsIds(), {
   error: 'Veuillez sélectionner un groupe ethnique valide.',

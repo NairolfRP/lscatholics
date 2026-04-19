@@ -3,7 +3,9 @@ import { civilTitleIds, genderIds, maritalStatusIds } from '#shared/constants/pe
 import { getDistrictIds } from '#shared/constants/districts.constants'
 import { phoneRule } from '#core/validators/rules/phone_rule'
 
-export const firstnameLastnameSchema = vine.string().trim().minLength(1).maxLength(50)
+export const firstnameLastnameSchema = vine.string().trim().minLength(1).maxLength(30)
+
+export const middleNameSchema = firstnameLastnameSchema.optional()
 
 export const districtSchema = vine.enum(getDistrictIds())
 
