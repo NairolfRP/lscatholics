@@ -1,11 +1,4 @@
-import type { HelpCard, Stat } from '@/features/charities/types/charities.types'
-
-export const STATS: Stat[] = [
-  { value: '18 400+', label: 'Personnes aidées en 2024' },
-  { value: '340 000', label: 'Repas servis annuellement' },
-  { value: '62', label: 'Paroisses partenaires' },
-  { value: '1 200', label: 'Bénévoles actifs' },
-]
+import type { HelpCard } from '@/features/charities/types/charities.types'
 
 export const HELP_CARDS: HelpCard[] = [
   {
@@ -19,7 +12,7 @@ export const HELP_CARDS: HelpCard[] = [
     title: 'Devenir bénévole',
     body: 'Offrez votre temps et vos talents au service de vos frères et sœurs dans le besoin.',
     cta: "S'engager",
-    route: 'contact',
+    route: 'volunteers.index',
     accent: 'bg-secondary',
   },
   {
