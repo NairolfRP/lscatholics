@@ -178,7 +178,7 @@ export class DiscordWebhookService {
     this.#allowedMentions = undefined
     this.#threadTags = []
     this.#components = []
-    this.#content = ''
+    this.#content = ' '
     this.#embeds = []
     this.#files = undefined
     this.#flags = undefined
