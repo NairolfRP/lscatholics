@@ -117,7 +117,7 @@
     "@fontsource-variable/inter": "^5.2.8",
     "@gtaw-oauth-providers/adonisjs-ally": "^2.0.7",
     "@inertiajs/react": "^2.3.21",
-    "@internationalized/date": "^3.12.0",
+    "@internationalized/date": "^3.12.1",
     "@libsql/sqlite3": "^0.3.1",
     "@tanstack/react-form": "^1.29.0",
     "@tanstack/react-query": "^5.99.0",
