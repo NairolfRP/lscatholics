@@ -4,7 +4,9 @@ type ParamValue = string | number | bigint | boolean
 
 export type ScannedRoutes = {
   ALL: {
-    'payment.callback': { paramsTuple: [ParamValue]; params: {'token': ParamValue} }
+    'payment.webhook': { paramsTuple?: []; params?: {} }
+    'payment.callback': { paramsTuple?: []; params?: {} }
+    'payment.status': { paramsTuple: [ParamValue]; params: {'paymentId': ParamValue} }
     'signIn': { paramsTuple?: []; params?: {} }
     'auth.handle_callback': { paramsTuple?: []; params?: {} }
     'logout': { paramsTuple?: []; params?: {} }
@@ -74,112 +76,11 @@ export type ScannedRoutes = {
     'dailyReadings': { paramsTuple?: []; params?: {} }
     'decrees.index': { paramsTuple?: []; params?: {} }
     'decrees.single': { paramsTuple: [ParamValue]; params: {'uid': ParamValue} }
-  }
-  GET: {
-    'payment.callback': { paramsTuple: [ParamValue]; params: {'token': ParamValue} }
-    'signIn': { paramsTuple?: []; params?: {} }
-    'auth.handle_callback': { paramsTuple?: []; params?: {} }
-    'discord.redirect': { paramsTuple?: []; params?: {} }
-    'auth.handle_discord_callback': { paramsTuple?: []; params?: {} }
-    'account.settings': { paramsTuple?: []; params?: {} }
-    'characters.list': { paramsTuple?: []; params?: {} }
-    'dashboard.index': { paramsTuple?: []; params?: {} }
-    'dashboard.dashboard_posts.index': { paramsTuple?: []; params?: {} }
-    'dashboard.dashboard_posts.create': { paramsTuple?: []; params?: {} }
-    'dashboard.dashboard_posts.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
-    'dashboard.dashboard_posts.edit': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
-    'dashboard.dashboard_events.index': { paramsTuple?: []; params?: {} }
-    'dashboard.dashboard_events.create': { paramsTuple?: []; params?: {} }
-    'dashboard.dashboard_events.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
-    'dashboard.dashboard_events.edit': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
-    'dashboard.dashboard_jobs.index': { paramsTuple?: []; params?: {} }
-    'dashboard.dashboard_jobs.create': { paramsTuple?: []; params?: {} }
-    'dashboard.dashboard_jobs.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
-    'dashboard.dashboard_jobs.edit': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
-    'dashboard.dashboard_users.index': { paramsTuple?: []; params?: {} }
-    'dashboard.dashboard_users.create': { paramsTuple?: []; params?: {} }
-    'dashboard.dashboard_users.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
-    'dashboard.dashboard_users.edit': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
-    'home': { paramsTuple?: []; params?: {} }
-    'contact': { paramsTuple?: []; params?: {} }
-    'news.index': { paramsTuple?: []; params?: {} }
-    'news.single': { paramsTuple: [ParamValue]; params: {'slug': ParamValue} }
-    'scheduled_events.index': { paramsTuple?: []; params?: {} }
-    'find.events': { paramsTuple?: []; params?: {} }
-    'event': { paramsTuple: [ParamValue]; params: {'slug': ParamValue} }
-    'find.parishes': { paramsTuple?: []; params?: {} }
-    'about-us': { paramsTuple?: []; params?: {} }
-    'archbishop.index': { paramsTuple?: []; params?: {} }
-    'departments.index': { paramsTuple?: []; params?: {} }
-    'departments.single': { paramsTuple: [ParamValue]; params: {'slug': ParamValue} }
-    'services.index': { paramsTuple?: []; params?: {} }
-    'services.single': { paramsTuple: [ParamValue]; params: {'slug': ParamValue} }
-    'donate.index': { paramsTuple?: []; params?: {} }
-    'registerParishioner.index': { paramsTuple?: []; params?: {} }
-    'privacy': { paramsTuple?: []; params?: {} }
-    'charities.index': { paramsTuple?: []; params?: {} }
-    'charities.program': { paramsTuple: [ParamValue]; params: {'slug': ParamValue} }
-    'vocations': { paramsTuple?: []; params?: {} }
-    'jobs.index': { paramsTuple?: []; params?: {} }
-    'jobs.single': { paramsTuple: [ParamValue]; params: {'slug': ParamValue} }
-    'jobs.application': { paramsTuple: [ParamValue]; params: {'slug': ParamValue} }
-    'dailyReadings': { paramsTuple?: []; params?: {} }
-    'decrees.index': { paramsTuple?: []; params?: {} }
-    'decrees.single': { paramsTuple: [ParamValue]; params: {'uid': ParamValue} }
-  }
-  HEAD: {
-    'payment.callback': { paramsTuple: [ParamValue]; params: {'token': ParamValue} }
-    'signIn': { paramsTuple?: []; params?: {} }
-    'auth.handle_callback': { paramsTuple?: []; params?: {} }
-    'discord.redirect': { paramsTuple?: []; params?: {} }
-    'auth.handle_discord_callback': { paramsTuple?: []; params?: {} }
-    'account.settings': { paramsTuple?: []; params?: {} }
-    'characters.list': { paramsTuple?: []; params?: {} }
-    'dashboard.index': { paramsTuple?: []; params?: {} }
-    'dashboard.dashboard_posts.index': { paramsTuple?: []; params?: {} }
-    'dashboard.dashboard_posts.create': { paramsTuple?: []; params?: {} }
-    'dashboard.dashboard_posts.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
-    'dashboard.dashboard_posts.edit': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
-    'dashboard.dashboard_events.index': { paramsTuple?: []; params?: {} }
-    'dashboard.dashboard_events.create': { paramsTuple?: []; params?: {} }
-    'dashboard.dashboard_events.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
-    'dashboard.dashboard_events.edit': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
-    'dashboard.dashboard_jobs.index': { paramsTuple?: []; params?: {} }
-    'dashboard.dashboard_jobs.create': { paramsTuple?: []; params?: {} }
-    'dashboard.dashboard_jobs.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
-    'dashboard.dashboard_jobs.edit': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
-    'dashboard.dashboard_users.index': { paramsTuple?: []; params?: {} }
-    'dashboard.dashboard_users.create': { paramsTuple?: []; params?: {} }
-    'dashboard.dashboard_users.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
-    'dashboard.dashboard_users.edit': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
-    'home': { paramsTuple?: []; params?: {} }
-    'contact': { paramsTuple?: []; params?: {} }
-    'news.index': { paramsTuple?: []; params?: {} }
-    'news.single': { paramsTuple: [ParamValue]; params: {'slug': ParamValue} }
-    'scheduled_events.index': { paramsTuple?: []; params?: {} }
-    'find.events': { paramsTuple?: []; params?: {} }
-    'event': { paramsTuple: [ParamValue]; params: {'slug': ParamValue} }
-    'find.parishes': { paramsTuple?: []; params?: {} }
-    'about-us': { paramsTuple?: []; params?: {} }
-    'archbishop.index': { paramsTuple?: []; params?: {} }
-    'departments.index': { paramsTuple?: []; params?: {} }
-    'departments.single': { paramsTuple: [ParamValue]; params: {'slug': ParamValue} }
-    'services.index': { paramsTuple?: []; params?: {} }
-    'services.single': { paramsTuple: [ParamValue]; params: {'slug': ParamValue} }
-    'donate.index': { paramsTuple?: []; params?: {} }
-    'registerParishioner.index': { paramsTuple?: []; params?: {} }
-    'privacy': { paramsTuple?: []; params?: {} }
-    'charities.index': { paramsTuple?: []; params?: {} }
-    'charities.program': { paramsTuple: [ParamValue]; params: {'slug': ParamValue} }
-    'vocations': { paramsTuple?: []; params?: {} }
-    'jobs.index': { paramsTuple?: []; params?: {} }
-    'jobs.single': { paramsTuple: [ParamValue]; params: {'slug': ParamValue} }
-    'jobs.application': { paramsTuple: [ParamValue]; params: {'slug': ParamValue} }
-    'dailyReadings': { paramsTuple?: []; params?: {} }
-    'decrees.index': { paramsTuple?: []; params?: {} }
-    'decrees.single': { paramsTuple: [ParamValue]; params: {'uid': ParamValue} }
+    'volunteers.index': { paramsTuple?: []; params?: {} }
+    'volunteers.submit': { paramsTuple?: []; params?: {} }
   }
   POST: {
+    'payment.webhook': { paramsTuple?: []; params?: {} }
     'logout': { paramsTuple?: []; params?: {} }
     'dashboard.dashboard_posts.store': { paramsTuple?: []; params?: {} }
     'dashboard.dashboard_events.store': { paramsTuple?: []; params?: {} }
@@ -189,6 +90,115 @@ export type ScannedRoutes = {
     'donate.submit': { paramsTuple?: []; params?: {} }
     'registerParishioner.submit': { paramsTuple?: []; params?: {} }
     'jobs.application_submit': { paramsTuple: [ParamValue]; params: {'slug': ParamValue} }
+    'volunteers.submit': { paramsTuple?: []; params?: {} }
+  }
+  GET: {
+    'payment.callback': { paramsTuple?: []; params?: {} }
+    'payment.status': { paramsTuple: [ParamValue]; params: {'paymentId': ParamValue} }
+    'signIn': { paramsTuple?: []; params?: {} }
+    'auth.handle_callback': { paramsTuple?: []; params?: {} }
+    'discord.redirect': { paramsTuple?: []; params?: {} }
+    'auth.handle_discord_callback': { paramsTuple?: []; params?: {} }
+    'account.settings': { paramsTuple?: []; params?: {} }
+    'characters.list': { paramsTuple?: []; params?: {} }
+    'dashboard.index': { paramsTuple?: []; params?: {} }
+    'dashboard.dashboard_posts.index': { paramsTuple?: []; params?: {} }
+    'dashboard.dashboard_posts.create': { paramsTuple?: []; params?: {} }
+    'dashboard.dashboard_posts.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'dashboard.dashboard_posts.edit': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'dashboard.dashboard_events.index': { paramsTuple?: []; params?: {} }
+    'dashboard.dashboard_events.create': { paramsTuple?: []; params?: {} }
+    'dashboard.dashboard_events.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'dashboard.dashboard_events.edit': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'dashboard.dashboard_jobs.index': { paramsTuple?: []; params?: {} }
+    'dashboard.dashboard_jobs.create': { paramsTuple?: []; params?: {} }
+    'dashboard.dashboard_jobs.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'dashboard.dashboard_jobs.edit': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'dashboard.dashboard_users.index': { paramsTuple?: []; params?: {} }
+    'dashboard.dashboard_users.create': { paramsTuple?: []; params?: {} }
+    'dashboard.dashboard_users.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'dashboard.dashboard_users.edit': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'home': { paramsTuple?: []; params?: {} }
+    'contact': { paramsTuple?: []; params?: {} }
+    'news.index': { paramsTuple?: []; params?: {} }
+    'news.single': { paramsTuple: [ParamValue]; params: {'slug': ParamValue} }
+    'scheduled_events.index': { paramsTuple?: []; params?: {} }
+    'find.events': { paramsTuple?: []; params?: {} }
+    'event': { paramsTuple: [ParamValue]; params: {'slug': ParamValue} }
+    'find.parishes': { paramsTuple?: []; params?: {} }
+    'about-us': { paramsTuple?: []; params?: {} }
+    'archbishop.index': { paramsTuple?: []; params?: {} }
+    'departments.index': { paramsTuple?: []; params?: {} }
+    'departments.single': { paramsTuple: [ParamValue]; params: {'slug': ParamValue} }
+    'services.index': { paramsTuple?: []; params?: {} }
+    'services.single': { paramsTuple: [ParamValue]; params: {'slug': ParamValue} }
+    'donate.index': { paramsTuple?: []; params?: {} }
+    'registerParishioner.index': { paramsTuple?: []; params?: {} }
+    'privacy': { paramsTuple?: []; params?: {} }
+    'charities.index': { paramsTuple?: []; params?: {} }
+    'charities.program': { paramsTuple: [ParamValue]; params: {'slug': ParamValue} }
+    'vocations': { paramsTuple?: []; params?: {} }
+    'jobs.index': { paramsTuple?: []; params?: {} }
+    'jobs.single': { paramsTuple: [ParamValue]; params: {'slug': ParamValue} }
+    'jobs.application': { paramsTuple: [ParamValue]; params: {'slug': ParamValue} }
+    'dailyReadings': { paramsTuple?: []; params?: {} }
+    'decrees.index': { paramsTuple?: []; params?: {} }
+    'decrees.single': { paramsTuple: [ParamValue]; params: {'uid': ParamValue} }
+    'volunteers.index': { paramsTuple?: []; params?: {} }
+  }
+  HEAD: {
+    'payment.callback': { paramsTuple?: []; params?: {} }
+    'payment.status': { paramsTuple: [ParamValue]; params: {'paymentId': ParamValue} }
+    'signIn': { paramsTuple?: []; params?: {} }
+    'auth.handle_callback': { paramsTuple?: []; params?: {} }
+    'discord.redirect': { paramsTuple?: []; params?: {} }
+    'auth.handle_discord_callback': { paramsTuple?: []; params?: {} }
+    'account.settings': { paramsTuple?: []; params?: {} }
+    'characters.list': { paramsTuple?: []; params?: {} }
+    'dashboard.index': { paramsTuple?: []; params?: {} }
+    'dashboard.dashboard_posts.index': { paramsTuple?: []; params?: {} }
+    'dashboard.dashboard_posts.create': { paramsTuple?: []; params?: {} }
+    'dashboard.dashboard_posts.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'dashboard.dashboard_posts.edit': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'dashboard.dashboard_events.index': { paramsTuple?: []; params?: {} }
+    'dashboard.dashboard_events.create': { paramsTuple?: []; params?: {} }
+    'dashboard.dashboard_events.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'dashboard.dashboard_events.edit': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'dashboard.dashboard_jobs.index': { paramsTuple?: []; params?: {} }
+    'dashboard.dashboard_jobs.create': { paramsTuple?: []; params?: {} }
+    'dashboard.dashboard_jobs.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'dashboard.dashboard_jobs.edit': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'dashboard.dashboard_users.index': { paramsTuple?: []; params?: {} }
+    'dashboard.dashboard_users.create': { paramsTuple?: []; params?: {} }
+    'dashboard.dashboard_users.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'dashboard.dashboard_users.edit': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'home': { paramsTuple?: []; params?: {} }
+    'contact': { paramsTuple?: []; params?: {} }
+    'news.index': { paramsTuple?: []; params?: {} }
+    'news.single': { paramsTuple: [ParamValue]; params: {'slug': ParamValue} }
+    'scheduled_events.index': { paramsTuple?: []; params?: {} }
+    'find.events': { paramsTuple?: []; params?: {} }
+    'event': { paramsTuple: [ParamValue]; params: {'slug': ParamValue} }
+    'find.parishes': { paramsTuple?: []; params?: {} }
+    'about-us': { paramsTuple?: []; params?: {} }
+    'archbishop.index': { paramsTuple?: []; params?: {} }
+    'departments.index': { paramsTuple?: []; params?: {} }
+    'departments.single': { paramsTuple: [ParamValue]; params: {'slug': ParamValue} }
+    'services.index': { paramsTuple?: []; params?: {} }
+    'services.single': { paramsTuple: [ParamValue]; params: {'slug': ParamValue} }
+    'donate.index': { paramsTuple?: []; params?: {} }
+    'registerParishioner.index': { paramsTuple?: []; params?: {} }
+    'privacy': { paramsTuple?: []; params?: {} }
+    'charities.index': { paramsTuple?: []; params?: {} }
+    'charities.program': { paramsTuple: [ParamValue]; params: {'slug': ParamValue} }
+    'vocations': { paramsTuple?: []; params?: {} }
+    'jobs.index': { paramsTuple?: []; params?: {} }
+    'jobs.single': { paramsTuple: [ParamValue]; params: {'slug': ParamValue} }
+    'jobs.application': { paramsTuple: [ParamValue]; params: {'slug': ParamValue} }
+    'dailyReadings': { paramsTuple?: []; params?: {} }
+    'decrees.index': { paramsTuple?: []; params?: {} }
+    'decrees.single': { paramsTuple: [ParamValue]; params: {'uid': ParamValue} }
+    'volunteers.index': { paramsTuple?: []; params?: {} }
   }
   DELETE: {
     'discord.unlink': { paramsTuple?: []; params?: {} }

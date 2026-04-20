@@ -6,11 +6,23 @@ import type { ApiDefinition } from './tree.d.ts'
 const placeholder: any = {}
 
 const routes = {
+  'payment.webhook': {
+    methods: ["POST"],
+    pattern: '/api/payment/fleeca/webhook',
+    tokens: [{"old":"/api/payment/fleeca/webhook","type":0,"val":"api","end":""},{"old":"/api/payment/fleeca/webhook","type":0,"val":"payment","end":""},{"old":"/api/payment/fleeca/webhook","type":0,"val":"fleeca","end":""},{"old":"/api/payment/fleeca/webhook","type":0,"val":"webhook","end":""}],
+    types: placeholder as Registry['payment.webhook']['types'],
+  },
   'payment.callback': {
     methods: ["GET","HEAD"],
-    pattern: '/api/payment/fleeca/callback/:token',
-    tokens: [{"old":"/api/payment/fleeca/callback/:token","type":0,"val":"api","end":""},{"old":"/api/payment/fleeca/callback/:token","type":0,"val":"payment","end":""},{"old":"/api/payment/fleeca/callback/:token","type":0,"val":"fleeca","end":""},{"old":"/api/payment/fleeca/callback/:token","type":0,"val":"callback","end":""},{"old":"/api/payment/fleeca/callback/:token","type":1,"val":"token","end":""}],
+    pattern: '/api/payment/fleeca/callback',
+    tokens: [{"old":"/api/payment/fleeca/callback","type":0,"val":"api","end":""},{"old":"/api/payment/fleeca/callback","type":0,"val":"payment","end":""},{"old":"/api/payment/fleeca/callback","type":0,"val":"fleeca","end":""},{"old":"/api/payment/fleeca/callback","type":0,"val":"callback","end":""}],
     types: placeholder as Registry['payment.callback']['types'],
+  },
+  'payment.status': {
+    methods: ["GET","HEAD"],
+    pattern: '/api/payment/status/:paymentId',
+    tokens: [{"old":"/api/payment/status/:paymentId","type":0,"val":"api","end":""},{"old":"/api/payment/status/:paymentId","type":0,"val":"payment","end":""},{"old":"/api/payment/status/:paymentId","type":0,"val":"status","end":""},{"old":"/api/payment/status/:paymentId","type":1,"val":"paymentId","end":""}],
+    types: placeholder as Registry['payment.status']['types'],
   },
   'signIn': {
     methods: ["GET","HEAD"],
@@ -425,6 +437,18 @@ const routes = {
     pattern: '/decrees/:uid',
     tokens: [{"old":"/decrees/:uid","type":0,"val":"decrees","end":""},{"old":"/decrees/:uid","type":1,"val":"uid","end":""}],
     types: placeholder as Registry['decrees.single']['types'],
+  },
+  'volunteers.index': {
+    methods: ["GET","HEAD"],
+    pattern: '/volunteers',
+    tokens: [{"old":"/volunteers","type":0,"val":"volunteers","end":""}],
+    types: placeholder as Registry['volunteers.index']['types'],
+  },
+  'volunteers.submit': {
+    methods: ["POST"],
+    pattern: '/volunteers',
+    tokens: [{"old":"/volunteers","type":0,"val":"volunteers","end":""}],
+    types: placeholder as Registry['volunteers.submit']['types'],
   },
 } as const satisfies Record<string, AdonisEndpoint>
 

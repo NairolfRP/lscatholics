@@ -29,6 +29,7 @@ export const EmploymentApplicantDeclarationFields = withForm({
                           field.handleChange([...current, statement.id])
                         }
                       }}
+                      required
                     />
                     <FieldLabel htmlFor={statement.id} className="font-normal">
                       {statement.label}

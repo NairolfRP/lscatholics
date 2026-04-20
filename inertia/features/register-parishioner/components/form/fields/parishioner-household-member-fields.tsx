@@ -51,7 +51,9 @@ export const ParishionerHouseholdMemberFields = withForm({
               const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
               return (
                 <Field data-invalid={isInvalid}>
-                  <FieldLabel htmlFor={field.name}>Prénom *</FieldLabel>
+                  <FieldLabel required htmlFor={field.name}>
+                    Prénom
+                  </FieldLabel>
                   <Input
                     id={field.name}
                     name={field.name}
@@ -73,7 +75,9 @@ export const ParishionerHouseholdMemberFields = withForm({
               const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
               return (
                 <Field data-invalid={isInvalid}>
-                  <FieldLabel htmlFor={field.name}>Nom de famille *</FieldLabel>
+                  <FieldLabel required htmlFor={field.name}>
+                    Nom de famille
+                  </FieldLabel>
                   <Input
                     id={field.name}
                     name={field.name}
@@ -95,7 +99,9 @@ export const ParishionerHouseholdMemberFields = withForm({
               const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
               return (
                 <Field data-invalid={isInvalid}>
-                  <FieldLabel htmlFor={field.name}>Âge *</FieldLabel>
+                  <FieldLabel required htmlFor={field.name}>
+                    Âge
+                  </FieldLabel>
                   <Input
                     id={field.name}
                     name={field.name}
@@ -121,7 +127,9 @@ export const ParishionerHouseholdMemberFields = withForm({
               return (
                 <Field data-invalid={isInvalid}>
                   <FieldContent>
-                    <FieldLabel htmlFor={field.name}>Rôle dans le foyer *</FieldLabel>
+                    <FieldLabel required htmlFor={field.name}>
+                      Rôle dans le foyer
+                    </FieldLabel>
                   </FieldContent>
                   <Select
                     name={field.name}
@@ -129,6 +137,7 @@ export const ParishionerHouseholdMemberFields = withForm({
                     onValueChange={(v: HouseholdRole) => {
                       field.handleChange(v)
                     }}
+                    required
                   >
                     <SelectTrigger id={field.name} className="w-full" aria-invalid={isInvalid}>
                       <SelectValue placeholder="Sélectionner un rôle" />

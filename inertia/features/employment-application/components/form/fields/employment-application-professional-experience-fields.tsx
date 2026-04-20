@@ -75,7 +75,7 @@ export const EmploymentApplicationProfessionalExperienceFields = withForm({
                           subField.state.meta.isTouched && !subField.state.meta.isValid
                         return (
                           <Field data-invalid={isInvalid}>
-                            <FieldLabel htmlFor={`company-${index}`}>
+                            <FieldLabel required htmlFor={`company-${index}`}>
                               Nom de la compagnie
                             </FieldLabel>
                             <Input
@@ -88,6 +88,7 @@ export const EmploymentApplicationProfessionalExperienceFields = withForm({
                               placeholder="Ex: Eternal Word Television Network"
                               maxLength={100}
                               aria-invalid={isInvalid}
+                              required
                             />
                             {isInvalid && <FieldError errors={subField.state.meta.errors} />}
                           </Field>
@@ -101,7 +102,9 @@ export const EmploymentApplicationProfessionalExperienceFields = withForm({
                           subField.state.meta.isTouched && !subField.state.meta.isValid
                         return (
                           <Field data-invalid={isInvalid}>
-                            <FieldLabel htmlFor={`position-${index}`}>Poste / Fonction</FieldLabel>
+                            <FieldLabel required htmlFor={`position-${index}`}>
+                              Poste / Fonction
+                            </FieldLabel>
                             <Input
                               id={`position-${index}`}
                               name={subField.name}
@@ -112,6 +115,7 @@ export const EmploymentApplicationProfessionalExperienceFields = withForm({
                               placeholder="Ex: Assistant administratif"
                               maxLength={100}
                               aria-invalid={isInvalid}
+                              required
                             />
                             {isInvalid && <FieldError errors={subField.state.meta.errors} />}
                           </Field>
@@ -157,7 +161,9 @@ export const EmploymentApplicationProfessionalExperienceFields = withForm({
                             subField.state.meta.isTouched && !subField.state.meta.isValid
                           return (
                             <Field data-invalid={isInvalid}>
-                              <FieldLabel htmlFor={`start-date-${index}`}>Date de début</FieldLabel>
+                              <FieldLabel required htmlFor={`start-date-${index}`}>
+                                Date de début
+                              </FieldLabel>
                               <Input
                                 id={`start-date-${index}`}
                                 name={subField.name}
@@ -166,6 +172,7 @@ export const EmploymentApplicationProfessionalExperienceFields = withForm({
                                 onChange={(e) => subField.handleChange(e.target.value)}
                                 type="month"
                                 aria-invalid={isInvalid}
+                                required
                               />
                               {isInvalid && <FieldError errors={subField.state.meta.errors} />}
                             </Field>
@@ -186,7 +193,7 @@ export const EmploymentApplicationProfessionalExperienceFields = withForm({
                                   subField.state.meta.isTouched && !subField.state.meta.isValid
                                 return (
                                   <Field data-invalid={isInvalid}>
-                                    <FieldLabel htmlFor={`end-date-${index}`}>
+                                    <FieldLabel required htmlFor={`end-date-${index}`}>
                                       Date de fin
                                     </FieldLabel>
                                     <Input
@@ -197,6 +204,7 @@ export const EmploymentApplicationProfessionalExperienceFields = withForm({
                                       onChange={(e) => subField.handleChange(e.target.value)}
                                       type="month"
                                       aria-invalid={isInvalid}
+                                      required
                                     />
                                     {isInvalid && (
                                       <FieldError errors={subField.state.meta.errors} />
@@ -223,7 +231,7 @@ export const EmploymentApplicationProfessionalExperienceFields = withForm({
                                 subField.state.meta.isTouched && !subField.state.meta.isValid
                               return (
                                 <Field data-invalid={isInvalid}>
-                                  <FieldLabel htmlFor={`reason-${index}`}>
+                                  <FieldLabel required htmlFor={`reason-${index}`}>
                                     Raison du départ
                                   </FieldLabel>
                                   <FieldContent>
@@ -236,6 +244,7 @@ export const EmploymentApplicationProfessionalExperienceFields = withForm({
                                       placeholder="Ex: Nouvelle opportunité, relocation, fin de contrat..."
                                       maxLength={255}
                                       aria-invalid={isInvalid}
+                                      required
                                     />
                                     <FieldDescription className="text-xs">
                                       Maximum 255 caractères

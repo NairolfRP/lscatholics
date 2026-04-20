@@ -51,7 +51,14 @@ export default await Env.create(new URL('../', import.meta.url), {
   */
   GTAW_CLIENT_ID: Env.schema.string(),
   GTAW_CLIENT_SECRET: Env.schema.string(),
-  GTAW_FLEECA_AUTH_KEY: Env.schema.string(),
+
+  /*
+  |----------------------------------------------------------
+  | Variables for configuring GTA World Fleeca API
+  |----------------------------------------------------------
+  */
+  FLEECA_API_KEY: Env.schema.secret(),
+  FLEECA_BASE_URL: Env.schema.string.optional(),
 
   /*
   |----------------------------------------------------------
@@ -77,6 +84,8 @@ export default await Env.create(new URL('../', import.meta.url), {
   DISCORD_PARISHIONER_REGISTRATION: Env.schema.string.optional(),
 
   DISCORD_EMPLOYMENT_APPLICATION_WEBHOOK: Env.schema.string.optional(),
+
+  DISCORD_VOLUNTEER_APPLICATION_WEBHOOK: Env.schema.string.optional(),
 
   ERROR_REPORTING_WEBHOOK: Env.schema.string.optionalWhen(!app.inProduction),
 })

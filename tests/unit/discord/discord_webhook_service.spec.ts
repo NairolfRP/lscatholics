@@ -1,10 +1,8 @@
 import { test } from '@japa/runner'
 import nock from 'nock'
-import {
-  type DiscordWebhookOptions,
-  DiscordWebhookService,
-} from '#discord/services/discord_webhook_service'
+import { DiscordWebhookService } from '#discord/services/discord_webhook_service'
 import DiscordWebhookException from '#discord/exceptions/discord_webhook_exception'
+import type { DiscordWebhookOptions } from '#discord/types/discord_webhook.types'
 
 const VALID_WEBHOOK_URL = 'https://discord.com/api/webhooks/123456789/abcdef'
 const INVALID_WEBHOOK_URL = 'invalid-url'
@@ -367,7 +365,12 @@ test.group('DiscordWebhookService', (group) => {
     nock('https://discord.com/api')
       .post(WEBHOOK_PATH)
       .times(3)
-      .reply(429, { message: 'Rate limited', retry_after: 0 })
+      .reply(
+        429,
+        { message: 'Rate limited', retry_after: 0 },
+        { 'Accept': 'application/json', 'Content-Type': 'application/json', 'Retry-After': '0' }
+      )
+      .persist()
 
     const service = await discordWebhookService.create({ url: VALID_WEBHOOK_URL, retries: 3 })
     service.setContent('Hello')
@@ -375,7 +378,8 @@ test.group('DiscordWebhookService', (group) => {
     await service.execute()
 
     assert.isNull(service.getLastExecutionInfo())
-  })
+    assert.isTrue(nock.isDone())
+  }).timeout(10000)
 
   // -------------------------
   // Rate limiting (429)
@@ -416,7 +420,12 @@ test.group('DiscordWebhookService', (group) => {
     nock('https://discord.com/api')
       .post(WEBHOOK_PATH)
       .times(3)
-      .reply(429, { message: 'Rate limited', retry_after: 0 })
+      .reply(
+        429,
+        { message: 'Rate limited', retry_after: 0 },
+        { 'Accept': 'application/json', 'Content-Type': 'application/json', 'Retry-After': '0' }
+      )
+      .persist()
 
     const service = await discordWebhookService.create({ url: VALID_WEBHOOK_URL, retries: 3 })
     service.setContent('Hello')
@@ -425,13 +434,19 @@ test.group('DiscordWebhookService', (group) => {
 
     assert.isFalse(result.success)
     assert.include(result.error, '429')
-  })
+    assert.isTrue(nock.isDone())
+  }).timeout(10000)
 
   test('should include discord error message in error on 429', async ({ assert }) => {
     nock('https://discord.com/api')
       .post(WEBHOOK_PATH)
       .times(3)
-      .reply(429, { message: 'You are being rate limited.', retry_after: 0 })
+      .reply(
+        429,
+        { message: 'You are being rate limited.', retry_after: 0.01 },
+        { 'Accept': 'application/json', 'Content-Type': 'application/json', 'Retry-After': '0' }
+      )
+      .persist()
 
     const service = await discordWebhookService.create({ url: VALID_WEBHOOK_URL, retries: 3 })
     service.setContent('Hello')
@@ -440,13 +455,14 @@ test.group('DiscordWebhookService', (group) => {
 
     assert.isFalse(result.success)
     assert.include(result.error, 'You are being rate limited.')
-  })
+    assert.isTrue(nock.isDone())
+  }).timeout(10000)
 
   test('should include discord error message in error on other HTTP errors', async ({ assert }) => {
     nock('https://discord.com/api')
       .post(WEBHOOK_PATH)
       .times(3)
-      .reply(400, { message: 'Invalid form body' })
+      .reply(400, { message: 'Invalid form body' }, { 'Content-Type': 'application/json' })
 
     const service = await discordWebhookService.create({ url: VALID_WEBHOOK_URL, retries: 3 })
     service.setContent('Hello')

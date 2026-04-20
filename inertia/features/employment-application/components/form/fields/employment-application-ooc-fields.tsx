@@ -20,7 +20,9 @@ export const EmploymentApplicationOOCFields = withForm({
           const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
           return (
             <Field data-invalid={isInvalid}>
-              <FieldLabel htmlFor={field.name}>Nom d'utilisateur Discord *</FieldLabel>
+              <FieldLabel required htmlFor={field.name}>
+                Nom d'utilisateur Discord
+              </FieldLabel>
               <FieldDescription>
                 Nous utilisons principalement Discord pour la communication OOC et l'intranet IC.
                 Cette information nous permettra de t'ajouter les accès internes si ton personnage

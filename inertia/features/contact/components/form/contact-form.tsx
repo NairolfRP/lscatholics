@@ -1,7 +1,6 @@
 import { Loader2, Send } from 'lucide-react'
 import { router, usePage } from '@inertiajs/react'
 import { useForm } from '@tanstack/react-form'
-import { toast } from 'sonner'
 import {
   Select,
   SelectContent,
@@ -19,6 +18,7 @@ import { useCurrentCharacter } from '@/shared/hooks/use_current_character'
 import type { CONTACT_SUBJECTS } from '#shared/constants/contact_subjects'
 import { urlFor } from '@/client'
 import { serverErrorsFormConvertor } from '@/lib/utils'
+import { AsteriskRequired } from '@/shared/components/ui/asterisk-required'
 
 type Props = {
   subjects: typeof CONTACT_SUBJECTS
@@ -42,7 +42,6 @@ export default function ContactForm() {
         preserveScroll: true,
         onSuccess: () => {
           form.reset()
-          toast.success('Message envoyé !')
         },
         onError: (err) => {
           form.setErrorMap({ onSubmit: serverErrorsFormConvertor(err) })
@@ -77,11 +76,8 @@ export default function ContactForm() {
                 const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
                 return (
                   <Field data-invalid={isInvalid}>
-                    <FieldLabel
-                      htmlFor={field.name}
-                      className="block text-sm font-medium text-gray-700"
-                    >
-                      {item.label} *
+                    <FieldLabel htmlFor={field.name} required>
+                      {item.label}
                     </FieldLabel>
                     <Input
                       id={field.name}
@@ -92,6 +88,7 @@ export default function ContactForm() {
                       type="text"
                       placeholder={item.placeholder}
                       aria-invalid={isInvalid}
+                      required
                     />
                     {isInvalid && <FieldError errors={field.state.meta.errors} />}
                   </Field>
@@ -107,11 +104,8 @@ export default function ContactForm() {
             const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
             return (
               <Field data-invalid={isInvalid}>
-                <FieldLabel
-                  htmlFor={field.name}
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Téléphone *
+                <FieldLabel required htmlFor={field.name}>
+                  Téléphone
                 </FieldLabel>
                 <Input
                   id={field.name}
@@ -122,6 +116,7 @@ export default function ContactForm() {
                   type="tel"
                   placeholder="1234"
                   aria-invalid={isInvalid}
+                  required
                 />
                 {isInvalid && <FieldError errors={field.state.meta.errors} />}
               </Field>
@@ -135,16 +130,14 @@ export default function ContactForm() {
             const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
             return (
               <Field data-invalid={isInvalid}>
-                <FieldLabel
-                  htmlFor={field.name}
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Sujet *
+                <FieldLabel required htmlFor={field.name}>
+                  Sujet
                 </FieldLabel>
                 <Select
                   name={field.name}
                   value={field.state.value}
                   onValueChange={field.handleChange}
+                  required
                 >
                   <SelectTrigger id={field.name} aria-invalid={isInvalid}>
                     <SelectValue placeholder="Choisissez un sujet" />
@@ -171,11 +164,8 @@ export default function ContactForm() {
             const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
             return (
               <Field data-invalid={isInvalid}>
-                <FieldLabel
-                  htmlFor={field.name}
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Message *
+                <FieldLabel required htmlFor={field.name}>
+                  Message
                 </FieldLabel>
                 <Textarea
                   id={field.name}
@@ -187,6 +177,7 @@ export default function ContactForm() {
                   maxLength={2000}
                   placeholder="Décrivez votre demande en détail..."
                   aria-invalid={isInvalid}
+                  required
                 />
                 {isInvalid && <FieldError errors={field.state.meta.errors} />}
               </Field>
@@ -217,7 +208,9 @@ export default function ContactForm() {
         )}
       />
 
-      <p className="text-sm text-gray-500">* Champs obligatoires</p>
+      <p className="text-sm ">
+        <AsteriskRequired /> = Champs obligatoires
+      </p>
     </form>
   )
 }

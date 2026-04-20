@@ -43,7 +43,9 @@ export const DonateAddressFields = withForm({
                   return (
                     <Field data-invalid={isInvalid}>
                       <FieldContent>
-                        <FieldLabel htmlFor={field.name}>District {address ? '*' : ''}</FieldLabel>
+                        <FieldLabel required={!!address?.length} htmlFor={field.name}>
+                          District
+                        </FieldLabel>
                       </FieldContent>
                       <Select
                         name={field.name}
@@ -55,6 +57,7 @@ export const DonateAddressFields = withForm({
                             field.handleChange(v)
                           }
                         }}
+                        required={!!address?.length}
                       >
                         <SelectTrigger id={field.name} className="w-full" aria-invalid={isInvalid}>
                           <SelectValue id={field.name} placeholder="Sélectionnez un district" />
