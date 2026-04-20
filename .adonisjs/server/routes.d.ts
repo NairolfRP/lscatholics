@@ -4,7 +4,9 @@ type ParamValue = string | number | bigint | boolean
 
 export type ScannedRoutes = {
   ALL: {
-    'payment.callback': { paramsTuple: [ParamValue]; params: {'token': ParamValue} }
+    'payment.webhook': { paramsTuple?: []; params?: {} }
+    'payment.callback': { paramsTuple?: []; params?: {} }
+    'payment.status': { paramsTuple: [ParamValue]; params: {'paymentId': ParamValue} }
     'signIn': { paramsTuple?: []; params?: {} }
     'auth.handle_callback': { paramsTuple?: []; params?: {} }
     'logout': { paramsTuple?: []; params?: {} }
@@ -77,8 +79,22 @@ export type ScannedRoutes = {
     'volunteers.index': { paramsTuple?: []; params?: {} }
     'volunteers.submit': { paramsTuple?: []; params?: {} }
   }
+  POST: {
+    'payment.webhook': { paramsTuple?: []; params?: {} }
+    'logout': { paramsTuple?: []; params?: {} }
+    'dashboard.dashboard_posts.store': { paramsTuple?: []; params?: {} }
+    'dashboard.dashboard_events.store': { paramsTuple?: []; params?: {} }
+    'dashboard.dashboard_jobs.store': { paramsTuple?: []; params?: {} }
+    'dashboard.dashboard_users.store': { paramsTuple?: []; params?: {} }
+    'contact.submit': { paramsTuple?: []; params?: {} }
+    'donate.submit': { paramsTuple?: []; params?: {} }
+    'registerParishioner.submit': { paramsTuple?: []; params?: {} }
+    'jobs.application_submit': { paramsTuple: [ParamValue]; params: {'slug': ParamValue} }
+    'volunteers.submit': { paramsTuple?: []; params?: {} }
+  }
   GET: {
-    'payment.callback': { paramsTuple: [ParamValue]; params: {'token': ParamValue} }
+    'payment.callback': { paramsTuple?: []; params?: {} }
+    'payment.status': { paramsTuple: [ParamValue]; params: {'paymentId': ParamValue} }
     'signIn': { paramsTuple?: []; params?: {} }
     'auth.handle_callback': { paramsTuple?: []; params?: {} }
     'discord.redirect': { paramsTuple?: []; params?: {} }
@@ -131,7 +147,8 @@ export type ScannedRoutes = {
     'volunteers.index': { paramsTuple?: []; params?: {} }
   }
   HEAD: {
-    'payment.callback': { paramsTuple: [ParamValue]; params: {'token': ParamValue} }
+    'payment.callback': { paramsTuple?: []; params?: {} }
+    'payment.status': { paramsTuple: [ParamValue]; params: {'paymentId': ParamValue} }
     'signIn': { paramsTuple?: []; params?: {} }
     'auth.handle_callback': { paramsTuple?: []; params?: {} }
     'discord.redirect': { paramsTuple?: []; params?: {} }
@@ -182,18 +199,6 @@ export type ScannedRoutes = {
     'decrees.index': { paramsTuple?: []; params?: {} }
     'decrees.single': { paramsTuple: [ParamValue]; params: {'uid': ParamValue} }
     'volunteers.index': { paramsTuple?: []; params?: {} }
-  }
-  POST: {
-    'logout': { paramsTuple?: []; params?: {} }
-    'dashboard.dashboard_posts.store': { paramsTuple?: []; params?: {} }
-    'dashboard.dashboard_events.store': { paramsTuple?: []; params?: {} }
-    'dashboard.dashboard_jobs.store': { paramsTuple?: []; params?: {} }
-    'dashboard.dashboard_users.store': { paramsTuple?: []; params?: {} }
-    'contact.submit': { paramsTuple?: []; params?: {} }
-    'donate.submit': { paramsTuple?: []; params?: {} }
-    'registerParishioner.submit': { paramsTuple?: []; params?: {} }
-    'jobs.application_submit': { paramsTuple: [ParamValue]; params: {'slug': ParamValue} }
-    'volunteers.submit': { paramsTuple?: []; params?: {} }
   }
   DELETE: {
     'discord.unlink': { paramsTuple?: []; params?: {} }

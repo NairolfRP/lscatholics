@@ -7,16 +7,40 @@ import type { InferInput, SimpleError } from '@vinejs/vine/types'
 export type ParamValue = string | number | bigint | boolean
 
 export interface Registry {
-  'payment.callback': {
-    methods: ["GET","HEAD"]
-    pattern: '/api/payment/fleeca/callback/:token'
+  'payment.webhook': {
+    methods: ["POST"]
+    pattern: '/api/payment/fleeca/webhook'
     types: {
       body: {}
-      paramsTuple: [ParamValue]
-      params: { token: ParamValue }
+      paramsTuple: []
+      params: {}
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#app/billing/controllers/payments_controller').default['webhook']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#app/billing/controllers/payments_controller').default['webhook']>>>
+    }
+  }
+  'payment.callback': {
+    methods: ["GET","HEAD"]
+    pattern: '/api/payment/fleeca/callback'
+    types: {
+      body: {}
+      paramsTuple: []
+      params: {}
       query: {}
       response: ExtractResponse<Awaited<ReturnType<import('#app/billing/controllers/payments_controller').default['callback']>>>
       errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#app/billing/controllers/payments_controller').default['callback']>>>
+    }
+  }
+  'payment.status': {
+    methods: ["GET","HEAD"]
+    pattern: '/api/payment/status/:paymentId'
+    types: {
+      body: {}
+      paramsTuple: [ParamValue]
+      params: { paymentId: ParamValue }
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#app/billing/controllers/payments_controller').default['status']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#app/billing/controllers/payments_controller').default['status']>>>
     }
   }
   'signIn': {

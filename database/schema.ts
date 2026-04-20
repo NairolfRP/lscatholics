@@ -8,196 +8,217 @@ import { BaseModel, column } from '@adonisjs/lucid/orm'
 import { DateTime } from 'luxon'
 
 export class AccountSchema extends BaseModel {
-  static $columns = ['id', 'userId', 'accountId', 'providerId', 'accessToken', 'refreshToken', 'accessTokenExpiresAt', 'refreshTokenExpiresAt', 'scope', 'createdAt', 'updatedAt'] as const
+  static $columns = ['accessToken', 'accessTokenExpiresAt', 'accountId', 'createdAt', 'id', 'providerId', 'refreshToken', 'refreshTokenExpiresAt', 'scope', 'updatedAt', 'userId'] as const
   $columns = AccountSchema.$columns
+  @column()
+  declare accessToken: string | null
+  @column.dateTime()
+  declare accessTokenExpiresAt: DateTime | null
+  @column()
+  declare accountId: string
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime | null
   @column({ isPrimary: true })
   declare id: number
   @column()
-  declare userId: number | null
-  @column()
-  declare accountId: string
-  @column()
   declare providerId: string
   @column()
-  declare accessToken: string | null
-  @column()
   declare refreshToken: string | null
-  @column.dateTime()
-  declare accessTokenExpiresAt: DateTime | null
   @column.dateTime()
   declare refreshTokenExpiresAt: DateTime | null
   @column()
   declare scope: string | null
-  @column.dateTime({ autoCreate: true })
-  declare createdAt: DateTime | null
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare updatedAt: DateTime | null
+  @column()
+  declare userId: number | null
 }
 
 export class JobPostingSchema extends BaseModel {
-  static $columns = ['id', 'slug', 'title', 'summary', 'reportsTo', 'department', 'responsibilities', 'requirements', 'salary', 'employmentType', 'isActive', 'postedAt', 'expiresAt', 'createdAt', 'updatedAt', 'skills'] as const
+  static $columns = ['createdAt', 'department', 'employmentType', 'expiresAt', 'id', 'isActive', 'postedAt', 'reportsTo', 'requirements', 'responsibilities', 'salary', 'skills', 'slug', 'summary', 'title', 'updatedAt'] as const
   $columns = JobPostingSchema.$columns
-  @column({ isPrimary: true })
-  declare id: number
-  @column()
-  declare slug: string
-  @column()
-  declare title: string
-  @column()
-  declare summary: string | null
-  @column()
-  declare reportsTo: string | null
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime | null
   @column()
   declare department: string
   @column()
-  declare responsibilities: any | null
-  @column()
-  declare requirements: any | null
-  @column()
-  declare salary: number | null
-  @column()
   declare employmentType: string
+  @column.dateTime()
+  declare expiresAt: DateTime | null
+  @column({ isPrimary: true })
+  declare id: number
   @column()
   declare isActive: boolean
   @column.dateTime()
   declare postedAt: DateTime | null
-  @column.dateTime()
-  declare expiresAt: DateTime | null
-  @column.dateTime({ autoCreate: true })
-  declare createdAt: DateTime | null
-  @column.dateTime({ autoCreate: true, autoUpdate: true })
-  declare updatedAt: DateTime | null
+  @column()
+  declare reportsTo: string | null
+  @column()
+  declare requirements: any | null
+  @column()
+  declare responsibilities: any | null
+  @column()
+  declare salary: number | null
   @column()
   declare skills: any | null
+  @column()
+  declare slug: string
+  @column()
+  declare summary: string | null
+  @column()
+  declare title: string
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  declare updatedAt: DateTime | null
 }
 
 export class NewsSchema extends BaseModel {
-  static $columns = ['id', 'title', 'slug', 'category', 'content', 'excerpt', 'coverImageUrl', 'status', 'publishedAt', 'authorId', 'createdAt', 'updatedAt'] as const
+  static $columns = ['authorId', 'category', 'content', 'coverImageUrl', 'createdAt', 'excerpt', 'id', 'publishedAt', 'slug', 'status', 'title', 'updatedAt'] as const
   $columns = NewsSchema.$columns
-  @column({ isPrimary: true })
-  declare id: number
   @column()
-  declare title: string
-  @column()
-  declare slug: string
+  declare authorId: bigint | number | null
   @column()
   declare category: string | null
   @column()
   declare content: string
   @column()
-  declare excerpt: string | null
-  @column()
   declare coverImageUrl: string | null
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime | null
   @column()
-  declare status: string
+  declare excerpt: string | null
+  @column({ isPrimary: true })
+  declare id: number
   @column.dateTime()
   declare publishedAt: DateTime | null
   @column()
-  declare authorId: bigint | number | null
+  declare slug: string
+  @column()
+  declare status: string
+  @column()
+  declare title: string
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  declare updatedAt: DateTime | null
+}
+
+export class PendingPaymentSchema extends BaseModel {
+  static $columns = ['amount', 'createdAt', 'expiresAt', 'id', 'metadata', 'mode', 'source', 'updatedAt'] as const
+  $columns = PendingPaymentSchema.$columns
+  @column()
+  declare amount: number
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime | null
+  @column.dateTime()
+  declare expiresAt: DateTime
+  @column({ isPrimary: true })
+  declare id: string
+  @column()
+  declare metadata: any
+  @column()
+  declare mode: number
+  @column()
+  declare source: string
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare updatedAt: DateTime | null
 }
 
 export class PermissionSchema extends BaseModel {
-  static $columns = ['id', 'slug', 'name', 'description', 'createdAt', 'updatedAt'] as const
+  static $columns = ['createdAt', 'description', 'id', 'name', 'slug', 'updatedAt'] as const
   $columns = PermissionSchema.$columns
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime | null
+  @column()
+  declare description: string | null
   @column({ isPrimary: true })
   declare id: number
   @column()
-  declare slug: string
-  @column()
   declare name: string
   @column()
-  declare description: string | null
-  @column.dateTime({ autoCreate: true })
-  declare createdAt: DateTime | null
+  declare slug: string
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare updatedAt: DateTime | null
 }
 
 export class RolePermissionSchema extends BaseModel {
-  static $columns = ['roleId', 'permissionId'] as const
+  static $columns = ['permissionId', 'roleId'] as const
   $columns = RolePermissionSchema.$columns
   @column()
-  declare roleId: number
-  @column()
   declare permissionId: number
+  @column({ isPrimary: true })
+  declare roleId: number
 }
 
 export class RoleSchema extends BaseModel {
-  static $columns = ['id', 'slug', 'name', 'description', 'createdAt', 'updatedAt', 'hierarchyOrder'] as const
+  static $columns = ['createdAt', 'description', 'hierarchyOrder', 'id', 'name', 'slug', 'updatedAt'] as const
   $columns = RoleSchema.$columns
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime | null
+  @column()
+  declare description: string | null
+  @column()
+  declare hierarchyOrder: number
   @column({ isPrimary: true })
   declare id: number
-  @column()
-  declare slug: string
   @column()
   declare name: string
   @column()
-  declare description: string | null
-  @column.dateTime({ autoCreate: true })
-  declare createdAt: DateTime | null
+  declare slug: string
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare updatedAt: DateTime | null
-  @column()
-  declare hierarchyOrder: number
 }
 
 export class ScheduledEventSchema extends BaseModel {
-  static $columns = ['id', 'title', 'slug', 'description', 'content', 'location', 'parishId', 'coverImageUrl', 'flyerUrl', 'registrationRequired', 'maxParticipants', 'startDate', 'endDate', 'createdAt', 'updatedAt'] as const
+  static $columns = ['content', 'coverImageUrl', 'createdAt', 'description', 'endDate', 'flyerUrl', 'id', 'location', 'maxParticipants', 'parishId', 'registrationRequired', 'slug', 'startDate', 'title', 'updatedAt'] as const
   $columns = ScheduledEventSchema.$columns
-  @column({ isPrimary: true })
-  declare id: number
-  @column()
-  declare title: string
-  @column()
-  declare slug: string
-  @column()
-  declare description: string
   @column()
   declare content: string
   @column()
+  declare coverImageUrl: string | null
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime | null
+  @column()
+  declare description: string
+  @column.dateTime()
+  declare endDate: DateTime | null
+  @column()
+  declare flyerUrl: string | null
+  @column({ isPrimary: true })
+  declare id: number
+  @column()
   declare location: string
+  @column()
+  declare maxParticipants: number | null
   @column()
   declare parishId: number | null
   @column()
-  declare coverImageUrl: string | null
-  @column()
-  declare flyerUrl: string | null
-  @column()
   declare registrationRequired: boolean | null
   @column()
-  declare maxParticipants: number | null
+  declare slug: string
   @column.dateTime()
   declare startDate: DateTime
-  @column.dateTime()
-  declare endDate: DateTime | null
-  @column.dateTime({ autoCreate: true })
-  declare createdAt: DateTime | null
+  @column()
+  declare title: string
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare updatedAt: DateTime | null
 }
 
 export class UserRoleSchema extends BaseModel {
-  static $columns = ['userId', 'roleId'] as const
+  static $columns = ['roleId', 'userId'] as const
   $columns = UserRoleSchema.$columns
   @column()
-  declare userId: number
-  @column()
   declare roleId: number
+  @column({ isPrimary: true })
+  declare userId: number
 }
 
 export class UserSchema extends BaseModel {
-  static $columns = ['id', 'name', 'createdAt', 'updatedAt'] as const
+  static $columns = ['createdAt', 'id', 'name', 'updatedAt'] as const
   $columns = UserSchema.$columns
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime
   @column({ isPrimary: true })
   declare id: number
   @column()
   declare name: string
-  @column.dateTime({ autoCreate: true })
-  declare createdAt: DateTime
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare updatedAt: DateTime | null
 }

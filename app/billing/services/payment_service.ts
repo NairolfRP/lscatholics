@@ -1,289 +1,218 @@
+import { inject } from '@adonisjs/core'
+import { DateTime } from 'luxon'
+import logger from '@adonisjs/core/services/logger'
 import fleecaConfig from '#config/fleeca'
 import type {
-  FleecaGatewayToken,
-  FleecaValidationResponse,
-  PaymentResult,
-  PaymentSessionData,
+  FleecaWebhookPayload,
+  InitiatePaymentOptions,
+  InitiatePaymentResult,
+  ResolvedPaymentStatus,
 } from '#billing/types/payment'
-import encryption from '@adonisjs/core/services/encryption'
-import hash from '@adonisjs/core/services/hash'
-import logger from '@adonisjs/core/services/logger'
+import { FleecaClient } from '#billing/services/fleeca_client'
+import PendingPayment from '#billing/models/pending_payment'
 import PaymentException from '#billing/exceptions/payment_exception'
-import app from '@adonisjs/core/services/app'
-import type { HeadersInit } from '#shared/types/utils.types'
-import type { HttpContext } from '@adonisjs/core/http'
-import ky, { isHTTPError, isNetworkError, isTimeoutError } from 'ky'
+import { PaymentHandlerRegistry } from '#billing/handlers/payment_handler_registry'
 
+/**
+ * How long a pending payment lives before being considered stale.
+ * Should comfortably exceed the Fleeca session timeout on the hosted page.
+ */
+const PENDING_TTL_MINUTES = 30
+
+@inject()
 export class PaymentService {
-  /**
-   * Generate Fleeca payment URL with encrypted session data
-   */
-  async generatePaymentUrl(
-    source: string,
-    amount: number,
-    metadata: Record<string, any> = {},
-    session: HttpContext['session']
-  ): Promise<{ paymentUrl: string; sessionId: string }> {
-    this.#validatePaymentParameters(amount, source)
-
-    const [gatewayToken, sessionId] = await Promise.all([
-      this.#generateGatewayToken({ price: amount }),
-      hash.make(`${source}_${amount}_${Date.now()}_${Math.random()}`),
-    ])
-
-    const sessionData: PaymentSessionData = {
-      sessionId,
-      token: gatewayToken,
-      source,
-      amount,
-      metadata,
-      createdAt: new Date(),
-      expiresAt: new Date(Date.now() + fleecaConfig.sessionTTL * 1000),
-    }
-
-    this.#storeSessionData(session, sessionData)
-
-    return {
-      paymentUrl: this.#buildGatewayUrl(gatewayToken),
-      sessionId,
-    }
-  }
+  constructor(
+    private readonly fleeca: FleecaClient,
+    private readonly handlers: PaymentHandlerRegistry
+  ) {}
 
   /**
-   * Process payment callback
+   * Create a payment link and persist a transient pending record.
+   * Called by feature controllers — never from the webhook handler.
    */
-  async processPaymentCallback(
-    token: string,
-    session: HttpContext['session']
-  ): Promise<PaymentResult<FleecaValidationResponse>> {
-    try {
-      const sessionData = await this.#getSessionData(session)
-
-      if (!sessionData) {
-        throw PaymentException.create('SESSION_NOT_FOUND')
-      }
-
-      if (new Date() > sessionData.expiresAt) {
-        this.cancelPayment(session)
-        throw PaymentException.create('SESSION_EXPIRED')
-      }
-
-      const validationResponse = await this.#validateToken(token)
-
-      await this.#validatePaymentDetails(validationResponse, sessionData)
-
-      this.cancelPayment(session)
-
-      return {
-        success: true,
-        sessionData,
-        transactionData: validationResponse,
-      }
-    } catch (err) {
-      logger.error({ err }, 'Payment callback processing error')
-      this.cancelPayment(session)
-
-      if (err instanceof PaymentException) {
-        throw err
-      }
-
-      throw PaymentException.create('PROCESSING_ERROR', err)
-    }
-  }
-
-  cancelPayment(session: HttpContext['session']): void {
-    session.forget('payment_data')
-  }
-
-  #getBaseUrl(): string {
-    return fleecaConfig.server === 'fr' ? 'https://fleeca.gta.world' : 'https://banking.gta.world'
-  }
-
-  #getHeaders({ includeAuth = true }: { includeAuth?: boolean }): HeadersInit {
-    const headers: HeadersInit = {
-      Accept: 'application/json',
-    }
-
-    if (includeAuth && fleecaConfig.authKey) {
-      headers['Authorization'] = `Bearer ${fleecaConfig.authKey}`
-    }
-
-    return headers
-  }
-
-  /**
-   * Generate Fleeca Gateway Token
-   */
-  async #generateGatewayToken({
-    price,
-    type = 0,
-  }: {
-    price: number
-    type?: number
-  }): Promise<FleecaGatewayToken> {
-    if (price <= 0) {
-      throw PaymentException.create('INVALID_PRICE')
-    }
-
-    try {
-      const url = `${this.#getBaseUrl()}/gateway_token/generateToken?price=${price}&type=${type}`
-
-      const token = (await ky
-        .get(url, {
-          retry: {
-            limit: 3,
-          },
-          headers: this.#getHeaders({ includeAuth: true }),
-        })
-        .text()) as FleecaGatewayToken
-
-      if (!token?.trim()) {
-        throw PaymentException.create('EMPTY_TOKEN')
-      }
-
-      return token
-    } catch (err) {
-      logger.error({ err, price, type }, 'Failed to generate Gateway Token')
-
-      if (isTimeoutError(err) || isNetworkError(err)) {
-        throw PaymentException.create('NETWORK_ERROR', err)
-      }
-
-      if (isHTTPError(err)) {
-        throw PaymentException.create('TOKEN_GENERATION_ERROR', err)
-      }
-
-      throw err
-    }
-  }
-
-  #storeSessionData(session: HttpContext['session'], sessionData: PaymentSessionData): void {
-    const serializable = {
-      ...sessionData,
-      createdAt: sessionData.createdAt.toISOString(),
-      expiresAt: sessionData.expiresAt.toISOString(),
-    }
-
-    const encryptedData = encryption.encrypt(JSON.stringify(serializable))
-    session.put('payment_data', encryptedData)
-  }
-
-  async #getSessionData(session: HttpContext['session']): Promise<PaymentSessionData | null> {
-    const encryptedData = session.get('payment_data')
-
-    if (!encryptedData) {
-      return null
-    }
-
-    try {
-      const decrypted = encryption.decrypt(encryptedData) as string
-      const parsed = JSON.parse(decrypted)
-      return {
-        ...parsed,
-        createdAt: new Date(parsed.createdAt),
-        expiresAt: new Date(parsed.expiresAt),
-      }
-    } catch (error) {
-      logger.error({ err: error }, 'Failed to decrypt session data')
-      this.cancelPayment(session)
-      return null
-    }
-  }
-
-  /**
-   * Validate token with Fleeca API
-   */
-  async #validateToken(token: string): Promise<FleecaValidationResponse> {
-    try {
-      const url = `${this.#getBaseUrl()}/gateway_token/${token}`
-
-      const response = await ky.post(url, {
-        timeout: fleecaConfig.timeout,
-        retry: {
-          methods: ['post'],
-          limit: 3,
-        },
-        headers: {
-          Accept: 'application/json',
-        },
-      })
-
-      const data = await response.json<FleecaValidationResponse>()
-
-      if (!data) {
-        throw PaymentException.create('EMPTY_RESPONSE')
-      }
-
-      return data
-    } catch (err) {
-      logger.error({ err, token }, 'Token validation failed')
-
-      if (isTimeoutError(err) || isNetworkError(err)) {
-        throw PaymentException.create('NETWORK_ERROR', err)
-      }
-
-      throw err instanceof PaymentException ? err : PaymentException.create('VALIDATION_ERROR', err)
-    }
-  }
-
-  /**
-   * Validate payment details against session
-   */
-  async #validatePaymentDetails(
-    validationResponse: FleecaValidationResponse,
-    sessionData: PaymentSessionData
-  ): Promise<void> {
-    if (app.inProduction && validationResponse.sandbox) {
-      throw PaymentException.custom(
-        'Sandbox token not allowed in production',
-        'PAYMENT_NOT_SUCCESSFUL'
-      )
-    }
-
-    if (validationResponse.payment !== sessionData.amount) {
-      throw PaymentException.custom(
-        `Amount mismatch: expected ${sessionData.amount}, got ${validationResponse.payment}`,
-        'AMOUNT_MISMATCH'
-      )
-    }
-
-    if (validationResponse.auth_key !== fleecaConfig.authKey) {
-      throw PaymentException.create('INVALID_AUTH_KEY')
-    }
-
-    if (validationResponse.message !== 'payment_successful') {
-      throw PaymentException.custom(
-        `Payment not successful: ${validationResponse.message}`,
-        'PAYMENT_NOT_SUCCESSFUL'
-      )
-    }
-
-    if (validationResponse.token_expired) {
-      throw PaymentException.create('TOKEN_EXPIRED')
-    }
-  }
-
-  /**
-   * Build Fleeca gateway URL
-   */
-  #buildGatewayUrl(token: string): string {
-    return `${this.#getBaseUrl()}/gateway/${token}`
-  }
-
-  /**
-   * Validate payment parameters
-   */
-  #validatePaymentParameters(amount: number, source: string): void {
-    if (!fleecaConfig.authKey) {
-      throw PaymentException.create('INVALID_PARAMETERS')
-    }
+  async initiatePayment(options: InitiatePaymentOptions): Promise<InitiatePaymentResult> {
+    const { source, amount, metadata = {}, description } = options
 
     if (!amount || amount <= 0) {
       throw PaymentException.create('INVALID_PRICE')
     }
-
     if (!source?.trim()) {
       throw PaymentException.custom('Payment source is required', 'INVALID_PARAMETERS')
     }
+    if (!this.handlers.has(source)) {
+      throw PaymentException.custom(
+        `No handler registered for payment source "${source}"`,
+        'INVALID_PARAMETERS'
+      )
+    }
+
+    const response = await this.fleeca.createPayment({
+      amount,
+      mode: fleecaConfig.mode,
+      description,
+    })
+
+    await PendingPayment.create({
+      id: response.payment_id,
+      source,
+      amount,
+      mode: fleecaConfig.mode,
+      metadata,
+      expiresAt: DateTime.now().plus({ minutes: PENDING_TTL_MINUTES }),
+    })
+
+    logger.info({ paymentId: response.payment_id, source, amount }, 'Pending payment created')
+
+    return {
+      paymentId: response.payment_id,
+      paymentUrl: response.payment_link,
+    }
+  }
+
+  /**
+   * Validate and dispatch a signed Fleeca webhook.
+   *
+   * On a terminal status the pending record is **deleted** — it has served its
+   * purpose as a correlation key between initiation and webhook.
+   */
+  async processWebhook(rawBody: string, signature: string): Promise<void> {
+    if (!this.fleeca.verifyWebhookSignature(rawBody, signature)) {
+      throw PaymentException.create('WEBHOOK_SIGNATURE_INVALID')
+    }
+
+    let payload: FleecaWebhookPayload
+    try {
+      payload = JSON.parse(rawBody)
+    } catch (err) {
+      throw PaymentException.create('VALIDATION_ERROR', err)
+    }
+
+    const pending = await PendingPayment.find(payload.payment_id)
+
+    if (!pending) {
+      logger.warn(
+        { paymentId: payload.payment_id, status: payload.status },
+        'Payment Webhook received for unknown or already-processed payment — ignored'
+      )
+      return
+    }
+
+    const expectedMode = fleecaConfig.mode === 1 ? 'live' : 'sandbox'
+
+    if (payload.amount !== pending.amount) {
+      logger.error(
+        { paymentId: pending.id, expected: pending.amount, received: payload.amount },
+        'Payment Webhook amount mismatch — payment rejected'
+      )
+      await pending.delete()
+      throw PaymentException.custom(
+        `Amount mismatch: expected ${pending.amount}, received ${payload.amount}`,
+        'WEBHOOK_AMOUNT_MISMATCH'
+      )
+    }
+
+    if (payload.mode !== expectedMode) {
+      logger.error(
+        { paymentId: pending.id, expected: expectedMode, received: payload.mode },
+        'Payment Webhook mode mismatch — payment rejected'
+      )
+      await pending.delete()
+      throw PaymentException.custom(
+        `Mode mismatch: expected ${expectedMode}, received ${payload.mode}`,
+        'WEBHOOK_MODE_MISMATCH'
+      )
+    }
+
+    if (pending.expiresAt < DateTime.now()) {
+      logger.warn(
+        { paymentId: pending.id },
+        'Payment Webhook arrived for an expired pending payment'
+      )
+      await pending.delete()
+      return
+    }
+
+    if (payload.status === 'pending') {
+      logger.debug(
+        { paymentId: payload.payment_id },
+        'Intermediate pending payment webhook received'
+      )
+      return
+    }
+
+    const handler = this.handlers.resolve(pending.source)
+
+    if (payload.status === 'payment_successful') {
+      await handler.onSuccess(pending)
+    } else if (payload.status === 'payment_failed') {
+      await handler.onFailure?.(pending)
+    }
+
+    await pending.delete()
+
+    logger.info(
+      { paymentId: pending.id, status: payload.status, source: pending.source },
+      'Pending payment resolved and removed'
+    )
+  }
+
+  /**
+   * Resolve the current status of a payment.
+   *
+   * Strategy:
+   *   1. Look in `pending_payments` — if found, status is still pending.
+   *   2. If not found, query the Fleeca API as fallback — the webhook already
+   *      deleted the record, so Fleeca is the only source of truth.
+   *   3. If Fleeca also returns 404, the payment_id is genuinely unknown.
+   */
+  async resolvePaymentStatus(paymentId: string): Promise<ResolvedPaymentStatus> {
+    const pending = await PendingPayment.find(paymentId)
+
+    if (pending) {
+      if (pending.expiresAt < DateTime.now()) {
+        await pending.delete()
+        logger.info({ paymentId }, 'Expired pending payment reaped on read')
+        return { origin: 'expired' }
+      }
+
+      return {
+        origin: 'pending_table',
+        status: 'pending',
+        amount: pending.amount,
+        source: pending.source,
+      }
+    }
+
+    try {
+      const details = await this.fleeca.getPayment(paymentId)
+      return {
+        origin: 'fleeca_api',
+        status: details.status,
+        amount: details.amount,
+      }
+    } catch (err) {
+      if (err instanceof PaymentException && err.code === 'HTTP_CLIENT_ERROR') {
+        return { origin: 'not_found' }
+      }
+      throw err
+    }
+  }
+
+  /**
+   * Delete all pending records past their expires_at.
+   * Call from a scheduler to keep the table lean.
+   *
+   * @returns number of rows deleted
+   */
+  async purgeExpiredPending(): Promise<number> {
+    const count = await PendingPayment.query()
+      .where('expires_at', '<', DateTime.now().toSQL()!)
+      .delete()
+
+    if (count.length > 0) {
+      logger.info({ count: count.length }, 'Expired pending payments purged')
+    }
+
+    return count.length
   }
 }

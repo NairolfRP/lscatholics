@@ -3,7 +3,9 @@ import type { routes } from './index.ts'
 
 export interface ApiDefinition {
   payment: {
+    webhook: typeof routes['payment.webhook']
     callback: typeof routes['payment.callback']
+    status: typeof routes['payment.status']
   }
   signIn: typeof routes['signIn']
   auth: {
