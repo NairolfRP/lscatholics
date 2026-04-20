@@ -42,7 +42,9 @@ export const DonateOrganizationFields = withForm({
                 return (
                   <Field data-invalid={isInvalid}>
                     <div className="space-y-3 pl-6 border-l-2 border-gray-200">
-                      <FieldLabel htmlFor={field.name}>Nom de l'organisation *</FieldLabel>
+                      <FieldLabel required htmlFor={field.name}>
+                        Nom de l'organisation
+                      </FieldLabel>
                       <Input
                         id={field.name}
                         name={field.name}
@@ -52,6 +54,7 @@ export const DonateOrganizationFields = withForm({
                         type="text"
                         placeholder="Doe Corporation"
                         aria-invalid={isInvalid}
+                        required
                       />
                       {isInvalid && <FieldError errors={field.state.meta.errors} />}
                     </div>

@@ -67,5 +67,6 @@ declare module '@adonisjs/inertia/types' {
     'services/quinceanera': ExtractProps<(typeof import('../../inertia/pages/services/quinceanera.tsx'))['default']>
     'services/service-layout': ExtractProps<(typeof import('../../inertia/pages/services/service-layout.tsx'))['default']>
     'vocations': ExtractProps<(typeof import('../../inertia/pages/vocations.tsx'))['default']>
+    'volunteers': ExtractProps<(typeof import('../../inertia/pages/volunteers.tsx'))['default']>
   }
 }

@@ -43,7 +43,9 @@ export const DonatePersonalInfoFields = withForm({
               const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
               return (
                 <Field data-invalid={isInvalid}>
-                  <FieldLabel htmlFor={field.name}>{item.label} *</FieldLabel>
+                  <FieldLabel required htmlFor={field.name}>
+                    {item.label}
+                  </FieldLabel>
                   <Input
                     id={field.name}
                     name={field.name}
@@ -53,6 +55,7 @@ export const DonatePersonalInfoFields = withForm({
                     type="text"
                     placeholder={item.placeholder}
                     aria-invalid={isInvalid}
+                    required
                   />
                   {isInvalid && <FieldError errors={field.state.meta.errors} />}
                 </Field>

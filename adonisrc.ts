@@ -68,6 +68,7 @@ export default defineConfig({
     () => import('@adonisjs/bouncer/bouncer_provider'),
     () => import('#providers/api_provider'),
     () => import('#providers/app_provider'),
+    () => import('#providers/billing_provider'),
   ],
 
   /*

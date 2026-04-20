@@ -33,6 +33,7 @@ export const controllers = {
     Parishes: () => import('#app/pages/controllers/parishes_controller'),
     RegisterParishioners: () => import('#app/pages/controllers/register_parishioners_controller'),
     Services: () => import('#app/pages/controllers/services_controller'),
+    Volunteers: () => import('#app/pages/controllers/volunteers_controller'),
   },
   posts: {
     DashboardPosts: () => import('#app/posts/controllers/dashboard_posts_controller'),

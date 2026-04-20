@@ -66,12 +66,13 @@ export function DonateForm() {
                     name={field.name}
                     value={field.state.value}
                     onChange={(v) => field.handleChange(v)}
-                    label="Montant du don *"
+                    label="Montant du don"
                     predefinedAmounts={PREDEFINED_AMOUNTS}
                     currency="USD"
                     locale="fr-FR"
                     isInvalid={isInvalid}
                     errors={field.state.meta.errors}
+                    required
                   />
                 )
               }}

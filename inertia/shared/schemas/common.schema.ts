@@ -9,14 +9,14 @@ export const firstnameSchema = z
   })
   .trim()
   .min(1, { error: 'Le prénom ne peut pas être vide.' })
-  .max(50, 'Le prénom ne peut pas dépasser 50 caractères.')
+  .max(30, 'Le prénom ne peut pas dépasser 30 caractères.')
 
 export const middleNameSchema = z
   .string({
     error: 'Valeur invalide.',
   })
   .trim()
-  .max(50, 'Le deuxième prénom ne peut pas dépasser 50 caractères.')
+  .max(30, 'Le deuxième prénom ne peut pas dépasser 30 caractères.')
   .optional()
 
 export const lastnameSchema = z
@@ -26,7 +26,7 @@ export const lastnameSchema = z
   })
   .trim()
   .min(1, { error: 'Le nom de famille ne peut pas être vide.' })
-  .max(50, 'Le nom de famille ne peut pas dépasser 50 caractères.')
+  .max(30, 'Le nom de famille ne peut pas dépasser 30 caractères.')
 
 export const ethnicitySchema = z.enum(getEthnicsGroupsIds(), {
   error: 'Veuillez sélectionner un groupe ethnique valide.',
@@ -85,6 +85,21 @@ export const addressSchema = z
 export const districtSchema = z.enum(getDistrictIds(), {
   error: 'Veuillez sélectionner un district valide.',
 })
+
+const preprocessedAge = (schema: any) => {
+  return z.preprocess((val) => {
+    if (val === '' || val === null || val === undefined) return undefined
+    const num = Number(val)
+    return Number.isNaN(num) ? undefined : num
+  }, schema)
+}
+
+export const ageSchema = preprocessedAge(
+  z
+    .int({ error: "L'âge doit être un nombre entier." })
+    .min(16, { error: "L'âge minimum pour s'enregistrer est de 16 ans." })
+    .max(120, { error: "L'âge ne peut pas dépasser 120 ans." })
+)
 
 export const civilTitleSchema = z.enum(civilTitleIds(), {
   error: 'Veuillez sélectionner un titre de civilité valide.',

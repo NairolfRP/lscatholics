@@ -7,7 +7,7 @@ import { PaymentService } from '#billing/services/payment_service'
 export default class DonateController {
   private pageName = 'donate' as const
 
-  constructor(private paymentService: PaymentService) {}
+  constructor(private readonly paymentService: PaymentService) {}
 
   index({ inertia }: HttpContext) {
     return inertia.render(this.pageName, {})
@@ -19,19 +19,20 @@ export default class DonateController {
     const { fleecaConfirmation, ...metadata } = payload
 
     try {
-      const paymentSession = await this.paymentService.generatePaymentUrl(
-        'donation',
-        payload.amount,
+      const donatorName = payload.isOrganization
+        ? payload.organizationName
+        : `${payload.firstname} ${payload.lastname}`
+      const { paymentUrl } = await this.paymentService.initiatePayment({
+        source: 'donation',
+        amount: payload.amount,
         metadata,
-        session
-      )
-
-      return inertia.render(this.pageName, {
-        paymentUrl: paymentSession.paymentUrl,
+        description: `Don — ${donatorName}`,
       })
+
+      return inertia.render(this.pageName, { paymentUrl })
     } catch (error) {
-      logger.error({ err: error }, 'Error creating a donation')
-      session.flash('error', 'Erreur lors de la création du paiement')
+      logger.error({ err: error }, 'Failed to initiate donation payment')
+      session.flash('error', 'Erreur lors de la création du paiement. Veuillez réessayer.')
       return response.redirect().back()
     }
   }

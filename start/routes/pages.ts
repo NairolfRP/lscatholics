@@ -96,3 +96,9 @@ router
       .as('decrees.single')
   })
   .prefix('decrees')
+
+router.get('/volunteers', [controllers.pages.Volunteers, 'index']).as('volunteers.index')
+router
+  .post('/volunteers', [controllers.pages.Volunteers, 'submit'])
+  .use(middleware.auth())
+  .as('volunteers.submit')

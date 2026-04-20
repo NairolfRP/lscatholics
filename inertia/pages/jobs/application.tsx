@@ -3,7 +3,7 @@ import type { Data } from '@generated/data'
 import { useAppForm } from '@/shared/hooks/form'
 import { employmentApplicationFormOpts } from '@/features/employment-application/constants/form_opts'
 import { urlFor } from '@/client'
-import { serverErrorsFormConvertor } from '@/lib/utils'
+import { cn, serverErrorsFormConvertor } from '@/lib/utils'
 import { router } from '@inertiajs/react'
 import Head from '@/shared/components/app-head'
 import HeroSection from '@/shared/components/layout/default/hero-section'
@@ -25,6 +25,7 @@ import { EmploymentApplicantDeclarationFields } from '@/features/employment-appl
 import { EmploymentApplicationOOCFields } from '@/features/employment-application/components/form/fields/employment-application-ooc-fields'
 import { Container } from '@/shared/components/ui/container'
 import { ActionButton } from '@/shared/components/action-button'
+import { AsteriskRequired } from '@/shared/components/ui/asterisk-required'
 
 type PageProps = InertiaProps<{
   job: Data.Careers.JobPosting.Variants['employmentApplication']
@@ -124,13 +125,16 @@ export default function EmploymentApplicationPage({ job, user }: PageProps) {
               </div>
 
               <div className={sectionClasses}>
-                <form.Subscribe selector={(state) => state.values.gender}>
-                  {(gender) => (
-                    <Typography variant="h4" className={sectionTitleClasses}>
-                      Déclaration {gender === 'female' ? 'de la candidate' : 'du candidat'}
-                    </Typography>
-                  )}
-                </form.Subscribe>
+                <div className={cn(sectionTitleClasses, 'flex items-start gap-2')}>
+                  <form.Subscribe selector={(state) => state.values.gender}>
+                    {(gender) => (
+                      <Typography variant="h4" className={sectionTitleClasses}>
+                        Déclaration {gender === 'female' ? 'de la candidate' : 'du candidat'}
+                      </Typography>
+                    )}
+                  </form.Subscribe>
+                  <AsteriskRequired />
+                </div>
                 <EmploymentApplicantDeclarationFields form={form} />
               </div>
 

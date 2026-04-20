@@ -60,8 +60,9 @@ export const DonateOptionsFields = withForm({
                       field.handleChange(checked)
                     }
                   }}
+                  required
                 />
-                <FieldLabel htmlFor={field.name} className="inline font-normal">
+                <FieldLabel required htmlFor={field.name} className="inline font-normal">
                   (( Je confirme que je suis BIEN CONNECTÉ sur l'
                   <LinkText href="https://fleeca.gta.world" target="_blank">
                     application web Fleeca

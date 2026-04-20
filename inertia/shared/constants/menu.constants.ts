@@ -82,19 +82,24 @@ export const MENU_ITEMS: MenuItem[] = [
         route: 'charities.index',
       },
       {
+        id: 'become-volunteer',
+        label: 'Devenir bénévole',
+        route: 'volunteers.index',
+      },
+      {
         id: 'donate',
         label: 'Faire un don',
         route: 'donate.index',
       },
       {
-        id: 'vocations',
-        label: 'Vocations',
-        route: 'vocations',
-      },
-      {
         id: 'work-for-archdiocese',
         label: "Travailler pour l'Archidiocèse",
         route: 'jobs.index',
+      },
+      {
+        id: 'vocations',
+        label: 'Vocations',
+        route: 'vocations',
       },
     ],
   },

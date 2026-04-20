@@ -14,6 +14,7 @@ import { Typography } from '@/shared/components/ui/typography'
 import { ParishionerBenefits } from '@/features/register-parishioner/components/parishioner-benefits'
 import { ParishionerForm } from '@/features/register-parishioner/components/form/parishioner-form'
 import { Container } from '@/shared/components/ui/container'
+import { AsteriskRequired } from '@/shared/components/ui/asterisk-required'
 
 type PageProps = InertiaProps
 
@@ -45,7 +46,8 @@ export default function RegisterParishionerPage({ user }: PageProps) {
               <br />
               <br />
               <span className="font-bold">
-                Seuls les champs indiqués avec un astérisque (*) sont obligatoires.
+                Seuls les champs indiqués avec un astérisque (<AsteriskRequired />) sont
+                obligatoires.
               </span>
             </CardDescription>
           </CardHeader>

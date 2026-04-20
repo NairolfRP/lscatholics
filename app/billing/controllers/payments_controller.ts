@@ -1,111 +1,112 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import { inject } from '@adonisjs/core'
 import { PaymentService } from '#billing/services/payment_service'
-import { FleecaValidationResponse, PaymentResult, PaymentSessionData } from '#billing/types/payment'
-import { DonateService } from '#donate/services/donate_service'
-import type { Logger } from '@adonisjs/core/logger'
-import type { DonateMetadata } from '#donate/types/donate'
+import PaymentException from '#billing/exceptions/payment_exception'
 
 @inject()
 export default class PaymentsController {
-  constructor(
-    private readonly paymentService: PaymentService,
-    private readonly donateService: DonateService
-  ) {}
+  constructor(private readonly paymentService: PaymentService) {}
 
-  async callback({ inertia, response, session, params, logger }: HttpContext) {
+  async webhook({ request, response, logger }: HttpContext) {
+    const rawBody = request.raw() ?? ''
+    const signature = request.header('X-Fleeca-Signature') ?? ''
+
+    if (!signature) {
+      logger.warn('Webhook received without X-Fleeca-Signature header')
+      return response.status(403).send('Forbidden')
+    }
+
     try {
-      const { token } = params
-
-      if (!token) {
-        logger.error(undefined, 'Payment callback received without token')
-        return this.handlePaymentError(inertia, {
-          title: 'Erreur de paiement',
-          message: 'Token de paiement manquant',
-        })
+      await this.paymentService.processWebhook(rawBody, signature)
+      return response.status(200).send('OK')
+    } catch (err) {
+      if (err instanceof PaymentException && err.code === 'WEBHOOK_SIGNATURE_INVALID') {
+        logger.warn({ signature }, 'Webhook signature verification failed')
+        return response.status(403).send('Forbidden')
       }
 
-      logger.info(`Processing payment callback for token %s`, token)
+      logger.error({ err }, 'Webhook processing error — acknowledging to prevent retry loop')
+      return response.status(200).send('OK')
+    }
+  }
 
-      try {
-        const result = await this.paymentService.processPaymentCallback(token, session)
+  async callback({ request, inertia, logger }: HttpContext) {
+    const paymentId = request.input('payment_id') as string | undefined
 
-        await this.handleSuccessfulPayment(result, logger)
+    if (!paymentId) {
+      return inertia.render('payment-callback', {
+        success: false,
+        title: 'Erreur de paiement',
+        message: 'Identifiant de paiement manquant.',
+      })
+    }
 
-        return this.handlePaymentSuccess(response, session, inertia, result.sessionData)
-      } catch (err) {
-        logger.error({ err }, 'Payment processing failed for token %s', token)
-        return this.handlePaymentError(inertia, {
-          title: 'Erreur de paiement',
-          message: "Le paiement n'a pas pu être vérifié",
-        })
+    try {
+      const resolved = await this.paymentService.resolvePaymentStatus(paymentId)
+
+      switch (resolved.origin) {
+        case 'pending_table':
+          return inertia.render('payment-callback', {
+            success: null,
+            title: 'Traitement en cours…',
+            message: 'Votre paiement est en cours de traitement. Merci de patienter.',
+            paymentId,
+          })
+
+        case 'fleeca_api':
+          if (resolved.status === 'payment_successful') {
+            return inertia.render('payment-callback', {
+              success: true,
+              title: 'Paiement réussi !',
+              message: `Merci ! Votre paiement de $${resolved.amount.toLocaleString()} a été traité avec succès.`,
+              amount: resolved.amount,
+            })
+          }
+          return inertia.render('payment-callback', {
+            success: false,
+            title: 'Paiement refusé',
+            message: "Votre paiement a été refusé ou a échoué. Aucun montant n'a été débité.",
+          })
+
+        case 'expired':
+          return inertia.render('payment-callback', {
+            success: false,
+            title: 'Session expirée',
+            message: "La session de paiement a expiré. Aucun montant n'a été débité.",
+          })
+
+        case 'not_found':
+          return inertia.render('payment-callback', {
+            success: false,
+            title: 'Paiement introuvable',
+            message: 'Ce paiement est introuvable.',
+          })
       }
-    } catch (error) {
-      logger.error({ err: error }, 'Payment callback error')
-      return this.handlePaymentError(inertia, {
+    } catch (err) {
+      logger.error({ err, paymentId }, 'Payment callback page error')
+      return inertia.render('payment-callback', {
+        success: false,
         title: 'Erreur technique',
-        message: 'Erreur lors du traitement du paiement',
+        message: 'Une erreur est survenue lors de la vérification du paiement.',
       })
     }
   }
 
-  private handlePaymentSuccess(
-    response: HttpContext['response'],
-    session: HttpContext['session'],
-    inertia: HttpContext['inertia'],
-    sessionData: PaymentSessionData
-  ) {
-    const { source, amount } = sessionData
+  async status({ params, response }: HttpContext) {
+    const resolved = await this.paymentService.resolvePaymentStatus(params.paymentId)
 
-    switch (source) {
-      case 'donation':
-        return inertia.render('payment-callback', {
-          //@ts-ignore
-          success: true,
-          title: 'Donation réussie !',
-          message: `Merci pour votre générosité ! Votre don de $${amount} a été traité avec succès.`,
-          amount: sessionData.amount,
-          source: sessionData.source,
-          metadata: sessionData.metadata,
-        })
-      default:
-        session.flash('success', `Votre paiement de $${amount} a été traité avec succès.`)
-        return response.redirect().back()
-    }
-  }
+    switch (resolved.origin) {
+      case 'pending_table':
+        return response.json({ status: 'pending', amount: resolved.amount })
 
-  private handlePaymentError(
-    inertia: HttpContext['inertia'],
-    error: { title: string; message: string }
-  ) {
-    return inertia.render('payment-callback', {
-      //@ts-ignore
-      success: false,
-      title: error.title,
-      message: error.message,
-    })
-  }
+      case 'fleeca_api':
+        return response.json({ status: resolved.status, amount: resolved.amount })
 
-  private async handleSuccessfulPayment(
-    result: PaymentResult<FleecaValidationResponse>,
-    logger: Logger
-  ): Promise<void> {
-    const { sessionData } = result
-    logger.debug(
-      { source: sessionData.source, amount: sessionData.amount },
-      `Processing successful payment`
-    )
-    switch (sessionData.source) {
-      case 'donation':
-        const donateMetadata = sessionData.metadata as DonateMetadata
-        await Promise.all([
-          this.donateService.sendPrivateDonateNotification(donateMetadata),
-          this.donateService.sendPublicDonateNotification(donateMetadata),
-        ])
-        break
-      default:
-        logger.warn({ source: sessionData.source }, `Unknown payment source`)
-        throw new Error(`Unsupported payment source: ${sessionData.source}`)
+      case 'expired':
+        return response.json({ status: 'expired' })
+
+      case 'not_found':
+        return response.status(404).json({ status: 'not_found' })
     }
   }
 }

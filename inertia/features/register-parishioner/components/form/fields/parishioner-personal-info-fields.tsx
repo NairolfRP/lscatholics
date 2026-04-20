@@ -61,7 +61,9 @@ export const ParishionerPersonalInfoFields = withForm({
               return (
                 <Field data-invalid={isInvalid}>
                   <FieldContent>
-                    <FieldLabel htmlFor={field.name}>Titre de civilité *</FieldLabel>
+                    <FieldLabel required htmlFor={field.name}>
+                      Titre de civilité
+                    </FieldLabel>
                   </FieldContent>
                   <Select
                     name={field.name}
@@ -69,6 +71,7 @@ export const ParishionerPersonalInfoFields = withForm({
                     onValueChange={(v: CivilTitle) => {
                       field.handleChange(v)
                     }}
+                    required
                   >
                     <SelectTrigger id={field.name} className="w-full" aria-invalid={isInvalid}>
                       <SelectValue placeholder="Sélectionnez un titre de civilité" />
@@ -93,7 +96,9 @@ export const ParishionerPersonalInfoFields = withForm({
               return (
                 <Field data-invalid={isInvalid}>
                   <FieldContent>
-                    <FieldLabel htmlFor={field.name}>État matrimonial *</FieldLabel>
+                    <FieldLabel required htmlFor={field.name}>
+                      État matrimonial
+                    </FieldLabel>
                   </FieldContent>
                   <Select
                     name={field.name}
@@ -101,6 +106,7 @@ export const ParishionerPersonalInfoFields = withForm({
                     onValueChange={(v: MaritalStatus) => {
                       field.handleChange(v)
                     }}
+                    required
                   >
                     <SelectTrigger id={field.name} className="w-full" aria-invalid={isInvalid}>
                       <SelectValue placeholder="Sélectionnez un état matrimonial" />
@@ -134,7 +140,9 @@ export const ParishionerPersonalInfoFields = withForm({
                     const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
                     return (
                       <Field data-invalid={isInvalid}>
-                        <FieldLabel htmlFor={field.name}>{item.label} *</FieldLabel>
+                        <FieldLabel required htmlFor={field.name}>
+                          {item.label}
+                        </FieldLabel>
                         <Input
                           id={field.name}
                           name={field.name}
@@ -159,7 +167,9 @@ export const ParishionerPersonalInfoFields = withForm({
                 return (
                   <Field data-invalid={isInvalid}>
                     <FieldContent>
-                      <FieldLabel htmlFor={field.name}>Sexe *</FieldLabel>
+                      <FieldLabel required htmlFor={field.name}>
+                        Sexe
+                      </FieldLabel>
                     </FieldContent>
                     <Select
                       name={field.name}
@@ -167,6 +177,7 @@ export const ParishionerPersonalInfoFields = withForm({
                       onValueChange={(v: Gender) => {
                         field.handleChange(v)
                       }}
+                      required
                     >
                       <SelectTrigger id={field.name} className="w-full" aria-invalid={isInvalid}>
                         <SelectValue placeholder="Sélectionnez un genre" />
@@ -192,13 +203,16 @@ export const ParishionerPersonalInfoFields = withForm({
                 const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
                 return (
                   <Field data-invalid={isInvalid}>
-                    <FieldLabel htmlFor={field.name}>Âge *</FieldLabel>
+                    <FieldLabel required htmlFor={field.name}>
+                      Âge
+                    </FieldLabel>
                     <NumberField
                       id={field.name}
                       min={16}
                       max={120}
                       value={field.state.value ?? null}
                       onChange={(v) => field.handleChange(v ?? undefined)}
+                      required
                     >
                       <NumberFieldContent>
                         <NumberFieldDecrement />

@@ -32,8 +32,12 @@ export const ParishionerContactInfoFields = withForm({
                 const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
                 return (
                   <Field data-invalid={isInvalid}>
-                    <FieldLabel htmlFor={field.name} className="flex items-center gap-2">
-                      {item.label} {item.required && '*'}
+                    <FieldLabel
+                      required={item.required}
+                      htmlFor={field.name}
+                      className="flex items-center gap-2"
+                    >
+                      {item.label}
                     </FieldLabel>
                     <Input
                       id={field.name}

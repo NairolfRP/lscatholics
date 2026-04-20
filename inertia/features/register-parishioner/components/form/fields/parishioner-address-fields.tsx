@@ -35,7 +35,9 @@ export const ParishionerAddressFields = withForm({
             const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
             return (
               <Field data-invalid={isInvalid}>
-                <FieldLabel htmlFor={field.name}>Adresse postale *</FieldLabel>
+                <FieldLabel required htmlFor={field.name}>
+                  Adresse postale
+                </FieldLabel>
                 <Input
                   id={field.name}
                   name={field.name}
@@ -62,12 +64,15 @@ export const ParishionerAddressFields = withForm({
             return (
               <Field data-invalid={isInvalid}>
                 <FieldContent>
-                  <FieldLabel htmlFor={field.name}>District *</FieldLabel>
+                  <FieldLabel required htmlFor={field.name}>
+                    District
+                  </FieldLabel>
                 </FieldContent>
                 <Select
                   name={field.name}
                   value={field.state.value}
                   onValueChange={(v) => field.handleChange((v as GTA5DistrictId) ?? undefined)}
+                  required
                 >
                   <SelectTrigger id={field.name} className="w-full" aria-invalid={isInvalid}>
                     <SelectValue id={field.name} placeholder="Sélectionnez un district" />

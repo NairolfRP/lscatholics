@@ -26,6 +26,7 @@ type Props = {
   locale?: string
   selectedClass?: string
   gridCols?: number
+  required?: boolean
 }
 
 export default function AmountField({
@@ -43,6 +44,7 @@ export default function AmountField({
   locale = 'fr-FR',
   selectedClass = 'bg-blue-50 border-blue-500 text-blue-700',
   gridCols = 4,
+  required,
 }: Props) {
   const [showCustomField, setShowCustomField] = useState(false)
 
@@ -67,7 +69,7 @@ export default function AmountField({
   return (
     <Field data-invalid={isInvalid}>
       {label && (
-        <FieldLabel htmlFor={name} className="text-sm font-medium text-gray-700 mb-3 block">
+        <FieldLabel required={required} htmlFor={name}>
           {label}
         </FieldLabel>
       )}
@@ -90,6 +92,7 @@ export default function AmountField({
               onChange={(val) => handleAmountChange(val)}
               aria-invalid={isInvalid}
               className="w-full"
+              required={required}
             >
               <NumberFieldContent>
                 <NumberFieldDecrement />
