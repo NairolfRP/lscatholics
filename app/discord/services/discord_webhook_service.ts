@@ -196,7 +196,7 @@ export class DiscordWebhookService {
   }
 
   getContentLength(): number {
-    return this.#content.length
+    return this.#content.trim().length
   }
 
   hasContent(): boolean {
