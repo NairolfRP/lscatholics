@@ -4,7 +4,7 @@ import { Typography } from '@/shared/components/ui/typography'
 
 export function VolunteersSidebar() {
   return (
-    <div className="flex flex-col gap-5 col-span-2">
+    <>
       <Card className="bg-accent text-accent-foreground">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
@@ -65,6 +65,6 @@ export function VolunteersSidebar() {
           </Typography>
         </CardContent>
       </Card>
-    </div>
+    </>
   )
 }

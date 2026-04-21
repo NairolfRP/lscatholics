@@ -12,7 +12,7 @@ export const VolunteerApplicationButtons = withForm({
     }
 
     return (
-      <Field orientation="horizontal">
+      <Field orientation="horizontal" className="gap-8 justify-center-safe md:justify-end-safe">
         <ActionButton
           type="button"
           variant="outline"
@@ -31,7 +31,7 @@ export const VolunteerApplicationButtons = withForm({
               form="volunteer-application-form"
               disabled={!canSubmit || isSubmitting || isValidating}
             >
-              Soumettre la candidature
+              Soumettre
             </Button>
           )}
         </form.Subscribe>

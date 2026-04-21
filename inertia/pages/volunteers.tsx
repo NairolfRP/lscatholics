@@ -39,9 +39,9 @@ export default function Volunteers({ user }: PageProps) {
         as="section"
         size="wide"
         spacing="md"
-        className="grid grid-cols-1 md:grid-cols-5 gap-5"
+        className="grid grid-cols-1 md:grid-cols-5 gap-5 px-2"
       >
-        <div className="flex flex-col gap-5 col-span-3">
+        <div className="flex flex-col gap-5 md:col-span-3">
           <Card>
             <CardContent>
               Nos programmes ont besoin de bénévoles au service des personnes les plus vulnérables
@@ -77,7 +77,9 @@ export default function Volunteers({ user }: PageProps) {
           </Card>
         </div>
 
-        <VolunteersSidebar />
+        <div className="flex flex-col gap-5 md:col-span-2">
+          <VolunteersSidebar />
+        </div>
       </Container>
     </>
   )
