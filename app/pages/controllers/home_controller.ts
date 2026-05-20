@@ -22,7 +22,7 @@ export default class HomeController {
         .select('slug', 'title', 'start_date')
         .where('start_date', '>=', now)
         .where((query) => {
-          query.where('end_date', '<', now).orWhereNull('end_date')
+          query.where('end_date', '>=', now).orWhereNull('end_date')
         })
         .orderBy('start_date', 'asc')
         .first()
