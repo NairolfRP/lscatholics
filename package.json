@@ -24,7 +24,10 @@
     "url": "git+https://github.com/NairolfRP/lscatholics.git"
   },
   "scripts": {
-    "deploy-build": "pnpm install && NODE_ENV=production node ace build && cd build && pnpm install --prod && NODE_ENV=production node ace migration:run --force && NODE_ENV=production node ace db:seed",
+    "deploy-build": "pnpm install && NODE_ENV=production node ace build && cd build && pnpm install --prod",
+    "deploy:migrate": "cd build && NODE_ENV=production node ace migration:run --force",
+    "deploy:seed": "cd build && NODE_ENV=production node ace db:seed",
+    "deploy": "pnpm run deploy-build && pnpm run deploy:migrate && pnpm run deploy:seed",
     "start": "node bin/server.js",
     "build": "node ace build",
     "dev": "node ace serve --hmr",
