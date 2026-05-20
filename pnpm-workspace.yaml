@@ -1,13 +1,4 @@
-minimumReleaseAge: 4320
 strictPeerDependencies: true
-minimumReleaseAgeExclude:
-  - "@types/node"
-  - "@types/react"
-  - nock@14.0.12
-  - "@inertiajs/core@2.3.21"
-  - "@inertiajs/react@2.3.21"
-  # Renovate security update: vite@7.3.2
-  - vite@7.3.2
 engineStrict: true
 allowBuilds:
   esbuild: true
