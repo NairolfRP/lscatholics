@@ -7,11 +7,13 @@ import { ReactElement } from 'react'
 import { client } from '@/lib/client'
 import { TuyauProvider } from '@adonisjs/inertia/react'
 import { QueryClientProvider } from '@tanstack/react-query'
-import { queryClient } from '@/lib/query'
+import { createQueryClient } from '@/lib/query'
 
 const appName = import.meta.env.VITE_APP_NAME || 'LS Catholics'
 
 export default function render(page: any) {
+  const queryClient = createQueryClient()
+
   return createInertiaApp({
     page,
     render: ReactDOMServer.renderToString,
