@@ -1,11 +1,16 @@
 import vine from '@vinejs/vine'
 
-export const validateEndDateWithContext = vine.createRule((value: any, _options, field) => {
-  const data = field.parent as any
+type EmploymentExperienceParent = {
+  isCurrentPosition?: boolean
+  startDate?: string
+}
+
+export const validateEndDateWithContext = vine.createRule((value: unknown, _options, field) => {
+  const data = field.parent as EmploymentExperienceParent
 
   const isCurrentPosition = data.isCurrentPosition
   const startDateStr = data.startDate
-  const endDateStr = value
+  const endDateStr = typeof value === 'string' ? value : undefined
 
   if (isCurrentPosition === false && startDateStr && endDateStr) {
     const start = new Date(`${startDateStr}-01`)
