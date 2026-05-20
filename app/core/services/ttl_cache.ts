@@ -14,6 +14,7 @@ type TtlCacheOptions = {
 
 export class TtlCache<T> {
   readonly #store = new Map<string, CacheEntry<T>>()
+  readonly #inFlight = new Map<string, Promise<T>>()
   #cleanupTimer?: NodeJS.Timeout
 
   readonly #ttlMs: number
@@ -77,13 +78,29 @@ export class TtlCache<T> {
     const cached = this.get(key)
     if (cached !== undefined) return cached
 
-    const data = await fetchFn()
-    this.set(key, data)
-    return data
+    const pending = this.#inFlight.get(key)
+    if (pending) return pending
+
+    const promise = fetchFn()
+      .then((data) => {
+        if (this.#inFlight.get(key) === promise) {
+          this.set(key, data)
+        }
+        return data
+      })
+      .finally(() => {
+        if (this.#inFlight.get(key) === promise) {
+          this.#inFlight.delete(key)
+        }
+      })
+
+    this.#inFlight.set(key, promise)
+    return promise
   }
 
   async forceRefresh(key: string, fetchFn: () => Promise<T>): Promise<T> {
     this.delete(key)
+    this.#inFlight.delete(key)
     return this.getOrFetch(key, fetchFn)
   }
 
@@ -110,6 +127,7 @@ export class TtlCache<T> {
 
   clear(): void {
     this.#store.clear()
+    this.#inFlight.clear()
   }
 
   get size(): number {
