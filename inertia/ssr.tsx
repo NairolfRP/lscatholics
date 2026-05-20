@@ -2,7 +2,6 @@ import { createInertiaApp } from '@inertiajs/react'
 import Layout from '@/layouts/default'
 import { resolvePageComponent } from '@adonisjs/inertia/helpers'
 import ReactDOMServer from 'react-dom/server'
-import type { InertiaPageComponent } from '@/shared/types/pages'
 import type { Data } from '@generated/data'
 import { ReactElement } from 'react'
 import { client } from '@/lib/client'
@@ -17,19 +16,12 @@ export default function render(page: any) {
     page,
     render: ReactDOMServer.renderToString,
     title: (title) => (title ? `${title} - ${appName}` : appName),
-    resolve: async (name) => {
-      const pageComponent = await resolvePageComponent(
+    resolve: (name) => {
+      return resolvePageComponent(
         `./pages/${name}.tsx`,
-        import.meta.glob<{ default: InertiaPageComponent<Data.SharedProps> }>('./pages/**/*.tsx', {
-          eager: true,
-        })
+        import.meta.glob('./pages/**/*.tsx', { eager: true }),
+        (page: ReactElement<Data.SharedProps>) => <Layout children={page} breadcrumb={[]} />
       )
-
-      pageComponent.default.layout =
-        pageComponent.default.layout ||
-        ((page) => <Layout children={page as ReactElement<Data.SharedProps>} />)
-
-      return pageComponent
     },
 
     setup({ App, props }) {

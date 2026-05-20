@@ -1,5 +1,4 @@
 import '@/assets/css/app.css'
-import type { InertiaPageComponent } from '@/shared/types/pages'
 import { client } from '@/lib/client'
 import Layout from '@/layouts/default'
 import type { Data } from '@generated/data'
@@ -23,20 +22,11 @@ createInertiaApp({
   title: (title) => (title ? `${title} - ${appName}` : appName),
 
   resolve: async (name) => {
-    const pageComponent = await resolvePageComponent(
+    return resolvePageComponent(
       `./pages/${name}.tsx`,
-      import.meta.glob<{ default: InertiaPageComponent<Data.SharedProps> }>('./pages/**/*.tsx')
+      import.meta.glob('./pages/**/*.tsx'),
+      (page: ReactElement<Data.SharedProps>) => <Layout children={page} breadcrumb={[]} />
     )
-
-    if (pageComponent.default.layout === undefined) {
-      if (!name.startsWith('dashboard/')) {
-        pageComponent.default.layout = (page) => (
-          <Layout children={page as ReactElement<Data.SharedProps>} />
-        )
-      }
-    }
-
-    return pageComponent
   },
 
   setup({ el, App, props }) {

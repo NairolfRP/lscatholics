@@ -6,8 +6,14 @@ import type { Data } from '@generated/data'
 import AppHead from '@/shared/components/app-head'
 import Header from '@/shared/components/layout/default/header'
 import Footer from '@/shared/components/layout/default/footer'
+import type { NavItem } from '@/shared/types/breadcrumb'
 
-export default function Layout({ children }: { children: ReactElement<Data.SharedProps> }) {
+type Props = {
+  breadcrumb: NavItem[]
+  children: ReactElement<Data.SharedProps>
+}
+
+export default function Layout({ children }: Props) {
   const page = usePage()
 
   useEffect(() => {
