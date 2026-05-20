@@ -1,12 +1,12 @@
 import Head from '@/shared/components/app-head'
-import {Button} from '@/shared/components/ui/button'
-import type {InertiaProps} from '@/shared/types/pages'
-import {Link} from '@adonisjs/inertia/react'
-import {ArrowLeft} from 'lucide-react'
-import type {Data} from '@generated/data'
-import {EditPostForm} from '@/features/posts/components/dashboard/form/edit-post-form'
-import {withDashboardLayout} from '@/shared/components/layout'
-import {urlFor} from '@/lib/client'
+import { Button } from '@/shared/components/ui/button'
+import type { InertiaProps } from '@/shared/types/pages'
+import { Link } from '@adonisjs/inertia/react'
+import { ArrowLeft } from 'lucide-react'
+import type { Data } from '@generated/data'
+import { EditPostForm } from '@/features/posts/components/dashboard/form/edit-post-form'
+import { withDashboardLayout } from '@/shared/components/layout'
+import { urlFor } from '@/lib/client'
 
 type PageProps = InertiaProps<{
   post: Data.Posts.Post.Variants['allFields']
