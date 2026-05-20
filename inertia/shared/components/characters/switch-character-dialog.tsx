@@ -12,7 +12,7 @@ import {
 import { Label } from '@/shared/components/ui/label'
 import { Alert, AlertDescription, AlertTitle } from '@/shared/components/ui/alert'
 import { RadioGroup, RadioGroupItem } from '@/shared/components/ui/radio-group'
-import { api, urlFor } from '@/client'
+import { api, urlFor } from '@/lib/client'
 import { useUser } from '@/shared/hooks/use_user'
 import { useQuery } from '@tanstack/react-query'
 

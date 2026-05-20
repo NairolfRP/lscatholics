@@ -13,7 +13,7 @@ import JobActiveFilters from '@/features/jobs/components/job-active-filters'
 import { getDepartmentTitleById } from '@/shared/constants/departments.constants'
 import { useJobFilters } from '@/features/jobs/hooks/use_job_filters'
 import type { Data } from '@generated/data'
-import type { InertiaProps } from '@/types'
+import type { InertiaProps } from '@/shared/types/pages'
 import { Container } from '@/shared/components/ui/container'
 
 type PageProps = InertiaProps<{

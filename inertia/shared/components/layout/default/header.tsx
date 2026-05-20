@@ -1,5 +1,4 @@
 import { cn } from '@/lib/utils'
-import Logo from '@/assets/images/logo.png'
 import { Link } from '@adonisjs/inertia/react'
 import { useWindowScroll } from '@/shared/hooks/use_window_scroll'
 import { useUser } from '@/shared/hooks/use_user'
@@ -7,6 +6,7 @@ import Navigation from '@/shared/components/layout/default/navigation'
 import LoginButton from '@/shared/components/layout/default/login-button'
 import UserAccountMenu from '@/shared/components/layout/default/user-account-menu'
 import MobileNavigation from '@/shared/components/layout/default/mobile-navigation'
+import { Logo } from '@/shared/components/logo'
 
 const SCROLL_THRESHOLD = 50
 
@@ -35,7 +35,7 @@ export default function Header() {
       <div className="flex w-full justify-between align-middle items-center lg:py-5 lg:px-10">
         <h1>
           <Link route="home">
-            <img alt="Logo" src={Logo} className="w-20 h-20" />
+            <Logo className="w-20 h-20" />
           </Link>
         </h1>
 

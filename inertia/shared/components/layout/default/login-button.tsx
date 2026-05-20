@@ -1,4 +1,4 @@
-import { urlFor } from '@/client'
+import { urlFor } from '@/lib/client'
 import { Button } from '@/shared/components/ui/button'
 import { LogIn } from 'lucide-react'
 import { usePage } from '@inertiajs/react'

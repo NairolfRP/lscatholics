@@ -1,4 +1,4 @@
-import type { InertiaProps } from '@/types'
+import type { InertiaProps } from '@/shared/types/pages'
 import Head from '@/shared/components/app-head'
 import {
   Card,

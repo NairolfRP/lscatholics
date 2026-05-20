@@ -1,4 +1,4 @@
-import { withForm } from '@/shared/hooks/form'
+import { withForm } from '@/lib/form'
 import { employmentApplicationFormOpts } from '@/features/employment-application/constants/form_opts'
 import { APPLICANT_STATEMENTS } from '#shared/constants/employment.constants'
 import { Checkbox } from '@/shared/components/ui/checkbox'

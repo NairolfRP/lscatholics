@@ -1,4 +1,4 @@
-import { withForm } from '@/shared/hooks/form'
+import { withForm } from '@/lib/form'
 import { donateFormOpts } from '@/features/donate/constants/form_opts'
 import {
   Field,

@@ -1,4 +1,4 @@
-import type { InertiaProps } from '@/types'
+import type { InertiaProps } from '@/shared/types/pages'
 import { useEffect, useRef, useState } from 'react'
 import { cn } from '@/lib/utils'
 

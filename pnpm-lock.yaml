@@ -44,9 +44,6 @@ importers:
       '@daypicker/react':
         specifier: ^10.0.1
         version: 10.0.1(@types/react@19.2.14)(react@19.2.6)
-      '@fontsource-variable/inter':
-        specifier: ^5.2.8
-        version: 5.2.8
       '@gtaw-oauth-providers/adonisjs-ally':
         specifier: ^2.0.7
         version: 2.0.7(@adonisjs/ally@6.3.0(b30d5e179b0dbfc710d4f80a4e85e121))(@adonisjs/core@7.3.2(@adonisjs/assembler@8.4.0(typescript@6.0.3))(@vinejs/vine@4.4.0)(edge.js@6.5.0)(pino-pretty@13.1.3)(youch@4.1.1))
@@ -1078,9 +1075,6 @@ packages:
 
   '@floating-ui/utils@0.2.11':
     resolution: {integrity: sha512-RiB/yIh78pcIxl6lLMG0CgBXAZ2Y0eVHqMPYugu+9U0AeT6YBeiJpf7lbdJNIugFP5SIjwNRgo4DhR1Qxi26Gg==}
-
-  '@fontsource-variable/inter@5.2.8':
-    resolution: {integrity: sha512-kOfP2D+ykbcX/P3IFnokOhVRNoTozo5/JxhAIVYLpea/UBmCQ/YWPBfWIDuBImXX/15KH+eKh4xpEUyS2sQQGQ==}
 
   '@gtaw-oauth-providers/adonisjs-ally@2.0.7':
     resolution: {integrity: sha512-B68rwu+fZybSKsH87CVbnptvi33nrSvA09AkQQAMltOaQmyR4UsTd7WlaaZyvYlW2QUHOYIjyNthtngmYNy/LA==}
@@ -6780,8 +6774,6 @@ snapshots:
       react-dom: 19.2.6(react@19.2.6)
 
   '@floating-ui/utils@0.2.11': {}
-
-  '@fontsource-variable/inter@5.2.8': {}
 
   '@gtaw-oauth-providers/adonisjs-ally@2.0.7(@adonisjs/ally@6.3.0(b30d5e179b0dbfc710d4f80a4e85e121))(@adonisjs/core@7.3.2(@adonisjs/assembler@8.4.0(typescript@6.0.3))(@vinejs/vine@4.4.0)(edge.js@6.5.0)(pino-pretty@13.1.3)(youch@4.1.1))':
     dependencies:

@@ -15,7 +15,7 @@ import { Unlink } from 'lucide-react'
 import { useCallback } from 'react'
 import { router } from '@inertiajs/react'
 import { toast } from 'sonner'
-import { urlFor } from '@/client'
+import { urlFor } from '@/lib/client'
 
 export function DiscordConnection() {
   const props = usePageProps<AccountSettingsPageProps>()

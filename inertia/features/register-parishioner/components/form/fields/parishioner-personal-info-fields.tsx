@@ -32,7 +32,7 @@ import {
   NumberFieldInput,
 } from '@/shared/components/ui/number-field'
 import { registerParishionerFormOpts } from '@/features/register-parishioner/constants/form_opts'
-import { withForm } from '@/shared/hooks/form'
+import { withForm } from '@/lib/form'
 import { Fragment } from 'react'
 
 export const ParishionerPersonalInfoFields = withForm({

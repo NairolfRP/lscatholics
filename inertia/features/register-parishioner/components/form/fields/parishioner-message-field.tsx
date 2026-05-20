@@ -1,4 +1,4 @@
-import { withForm } from '@/shared/hooks/form'
+import { withForm } from '@/lib/form'
 import { registerParishionerFormOpts } from '@/features/register-parishioner/constants/form_opts'
 import { Textarea } from '@/shared/components/ui/textarea'
 import { Field, FieldDescription, FieldError, FieldLabel } from '@/shared/components/ui/field'

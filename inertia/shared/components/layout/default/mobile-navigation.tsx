@@ -18,7 +18,7 @@ import {
   SheetTrigger,
 } from '@/shared/components/ui/sheet'
 import { Button } from '@/shared/components/ui/button'
-import { urlFor } from '@/client'
+import { urlFor } from '@/lib/client'
 
 export default function MobileNavigation() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)

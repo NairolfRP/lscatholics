@@ -1,7 +1,7 @@
 import { LogIn } from 'lucide-react'
 import { Alert, AlertDescription } from '@/shared/components/ui/alert'
 import { LinkText } from '@/shared/components/link-text'
-import { urlFor } from '@/client'
+import { urlFor } from '@/lib/client'
 import { usePage } from '@inertiajs/react'
 
 type Props = {

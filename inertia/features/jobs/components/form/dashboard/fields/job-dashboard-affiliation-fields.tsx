@@ -1,5 +1,5 @@
 import { createJobFormOpts } from '@/features/jobs/constants/form_opts'
-import { withForm } from '@/shared/hooks/form'
+import { withForm } from '@/lib/form'
 import {
   Field,
   FieldContent,

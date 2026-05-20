@@ -16,7 +16,7 @@ import { Field, FieldError, FieldGroup, FieldLabel } from '@/shared/components/u
 import { contactSchema } from '@/features/contact/schemas/contact.schema'
 import { useCurrentCharacter } from '@/shared/hooks/use_current_character'
 import type { CONTACT_SUBJECTS } from '#shared/constants/contact_subjects'
-import { urlFor } from '@/client'
+import { urlFor } from '@/lib/client'
 import { serverErrorsFormConvertor } from '@/lib/utils'
 import { AsteriskRequired } from '@/shared/components/ui/asterisk-required'
 

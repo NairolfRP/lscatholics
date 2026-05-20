@@ -4,7 +4,7 @@ import HeroSection from '@/shared/components/layout/default/hero-section'
 import { MarkdownContent } from '@/shared/components/ui/markdown'
 import { formatDate } from '@/lib/utils'
 import type { Data } from '@generated/data'
-import { InertiaProps } from '@/types'
+import { InertiaProps } from '@/shared/types/pages'
 import { Container } from '@/shared/components/ui/container'
 
 type PageProps = InertiaProps<{

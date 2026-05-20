@@ -1,4 +1,4 @@
-import { InertiaProps } from '@/types'
+import { InertiaProps } from '@/shared/types/pages'
 import { Typography } from '@/shared/components/ui/typography'
 import { Container } from '@/shared/components/ui/container'
 import { MarkdownContent } from '@/shared/components/ui/markdown'

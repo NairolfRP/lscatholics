@@ -8,7 +8,7 @@ import { Button } from '@/shared/components/ui/button'
 import HeroSection from '@/shared/components/layout/default/hero-section'
 import { MarkdownContent } from '@/shared/components/ui/markdown'
 import type { Data } from '@generated/data'
-import type { InertiaProps } from '@/types'
+import type { InertiaProps } from '@/shared/types/pages'
 import { Container } from '@/shared/components/ui/container'
 
 type PageProps = InertiaProps<{

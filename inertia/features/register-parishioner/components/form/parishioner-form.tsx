@@ -1,6 +1,6 @@
-import { useAppForm } from '@/shared/hooks/form'
+import { useAppForm } from '@/lib/form'
 import { registerParishionerFormOpts } from '@/features/register-parishioner/constants/form_opts'
-import { urlFor } from '@/client'
+import { urlFor } from '@/lib/client'
 import { router } from '@inertiajs/react'
 import { usePageProps } from '@/shared/hooks/use_page_props'
 import { serverErrorsFormConvertor } from '@/lib/utils'

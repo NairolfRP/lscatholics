@@ -6,7 +6,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/shared/components/ui/card'
-import { getReadingTypeLabel } from '@/shared/services/liturgy'
+import { getReadingTypeLabel } from '@/features/readings/services/readings_service'
 import { Typography } from '@/shared/components/ui/typography'
 
 function ParsedInline({ text }: { text: string }): React.ReactNode[] {

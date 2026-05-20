@@ -2,11 +2,14 @@ import { useQuery } from '@tanstack/react-query'
 import Head from '@/shared/components/app-head'
 import { Typography } from '@/shared/components/ui/typography'
 import { Button } from '@/shared/components/ui/button'
-import { liturgicalColor } from '@/shared/services/liturgy'
+import {
+  getLiturgicalHeader,
+  liturgicalColor,
+  sortReadings,
+} from '@/features/readings/services/readings_service'
 import { Container } from '@/shared/components/ui/container'
 import type { AELFReadingsResponse } from '@/features/readings/types/readings.types'
 import { ReadingCard } from '@/features/readings/components/reading-card'
-import { getLiturgicalHeader, sortReadings } from '@/features/readings/services/readings_service'
 
 export default function DailyReadingsPage() {
   const { isLoading, data, error, refetch } = useQuery<AELFReadingsResponse>({

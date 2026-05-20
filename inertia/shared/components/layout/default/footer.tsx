@@ -2,7 +2,7 @@ import { MapPin, Phone } from 'lucide-react'
 import { Link } from '@adonisjs/inertia/react'
 import { FOOTER_MENU_ITEMS } from '@/shared/constants/menu.constants'
 import { LinkText } from '@/shared/components/link-text'
-import { urlFor } from '@/client'
+import { urlFor } from '@/lib/client'
 import { ARCHDIOCESE_SOCIAL_MEDIAS } from '@/shared/constants/social.constants'
 
 export default function Footer() {

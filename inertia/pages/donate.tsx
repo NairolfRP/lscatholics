@@ -1,4 +1,4 @@
-import { InertiaProps } from '@/types'
+import { InertiaProps } from '@/shared/types/pages'
 import DonateHero from '@/assets/images/donate-background.webp'
 import Head from '@/shared/components/app-head'
 import HeroSection from '@/shared/components/layout/default/hero-section'

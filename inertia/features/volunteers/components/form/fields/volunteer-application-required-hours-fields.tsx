@@ -1,4 +1,4 @@
-import { withForm } from '@/shared/hooks/form'
+import { withForm } from '@/lib/form'
 import { volunteersFormOpts } from '@/features/volunteers/constants/form_opts'
 import { Typography } from '@/shared/components/ui/typography'
 import {

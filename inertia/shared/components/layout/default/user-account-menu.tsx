@@ -11,7 +11,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/shared/components/ui/dropdown-menu'
-import { urlFor } from '@/client'
+import { urlFor } from '@/lib/client'
 import SwitchCharacterDialog from '@/shared/components/characters/switch-character-dialog'
 import type { Data } from '@generated/data'
 

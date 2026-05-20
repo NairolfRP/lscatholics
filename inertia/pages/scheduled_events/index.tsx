@@ -7,9 +7,9 @@ import { Button } from '@/shared/components/ui/button'
 import { Card } from '@/shared/components/ui/card'
 import { Alert, AlertDescription, AlertTitle } from '@/shared/components/ui/alert'
 import HeroSection from '@/shared/components/layout/default/hero-section'
-import { urlFor } from '@/client'
+import { urlFor } from '@/lib/client'
 import type { Data } from '@generated/data'
-import { InertiaProps } from '@/types'
+import { InertiaProps } from '@/shared/types/pages'
 import { Container } from '@/shared/components/ui/container'
 
 type PageProps = InertiaProps<{

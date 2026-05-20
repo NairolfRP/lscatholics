@@ -14,9 +14,9 @@ import {
 } from '@/shared/components/ui/pagination'
 import HeroSection from '@/shared/components/layout/default/hero-section'
 import PostCard from '@/shared/components/post-card'
-import { urlFor } from '@/client'
+import { urlFor } from '@/lib/client'
 import type { Data } from '@generated/data'
-import { InertiaProps } from '@/types'
+import { InertiaProps } from '@/shared/types/pages'
 import { getPaginationItems } from '@/lib/utils'
 import { Container } from '@/shared/components/ui/container'
 

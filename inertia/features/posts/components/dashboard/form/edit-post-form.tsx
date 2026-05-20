@@ -1,6 +1,6 @@
 import { router, usePage } from '@inertiajs/react'
 import { useForm } from '@tanstack/react-form'
-import { hasRoute, urlFor } from '@/client'
+import { client, urlFor } from '@/lib/client'
 import { type EditPostSchema, editPostSchema } from '@/features/posts/schemas/dashboard/post.schema'
 import { DASHBOARD_POST_FORMS_ID } from '@/features/posts/constants/dashboard_posts.constants'
 import {
@@ -53,7 +53,7 @@ export function EditPostForm() {
       publishedAt: post.publishedAt ? new Date(post.publishedAt) : (null as Date | null),
     } as EditPostSchema,
     onSubmit: ({ value }) => {
-      if (!hasRoute('dashboard.dashboard_posts.update')) return
+      if (!client.has('dashboard.dashboard_posts.update')) return
 
       router.put(urlFor('dashboard.dashboard_posts.update', { id: post.id }), value, {
         preserveScroll: true,

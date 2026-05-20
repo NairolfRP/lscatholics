@@ -1,5 +1,5 @@
 import { PhoneCall } from 'lucide-react'
-import { withForm } from '@/shared/hooks/form'
+import { withForm } from '@/lib/form'
 import { registerParishionerFormOpts } from '@/features/register-parishioner/constants/form_opts'
 import { Input } from '@/shared/components/ui/input'
 import { Field, FieldError, FieldGroup, FieldLabel } from '@/shared/components/ui/field'

@@ -1,6 +1,6 @@
 import { router } from '@inertiajs/react'
 import { useForm } from '@tanstack/react-form'
-import { hasRoute, urlFor } from '@/client'
+import { client, urlFor } from '@/lib/client'
 import { CreatePostSchema, createPostSchema } from '@/features/posts/schemas/dashboard/post.schema'
 import { DASHBOARD_POST_FORMS_ID } from '@/features/posts/constants/dashboard_posts.constants'
 import {
@@ -53,7 +53,7 @@ export function CreatePostForm() {
       coverImageUrl: '',
     } as CreatePostSchema,
     onSubmit: ({ value }) => {
-      if (!hasRoute('dashboard.dashboard_posts.store')) return
+      if (!client.has('dashboard.dashboard_posts.store')) return
 
       router.post(urlFor('dashboard.dashboard_posts.store'), value, {
         preserveScroll: true,

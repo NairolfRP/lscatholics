@@ -1,6 +1,6 @@
 import { router } from '@inertiajs/react'
 import { useForm } from '@tanstack/react-form'
-import { hasRoute, urlFor } from '@/client'
+import { client, urlFor } from '@/lib/client'
 import {
   Card,
   CardContent,
@@ -61,7 +61,7 @@ export function CreateEventForm() {
       endDate: undefined as Date | undefined,
     },
     onSubmit: ({ value }) => {
-      if (!hasRoute('dashboard.dashboard_events.store')) return
+      if (!client.has('dashboard.dashboard_events.store')) return
 
       router.post(urlFor('dashboard.dashboard_events.store'), value, {
         preserveScroll: true,

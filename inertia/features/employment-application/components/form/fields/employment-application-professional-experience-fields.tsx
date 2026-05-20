@@ -1,5 +1,5 @@
 import { Briefcase, Plus, Trash2 } from 'lucide-react'
-import { withForm } from '@/shared/hooks/form'
+import { withForm } from '@/lib/form'
 import { employmentApplicationFormOpts } from '@/features/employment-application/constants/form_opts'
 import { Button } from '@/shared/components/ui/button'
 import { Input } from '@/shared/components/ui/input'

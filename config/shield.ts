@@ -13,9 +13,9 @@ const shieldConfig = defineConfig({
       scriptSrc: app.inDev
         ? [`'self'`, `'unsafe-eval'`, `'unsafe-inline'`, 'https://cloud.umami.is']
         : [`'self'`, 'https://cloud.umami.is'],
-      styleSrc: [`'self'`, `'unsafe-inline'`, 'https://fonts.googleapis.com'],
+      styleSrc: [`'self'`, `'unsafe-inline'`, 'https://fonts.bunny.net'],
       imgSrc: [`'self'`, 'data:', 'https:'],
-      fontSrc: [`'self'`, 'https://fonts.gstatic.com'],
+      fontSrc: [`'self'`, 'https://fonts.bunny.net'],
       connectSrc: [
         `'self'`,
         ...(app.inDev ? ['ws://localhost:24678'] : []),

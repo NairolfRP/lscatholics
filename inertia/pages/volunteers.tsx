@@ -1,4 +1,4 @@
-import { InertiaProps } from '@/types'
+import { InertiaProps } from '@/shared/types/pages'
 import Head from '@/shared/components/app-head'
 import HeroSection from '@/shared/components/layout/default/hero-section'
 import { Typography } from '@/shared/components/ui/typography'

@@ -1,6 +1,6 @@
 import { Container } from '@/shared/components/ui/container'
 import { Link } from '@adonisjs/inertia/react'
-import { urlFor } from '@/client'
+import { urlFor } from '@/lib/client'
 import { Card, CardContent } from '@/shared/components/ui/card'
 import { Button } from '@/shared/components/ui/button'
 import { Heart } from 'lucide-react'

@@ -1,18 +1,21 @@
 import '@/assets/css/app.css'
-import type { InertiaPageComponent } from '@/types'
-import { client, queryClient } from '@/client'
+import type { InertiaPageComponent } from '@/shared/types/pages'
+import { client } from '@/lib/client'
 import Layout from '@/layouts/default'
 import type { Data } from '@generated/data'
 import { createRoot } from 'react-dom/client'
 import { createInertiaApp } from '@inertiajs/react'
 import { TuyauProvider } from '@adonisjs/inertia/react'
 import { resolvePageComponent } from '@adonisjs/inertia/helpers'
-import { hydrate, QueryClientProvider } from '@tanstack/react-query'
-import { ReactElement } from 'react'
+import { QueryClientProvider } from '@tanstack/react-query'
+import { ReactElement, StrictMode } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
 import { ErrorFallback } from '@/shared/components/error-fallback'
+import ScrollToTopButton from '@/shared/components/scroll-to-top-button'
+import { Toaster } from 'sonner'
+import { queryClient } from '@/lib/query'
 
-const appName = import.meta.env.VITE_APP_NAME || 'Archidiocèse de Los Santos'
+const appName = import.meta.env.VITE_APP_NAME || 'LS Catholics'
 
 createInertiaApp({
   progress: { color: '#5468FF' },
@@ -42,18 +45,20 @@ createInertiaApp({
   },
 
   setup({ el, App, props }) {
-    if (props.initialPage.props.dehydratedState) {
-      hydrate(queryClient, props.initialPage.props.dehydratedState)
-    }
+    const root = createRoot(el)
 
-    createRoot(el).render(
-      <ErrorBoundary FallbackComponent={ErrorFallback}>
-        <QueryClientProvider client={queryClient}>
-          <TuyauProvider client={client}>
-            <App {...props} />
-          </TuyauProvider>
-        </QueryClientProvider>
-      </ErrorBoundary>
+    root.render(
+      <StrictMode>
+        <ErrorBoundary FallbackComponent={ErrorFallback}>
+          <QueryClientProvider client={queryClient}>
+            <TuyauProvider client={client}>
+              <Toaster position="top-center" richColors closeButton />
+              <App {...props} />
+              <ScrollToTopButton />
+            </TuyauProvider>
+          </QueryClientProvider>
+        </ErrorBoundary>
+      </StrictMode>
     )
   },
 })

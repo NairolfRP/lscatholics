@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useRef, useState } from 'react'
 import { router } from '@inertiajs/react'
-import { urlFor } from '@/client'
+import { urlFor } from '@/lib/client'
 import type { EmploymentType } from '#shared/constants/employment.constants'
 
 export type JobFiltersHandle = ReturnType<typeof useJobFilters>

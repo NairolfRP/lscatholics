@@ -22,7 +22,7 @@ import { Input } from '@/shared/components/ui/input'
 import { useForm } from '@tanstack/react-form'
 import { Field, FieldError } from '@/shared/components/ui/field'
 import { router } from '@inertiajs/react'
-import { urlFor } from '@/client'
+import { urlFor } from '@/lib/client'
 import { deleteAccountSchema } from '@/features/account/schemas/delete_account_schema'
 import { serverErrorsFormConvertor } from '@/lib/utils'
 

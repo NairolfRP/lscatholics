@@ -14,7 +14,7 @@ import { getDepartmentBySlug } from '@/shared/constants/departments.constants'
 import NotFoundPage from '@/pages/errors/not-found'
 import { cn } from '@/lib/utils'
 import DefaultBanner from '@/assets/images/cathedralTower.webp'
-import type { InertiaProps } from '@/types'
+import type { InertiaProps } from '@/shared/types/pages'
 import { Container } from '@/shared/components/ui/container'
 
 type PageProps = InertiaProps<{ departmentSlug: string }>

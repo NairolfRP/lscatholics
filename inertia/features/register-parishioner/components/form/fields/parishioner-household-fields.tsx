@@ -1,5 +1,5 @@
 import { Users } from 'lucide-react'
-import { withForm } from '@/shared/hooks/form'
+import { withForm } from '@/lib/form'
 import { registerParishionerFormOpts } from '@/features/register-parishioner/constants/form_opts'
 import { Button } from '@/shared/components/ui/button'
 import { FieldDescription, FieldGroup, FieldLegend, FieldSet } from '@/shared/components/ui/field'
