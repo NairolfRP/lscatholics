@@ -29,12 +29,7 @@ createInertiaApp({
     )
 
     if (pageComponent.default.layout === undefined) {
-      if (name.startsWith('dashboard/')) {
-        const { default: DashboardLayout } = await import('@/layouts/dashboard')
-        pageComponent.default.layout = (page) => (
-          <DashboardLayout children={page as ReactElement<Data.SharedProps>} />
-        )
-      } else {
+      if (!name.startsWith('dashboard/')) {
         pageComponent.default.layout = (page) => (
           <Layout children={page as ReactElement<Data.SharedProps>} />
         )
