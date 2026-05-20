@@ -4,6 +4,9 @@ import react from 'eslint-plugin-react'
 
 export default configApp(
   {
+    ignores: ['tmp/**'],
+  },
+  {
     plugins: {
       'react-hooks': reactHooks,
       'react': react,
