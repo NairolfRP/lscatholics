@@ -18,6 +18,9 @@ export const controllers = {
   characters: {
     Characters: () => import('#app/characters/controllers/characters_controller'),
   },
+  contact: {
+    Contact: () => import('#app/contact/controllers/contact_controller'),
+  },
   dashboard: {
     Dashboard: () => import('#app/dashboard/controllers/dashboard_controller'),
   },
@@ -26,14 +29,14 @@ export const controllers = {
   },
   pages: {
     Charities: () => import('#app/pages/controllers/charities_controller'),
-    Contact: () => import('#app/pages/controllers/contact_controller'),
     Decrees: () => import('#app/pages/controllers/decrees_controller'),
     Departments: () => import('#app/pages/controllers/departments_controller'),
     Home: () => import('#app/pages/controllers/home_controller'),
     Parishes: () => import('#app/pages/controllers/parishes_controller'),
-    RegisterParishioners: () => import('#app/pages/controllers/register_parishioners_controller'),
     Services: () => import('#app/pages/controllers/services_controller'),
-    Volunteers: () => import('#app/pages/controllers/volunteers_controller'),
+  },
+  parishioners: {
+    RegisterParishioners: () => import('#app/parishioners/controllers/register_parishioners_controller'),
   },
   posts: {
     DashboardPosts: () => import('#app/posts/controllers/dashboard_posts_controller'),
@@ -46,5 +49,8 @@ export const controllers = {
   users: {
     Account: () => import('#app/users/controllers/account_controller'),
     DashboardUsers: () => import('#app/users/controllers/dashboard_users_controller'),
+  },
+  volunteers: {
+    Volunteers: () => import('#app/volunteers/controllers/volunteers_controller'),
   },
 }

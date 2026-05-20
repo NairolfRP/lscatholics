@@ -1,7 +1,7 @@
 import type { HttpContext } from '@adonisjs/core/http'
-import { createRegisterParishionerValidator } from '#pages/validators/register_parishioner'
+import { createRegisterParishionerValidator } from '#parishioners/validators/register_parishioner'
 import env from '#start/env'
-import { RegisterParishionerService } from '#pages/services/register_parishioner_service'
+import { RegisterParishionerService } from '#parishioners/services/register_parishioner_service'
 import { inject } from '@adonisjs/core'
 
 @inject()

@@ -531,20 +531,20 @@ export interface Registry {
       paramsTuple: []
       params: {}
       query: {}
-      response: ExtractResponse<Awaited<ReturnType<import('#app/pages/controllers/contact_controller').default['index']>>>
-      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#app/pages/controllers/contact_controller').default['index']>>>
+      response: ExtractResponse<Awaited<ReturnType<import('#app/contact/controllers/contact_controller').default['index']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#app/contact/controllers/contact_controller').default['index']>>>
     }
   }
   'contact.submit': {
     methods: ["POST"]
     pattern: '/contact'
     types: {
-      body: ExtractBody<InferInput<(typeof import('#pages/validators/contact_validation').createContactValidator)>>
+      body: ExtractBody<InferInput<(typeof import('#contact/validators/contact_validation').createContactValidator)>>
       paramsTuple: []
       params: {}
-      query: ExtractQuery<InferInput<(typeof import('#pages/validators/contact_validation').createContactValidator)>>
-      response: ExtractResponse<Awaited<ReturnType<import('#app/pages/controllers/contact_controller').default['submit']>>>
-      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#app/pages/controllers/contact_controller').default['submit']>>> | { status: 422; response: { errors: SimpleError[] } }
+      query: ExtractQuery<InferInput<(typeof import('#contact/validators/contact_validation').createContactValidator)>>
+      response: ExtractResponse<Awaited<ReturnType<import('#app/contact/controllers/contact_controller').default['submit']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#app/contact/controllers/contact_controller').default['submit']>>> | { status: 422; response: { errors: SimpleError[] } }
     }
   }
   'news.index': {
@@ -723,20 +723,20 @@ export interface Registry {
       paramsTuple: []
       params: {}
       query: {}
-      response: ExtractResponse<Awaited<ReturnType<import('#app/pages/controllers/register_parishioners_controller').default['index']>>>
-      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#app/pages/controllers/register_parishioners_controller').default['index']>>>
+      response: ExtractResponse<Awaited<ReturnType<import('#app/parishioners/controllers/register_parishioners_controller').default['index']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#app/parishioners/controllers/register_parishioners_controller').default['index']>>>
     }
   }
   'registerParishioner.submit': {
     methods: ["POST"]
     pattern: '/register-parishioner'
     types: {
-      body: ExtractBody<InferInput<(typeof import('#pages/validators/register_parishioner').createRegisterParishionerValidator)>>
+      body: ExtractBody<InferInput<(typeof import('#parishioners/validators/register_parishioner').createRegisterParishionerValidator)>>
       paramsTuple: []
       params: {}
-      query: ExtractQuery<InferInput<(typeof import('#pages/validators/register_parishioner').createRegisterParishionerValidator)>>
-      response: ExtractResponse<Awaited<ReturnType<import('#app/pages/controllers/register_parishioners_controller').default['submit']>>>
-      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#app/pages/controllers/register_parishioners_controller').default['submit']>>> | { status: 422; response: { errors: SimpleError[] } }
+      query: ExtractQuery<InferInput<(typeof import('#parishioners/validators/register_parishioner').createRegisterParishionerValidator)>>
+      response: ExtractResponse<Awaited<ReturnType<import('#app/parishioners/controllers/register_parishioners_controller').default['submit']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#app/parishioners/controllers/register_parishioners_controller').default['submit']>>> | { status: 422; response: { errors: SimpleError[] } }
     }
   }
   'privacy': {
@@ -879,20 +879,20 @@ export interface Registry {
       paramsTuple: []
       params: {}
       query: {}
-      response: ExtractResponse<Awaited<ReturnType<import('#app/pages/controllers/volunteers_controller').default['index']>>>
-      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#app/pages/controllers/volunteers_controller').default['index']>>>
+      response: ExtractResponse<Awaited<ReturnType<import('#app/volunteers/controllers/volunteers_controller').default['index']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#app/volunteers/controllers/volunteers_controller').default['index']>>>
     }
   }
   'volunteers.submit': {
     methods: ["POST"]
     pattern: '/volunteers'
     types: {
-      body: ExtractBody<InferInput<(typeof import('#pages/validators/volunteer_application').createVolunteerApplicationValidator)>>
+      body: ExtractBody<InferInput<(typeof import('#volunteers/validators/volunteer_application').createVolunteerApplicationValidator)>>
       paramsTuple: []
       params: {}
-      query: ExtractQuery<InferInput<(typeof import('#pages/validators/volunteer_application').createVolunteerApplicationValidator)>>
-      response: ExtractResponse<Awaited<ReturnType<import('#app/pages/controllers/volunteers_controller').default['submit']>>>
-      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#app/pages/controllers/volunteers_controller').default['submit']>>> | { status: 422; response: { errors: SimpleError[] } }
+      query: ExtractQuery<InferInput<(typeof import('#volunteers/validators/volunteer_application').createVolunteerApplicationValidator)>>
+      response: ExtractResponse<Awaited<ReturnType<import('#app/volunteers/controllers/volunteers_controller').default['submit']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#app/volunteers/controllers/volunteers_controller').default['submit']>>> | { status: 422; response: { errors: SimpleError[] } }
     }
   }
 }

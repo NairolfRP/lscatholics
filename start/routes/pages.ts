@@ -4,9 +4,9 @@ import { controllers } from '#generated/controllers'
 
 router.get('/', [controllers.pages.Home, 'index']).as('home')
 
-router.get('/contact', [controllers.pages.Contact, 'index']).as('contact')
+router.get('/contact', [controllers.contact.Contact, 'index']).as('contact')
 router
-  .post('/contact', [controllers.pages.Contact, 'submit'])
+  .post('/contact', [controllers.contact.Contact, 'submit'])
   .use(middleware.auth())
   .as('contact.submit')
 
@@ -42,10 +42,10 @@ router.get('/donate', [controllers.donate.Donate, 'index']).as('donate.index')
 router.post('/donate', [controllers.donate.Donate, 'submit']).as('donate.submit')
 
 router
-  .get('/register-parishioner', [controllers.pages.RegisterParishioners, 'index'])
+  .get('/register-parishioner', [controllers.parishioners.RegisterParishioners, 'index'])
   .as('registerParishioner.index')
 router
-  .post('/register-parishioner', [controllers.pages.RegisterParishioners, 'submit'])
+  .post('/register-parishioner', [controllers.parishioners.RegisterParishioners, 'submit'])
   .as('registerParishioner.submit')
   .use(middleware.auth())
 
@@ -97,8 +97,8 @@ router
   })
   .prefix('decrees')
 
-router.get('/volunteers', [controllers.pages.Volunteers, 'index']).as('volunteers.index')
+router.get('/volunteers', [controllers.volunteers.Volunteers, 'index']).as('volunteers.index')
 router
-  .post('/volunteers', [controllers.pages.Volunteers, 'submit'])
+  .post('/volunteers', [controllers.volunteers.Volunteers, 'submit'])
   .use(middleware.auth())
   .as('volunteers.submit')

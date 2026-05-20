@@ -1,8 +1,8 @@
 import type { HttpContext } from '@adonisjs/core/http'
-import { createContactValidator } from '#pages/validators/contact_validation'
+import { createContactValidator } from '#contact/validators/contact_validation'
 import env from '#start/env'
 import { inject } from '@adonisjs/core'
-import { ContactService } from '#pages/services/contact_service'
+import { ContactService } from '#contact/services/contact_service'
 import { CONTACT_SUBJECTS } from '#shared/constants/contact_subjects'
 
 @inject()

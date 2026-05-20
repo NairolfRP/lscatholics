@@ -1,5 +1,5 @@
 import env from '#start/env'
-import type { VolunteerApplicationPayload } from '#pages/validators/volunteer_application'
+import type { VolunteerApplicationPayload } from '#volunteers/validators/volunteer_application'
 import { DiscordWebhookService } from '#discord/services/discord_webhook_service'
 import { getDistrictLabelById } from '#shared/constants/districts.constants'
 import { getApplicationSourceLabel } from '#shared/constants/employment.constants'
@@ -174,7 +174,8 @@ export class VolunteerApplicationService {
     const description = [
       {
         name: 'Motif',
-        value: `${getVolunteerApplicationRequiredHoursLabelById(payload.requiredHours.reason)} ?? 'Inconnue'`,
+        value:
+          getVolunteerApplicationRequiredHoursLabelById(payload.requiredHours.reason) ?? 'Inconnue',
       },
       {
         name: 'Date limite pour valider les heures',

@@ -2,6 +2,8 @@ import { DiscordWebhookService } from '#discord/services/discord_webhook_service
 import env from '#start/env'
 import logger from '@adonisjs/core/services/logger'
 import { CONTACT_SUBJECTS } from '#shared/constants/contact_subjects'
+import type { ContactPayload } from '#contact/validators/contact_validation'
+import type { DiscordWebhookService as DiscordWebhook } from '#discord/services/discord_webhook_service'
 
 export class ContactService {
   readonly ERROR_MESSAGES = {
@@ -11,7 +13,7 @@ export class ContactService {
       'Merci ! Votre demande de contact a été soumise avec succès. Nous vous recontacterons dans les meilleurs délais',
   } as const
 
-  async sendToDiscord(payload: any, webhookUrl: string) {
+  async sendToDiscord(payload: ContactPayload, webhookUrl: string) {
     const discordWebhook = await DiscordWebhookService.create({ url: webhookUrl })
 
     this.#buildDiscordEmbeds(discordWebhook, payload)
@@ -33,7 +35,7 @@ export class ContactService {
     return result
   }
 
-  #buildDiscordEmbeds(discordWebhook: any, payload: any): void {
+  #buildDiscordEmbeds(discordWebhook: DiscordWebhook, payload: ContactPayload): void {
     const subjectLabel = CONTACT_SUBJECTS.find((item) => item.id === payload.subject)?.label
 
     discordWebhook.addEmbed({
@@ -67,7 +69,7 @@ export class ContactService {
     })
   }
 
-  #configureThreadOptions(discordWebhook: any, payload: any): void {
+  #configureThreadOptions(discordWebhook: DiscordWebhook, payload: ContactPayload): void {
     const threadName = `${payload.firstname || 'N/A'} ${payload.lastname || 'N/A'}`.trim()
     const threadTag = env.get('DISCORD_CONTACT_WEBHOOK_TAG_ID')
 
