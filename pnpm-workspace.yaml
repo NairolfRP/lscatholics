@@ -9,3 +9,6 @@ allowBuilds:
   msw: true
 overrides:
   "@tailwindcss/typography>tailwindcss": "$tailwindcss"
+minimumReleaseAgeExclude:
+  - '@inertiajs/core@2.3.24'
+  - '@inertiajs/react@2.3.24'
