@@ -82,7 +82,7 @@ export default function DesktopNavigation() {
                           asChild
                         >
                           <NavigationLink
-                            route={subItem.route as any}
+                            route={subItem.route}
                             routeParams={subItem.routeParams}
                             title={subItem.label}
                           />
@@ -103,7 +103,7 @@ export default function DesktopNavigation() {
             ) : hasLink(item) ? (
               <NavigationMenuLink className={triggerButtonClasses} asChild>
                 {item.route ? (
-                  <Link route={item.route as any} routeParams={item.routeParams}>
+                  <Link route={item.route} routeParams={item.routeParams}>
                     {item.label}
                   </Link>
                 ) : (

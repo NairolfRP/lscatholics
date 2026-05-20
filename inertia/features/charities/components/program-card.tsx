@@ -13,7 +13,7 @@ import { Link } from '@adonisjs/inertia/react'
 export function ProgramCard({ program }: { program: Program }) {
   const Icon = program.icon
   return (
-    <Link route={program.route as any} routeParams={program.routeParams}>
+    <Link route={program.route} routeParams={program.routeParams}>
       <Card className="group h-full border border-primary/20 hover:border-primary/40 transition-all duration-300 p-8 flex flex-col gap-4 cursor-pointer card-hover">
         <div className="flex items-center justify-between">
           <div className="p-3 bg-secondary/10 group-hover:bg-primary/10 transition-colors duration-300 rounded-sm">

@@ -1,4 +1,5 @@
 import type { LucideIcon } from 'lucide-react'
+import type { RouteName } from '@/shared/types/routes'
 
 export type Program = {
   icon: LucideIcon
@@ -6,8 +7,8 @@ export type Program = {
   slug: string
   description: string
   tag: string
-  route: string
-  routeParams?: Record<string, any>
+  route: RouteName
+  routeParams?: Record<string, unknown>
 }
 
 export interface ProgramDetail extends Program {
@@ -39,8 +40,8 @@ export type HelpCardWithExternalLink = HelpCardBase & {
 }
 
 export type HelpCardWithInternalLink = HelpCardBase & {
-  route: string
-  routeParams?: Record<string, any>
+  route: RouteName
+  routeParams?: Record<string, unknown>
   href?: undefined
 }
 

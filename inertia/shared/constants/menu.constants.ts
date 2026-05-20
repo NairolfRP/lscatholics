@@ -1,8 +1,10 @@
+import type { RouteName } from '@/shared/types/routes'
+
 export interface MenuItem {
   id: string
   label: string
-  route?: string
-  routeParams?: Record<string, any>
+  route?: RouteName
+  routeParams?: Record<string, unknown>
   href?: string
   target?: '_blank' | '_self'
   children?: MenuItem[]

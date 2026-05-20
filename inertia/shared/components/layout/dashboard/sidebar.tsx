@@ -36,8 +36,16 @@ import {
 } from '@/shared/components/ui/sidebar'
 import { usePage } from '@inertiajs/react'
 import type { Data } from '@generated/data'
+import type { RouteName } from '@/shared/types/routes'
 
-const MENU_ITEMS = [
+type DashboardMenuItem = {
+  label: string
+  icon: typeof LayoutDashboard
+  route: RouteName
+  permission: string
+}
+
+const MENU_ITEMS: DashboardMenuItem[] = [
   {
     label: 'Tableau de bord',
     icon: LayoutDashboard,
@@ -47,25 +55,25 @@ const MENU_ITEMS = [
   {
     label: 'Articles',
     icon: FileText,
-    route: 'dashboard.dashboard_posts.index*' as const,
+    route: 'dashboard.dashboard_posts.index',
     permission: 'viewArticles',
   },
   {
     label: 'Événements',
     icon: Calendar,
-    route: 'dashboard.dashboard_events.index*' as const,
+    route: 'dashboard.dashboard_events.index',
     permission: 'manageEvents',
   },
   {
     label: "Offres d'emplois",
     icon: BriefcaseBusiness,
-    route: 'dashboard.dashboard_jobs.index*' as const,
+    route: 'dashboard.dashboard_jobs.index',
     permission: 'viewArticles',
   },
   {
     label: 'Utilisateurs',
     icon: Users,
-    route: 'dashboard.dashboard_users.index*' as const,
+    route: 'dashboard.dashboard_users.index',
     permission: 'manageUsers',
   },
 ]
@@ -173,10 +181,10 @@ function DashboardSidebarItems() {
             <SidebarMenuButton asChild>
               <Link
                 key={item.route}
-                route={item.route.replace(/\*/g, '') as any}
+                route={item.route.replace(/\*/g, '') as RouteName}
                 aria-current={
                   client.current(item.route) ||
-                  page.url.startsWith(urlFor(item.route.replace(/\*/g, '') as any))
+                  page.url.startsWith(urlFor(item.route.replace(/\*/g, '') as RouteName))
                 }
               >
                 {item.icon && <item.icon className="h-5 w-5" />}

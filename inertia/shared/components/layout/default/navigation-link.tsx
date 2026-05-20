@@ -1,10 +1,10 @@
-import type { registry } from '@generated/registry'
 import { Link } from '@adonisjs/inertia/react'
 import { MouseEvent, PropsWithChildren } from 'react'
+import type { RouteName } from '@/shared/types/routes'
 
 type Props = PropsWithChildren<{
-  route?: keyof typeof registry.routes
-  routeParams?: Record<string, any>
+  route?: RouteName
+  routeParams?: Record<string, unknown>
   href?: string
   title?: string
   onClick?: (e: MouseEvent) => void

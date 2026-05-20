@@ -19,12 +19,13 @@ import {
 } from '@/shared/components/ui/sheet'
 import { Button } from '@/shared/components/ui/button'
 import { urlFor } from '@/lib/client'
+import type { RouteName } from '@/shared/types/routes'
 
 export default function MobileNavigation() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
-  const handleNavigate = (route: string, routeParams?: Record<string, any>) => {
-    router.visit(urlFor(route as any, routeParams))
+  const handleNavigate = (route: RouteName, routeParams?: Record<string, unknown>) => {
+    router.visit(urlFor(route, routeParams))
     setMobileMenuOpen(false)
   }
 

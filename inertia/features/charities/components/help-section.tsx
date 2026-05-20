@@ -50,7 +50,7 @@ export function HelpSection() {
                 </p>
 
                 {helpCard?.route ? (
-                  <Link route={helpCard.route as any} routeParams={helpCard.routeParams}>
+                  <Link route={helpCard.route} routeParams={helpCard.routeParams}>
                     <Button
                       variant="default"
                       className="w-full tracking-widest uppercase text-xs mt-2"
