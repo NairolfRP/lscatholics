@@ -31,16 +31,6 @@ export default class AppProvider {
   }
 
   /**
-   * The application has been booted
-   */
-  async start() {}
-
-  /**
-   * The process has been started
-   */
-  async ready() {}
-
-  /**
    * Preparing to shutdown the app
    */
   shutdown() {
