@@ -35,7 +35,6 @@ export const VolunteerApplicationReferencesFields = withForm({
                 name={field.name}
                 value={field.state.value ?? ''}
                 onValueChange={(v: ApplicationSource | 'none') => {
-                  console.log(v)
                   if (!v || v === 'none') {
                     field.handleChange(undefined)
                   } else {

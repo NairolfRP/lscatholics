@@ -17,6 +17,7 @@ export default configApp(
       'react/no-danger': 'warn',
       'react/no-array-index-key': 'off',
       'react/self-closing-comp': 'warn',
+      'no-console': ['warn', { allow: ['warn', 'error'] }],
     },
   },
   {
