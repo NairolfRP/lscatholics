@@ -1,10 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap');
-
 @import 'tailwindcss';
 @import 'tw-animate-css';
 @import 'shadcn/tailwind.css';
 @import './tailwindcss-safe-area.css';
-@import '@fontsource-variable/inter';
 
 @plugin '@tailwindcss/typography';
 
@@ -25,8 +22,8 @@
 }
 
 @theme inline {
-  --font-sans: 'Inter Variable', sans-serif;
-  --font-serif: 'Crimson Text', ui-serif, serif;
+  --font-sans: 'Inter', sans-serif;
+  --font-serif: 'Crimson Pro', ui-serif, serif;
 
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
