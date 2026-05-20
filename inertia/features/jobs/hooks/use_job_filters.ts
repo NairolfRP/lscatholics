@@ -11,41 +11,43 @@ export type JobFilters = {
   employmentTypes: string[]
 }
 
-export function useJobFilters(_initialFilters?: Partial<JobFilters>) {
+const DEFAULT_FILTERS: JobFilters = {
+  search: '',
+  departments: [],
+  employmentTypes: [],
+}
+
+export function useJobFilters(initialFilters?: Partial<JobFilters>) {
   const [filters, setFilters] = useState<JobFilters>({
-    search: '',
-    departments: [],
-    employmentTypes: [],
+    ...DEFAULT_FILTERS,
+    ...initialFilters,
   })
 
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
-  const sync = useCallback(
-    (overrides?: Partial<typeof filters>, immediate = false) => {
-      if (debounceRef.current) clearTimeout(debounceRef.current)
+  const sync = useCallback((nextFilters: JobFilters, immediate = false) => {
+    if (debounceRef.current) clearTimeout(debounceRef.current)
 
-      debounceRef.current = setTimeout(
-        () => {
-          const merged = { ...filters, ...overrides }
-          const params: Record<string, string> = {}
+    debounceRef.current = setTimeout(
+      () => {
+        const params: Record<string, string> = {}
 
-          if (merged.search) params.search = merged.search
-          if (merged.departments.length > 0) params.departments = merged.departments.join(',')
-          if (merged.employmentTypes.length > 0)
-            params.employmentTypes = merged.employmentTypes.join(',')
+        if (nextFilters.search) params.search = nextFilters.search
+        if (nextFilters.departments.length > 0)
+          params.departments = nextFilters.departments.join(',')
+        if (nextFilters.employmentTypes.length > 0)
+          params.employmentTypes = nextFilters.employmentTypes.join(',')
 
-          router.get(urlFor('jobs.index'), params, {
-            preserveState: true,
-            preserveScroll: true,
-            only: ['offers', 'filters'],
-            replace: true,
-          })
-        },
-        immediate ? 0 : 400
-      )
-    },
-    [filters]
-  )
+        router.get(urlFor('jobs.index'), params, {
+          preserveState: true,
+          preserveScroll: true,
+          only: ['offers', 'filters'],
+          replace: true,
+        })
+      },
+      immediate ? 0 : 400
+    )
+  }, [])
 
   const activeFiltersCount = useMemo(() => {
     let count = 0
@@ -59,11 +61,11 @@ export function useJobFilters(_initialFilters?: Partial<JobFilters>) {
 
   const setSearch = useCallback(
     (value: string) => {
-      setFilters((prev) => ({ ...prev, search: value }))
-      sync({ search: value })
+      const next = { ...filters, search: value }
+      setFilters(next)
+      sync(next)
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [filters.search]
+    [filters, sync]
   )
 
   const toggleDepartment = useCallback(
@@ -71,11 +73,11 @@ export function useJobFilters(_initialFilters?: Partial<JobFilters>) {
       const next = filters.departments.includes(departmentId)
         ? filters.departments.filter((id) => id !== departmentId)
         : [...filters.departments, departmentId]
-      setFilters((prev) => ({ ...prev, departments: next }))
-      sync({ departments: next }, true)
+      const nextFilters = { ...filters, departments: next }
+      setFilters(nextFilters)
+      sync(nextFilters, true)
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [filters.departments]
+    [filters, sync]
   )
 
   const toggleEmploymentType = useCallback(
@@ -83,36 +85,35 @@ export function useJobFilters(_initialFilters?: Partial<JobFilters>) {
       const next = filters.employmentTypes.includes(type)
         ? filters.employmentTypes.filter((t) => t !== type)
         : [...filters.employmentTypes, type]
-      setFilters((prev) => ({ ...prev, employmentTypes: next }))
-      sync({ employmentTypes: next }, true)
+      const nextFilters = { ...filters, employmentTypes: next }
+      setFilters(nextFilters)
+      sync(nextFilters, true)
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [filters.employmentTypes]
+    [filters, sync]
   )
 
   const clearAllFilters = useCallback(() => {
-    setFilters({ search: '', departments: [], employmentTypes: [] })
-    sync({ search: '', departments: [], employmentTypes: [] }, true)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+    setFilters(DEFAULT_FILTERS)
+    sync(DEFAULT_FILTERS, true)
+  }, [sync])
 
   const clearSearch = useCallback(() => {
-    setFilters((prev) => ({ ...prev, search: '' }))
-    sync({ search: '' }, true)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+    const next = { ...filters, search: '' }
+    setFilters(next)
+    sync(next, true)
+  }, [filters, sync])
 
   const clearDepartments = useCallback(() => {
-    setFilters((prev) => ({ ...prev, departments: [] }))
-    sync({ departments: [] }, true)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+    const next = { ...filters, departments: [] }
+    setFilters(next)
+    sync(next, true)
+  }, [filters, sync])
 
   const clearEmploymentTypes = useCallback(() => {
-    setFilters((prev) => ({ ...prev, employmentTypes: [] }))
-    sync({ employmentTypes: [] }, true)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+    const next = { ...filters, employmentTypes: [] }
+    setFilters(next)
+    sync(next, true)
+  }, [filters, sync])
 
   return {
     filters,
