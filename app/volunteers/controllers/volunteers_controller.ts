@@ -1,5 +1,6 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import { createVolunteerApplicationValidator } from '#volunteers/validators/volunteer_application'
+// oxlint-disable-next-line typescript/consistent-type-imports
 import { VolunteerApplicationService } from '#volunteers/services/volunteer_application_service'
 import { inject } from '@adonisjs/core'
 

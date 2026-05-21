@@ -96,7 +96,7 @@ export class DiscordWebhookService {
   }: DiscordWebhookServiceInitProps): Promise<DiscordWebhookService> {
     try {
       await createDiscordWebhookUrlValidator.validate(url)
-    } catch (e) {
+    } catch {
       logger.error({ url }, 'Invalid Discord webhook URL provided')
       throw new DiscordWebhookException('Invalid webhook URL', true)
     }

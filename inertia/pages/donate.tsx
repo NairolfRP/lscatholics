@@ -9,7 +9,7 @@ import { Container } from '@/shared/components/ui/container'
 
 type PageProps = InertiaProps
 
-export default function DonatePage({}: PageProps) {
+export default function DonatePage(_: PageProps) {
   return (
     <>
       <Head title="Faire un don" image={DonateHero} />

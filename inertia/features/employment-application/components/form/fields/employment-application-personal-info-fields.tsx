@@ -61,7 +61,7 @@ const NAME_FIELDS = [
 export const EmploymentApplicationPersonalInfoFields = withForm({
   ...employmentApplicationFormOpts(),
   render: ({ form }) => {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
+    // oxlint-disable-next-line react-hooks-js/rules-of-hooks
     const currentCharacter = useCurrentCharacter()
     return (
       <>

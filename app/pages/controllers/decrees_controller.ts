@@ -1,6 +1,7 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import { Exception } from '@adonisjs/core/exceptions'
 import { inject } from '@adonisjs/core'
+// oxlint-disable-next-line typescript/consistent-type-imports
 import DecreesService from '#pages/services/decrees_service'
 
 @inject()

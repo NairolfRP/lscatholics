@@ -1,6 +1,7 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import { createDonateFormValidator } from '#donate/validators/donate'
 import { inject } from '@adonisjs/core'
+// oxlint-disable-next-line typescript/consistent-type-imports
 import { PaymentService } from '#billing/services/payment_service'
 
 @inject()
@@ -16,7 +17,7 @@ export default class DonateController {
   async submit({ request, response, session, logger, inertia }: HttpContext) {
     const payload = await request.validateUsing(createDonateFormValidator)
 
-    const { fleecaConfirmation, ...metadata } = payload
+    const { fleecaConfirmation: _fleecaConfirmation, ...metadata } = payload
 
     try {
       const donatorName = payload.isOrganization

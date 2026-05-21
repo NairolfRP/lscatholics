@@ -73,7 +73,7 @@ export default class PostsController {
         categories,
         error: false,
       })
-    } catch (e) {
+    } catch {
       return inertia.render('posts/index', {
         posts: {
           metadata: {

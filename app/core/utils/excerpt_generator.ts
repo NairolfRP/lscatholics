@@ -14,7 +14,7 @@ export class ExcerptGenerator {
 
     cleaned = cleaned.replace(/!\[.*?\]\(.*?\)/g, '')
 
-    cleaned = cleaned.replace(/\[([^\]]+)\]\([^\)]+\)/g, '$1')
+    cleaned = cleaned.replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
 
     cleaned = cleaned.replace(/^#{1,6}\s+/gm, '')
 

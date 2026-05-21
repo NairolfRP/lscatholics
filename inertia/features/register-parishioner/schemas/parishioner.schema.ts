@@ -1,3 +1,4 @@
+import type { ZodNumber, ZodPreprocess, ZodUndefined } from 'zod'
 import { z } from 'zod'
 import {
   civilTitleSchema,
@@ -19,9 +20,9 @@ import { parishesIds } from '@/shared/constants/parishes.constants'
 import { numberEnum } from '@/lib/utils'
 import { getLocalEthnicsCommunitiesIds } from '#shared/constants/ethnicity.constants'
 
-const preprocessedAge = (schema: any) => {
+const preprocessedAge = (schema: any): ZodPreprocess<ZodNumber | ZodUndefined> => {
   return z.preprocess((val) => {
-    if (val === '' || val === null || val === undefined) return undefined
+    if (val === '' || val === null || val === undefined) return
     const num = Number(val)
     return Number.isNaN(num) ? undefined : num
   }, schema)

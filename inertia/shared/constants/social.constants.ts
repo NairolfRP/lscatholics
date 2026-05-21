@@ -32,7 +32,7 @@ export const SOCIAL_FACEBROWSER: SocialMedia = {
 
 export const SOCIAL_YOUTUBE: SocialMedia = {
   id: 'youtube',
-  title: "Chaîne youtube de l\'Archidiocèse de Los Santos",
+  title: "Chaîne youtube de l'Archidiocèse de Los Santos",
   colorClasses: SOCIAL_MEDIAS_COLORS_CLASSES.youtube,
   url: 'https://www.youtube.com/@lscatholics',
   icon: YoutubeIcon,

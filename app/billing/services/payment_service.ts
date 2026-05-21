@@ -8,9 +8,11 @@ import type {
   InitiatePaymentResult,
   ResolvedPaymentStatus,
 } from '#billing/types/payment'
+// oxlint-disable-next-line typescript/consistent-type-imports
 import { FleecaClient } from '#billing/services/fleeca_client'
 import PendingPayment from '#billing/models/pending_payment'
 import PaymentException from '#billing/exceptions/payment_exception'
+// oxlint-disable-next-line typescript/consistent-type-imports
 import { PaymentHandlerRegistry } from '#billing/handlers/payment_handler_registry'
 
 /**

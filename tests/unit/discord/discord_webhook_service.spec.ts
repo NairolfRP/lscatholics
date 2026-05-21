@@ -241,7 +241,7 @@ test.group('DiscordWebhookService', (group) => {
 
     assert.isTrue(scope.isDone())
     assert.isTrue(result.success)
-    assert.isUndefined(result.error, undefined)
+    assert.isUndefined(result.error)
 
     scope.done()
   })

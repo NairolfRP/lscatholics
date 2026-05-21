@@ -27,12 +27,12 @@ export default class HomeController {
         .orderBy('start_date', 'asc')
         .first()
 
-      if (!nextEvent) return undefined
+      if (!nextEvent) return
 
       return ScheduledEventTransformer.transform(nextEvent).useVariant('home')
     } catch (error) {
       logger.error({ err: error }, 'Failed to get upcoming event')
-      return undefined
+      return
     }
   }
 

@@ -5,6 +5,7 @@ import { DateTime } from 'luxon'
 import { createEmploymentApplicationValidator } from '#careers/validators/employment_application'
 import JobPostingTransformer from '#careers/transformers/job_posting_transformer'
 import { inject } from '@adonisjs/core'
+// oxlint-disable-next-line typescript/consistent-type-imports
 import { JobApplicationService } from '#careers/services/job_application_service'
 
 @inject()

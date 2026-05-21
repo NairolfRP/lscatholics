@@ -1,5 +1,6 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import { inject } from '@adonisjs/core'
+// oxlint-disable-next-line typescript/consistent-type-imports
 import { PaymentService } from '#billing/services/payment_service'
 import PaymentException from '#billing/exceptions/payment_exception'
 

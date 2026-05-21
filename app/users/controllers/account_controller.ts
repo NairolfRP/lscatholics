@@ -1,4 +1,5 @@
 import type { HttpContext } from '@adonisjs/core/http'
+// oxlint-disable-next-line typescript/consistent-type-imports
 import { DiscordTokenService } from '#discord/services/discord_token_service'
 import { inject } from '@adonisjs/core'
 import { createDeleteUserConfirmationValidator } from '#users/validators/delete_user_confirmation'

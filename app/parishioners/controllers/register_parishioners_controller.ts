@@ -1,6 +1,7 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import { createRegisterParishionerValidator } from '#parishioners/validators/register_parishioner'
 import env from '#start/env'
+// oxlint-disable-next-line typescript/consistent-type-imports
 import { RegisterParishionerService } from '#parishioners/services/register_parishioner_service'
 import { inject } from '@adonisjs/core'
 

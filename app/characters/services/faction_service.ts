@@ -1,4 +1,5 @@
 import { inject } from '@adonisjs/core'
+// oxlint-disable-next-line typescript/consistent-type-imports
 import { HttpContext } from '@adonisjs/core/http'
 import type { CharacterFaction, CharacterFactionsResponse } from '#characters/types/faction'
 import app from '@adonisjs/core/services/app'

@@ -1,6 +1,7 @@
 import type User from '#users/models/user'
 import { BaseTransformer } from '@adonisjs/core/transformers'
 import { inject } from '@adonisjs/core'
+// oxlint-disable-next-line typescript/consistent-type-imports
 import { HttpContext } from '@adonisjs/core/http'
 import RoleTransformer from '#roles/transformers/role_transformer'
 

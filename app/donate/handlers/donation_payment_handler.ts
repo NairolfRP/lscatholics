@@ -1,6 +1,7 @@
 import { inject } from '@adonisjs/core'
 import type { PaymentHandler } from '#billing/types/payment_handler'
 import type PendingPayment from '#billing/models/pending_payment'
+// oxlint-disable-next-line typescript/consistent-type-imports
 import { DonateService } from '#donate/services/donate_service'
 import type { DonateMetadata } from '#donate/types/donate'
 import logger from '@adonisjs/core/services/logger'

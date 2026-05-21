@@ -109,8 +109,8 @@ export default withDashboardLayout<PageProps>(
                     {!!job.responsibilities?.length && (
                       <div>
                         <Typography variant="h3">Fonctions essentielles</Typography>
-                        {job.responsibilities.map((responsability) => (
-                          <Typography variant="list">
+                        {job.responsibilities.map((responsability, index) => (
+                          <Typography key={`responsibility-${index}`} variant="list">
                             <li>{responsability}</li>
                           </Typography>
                         ))}
@@ -121,8 +121,8 @@ export default withDashboardLayout<PageProps>(
                   {!!job.requirements?.length && (
                     <div className="rounded-lg bg-gray-50 p-4 dark:bg-gray-800">
                       <Typography variant="h2">Conditions requises</Typography>
-                      {job.requirements.map((requirement) => (
-                        <Typography variant="list">
+                      {job.requirements.map((requirement, index) => (
+                        <Typography key={`requirement-${index}`} variant="list">
                           <li>{requirement}</li>
                         </Typography>
                       ))}
@@ -132,8 +132,8 @@ export default withDashboardLayout<PageProps>(
                   {!!job.skills?.length && (
                     <div className="rounded-lg bg-gray-50 p-4 dark:bg-gray-800">
                       <Typography variant="h2">Profil recherché</Typography>
-                      {job.skills.map((skill) => (
-                        <Typography variant="list">
+                      {job.skills.map((skill, index) => (
+                        <Typography key={`skill-${index}`} variant="list">
                           <li>{skill}</li>
                         </Typography>
                       ))}

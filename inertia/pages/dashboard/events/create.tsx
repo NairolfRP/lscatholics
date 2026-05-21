@@ -10,7 +10,7 @@ import { urlFor } from '@/lib/client'
 type PageProps = InertiaProps
 
 export default withDashboardLayout<PageProps>(
-  ({}) => {
+  () => {
     return (
       <>
         <Head title="Créer un événement" />

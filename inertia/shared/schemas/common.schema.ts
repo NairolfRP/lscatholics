@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { z, type ZodNumber, type ZodPreprocess, type ZodUndefined } from 'zod'
 import { getEthnicsGroupsIds } from '#shared/constants/ethnicity.constants'
 import { getDistrictIds } from '#shared/constants/districts.constants'
 import { civilTitleIds, genderIds, maritalStatusIds } from '#shared/constants/person.constants'
@@ -86,9 +86,9 @@ export const districtSchema = z.enum(getDistrictIds(), {
   error: 'Veuillez sélectionner un district valide.',
 })
 
-const preprocessedAge = (schema: any) => {
+const preprocessedAge = (schema: any): ZodPreprocess<ZodNumber | ZodUndefined> => {
   return z.preprocess((val) => {
-    if (val === '' || val === null || val === undefined) return undefined
+    if (val === '' || val === null || val === undefined) return
     const num = Number(val)
     return Number.isNaN(num) ? undefined : num
   }, schema)

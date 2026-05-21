@@ -1,0 +1,171 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["typescript", "node", "eslint", "oxc", "react", "react-perf", "unicorn"],
+  "jsPlugins": [
+    "@stylistic/eslint-plugin",
+    {
+      "name": "react-hooks-js",
+      "specifier": "eslint-plugin-react-hooks"
+    },
+    "@adonisjs/eslint-plugin",
+    "eslint-plugin-prettier"
+  ],
+  "ignorePatterns": [
+    "tmp/**",
+    "eslint.config.js",
+    "eslint.config.ts",
+    "*.min.*",
+    "*.d.ts",
+    "CHANGELOG.md",
+    "dist/**",
+    "LICENSE*",
+    "output/**",
+    "coverage/**",
+    "temp/**",
+    "build/**",
+    ".yalc/**",
+    "pnpm-lock.yaml",
+    "yarn.lock",
+    "package-lock.json",
+    "public/assets/**",
+    "__snapshots__/**",
+    "resources/**",
+    ".adonisjs/**",
+    "database/schema.ts"
+  ],
+  "rules": {
+    "react-hooks-js/rules-of-hooks": "error",
+    "react-hooks-js/exhaustive-deps": "warn",
+
+    "react/jsx-no-duplicate-props": "error",
+    "react/jsx-no-undef": "error",
+    "react/no-children-prop": "off",
+    "react/no-danger": "warn",
+    "react/no-array-index-key": "off",
+    "react/self-closing-comp": "warn"
+  },
+  "overrides": [
+    {
+      "files": ["**/*.ts"],
+      "rules": {
+        "arrow-body-style": "off",
+        "curly": 0,
+        "eqeqeq": ["error", "always"],
+        "handle-callback-err": ["error", "^(err|error)$"],
+        "no-array-constructor": ["error"],
+        "no-caller": ["error"],
+        "no-cond-assign": ["error", "except-parens"],
+        "no-constant-condition": ["error"],
+        "no-control-regex": ["error"],
+        "no-debugger": ["error"],
+        "no-console": ["warn", { "allow": ["warn", "error"] }],
+        "no-duplicate-case": ["error"],
+        "no-empty-pattern": ["error"],
+        "no-eval": ["error"],
+        "no-ex-assign": ["error"],
+        "no-extra-boolean-cast": ["error"],
+        "no-fallthrough": ["error"],
+        "no-inner-declarations": ["error"],
+        "no-invalid-regexp": ["error", { "allowConstructorFlags": ["u", "y"] }],
+        "no-irregular-whitespace": ["error"],
+        "no-new-wrappers": ["error"],
+        "no-proto": ["error"],
+        "no-regex-spaces": ["error"],
+        "no-self-assign": ["error"],
+        "no-self-compare": ["error"],
+        "no-shadow": ["off"],
+        "no-sparse-arrays": ["error"],
+        "no-this-before-super": ["error"],
+        "no-unreachable": ["error"],
+        "no-unused-vars": ["error"],
+        "no-unsafe-finally": ["error"],
+        "no-unsafe-negation": ["error"],
+        "no-useless-escape": ["error"],
+        "no-with": ["error"],
+        "prefer-arrow-callback": "off",
+        "use-isnan": ["error"],
+        "valid-typeof": ["error", { "requireStringLiterals": true }],
+
+        "@stylistic/brace-style": "off",
+        "@stylistic/comma-dangle": "off",
+        "@stylistic/eol-last": "off",
+        "@stylistic/indent": "off",
+        "@stylistic/max-len": 0,
+        "@stylistic/new-parens": "off",
+        "@stylistic/no-mixed-spaces-and-tabs": "off",
+        "@stylistic/no-multi-spaces": "off",
+        "@stylistic/no-multiple-empty-lines": "off",
+        "@stylistic/no-trailing-spaces": "off",
+        "@stylistic/padded-blocks": "off",
+        "@stylistic/quotes": "off",
+        "@stylistic/rest-spread-spacing": "off",
+        "@stylistic/space-before-function-paren": "off",
+        "@stylistic/space-in-parens": "off",
+
+        "typescript/consistent-type-imports": [
+          "error",
+          {
+            "fixStyle": "inline-type-imports",
+            "disallowTypeAnnotations": false
+          }
+        ],
+        "typescript/no-shadow": "error",
+        "typescript/prefer-for-of": "error",
+        "typescript/triple-slash-reference": "off",
+
+        "typescript/no-floating-promises": [
+          "error",
+          {
+            "allowForKnownSafePromises": [
+              {
+                "from": "package",
+                "package": "@adonisjs/lucid",
+                "name": [
+                  "ExcutableQueryBuilderContract",
+                  "ModelQueryBuilderContract",
+                  "DatabaseQueryBuilderContract",
+                  "InsertQueryBuilderContract",
+                  "RawQueryBuilderContract",
+                  "ChainableContract",
+                  "RelationQueryBuilderContract",
+                  "RelationSubQueryBuilderContract",
+                  "HasManyQueryBuilderContract",
+                  "HasManyThroughQueryBuilderContract",
+                  "ManyToManyQueryBuilderContract",
+                  "ManyToManySubQueryBuilderContract"
+                ]
+              },
+              { "from": "package", "package": "knex", "name": "QueryBuilder" }
+            ]
+          }
+        ],
+
+        "unicorn/prefer-module": "error",
+        "unicorn/prefer-node-protocol": "error",
+        "unicorn/filename-case": ["warn", { "case": "snakeCase" }],
+        "unicorn/no-await-expression-member": "error",
+        "unicorn/no-instanceof-builtins": "error",
+        "unicorn/prefer-number-properties": "error",
+        "unicorn/no-useless-undefined": [
+          "error",
+          {
+            "checkArrowFunctionBody": false
+          }
+        ],
+
+        "prettier/prettier": ["error", { "endOfLine": "auto" }],
+
+        "@adonisjs/prefer-lazy-controller-import": ["error"],
+        "@adonisjs/prefer-lazy-listener-import": ["error"]
+      }
+    },
+    {
+      "files": ["inertia/**/*.{ts,tsx}"],
+      "rules": {
+        "@adonisjs/no-backend-import-in-frontend": "off",
+        "@adonisjs/prefer-adonisjs-inertia-link": ["error"],
+        "@adonisjs/prefer-adonisjs-inertia-form": ["error"]
+      }
+    }
+  ]
+}

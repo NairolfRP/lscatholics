@@ -112,7 +112,7 @@ test.group('PaymentService.initiatePayment', (group) => {
     sinon.assert.calledOnce(mockClient.createPayment as sinon.SinonStub)
   })
 
-  test('passes description and mode to Fleeca API', async ({}) => {
+  test('passes description and mode to Fleeca API', async () => {
     const mockClient = makeMockClient()
     const { registry } = makeRegistryWithHandler()
     const service = new PaymentService(mockClient as any, registry)

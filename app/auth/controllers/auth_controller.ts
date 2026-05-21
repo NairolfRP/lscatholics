@@ -11,7 +11,7 @@ export default class AuthController {
       session.setIntendedUrl(intended)
     }
     return ally.use('gtaw').redirect((oauthRequest) => {
-      oauthRequest.param('intended', undefined)
+      oauthRequest.param('intended', null)
     })
   }
 
