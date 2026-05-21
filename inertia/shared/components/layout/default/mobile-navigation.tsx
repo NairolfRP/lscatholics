@@ -32,7 +32,7 @@ export default function MobileNavigation() {
   return (
     <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
       <SheetTrigger className="lg:hidden py-5 px-10" asChild>
-        <Button variant="ghost" size="icon">
+        <Button variant="ghost" size="icon" aria-label="Ouvrir le menu de navigation">
           <Menu className="size-8" />
         </Button>
       </SheetTrigger>

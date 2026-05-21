@@ -123,6 +123,7 @@ export default withDashboardLayout<PageProps>(
                   handleSearch(e.target.value)
                 }}
                 placeholder="Rechercher..."
+                aria-label="Rechercher"
               />
               {jobs.data.length > 0 ? (
                 <>
@@ -156,7 +157,12 @@ export default withDashboardLayout<PageProps>(
 
                           <TableCell className="text-right">
                             <div className="flex justify-end gap-2">
-                              <Button variant="ghost" size="icon" as-child>
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                aria-label="Éditer l'ofre d'emploi"
+                                as-child
+                              >
                                 <Link
                                   route="dashboard.dashboard_jobs.edit"
                                   routeParams={{ id: job.id }}

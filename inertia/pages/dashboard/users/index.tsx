@@ -126,6 +126,7 @@ export default withDashboardLayout<PageProps>(
                 defaultValue={filters.search}
                 onChange={(e) => handleSearch(e.target.value)}
                 placeholder="Rechercher par nom d'utilisateur..."
+                aria-label="Rechercher par nom d'utilisateur"
               />
               {users.data.length > 0 ? (
                 <>
@@ -164,7 +165,12 @@ export default withDashboardLayout<PageProps>(
                           </TableCell>
                           <TableCell className="text-right">
                             <div className="flex justify-end gap-2">
-                              <Button variant="ghost" size="icon" asChild>
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                aria-label="Gérer l'utilisateur"
+                                asChild
+                              >
                                 <Link
                                   route="dashboard.dashboard_users.edit"
                                   routeParams={{ id: itemUser.id }}

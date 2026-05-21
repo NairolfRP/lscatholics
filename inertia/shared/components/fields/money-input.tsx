@@ -105,6 +105,7 @@ export default function AmountField({
               className="px-2 cursor-pointer hover:bg-transparent"
               size="icon"
               type="button"
+              aria-label="Fermer le montant personnalisé"
               onClick={() => setShowCustomField(false)}
             >
               <CircleX className="size-6 text-muted-foreground" />
