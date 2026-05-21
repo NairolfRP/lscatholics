@@ -14,20 +14,27 @@ type Props = {
 }
 
 export default function Layout({ children }: Props) {
-  const page = usePage()
+  const { props, url } = usePage<Data.SharedProps>()
+  const { flash, errors } = props
 
   useEffect(() => {
     toast.dismiss()
-  }, [page.url])
+  }, [url])
 
   useEffect(() => {
-    if (children.props.flash.error) {
-      toast.error(children.props.flash.error)
+    if (flash.error) {
+      toast.error(flash.error)
     }
-    if (children.props.flash.success) {
-      toast.success(children.props.flash.success)
+    if (flash.success) {
+      toast.success(flash.success)
     }
-  })
+  }, [flash])
+
+  useEffect(() => {
+    if (Object.keys(errors).length > 0) {
+      toast.error('Il y a des erreurs sur le formulaire. Veuillez les corriger.')
+    }
+  }, [errors])
 
   return (
     <>

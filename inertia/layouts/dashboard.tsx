@@ -37,7 +37,7 @@ export default function DashboardLayout({ breadcrumb, children }: Props) {
     if (flash.success) {
       toast.success(flash.success)
     }
-  })
+  }, [flash])
 
   useEffect(() => {
     if (Object.keys(errors).length > 0) {
