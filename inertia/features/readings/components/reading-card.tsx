@@ -1,4 +1,4 @@
-import type { AELFReading } from '@/features/readings/types/readings.types'
+import type { AELFReading } from '@/features/readings/types/readings'
 import {
   Card,
   CardContent,

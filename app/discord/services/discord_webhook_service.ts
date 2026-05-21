@@ -1,6 +1,6 @@
 import type { DiscordAllowedMentions } from '#discord/types/interfaces/entities/discord_allowed_mentions'
 import type { DiscordEmbed } from '#discord/types/interfaces/entities/discord_embed'
-import type { DiscordFlag } from '#discord/types/interfaces/entities/discord_flags'
+import type { DiscordFlag } from '#discord/constants/discord.constants'
 import type { DiscordPoll } from '#discord/types/interfaces/entities/discord_poll'
 import {
   createDiscordWebhookUrlValidator,
@@ -15,7 +15,7 @@ import type {
   DiscordWebhookOptions,
   DiscordWebhookServiceInitProps,
   WebhookExecutionResult,
-} from '#discord/types/discord_webhook.types'
+} from '#discord/types/discord_webhook'
 import type { RESTError, RESTRateLimit } from 'discord-api-types/v10'
 
 export class DiscordWebhookService {

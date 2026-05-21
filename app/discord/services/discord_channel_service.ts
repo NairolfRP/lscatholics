@@ -1,4 +1,4 @@
-import type { HeadersInit } from '#app/shared/types/utils.types'
+import type { HeadersInit } from '#shared/types/utils'
 import env from '#start/env'
 import type {
   DiscordChannelThreadsArchivedPublicResponse,

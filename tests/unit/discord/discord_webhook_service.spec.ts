@@ -2,7 +2,7 @@ import { test } from '@japa/runner'
 import nock from 'nock'
 import { DiscordWebhookService } from '#discord/services/discord_webhook_service'
 import DiscordWebhookException from '#discord/exceptions/discord_webhook_exception'
-import type { DiscordWebhookOptions } from '#discord/types/discord_webhook.types'
+import type { DiscordWebhookOptions } from '#discord/types/discord_webhook'
 
 const VALID_WEBHOOK_URL = 'https://discord.com/api/webhooks/123456789/abcdef'
 const INVALID_WEBHOOK_URL = 'invalid-url'

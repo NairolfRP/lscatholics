@@ -8,7 +8,7 @@ import {
   sortReadings,
 } from '@/features/readings/services/readings_service'
 import { Container } from '@/shared/components/ui/container'
-import type { AELFReadingsResponse } from '@/features/readings/types/readings.types'
+import type { AELFReadingsResponse } from '@/features/readings/types/readings'
 import { ReadingCard } from '@/features/readings/components/reading-card'
 
 export default function DailyReadingsPage() {

@@ -1,6 +1,6 @@
 import { formOptions } from '@tanstack/react-form'
 import { employmentApplicationSchema } from '@/features/employment-application/schemas/employment_application.schema'
-import type { EmploymentApplicationFormValues } from '@/features/employment-application/types/employment_application_form.types'
+import type { EmploymentApplicationFormValues } from '@/features/employment-application/types/employment_application'
 
 export const employmentApplicationFormOpts = (firstname: string = '', lastname: string = '') => {
   return formOptions({

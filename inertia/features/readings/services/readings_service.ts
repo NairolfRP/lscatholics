@@ -1,4 +1,4 @@
-import type { AELFReading, AELFReadingsMetadata } from '@/features/readings/types/readings.types'
+import type { AELFReading, AELFReadingsMetadata } from '@/features/readings/types/readings'
 import { READING_ORDER } from '@/features/readings/constants/readings.constants'
 
 export function sortReadings(readings: AELFReading[]): AELFReading[] {

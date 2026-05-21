@@ -1,5 +1,5 @@
 import type { DiscordAllowedMentions } from '#discord/types/interfaces/entities/discord_allowed_mentions'
-import type { DiscordFlag } from '#discord/types/interfaces/entities/discord_flags'
+import { DiscordFlag } from '#discord/constants/discord.constants'
 import type { DiscordEmbed } from '#discord/types/interfaces/entities/discord_embed'
 
 export type DiscordWebhookServiceInitProps = {

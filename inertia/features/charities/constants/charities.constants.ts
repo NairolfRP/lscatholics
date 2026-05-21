@@ -1,4 +1,4 @@
-import type { HelpCard } from '@/features/charities/types/charities.types'
+import type { HelpCard } from '@/features/charities/types/charities'
 
 export const HELP_CARDS: HelpCard[] = [
   {

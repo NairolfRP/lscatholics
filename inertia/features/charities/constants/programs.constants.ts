@@ -1,5 +1,5 @@
 import { Briefcase, Globe, Home, HouseHeart, ShieldAlert, Utensils, WineOff } from 'lucide-react'
-import type { ProgramDetail } from '@/features/charities/types/charities.types'
+import type { ProgramDetail } from '@/features/charities/types/charities'
 
 const BASE_CONTACT = {
   phone: '700',

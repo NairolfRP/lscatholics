@@ -1,6 +1,6 @@
 import { Badge } from '@/shared/components/ui/badge'
 import { ArrowRight } from 'lucide-react'
-import type { Program } from '@/features/charities/types/charities.types'
+import type { Program } from '@/features/charities/types/charities'
 import {
   Card,
   CardDescription,

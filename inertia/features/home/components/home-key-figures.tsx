@@ -4,7 +4,7 @@ import {
   ARCHDIOCESAN_HISTORY_START_DATE,
   NB_FAITHFUL,
 } from '@/shared/constants/archdiocese.constants'
-import { StatItem } from '@/features/home/types/home.types'
+import { StatItem } from '@/features/home/types/home'
 
 export function HomeKeyFigures() {
   const stats: StatItem[] = [

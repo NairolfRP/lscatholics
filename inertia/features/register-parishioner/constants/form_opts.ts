@@ -1,7 +1,7 @@
 import { formOptions, type StandardSchemaV1 } from '@tanstack/react-form'
 import type { Character } from '#characters/types/character'
 import { parishionerSchema } from '@/features/register-parishioner/schemas/parishioner.schema'
-import type { RegisterParishionerFormValues } from '@/features/register-parishioner/types/parishioner_form.types'
+import type { RegisterParishionerFormValues } from '@/features/register-parishioner/types/register_parishioner'
 
 export const registerParishionerFormOpts = (currentCharacter: Character) => {
   return formOptions({
