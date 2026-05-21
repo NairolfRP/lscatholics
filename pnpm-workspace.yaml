@@ -12,3 +12,7 @@ overrides:
 minimumReleaseAgeExclude:
   - '@inertiajs/core@2.3.24'
   - '@inertiajs/react@2.3.24'
+  - edge-lexer@6.0.5
+  - edge-parser@9.1.1
+  - edge.js@6.5.1
+  - shadcn@4.8.0
