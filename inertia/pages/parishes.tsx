@@ -10,8 +10,7 @@ import type { GTA5MapHandle } from '@/shared/components/map/gta5-map'
 import { MapFallback } from '@/shared/components/map/map-fallback'
 import { Container } from '@/shared/components/ui/container'
 
-const GTA5Map = lazy(() => import('@/shared/components/map/gta5-map'))
-const MapMarker = lazy(() => import('@/shared/components/map/map-marker'))
+const ParishesMap = lazy(() => import('@/features/parishes/components/parishes-map'))
 
 export default function ParishesPage() {
   const mapScrollTarget = useRef<HTMLDivElement>(null)
@@ -102,26 +101,7 @@ export default function ParishesPage() {
 
           <div ref={mapScrollTarget} className="mt-12">
             <Suspense fallback={<MapFallback />}>
-              <GTA5Map
-                ref={mapRef}
-                center={[-709.148, -759.794]}
-                zoom={3}
-                className="h-[500px] rounded-xl border-2 border-catholic-gold shadow-xl"
-              >
-                {parishes.map((parish, index) => (
-                  <MapMarker
-                    key={parish.id}
-                    ref={(el: MapMarkerHandle | null) => {
-                      markerRefs.current[index] = el
-                    }}
-                    position={parish.coords}
-                  >
-                    <div className="p-2">
-                      <h4 className="font-bold">{parish.name}</h4>
-                    </div>
-                  </MapMarker>
-                ))}
-              </GTA5Map>
+              <ParishesMap mapRef={mapRef} markerRefs={markerRefs} />
             </Suspense>
           </div>
         </div>

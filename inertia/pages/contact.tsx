@@ -5,11 +5,12 @@ import HeroSection from '@/shared/components/layout/default/hero-section'
 import { Typography } from '@/shared/components/ui/typography'
 import LoginAlert from '@/shared/components/auth/login-alert'
 import ContactInfo from '@/features/contact/components/contact-info'
-import ContactMap from '@/features/contact/components/contact-map'
-import { Suspense } from 'react'
+import { lazy, Suspense } from 'react'
 import { MapFallback } from '@/shared/components/map/map-fallback'
 import ContactForm from '@/features/contact/components/form/contact-form'
 import { Container } from '@/shared/components/ui/container'
+
+const ContactMap = lazy(() => import('@/features/contact/components/contact-map'))
 
 type PageProps = InertiaProps<{
   subjects: typeof CONTACT_SUBJECTS

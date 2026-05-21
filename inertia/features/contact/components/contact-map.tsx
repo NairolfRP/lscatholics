@@ -1,9 +1,7 @@
-import { lazy } from 'react'
 import { Typography } from '@/shared/components/ui/typography'
 import { Container } from '@/shared/components/ui/container'
-
-const GTA5Map = lazy(() => import('@/shared/components/map/gta5-map'))
-const MapMarker = lazy(() => import('@/shared/components/map/map-marker'))
+import GTA5Map from '@/shared/components/map/gta5-map'
+import MapMarker from '@/shared/components/map/map-marker'
 
 export default function ContactMap() {
   return (
