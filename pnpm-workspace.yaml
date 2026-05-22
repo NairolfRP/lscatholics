@@ -16,3 +16,4 @@ minimumReleaseAgeExclude:
   - edge-parser@9.1.1
   - edge.js@6.5.1
   - shadcn@4.8.0
+  - '@adonisjs-community/modules@2.0.0'

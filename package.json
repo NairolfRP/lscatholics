@@ -112,6 +112,7 @@
     "youch": "^4.1.1"
   },
   "dependencies": {
+    "@adonisjs-community/modules": "^2.0.0",
     "@adonisjs/ally": "6.3.0",
     "@adonisjs/auth": "^10.1.0",
     "@adonisjs/bouncer": "^4.0.0",
