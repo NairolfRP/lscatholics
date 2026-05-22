@@ -162,7 +162,12 @@
     {
       "files": ["inertia/**/*.{ts,tsx}"],
       "rules": {
-        "@adonisjs/no-backend-import-in-frontend": "off",
+        "@adonisjs/no-backend-import-in-frontend": [
+          "error",
+          {
+            "allowed": ["#shared/**"]
+          }
+        ],
         "@adonisjs/prefer-adonisjs-inertia-link": ["error"],
         "@adonisjs/prefer-adonisjs-inertia-form": ["error"]
       }
