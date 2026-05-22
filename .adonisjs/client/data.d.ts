@@ -11,7 +11,7 @@ import type PostsPostTransformer from '#app/posts/transformers/post_transformer'
 import type RolesRoleTransformer from '#app/roles/transformers/role_transformer'
 import type ScheduledEventsScheduledEventTransformer from '#app/scheduled_events/transformers/scheduled_event_transformer'
 import type UsersUserTransformer from '#app/users/transformers/user_transformer'
-import type InertiaMiddleware from '#core/middleware/inertia_middleware'
+import type InertiaMiddleware from '#core/middlewares/inertia_middleware'
 
 export namespace Data {
   export namespace Careers {
