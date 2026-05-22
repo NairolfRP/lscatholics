@@ -1,5 +1,7 @@
 # Los Santos Catholics - Web application for a roleplay project
 
+[![gh-workflow-image]][gh-workflow-url] [![website-image]][website-url] [![release-image]][release-url] [![license-image]][license-url]
+
 Welcome to the official repository for the **Los Santos Catholics** roleplay website, a project designed for a Catholic
 Church faction in the **GTA World** server community. This site serves as a central hub for managing catholic religious
 roleplay activities within the County of Los Santos.
@@ -52,7 +54,6 @@ This project is built with the following technologies:
 ## 🔗 Links
 
 - **Hosted application**: [https://archls.infos.st](https://archls.infos.st)
-- **GTA World**: [https://gta.world](https://gta.world)
 - **Project Repository**: [https://github.com/NairolfRP/lscatholics](https://github.com/NairolfRP/lscatholics)
 
 ## 📜 License
@@ -62,3 +63,12 @@ This project is licensed under the GPL v3.0 License - see the [LICENSE](LICENSE)
 ---
 
 Feel free to contribute and help improve the roleplay experience! ✝️
+
+[gh-workflow-image]: https://img.shields.io/github/check-runs/nairolfrp/lscatholics/prod?style=for-the-badge
+[gh-workflow-url]: https://github.com/nairolfrp/lscatholics/actions/workflows/test.yml
+[website-image]: https://img.shields.io/website?url=https%3A%2F%2Farchls.infos.st%2F&style=for-the-badge
+[website-url]: https://archls.infos.st/
+[release-image]: https://img.shields.io/github/v/release/nairolfrp/lscatholics?style=for-the-badge
+[release-url]: https://github.com/NairolfRP/lscatholics/releases
+[license-image]: https://img.shields.io/github/license/nairolfrp/lscatholics?style=for-the-badge
+[license-url]: LICENSE
