@@ -96,7 +96,7 @@
     "better-sqlite3": "^12.10.0",
     "discord-api-types": "^0.38.48",
     "eslint-plugin-oxlint": "^1.67.0",
-    "eslint-plugin-prettier": "^5.5.5",
+    "eslint-plugin-prettier": "^5.5.6",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^7.1.1",
     "hot-hook": "^1.0.0",
