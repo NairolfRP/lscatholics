@@ -84,7 +84,7 @@
     "@poppinss/ts-exec": "^1.4.4",
     "@stylistic/eslint-plugin": "^5.10.0",
     "@tailwindcss/typography": "^0.5.19",
-    "@tailwindcss/vite": "^4.3.0",
+    "@tailwindcss/vite": "^4.3.1",
     "@types/leaflet": "^1.9.21",
     "@types/luxon": "^3.7.1",
     "@types/node": "^25.9.1",
