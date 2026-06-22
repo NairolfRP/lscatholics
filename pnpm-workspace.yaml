@@ -7,13 +7,3 @@ allowBuilds:
   better-sqlite3: true
   lightningcss: true
   msw: true
-overrides:
-  "@tailwindcss/typography>tailwindcss": "$tailwindcss"
-minimumReleaseAgeExclude:
-  - '@inertiajs/core@2.3.24'
-  - '@inertiajs/react@2.3.24'
-  - edge-lexer@6.0.5
-  - edge-parser@9.1.1
-  - edge.js@6.5.1
-  - shadcn@4.8.0
-  - '@adonisjs-community/modules@2.0.0'
