@@ -62,7 +62,7 @@ const dbConfig = defineConfig({
       ...sharedConfig,
       client: 'better-sqlite3',
       connection: {
-        filename: env.get('TURSO_DATABASE_URL', app.tmpPath('test.db')),
+        filename: env.get('TURSO_DATABASE_URL', ':memory:'),
         debug: app.inTest,
       },
       pool: {
