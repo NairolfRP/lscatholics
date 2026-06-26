@@ -8,35 +8,37 @@ import ScheduledEventTransformer from '#scheduled_events/transformers/scheduled_
 export default class HomeController {
   async index({ inertia, logger }: HttpContext) {
     return inertia.render('home', {
-      upcomingEvent: inertia.defer(() => this.#getUpcomingEvent(logger)),
       // @ts-ignore
-      posts: inertia.optional(() => this.#getRecentPosts(logger)),
+      latestPosts: inertia.optional(() => this.#getLatestPosts(logger)),
+      // @ts-ignore
+      upcomingEvents: inertia.defer(() => this.#getUpcomingEvents(logger)),
     })
   }
 
-  async #getUpcomingEvent(logger: HttpContext['logger']) {
+  async #getUpcomingEvents(logger: HttpContext['logger']) {
     try {
       const now = DateTime.now().toSQL()
 
-      const nextEvent = await ScheduledEvent.query()
+      const upcomingEvents = await ScheduledEvent.query()
         .select('slug', 'title', 'start_date')
         .where('start_date', '>=', now)
         .where((query) => {
           query.where('end_date', '>=', now).orWhereNull('end_date')
         })
         .orderBy('start_date', 'asc')
-        .first()
+        .limit(3)
 
-      if (!nextEvent) return
-
-      return ScheduledEventTransformer.transform(nextEvent).useVariant('home')
+      return { data: ScheduledEventTransformer.transform(upcomingEvents).useVariant('home') }
     } catch (error) {
-      logger.error({ err: error }, 'Failed to get upcoming event')
-      return
+      logger.error({ err: error }, '[Home] Failed to get upcoming events')
+      return {
+        data: [],
+        error: 'Une erreur est survenue lors du chargement des prochains événements.',
+      }
     }
   }
 
-  async #getRecentPosts(logger: HttpContext['logger']) {
+  async #getLatestPosts(logger: HttpContext['logger']) {
     try {
       const posts = await Post.query()
         .select('id', 'slug', 'title', 'excerpt', 'cover_image_url', 'category', 'publishedAt')

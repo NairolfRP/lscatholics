@@ -31,6 +31,12 @@ export function formatDate(dateString: string): string {
   })
 }
 
+export function isExternalLink(href: string) {
+  const EXTERNAL_RE = /^(https?:\/\/|www\.)/i
+
+  return EXTERNAL_RE.test(href)
+}
+
 export function formatCurrency(nb: number, locale: string = 'fr-FR') {
   return new Intl.NumberFormat(locale, {
     style: 'currency',
