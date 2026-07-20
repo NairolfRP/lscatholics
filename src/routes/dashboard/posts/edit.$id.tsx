@@ -140,6 +140,7 @@ function RouteComponent() {
                             placeholder="Contenu de l'article"
                             rows={15}
                             markdown
+                            required
                           />
                         )}
                       </form.AppField>
