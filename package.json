@@ -48,7 +48,7 @@
         "@tanstack/react-router-ssr-query": "latest",
         "@tanstack/react-start": "latest",
         "@tanstack/react-table": "latest",
-        "@tanstack/router-plugin": "^1.168.22",
+        "@tanstack/router-plugin": "^1.168.23",
         "@unpic/react": "^1.0.2",
         "@vercel/analytics": "^2.0.1",
         "@vercel/functions": "^3.7.5",
