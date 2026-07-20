@@ -22,7 +22,8 @@
         "**/dist/**",
         "**/snap/**",
         "**/vite.config.*.timestamp-*.*",
-        "**/routeTree.gen.ts"
+        "**/routeTree.gen.ts",
+        "eslint.config.ts"
     ],
     "overrides": [
         {
@@ -147,14 +148,6 @@
             "env": {
                 "es2020": true,
                 "browser": true
-            }
-        },
-        {
-            "files": ["**/server/repositories/**/*.ts"],
-            "jsPlugins": ["eslint-plugin-drizzle"],
-            "rules": {
-                "drizzle/enforce-delete-with-where": "error",
-                "drizzle/enforce-update-with-where": "error"
             }
         },
         {
