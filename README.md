@@ -1,6 +1,6 @@
 # Los Santos Catholics - Web application for a roleplay project
 
-[![gh-workflow-image]][gh-workflow-url] [![website-image]][website-url] [![release-image]][release-url] [![license-image]][license-url]
+[![gh-workflow-image]][gh-workflow-url] [![CodSpeed][codspeed-image]][codspeed-url] [![website-image]][website-url] [![release-image]][release-url] [![license-image]][license-url]
 
 Welcome to the official repository for the **Los Santos Catholics** roleplay website, a project designed for a Catholic
 Church faction in the **GTA World** server community. This site serves as a central hub for managing catholic religious
@@ -65,6 +65,8 @@ Feel free to contribute and help improve the roleplay experience! ✝️
 
 [gh-workflow-image]: https://img.shields.io/github/check-runs/nairolfrp/lscatholics/prod?style=for-the-badge
 [gh-workflow-url]: https://github.com/nairolfrp/lscatholics/actions/workflows/test.yml
+[codspeed-image]: https://img.shields.io/endpoint?url=https://codspeed.io/badge.json&style=for-the-badge
+[codspeed-url]: https://app.codspeed.io/NairolfRP/lscatholics-start?utm_source=badge
 [website-image]: https://img.shields.io/website?url=https%3A%2F%2Farchls.infos.st%2F&style=for-the-badge
 [website-url]: https://archls.infos.st/
 [release-image]: https://img.shields.io/github/v/release/nairolfrp/lscatholics?style=for-the-badge

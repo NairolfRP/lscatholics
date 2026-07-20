@@ -13,6 +13,7 @@
         "build": "vite build && cp instrument.server.mjs .output/server",
         "preview": "vite preview",
         "test": "vitest",
+        "bench": "vitest bench --run --project bench",
         "lint": "oxlint",
         "format": "oxfmt",
         "check": "oxfmt --check",
@@ -78,6 +79,7 @@
         "zod": "^4.4.3"
     },
     "devDependencies": {
+        "@codspeed/vitest-plugin": "^5.7.1",
         "@playwright/test": "^1.61.1",
         "@rolldown/plugin-babel": "^0.2.3",
         "@tailwindcss/typography": "^0.5.20",

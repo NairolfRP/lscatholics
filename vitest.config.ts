@@ -1,5 +1,6 @@
 import path from 'node:path'
 import { tanstackRouter } from '@tanstack/router-plugin/vite'
+import codspeedPlugin from '@codspeed/vitest-plugin'
 import react from '@vitejs/plugin-react'
 import { playwright } from '@vitest/browser-playwright'
 import { loadEnv } from 'vite'
@@ -22,6 +23,17 @@ export default defineConfig(({ mode }) => ({
   ],
   test: {
     projects: [
+      {
+        plugins: [codspeedPlugin()],
+        test: {
+          name: 'bench',
+          environment: 'node',
+          include: ['tests/bench/**/*.bench.?(c|m)[jt]s?(x)'],
+        },
+        resolve: {
+          tsconfigPaths: true,
+        },
+      },
       {
         test: {
           name: 'browser',
