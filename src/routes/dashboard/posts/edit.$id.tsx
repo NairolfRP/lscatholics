@@ -1,4 +1,4 @@
-import { createFileRoute, Link, redirect } from '@tanstack/react-router'
+import { createFileRoute, Link, redirect, useRouter } from '@tanstack/react-router'
 import { toast } from 'sonner'
 import { DashboardHeading } from '#/features/dashboard/components/dashboard-heading.tsx'
 import { getDashboardPostFn, updatePostFn } from '#/features/post/functions/post.functions.ts'
@@ -37,6 +37,7 @@ export const Route = createFileRoute('/dashboard/posts/edit/$id')({
 })
 
 function RouteComponent() {
+  const router = useRouter()
   const { post } = Route.useLoaderData()
 
   const form = useAppForm({
@@ -68,7 +69,9 @@ function RouteComponent() {
         return toast.error('Une erreur est survenue')
       }
 
-      toast.success('Successful')
+      toast.success('Article mis à jour !')
+      await router.invalidate()
+      formApi.reset()
     },
   })
 
