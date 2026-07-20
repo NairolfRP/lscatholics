@@ -1,0 +1,14 @@
+engineStrict: true
+allowBuilds:
+  '@sentry/cli': true
+  esbuild: true
+  unrs-resolver: true
+  better-sqlite3: true
+  '@libsql/client': true
+peerDependencyRules:
+  allowAny:
+    - vite
+    - vitest
+  allowedVersions:
+    vite: '*'
+    vitest: '*'

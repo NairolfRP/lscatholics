@@ -1,0 +1,63 @@
+{
+    "$schema": "./node_modules/oxfmt/configuration_schema.json",
+    "trailingComma": "es5",
+    "semi": false,
+    "singleQuote": true,
+    "useTabs": false,
+    "quoteProps": "consistent",
+    "bracketSpacing": true,
+    "bracketSameLine": false,
+    "arrowParens": "always",
+    "tabWidth": 2,
+    "printWidth": 100,
+    "ignorePatterns": [
+        "*.yml",
+        "*.yaml",
+        "*.md",
+        ".tanstack/**",
+        "out/**",
+        "output/**",
+        "build/**",
+        "src/routeTree.gen.ts"
+    ],
+    "sortTailwindcss": {
+        "stylesheet": "./src/styles/globals.css",
+        "functions": ["clsx", "cn"],
+        "preserveWhitespace": true
+    },
+    "sortImports": {
+        "newlinesBetween": false,
+        "customGroups": [
+            {
+                "groupName": "react",
+                "elementNamePattern": ["react", "react/**", "react-dom", "react-dom/**"]
+            },
+            {
+                "groupName": "tanstack",
+                "elementNamePattern": ["@tanstack/**"]
+            }
+        ],
+        "groups": [
+            "type-import",
+            "value-builtin",
+            "react",
+            "tanstack",
+            "value-external",
+            "type-internal",
+            "value-internal",
+            ["type-subpath", "value-subpath"],
+            ["type-parent", "type-sibling", "type-index"],
+            ["value-parent", "value-sibling", "value-index"],
+            "style",
+            "unknown"
+        ]
+    },
+    "overrides": [
+        {
+            "files": ["*.json"],
+            "options": {
+                "tabWidth": 4
+            }
+        }
+    ]
+}

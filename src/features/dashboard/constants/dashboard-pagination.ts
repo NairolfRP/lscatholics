@@ -1,0 +1,1 @@
+export const DASHBOARD_PAGINATION_LIMIT = 10

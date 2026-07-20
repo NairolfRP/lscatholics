@@ -1,0 +1,29 @@
+{
+    "files.watcherExclude": {
+        "**/routeTree.gen.ts": true
+    },
+    "search.exclude": {
+        "**/.tanstack": true,
+        "**/.vite-hooks/**": true,
+        "**/node_modules": true,
+        "**/output/**": true,
+        "**/routeTree.gen.ts": true,
+        "**/tmp": true
+    },
+    "files.readonlyInclude": {
+        "**/routeTree.gen.ts": true
+    },
+    "files.associations": {
+        "*.css": "tailwindcss"
+    },
+
+    "editor.defaultFormatter": "oxc.oxc-vscode",
+    "[javascript]": { "editor.defaultFormatter": "oxc.oxc-vscode" },
+    "[javascriptreact]": { "editor.defaultFormatter": "oxc.oxc-vscode" },
+    "[typescript]": { "editor.defaultFormatter": "oxc.oxc-vscode" },
+    "[typescriptreact]": { "editor.defaultFormatter": "oxc.oxc-vscode" },
+    "editor.formatOnSave": true,
+    "editor.formatOnSaveMode": "file",
+    "js/ts.experimental.useTsgo": true,
+    "js/ts.tsdk.path": "./node_modules/typescript"
+}

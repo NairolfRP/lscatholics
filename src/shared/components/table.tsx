@@ -1,0 +1,144 @@
+import type {
+  ColumnDef,
+  OnChangeFn,
+  PaginationOptions,
+  PaginationState,
+  RowData,
+  SortingState,
+  TableMeta,
+} from '@tanstack/react-table'
+import { flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table'
+import { ArrowDownAZIcon, ArrowUpAZIcon, FunnelIcon } from 'lucide-react'
+import { DebouncedInput } from '#/shared/components/debounced-input'
+import type { Filters } from '../lib/types/table'
+import { cn } from '../lib/utils'
+import { Pagination } from './pagination'
+import {
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+  Table as UITable,
+} from './ui/table'
+
+export const DEFAULT_PAGE_INDEX = 0
+export const DEFAULT_PAGE_SIZE = 10
+
+type Props<T extends Record<string, any>> = {
+  data: Array<T>
+  columns: Array<ColumnDef<T, any>>
+  pagination: PaginationState
+  paginationOptions: Pick<PaginationOptions, 'onPaginationChange' | 'rowCount'>
+  filters: Filters<T>
+  onFilterChange: (dataFilters: Partial<Filters<T>>) => void
+  sorting: SortingState
+  onSortingChange: OnChangeFn<SortingState>
+  meta: TableMeta<T>
+}
+
+// oxlint-disable-next-line react/react-compiler : False positive about TanStack Table
+export function Table<T extends Record<string, any>>({
+  data,
+  columns,
+  pagination,
+  paginationOptions,
+  filters,
+  onFilterChange,
+  sorting,
+  onSortingChange,
+  meta,
+}: Props<T>) {
+  const table = useReactTable({
+    data,
+    columns,
+    state: { pagination, sorting },
+    onSortingChange,
+    ...paginationOptions,
+    manualFiltering: true,
+    manualSorting: true,
+    manualPagination: true,
+    getCoreRowModel: getCoreRowModel(),
+    meta,
+  })
+
+  return (
+    <div className="flex flex-col gap-4">
+      <UITable>
+        <TableHeader>
+          {table.getHeaderGroups().map((headerGroup) => (
+            <TableRow key={headerGroup.id}>
+              {headerGroup.headers.map((header) => {
+                const fieldMeta = header.column.columnDef.meta
+                const canSort = header.column.getCanSort()
+                return (
+                  <TableHead key={header.id} colSpan={header.colSpan}>
+                    {header.isPlaceholder ? null : (
+                      <>
+                        <div
+                          className={cn('flex items-center gap-2', {
+                            'cursor-pointer select-none': canSort,
+                          })}
+                          {...{
+                            onClick: header.column.getToggleSortingHandler(),
+                          }}
+                        >
+                          {flexRender(header.column.columnDef.header, header.getContext())}
+                          {canSort &&
+                            ({
+                              asc: <ArrowUpAZIcon className="size-4" />,
+                              desc: <ArrowDownAZIcon className="size-4" />,
+                              false: <FunnelIcon className="size-4" />,
+                            }[header.column.getIsSorted() as string] ??
+                              null)}
+                        </div>
+                        {header.column.getCanFilter() && fieldMeta?.filterKey !== undefined ? (
+                          <DebouncedInput
+                            className="w-36 rounded border shadow"
+                            onChange={(value) => {
+                              // oxlint-disable-next-line typescript/no-unnecessary-type-assertion
+                              onFilterChange({
+                                [fieldMeta.filterKey as keyof T]: value,
+                              } as Partial<T>)
+                            }}
+                            placeholder="Search..."
+                            type={fieldMeta.filterVariant === 'number' ? 'number' : 'text'}
+                            value={filters[fieldMeta.filterKey] ?? ''}
+                          />
+                        ) : null}
+                      </>
+                    )}
+                  </TableHead>
+                )
+              })}
+            </TableRow>
+          ))}
+        </TableHeader>
+        <TableBody>
+          {table.getRowModel().rows.map((row) => {
+            return (
+              <TableRow key={row.id}>
+                {row.getVisibleCells().map((cell) => {
+                  return (
+                    <TableCell key={cell.id}>
+                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                    </TableCell>
+                  )
+                })}
+              </TableRow>
+            )
+          })}
+        </TableBody>
+      </UITable>
+      <Pagination totalPages={Math.ceil((paginationOptions.rowCount || 1) / pagination.pageSize)} />
+    </div>
+  )
+}
+
+declare module '@tanstack/react-table' {
+  // oxlint-disable-next-line @typescript-eslint/no-unused-vars
+  interface ColumnMeta<TData extends RowData, TValue> {
+    filterKey?: keyof TData
+    filterVariant?: 'text' | 'number'
+  }
+}

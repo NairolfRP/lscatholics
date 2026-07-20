@@ -1,0 +1,28 @@
+import { accounts } from '../db/schema/auth-schema'
+import { BaseRepository } from './base.repository'
+
+type AccountsColumns = {
+  [K in keyof typeof accounts.$inferSelect]?: boolean
+}
+
+class AccountRepository extends BaseRepository<typeof accounts> {
+  constructor() {
+    super(undefined, accounts)
+  }
+
+  async getDiscordAccount<TColumns extends AccountsColumns>({
+    columns,
+    userId,
+  }: {
+    columns?: TColumns
+    userId: string
+  }) {
+    return this.db.query.accounts.findFirst({
+      columns,
+      where: (schema, { and, eq }) =>
+        and(eq(schema.providerId, 'discord'), eq(schema.userId, userId)),
+    })
+  }
+}
+
+export const accountRepository = new AccountRepository()

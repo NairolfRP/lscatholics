@@ -1,0 +1,26 @@
+/**
+ * Navigation
+ */
+
+.nav-trigger-button:hover,
+.nav-trigger-button:focus,
+.nav-trigger-button[data-state='open'],
+.nav-trigger-button[data-state='open']:hover,
+.nav-trigger-button[data-state='open']:focus {
+  background-color: transparent;
+  color: var(--accent);
+}
+
+.nav-trigger-button:hover:before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  height: 0.625rem;
+  background: var(--primary);
+  content: '';
+  -webkit-transform: translate(0, -105%);
+  -ms-transform: translate(0, -105%);
+  transform: translate(0, -105%);
+}

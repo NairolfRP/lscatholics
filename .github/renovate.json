@@ -1,0 +1,127 @@
+{
+    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+    "extends": [
+        "config:recommended",
+        ":semanticCommits",
+        ":semanticCommitTypeAll(chore)",
+        ":separateMultipleMajorReleases",
+        ":combinePatchMinorReleases",
+        ":disableRateLimiting",
+        "schedule:weekly"
+    ],
+    "rangeStrategy": "bump",
+    "labels": ["dependencies", "renovate"],
+    "minimumReleaseAge": "3 days",
+    "dependencyDashboard": true,
+    "timezone": "Europe/Paris",
+    "schedule": ["before 3am on monday"],
+    "prConcurrentLimit": 5,
+    "prHourlyLimit": 2,
+    "packageRules": [
+        {
+            "description": "Group Vercel and platform dependencies",
+            "matchPackageNames": ["@vercel/**", "nitro", "@unpic/react"],
+            "groupName": "platform",
+            "minimumReleaseAge": "3 days"
+        },
+        {
+            "description": "Group React and React DOM",
+            "matchPackageNames": ["react", "react-dom"],
+            "groupName": "react",
+            "schedule": ["before 3am on sunday"],
+            "minimumReleaseAge": "5 days"
+        },
+        {
+            "description": "Group TanStack Start and related plugins",
+            "matchPackageNames": [
+                "@tanstack/react-start",
+                "@tanstack/router-plugin",
+                "@tanstack/react-form-devtools",
+                "@tanstack/react-router-devtools",
+                "@tanstack/react-query-devtools",
+                "@tanstack/react-devtools",
+                "@tanstack/devtools-vite"
+            ],
+            "groupName": "tanstack-start",
+            "schedule": ["before 3am on sunday"],
+            "minimumReleaseAge": "3 days"
+        },
+        {
+            "description": "Group TanStack libraries",
+            "matchPackageNames": ["@tanstack/**"],
+            "groupName": "tanstack",
+            "schedule": ["before 3am on sunday"],
+            "minimumReleaseAge": "3 days"
+        },
+        {
+            "description": "Group Better Auth dependencies",
+            "matchPackageNames": ["better-auth", "@better-auth/**", "@gtaw-oauth-providers/**"],
+            "groupName": "better-auth",
+            "minimumReleaseAge": "2 days"
+        },
+        {
+            "description": "Group Drizzle ORM and utilities",
+            "matchPackageNames": ["drizzle-orm", "drizzle-kit"],
+            "groupName": "drizzle",
+            "minimumReleaseAge": "3 days"
+        },
+        {
+            "description": "Group LibSQL and database clients",
+            "matchPackageNames": ["@libsql/**"],
+            "groupName": "libsql",
+            "minimumReleaseAge": "2 days"
+        },
+        {
+            "description": "Group TypeScript and type definitions",
+            "matchPackageNames": ["typescript", "@types/**"],
+            "groupName": "typescript",
+            "schedule": ["before 3am on sunday"],
+            "minimumReleaseAge": "5 days"
+        },
+        {
+            "description": "Group Linting and formatting tools",
+            "matchPackageNames": ["oxlint", "oxfmt"],
+            "groupName": "linting-tools",
+            "minimumReleaseAge": "2 days"
+        },
+        {
+            "description": "Group Tailwind and CSS utilities",
+            "matchPackageNames": [
+                "tailwindcss",
+                "@tailwindcss/**",
+                "tailwind-merge",
+                "tw-animate-css",
+                "postcss"
+            ],
+            "groupName": "tailwind-css",
+            "minimumReleaseAge": "2 days"
+        },
+        {
+            "description": "Group UI and component libraries",
+            "matchPackageNames": ["radix-ui", "lucide-react", "sonner", "vaul", "shadcn"],
+            "groupName": "ui-components"
+        },
+        {
+            "description": "Group form and validation libraries",
+            "matchPackageNames": ["zod", "zod-form-data"],
+            "groupName": "form-validation"
+        },
+        {
+            "description": "Group logging utilities",
+            "matchPackageNames": ["pino", "pino-pretty"],
+            "groupName": "logging"
+        },
+        {
+            "description": "Group utility libraries",
+            "matchPackageNames": ["clsx", "class-variance-authority", "ky", "dotenv"],
+            "groupName": "utils"
+        }
+    ],
+    "vulnerabilityAlerts": {
+        "enabled": true,
+        "labels": ["security"],
+        "automerge": false,
+        "assignees": ["nairolfrp"],
+        "prCreation": "immediate"
+    }
+}
