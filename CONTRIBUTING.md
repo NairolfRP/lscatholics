@@ -25,36 +25,26 @@ Before getting started, make sure you have:
 ## 🚀 Getting Started
 
 1. **Fork the Repository**
-
-- Navigate to the [repository](https://github.com/NairolfRP/lscatholics) and click the `Fork` button.
-
+   - Navigate to the [repository](https://github.com/NairolfRP/lscatholics) and click the `Fork` button.
 2. **Clone Your Fork**
-
    ```sh
    git clone https://github.com/your-username/lscatholics.git
    cd lscatholics
    ```
-
 3. **Install Dependencies**
-
    ```sh
    pnpm install
    ```
-
 4. **Set Up Environment**
-
-- Copy `.env.example` to `.env`:
-  ```sh
-  cp .env.example .env
-  ```
-- Update the `.env` file with your database credentials and other required settings.
-
+   - Copy `.env.example` to `.env`:
+     ```sh
+     cp .env.example .env
+     ```
+   - Update the `.env` file with your database credentials and other required settings.
 5. **Run Database Migrations**
-
    ```sh
    pnpm db:migrate
    ```
-
 6. **Start the Development Server**
    ```sh
    pnpm dev
