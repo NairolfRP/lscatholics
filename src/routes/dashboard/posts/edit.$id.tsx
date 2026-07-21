@@ -14,8 +14,7 @@ import {
   CardHeader,
   CardTitle,
 } from '#shared/components/ui/card.tsx'
-import { DateTimePicker } from '#shared/components/ui/date-time-picker.tsx'
-import { Field, FieldError, FieldGroup, FieldLabel } from '#shared/components/ui/field.tsx'
+import { Field, FieldError, FieldGroup } from '#shared/components/ui/field.tsx'
 import { Input } from '#shared/components/ui/input.tsx'
 import { POST_STATUS } from '#shared/constants/post-status.ts'
 import { useAppForm } from '#shared/integrations/form/form-hook.ts'
@@ -184,24 +183,7 @@ function RouteComponent() {
                         {(status) =>
                           status === 'published' && (
                             <form.AppField name="publishedAt">
-                              {(field) => {
-                                const isInvalid =
-                                  field.state.meta.isTouched && !field.state.meta.isValid
-                                return (
-                                  <Field data-invalid={isInvalid}>
-                                    <FieldLabel htmlFor={field.name}>
-                                      Date de publication
-                                    </FieldLabel>
-                                    <DateTimePicker
-                                      id={field.name}
-                                      value={field.state.value ?? undefined}
-                                      onChange={(v) => field.handleChange(v ?? null)}
-                                      aria-invalid={isInvalid}
-                                    />
-                                    {isInvalid && <FieldError errors={field.state.meta.errors} />}
-                                  </Field>
-                                )
-                              }}
+                              {(field) => <field.DateTimePickerField label="Date de publication" />}
                             </form.AppField>
                           )
                         }
