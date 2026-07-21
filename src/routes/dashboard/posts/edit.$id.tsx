@@ -194,6 +194,7 @@ function RouteComponent() {
                           label="Mettre à jour"
                           submittingLabel="Mise à jour..."
                           form="edit-post-form"
+                          disabled={(state) => !state.canSubmit || !state.isDirty}
                           className="flex-1"
                         />
 
