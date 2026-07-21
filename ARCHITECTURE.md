@@ -117,17 +117,17 @@ Project configuration only. Plain validated values, no logic, no dependency on o
 
 ## 4. Decision table — where to place a new file
 
-| Question | Answer → location |
-|---|---|
-| Does the code instantiate a third-party SDK with server secrets (db, private API key)? | `server/integrations/` |
-| Does the code instantiate a third-party SDK client-side (hooks, public plugins)? | `shared/integrations/` |
-| Is it a `createServerFn`, used by 2+ features/routes? | `server-fn/{domain}.ts` |
-| Is it a `createServerFn`, used by a single feature? | `features/{feature}/server-fn/` |
+| Question                                                                                                | Answer → location                                           |
+|---------------------------------------------------------------------------------------------------------|-------------------------------------------------------------|
+| Does the code instantiate a third-party SDK with server secrets (db, private API key)?                  | `server/integrations/`                                      |
+| Does the code instantiate a third-party SDK client-side (hooks, public plugins)?                        | `shared/integrations/`                                      |
+| Is it a `createServerFn`, used by 2+ features/routes?                                                   | `server-fn/{domain}.ts`                                     |
+| Is it a `createServerFn`, used by a single feature?                                                     | `features/{feature}/server-fn/`                             |
 | Does the file know the name of a business entity (User, Plan, Organization) and is used by 2+ features? | `shared/` (types, constants, hooks, ui depending on nature) |
-| Is the file 100% generic, copyable into another project without changes? | `shared/lib/` |
-| Is the file specific to a single feature? | `features/{feature}/` |
-| Is it a validated config value (env), with no logic? | `config/` |
-| Is it Drizzle schema/migration? | `server/db/schema/` (never inside a feature) |
+| Is the file 100% generic, copyable into another project without changes?                                | `shared/lib/`                                               |
+| Is the file specific to a single feature?                                                               | `features/{feature}/`                                       |
+| Is it a validated config value (env), with no logic?                                                    | `config/`                                                   |
+| Is it Drizzle schema/migration?                                                                         | `server/db/schema/` (never inside a feature)                |
 
 ---
 
