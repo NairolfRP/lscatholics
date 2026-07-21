@@ -37,10 +37,8 @@ This project is built with the following technologies:
    pnpm install
    ```
 3. Configure environment variables:
-
-- Copy `.env.example` to `.env`
-- Set up database credentials and other necessary configurations
-
+   - Copy `.env.example` to `.env`
+   - Set up database credentials and other necessary configurations
 4. Run database migrations and seeders:
    ```sh
    pnpm db:migrate && pnpm db:seed
