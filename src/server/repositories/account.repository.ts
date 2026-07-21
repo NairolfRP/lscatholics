@@ -1,4 +1,4 @@
-import { accounts } from '../db/schema/auth-schema'
+import { accounts } from '#server/db/schema'
 import { BaseRepository } from './base.repository'
 
 type AccountsColumns = {

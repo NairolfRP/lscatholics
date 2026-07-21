@@ -5,9 +5,7 @@ import type { PaginationState, SortingState, Updater } from '@tanstack/react-tab
 import { useFilters } from '#shared/hooks/use-filters.tsx'
 import { sortByToState, stateToSortBy } from '#/utils/table.ts'
 import { DASHBOARD_PAGINATION_LIMIT } from '#shared/constants/dashboard.ts'
-import type {
-  DashboardFilters,
-} from '../../../features/dashboard/schemas/dashboard-filters.schema.ts'
+import type { DashboardFilters } from '#/features/dashboard/schemas/dashboard-filters.schema.ts'
 
 interface UseDashboardListParams<
   TRouteId extends RouteIds<RegisteredRouter['routeTree']>,

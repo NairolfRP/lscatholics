@@ -1,5 +1,5 @@
 import { PARISH_VALUES } from '#/shared/constants/parish'
-import { churchEvents } from '../schema/church-event-schema'
+import { churchEvents } from '#server/db/schema'
 import { Factory } from './factory'
 
 const EVENT_TYPES = [

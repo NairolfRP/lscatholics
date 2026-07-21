@@ -18,7 +18,7 @@ import {
 import { postsDashboardQueryOptions } from '#shared/queries/post.queries.ts'
 import type { DashboardPostsTableMeta } from '../types/dashboard-post.types'
 import { dashboardPostColumns } from '../constants/dashboard-post-columns'
-import { deletePostFn } from '../../../server-fn/post.functions.ts'
+import { deletePostFn } from '#/server-fn/post.functions.ts'
 import { canEditPost } from '../utils/post.utils'
 
 export function DashboardPostsList() {
