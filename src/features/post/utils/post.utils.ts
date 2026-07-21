@@ -6,9 +6,5 @@ export function canEditPost({ user, authorId }: { user: User; authorId: string |
     return true
   }
 
-  if (!authorId || user.id !== authorId) {
-    return false
-  }
-
-  return true
+  return Boolean(authorId) && user.id === authorId
 }
