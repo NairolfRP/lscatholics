@@ -1,23 +1,46 @@
 import type { ComponentPropsWithRef } from 'react'
+import type { AnyFormApi } from '@tanstack/react-form'
 import { useFormContext } from '#/shared/integrations/form/form-hook'
 import { Button } from '../ui/button'
 import { Spinner } from '../ui/spinner'
 
-type SubmitButtonProps = ComponentPropsWithRef<typeof Button> & {
-  label: string
-  submittingLabel?: string
+type FormState<TFormValues> = Omit<AnyFormApi['state'], 'values'> & {
+  values: TFormValues
 }
 
-export function SubmitButton({ label, submittingLabel, disabled, ...props }: SubmitButtonProps) {
+type SubmitButtonProps<TFormValues = unknown> = Omit<
+  ComponentPropsWithRef<typeof Button>,
+  'disabled'
+> & {
+  label: string
+  submittingLabel?: string
+  disabled?: boolean | ((state: FormState<TFormValues>) => boolean)
+}
+
+const defaultDisabled = (state: AnyFormApi['state']) => !state.canSubmit
+
+export function SubmitButton<TFormValues = unknown>({
+  label,
+  submittingLabel,
+  disabled,
+  ...props
+}: SubmitButtonProps<TFormValues>) {
   const form = useFormContext()
   return (
-    <form.Subscribe selector={(state) => [state.canSubmit, state.isSubmitting]}>
-      {([canSubmit, isSubmitting]) => (
-        <Button
-          type="submit"
-          disabled={typeof disabled === 'boolean' ? disabled && !canSubmit : !canSubmit}
-          {...props}
-        >
+    <form.Subscribe
+      selector={(state) =>
+        [
+          typeof disabled === 'function'
+            ? disabled(state as unknown as FormState<TFormValues>)
+            : typeof disabled === 'boolean'
+              ? disabled
+              : defaultDisabled(state),
+          state.isSubmitting,
+        ] as const
+      }
+    >
+      {([isDisabled, isSubmitting]) => (
+        <Button type="submit" disabled={isDisabled} {...props}>
           {submittingLabel && isSubmitting ? <SubmittingLabel label={submittingLabel} /> : label}
         </Button>
       )}
