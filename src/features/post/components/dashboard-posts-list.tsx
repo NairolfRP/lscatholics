@@ -1,22 +1,24 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useRouter } from '@tanstack/react-router'
 import { toast } from 'sonner'
-import { DashboardList } from '#/features/dashboard/components/dashboard-list.tsx'
-import { DASHBOARD_PAGINATION_LIMIT } from '#/features/dashboard/constants/dashboard-pagination.ts'
-import { DASHBOARD_LIST_INITIAL_FILTERS } from '#/features/dashboard/constants/dashboard.constants.ts'
-import { useDashboardList } from '#/features/dashboard/hooks/use-dashboard-list.tsx'
+import { DashboardList } from '#shared/components/dashboard/list.tsx'
+import { useDashboardList } from '#shared/hooks/dashboard/use-dashboard-list.tsx'
 import { Skeleton } from '#/shared/components/ui/skeleton.tsx'
 import {
+  Table as TableShadcn,
   TableBody,
   TableCell,
   TableRow,
-  Table as TableShadcn,
 } from '#/shared/components/ui/table.tsx'
 import { authClient } from '#/shared/integrations/auth/auth-client.ts'
+import {
+  DASHBOARD_LIST_INITIAL_FILTERS,
+  DASHBOARD_PAGINATION_LIMIT,
+} from '#shared/constants/dashboard.ts'
+import { postsDashboardQueryOptions } from '#shared/queries/post.queries.ts'
 import type { DashboardPostsTableMeta } from '../types/dashboard-post.types'
 import { dashboardPostColumns } from '../constants/dashboard-post-columns'
-import { deletePostFn } from '../functions/post.functions'
-import { postsDashboardQueryOptions } from '../queries'
+import { deletePostFn } from '../../../server-fn/post.functions.ts'
 import { canEditPost } from '../utils/post.utils'
 
 export function DashboardPostsList() {

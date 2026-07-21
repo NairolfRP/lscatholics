@@ -2,10 +2,12 @@ import type { QueryKey, queryOptions } from '@tanstack/react-query'
 import { useQuery } from '@tanstack/react-query'
 import type { RegisteredRouter, RouteIds } from '@tanstack/react-router'
 import type { PaginationState, SortingState, Updater } from '@tanstack/react-table'
-import { useFilters } from '#/shared/hooks/use-filters.tsx'
+import { useFilters } from '#shared/hooks/use-filters.tsx'
 import { sortByToState, stateToSortBy } from '#/utils/table.ts'
-import type { DashboardFilters } from '../schemas/dashboard-filters.schema'
-import { DASHBOARD_PAGINATION_LIMIT } from '../constants/dashboard-pagination'
+import { DASHBOARD_PAGINATION_LIMIT } from '#shared/constants/dashboard.ts'
+import type {
+  DashboardFilters,
+} from '../../../features/dashboard/schemas/dashboard-filters.schema.ts'
 
 interface UseDashboardListParams<
   TRouteId extends RouteIds<RegisteredRouter['routeTree']>,

@@ -3,9 +3,9 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useRouter } from '@tanstack/react-router'
 import { LoaderCircle } from 'lucide-react'
 import { toast } from 'sonner'
-import { updateCurrentCharacterFn } from '#/server-fn/character.functions'
-import { Alert, AlertDescription, AlertTitle } from '#/shared/components/ui/alert'
-import { RadioGroup, RadioGroupItem } from '#/shared/components/ui/radio-group'
+import { updateCurrentCharacterFn } from '#/server-fn/character.functions.ts'
+import { Alert, AlertDescription, AlertTitle } from '#shared/components/ui/alert.tsx'
+import { RadioGroup, RadioGroupItem } from '#shared/components/ui/radio-group.tsx'
 import {
   ResponsiveDialog,
   ResponsiveDialogClose,
@@ -14,11 +14,11 @@ import {
   ResponsiveDialogFooter,
   ResponsiveDialogHeader,
   ResponsiveDialogTitle,
-} from '#/shared/components/ui/responsive-dialog'
-import { authClient } from '#/shared/integrations/auth/auth-client'
-import { gameContextQueryOptions } from '#/shared/queries/game.queries'
-import { Button } from '../../../shared/components/ui/button'
-import { Label } from '../../../shared/components/ui/label'
+} from '#shared/components/ui/responsive-dialog.tsx'
+import { authClient } from '#shared/integrations/auth/auth-client.ts'
+import { gameContextQueryOptions } from '#shared/queries/game.queries.ts'
+import { Button } from '../ui/button.tsx'
+import { Label } from '../ui/label.tsx'
 
 type Props = {
   open?: boolean

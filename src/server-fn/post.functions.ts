@@ -2,21 +2,21 @@ import { notFound } from '@tanstack/react-router'
 import { createServerFn } from '@tanstack/react-start'
 import { setResponseStatus } from '@tanstack/react-start/server'
 import { z } from 'zod'
-import { DASHBOARD_PAGINATION_LIMIT } from '#/features/dashboard/constants/dashboard-pagination.ts'
-import { dashboardSearchSchema } from '#/features/dashboard/schemas/dashboard-search.schema.ts'
 import { requireDashboardAccess } from '#/middleware/permission.middleware.ts'
-import { logger } from '#/server/integrations/logger.ts'
-import { postRepository } from '#/server/repositories/post.repository'
+import { logger } from '#server/integrations/logger.ts'
+import { postRepository } from '#server/repositories/post.repository.ts'
 import { getFieldErrors } from '#/utils/form.ts'
 import { createSlug, generateExcerpt } from '#/utils/string.ts'
 import { NotFoundException, UnauthorizedException } from '#server/exceptions/http-exception.ts'
+import { DASHBOARD_PAGINATION_LIMIT } from '#shared/constants/dashboard.ts'
 import { POST_STATUS } from '#shared/constants/post-status.ts'
+import { dashboardSearchSchema } from '#shared/schemas/dashboard/search.schema.ts'
 import {
   basePostInteractionSchema,
   editPostSchema,
   postsSearchSchema,
-} from '../schemas/post.schema'
-import { canEditPost } from '../utils/post.utils'
+} from '../features/post/schemas/post.schema.ts'
+import { canEditPost } from '../features/post/utils/post.utils.ts'
 
 export const getPostFn = createServerFn({ method: 'GET' })
   .validator((slug: string) => slug)

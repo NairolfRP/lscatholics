@@ -2,13 +2,13 @@ import { Fragment } from 'react/jsx-runtime'
 import { useQuery } from '@tanstack/react-query'
 import { Link } from '@tanstack/react-router'
 import { AlertCircleIcon } from 'lucide-react'
-import { latestEventsQueryOptions } from '#/features/church-event/queries'
 import { Alert, AlertDescription, AlertTitle } from '#/shared/components/ui/alert'
 import { Button } from '#/shared/components/ui/button'
 import { Separator } from '#/shared/components/ui/separator'
 import { Skeleton } from '#/shared/components/ui/skeleton'
 import { Typography } from '#/shared/components/ui/typography'
 import { formatDate } from '#/utils/date'
+import { latestEventsQueryOptions } from '#shared/queries/church-event.queries.ts'
 
 export function LatestEventsSection() {
   const { data: events, isPending, isError, refetch } = useQuery(latestEventsQueryOptions)

@@ -1,7 +1,7 @@
 import { keepPreviousData, queryOptions } from '@tanstack/react-query'
-import type { DashboardSearch } from '../dashboard/schemas/dashboard-search.schema'
-import { getLatestPostsFn } from './functions/latest-posts.functions'
-import { getDashboardPostsFn, getPostFn, getPostsFn } from './functions/post.functions'
+import type { DashboardSearch } from '../schemas/dashboard/search.schema.ts'
+import { getLatestPostsFn } from '../../server-fn/latest-posts.functions.ts'
+import { getDashboardPostsFn, getPostFn, getPostsFn } from '../../server-fn/post.functions.ts'
 
 export const latestPostsQueryOptions = queryOptions({
   queryKey: ['posts', 'latest'],

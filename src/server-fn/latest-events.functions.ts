@@ -1,5 +1,5 @@
 import { createServerFn } from '@tanstack/react-start'
-import { churchEventRepository } from '#/server/repositories/church-event.repository'
+import { churchEventRepository } from '#server/repositories/church-event.repository.ts'
 
 const HOMEPAGE_EVENTS_LIMIT = 3
 

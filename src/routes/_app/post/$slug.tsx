@@ -1,10 +1,10 @@
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute } from '@tanstack/react-router'
-import { postQueryOptions } from '#/features/post/queries'
 import { Markdown } from '#/shared/components/ui/markdown'
 import Hero from '#/shared/layouts/app/components/hero'
 import { formatDate } from '#/utils/date'
 import { pageMetadata } from '#/utils/seo'
+import { postQueryOptions } from '#shared/queries/post.queries.ts'
 
 export const Route = createFileRoute('/_app/post/$slug')({
   loader: ({ context: { queryClient }, params }) => {

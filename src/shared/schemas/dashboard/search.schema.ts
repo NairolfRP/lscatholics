@@ -1,5 +1,5 @@
 import z from 'zod'
-import { pageSchema, sortBySchema } from '#/shared/schemas/pagination.schema'
+import { pageSchema, sortBySchema } from '#shared/schemas/pagination.schema.ts'
 
 export const dashboardSearchSchema = z.object({
   search: z.string().catch('').default(''),

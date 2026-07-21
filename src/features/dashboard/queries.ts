@@ -1,5 +1,5 @@
 import { queryOptions } from '@tanstack/react-query'
-import { getDashboardStatsFn } from './functions/dashboard.functions'
+import { getDashboardStatsFn } from '#/features/dashboard/server-fn/dashboard.functions'
 
 export const dashboardStatsQueryOptions = queryOptions({
   queryKey: ['dashboard-stats'],

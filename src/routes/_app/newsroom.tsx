@@ -1,9 +1,9 @@
 import { createFileRoute, redirect, stripSearchParams } from '@tanstack/react-router'
 import { PostsGrid } from '#/features/post/components/posts-grid'
-import { postsQueryOptions } from '#/features/post/queries'
 import { postsSearchSchema } from '#/features/post/schemas/post.schema'
 import Hero from '#/shared/layouts/app/components/hero'
 import { pageMetadata } from '#/utils/seo'
+import { postsQueryOptions } from '#shared/queries/post.queries.ts'
 
 export const Route = createFileRoute('/_app/newsroom')({
   validateSearch: postsSearchSchema,

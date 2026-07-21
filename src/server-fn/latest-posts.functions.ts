@@ -1,5 +1,5 @@
 import { createServerFn } from '@tanstack/react-start'
-import { postRepository } from '#/server/repositories/post.repository'
+import { postRepository } from '#server/repositories/post.repository.ts'
 
 const HOMEPAGE_POSTS_LIMIT = 4
 

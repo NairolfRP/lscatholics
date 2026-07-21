@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Link, useRouter } from '@tanstack/react-router'
 import { User } from 'lucide-react'
 import { toast } from 'sonner'
-import SwitchCharacterDialog from '#/features/character-switch/components/switch-character-dialog'
+import SwitchCharacterDialog from '#shared/components/character-switch/dialog.tsx'
 import { Button } from '#/shared/components/ui/button'
 import {
   DropdownMenu,

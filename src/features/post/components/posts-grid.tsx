@@ -5,7 +5,7 @@ import { Pagination } from '#/shared/components/pagination'
 import { Alert, AlertAction, AlertDescription, AlertTitle } from '#/shared/components/ui/alert'
 import { Button } from '#/shared/components/ui/button'
 import { cn } from '#/shared/lib/utils'
-import { postsQueryOptions } from '../queries'
+import { postsQueryOptions } from '#shared/queries/post.queries.ts'
 import PostCard, { PostCardSkeleton } from './post-card'
 
 export function PostsGrid() {

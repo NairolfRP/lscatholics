@@ -1,6 +1,6 @@
 import type { ColumnDef, PaginationState, TableMeta } from '@tanstack/react-table'
-import { Table } from '#/shared/components/table.tsx'
-import { Button } from '#/shared/components/ui/button.tsx'
+import { Table } from '#shared/components/table.tsx'
+import { Button } from '#shared/components/ui/button.tsx'
 
 type DashboardListProps<TItem extends Record<string, any>> = {
   columns: Array<ColumnDef<TItem, any>>

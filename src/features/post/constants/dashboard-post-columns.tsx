@@ -1,15 +1,15 @@
 import { Link } from '@tanstack/react-router'
 import { createColumnHelper } from '@tanstack/react-table'
 import { EditIcon, Trash2Icon } from 'lucide-react'
-import type { posts } from '#/server/db/schema/post-schema.ts'
 import { ActionButton } from '#/shared/components/action-button.tsx'
 import { Badge } from '#/shared/components/ui/badge.tsx'
 import { ButtonGroup } from '#/shared/components/ui/button-group.tsx'
 import { buttonVariants } from '#/shared/components/ui/button.tsx'
 import { formatDate } from '#/utils/date.ts'
 import type { DashboardPostsTableMeta } from '../types/dashboard-post.types'
+import type { Post } from '#shared/types/post.types.ts'
 
-const columnHelper = createColumnHelper<typeof posts.$inferSelect>()
+const columnHelper = createColumnHelper<Post>()
 
 export const dashboardPostColumns = [
   columnHelper.accessor('title', {

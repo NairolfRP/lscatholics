@@ -1,5 +1,5 @@
 import { parishes } from '#/config/parishes'
-import { createEnum } from '#/utils/create-enum'
+import { createEnum } from '#shared/lib/enum.ts'
 import type { ParishId } from '../types/parish.types'
 
 export const [PARISH, PARISH_VALUES] = createEnum({
