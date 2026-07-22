@@ -17,25 +17,35 @@ import {
 import { useFieldContext } from '#/shared/integrations/form/form-hook'
 import type { FieldComponentProps, SelectValues } from '#/shared/lib/types/form'
 
-type SelectFieldProps = FieldComponentProps<
-  typeof Select,
-  {
-    label: string
-    description?: string | ReactNode
-    descriptionPos?: 'before' | 'after'
-    errorsPos?: 'before' | 'after'
-    placeholder?: string
-    values: Array<SelectValues>
-    selectTriggerProps?: Omit<ComponentPropsWithoutRef<typeof SelectTrigger>, 'id' | 'aria-invalid'>
-    selectContentProps?: ComponentPropsWithoutRef<typeof SelectContent>
-  }
->
+type SelectFieldProps<TValue extends string | null | undefined = string | null | undefined> =
+  FieldComponentProps<
+    typeof Select,
+    {
+      label: string
+      description?: string | ReactNode
+      descriptionPos?: 'before' | 'after'
+      errorsPos?: 'before' | 'after'
+      placeholder?: string
+      values: Array<SelectValues>
+      onValueChange?: (
+        value: TValue,
+        handleChange: ReturnType<typeof useFieldContext<TValue>>['handleChange']
+      ) => void
+      selectTriggerProps?: Omit<
+        ComponentPropsWithoutRef<typeof SelectTrigger>,
+        'id' | 'aria-invalid'
+      >
+      selectContentProps?: ComponentPropsWithoutRef<typeof SelectContent>
+    },
+    'onValueChange'
+  >
 
 export function SelectField({
   fieldProps,
   fieldContentProps,
   fieldLabelProps,
   values,
+  onValueChange,
   label,
   placeholder,
   description,
@@ -46,7 +56,7 @@ export function SelectField({
   ...props
 }: SelectFieldProps) {
   const generatedId = useId()
-  const field = useFieldContext<string>()
+  const field = useFieldContext<string | null | undefined>()
 
   const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
 
@@ -68,7 +78,11 @@ export function SelectField({
         items={values}
         name={field.name}
         value={field.state.value}
-        onValueChange={(v) => field.handleChange(v as string)}
+        onValueChange={(v) =>
+          onValueChange
+            ? onValueChange(v as string | null | undefined, field.handleChange)
+            : field.handleChange(v as string | null | undefined)
+        }
         {...props}
       >
         <SelectTrigger {...selectTriggerProps} id={fieldId} aria-invalid={isInvalid}>
