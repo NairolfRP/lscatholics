@@ -1,7 +1,6 @@
 import { useMemo, useState } from 'react'
 import { Link } from '@tanstack/react-router'
 import { ChevronsUpDownIcon, LogOutIcon, SettingsIcon } from 'lucide-react'
-import SwitchCharacterDialog from '#shared/components/character-switch/dialog.tsx'
 import { dashboardMenuItems } from '#/features/dashboard/constants/dashboard-menu-items'
 import { Logo } from '#/shared/components/logo'
 import { Avatar, AvatarFallback, AvatarImage } from '#/shared/components/ui/avatar'
@@ -27,6 +26,7 @@ import {
   useSidebar,
 } from '#/shared/components/ui/sidebar'
 import { authClient } from '#/shared/integrations/auth/auth-client'
+import SwitchCharacterDialog from '#shared/components/character-switch/dialog.tsx'
 
 export function DashboardSidebar() {
   const { data: session, isPending } = authClient.useSession()

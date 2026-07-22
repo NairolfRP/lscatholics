@@ -6,8 +6,8 @@ import { Badge } from '#/shared/components/ui/badge.tsx'
 import { ButtonGroup } from '#/shared/components/ui/button-group.tsx'
 import { buttonVariants } from '#/shared/components/ui/button.tsx'
 import { formatDate } from '#/utils/date.ts'
-import type { DashboardPostsTableMeta } from '../types/dashboard-post.types'
 import type { Post } from '#shared/types/post.types.ts'
+import type { DashboardPostsTableMeta } from '../types/dashboard-post.types'
 
 const columnHelper = createColumnHelper<Post>()
 

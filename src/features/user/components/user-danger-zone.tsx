@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useRouteContext, useRouter } from '@tanstack/react-router'
 import { Trash, TriangleAlert } from 'lucide-react'
 import { toast } from 'sonner'
+import { deleteUserFn } from '#/features/user/server-fn/user.functions'
 import { Alert, AlertTitle } from '#/shared/components/ui/alert'
 import { Button } from '#/shared/components/ui/button'
 import {
@@ -24,7 +25,6 @@ import { useReauth } from '#/shared/hooks/auth/use-reauth'
 import { authClient } from '#/shared/integrations/auth/auth-client'
 import { useAppForm } from '#/shared/integrations/form/form-hook'
 import { RequireReauthProvider } from '#/shared/providers/require-reauth-provider'
-import { deleteUserFn } from '#/features/user/server-fn/user.functions'
 import { deleteUserFormSchema } from '../schemas/delete-user-schema'
 
 export function UserDangerZone() {

@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { Link, useRouter } from '@tanstack/react-router'
 import { User } from 'lucide-react'
 import { toast } from 'sonner'
-import SwitchCharacterDialog from '#shared/components/character-switch/dialog.tsx'
 import { Button } from '#/shared/components/ui/button'
 import {
   DropdownMenu,
@@ -13,6 +12,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '#/shared/components/ui/dropdown-menu'
+import SwitchCharacterDialog from '#shared/components/character-switch/dialog.tsx'
 import { useGameContext } from '#shared/hooks/use-game-context.ts'
 import { authClient } from '../integrations/auth/auth-client'
 

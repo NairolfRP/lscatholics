@@ -1,5 +1,16 @@
 {
-    "include": ["src/**/*.ts", "scripts/**/*.ts", "tests/**/*.ts", "tests/**/*.tsx", "src/**/*.tsx", "vite.config.ts", "vitest.config.ts", "playwright.config.ts", "drizzle.config.ts", "eslint.config.ts"],
+    "include": [
+        "src/**/*.ts",
+        "scripts/**/*.ts",
+        "tests/**/*.ts",
+        "tests/**/*.tsx",
+        "src/**/*.tsx",
+        "vite.config.ts",
+        "vitest.config.ts",
+        "playwright.config.ts",
+        "drizzle.config.ts",
+        "eslint.config.ts"
+    ],
 
     "compilerOptions": {
         "target": "ES2022",

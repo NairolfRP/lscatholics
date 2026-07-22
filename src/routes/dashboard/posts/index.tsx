@@ -1,7 +1,6 @@
 import { createFileRoute, Link, stripSearchParams } from '@tanstack/react-router'
 import { PlusIcon } from 'lucide-react'
 import { DashboardHeading } from '#/features/dashboard/components/dashboard-heading.tsx'
-import { DASHBOARD_LIST_INITIAL_FILTERS } from '#shared/constants/dashboard.ts'
 import { DashboardPostsList } from '#/features/post/components/dashboard-posts-list.tsx'
 import { DebouncedInput } from '#/shared/components/debounced-input.tsx'
 import { buttonVariants } from '#/shared/components/ui/button.tsx'
@@ -13,6 +12,7 @@ import {
   CardTitle,
 } from '#/shared/components/ui/card.tsx'
 import { pageMetadata } from '#/utils/seo.ts'
+import { DASHBOARD_LIST_INITIAL_FILTERS } from '#shared/constants/dashboard.ts'
 import { postsDashboardQueryOptions } from '#shared/queries/post.queries.ts'
 import { dashboardSearchSchema } from '#shared/schemas/dashboard/search.schema.ts'
 

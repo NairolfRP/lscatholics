@@ -1,6 +1,5 @@
 import { createFileRoute, stripSearchParams } from '@tanstack/react-router'
 import { DashboardHeading } from '#/features/dashboard/components/dashboard-heading'
-import { DASHBOARD_LIST_INITIAL_FILTERS } from '#shared/constants/dashboard.ts'
 import { UsersList } from '#/features/user/components/admin/users-list.tsx'
 import { CreateFakeUserButton } from '#/features/user/components/create-fake-user-button'
 import { DebouncedInput } from '#/shared/components/debounced-input'
@@ -12,6 +11,7 @@ import {
   CardTitle,
 } from '#/shared/components/ui/card'
 import { pageMetadata } from '#/utils/seo'
+import { DASHBOARD_LIST_INITIAL_FILTERS } from '#shared/constants/dashboard.ts'
 import { dashboardSearchSchema } from '#shared/schemas/dashboard/search.schema.ts'
 
 export const Route = createFileRoute('/dashboard/users/')({

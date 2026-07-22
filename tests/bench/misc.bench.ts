@@ -1,8 +1,8 @@
 import { bench, describe } from 'vitest'
-import { createEnum } from '#shared/lib/enum.ts'
 import { isExternalLink } from '#/utils/link'
 import { formatNumber } from '#/utils/number'
 import { sortByToState, stateToSortBy } from '#/utils/table'
+import { createEnum } from '#shared/lib/enum.ts'
 
 describe('formatNumber', () => {
   bench('format large number', () => {

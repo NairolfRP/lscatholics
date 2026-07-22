@@ -1,6 +1,6 @@
 import { queryOptions } from '@tanstack/react-query'
-import type { DashboardSearch } from '#shared/schemas/dashboard/search.schema.ts'
 import { getDiscordAccountFn, getUsersListFn } from '#/features/user/server-fn/user.functions'
+import type { DashboardSearch } from '#shared/schemas/dashboard/search.schema.ts'
 
 const DISCORD_CONNECTION_QUERY_KEY = 'discord-connection'
 

@@ -1,5 +1,3 @@
-import { DashboardList } from '#shared/components/dashboard/list.tsx'
-import { useDashboardList } from '#shared/hooks/dashboard/use-dashboard-list.tsx'
 import { Skeleton } from '#/shared/components/ui/skeleton.tsx'
 import {
   Table as TableShadcn,
@@ -8,10 +6,12 @@ import {
   TableRow,
 } from '#/shared/components/ui/table.tsx'
 import { authClient } from '#/shared/integrations/auth/auth-client.ts'
+import { DashboardList } from '#shared/components/dashboard/list.tsx'
 import {
   DASHBOARD_LIST_INITIAL_FILTERS,
   DASHBOARD_PAGINATION_LIMIT,
 } from '#shared/constants/dashboard.ts'
+import { useDashboardList } from '#shared/hooks/dashboard/use-dashboard-list.tsx'
 import type { UsersTableMeta } from '../../types/user.types'
 import { userColumns } from '../../constants/dashboard-user-columns'
 import { useUserAdminMutations } from '../../hooks/use-user-admin-mutations'
