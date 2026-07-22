@@ -3,16 +3,17 @@ import { createServerFn } from '@tanstack/react-start'
 import { setResponseStatus } from '@tanstack/react-start/server'
 import { z } from 'zod'
 import { requireDashboardAccess } from '#/middleware/permission.middleware.ts'
-import { logger } from '#server/integrations/logger.ts'
-import { postRepository } from '#server/repositories/post.repository.ts'
 import { getFieldErrors } from '#/utils/form.ts'
 import { createSlug, generateExcerpt } from '#/utils/string.ts'
 import { NotFoundException, UnauthorizedException } from '#server/exceptions/http-exception.ts'
+import { logger } from '#server/integrations/logger.ts'
+import { postRepository } from '#server/repositories/post.repository.ts'
 import { DASHBOARD_PAGINATION_LIMIT } from '#shared/constants/dashboard.ts'
 import { POST_STATUS } from '#shared/constants/post-status.ts'
 import { dashboardSearchSchema } from '#shared/schemas/dashboard/search.schema.ts'
 import {
   basePostInteractionSchema,
+  createPostSchema,
   editPostSchema,
   postsSearchSchema,
 } from '../features/post/schemas/post.schema.ts'
@@ -64,7 +65,7 @@ export const getDashboardPostFn = createServerFn({ method: 'GET' })
         id: true,
         name: true,
       },
-      status: null
+      status: null,
     })
 
     if (!post) {
@@ -228,6 +229,82 @@ export const updatePostFn = createServerFn({ method: 'POST' })
       }
 
       logger.error({ err, postId, userId: context.session.user.id }, 'Failed to update post')
+      setResponseStatus(500)
+      return { success: false, error: 'Une erreur est survenue' }
+    }
+  })
+
+export const createPostFn = createServerFn({ method: 'POST' })
+  .middleware([requireDashboardAccess])
+  .validator((data: unknown) => {
+    if (!data || typeof data !== 'object') {
+      setResponseStatus(400)
+      throw new Error('Invalid data')
+    }
+
+    return data
+  })
+  .handler(async ({ data, context }) => {
+    try {
+      const validatedData = await createPostSchema.parseAsync(data)
+
+      let slug = validatedData.slug
+      if (slug && (await postRepository.existsBySlug(slug))) {
+        throw {
+          success: false,
+          validationErrors: { slug: [{ message: 'Ce slug est déjà pris.' }] },
+        }
+      } else if (!slug) {
+        const baseSlug = createSlug(validatedData.title)
+        slug = baseSlug
+        let counter = 1
+        while (await postRepository.existsBySlug(slug)) {
+          slug = `${baseSlug}-${counter}`
+          counter++
+        }
+      }
+
+      let excerpt = validatedData.excerpt
+      if (!excerpt) {
+        excerpt = generateExcerpt(validatedData.content, 150)
+      }
+
+      let publishedAt = validatedData.publishedAt
+      if (validatedData.status === POST_STATUS.PUBLISHED && !publishedAt) {
+        publishedAt = new Date()
+      }
+
+      const createdPost = await postRepository.create(
+        {
+          title: validatedData.title,
+          slug,
+          excerpt,
+          content: validatedData.content,
+          coverImageUrl: validatedData.coverImageUrl,
+          status: validatedData.status,
+          publishedAt,
+          authorId: context.session.user.id,
+        },
+        { returning: ['id'] }
+      )
+
+      return { success: true, postId: createdPost[0].id }
+    } catch (err) {
+      if (err instanceof z.ZodError) {
+        const validationErrors = getFieldErrors(err)
+        setResponseStatus(400)
+        return { success: false, validationErrors }
+      }
+
+      if (err && typeof err === 'object' && 'validationErrors' in err) {
+        setResponseStatus(400)
+        return {
+          success: false,
+          validationErrors: err.validationErrors as Record<string, Array<{ message: string }>>,
+        }
+      }
+
+      logger.error({ err, data, userId: context.session.user.id }, 'Failed to create post')
       setResponseStatus(500)
       return { success: false, error: 'Une erreur est survenue' }
     }

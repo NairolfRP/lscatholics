@@ -1,10 +1,24 @@
 import z from 'zod'
 import { pageSchema } from '#/shared/schemas/pagination.schema'
-import { POST_STATUS_VALUES } from '#shared/constants/post-status.ts'
+import { POST_STATUS, POST_STATUS_VALUES } from '#shared/constants/post-status.ts'
 import { slugSchema } from '#shared/schemas/common.schema.ts'
 
 export const basePostInteractionSchema = z.object({ postId: z.cuid2() })
-export const postStatusSchema = z.enum(POST_STATUS_VALUES)
+export const postStatusSchema = z.enum(POST_STATUS_VALUES, {
+  error: (iss) =>
+    iss.input === undefined
+      ? 'Le statut est requis.'
+      : `Seuls les statuts suivants sont acceptés : ${iss.values.join(', ')}`,
+})
+export const postStatusSchemaWithoutArchived = z.enum(
+  POST_STATUS_VALUES.filter((v) => v !== POST_STATUS.ARCHIVED),
+  {
+    error: (iss) =>
+      iss.input === undefined
+        ? 'Le statut est requis.'
+        : `Seuls les statuts suivants sont acceptés : ${iss.values.join(', ')}`,
+  }
+)
 export const postsSearchSchema = z.object({
   page: pageSchema,
   search: z.string().optional(),
@@ -44,3 +58,8 @@ export const editPostSchema = z.object({
 })
 
 export type InferEditPostSchema = z.Infer<typeof editPostSchema>
+
+export const createPostSchema = editPostSchema.extend({
+  status: postStatusSchemaWithoutArchived,
+})
+export type InferCreatePostSchema = z.Infer<typeof createPostSchema>

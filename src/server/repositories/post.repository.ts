@@ -2,8 +2,8 @@ import type { AnySQLiteColumn } from 'drizzle-orm/sqlite-core'
 import { and, count, eq, like, or } from 'drizzle-orm'
 import { POST_STATUS } from '#/shared/constants/post-status'
 import type { PostStatus } from '#/shared/types/post.types'
-import { lower } from '#shared/lib/sql.ts'
 import type { UsersColumns } from '#server/repositories/user.repository.ts'
+import { lower } from '#shared/lib/sql.ts'
 import { db } from '../db'
 import { posts } from '../db/schema'
 import { BaseRepository } from './base.repository'
@@ -123,6 +123,16 @@ class PostRepository extends BaseRepository<typeof posts> {
     ])
 
     return { posts: data, total: total[0].postsCount }
+  }
+
+  async existsBySlug(slug: string): Promise<boolean> {
+    const result = await db
+      .select({ id: this.schema.id })
+      .from(this.schema)
+      .where(eq(this.schema.slug, slug))
+      .limit(1)
+
+    return result.length > 0
   }
 
   async deletePost({ id }: { id: string }) {

@@ -1,3 +1,4 @@
+import type { ResultSet } from '@libsql/client/web'
 import type { Table } from 'drizzle-orm'
 import { and, count, eq, getTableColumns } from 'drizzle-orm'
 import { db as dbClient } from '../db'
@@ -30,6 +31,37 @@ export class BaseRepository<TSchema extends Table> {
       .set(data as any)
       .where(sqlCondition)
       .returning()
+  }
+
+  async create<
+    TReturning extends boolean | ReadonlyArray<keyof TSchema['$inferSelect']> | undefined =
+      undefined,
+  >(
+    data: TSchema['$inferInsert'],
+    options?: { returning?: TReturning }
+  ): Promise<
+    TReturning extends true
+      ? Array<TSchema['$inferSelect']>
+      : TReturning extends ReadonlyArray<keyof TSchema['$inferSelect']>
+        ? Array<Pick<TSchema['$inferSelect'], TReturning[number]>>
+        : ResultSet
+  > {
+    const returning = options?.returning
+    const query = this.db.insert(this.schema).values(data)
+
+    if (returning) {
+      const returningFields =
+        Array.isArray(returning) && returning.length > 0
+          ? returning.reduce((selectedFields, field) => {
+              selectedFields[field as keyof TSchema['$inferSelect']] =
+                this.schema[field as keyof typeof this.schema]
+              return selectedFields
+            }, {} as any)
+          : undefined
+      return (await query.returning(returningFields)) as any
+    }
+
+    return (await query) as any
   }
 
   async getCount() {
