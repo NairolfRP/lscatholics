@@ -57,6 +57,8 @@ export const getDashboardPostFn = createServerFn({ method: 'GET' })
         publishedAt: true,
         status: true,
         authorId: true,
+        createdAt: true,
+        updatedAt: true,
       },
       authorColumns: {
         id: true,
