@@ -64,6 +64,7 @@ export const getDashboardPostFn = createServerFn({ method: 'GET' })
         id: true,
         name: true,
       },
+      status: null
     })
 
     if (!post) {
