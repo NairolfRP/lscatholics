@@ -1,5 +1,7 @@
 import { z } from 'zod'
 
+export const looseObjectSchema = z.looseObject({})
+
 export const slugSchema = z.string().superRefine((value, ctx) => {
   if (/[A-Z]/.test(value)) {
     ctx.addIssue({

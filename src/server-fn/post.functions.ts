@@ -2,22 +2,26 @@ import { notFound } from '@tanstack/react-router'
 import { createServerFn } from '@tanstack/react-start'
 import { setResponseStatus } from '@tanstack/react-start/server'
 import { z } from 'zod'
-import { requireDashboardAccess } from '#/middleware/permission.middleware.ts'
-import { getFieldErrors } from '#/utils/form.ts'
-import { createSlug, generateExcerpt } from '#/utils/string.ts'
-import { NotFoundException, UnauthorizedException } from '#server/exceptions/http-exception.ts'
-import { logger } from '#server/integrations/logger.ts'
-import { postRepository } from '#server/repositories/post.repository.ts'
-import { DASHBOARD_PAGINATION_LIMIT } from '#shared/constants/dashboard.ts'
-import { POST_STATUS } from '#shared/constants/post-status.ts'
-import { dashboardSearchSchema } from '#shared/schemas/dashboard/search.schema.ts'
 import {
   basePostInteractionSchema,
   createPostSchema,
   editPostSchema,
   postsSearchSchema,
-} from '../features/post/schemas/post.schema.ts'
-import { canEditPost } from '../features/post/utils/post.utils.ts'
+} from '#/features/post/schemas/post.schema.ts'
+import {
+  canEditPost,
+  resolveExcerpt,
+  resolvePublishedAt,
+  resolveSlug,
+} from '#/features/post/utils/post.utils.ts'
+import { requireDashboardAccess } from '#/middleware/permission.middleware.ts'
+import { getFieldErrors } from '#/utils/form.ts'
+import { NotFoundException, UnauthorizedException } from '#server/exceptions/http-exception.ts'
+import { logger } from '#server/integrations/logger.ts'
+import { postRepository } from '#server/repositories/post.repository.ts'
+import { DASHBOARD_PAGINATION_LIMIT } from '#shared/constants/dashboard.ts'
+import { looseObjectSchema } from '#shared/schemas/common.schema.ts'
+import { dashboardSearchSchema } from '#shared/schemas/dashboard/search.schema.ts'
 
 export const getPostFn = createServerFn({ method: 'GET' })
   .validator((slug: string) => slug)
@@ -132,19 +136,18 @@ export const deletePostFn = createServerFn({ method: 'POST' })
 
     if (!post) {
       setResponseStatus(404)
-      throw new Error('Post not found')
+      throw NotFoundException('Post not found')
     }
 
     const user = context.session.user
 
     if (!canEditPost({ user, authorId: post.authorId })) {
       setResponseStatus(401)
-      throw new Error('Unauthorized')
+      throw UnauthorizedException('Not authorized to delete this post')
     }
 
     try {
       await postRepository.deletePost({ id: post.id })
-
       return { success: true }
     } catch (err) {
       logger.error(
@@ -164,26 +167,21 @@ export const deletePostFn = createServerFn({ method: 'POST' })
 export const updatePostFn = createServerFn({ method: 'POST' })
   .middleware([requireDashboardAccess])
   .validator(async (data: unknown) => {
-    if (!data || typeof data !== 'object') {
-      throw new Error('Invalid data')
-    }
-
-    if (!('postId' in data)) {
-      throw new Error('Missing post ID')
-    }
-
-    const { postId, ...values } = data
-
-    if (typeof postId !== 'string') {
-      throw new Error('Invalid post ID')
-    }
+    const schema = z
+      .object({
+        postId: z.cuid2({
+          error: (iss) => (iss.input === undefined ? 'Missing post ID' : 'Bad ID format'),
+        }),
+      })
+      .catchall(z.unknown())
+      .refine((obj) => Object.keys(obj).length > 1, {
+        error: 'Invalid body',
+      })
+    const { postId, ...values } = schema.parse(data)
 
     const post = await postRepository.getPost({
       id: postId,
-      columns: {
-        authorId: true,
-        status: true,
-      },
+      columns: { authorId: true, status: true },
     })
 
     if (!post) {
@@ -197,26 +195,16 @@ export const updatePostFn = createServerFn({ method: 'POST' })
     const isAuthorized = canEditPost({ user: context.session.user, authorId: post.authorId })
 
     if (!isAuthorized) {
-      throw UnauthorizedException()
+      setResponseStatus(401)
+      throw UnauthorizedException('Not authorized to edit this post')
     }
 
     try {
       const validatedData = await editPostSchema.parseAsync(values)
 
-      let slug = validatedData.slug
-      if (!slug) {
-        slug = createSlug(validatedData.title)
-      }
-
-      let excerpt = validatedData.excerpt
-      if (!excerpt) {
-        excerpt = generateExcerpt(validatedData.content, 150)
-      }
-
-      let publishedAt = validatedData.publishedAt
-      if (validatedData.status === POST_STATUS.PUBLISHED && !publishedAt) {
-        publishedAt = new Date()
-      }
+      const slug = resolveSlug(validatedData.slug, validatedData.title)
+      const excerpt = resolveExcerpt(validatedData.excerpt, validatedData.content)
+      const publishedAt = resolvePublishedAt(validatedData.publishedAt, validatedData.status)
 
       await postRepository.update({ id: postId }, { ...validatedData, slug, excerpt, publishedAt })
 
@@ -236,43 +224,24 @@ export const updatePostFn = createServerFn({ method: 'POST' })
 
 export const createPostFn = createServerFn({ method: 'POST' })
   .middleware([requireDashboardAccess])
-  .validator((data: unknown) => {
-    if (!data || typeof data !== 'object') {
-      setResponseStatus(400)
-      throw new Error('Invalid data')
-    }
-
-    return data
-  })
+  .validator(looseObjectSchema)
   .handler(async ({ data, context }) => {
     try {
       const validatedData = await createPostSchema.parseAsync(data)
 
-      let slug = validatedData.slug
-      if (slug && (await postRepository.existsBySlug(slug))) {
-        throw {
-          success: false,
-          validationErrors: { slug: [{ message: 'Ce slug est déjà pris.' }] },
-        }
-      } else if (!slug) {
-        const baseSlug = createSlug(validatedData.title)
-        slug = baseSlug
+      let slug = resolveSlug(validatedData.slug, validatedData.title)
+
+      if (await postRepository.existsBySlug(slug)) {
         let counter = 1
+        const baseSlug = slug
         while (await postRepository.existsBySlug(slug)) {
           slug = `${baseSlug}-${counter}`
           counter++
         }
       }
 
-      let excerpt = validatedData.excerpt
-      if (!excerpt) {
-        excerpt = generateExcerpt(validatedData.content, 150)
-      }
-
-      let publishedAt = validatedData.publishedAt
-      if (validatedData.status === POST_STATUS.PUBLISHED && !publishedAt) {
-        publishedAt = new Date()
-      }
+      const excerpt = resolveExcerpt(validatedData.excerpt, validatedData.content)
+      const publishedAt = resolvePublishedAt(validatedData.publishedAt, validatedData.status)
 
       const currentCharacterFullName = [
         context.currentCharacter?.firstname,
@@ -302,14 +271,6 @@ export const createPostFn = createServerFn({ method: 'POST' })
         const validationErrors = getFieldErrors(err)
         setResponseStatus(400)
         return { success: false, validationErrors }
-      }
-
-      if (err && typeof err === 'object' && 'validationErrors' in err) {
-        setResponseStatus(400)
-        return {
-          success: false,
-          validationErrors: err.validationErrors as Record<string, Array<{ message: string }>>,
-        }
       }
 
       logger.error({ err, data, userId: context.session.user.id }, 'Failed to create post')
