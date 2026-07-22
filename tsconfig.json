@@ -1,16 +1,15 @@
 {
     "include": [
-        "src/**/*.ts",
-        "scripts/**/*.ts",
-        "tests/**/*.ts",
-        "tests/**/*.tsx",
-        "src/**/*.tsx",
+        "src",
+        "scripts",
+        "tests",
         "vite.config.ts",
         "vitest.config.ts",
         "playwright.config.ts",
         "drizzle.config.ts",
         "eslint.config.ts"
     ],
+    "exclude": ["dist", ".output", "build", "coverage", ".vercel", ".idea", ".nitro", ".vscode"],
 
     "compilerOptions": {
         "target": "ES2022",
