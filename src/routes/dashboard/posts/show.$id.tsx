@@ -12,19 +12,22 @@ import { Card, CardContent, CardHeader, CardTitle } from '#shared/components/ui/
 import { Markdown } from '#shared/components/ui/markdown.tsx'
 import { Separator } from '#shared/components/ui/separator.tsx'
 import { Typography } from '#shared/components/ui/typography.tsx'
+import { parseCsvString } from '#/utils/string.ts'
 
 export const Route = createFileRoute('/dashboard/posts/show/$id')({
   beforeLoad: async ({ params, context }) => {
-    const post = await getDashboardPostFn({ data: params.id })
-    const isAuthorized = canEditPost({ user: context.gameContext.user, authorId: post.authorId })
+    const { author, ...post } = await getDashboardPostFn({ data: params.id })
+    const isAuthorized = canEditPost({ user: context.gameContext.user, authorId: author?.id ?? null })
 
     if (!isAuthorized) {
       throw redirect({ to: '/dashboard/posts', replace: true })
     }
 
-    return { post }
+    const isAdmin = parseCsvString(context.gameContext.user.role).includes('admin')
+
+    return { post, author: isAdmin ? author : null, isAdmin }
   },
-  loader: ({ context }) => ({ post: context.post }),
+  loader: ({ context }) => ({ post: context.post, author: context.author, isAdmin: context.isAdmin }),
   head: ({ loaderData }) => {
     if (!loaderData) return {}
 
@@ -34,14 +37,14 @@ export const Route = createFileRoute('/dashboard/posts/show/$id')({
 })
 
 function RouteComponent() {
-  const { post } = Route.useLoaderData()
+  const { post, author, isAdmin } = Route.useLoaderData()
   return (
     <>
       <DashboardHeading
         title={post.title}
         description={
           <Typography className="text-muted-foreground">
-            Par {post.author?.name || 'un auteur inconnu'} ·{formatDateTime(post.createdAt)}
+            Par {post.authorDisplayName || 'un auteur inconnu'} {(isAdmin) ? <em>({author?.name || 'Utilisateur inconnu/supprimé'})</em> : undefined} ·{formatDateTime(post.createdAt)}
           </Typography>
         }
         backButton={{ to: '/dashboard/posts', preload: false }}
@@ -122,7 +125,7 @@ function RouteComponent() {
               <Separator />
               <div>
                 <p className="font-medium text-muted-foreground">Auteur</p>
-                <p>{post.author?.name || <em>Inconnu</em>}</p>
+                <p>{post.authorDisplayName || <em>Inconnu</em>} {(isAdmin) ? <em>({author?.name || 'Utilisateur inconnu/supprimé'})</em> : undefined}</p>
               </div>
               <div>
                 <p className="font-medium text-muted-foreground">Créé le</p>

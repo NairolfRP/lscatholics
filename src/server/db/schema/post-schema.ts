@@ -27,6 +27,7 @@ export const posts = sqliteTable(
       .default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
       .$onUpdate(() => /* @__PURE__ */ new Date())
       .notNull(),
+    authorDisplayName: text('author_display_name').notNull().default('John Doe'),
     authorId: text('author_id').references(() => users.id, { onDelete: 'set null' }),
   },
   (table) => [

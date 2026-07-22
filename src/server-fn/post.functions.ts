@@ -57,7 +57,7 @@ export const getDashboardPostFn = createServerFn({ method: 'GET' })
         coverImageUrl: true,
         publishedAt: true,
         status: true,
-        authorId: true,
+        authorDisplayName: true,
         createdAt: true,
         updatedAt: true,
       },
@@ -274,6 +274,13 @@ export const createPostFn = createServerFn({ method: 'POST' })
         publishedAt = new Date()
       }
 
+      const currentCharacterFullName = [
+        context.currentCharacter?.firstname,
+        context.currentCharacter?.lastname,
+      ]
+        .filter(Boolean)
+        .join(' ')
+
       const createdPost = await postRepository.create(
         {
           title: validatedData.title,
@@ -283,6 +290,7 @@ export const createPostFn = createServerFn({ method: 'POST' })
           coverImageUrl: validatedData.coverImageUrl,
           status: validatedData.status,
           publishedAt,
+          authorDisplayName: currentCharacterFullName.trim() || 'John Doe',
           authorId: context.session.user.id,
         },
         { returning: ['id'] }
