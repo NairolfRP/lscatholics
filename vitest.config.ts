@@ -9,10 +9,6 @@ import { defineConfig } from 'vitest/config'
 const resolve = (filePath: string) => path.resolve(import.meta.dirname, filePath)
 
 export default defineConfig(({ mode }) => ({
-  env: loadEnv(mode, process.cwd(), ''),
-  typecheck: { enabled: true },
-  globals: true,
-  watch: false,
   plugins: [
     react(),
     tanstackRouter({
@@ -22,6 +18,10 @@ export default defineConfig(({ mode }) => ({
     }),
   ],
   test: {
+    env: loadEnv(mode, process.cwd(), ''),
+    typecheck: { enabled: true },
+    globals: true,
+    watch: false,
     projects: [
       {
         plugins: [codspeedPlugin()],
