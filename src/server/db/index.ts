@@ -1,5 +1,6 @@
 import { drizzle } from 'drizzle-orm/libsql/web'
 import { env } from '#/config/env.server'
+import { logger } from '#server/integrations/logger.ts'
 import * as schema from './schema'
 
 export const db = drizzle({
@@ -8,5 +9,12 @@ export const db = drizzle({
     authToken: env.DATABASE_AUTH_TOKEN,
   },
   schema,
-  logger: env.NODE_ENV === 'development',
+  logger:
+    env.NODE_ENV === 'development'
+      ? {
+          logQuery(query, params) {
+            logger.debug({ query, params })
+          },
+        }
+      : false,
 })
