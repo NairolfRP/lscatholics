@@ -1,3 +1,4 @@
+import { useQueryClient } from '@tanstack/react-query'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { toast } from 'sonner'
 import { DashboardHeading } from '#/features/dashboard/components/dashboard-heading.tsx'
@@ -24,6 +25,7 @@ export const Route = createFileRoute('/dashboard/posts/create')({
 })
 
 function RouteComponent() {
+  const queryClient = useQueryClient()
   const navigate = Route.useNavigate()
   const form = useAppForm({
     validators: {
@@ -53,6 +55,8 @@ function RouteComponent() {
 
         return toast.error(result.error)
       }
+
+      await queryClient.invalidateQueries({ queryKey: ['posts'] })
 
       void navigate({ to: '/dashboard/posts/show/$id', params: { id: result.postId } })
       toast.success('Article créé !')
