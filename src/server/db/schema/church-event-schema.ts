@@ -40,7 +40,7 @@ export const churchEvents = sqliteTable(
 )
 
 export const churchEventsRelations = relations(churchEvents, ({ one }) => ({
-  users: one(users, {
+  author: one(users, {
     fields: [churchEvents.authorId],
     references: [users.id],
   }),
