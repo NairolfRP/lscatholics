@@ -9,7 +9,7 @@ Before getting started, make sure you have:
 
 - Node.js (LTS version recommended)
 - Turso CLI or SQLite database installed
-- Pnpm installed globally
+- Bun (package manager) installed globally
 - Familiarity with the following tools and conventions:
   - **TypeScript** for type-safe code
   - **TanStack Start** for fullstack development
@@ -33,7 +33,7 @@ Before getting started, make sure you have:
    ```
 3. **Install Dependencies**
    ```sh
-   pnpm install
+   bun install
    ```
 4. **Set Up Environment**
    - Copy `.env.example` to `.env`:
@@ -43,11 +43,11 @@ Before getting started, make sure you have:
    - Update the `.env` file with your database credentials and other required settings.
 5. **Run Database Migrations**
    ```sh
-   pnpm db:migrate
+   bun run db:migrate
    ```
 6. **Start the Development Server**
    ```sh
-   pnpm dev
+   bun run dev
    ```
 
 ---
@@ -70,11 +70,11 @@ git checkout -b feature/user-authentication
 - Follow the existing coding patterns.
 - Lint your code:
   ```sh
-  pnpm lint
+  bun run lint
   ```
 - Format also your code before committing:
   ```sh
-  pnpm format
+  bun run format
   ```
 
 ### 3. Commit Messages
