@@ -1,5 +1,5 @@
 import type { User } from '#/shared/lib/types/auth.ts'
-import { createSlug, generateExcerpt } from '#/utils/string.ts'
+import { generateExcerpt } from '#/utils/string.ts'
 import { isAdmin } from '#/utils/user.ts'
 import { POST_STATUS } from '#shared/constants/post-status.ts'
 
@@ -9,11 +9,6 @@ export function canEditPost({ user, authorId }: { user: User; authorId: string |
   }
 
   return Boolean(authorId) && user.id === authorId
-}
-
-export function resolveSlug(slug: string | undefined, title: string): string {
-  if (slug) return slug
-  return createSlug(title)
 }
 
 export function resolveExcerpt(excerpt: string | undefined, content: string): string {

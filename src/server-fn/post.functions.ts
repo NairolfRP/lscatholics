@@ -12,10 +12,10 @@ import {
   canEditPost,
   resolveExcerpt,
   resolvePublishedAt,
-  resolveSlug,
 } from '#/features/post/utils/post.utils.ts'
 import { requireDashboardAccess } from '#/middleware/permission.middleware.ts'
 import { getFieldErrors } from '#/utils/form.ts'
+import { resolveSlug } from '#/utils/slug.ts'
 import { NotFoundException, UnauthorizedException } from '#server/exceptions/http-exception.ts'
 import { logger } from '#server/integrations/logger.ts'
 import { postRepository } from '#server/repositories/post.repository.ts'
