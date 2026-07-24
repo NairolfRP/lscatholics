@@ -48,8 +48,9 @@ export const getPostFn = createServerFn({ method: 'GET' })
   })
 
 export const getDashboardPostFn = createServerFn({ method: 'GET' })
+  .middleware([requireDashboardAccess])
   .validator((id: string) => id)
-  .handler(async ({ data }) => {
+  .handler(async ({ data, context }) => {
     const post = await postRepository.getPostWithAuthor({
       id: data,
       columns: {
@@ -74,6 +75,15 @@ export const getDashboardPostFn = createServerFn({ method: 'GET' })
 
     if (!post) {
       throw notFound()
+    }
+
+    const isAuthorized = canEditPost({
+      user: context.session.user,
+      authorId: post.author?.id ?? null,
+    })
+
+    if (!isAuthorized) {
+      throw UnauthorizedException()
     }
 
     return post
