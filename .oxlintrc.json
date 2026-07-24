@@ -4,10 +4,6 @@
     "categories": {
         "correctness": "warn"
     },
-    "options": {
-        "typeAware": true,
-        "typeCheck": true
-    },
     "env": {
         "builtin": true
     },
