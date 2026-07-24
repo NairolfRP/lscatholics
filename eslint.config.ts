@@ -2,9 +2,9 @@ import tsParser from '@typescript-eslint/parser'
 // @ts-ignore
 import drizzle from 'eslint-plugin-drizzle'
 import oxlintPlugin from 'eslint-plugin-oxlint'
-import tsEslint from 'typescript-eslint'
+import { defineConfig } from 'eslint/config'
 
-export default tsEslint.config(
+export default defineConfig(
   {
     files: ['**/server/repositories/**/*.ts'],
     languageOptions: {
