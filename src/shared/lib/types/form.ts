@@ -24,4 +24,4 @@ export type FieldComponentProps<
 } & Omit<ComponentPropsWithRef<C>, 'id' | O> &
   T
 
-export type SelectValues = { label: string; value: string }
+export type SelectValues = { label: string; value: string | null }
