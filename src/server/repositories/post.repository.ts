@@ -4,6 +4,7 @@ import { POST_STATUS } from '#/shared/constants/post-status'
 import type { PostStatus } from '#/shared/types/post.types'
 import type { UsersColumns } from '#server/repositories/user.repository.ts'
 import { lower } from '#shared/lib/sql.ts'
+import type { OrderBy } from '#shared/types/database.types.ts'
 import { db } from '../db'
 import { posts } from '../db/schema'
 import { BaseRepository } from './base.repository'
@@ -13,8 +14,6 @@ type PostSchemaKeys = keyof typeof posts.$inferSelect
 type PostsColumns = {
   [K in PostSchemaKeys]?: boolean
 }
-
-type OrderBy<TColumns> = `${Extract<keyof TColumns, string>}.${'asc' | 'desc'}` | (string & {})
 
 class PostRepository extends BaseRepository<typeof posts> {
   constructor() {
