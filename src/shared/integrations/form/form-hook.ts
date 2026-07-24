@@ -5,6 +5,7 @@ import { MultiSelectField } from '#/shared/components/form/multi-select-field'
 import { SelectField } from '#/shared/components/form/select-field'
 import { SubmitButton } from '#/shared/components/form/submit-button'
 import { FieldGroup } from '#/shared/components/ui/field'
+import { CheckboxField } from '#shared/components/form/checkbox-field.tsx'
 import { TextareaField } from '#shared/components/form/textarea-field.tsx'
 
 export const { fieldContext, useFieldContext, formContext, useFormContext } =
@@ -17,6 +18,7 @@ export const { useAppForm } = createFormHook({
     SelectField,
     MultiSelectField,
     DateTimePickerField,
+    CheckboxField,
   },
   formComponents: {
     FieldGroup,
