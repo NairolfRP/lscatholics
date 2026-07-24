@@ -1,6 +1,6 @@
 import type { ParishInfo } from '#/shared/types/parish.types'
 
-export const parishes: Array<ParishInfo> = [
+export const parishes: ParishInfo[] = [
   {
     id: 'cathedral',
     title: 'Cathédrale Notre-Dame-des-Saints',

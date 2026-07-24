@@ -2,7 +2,7 @@ import { Briefcase, Calendar, ChessBishop } from 'lucide-react'
 import { socials } from '#/shared/constants/socials'
 import type { CTA } from '../types/home.types'
 
-export const homeCTA: Array<CTA> = [
+export const homeCTA: CTA[] = [
   {
     icon: ChessBishop,
     title: 'Cardinal Ronan Callahan',

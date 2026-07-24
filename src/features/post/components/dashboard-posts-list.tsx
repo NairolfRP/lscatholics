@@ -69,7 +69,7 @@ export function DashboardPostsList() {
       sorting={list.sortingState}
       onSortingChange={list.onSortingChange}
       filters={list.filters}
-      onFilterChange={(partialFilters: Partial<typeof list.filters>) => {
+      onFilterChange={(partialFilters) => {
         void list.setFilters(partialFilters)
         if ('search' in partialFilters) {
           void router.invalidate()

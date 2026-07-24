@@ -7,8 +7,8 @@ export interface LogContext {
 }
 
 export interface LogFn {
-  (msg: string, ...args: Array<any>): void
-  (obj: LogContext | Error, msg?: string, ...args: Array<any>): void
+  (msg: string, ...args: unknown[]): void
+  (obj: LogContext | Error, msg?: string, ...args: unknown[]): void
 }
 
 export interface ILogger {
@@ -21,7 +21,7 @@ export interface ILogger {
   child: (bindings: LogContext) => ILogger
 }
 
-export class Logger {
+export class Logger implements ILogger {
   constructor(private logger: PinoLogger = Logger.createRootLogger()) {}
 
   private static createRootLogger(): PinoLogger {
@@ -53,11 +53,11 @@ export class Logger {
     })
   }
 
-  public debug: LogFn = (...args: Array<any>) => (this.logger.debug as any)(...args)
-  public info: LogFn = (...args: Array<any>) => (this.logger.info as any)(...args)
-  public warn: LogFn = (...args: Array<any>) => (this.logger.warn as any)(...args)
-  public error: LogFn = (...args: Array<any>) => (this.logger.error as any)(...args)
-  public fatal: LogFn = (...args: Array<any>) => (this.logger.fatal as any)(...args)
+  public debug: LogFn = (...args: unknown[]) => this.logger.debug.bind(null, ...args)
+  public info: LogFn = (...args: unknown[]) => this.logger.info.bind(null, ...args)
+  public warn: LogFn = (...args: unknown[]) => this.logger.warn.bind(null, ...args)
+  public error: LogFn = (...args: unknown[]) => this.logger.error.bind(null, ...args)
+  public fatal: LogFn = (...args: unknown[]) => this.logger.fatal.bind(null, ...args)
   public child(bindings: LogContext): ILogger {
     return new Logger(this.logger.child(bindings))
   }

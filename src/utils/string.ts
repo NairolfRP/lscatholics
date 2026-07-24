@@ -49,7 +49,7 @@ export function generateExcerpt(content: string, maxLength: number): string {
   return `${excerpt.trim()}${suffix}`
 }
 
-export function parseCsvString<T extends Array<string>>(str: string): T {
+export function parseCsvString<T extends string[]>(str: string): T {
   return str.split(/\s*,+\s*/).filter(Boolean) as T
 }
 

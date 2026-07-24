@@ -23,7 +23,7 @@ function client(accessToken: string) {
 }
 
 const fetchUserCharacters = defineCachedFunction(
-  async (accessToken: string): Promise<Array<GTAWCharacter>> => {
+  async (accessToken: string): Promise<GTAWCharacter[]> => {
     logger.debug('GTAW Client calling api/user...')
     const response = await client(accessToken).get('api/user').json<GTAWProfile>()
     return response.user.character
@@ -51,29 +51,29 @@ const fetchUserFactions = defineCachedFunction(
 )
 
 export type ForceRefreshReturnMap = {
-  characters: Array<GTAWCharacter>
+  characters: GTAWCharacter[]
   factions: GTAWClientFetchFactionsResponse['data']
 }
 export type ForceRefreshType = keyof ForceRefreshReturnMap
 
-async function forceRefresh<T extends ReadonlyArray<ForceRefreshType>>(
+async function forceRefresh<T extends readonly ForceRefreshType[]>(
   accessToken: string,
   keys: T
 ): Promise<{ [K in T[number]]: ForceRefreshReturnMap[K] }> {
-  const results = {} as { [K in T[number]]: ForceRefreshReturnMap[K] }
+  const results: Partial<ForceRefreshReturnMap> = {}
 
   const promises = keys.map(async (type) => {
     switch (type) {
       case 'characters':
         await fetchUserCharacters.invalidate(accessToken)
         logger.debug(`User characters cache invalidated for token %s`, accessToken)
-        ;(results as any).characters = await fetchUserCharacters(accessToken)
+        results.characters = await fetchUserCharacters(accessToken)
         break
 
       case 'factions':
         await fetchUserFactions.invalidate(accessToken)
         logger.debug(`User factions cache invalidated for token %s`, accessToken)
-        ;(results as any).factions = await fetchUserFactions(accessToken)
+        results.factions = await fetchUserFactions(accessToken)
         break
     }
   })
@@ -84,7 +84,7 @@ async function forceRefresh<T extends ReadonlyArray<ForceRefreshType>>(
 
   await Promise.all(promises)
 
-  return results
+  return results as { [K in T[number]]: ForceRefreshReturnMap[K] }
 }
 
 function hashToken(token: string): string {

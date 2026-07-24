@@ -5,9 +5,9 @@ export const ROLE_HIERARCHY: Record<UserRole, number> = Object.freeze({
   admin: 1000,
 })
 
-export const allRoles = Object.keys(ROLE_HIERARCHY) as Array<UserRole>
+export const allRoles = Object.keys(ROLE_HIERARCHY) as UserRole[]
 
-export function getUserRoleMaxLevel(userRoles: Array<UserRole>): number {
+export function getUserRoleMaxLevel(userRoles: UserRole[]): number {
   // oxlint-disable-next-line typescript/no-unnecessary-condition
   return Math.max(...userRoles.map((r) => ROLE_HIERARCHY[r] ?? 0))
 }

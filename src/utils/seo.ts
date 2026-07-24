@@ -7,13 +7,13 @@ type ArticleSEO = {
   expirationTime?: string
   authorPath?: string
   section?: string
-  tags?: Array<string>
+  tags?: string[]
 }
 
 type PageMetadata = {
   description?: string
   language?: string
-  keywords?: Array<string>
+  keywords?: string[]
   image?: string
   url?: string
   article?: ArticleSEO

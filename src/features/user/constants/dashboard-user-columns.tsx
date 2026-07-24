@@ -1,4 +1,5 @@
 import { Link } from '@tanstack/react-router'
+import type { ColumnDef } from '@tanstack/react-table'
 import { createColumnHelper } from '@tanstack/react-table'
 import { Badge } from '#/shared/components/ui/badge.tsx'
 import type { User } from '#/shared/lib/types/auth.ts'
@@ -61,4 +62,4 @@ export const userColumns = [
     },
     enableSorting: false,
   }),
-]
+] as unknown as ColumnDef<User, unknown>[]

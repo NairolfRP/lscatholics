@@ -14,7 +14,7 @@
         "preview": "vite preview",
         "test": "vitest --exclude '**/*.bench.*'",
         "bench": "vitest bench --run --project bench",
-        "lint": "oxlint && eslint",
+        "lint": "oxlint --type-aware --disable-nested-config && eslint",
         "format": "oxfmt",
         "check": "oxfmt --check",
         "typecheck": "tsc --noEmit",

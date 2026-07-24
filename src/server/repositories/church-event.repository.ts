@@ -77,8 +77,8 @@ class ChurchEventRepository extends BaseRepository<typeof churchEvents> {
       page?: number
       pageSize?: number
       includeEndedEvents?: boolean
-      orderBy?: Array<OrderBy<TColumns>>
-      searchText?: Array<{ column: keyof EventsColumns; text: string }>
+      orderBy?: OrderBy<TColumns>[]
+      searchText?: { column: keyof EventsColumns; text: string }[]
     } = {}
   ) {
     const {

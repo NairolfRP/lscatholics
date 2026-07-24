@@ -85,7 +85,7 @@ function DashboardSidebarItems() {
       <SidebarMenu>
         {dashboardMenuItems.map((item) => (
           <SidebarMenuItem key={item.label}>
-            <SidebarMenuButton render={<Link to={item.to as any} preload={false} />}>
+            <SidebarMenuButton render={<Link to={item.to} preload={false} />}>
               <item.icon />
               <span>{item.label}</span>
             </SidebarMenuButton>

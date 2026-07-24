@@ -41,7 +41,7 @@ export function useDashboardList<
     filters.sortBy as `${string}.asc` | `${string}.desc` | undefined
   )
 
-  const isDefaultFilters = (Object.keys(initialFilters) as Array<keyof TFilters>).every(
+  const isDefaultFilters = (Object.keys(initialFilters) as (keyof TFilters)[]).every(
     (key) => filters[key] === initialFilters[key]
   )
 
@@ -58,14 +58,20 @@ export function useDashboardList<
     onPaginationChange: (pagination: Updater<PaginationState>) => {
       if (typeof pagination === 'function') {
         const resolved = pagination(paginationState)
-        return setFilters({ page: resolved.pageIndex } as any)
+        return setFilters({ page: resolved.pageIndex } as unknown as Parameters<
+          typeof setFilters
+        >[0])
       }
-      return setFilters({ page: pagination.pageIndex } as any)
+      return setFilters({ page: pagination.pageIndex } as unknown as Parameters<
+        typeof setFilters
+      >[0])
     },
     onSortingChange: (updaterOrValue: Updater<SortingState>) => {
       const newSorting =
         typeof updaterOrValue === 'function' ? updaterOrValue(sortingState) : updaterOrValue
-      return setFilters({ sortBy: stateToSortBy(newSorting) } as any)
+      return setFilters({ sortBy: stateToSortBy(newSorting) } as unknown as Parameters<
+        typeof setFilters
+      >[0])
     },
   }
 }

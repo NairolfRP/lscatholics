@@ -48,9 +48,9 @@ export function InputField<TType extends HTMLInputTypeAttribute | undefined = un
           const val = e.target.value
           if (type === 'number') {
             const numVal = !val || val.trim() === '' ? null : Number(val)
-            return field.handleChange(numVal as any)
+            return field.handleChange(numVal as ValueType<TType>)
           }
-          field.handleChange(val as any)
+          field.handleChange(val as ValueType<TType>)
         }}
         required={required}
         aria-required={required}

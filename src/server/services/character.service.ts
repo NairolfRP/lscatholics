@@ -7,7 +7,7 @@ import { gtawClient } from './gtaw-client.service'
 export async function getAllUserCharacters(
   accessToken?: string,
   options?: { forceRefresh?: boolean }
-): Promise<Array<Character>> {
+): Promise<Character[]> {
   if (!accessToken) {
     const result = await getAccessToken()
     accessToken = result.accessToken
@@ -30,7 +30,7 @@ export async function getAllUserCharacters(
 export async function getAllUserCharactersWithFactions(
   accessToken?: string,
   options?: { forceRefresh?: boolean }
-): Promise<Array<CharacterWithFaction>> {
+): Promise<CharacterWithFaction[]> {
   if (!accessToken) {
     const result = await getAccessToken()
     accessToken = result.accessToken

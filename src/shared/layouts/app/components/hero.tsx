@@ -20,7 +20,7 @@ export interface HeroAction {
 export interface HeroProps {
   title: string | React.ReactElement
   subtitle?: string | React.ReactElement
-  actions?: Array<HeroAction>
+  actions?: HeroAction[]
   /** Extra content below actions — use HeroStats, HeroScrollCue, etc. */
   children?: ReactNode
 
@@ -93,7 +93,7 @@ function Overlay({ opacity = 55 }: { opacity?: number }) {
   )
 }
 
-function Actions({ actions, align }: { actions: Array<HeroAction>; align: HeroAlign }) {
+function Actions({ actions, align }: { actions: HeroAction[]; align: HeroAlign }) {
   return (
     <div
       className={cn(
@@ -131,7 +131,7 @@ function Content({
           {title}
         </Typography>
       ) : (
-        React.cloneElement(title as any, {
+        React.cloneElement(title as never, {
           className: cn(
             'text-balance text-white',
             'text-4xl sm:text-5xl md:text-6xl xl:text-7xl',

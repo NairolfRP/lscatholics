@@ -14,20 +14,20 @@ import type { Filters } from '../lib/types/table'
 import { cn } from '../lib/utils'
 import { Pagination } from './pagination'
 import {
+  Table as UITable,
   TableBody,
   TableCell,
   TableHead,
   TableHeader,
   TableRow,
-  Table as UITable,
 } from './ui/table'
 
 export const DEFAULT_PAGE_INDEX = 0
 export const DEFAULT_PAGE_SIZE = 10
 
-type Props<T extends Record<string, any>> = {
-  data: Array<T>
-  columns: Array<ColumnDef<T, any>>
+type Props<T extends Record<string, unknown>> = {
+  data: T[]
+  columns: ColumnDef<T, unknown>[]
   pagination: PaginationState
   paginationOptions: Pick<PaginationOptions, 'onPaginationChange' | 'rowCount'>
   filters: Filters<T>
@@ -38,7 +38,7 @@ type Props<T extends Record<string, any>> = {
 }
 
 // oxlint-disable-next-line react/react-compiler : False positive about TanStack Table
-export function Table<T extends Record<string, any>>({
+export function Table<T extends Record<string, unknown>>({
   data,
   columns,
   pagination,
@@ -99,11 +99,15 @@ export function Table<T extends Record<string, any>>({
                               // oxlint-disable-next-line typescript/no-unnecessary-type-assertion
                               onFilterChange({
                                 [fieldMeta.filterKey as keyof T]: value,
-                              } as Partial<T>)
+                              } as Partial<Filters<T>>)
                             }}
                             placeholder="Search..."
                             type={fieldMeta.filterVariant === 'number' ? 'number' : 'text'}
-                            value={filters[fieldMeta.filterKey] ?? ''}
+                            value={
+                              (filters[fieldMeta.filterKey as keyof Filters<T>] ?? '') as
+                                | string
+                                | number
+                            }
                           />
                         ) : null}
                       </>

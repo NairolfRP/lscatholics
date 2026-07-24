@@ -1,4 +1,5 @@
 import { Link } from '@tanstack/react-router'
+import type { ColumnDef } from '@tanstack/react-table'
 import { createColumnHelper } from '@tanstack/react-table'
 import { CalendarIcon, EditIcon, Trash2Icon } from 'lucide-react'
 import type { ChurchEvent } from '#/features/church-event/types/church-event.types.ts'
@@ -43,11 +44,6 @@ export const dashboardChurchEventColumns = [
     header: () => 'Date de début',
     cell: (info) => {
       const startDate = info.getValue()
-
-      if (!startDate) {
-        return <em>Inconnue</em>
-      }
-
       return (
         <div className="flex items-center gap-2">
           <CalendarIcon className="h-4 w-4 text-muted-foreground" />
@@ -78,7 +74,7 @@ export const dashboardChurchEventColumns = [
     cell: (info) => {
       const maxParticipants = info.getValue()
 
-      if (maxParticipants === undefined || maxParticipants === null) {
+      if (maxParticipants == null) {
         return <span className="text-sm">—</span>
       }
 
@@ -116,4 +112,4 @@ export const dashboardChurchEventColumns = [
       )
     },
   }),
-]
+] as unknown as ColumnDef<ChurchEvent, unknown>[]

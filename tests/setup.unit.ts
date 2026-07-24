@@ -4,7 +4,7 @@ import { mockGetSession, setupAuthenticatedUser } from './utils/test-unit.utils'
 vi.mock('@/server/auth', () => ({
   auth: {
     api: {
-      getSession: (...args: Array<unknown>) => mockGetSession(...args),
+      getSession: (...args: unknown[]) => mockGetSession(...args),
     },
   },
 }))

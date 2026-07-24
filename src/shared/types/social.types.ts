@@ -7,8 +7,8 @@ type SocialWhere = 'footer'
 
 type SocialMeta = {
   isOOC?: boolean
-  only?: ReadonlyArray<SocialWhere>
-  exclude?: ReadonlyArray<SocialWhere>
+  only?: readonly SocialWhere[]
+  exclude?: readonly SocialWhere[]
 }
 
 export type Social = {

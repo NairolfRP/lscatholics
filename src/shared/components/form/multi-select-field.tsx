@@ -26,7 +26,7 @@ type MutliSelectProps = FieldComponentProps<
     descriptionPos?: 'before' | 'after'
     errorsPos?: 'before' | 'after'
     placeholder?: string
-    values: Array<SelectValues & { disabled?: boolean }>
+    values: (SelectValues & { disabled?: boolean })[]
     selectTriggerProps?: Omit<
       ComponentPropsWithoutRef<typeof MultiSelectTrigger>,
       'id' | 'aria-invalid'
@@ -53,7 +53,7 @@ export function MultiSelectField({
   ...props
 }: MutliSelectProps) {
   const generatedId = useId()
-  const field = useFieldContext<Array<string>>()
+  const field = useFieldContext<(string | null)[]>()
 
   const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
 

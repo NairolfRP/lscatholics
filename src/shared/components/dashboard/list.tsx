@@ -1,29 +1,39 @@
-import type { ColumnDef, PaginationState, TableMeta } from '@tanstack/react-table'
+import type {
+  ColumnDef,
+  OnChangeFn,
+  PaginationState,
+  SortingState,
+  TableMeta,
+} from '@tanstack/react-table'
 import { Table } from '#shared/components/table.tsx'
 import { Button } from '#shared/components/ui/button.tsx'
+import type { Filters } from '#shared/lib/types/table.ts'
 
-type DashboardListProps<TItem extends Record<string, any>> = {
-  columns: Array<ColumnDef<TItem, any>>
-  data: Array<TItem> | undefined
+type DashboardListProps<TItem extends Record<string, unknown>, TCell = unknown> = {
+  columns: ColumnDef<TItem, TCell>[]
+  data: TItem[] | undefined
   total: number | undefined
   entityLabel: string
   pagination: PaginationState
-  onPaginationChange: (p: any) => void
-  sorting: any
-  onSortingChange: (s: any) => void
-  filters: Record<string, unknown>
-  onFilterChange: (f: any) => void
-  meta: TableMeta<Record<string, any>>
+  onPaginationChange: OnChangeFn<PaginationState>
+  sorting: SortingState
+  onSortingChange: OnChangeFn<SortingState>
+  filters: Filters<TItem>
+  onFilterChange: (f: Partial<Filters<TItem>>) => void
+  meta: TableMeta<TItem>
   isDefaultFilters: boolean
   onResetFilters: () => void
 }
 
-export function DashboardList<TItem extends Record<string, any>>(props: DashboardListProps<TItem>) {
+export function DashboardList<TItem extends Record<string, unknown>, TCell = unknown>(
+  props: DashboardListProps<TItem, TCell>
+) {
   return (
     <div>
       <Table
-        data={props.data!}
-        columns={props.columns as Array<ColumnDef<Record<string, any>, any>>}
+        data={props.data ?? []}
+        // oxlint-disable-next-line typescript/no-unnecessary-type-assertion
+        columns={props.columns as ColumnDef<TItem, unknown>[]}
         pagination={props.pagination}
         paginationOptions={{ onPaginationChange: props.onPaginationChange, rowCount: props.total }}
         filters={props.filters}

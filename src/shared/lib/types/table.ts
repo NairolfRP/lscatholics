@@ -1,5 +1,5 @@
 export type PaginatedData<T> = {
-  result: Array<T>
+  result: T[]
   rowCount: number
 }
 

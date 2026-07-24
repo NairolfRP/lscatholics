@@ -42,7 +42,7 @@ export type PaginationProps = {
 
 type PaginationToken = number | 'start-ellipsis' | 'end-ellipsis'
 
-function range(start: number, end: number): Array<number> {
+function range(start: number, end: number): number[] {
   if (end < start) return []
   return Array.from({ length: end - start + 1 }, (_, i) => start + i)
 }
@@ -52,7 +52,7 @@ function getPaginationItems(
   count: number,
   siblingCount: number,
   boundaryCount: number
-): Array<PaginationToken> {
+): PaginationToken[] {
   const startPages = range(1, Math.min(boundaryCount, count))
   const endPages = range(Math.max(count - boundaryCount + 1, boundaryCount + 1), count)
 

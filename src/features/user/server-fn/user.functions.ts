@@ -120,7 +120,7 @@ export const getUsersListFn = createServerFn({ method: 'GET' })
         sortDirection: (['desc', 'asc'] as const).find((b) => sorting[1] === b) ?? 'desc',
       },
       headers,
-    }) as Promise<{ users: Array<User>; total: number }>
+    }) as Promise<{ users: User[]; total: number }>
   })
 
 export const getTargetUserFn = createServerFn({ method: 'GET' })
@@ -180,10 +180,10 @@ export const updateTargetUserFn = createServerFn({ method: 'POST' })
         headers,
       })
 
-      const submitterRoles: Array<UserRole> = session.user.role
+      const submitterRoles: UserRole[] = session.user.role
         ? parseCsvString(session.user.role)
         : ['user']
-      const currentTargetRoles: Array<UserRole> = targetUser.role
+      const currentTargetRoles: UserRole[] = targetUser.role
         ? parseCsvString(targetUser.role)
         : ['user']
       const newTargetRoles = data.roles

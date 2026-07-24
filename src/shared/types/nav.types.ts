@@ -6,12 +6,12 @@ type NavItemBase = {
   label: string
   target?: HTMLAttributeAnchorTarget
   icon?: LucideIcon
-  children?: Array<NavItem>
+  children?: NavItem[]
 }
 
 export type NavItem =
   | (NavItemBase & {
-      children: Array<NavItem>
+      children: NavItem[]
       to?: never
       params?: never
       href?: never

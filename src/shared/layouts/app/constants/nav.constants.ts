@@ -1,6 +1,6 @@
 import type { NavItem } from '#/shared/types/nav.types'
 
-export const navItems: Array<NavItem> = [
+export const navItems: NavItem[] = [
   {
     label: 'Notre communauté',
     children: [
@@ -88,9 +88,9 @@ export const navItems: Array<NavItem> = [
     label: 'Actualités',
     to: '/newsroom',
   },
-] satisfies Array<NavItem>
+] satisfies NavItem[]
 
-export const footerNavItems: Array<NavItem> = [
+export const footerNavItems: NavItem[] = [
   {
     label: "L'Archidiocèse",
     children: [
@@ -146,4 +146,4 @@ export const footerNavItems: Array<NavItem> = [
       },
     ],
   },
-] satisfies Array<NavItem>
+] satisfies NavItem[]

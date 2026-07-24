@@ -1,4 +1,5 @@
 import { Link } from '@tanstack/react-router'
+import type { ColumnDef } from '@tanstack/react-table'
 import { createColumnHelper } from '@tanstack/react-table'
 import { EditIcon, Trash2Icon } from 'lucide-react'
 import { ActionButton } from '#/shared/components/action-button.tsx'
@@ -90,4 +91,4 @@ export const dashboardPostColumns = [
       )
     },
   }),
-]
+] as unknown as ColumnDef<Post, unknown>[]

@@ -35,7 +35,7 @@ export function RequireReauthProvider({
 
   const handleCancel = () => {
     if (cancelCallbackURL) {
-      void router.navigate({ to: cancelCallbackURL as any, replace: true })
+      void router.navigate({ to: cancelCallbackURL, replace: true })
     }
     setOpen(false)
     rejectRef.current?.(new Error('Reauth cancelled'))

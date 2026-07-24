@@ -14,7 +14,7 @@ export function getCurrentCharacter(args: {
   forceRefresh?: boolean
 }): Promise<{
   currentCharacter: CharacterWithFaction
-  characters: Array<CharacterWithFaction>
+  characters: CharacterWithFaction[]
 } | null>
 
 export function getCurrentCharacter(args: {
@@ -29,7 +29,7 @@ export function getCurrentCharacter(args: {
   forceRefresh?: boolean
 }): Promise<{
   currentCharacter: Character
-  characters: Array<Character>
+  characters: Character[]
 } | null>
 
 export function getCurrentCharacter(args?: {
@@ -51,12 +51,12 @@ export async function getCurrentCharacter({
   | CharacterWithFaction
   | {
       currentCharacter: Character | CharacterWithFaction
-      characters: Array<Character | CharacterWithFaction>
+      characters: (Character | CharacterWithFaction)[]
     }
   | null
 > {
   try {
-    let userCharacters: Array<Character> | Array<CharacterWithFaction> = []
+    let userCharacters: Character[] | CharacterWithFaction[] = []
 
     if (withFaction) {
       userCharacters = await getAllUserCharactersWithFactions(undefined, { forceRefresh })

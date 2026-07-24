@@ -34,7 +34,7 @@ export const Route = createFileRoute('/dashboard/users/edit/$id')({
 
     const session = await getSessionFn()
     const userHighestRole = session!.user.role
-      ? getUserRoleMaxLevel(parseCsvString<Array<UserRole>>(session!.user.role))
+      ? getUserRoleMaxLevel(parseCsvString<UserRole[]>(session!.user.role))
       : 0
 
     const assignableRoles = allRoles
@@ -63,7 +63,7 @@ function RouteComponent() {
 
   const form = useAppForm({
     defaultValues: {
-      roles: targetUser.role ? parseCsvString<Array<UserRole>>(targetUser.role) : [],
+      roles: targetUser.role ? parseCsvString<UserRole[]>(targetUser.role) : [],
     },
     validators: {
       onChange: updateUserFormSchema,

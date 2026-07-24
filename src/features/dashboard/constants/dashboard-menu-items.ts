@@ -7,7 +7,7 @@ import {
 } from 'lucide-react'
 import type { DashboardMenuItem } from '../types/dashboard.types'
 
-export const dashboardMenuItems: Array<DashboardMenuItem> = [
+export const dashboardMenuItems: DashboardMenuItem[] = [
   {
     label: 'Tableau de bord',
     icon: LayoutDashboardIcon,

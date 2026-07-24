@@ -1,4 +1,4 @@
-import type { ComponentProps, ComponentPropsWithRef } from 'react'
+import type React from 'react'
 import type {
   Field,
   FieldContent,
@@ -6,22 +6,22 @@ import type {
   FieldLabel,
 } from '#/shared/components/ui/field'
 
-type FieldProps = ComponentProps<typeof Field>
-type FieldLabelProps = ComponentProps<typeof FieldLabel>
-type FieldDescriptionProps = ComponentProps<typeof FieldDescription>
-type FieldContentProps = ComponentProps<typeof FieldContent>
+type FieldProps = React.ComponentProps<typeof Field>
+type FieldLabelProps = React.ComponentProps<typeof FieldLabel>
+type FieldDescriptionProps = React.ComponentProps<typeof FieldDescription>
+type FieldContentProps = React.ComponentProps<typeof FieldContent>
 
 export type FieldComponentProps<
   C extends React.ElementType,
-  T extends Record<string, unknown> = {},
-  O extends keyof ComponentPropsWithRef<C> = Exclude<keyof C, unknown>,
+  T extends Record<string, unknown> = Record<string, unknown>,
+  O extends keyof React.ComponentPropsWithRef<C> = Exclude<keyof C, unknown>,
 > = {
   id?: string
   fieldProps?: Omit<FieldProps, 'data-invalid'>
   fieldLabelProps?: Omit<FieldLabelProps, 'htmlFor'>
   fieldDescriptionProps?: FieldDescriptionProps
   fieldContentProps?: FieldContentProps
-} & Omit<ComponentPropsWithRef<C>, 'id' | O> &
+} & Omit<React.ComponentPropsWithRef<C>, 'id' | O> &
   T
 
 export type SelectValues = { label: string; value: string | null }

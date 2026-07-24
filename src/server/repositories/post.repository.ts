@@ -78,8 +78,8 @@ class PostRepository extends BaseRepository<typeof posts> {
       pageSize?: number
       page?: number
       status?: PostStatus | null
-      orderBy?: Array<OrderBy<TColumns>>
-      searchText?: Array<{ column: keyof PostsColumns; text: string }>
+      orderBy?: OrderBy<TColumns>[]
+      searchText?: { column: keyof PostsColumns; text: string }[]
     } = {}
   ) {
     const {

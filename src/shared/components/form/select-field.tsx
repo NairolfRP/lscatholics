@@ -26,7 +26,7 @@ type SelectFieldProps<TValue extends string | null | undefined = string | null |
       descriptionPos?: 'before' | 'after'
       errorsPos?: 'before' | 'after'
       placeholder?: string
-      values: Array<SelectValues>
+      values: SelectValues[]
       onValueChange?: (
         value: TValue,
         handleChange: ReturnType<typeof useFieldContext<TValue>>['handleChange']

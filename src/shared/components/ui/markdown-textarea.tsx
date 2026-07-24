@@ -132,7 +132,7 @@ export function MarkdownTextarea({
     [onChange]
   )
 
-  const toolbarGroups: Array<Array<ToolbarAction>> = [
+  const toolbarGroups: ToolbarAction[][] = [
     [
       {
         icon: <BoldIcon className="size-3.5" />,

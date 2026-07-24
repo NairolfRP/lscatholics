@@ -20,11 +20,11 @@ import { cn } from '#/shared/lib/utils'
 type MultiSelectContextType = {
   open: boolean
   setOpen: (open: boolean) => void
-  selectedValues: Set<string>
-  toggleValue: (value: string) => void
-  items: Map<string, ReactNode>
+  selectedValues: Set<string | null>
+  toggleValue: (value: string | null) => void
+  items: Map<string | null, ReactNode>
   single: boolean
-  onItemAdded: (value: string, label: ReactNode) => void
+  onItemAdded: (value: string | null, label: ReactNode) => void
 }
 const MultiSelectContext = createContext<MultiSelectContextType | null>(null)
 
@@ -36,20 +36,22 @@ export function MultiSelect({
   single = false,
 }: {
   children: ReactNode
-  values?: Array<string>
-  defaultValues?: Array<string>
-  onValuesChange?: (values: Array<string>) => void
+  values?: string[]
+  defaultValues?: string[]
+  onValuesChange?: (values: (string | null)[]) => void
   single?: boolean
 }) {
   const [open, setOpen] = useState(false)
-  const [internalValues, setInternalValues] = useState(new Set<string>(values ?? defaultValues))
+  const [internalValues, setInternalValues] = useState(
+    new Set<string | null>(values ?? defaultValues)
+  )
   const selectedValues = values ? new Set(values) : internalValues
-  const [items, setItems] = useState<Map<string, ReactNode>>(new Map())
+  const [items, setItems] = useState<Map<string | null, ReactNode>>(new Map())
 
-  function toggleValue(value: string) {
-    const getNewSet = (prev: Set<string>) => {
+  function toggleValue(value: string | null) {
+    const getNewSet = (prev: Set<string | null>) => {
       if (single) {
-        return prev.has(value) ? new Set<string>() : new Set<string>([value])
+        return prev.has(value) ? new Set<string | null>() : new Set<string | null>([value])
       }
       const newSet = new Set(prev)
       if (newSet.has(value)) {
@@ -65,7 +67,7 @@ export function MultiSelect({
     if (single) setOpen(false)
   }
 
-  const onItemAdded = useCallback((value: string, label: ReactNode) => {
+  const onItemAdded = useCallback((value: string | null, label: ReactNode) => {
     setItems((prev) => {
       if (prev.get(value) === label) return prev
       return new Map(prev).set(value, label)
@@ -292,7 +294,7 @@ export function MultiSelectItem({
   ...props
 }: {
   badgeLabel?: ReactNode
-  value: string
+  value: string | null
 } & Omit<ComponentPropsWithoutRef<typeof CommandItem>, 'value'>) {
   const { toggleValue, selectedValues, onItemAdded } = useMultiSelectContext()
   const isSelected = selectedValues.has(value)
@@ -306,7 +308,7 @@ export function MultiSelectItem({
       {...props}
       onSelect={() => {
         toggleValue(value)
-        onSelect?.(value)
+        onSelect?.(value ?? '')
       }}
     >
       <CheckIcon className={cn('mr-2 size-4', isSelected ? 'opacity-100' : 'opacity-0')} />
@@ -331,7 +333,7 @@ function useMultiSelectContext() {
   return context
 }
 
-function debounce<T extends (...args: Array<never>) => void>(
+function debounce<T extends (...args: never[]) => void>(
   func: T,
   wait: number
 ): (...args: Parameters<T>) => void {

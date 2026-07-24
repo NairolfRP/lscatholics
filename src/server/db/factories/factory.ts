@@ -26,7 +26,7 @@ export class Factory<TSchema extends Table> {
     return new Factory(schema, callback)
   }
 
-  make(nb: number = 1): Array<TSchema['$inferInsert']> {
+  make(nb: number = 1): TSchema['$inferInsert'][] {
     return Array.from({ length: nb }, () =>
       this.definition({ schema: this.schema, faker: this.faker })
     )

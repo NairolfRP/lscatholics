@@ -47,7 +47,7 @@ function RouteComponent() {
           title={churchEvent.title}
           description={
             <Typography className="text-muted-foreground">
-              · {churchEvent.startDate ? formatDateTime(churchEvent.startDate) : 'Date inconnue'}
+              · {formatDateTime(churchEvent.startDate)}
               {churchEvent.endDate ? ` — ${formatDateTime(churchEvent.endDate)}` : null}
             </Typography>
           }
@@ -147,13 +147,7 @@ function RouteComponent() {
                 <Separator />
                 <div>
                   <p className="font-medium text-muted-foreground">Date de l'événement</p>
-                  <p>
-                    {churchEvent.startDate ? (
-                      formatDateTime(churchEvent.startDate)
-                    ) : (
-                      <em>Date inconnue</em>
-                    )}
-                  </p>
+                  <p>{formatDateTime(churchEvent.startDate)}</p>
                 </div>
                 {churchEvent.endDate ? (
                   <div>
