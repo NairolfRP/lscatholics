@@ -1,0 +1,3 @@
+[install]
+minimumReleaseAge = 86400 # 1 day
+minimumReleaseAgeExcludes = ["@types/node", "typescript", "react", "react-dom"]
