@@ -1,4 +1,3 @@
-import { createId } from '@paralleldrive/cuid2'
 import { relations, sql } from 'drizzle-orm'
 import { index, integer, sqliteTable, text } from 'drizzle-orm/sqlite-core'
 import { PARISH_VALUES } from '#/shared/constants/parish'
@@ -9,7 +8,7 @@ export const churchEvents = sqliteTable(
   {
     id: text('id')
       .primaryKey()
-      .$defaultFn(() => createId()),
+      .$defaultFn(() => crypto.randomUUID()),
     title: text('title').notNull(),
     slug: text('slug').notNull().unique(),
     description: text('description').notNull(),

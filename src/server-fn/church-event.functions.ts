@@ -106,7 +106,7 @@ export const updateChurchEventFn = createServerFn({ method: 'POST' })
   .validator(async (data: unknown) => {
     const schema = z
       .object({
-        churchEventId: z.cuid2({
+        churchEventId: z.uuidv4({
           error: (iss) => (iss.input === undefined ? 'Missing church event ID' : 'Bad ID format'),
         }),
       })

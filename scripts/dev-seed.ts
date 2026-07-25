@@ -8,16 +8,16 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 async function seed() {
-  logger.info('🌱 [Development] Seeding...')
+  console.log('🌱 [Development] Seeding...')
   await Promise.all([
     postFactory.withLocale(fr).insert(50),
     churchEventFactory.withLocale(fr).insert(50),
   ])
-  logger.info('✅ Done')
+  console.log('✅ Done')
   process.exit(0)
 }
 
 seed().catch((err) => {
-  logger.error({ err }, '❌ [Development] Seeding has failed')
+  console.error('❌ [Development] Seeding has failed', { err })
   process.exit(1)
 })

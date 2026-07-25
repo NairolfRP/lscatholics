@@ -1,4 +1,3 @@
-import { createId } from '@paralleldrive/cuid2'
 import { desc, relations, sql } from 'drizzle-orm'
 import { index, integer, sqliteTable, text } from 'drizzle-orm/sqlite-core'
 import { POST_STATUS, POST_STATUS_VALUES } from '#/shared/constants/post-status'
@@ -9,7 +8,7 @@ export const posts = sqliteTable(
   {
     id: text('id')
       .primaryKey()
-      .$defaultFn(() => createId()),
+      .$defaultFn(() => crypto.randomUUID()),
     title: text('title').notNull(),
     slug: text('slug').notNull().unique(),
     excerpt: text('excerpt'),

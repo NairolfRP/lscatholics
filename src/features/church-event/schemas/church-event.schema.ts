@@ -4,7 +4,7 @@ import { PARISH_VALUES } from '#shared/constants/parish.ts'
 import { slugSchema } from '#shared/schemas/common.schema.ts'
 import { emptyToNull } from '#shared/schemas/utils.schema.ts'
 
-export const baseChurchEventInteractionSchema = z.object({ churchEventId: z.cuid2() })
+export const baseChurchEventInteractionSchema = z.object({ churchEventId: z.uuidv4() })
 
 export const editChurchEventSchema = z
   .object({

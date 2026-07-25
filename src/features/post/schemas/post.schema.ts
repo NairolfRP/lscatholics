@@ -3,7 +3,7 @@ import { pageSchema } from '#/shared/schemas/pagination.schema'
 import { POST_STATUS, POST_STATUS_VALUES } from '#shared/constants/post-status.ts'
 import { slugSchema } from '#shared/schemas/common.schema.ts'
 
-export const basePostInteractionSchema = z.object({ postId: z.cuid2() })
+export const basePostInteractionSchema = z.object({ postId: z.uuidv4() })
 export const postStatusSchema = z.enum(POST_STATUS_VALUES, {
   error: (iss) =>
     iss.input === undefined
