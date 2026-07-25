@@ -11,7 +11,7 @@ import { TextareaField } from '#shared/components/form/textarea-field.tsx'
 export const { fieldContext, useFieldContext, formContext, useFormContext } =
   createFormHookContexts()
 
-export const { useAppForm } = createFormHook({
+export const { useAppForm, withForm } = createFormHook({
   fieldComponents: {
     InputField,
     TextareaField,

@@ -12,8 +12,8 @@ type SubmitButtonProps<TFormValues = unknown> = Omit<
   ComponentPropsWithRef<typeof Button>,
   'disabled'
 > & {
-  label: string
-  submittingLabel?: string
+  label: string | ((state: FormState<TFormValues>) => string)
+  submittingLabel?: string | ((state: FormState<TFormValues>) => string)
   disabled?: boolean | ((state: FormState<TFormValues>) => boolean)
 }
 
@@ -28,20 +28,28 @@ export function SubmitButton<TFormValues = unknown>({
   const form = useFormContext()
   return (
     <form.Subscribe
-      selector={(state) =>
-        [
+      selector={(state) => {
+        const typedState = state as unknown as FormState<TFormValues>
+
+        return [
           typeof disabled === 'function'
             ? disabled(state as unknown as FormState<TFormValues>)
             : typeof disabled === 'boolean'
               ? disabled
               : defaultDisabled(state),
           state.isSubmitting,
+          typeof label === 'function' ? label(typedState) : label,
+          typeof submittingLabel === 'function' ? submittingLabel(typedState) : submittingLabel,
         ] as const
-      }
+      }}
     >
-      {([isDisabled, isSubmitting]) => (
+      {([isDisabled, isSubmitting, resolvedLabel, resolvedSubmittingLabel]) => (
         <Button type="submit" disabled={isDisabled} {...props}>
-          {submittingLabel && isSubmitting ? <SubmittingLabel label={submittingLabel} /> : label}
+          {resolvedSubmittingLabel && isSubmitting ? (
+            <SubmittingLabel label={resolvedSubmittingLabel} />
+          ) : (
+            resolvedLabel
+          )}
         </Button>
       )}
     </form.Subscribe>

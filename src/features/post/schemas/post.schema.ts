@@ -58,8 +58,10 @@ export const editPostSchema = z.object({
 })
 
 export type InferEditPostSchema = z.Infer<typeof editPostSchema>
+export type EditPostFormInput = z.input<typeof editPostSchema>
 
 export const createPostSchema = editPostSchema.extend({
   status: postStatusSchemaWithoutArchived,
 })
 export type InferCreatePostSchema = z.Infer<typeof createPostSchema>
+export type CreatePostFormInput = z.input<typeof createPostSchema>
