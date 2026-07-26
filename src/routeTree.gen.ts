@@ -23,15 +23,20 @@ import { Route as AppAccountIndexRouteImport } from './routes/_app/account/index
 import { Route as AppAccountSessionsRouteImport } from './routes/_app/account/sessions'
 import { Route as AppAccountSettingsRouteImport } from './routes/_app/account/settings'
 import { Route as AppEventSlugRouteImport } from './routes/_app/event/$slug'
+import { Route as AppJobSlugRouteImport } from './routes/_app/job.$slug'
 import { Route as AppPostSlugRouteImport } from './routes/_app/post/$slug'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 import { Route as DashboardEventsIndexRouteImport } from './routes/dashboard/events/index'
 import { Route as DashboardEventsCreateRouteImport } from './routes/dashboard/events/create'
+import { Route as DashboardJobOpeningsIndexRouteImport } from './routes/dashboard/job-openings/index'
+import { Route as DashboardJobOpeningsCreateRouteImport } from './routes/dashboard/job-openings/create'
 import { Route as DashboardPostsIndexRouteImport } from './routes/dashboard/posts/index'
 import { Route as DashboardPostsCreateRouteImport } from './routes/dashboard/posts/create'
 import { Route as DashboardUsersIndexRouteImport } from './routes/dashboard/users/index'
 import { Route as DashboardEventsEditIdRouteImport } from './routes/dashboard/events/edit.$id'
 import { Route as DashboardEventsShowIdRouteImport } from './routes/dashboard/events/show.$id'
+import { Route as DashboardJobOpeningsEditIdRouteImport } from './routes/dashboard/job-openings/edit.$id'
+import { Route as DashboardJobOpeningsShowIdRouteImport } from './routes/dashboard/job-openings/show.$id'
 import { Route as DashboardPostsEditIdRouteImport } from './routes/dashboard/posts/edit.$id'
 import { Route as DashboardPostsShowIdRouteImport } from './routes/dashboard/posts/show.$id'
 import { Route as DashboardUsersEditIdRouteImport } from './routes/dashboard/users/edit.$id'
@@ -105,6 +110,11 @@ const AppEventSlugRoute = AppEventSlugRouteImport.update({
   path: '/event/$slug',
   getParentRoute: () => AppRoute,
 } as any)
+const AppJobSlugRoute = AppJobSlugRouteImport.update({
+  id: '/job/$slug',
+  path: '/job/$slug',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppPostSlugRoute = AppPostSlugRouteImport.update({
   id: '/post/$slug',
   path: '/post/$slug',
@@ -125,6 +135,18 @@ const DashboardEventsCreateRoute = DashboardEventsCreateRouteImport.update({
   path: '/events/create',
   getParentRoute: () => DashboardRouteRoute,
 } as any)
+const DashboardJobOpeningsIndexRoute =
+  DashboardJobOpeningsIndexRouteImport.update({
+    id: '/job-openings/',
+    path: '/job-openings/',
+    getParentRoute: () => DashboardRouteRoute,
+  } as any)
+const DashboardJobOpeningsCreateRoute =
+  DashboardJobOpeningsCreateRouteImport.update({
+    id: '/job-openings/create',
+    path: '/job-openings/create',
+    getParentRoute: () => DashboardRouteRoute,
+  } as any)
 const DashboardPostsIndexRoute = DashboardPostsIndexRouteImport.update({
   id: '/posts/',
   path: '/posts/',
@@ -150,6 +172,18 @@ const DashboardEventsShowIdRoute = DashboardEventsShowIdRouteImport.update({
   path: '/events/show/$id',
   getParentRoute: () => DashboardRouteRoute,
 } as any)
+const DashboardJobOpeningsEditIdRoute =
+  DashboardJobOpeningsEditIdRouteImport.update({
+    id: '/job-openings/edit/$id',
+    path: '/job-openings/edit/$id',
+    getParentRoute: () => DashboardRouteRoute,
+  } as any)
+const DashboardJobOpeningsShowIdRoute =
+  DashboardJobOpeningsShowIdRouteImport.update({
+    id: '/job-openings/show/$id',
+    path: '/job-openings/show/$id',
+    getParentRoute: () => DashboardRouteRoute,
+  } as any)
 const DashboardPostsEditIdRoute = DashboardPostsEditIdRouteImport.update({
   id: '/posts/edit/$id',
   path: '/posts/edit/$id',
@@ -179,16 +213,21 @@ export interface FileRoutesByFullPath {
   '/account/sessions': typeof AppAccountSessionsRoute
   '/account/settings': typeof AppAccountSettingsRoute
   '/event/$slug': typeof AppEventSlugRoute
+  '/job/$slug': typeof AppJobSlugRoute
   '/post/$slug': typeof AppPostSlugRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/dashboard/events/create': typeof DashboardEventsCreateRoute
+  '/dashboard/job-openings/create': typeof DashboardJobOpeningsCreateRoute
   '/dashboard/posts/create': typeof DashboardPostsCreateRoute
   '/account/': typeof AppAccountIndexRoute
   '/dashboard/events/': typeof DashboardEventsIndexRoute
+  '/dashboard/job-openings/': typeof DashboardJobOpeningsIndexRoute
   '/dashboard/posts/': typeof DashboardPostsIndexRoute
   '/dashboard/users/': typeof DashboardUsersIndexRoute
   '/dashboard/events/edit/$id': typeof DashboardEventsEditIdRoute
   '/dashboard/events/show/$id': typeof DashboardEventsShowIdRoute
+  '/dashboard/job-openings/edit/$id': typeof DashboardJobOpeningsEditIdRoute
+  '/dashboard/job-openings/show/$id': typeof DashboardJobOpeningsShowIdRoute
   '/dashboard/posts/edit/$id': typeof DashboardPostsEditIdRoute
   '/dashboard/posts/show/$id': typeof DashboardPostsShowIdRoute
   '/dashboard/users/edit/$id': typeof DashboardUsersEditIdRoute
@@ -203,16 +242,21 @@ export interface FileRoutesByTo {
   '/account/sessions': typeof AppAccountSessionsRoute
   '/account/settings': typeof AppAccountSettingsRoute
   '/event/$slug': typeof AppEventSlugRoute
+  '/job/$slug': typeof AppJobSlugRoute
   '/post/$slug': typeof AppPostSlugRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/dashboard/events/create': typeof DashboardEventsCreateRoute
+  '/dashboard/job-openings/create': typeof DashboardJobOpeningsCreateRoute
   '/dashboard/posts/create': typeof DashboardPostsCreateRoute
   '/account': typeof AppAccountIndexRoute
   '/dashboard/events': typeof DashboardEventsIndexRoute
+  '/dashboard/job-openings': typeof DashboardJobOpeningsIndexRoute
   '/dashboard/posts': typeof DashboardPostsIndexRoute
   '/dashboard/users': typeof DashboardUsersIndexRoute
   '/dashboard/events/edit/$id': typeof DashboardEventsEditIdRoute
   '/dashboard/events/show/$id': typeof DashboardEventsShowIdRoute
+  '/dashboard/job-openings/edit/$id': typeof DashboardJobOpeningsEditIdRoute
+  '/dashboard/job-openings/show/$id': typeof DashboardJobOpeningsShowIdRoute
   '/dashboard/posts/edit/$id': typeof DashboardPostsEditIdRoute
   '/dashboard/posts/show/$id': typeof DashboardPostsShowIdRoute
   '/dashboard/users/edit/$id': typeof DashboardUsersEditIdRoute
@@ -232,16 +276,21 @@ export interface FileRoutesById {
   '/_app/account/sessions': typeof AppAccountSessionsRoute
   '/_app/account/settings': typeof AppAccountSettingsRoute
   '/_app/event/$slug': typeof AppEventSlugRoute
+  '/_app/job/$slug': typeof AppJobSlugRoute
   '/_app/post/$slug': typeof AppPostSlugRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/dashboard/events/create': typeof DashboardEventsCreateRoute
+  '/dashboard/job-openings/create': typeof DashboardJobOpeningsCreateRoute
   '/dashboard/posts/create': typeof DashboardPostsCreateRoute
   '/_app/account/': typeof AppAccountIndexRoute
   '/dashboard/events/': typeof DashboardEventsIndexRoute
+  '/dashboard/job-openings/': typeof DashboardJobOpeningsIndexRoute
   '/dashboard/posts/': typeof DashboardPostsIndexRoute
   '/dashboard/users/': typeof DashboardUsersIndexRoute
   '/dashboard/events/edit/$id': typeof DashboardEventsEditIdRoute
   '/dashboard/events/show/$id': typeof DashboardEventsShowIdRoute
+  '/dashboard/job-openings/edit/$id': typeof DashboardJobOpeningsEditIdRoute
+  '/dashboard/job-openings/show/$id': typeof DashboardJobOpeningsShowIdRoute
   '/dashboard/posts/edit/$id': typeof DashboardPostsEditIdRoute
   '/dashboard/posts/show/$id': typeof DashboardPostsShowIdRoute
   '/dashboard/users/edit/$id': typeof DashboardUsersEditIdRoute
@@ -261,16 +310,21 @@ export interface FileRouteTypes {
     | '/account/sessions'
     | '/account/settings'
     | '/event/$slug'
+    | '/job/$slug'
     | '/post/$slug'
     | '/api/auth/$'
     | '/dashboard/events/create'
+    | '/dashboard/job-openings/create'
     | '/dashboard/posts/create'
     | '/account/'
     | '/dashboard/events/'
+    | '/dashboard/job-openings/'
     | '/dashboard/posts/'
     | '/dashboard/users/'
     | '/dashboard/events/edit/$id'
     | '/dashboard/events/show/$id'
+    | '/dashboard/job-openings/edit/$id'
+    | '/dashboard/job-openings/show/$id'
     | '/dashboard/posts/edit/$id'
     | '/dashboard/posts/show/$id'
     | '/dashboard/users/edit/$id'
@@ -285,16 +339,21 @@ export interface FileRouteTypes {
     | '/account/sessions'
     | '/account/settings'
     | '/event/$slug'
+    | '/job/$slug'
     | '/post/$slug'
     | '/api/auth/$'
     | '/dashboard/events/create'
+    | '/dashboard/job-openings/create'
     | '/dashboard/posts/create'
     | '/account'
     | '/dashboard/events'
+    | '/dashboard/job-openings'
     | '/dashboard/posts'
     | '/dashboard/users'
     | '/dashboard/events/edit/$id'
     | '/dashboard/events/show/$id'
+    | '/dashboard/job-openings/edit/$id'
+    | '/dashboard/job-openings/show/$id'
     | '/dashboard/posts/edit/$id'
     | '/dashboard/posts/show/$id'
     | '/dashboard/users/edit/$id'
@@ -313,16 +372,21 @@ export interface FileRouteTypes {
     | '/_app/account/sessions'
     | '/_app/account/settings'
     | '/_app/event/$slug'
+    | '/_app/job/$slug'
     | '/_app/post/$slug'
     | '/api/auth/$'
     | '/dashboard/events/create'
+    | '/dashboard/job-openings/create'
     | '/dashboard/posts/create'
     | '/_app/account/'
     | '/dashboard/events/'
+    | '/dashboard/job-openings/'
     | '/dashboard/posts/'
     | '/dashboard/users/'
     | '/dashboard/events/edit/$id'
     | '/dashboard/events/show/$id'
+    | '/dashboard/job-openings/edit/$id'
+    | '/dashboard/job-openings/show/$id'
     | '/dashboard/posts/edit/$id'
     | '/dashboard/posts/show/$id'
     | '/dashboard/users/edit/$id'
@@ -434,6 +498,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppEventSlugRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/job/$slug': {
+      id: '/_app/job/$slug'
+      path: '/job/$slug'
+      fullPath: '/job/$slug'
+      preLoaderRoute: typeof AppJobSlugRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/post/$slug': {
       id: '/_app/post/$slug'
       path: '/post/$slug'
@@ -460,6 +531,20 @@ declare module '@tanstack/react-router' {
       path: '/events/create'
       fullPath: '/dashboard/events/create'
       preLoaderRoute: typeof DashboardEventsCreateRouteImport
+      parentRoute: typeof DashboardRouteRoute
+    }
+    '/dashboard/job-openings/': {
+      id: '/dashboard/job-openings/'
+      path: '/job-openings'
+      fullPath: '/dashboard/job-openings/'
+      preLoaderRoute: typeof DashboardJobOpeningsIndexRouteImport
+      parentRoute: typeof DashboardRouteRoute
+    }
+    '/dashboard/job-openings/create': {
+      id: '/dashboard/job-openings/create'
+      path: '/job-openings/create'
+      fullPath: '/dashboard/job-openings/create'
+      preLoaderRoute: typeof DashboardJobOpeningsCreateRouteImport
       parentRoute: typeof DashboardRouteRoute
     }
     '/dashboard/posts/': {
@@ -495,6 +580,20 @@ declare module '@tanstack/react-router' {
       path: '/events/show/$id'
       fullPath: '/dashboard/events/show/$id'
       preLoaderRoute: typeof DashboardEventsShowIdRouteImport
+      parentRoute: typeof DashboardRouteRoute
+    }
+    '/dashboard/job-openings/edit/$id': {
+      id: '/dashboard/job-openings/edit/$id'
+      path: '/job-openings/edit/$id'
+      fullPath: '/dashboard/job-openings/edit/$id'
+      preLoaderRoute: typeof DashboardJobOpeningsEditIdRouteImport
+      parentRoute: typeof DashboardRouteRoute
+    }
+    '/dashboard/job-openings/show/$id': {
+      id: '/dashboard/job-openings/show/$id'
+      path: '/job-openings/show/$id'
+      fullPath: '/dashboard/job-openings/show/$id'
+      preLoaderRoute: typeof DashboardJobOpeningsShowIdRouteImport
       parentRoute: typeof DashboardRouteRoute
     }
     '/dashboard/posts/edit/$id': {
@@ -538,11 +637,15 @@ interface DashboardRouteRouteChildren {
   DashboardUsersRouteRoute: typeof DashboardUsersRouteRouteWithChildren
   DashboardIndexRoute: typeof DashboardIndexRoute
   DashboardEventsCreateRoute: typeof DashboardEventsCreateRoute
+  DashboardJobOpeningsCreateRoute: typeof DashboardJobOpeningsCreateRoute
   DashboardPostsCreateRoute: typeof DashboardPostsCreateRoute
   DashboardEventsIndexRoute: typeof DashboardEventsIndexRoute
+  DashboardJobOpeningsIndexRoute: typeof DashboardJobOpeningsIndexRoute
   DashboardPostsIndexRoute: typeof DashboardPostsIndexRoute
   DashboardEventsEditIdRoute: typeof DashboardEventsEditIdRoute
   DashboardEventsShowIdRoute: typeof DashboardEventsShowIdRoute
+  DashboardJobOpeningsEditIdRoute: typeof DashboardJobOpeningsEditIdRoute
+  DashboardJobOpeningsShowIdRoute: typeof DashboardJobOpeningsShowIdRoute
   DashboardPostsEditIdRoute: typeof DashboardPostsEditIdRoute
   DashboardPostsShowIdRoute: typeof DashboardPostsShowIdRoute
 }
@@ -551,11 +654,15 @@ const DashboardRouteRouteChildren: DashboardRouteRouteChildren = {
   DashboardUsersRouteRoute: DashboardUsersRouteRouteWithChildren,
   DashboardIndexRoute: DashboardIndexRoute,
   DashboardEventsCreateRoute: DashboardEventsCreateRoute,
+  DashboardJobOpeningsCreateRoute: DashboardJobOpeningsCreateRoute,
   DashboardPostsCreateRoute: DashboardPostsCreateRoute,
   DashboardEventsIndexRoute: DashboardEventsIndexRoute,
+  DashboardJobOpeningsIndexRoute: DashboardJobOpeningsIndexRoute,
   DashboardPostsIndexRoute: DashboardPostsIndexRoute,
   DashboardEventsEditIdRoute: DashboardEventsEditIdRoute,
   DashboardEventsShowIdRoute: DashboardEventsShowIdRoute,
+  DashboardJobOpeningsEditIdRoute: DashboardJobOpeningsEditIdRoute,
+  DashboardJobOpeningsShowIdRoute: DashboardJobOpeningsShowIdRoute,
   DashboardPostsEditIdRoute: DashboardPostsEditIdRoute,
   DashboardPostsShowIdRoute: DashboardPostsShowIdRoute,
 }
@@ -588,6 +695,7 @@ interface AppRouteChildren {
   AppRegisterParishionerRoute: typeof AppRegisterParishionerRoute
   AppIndexRoute: typeof AppIndexRoute
   AppEventSlugRoute: typeof AppEventSlugRoute
+  AppJobSlugRoute: typeof AppJobSlugRoute
   AppPostSlugRoute: typeof AppPostSlugRoute
 }
 
@@ -599,6 +707,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppRegisterParishionerRoute: AppRegisterParishionerRoute,
   AppIndexRoute: AppIndexRoute,
   AppEventSlugRoute: AppEventSlugRoute,
+  AppJobSlugRoute: AppJobSlugRoute,
   AppPostSlugRoute: AppPostSlugRoute,
 }
 

@@ -53,6 +53,7 @@ export function SelectField({
   errorsPos = 'before',
   selectTriggerProps,
   selectContentProps,
+  required,
   ...props
 }: SelectFieldProps) {
   const generatedId = useId()
@@ -65,7 +66,7 @@ export function SelectField({
   return (
     <Field {...fieldProps} data-invalid={isInvalid}>
       <FieldContent {...fieldContentProps}>
-        <FieldLabel {...fieldLabelProps} htmlFor={fieldId}>
+        <FieldLabel required={required} {...fieldLabelProps} htmlFor={fieldId}>
           {label}
         </FieldLabel>
         {description && descriptionPos === 'before' && (
@@ -83,6 +84,7 @@ export function SelectField({
             ? onValueChange(v as string | null | undefined, field.handleChange)
             : field.handleChange(v as string | null | undefined)
         }
+        required={required}
         {...props}
       >
         <SelectTrigger {...selectTriggerProps} id={fieldId} aria-invalid={isInvalid}>

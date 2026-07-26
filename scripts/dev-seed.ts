@@ -1,7 +1,7 @@
 import { fr } from '@faker-js/faker'
 import { churchEventFactory } from '#/server/db/factories/church-event-factory'
 import { postFactory } from '#/server/db/factories/post-factory'
-import { logger } from '#/server/integrations/logger'
+import { jobPostingFactory } from '#server/db/factories/job-posting-factory.ts'
 
 if (process.env.NODE_ENV === 'production') {
   throw new Error('This seed is only for development.')
@@ -12,6 +12,7 @@ async function seed() {
   await Promise.all([
     postFactory.withLocale(fr).insert(50),
     churchEventFactory.withLocale(fr).insert(50),
+    jobPostingFactory.withLocale(fr).insert(50),
   ])
   console.log('✅ Done')
   process.exit(0)

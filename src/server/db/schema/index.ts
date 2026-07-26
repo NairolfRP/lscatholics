@@ -1,3 +1,4 @@
 export * from './auth-schema'
 export * from './church-event-schema'
 export * from './post-schema'
+export * from './job-posting-schema'

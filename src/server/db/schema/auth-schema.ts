@@ -2,6 +2,7 @@ import { relations, sql } from 'drizzle-orm'
 import { index, integer, sqliteTable, text, unique } from 'drizzle-orm/sqlite-core'
 import { churchEvents } from './church-event-schema'
 import { posts } from './post-schema'
+import { jobPostings } from '#server/db/schema/job-posting-schema.ts'
 
 export const users = sqliteTable('users', {
   id: text('id').primaryKey(),
@@ -82,6 +83,7 @@ export const usersRelations = relations(users, ({ many }) => ({
   accounts: many(accounts),
   posts: many(posts),
   churchEvents: many(churchEvents),
+  jobPostings: many(jobPostings),
 }))
 
 export const sessionsRelations = relations(sessions, ({ one }) => ({
