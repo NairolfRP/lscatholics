@@ -1,6 +1,12 @@
 import { useState } from 'react'
 import { Link, useRouter } from '@tanstack/react-router'
-import { User } from 'lucide-react'
+import {
+  ArrowRightLeftIcon,
+  LayoutDashboardIcon,
+  LogOutIcon,
+  SettingsIcon,
+  User,
+} from 'lucide-react'
 import { toast } from 'sonner'
 import { Button } from '#/shared/components/ui/button'
 import {
@@ -85,8 +91,11 @@ UserMenu.Content = function Content({
       {canAccessDashboard && (
         <>
           <DropdownMenuGroup>
-            <DropdownMenuItem render={<Link to="/dashboard" preload={false} />}>
-              Tableau de bord
+            <DropdownMenuItem
+              className="cursor-pointer"
+              render={<Link to="/dashboard" preload={false} />}
+            >
+              <LayoutDashboardIcon /> Tableau de bord
             </DropdownMenuItem>
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
@@ -94,11 +103,16 @@ UserMenu.Content = function Content({
       )}
 
       <DropdownMenuGroup>
-        <DropdownMenuItem onClick={onOpenSwitch}>Changer de personnage</DropdownMenuItem>
-        <DropdownMenuItem render={<Link to="/account/settings" />}>Paramètres</DropdownMenuItem>
+        <DropdownMenuItem className="cursor-pointer" onClick={onOpenSwitch}>
+          <ArrowRightLeftIcon /> Changer de personnage
+        </DropdownMenuItem>
+        <DropdownMenuItem className="cursor-pointer" render={<Link to="/account/settings" />}>
+          <SettingsIcon /> Paramètres
+        </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem
-          className="text-destructive"
+          variant="destructive"
+          className="cursor-pointer"
           onClick={async () =>
             await authClient.signOut({
               fetchOptions: {
@@ -110,7 +124,7 @@ UserMenu.Content = function Content({
             })
           }
         >
-          Déconnexion
+          <LogOutIcon /> Déconnexion
         </DropdownMenuItem>
       </DropdownMenuGroup>
     </DropdownMenuContent>

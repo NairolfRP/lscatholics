@@ -1,6 +1,13 @@
 import { useMemo, useState } from 'react'
-import { Link } from '@tanstack/react-router'
-import { ChevronsUpDownIcon, LogOutIcon, SettingsIcon } from 'lucide-react'
+import { Link, useRouteContext } from '@tanstack/react-router'
+import {
+  ArrowBigLeftIcon,
+  ArrowRightLeftIcon,
+  ChevronsUpDownIcon,
+  LogOutIcon,
+  SettingsIcon,
+  UserIcon,
+} from 'lucide-react'
 import { dashboardMenuItems } from '#/features/dashboard/constants/dashboard-menu-items'
 import { Logo } from '#/shared/components/logo'
 import { Avatar, AvatarFallback, AvatarImage } from '#/shared/components/ui/avatar'
@@ -105,7 +112,14 @@ function DashboardSidebarFooter({
   username: string
   isMobile: boolean
 }) {
+  const context = useRouteContext({ from: '/dashboard' })
   const [isSwitchCharacterOpen, setSwitchCharacterOpen] = useState<boolean>(false)
+
+  const characterFullName = context.gameContext.currentCharacter ? (
+    `${context.gameContext.currentCharacter.firstname} ${context.gameContext.currentCharacter.lastname}`
+  ) : (
+    <em>Personnage inconnu</em>
+  )
 
   return (
     <>
@@ -123,10 +137,12 @@ function DashboardSidebarFooter({
               >
                 <Avatar className="h-8 w-8 rounded-lg">
                   <AvatarImage alt="Avatar" />
-                  <AvatarFallback>{userInitials}</AvatarFallback>
+                  <AvatarFallback className="bg-primary text-primary-foreground">
+                    <UserIcon />
+                  </AvatarFallback>
                 </Avatar>
                 <div className="text-left text-sm leading-tight">
-                  <span className="truncate font-medium">{username}</span>
+                  <span className="truncate font-medium">{characterFullName}</span>
                 </div>
                 <ChevronsUpDownIcon className="ml-auto size-4" />
               </DropdownMenuTrigger>
@@ -149,23 +165,38 @@ function DashboardSidebarFooter({
                     </div>
                   </DropdownMenuLabel>
                 </DropdownMenuGroup>
+                <DropdownMenuGroup>
+                  <DropdownMenuItem
+                    className="cursor-pointer"
+                    render={<Link to="/" preload={false} />}
+                  >
+                    <ArrowBigLeftIcon /> Retour sur l'application
+                  </DropdownMenuItem>
+                </DropdownMenuGroup>
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
-                  <DropdownMenuItem onClick={() => setSwitchCharacterOpen(true)}>
-                    Changer de personnage
+                  <DropdownMenuItem
+                    className="cursor-pointer"
+                    onClick={() => setSwitchCharacterOpen(true)}
+                  >
+                    <ArrowRightLeftIcon /> Changer de personnage
                   </DropdownMenuItem>
-                  <DropdownMenuItem render={<Link to="/account/settings" />}>
+                  <DropdownMenuItem
+                    className="cursor-pointer"
+                    render={<Link to="/account/settings" />}
+                  >
                     <SettingsIcon />
                     Paramètres
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem
+                    className="cursor-pointer"
                     onClick={async () => {
                       await authClient.signOut({
                         query: { callbackURL: '/' },
                       })
                     }}
-                    className="text-destructive"
+                    variant="destructive"
                   >
                     <LogOutIcon />
                     Déconnexion
