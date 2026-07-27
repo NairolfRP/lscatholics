@@ -16,6 +16,7 @@ import { Route as AppAccountRouteRouteImport } from './routes/_app/account/route
 import { Route as AppEventsRouteImport } from './routes/_app/events'
 import { Route as AppNewsroomRouteImport } from './routes/_app/newsroom'
 import { Route as AppParishesRouteImport } from './routes/_app/parishes'
+import { Route as AppPrivacyRouteImport } from './routes/_app/privacy'
 import { Route as AppRegisterParishionerRouteImport } from './routes/_app/register-parishioner'
 import { Route as DashboardIndexRouteImport } from './routes/dashboard/index'
 import { Route as DashboardUsersRouteRouteImport } from './routes/dashboard/users/route'
@@ -73,6 +74,11 @@ const AppNewsroomRoute = AppNewsroomRouteImport.update({
 const AppParishesRoute = AppParishesRouteImport.update({
   id: '/parishes',
   path: '/parishes',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppPrivacyRoute = AppPrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
   getParentRoute: () => AppRoute,
 } as any)
 const AppRegisterParishionerRoute = AppRegisterParishionerRouteImport.update({
@@ -208,6 +214,7 @@ export interface FileRoutesByFullPath {
   '/events': typeof AppEventsRoute
   '/newsroom': typeof AppNewsroomRoute
   '/parishes': typeof AppParishesRoute
+  '/privacy': typeof AppPrivacyRoute
   '/register-parishioner': typeof AppRegisterParishionerRoute
   '/dashboard/': typeof DashboardIndexRoute
   '/account/sessions': typeof AppAccountSessionsRoute
@@ -236,6 +243,7 @@ export interface FileRoutesByTo {
   '/events': typeof AppEventsRoute
   '/newsroom': typeof AppNewsroomRoute
   '/parishes': typeof AppParishesRoute
+  '/privacy': typeof AppPrivacyRoute
   '/register-parishioner': typeof AppRegisterParishionerRoute
   '/': typeof AppIndexRoute
   '/dashboard': typeof DashboardIndexRoute
@@ -270,6 +278,7 @@ export interface FileRoutesById {
   '/_app/events': typeof AppEventsRoute
   '/_app/newsroom': typeof AppNewsroomRoute
   '/_app/parishes': typeof AppParishesRoute
+  '/_app/privacy': typeof AppPrivacyRoute
   '/_app/register-parishioner': typeof AppRegisterParishionerRoute
   '/_app/': typeof AppIndexRoute
   '/dashboard/': typeof DashboardIndexRoute
@@ -305,6 +314,7 @@ export interface FileRouteTypes {
     | '/events'
     | '/newsroom'
     | '/parishes'
+    | '/privacy'
     | '/register-parishioner'
     | '/dashboard/'
     | '/account/sessions'
@@ -333,6 +343,7 @@ export interface FileRouteTypes {
     | '/events'
     | '/newsroom'
     | '/parishes'
+    | '/privacy'
     | '/register-parishioner'
     | '/'
     | '/dashboard'
@@ -366,6 +377,7 @@ export interface FileRouteTypes {
     | '/_app/events'
     | '/_app/newsroom'
     | '/_app/parishes'
+    | '/_app/privacy'
     | '/_app/register-parishioner'
     | '/_app/'
     | '/dashboard/'
@@ -447,6 +459,13 @@ declare module '@tanstack/react-router' {
       path: '/parishes'
       fullPath: '/parishes'
       preLoaderRoute: typeof AppParishesRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/privacy': {
+      id: '/_app/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof AppPrivacyRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/register-parishioner': {
@@ -692,6 +711,7 @@ interface AppRouteChildren {
   AppEventsRoute: typeof AppEventsRoute
   AppNewsroomRoute: typeof AppNewsroomRoute
   AppParishesRoute: typeof AppParishesRoute
+  AppPrivacyRoute: typeof AppPrivacyRoute
   AppRegisterParishionerRoute: typeof AppRegisterParishionerRoute
   AppIndexRoute: typeof AppIndexRoute
   AppEventSlugRoute: typeof AppEventSlugRoute
@@ -704,6 +724,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppEventsRoute: AppEventsRoute,
   AppNewsroomRoute: AppNewsroomRoute,
   AppParishesRoute: AppParishesRoute,
+  AppPrivacyRoute: AppPrivacyRoute,
   AppRegisterParishionerRoute: AppRegisterParishionerRoute,
   AppIndexRoute: AppIndexRoute,
   AppEventSlugRoute: AppEventSlugRoute,
