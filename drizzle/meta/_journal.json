@@ -5,22 +5,8 @@
     {
       "idx": 0,
       "version": "6",
-      "when": 1783278315271,
-      "tag": "0000_lively_sunspot",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "6",
-      "when": 1784490948096,
-      "tag": "0001_previous_jack_murdock",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "6",
-      "when": 1784694143894,
-      "tag": "0002_typical_nitro",
+      "when": 1785118161250,
+      "tag": "0000_majestic_madame_web",
       "breakpoints": true
     }
   ]

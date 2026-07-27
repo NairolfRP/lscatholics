@@ -1,1 +1,0 @@
-ALTER TABLE `posts` ADD `author_display_name` text NOT NULL;

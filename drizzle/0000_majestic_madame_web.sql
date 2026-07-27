@@ -81,13 +81,41 @@ CREATE TABLE `posts` (
 	`content` text NOT NULL,
 	`cover_image_url` text NOT NULL,
 	`status` text DEFAULT 'draft' NOT NULL,
-	`published_at` integer DEFAULT (cast(unixepoch('subsecond') * 1000 as integer)) NOT NULL,
+	`published_at` integer DEFAULT (cast(unixepoch('subsecond') * 1000 as integer)),
 	`created_at` integer DEFAULT (cast(unixepoch('subsecond') * 1000 as integer)) NOT NULL,
 	`updated_at` integer DEFAULT (cast(unixepoch('subsecond') * 1000 as integer)) NOT NULL,
+	`author_display_name` text DEFAULT 'John Doe' NOT NULL,
 	`author_id` text,
 	FOREIGN KEY (`author_id`) REFERENCES `users`(`id`) ON UPDATE no action ON DELETE set null
 );
 --> statement-breakpoint
 CREATE UNIQUE INDEX `posts_slug_unique` ON `posts` (`slug`);--> statement-breakpoint
 CREATE INDEX `posts_status_published_at_idx` ON `posts` (`status`,"published_at" desc);--> statement-breakpoint
-CREATE INDEX `posts_author_id_idx` ON `posts` (`author_id`);
+CREATE INDEX `posts_author_id_idx` ON `posts` (`author_id`);--> statement-breakpoint
+CREATE TABLE `job_postings` (
+	`id` text PRIMARY KEY NOT NULL,
+	`title` text(150) NOT NULL,
+	`slug` text(150) NOT NULL,
+	`description` text(2000),
+	`reports_to` text(100),
+	`department` text NOT NULL,
+	`responsibilities` text DEFAULT (json_array()),
+	`requirements` text DEFAULT (json_array()),
+	`skills` text DEFAULT (json_array()),
+	`salary_min` integer,
+	`salary_max` integer,
+	`employment_type` text NOT NULL,
+	`is_active` integer DEFAULT true NOT NULL,
+	`posted_at` integer,
+	`expires_at` integer,
+	`created_at` integer DEFAULT (cast(unixepoch('subsecond') * 1000 as integer)) NOT NULL,
+	`updated_at` integer DEFAULT (cast(unixepoch('subsecond') * 1000 as integer)) NOT NULL,
+	`author_id` text,
+	FOREIGN KEY (`author_id`) REFERENCES `users`(`id`) ON UPDATE no action ON DELETE set null
+);
+--> statement-breakpoint
+CREATE UNIQUE INDEX `job_postings_slug_unique` ON `job_postings` (`slug`);--> statement-breakpoint
+CREATE INDEX `job_postings_department_idx` ON `job_postings` (`department`);--> statement-breakpoint
+CREATE INDEX `job_postings_employment_type_idx` ON `job_postings` (`employment_type`);--> statement-breakpoint
+CREATE INDEX `job_postings_active_idx` ON `job_postings` (`is_active`);--> statement-breakpoint
+CREATE INDEX `job_postings_expires_at_idx` ON `job_postings` (`expires_at`);
