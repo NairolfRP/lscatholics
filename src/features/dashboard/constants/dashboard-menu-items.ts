@@ -17,25 +17,25 @@ export const dashboardMenuItems: DashboardMenuItem[] = [
   {
     label: 'Articles',
     icon: FileTextIcon,
-    to: '/dashboard/posts/',
+    to: '/dashboard/posts',
     permission: 'viewArticles',
   },
   {
     label: 'Événements',
     icon: CalendarIcon,
-    to: '/dashboard/events/',
+    to: '/dashboard/events',
     permission: 'manageEvents',
   },
   {
     label: "Offres d'emplois",
     icon: BriefcaseBusinessIcon,
-    to: '/dashboard/job-openings/',
+    to: '/dashboard/job-openings',
     permission: 'viewArticles',
   },
   {
     label: 'Utilisateurs',
     icon: UsersIcon,
-    to: '/dashboard/users/',
+    to: '/dashboard/users',
     permission: 'manageUsers',
   },
 ]
