@@ -105,9 +105,25 @@ export const editJobPostingSchema = z.object({
           })
       ),
     })
-    .refine((v) => !(v.max && !v.min), {
-      error: 'Vous ne pouvez pas indiquer un salaire maximum sans définir un salaire minimum.',
-      path: ['max'],
+    .superRefine((salary, ctx) => {
+      if (salary.max && !salary.min) {
+        ctx.addIssue({
+          code: 'custom',
+          message:
+            'Vous ne pouvez pas indiquer un salaire maximum sans définir un salaire minimum.',
+          path: ['max'],
+          input: salary.max,
+        })
+      }
+
+      if (salary.max != null && salary.min != null && salary.max <= salary.min) {
+        ctx.addIssue({
+          code: 'custom',
+          message: 'Le salaire maximum doit être supérieur au salaire minimum.',
+          path: ['max'],
+          input: salary.max,
+        })
+      }
     }),
   employmentType: z.enum(EMPLOYMENT_TYPE_VALUES, {
     error: (iss) => (iss.input === undefined ? "Le type d'emploi est requis." : 'Type invalide.'),
