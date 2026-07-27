@@ -1,6 +1,6 @@
 import type { PropsWithChildren, ReactElement } from 'react'
 import { useState } from 'react'
-import { toast } from 'sonner'
+import { toast } from '#/shared/components/ui/toast'
 import { Button } from '#/shared/components/ui/button'
 import {
   ResponsiveDialog,

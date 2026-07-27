@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useRouter } from '@tanstack/react-router'
-import { toast } from 'sonner'
+import { toast } from '#/shared/components/ui/toast'
 import {
   dashboardJobPostingColumns,
 } from '#/features/job-posting/constants/dashboard-job-posting-columns.tsx'

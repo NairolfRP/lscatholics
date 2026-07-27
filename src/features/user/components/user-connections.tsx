@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { BadgeCheckIcon, UnlinkIcon } from 'lucide-react'
-import { toast } from 'sonner'
+import { toast } from '#/shared/components/ui/toast'
 import { ActionButton } from '#/shared/components/action-button'
 import DiscordIcon from '#/shared/components/icons/discord'
 import { Avatar, AvatarFallback, AvatarImage } from '#/shared/components/ui/avatar'

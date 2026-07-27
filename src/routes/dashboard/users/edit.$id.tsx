@@ -1,7 +1,7 @@
 import { useQueryClient } from '@tanstack/react-query'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { BanIcon, CircleOffIcon, ShieldXIcon } from 'lucide-react'
-import { toast } from 'sonner'
+import { toast } from '#/shared/components/ui/toast'
 import { DashboardHeading } from '#/features/dashboard/components/dashboard-heading.tsx'
 import { BanUserDialog } from '#/features/user/components/admin/ban-user-dialog.tsx'
 import { useUserAdminMutations } from '#/features/user/hooks/use-user-admin-mutations.tsx'

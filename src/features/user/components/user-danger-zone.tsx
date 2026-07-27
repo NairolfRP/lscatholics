@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useRouteContext, useRouter } from '@tanstack/react-router'
 import { Trash, TriangleAlert } from 'lucide-react'
-import { toast } from 'sonner'
+import { toast } from '#/shared/components/ui/toast'
 import { deleteUserFn } from '#/features/user/server-fn/user.functions'
 import { Alert, AlertTitle } from '#/shared/components/ui/alert'
 import { Button } from '#/shared/components/ui/button'

@@ -1,5 +1,5 @@
 import { createFileRoute, redirect, useRouter } from '@tanstack/react-router'
-import { toast } from 'sonner'
+import { toast } from '#/shared/components/ui/toast'
 import { DashboardHeading } from '#/features/dashboard/components/dashboard-heading.tsx'
 import { DashboardPostForm } from '#/features/post/components/dashboard-post-form.tsx'
 import type { EditPostFormInput } from '#/features/post/schemas/post.schema.ts'

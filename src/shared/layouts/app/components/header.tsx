@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link } from '@tanstack/react-router'
 import { LogInIcon, MenuIcon, XIcon } from 'lucide-react'
-import { toast } from 'sonner'
+import { toast } from '#/shared/components/ui/toast'
 import { Logo } from '#/shared/components/logo'
 import { ThemeModeToggle } from '#/shared/components/theme-mode-toggle'
 import { Button } from '#/shared/components/ui/button'

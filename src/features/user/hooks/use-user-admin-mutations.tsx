@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useRouter } from '@tanstack/react-router'
-import { toast } from 'sonner'
+import { toast } from '#/shared/components/ui/toast'
 import type { ActionButtonReturnType } from '#/shared/components/action-button'
 import { authClient } from '#/shared/integrations/auth/auth-client'
 import type { User } from '#/shared/lib/types/auth'

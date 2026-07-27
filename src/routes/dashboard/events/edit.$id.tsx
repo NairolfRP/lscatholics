@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { toast } from 'sonner'
+import { toast } from '#/shared/components/ui/toast'
 import {
   DashboardChurchEventForm,
 } from '#/features/church-event/components/dashboard-church-event-form.tsx'

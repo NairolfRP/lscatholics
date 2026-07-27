@@ -1,12 +1,12 @@
 import { TanStackDevtools } from '@tanstack/react-devtools'
 import type { QueryClient } from '@tanstack/react-query'
-import { HeadContent, Outlet, Scripts, createRootRouteWithContext } from '@tanstack/react-router'
+import { createRootRouteWithContext, HeadContent, Outlet, Scripts } from '@tanstack/react-router'
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/react'
 import { envClient } from '#/config/env-client'
 import ScrollToTopButton from '#/shared/components/scroll-to-top'
-import { Toaster } from '#/shared/components/ui/sonner'
+import { Toaster } from '#/shared/components/ui/toast'
 import { ThemeProvider } from '#/shared/providers/theme-provider'
 import { pageMetadata } from '#/utils/seo'
 import TanStackQueryDevtools from '../shared/integrations/tanstack-query/devtools'
@@ -72,7 +72,7 @@ function RootDocument() {
         <ThemeProvider defaultTheme="light" storageKey="theme">
           <Outlet />
           <ScrollToTopButton />
-          <Toaster position="top-right" richColors closeButton />
+          <Toaster />
         </ThemeProvider>
         {import.meta.env.DEV && (
           <TanStackDevtools

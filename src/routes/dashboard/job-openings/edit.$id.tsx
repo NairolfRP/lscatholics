@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { toast } from 'sonner'
+import { toast } from '#/shared/components/ui/toast'
 import { DashboardHeading } from '#/features/dashboard/components/dashboard-heading.tsx'
 import {
   DashboardJobPostingForm,

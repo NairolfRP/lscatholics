@@ -7,7 +7,7 @@ import {
   SettingsIcon,
   User,
 } from 'lucide-react'
-import { toast } from 'sonner'
+import { toast } from '#/shared/components/ui/toast'
 import { Button } from '#/shared/components/ui/button'
 import {
   DropdownMenu,

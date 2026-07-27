@@ -1,6 +1,6 @@
 import type { ComponentPropsWithRef, ReactNode } from 'react'
 import { useState, useTransition } from 'react'
-import { toast } from 'sonner'
+import { toast } from '#/shared/components/ui/toast'
 import {
   AlertDialog,
   AlertDialogAction,
