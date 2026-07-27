@@ -1,24 +1,35 @@
-import { createFileRoute, redirect, useRouter } from '@tanstack/react-router'
-import { toast } from '#/shared/components/ui/toast'
+import { createFileRoute, isNotFound, notFound, redirect, useRouter } from '@tanstack/react-router'
 import { DashboardHeading } from '#/features/dashboard/components/dashboard-heading.tsx'
 import { DashboardPostForm } from '#/features/post/components/dashboard-post-form.tsx'
 import type { EditPostFormInput } from '#/features/post/schemas/post.schema.ts'
 import { editPostSchema } from '#/features/post/schemas/post.schema.ts'
-import { canEditPost } from '#/features/post/utils/post.utils.ts'
 import { getDashboardPostFn, updatePostFn } from '#/server-fn/post.functions.ts'
+import { toast } from '#/shared/components/ui/toast'
 import { pageMetadata } from '#/utils/seo.ts'
 import { useAppForm } from '#shared/integrations/form/form-hook.ts'
 
 export const Route = createFileRoute('/dashboard/posts/edit/$id')({
-  beforeLoad: async ({ params, context }) => {
-    const post = await getDashboardPostFn({ data: params.id })
-    const isAuthorized = canEditPost({ user: context.gameContext.user, authorId: post.authorId })
+  beforeLoad: async ({ params }) => {
+    try {
+      const post = await getDashboardPostFn({ data: params.id })
 
-    if (!isAuthorized) {
-      throw redirect({ to: '/dashboard/posts', replace: true })
+      return { post }
+    } catch (err) {
+      if (isNotFound(err)) {
+        throw notFound()
+      }
+
+      if (err && typeof err === 'object' && 'status' in err && err.status === 401) {
+        throw redirect({ to: '/dashboard/posts', replace: true })
+      }
+
+      toast.add({
+        type: 'error',
+        description: 'Une erreur est survenue',
+        priority: 'high',
+      })
+      throw redirect({ to: '/dashboard/posts' })
     }
-
-    return { post }
   },
   loader: ({ context }) => ({ post: context.post }),
   head: () => ({ meta: pageMetadata("Modifier l'article") }),

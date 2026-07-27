@@ -1,33 +1,48 @@
-import { createFileRoute, Link, redirect } from '@tanstack/react-router'
+import { createFileRoute, isNotFound, Link, notFound, redirect } from '@tanstack/react-router'
 import { EditIcon, EyeIcon } from 'lucide-react'
 import { envClient } from '#/config/env-client.ts'
 import { DashboardHeading } from '#/features/dashboard/components/dashboard-heading.tsx'
-import { canEditPost } from '#/features/post/utils/post.utils.ts'
 import { getDashboardPostFn } from '#/server-fn/post.functions.ts'
 import { formatDateTime } from '#/utils/date.ts'
 import { pageMetadata } from '#/utils/seo.ts'
+import { parseCsvString } from '#/utils/string.ts'
 import { Badge } from '#shared/components/ui/badge.tsx'
 import { buttonVariants } from '#shared/components/ui/button.tsx'
 import { Card, CardContent, CardHeader, CardTitle } from '#shared/components/ui/card.tsx'
 import { Markdown } from '#shared/components/ui/markdown.tsx'
 import { Separator } from '#shared/components/ui/separator.tsx'
+import { toast } from '#shared/components/ui/toast.tsx'
 import { Typography } from '#shared/components/ui/typography.tsx'
-import { parseCsvString } from '#/utils/string.ts'
 
 export const Route = createFileRoute('/dashboard/posts/show/$id')({
   beforeLoad: async ({ params, context }) => {
-    const { author, ...post } = await getDashboardPostFn({ data: params.id })
-    const isAuthorized = canEditPost({ user: context.gameContext.user, authorId: author?.id ?? null })
+    try {
+      const { author, ...post } = await getDashboardPostFn({ data: params.id })
+      const isAdmin = parseCsvString(context.gameContext.user.role).includes('admin')
 
-    if (!isAuthorized) {
-      throw redirect({ to: '/dashboard/posts', replace: true })
+      return { post, author: isAdmin ? author : null, isAdmin }
+    } catch (err) {
+      if (isNotFound(err)) {
+        throw notFound()
+      }
+
+      if (err && typeof err === 'object' && 'status' in err && err.status === 401) {
+        throw redirect({ to: '/dashboard/posts', replace: true })
+      }
+
+      toast.add({
+        type: 'error',
+        description: 'Une erreur est survenue',
+        priority: 'high',
+      })
+      throw redirect({ to: '/dashboard/posts' })
     }
-
-    const isAdmin = parseCsvString(context.gameContext.user.role).includes('admin')
-
-    return { post, author: isAdmin ? author : null, isAdmin }
   },
-  loader: ({ context }) => ({ post: context.post, author: context.author, isAdmin: context.isAdmin }),
+  loader: ({ context }) => ({
+    post: context.post,
+    author: context.author,
+    isAdmin: context.isAdmin,
+  }),
   head: ({ loaderData }) => {
     if (!loaderData) return {}
 
@@ -44,7 +59,9 @@ function RouteComponent() {
         title={post.title}
         description={
           <Typography className="text-muted-foreground">
-            Par {post.authorDisplayName || 'un auteur inconnu'} {(isAdmin) ? <em>({author?.name || 'Utilisateur inconnu/supprimé'})</em> : undefined} ·{formatDateTime(post.createdAt)}
+            Par {post.authorDisplayName || 'un auteur inconnu'}{' '}
+            {isAdmin ? <em>({author?.name || 'Utilisateur inconnu/supprimé'})</em> : undefined} ·
+            {formatDateTime(post.createdAt)}
           </Typography>
         }
         backButton={{ to: '/dashboard/posts', preload: false }}
@@ -125,7 +142,12 @@ function RouteComponent() {
               <Separator />
               <div>
                 <p className="font-medium text-muted-foreground">Auteur</p>
-                <p>{post.authorDisplayName || <em>Inconnu</em>} {(isAdmin) ? <em>({author?.name || 'Utilisateur inconnu/supprimé'})</em> : undefined}</p>
+                <p>
+                  {post.authorDisplayName || <em>Inconnu</em>}{' '}
+                  {isAdmin ? (
+                    <em>({author?.name || 'Utilisateur inconnu/supprimé'})</em>
+                  ) : undefined}
+                </p>
               </div>
               <div>
                 <p className="font-medium text-muted-foreground">Créé le</p>
