@@ -38,6 +38,8 @@ export const auth = betterAuth({
     admin({
       ac,
       roles,
+      bannedUserMessage:
+        "Vous avez été banni de l'application. Contactez @nairolf.rp sur Discord si vous pensez qu'il s'agit d'une erreur.",
     }),
     genericOAuth({
       config: [
