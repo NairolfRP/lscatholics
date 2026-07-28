@@ -8,7 +8,7 @@ import {
   getCurrentCharacter,
   setCurrentCharacter,
 } from '#/server/services/current-character.service'
-import { checkCanAccessDashboard } from '#/server/services/permission.service'
+import { resolvePermissions } from '#/server/services/permission.service'
 
 export const getCurrentCharacterFn = createServerFn({ method: 'GET' })
   .middleware([silentAuthMiddleware])
@@ -39,12 +39,15 @@ export const updateCurrentCharacterFn = createServerFn({ method: 'POST' })
 
     setCurrentCharacter(character.id)
 
+    const permissions = resolvePermissions(context.session.user.role, character)
+
     return {
       success: true,
       data: {
         characters: context.characters,
         currentCharacter: character,
-        canAccessDashboard: checkCanAccessDashboard(context.session.user.role, character),
+        canAccessDashboard: permissions.dashboard.includes('access'),
+        permissions,
       },
     }
   })
