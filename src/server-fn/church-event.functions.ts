@@ -7,7 +7,7 @@ import {
   createChurchEventSchema,
   editChurchEventSchema,
 } from '#/features/church-event/schemas/church-event.schema.ts'
-import { requireDashboardAccess } from '#/middleware/permission.middleware.ts'
+import { requirePermission } from '#/middleware/permission.middleware.ts'
 import { getFieldErrors } from '#/utils/form.ts'
 import { resolveSlug } from '#/utils/slug.ts'
 import { NotFoundException } from '#server/exceptions/http-exception.ts'
@@ -18,7 +18,7 @@ import { looseObjectSchema } from '#shared/schemas/common.schema.ts'
 import { dashboardSearchSchema } from '#shared/schemas/dashboard/search.schema.ts'
 
 export const getDashboardChurchEventFn = createServerFn({ method: 'GET' })
-  .middleware([requireDashboardAccess])
+  .middleware([requirePermission('event', 'read')])
   .validator((id: string) => id)
   .handler(async ({ data }) => {
     const churchEvent = await churchEventRepository.getChurchEventWithAuthor({
@@ -38,7 +38,7 @@ export const getDashboardChurchEventFn = createServerFn({ method: 'GET' })
   })
 
 export const getDashboardChurchEventsFn = createServerFn({ method: 'GET' })
-  .middleware([requireDashboardAccess])
+  .middleware([requirePermission('event', 'read')])
   .validator(dashboardSearchSchema)
   .handler(async ({ data }) => {
     return churchEventRepository.getChurchEvents({
@@ -67,13 +67,13 @@ export const getDashboardChurchEventsFn = createServerFn({ method: 'GET' })
   })
 
 export const deleteChurchEventFn = createServerFn({ method: 'POST' })
-  .middleware([requireDashboardAccess])
+  .middleware([requirePermission('event', 'delete')])
   .validator(baseChurchEventInteractionSchema)
   .handler(async ({ data, context }) => {
     const churchEvent = await churchEventRepository.getChurchEvent({
       id: data.churchEventId,
       includeEndedEvent: true,
-      columns: { id: true, authorId: true },
+      columns: { id: true },
     })
 
     if (!churchEvent) {
@@ -102,7 +102,7 @@ export const deleteChurchEventFn = createServerFn({ method: 'POST' })
   })
 
 export const updateChurchEventFn = createServerFn({ method: 'POST' })
-  .middleware([requireDashboardAccess])
+  .middleware([requirePermission('event', 'update')])
   .validator(async (data: unknown) => {
     const schema = z
       .object({
@@ -173,7 +173,7 @@ export const updateChurchEventFn = createServerFn({ method: 'POST' })
   })
 
 export const createChurchEventFn = createServerFn({ method: 'POST' })
-  .middleware([requireDashboardAccess])
+  .middleware([requirePermission('event', 'create')])
   .validator(looseObjectSchema)
   .handler(async ({ data, context }) => {
     try {

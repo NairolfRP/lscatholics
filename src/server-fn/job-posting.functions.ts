@@ -7,11 +7,10 @@ import {
   createJobPostingSchema,
   editJobPostingSchema,
 } from '#/features/job-posting/schemas/job-posting.schema.ts'
-import { requireDashboardAccess } from '#/middleware/permission.middleware.ts'
+import { requirePermission } from '#/middleware/permission.middleware.ts'
 import { getFieldErrors } from '#/utils/form.ts'
 import { resolveSlug } from '#/utils/slug.ts'
-import { isAdmin } from '#/utils/user.ts'
-import { NotFoundException, UnauthorizedException } from '#server/exceptions/http-exception.ts'
+import { NotFoundException } from '#server/exceptions/http-exception.ts'
 import { logger } from '#server/integrations/logger.ts'
 import { jobPostingRepository } from '#server/repositories/job-posting.repository.ts'
 import { DASHBOARD_PAGINATION_LIMIT } from '#shared/constants/dashboard.ts'
@@ -19,7 +18,7 @@ import { looseObjectSchema } from '#shared/schemas/common.schema.ts'
 import { dashboardSearchSchema } from '#shared/schemas/dashboard/search.schema.ts'
 
 export const getDashboardJobPostingFn = createServerFn({ method: 'GET' })
-  .middleware([requireDashboardAccess])
+  .middleware([requirePermission('job', 'read')])
   .validator((id: string) => id)
   .handler(async ({ data }) => {
     const jobPosting = await jobPostingRepository.getJobPostingWithAuthor({
@@ -40,7 +39,7 @@ export const getDashboardJobPostingFn = createServerFn({ method: 'GET' })
   })
 
 export const getDashboardJobPostingsFn = createServerFn({ method: 'GET' })
-  .middleware([requireDashboardAccess])
+  .middleware([requirePermission('job', 'read')])
   .validator(dashboardSearchSchema)
   .handler(async ({ data }) => {
     return jobPostingRepository.getJobPostings({
@@ -70,16 +69,9 @@ export const getDashboardJobPostingsFn = createServerFn({ method: 'GET' })
   })
 
 export const jobPostingDeleteFn = createServerFn({ method: 'POST' })
-  .middleware([requireDashboardAccess])
+  .middleware([requirePermission('job', 'delete')])
   .validator(baseJobPostingInteractionSchema)
   .handler(async ({ data, context }) => {
-    const user = context.session.user
-
-    if (!isAdmin(user)) {
-      setResponseStatus(401)
-      throw UnauthorizedException()
-    }
-
     const jobPosting = await jobPostingRepository.getJobPosting({
       id: data.jobPostingId,
       includeExpired: true,
@@ -99,7 +91,11 @@ export const jobPostingDeleteFn = createServerFn({ method: 'POST' })
       logger.error(
         {
           err,
-          user: { id: user.id, name: user.name, roles: JSON.stringify(user.role.split(',')) },
+          user: {
+            id: context.session.user.id,
+            name: context.session.user.name,
+            roles: JSON.stringify(context.session.user.role.split(',')),
+          },
         },
         "Failed to delete job posting (id: '%s')",
         jobPosting.id
@@ -111,7 +107,7 @@ export const jobPostingDeleteFn = createServerFn({ method: 'POST' })
   })
 
 export const toggleJobPostingActiveStateFn = createServerFn({ method: 'POST' })
-  .middleware([requireDashboardAccess])
+  .middleware([requirePermission('job', 'update')])
   .validator(baseJobPostingInteractionSchema)
   .handler(async ({ data, context }) => {
     const jobPosting = await jobPostingRepository.getJobPosting({
@@ -126,8 +122,6 @@ export const toggleJobPostingActiveStateFn = createServerFn({ method: 'POST' })
       throw NotFoundException('Job Posting not found')
     }
 
-    const user = context.session.user
-
     try {
       const state = !jobPosting.isActive
       const result = await jobPostingRepository.update(
@@ -139,7 +133,11 @@ export const toggleJobPostingActiveStateFn = createServerFn({ method: 'POST' })
       logger.error(
         {
           err,
-          user: { id: user.id, name: user.name, roles: JSON.stringify(user.role.split(',')) },
+          user: {
+            id: context.session.user.id,
+            name: context.session.user.name,
+            roles: JSON.stringify(context.session.user.role.split(',')),
+          },
         },
         "Failed to toggle the job posting active state (id: '%s')",
         jobPosting.id
@@ -151,7 +149,7 @@ export const toggleJobPostingActiveStateFn = createServerFn({ method: 'POST' })
   })
 
 export const createJobPostingFn = createServerFn({ method: 'POST' })
-  .middleware([requireDashboardAccess])
+  .middleware([requirePermission('job', 'create')])
   .validator(looseObjectSchema)
   .handler(async ({ data, context }) => {
     try {
@@ -207,7 +205,7 @@ export const createJobPostingFn = createServerFn({ method: 'POST' })
   })
 
 export const updateJobPostingFn = createServerFn({ method: 'POST' })
-  .middleware([requireDashboardAccess])
+  .middleware([requirePermission('job', 'update')])
   .validator(async (data: unknown) => {
     const schema = z
       .object({

@@ -13,7 +13,7 @@ import {
   resolveExcerpt,
   resolvePublishedAt,
 } from '#/features/post/utils/post.utils.ts'
-import { requireDashboardAccess } from '#/middleware/permission.middleware.ts'
+import { requirePermission } from '#/middleware/permission.middleware.ts'
 import { getFieldErrors } from '#/utils/form.ts'
 import { resolveSlug } from '#/utils/slug.ts'
 import { NotFoundException, UnauthorizedException } from '#server/exceptions/http-exception.ts'
@@ -48,7 +48,7 @@ export const getPostFn = createServerFn({ method: 'GET' })
   })
 
 export const getDashboardPostFn = createServerFn({ method: 'GET' })
-  .middleware([requireDashboardAccess])
+  .middleware([requirePermission('post', 'read')])
   .validator((id: string) => id)
   .handler(async ({ data, context }) => {
     const post = await postRepository.getPostWithAuthor({
@@ -107,7 +107,7 @@ export const getPostsFn = createServerFn({ method: 'GET' })
   })
 
 export const getDashboardPostsFn = createServerFn({ method: 'GET' })
-  .middleware([requireDashboardAccess])
+  .middleware([requirePermission('post', 'read')])
   .validator(dashboardSearchSchema)
   .handler(async ({ data }) => {
     return postRepository.getPosts({
@@ -135,7 +135,7 @@ export const getDashboardPostsFn = createServerFn({ method: 'GET' })
   })
 
 export const deletePostFn = createServerFn({ method: 'POST' })
-  .middleware([requireDashboardAccess])
+  .middleware([requirePermission('post', 'delete')])
   .validator(basePostInteractionSchema)
   .handler(async ({ data, context }) => {
     const post = await postRepository.getPost({
@@ -175,7 +175,7 @@ export const deletePostFn = createServerFn({ method: 'POST' })
   })
 
 export const updatePostFn = createServerFn({ method: 'POST' })
-  .middleware([requireDashboardAccess])
+  .middleware([requirePermission('post', 'update')])
   .validator(async (data: unknown) => {
     const schema = z
       .object({
@@ -233,7 +233,7 @@ export const updatePostFn = createServerFn({ method: 'POST' })
   })
 
 export const createPostFn = createServerFn({ method: 'POST' })
-  .middleware([requireDashboardAccess])
+  .middleware([requirePermission('post', 'create')])
   .validator(looseObjectSchema)
   .handler(async ({ data, context }) => {
     try {
