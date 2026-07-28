@@ -1,0 +1,23 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "permission": {
+    "*": "ask",
+    "read": {
+      "*": "allow",
+      "*.env": "deny",
+      "*.env.*": "deny",
+      ".env.example": "allow",
+      ".env.test": "allow"
+    },
+    "grep": "allow",
+    "list": "allow",
+    "glob": "allow"
+  },
+  "mcp": {
+    "better-auth": {
+      "type": "remote",
+      "url": "https://mcp.better-auth.com/mcp",
+      "enabled": true
+    }
+  }
+}
