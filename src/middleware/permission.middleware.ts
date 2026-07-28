@@ -2,7 +2,7 @@ import { createMiddleware } from '@tanstack/react-start'
 import { setResponseStatus } from '@tanstack/react-start/server'
 import { UnauthorizedException } from '#/server/exceptions/http-exception.ts'
 import { logger } from '#/server/integrations/logger'
-import { checkCanAccessDashboard } from '#/server/services/permission.service.ts'
+import { resolvePermissions } from '#/server/services/permission.service.ts'
 import { parseCsvString } from '#/utils/string'
 import { requireAuthMiddleware } from './auth.middleware'
 import { requireGameMiddleware } from './game.middleware'
@@ -37,19 +37,18 @@ export const adminMiddleware = createMiddleware({ type: 'request' })
     }
   })
 
-export const requireDashboardAccess = createMiddleware({ type: 'request' })
-  .middleware([requireGameMiddleware])
-  .server(async ({ next, context }) => {
-    const canAccessDashboard = checkCanAccessDashboard(
-      context.session.user.role,
-      context.currentCharacter
-    )
+export function requirePermission(resource: string, action: string) {
+  return createMiddleware({ type: 'request' })
+    .middleware([requireGameMiddleware])
+    .server(async ({ next, context }) => {
+      const permissions = resolvePermissions(context.session.user.role, context.currentCharacter)
 
-    if (!canAccessDashboard) {
-      throw UnauthorizedException()
-    }
+      if (!permissions[resource]?.includes(action)) {
+        throw UnauthorizedException()
+      }
 
-    return next({
-      context: { session: context.session, currentCharacter: context.currentCharacter },
+      return next({
+        context: { session: context.session, currentCharacter: context.currentCharacter },
+      })
     })
-  })
+}
