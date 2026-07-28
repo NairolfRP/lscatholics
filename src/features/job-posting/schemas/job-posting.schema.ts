@@ -116,7 +116,7 @@ export const editJobPostingSchema = z.object({
         })
       }
 
-      if (salary.max != null && salary.min != null && salary.max <= salary.min) {
+      if (salary.max != null && salary.max <= salary.min) {
         ctx.addIssue({
           code: 'custom',
           message: 'Le salaire maximum doit être supérieur au salaire minimum.',

@@ -8,9 +8,6 @@ import {
 import {
   genericDashboardJobPostingFormOptions,
 } from '#/features/job-posting/forms/job-posting-form-options.ts'
-import type {
-  CreateJobPostingFormInput,
-} from '#/features/job-posting/schemas/job-posting.schema.ts'
 import { createJobPostingSchema } from '#/features/job-posting/schemas/job-posting.schema.ts'
 import { createJobPostingFn } from '#/server-fn/job-posting.functions.ts'
 import { pageMetadata } from '#/utils/seo.ts'
@@ -27,7 +24,7 @@ function RouteComponent() {
   const navigate = Route.useNavigate()
 
   const form = useAppForm({
-    defaultValues: genericDashboardJobPostingFormOptions.defaultValues as CreateJobPostingFormInput,
+    defaultValues: genericDashboardJobPostingFormOptions.defaultValues,
     validators: {
       onChangeAsync: createJobPostingSchema,
     },

@@ -102,7 +102,7 @@ export const DashboardJobPostingForm = withForm({
                               if (!departmentLabel) return
                               return {
                                 label: departmentLabel,
-                                value: departmentId as string,
+                                value: departmentId,
                               }
                             })
                             .filter((dep) => dep !== undefined)}

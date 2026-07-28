@@ -52,11 +52,6 @@ export const dashboardJobPostingColumns = [
     header: () => 'Département',
     cell: (info) => {
       const departmentId = info.getValue()
-
-      if (!departmentId) {
-        return <em>—</em>
-      }
-
       const departmentLabel = getDepartmentTitle(departmentId, true)
 
       if (!departmentLabel) {

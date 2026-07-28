@@ -67,7 +67,7 @@ export function CurrencyField<TType extends HTMLInputTypeAttribute | undefined =
 
           id={fieldId}
           name={field.name}
-          value={field.state.value as string | number | undefined}
+          value={field.state.value}
           onBlur={field.handleBlur}
           onValueChange={(values) => {
             const { floatValue, value } = values

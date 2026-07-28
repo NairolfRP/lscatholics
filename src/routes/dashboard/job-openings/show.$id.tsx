@@ -138,12 +138,10 @@ function RouteComponent() {
                   )}
                 </div>
 
-                {jobPosting.employmentType ? (
-                  <div>
-                    <p className="font-medium text-muted-foreground">Type d'emploi</p>
-                    <p>{employmentTypeLabel[jobPosting.employmentType]}</p>
-                  </div>
-                ) : null}
+                <div>
+                  <p className="font-medium text-muted-foreground">Type d'emploi</p>
+                  <p>{employmentTypeLabel[jobPosting.employmentType]}</p>
+                </div>
 
                 {jobPosting.salaryMin ? (
                   <div>
@@ -164,16 +162,14 @@ function RouteComponent() {
                   </div>
                 ) : null}
 
-                {jobPosting.department ? (
-                  <div>
-                    <p className="font-medium text-muted-foreground">Département</p>
-                    <p>
-                      {getDepartmentTitle(jobPosting.department, true) ?? (
-                        <em>Département inconnu ou supprimé</em>
-                      )}
-                    </p>
-                  </div>
-                ) : null}
+                <div>
+                  <p className="font-medium text-muted-foreground">Département</p>
+                  <p>
+                    {getDepartmentTitle(jobPosting.department, true) ?? (
+                      <em>Département inconnu ou supprimé</em>
+                    )}
+                  </p>
+                </div>
 
                 {jobPosting.expiresAt ? (
                   <div>
