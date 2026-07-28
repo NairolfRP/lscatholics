@@ -5,7 +5,6 @@ import { DashboardHeading } from '#/features/dashboard/components/dashboard-head
 import { getDashboardChurchEventFn } from '#/server-fn/church-event.functions.ts'
 import { formatDateTime } from '#/utils/date.ts'
 import { pageMetadata } from '#/utils/seo.ts'
-import { parseCsvString } from '#/utils/string.ts'
 import { Badge } from '#shared/components/ui/badge.tsx'
 import { buttonVariants } from '#shared/components/ui/button.tsx'
 import { Card, CardContent, CardHeader, CardTitle } from '#shared/components/ui/card.tsx'
@@ -18,7 +17,7 @@ export const Route = createFileRoute('/dashboard/events/show/$id')({
   beforeLoad: async ({ params, context }) => {
     const { author, ...churchEvent } = await getDashboardChurchEventFn({ data: params.id })
 
-    const isAdmin = parseCsvString(context.gameContext.user.role).includes('admin')
+    const isAdmin = context.gameContext.user.role.includes('admin')
 
     return { churchEvent, author: isAdmin ? author : null, isAdmin }
   },

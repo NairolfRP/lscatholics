@@ -6,7 +6,6 @@ import { getDashboardJobPostingFn } from '#/server-fn/job-posting.functions.ts'
 import { formatDateTime } from '#/utils/date.ts'
 import { getDepartmentTitle } from '#/utils/department.ts'
 import { pageMetadata } from '#/utils/seo.ts'
-import { parseCsvString } from '#/utils/string.ts'
 import { Badge } from '#shared/components/ui/badge.tsx'
 import { buttonVariants } from '#shared/components/ui/button.tsx'
 import { Card, CardContent, CardHeader, CardTitle } from '#shared/components/ui/card.tsx'
@@ -19,7 +18,7 @@ import { formatJobPostingSalary } from '#/features/job-posting/utils/job-posting
 export const Route = createFileRoute('/dashboard/job-openings/show/$id')({
   beforeLoad: async ({ params, context }) => {
     const { author, ...jobPosting } = await getDashboardJobPostingFn({ data: params.id })
-    const isAdmin = parseCsvString(context.gameContext.user.role).includes('admin')
+    const isAdmin = context.gameContext.user.role.includes('admin')
 
     return { jobPosting, author: isAdmin ? author : null, isAdmin }
   },
