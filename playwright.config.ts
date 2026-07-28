@@ -57,7 +57,7 @@ export default defineConfig({
 
   /* Run your local dev server before starting the tests */
   webServer: {
-    command: 'pnpm dev',
+    command: 'bun dev',
     url: process.env.VITE_APP_URL,
     reuseExistingServer: !process.env.CI,
   },
