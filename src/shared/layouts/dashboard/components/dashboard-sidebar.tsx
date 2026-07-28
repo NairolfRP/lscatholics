@@ -76,21 +76,23 @@ export function DashboardSidebar() {
 }
 
 function DashboardSidebarItems() {
-  // TODO
-  /* const hasPermission = useCallback(
-    (permission: string) => (permissions as string[]).some((p) => p === permission),
-    []
-  )
+  const context = useRouteContext({ from: '/dashboard' })
+  const resolved = context.gameContext.permissions
 
   const menuItems = useMemo(
-    () => dashboardMenuItems.filter((item) => hasPermission(item.permission)),
-    [hasPermission]
-  ) */
+    () =>
+      dashboardMenuItems.filter((item) =>
+        Object.entries(item.permissions).every(([resource, actions]) =>
+          actions.every((action) => resolved[resource]?.includes(action))
+        )
+      ),
+    [resolved]
+  )
 
   return (
     <SidebarGroup>
       <SidebarMenu>
-        {dashboardMenuItems.map((item) => (
+        {menuItems.map((item) => (
           <SidebarMenuItem key={item.label}>
             <SidebarMenuButton render={<Link to={item.to} preload={false} />}>
               <item.icon />

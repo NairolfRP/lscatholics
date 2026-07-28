@@ -5,5 +5,5 @@ export type DashboardMenuItem = {
   label: string
   to: RoutePath
   icon: LucideIcon
-  permission: string
+  permissions: Record<string, string[]>
 }
