@@ -3,11 +3,32 @@ import { adminAc, defaultStatements, userAc } from 'better-auth/plugins/admin/ac
 
 const statement = {
   ...defaultStatements,
+  dashboard: ['access', 'supervise', 'manage'],
+  post: ['create', 'read', 'update', 'delete'],
+  event: ['create', 'read', 'update', 'delete'],
+  job: ['create', 'read', 'update', 'delete'],
 } as const
 
 export const ac = createAccessControl(statement)
 
+export const ROLE_PERMISSIONS = {
+  user: {
+    ...userAc.statements,
+    dashboard: ['access'],
+    post: ['read'],
+    event: ['read'],
+    job: ['read'],
+  },
+  admin: {
+    ...adminAc.statements,
+    dashboard: ['access', 'supervise', 'manage'],
+    post: ['create', 'read', 'update', 'delete'],
+    event: ['create', 'read', 'update', 'delete'],
+    job: ['create', 'read', 'update', 'delete'],
+  },
+} as const
+
 export const roles = Object.freeze({
-  user: ac.newRole({ ...userAc.statements }),
-  admin: ac.newRole({ ...adminAc.statements }),
+  user: ac.newRole(ROLE_PERMISSIONS.user),
+  admin: ac.newRole(ROLE_PERMISSIONS.admin),
 })
