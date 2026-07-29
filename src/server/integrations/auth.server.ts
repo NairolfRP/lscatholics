@@ -99,10 +99,12 @@ export const auth = betterAuth({
       },
       banReason: {
         type: 'string',
+        required: false,
         input: false,
       },
       banExpires: {
         type: 'date',
+        required: false,
         input: false,
       },
     },
