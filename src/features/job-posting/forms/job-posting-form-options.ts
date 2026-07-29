@@ -1,7 +1,5 @@
 import { formOptions } from '@tanstack/react-form'
-import type {
-  CreateJobPostingFormInput,
-} from '#/features/job-posting/schemas/job-posting.schema.ts'
+import type { CreateJobPostingFormInput } from '#/features/job-posting/schemas/job-posting.schema.ts'
 
 export const genericDashboardJobPostingFormOptions = formOptions({
   defaultValues: {

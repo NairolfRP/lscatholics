@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { PlusIcon } from 'lucide-react'
-import { toast } from '#/shared/components/ui/toast'
 import { Button } from '#/shared/components/ui/button'
+import { toast } from '#/shared/components/ui/toast'
 import { authClient } from '#/shared/integrations/auth/auth-client'
 import type { DashboardSearch } from '#shared/schemas/dashboard/search.schema.ts'
 import { usersListQueryOptions } from '../queries'

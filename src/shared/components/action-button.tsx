@@ -1,6 +1,5 @@
 import type { ComponentPropsWithRef, ReactNode } from 'react'
 import { useState, useTransition } from 'react'
-import { toast } from '#/shared/components/ui/toast'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -14,6 +13,7 @@ import {
 } from '#/shared/components/ui/alert-dialog'
 import { Button } from '#/shared/components/ui/button'
 import { LoadingSwap } from '#/shared/components/ui/loading-swap'
+import { toast } from '#/shared/components/ui/toast'
 
 export type ActionButtonReturnType = Promise<{ error: true; message?: string } | { error: false }>
 

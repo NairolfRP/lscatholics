@@ -1,8 +1,6 @@
 import { Link } from '@tanstack/react-router'
 import { PlusCircleIcon, XIcon } from 'lucide-react'
-import {
-  genericDashboardJobPostingFormOptions,
-} from '#/features/job-posting/forms/job-posting-form-options.ts'
+import { genericDashboardJobPostingFormOptions } from '#/features/job-posting/forms/job-posting-form-options.ts'
 import { getDepartmentTitle } from '#/utils/department.ts'
 import { Button, buttonVariants } from '#shared/components/ui/button.tsx'
 import {

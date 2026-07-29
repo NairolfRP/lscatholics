@@ -1,11 +1,11 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { BadgeCheckIcon, UnlinkIcon } from 'lucide-react'
-import { toast } from '#/shared/components/ui/toast'
 import { ActionButton } from '#/shared/components/action-button'
 import DiscordIcon from '#/shared/components/icons/discord'
 import { Avatar, AvatarFallback, AvatarImage } from '#/shared/components/ui/avatar'
 import { Button } from '#/shared/components/ui/button'
 import { Skeleton } from '#/shared/components/ui/skeleton'
+import { toast } from '#/shared/components/ui/toast'
 import { authClient } from '#/shared/integrations/auth/auth-client'
 import { discordConnectionQueryKey, discordConnectionQueryOptions } from '../queries'
 

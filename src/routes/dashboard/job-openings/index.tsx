@@ -1,9 +1,7 @@
 import { createFileRoute, Link, stripSearchParams } from '@tanstack/react-router'
 import { PlusIcon } from 'lucide-react'
 import { DashboardHeading } from '#/features/dashboard/components/dashboard-heading.tsx'
-import {
-  DashboardJobPostingsList,
-} from '#/features/job-posting/components/dashboard-job-postings-list.tsx'
+import { DashboardJobPostingsList } from '#/features/job-posting/components/dashboard-job-postings-list.tsx'
 import { pageMetadata } from '#/utils/seo.ts'
 import { DebouncedInput } from '#shared/components/debounced-input.tsx'
 import { buttonVariants } from '#shared/components/ui/button.tsx'

@@ -1,16 +1,12 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useRouter } from '@tanstack/react-router'
-import { toast } from '#/shared/components/ui/toast'
-import {
-  dashboardJobPostingColumns,
-} from '#/features/job-posting/constants/dashboard-job-posting-columns.tsx'
-import type {
-  DashboardJobPostingsTableMeta,
-} from '#/features/job-posting/types/job-posting.types.ts'
+import { dashboardJobPostingColumns } from '#/features/job-posting/constants/dashboard-job-posting-columns.tsx'
+import type { DashboardJobPostingsTableMeta } from '#/features/job-posting/types/job-posting.types.ts'
 import {
   jobPostingDeleteFn,
   toggleJobPostingActiveStateFn,
 } from '#/server-fn/job-posting.functions.ts'
+import { toast } from '#/shared/components/ui/toast'
 import { isAdmin } from '#/utils/user.ts'
 import { DashboardList } from '#shared/components/dashboard/list.tsx'
 import { Spinner } from '#shared/components/ui/spinner.tsx'

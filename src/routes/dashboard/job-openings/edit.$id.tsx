@@ -1,12 +1,10 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { toast } from '#/shared/components/ui/toast'
 import { DashboardHeading } from '#/features/dashboard/components/dashboard-heading.tsx'
-import {
-  DashboardJobPostingForm,
-} from '#/features/job-posting/components/dashboard-job-posting-form.tsx'
+import { DashboardJobPostingForm } from '#/features/job-posting/components/dashboard-job-posting-form.tsx'
 import type { EditJobPostingFormInput } from '#/features/job-posting/schemas/job-posting.schema.ts'
 import { editJobPostingSchema } from '#/features/job-posting/schemas/job-posting.schema.ts'
 import { getDashboardJobPostingFn, updateJobPostingFn } from '#/server-fn/job-posting.functions.ts'
+import { toast } from '#/shared/components/ui/toast'
 import { pageMetadata } from '#/utils/seo.ts'
 import { useAppForm } from '#shared/integrations/form/form-hook.ts'
 

@@ -7,7 +7,6 @@ import {
   SettingsIcon,
   User,
 } from 'lucide-react'
-import { toast } from '#/shared/components/ui/toast'
 import { Button } from '#/shared/components/ui/button'
 import {
   DropdownMenu,
@@ -18,6 +17,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '#/shared/components/ui/dropdown-menu'
+import { toast } from '#/shared/components/ui/toast'
 import SwitchCharacterDialog from '#shared/components/character-switch/dialog.tsx'
 import { useGameContext } from '#shared/hooks/use-game-context.ts'
 import { authClient } from '../integrations/auth/auth-client'

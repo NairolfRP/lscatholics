@@ -1,9 +1,9 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useRouter } from '@tanstack/react-router'
-import { toast } from '#/shared/components/ui/toast'
 import { dashboardChurchEventColumns } from '#/features/church-event/constants/dashboard-church-event-columns.tsx'
 import type { DashboardChurchEventsTableMeta } from '#/features/church-event/types/dashboard-church-event.types.ts'
 import { deleteChurchEventFn } from '#/server-fn/church-event.functions.ts'
+import { toast } from '#/shared/components/ui/toast'
 import { DashboardList } from '#shared/components/dashboard/list.tsx'
 import { Spinner } from '#shared/components/ui/spinner.tsx'
 import {

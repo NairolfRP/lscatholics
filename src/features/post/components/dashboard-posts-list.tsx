@@ -1,6 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useRouter } from '@tanstack/react-router'
-import { toast } from '#/shared/components/ui/toast'
 import { deletePostFn } from '#/server-fn/post.functions.ts'
 import { Skeleton } from '#/shared/components/ui/skeleton.tsx'
 import {
@@ -9,6 +8,7 @@ import {
   TableCell,
   TableRow,
 } from '#/shared/components/ui/table.tsx'
+import { toast } from '#/shared/components/ui/toast'
 import { authClient } from '#/shared/integrations/auth/auth-client.ts'
 import { DashboardList } from '#shared/components/dashboard/list.tsx'
 import {

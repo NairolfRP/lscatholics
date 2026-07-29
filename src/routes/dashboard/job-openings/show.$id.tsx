@@ -2,6 +2,7 @@ import { createFileRoute, Link } from '@tanstack/react-router'
 import { EditIcon, EyeIcon } from 'lucide-react'
 import { envClient } from '#/config/env-client.ts'
 import { DashboardHeading } from '#/features/dashboard/components/dashboard-heading.tsx'
+import { formatJobPostingSalary } from '#/features/job-posting/utils/job-posting.utils.ts'
 import { getDashboardJobPostingFn } from '#/server-fn/job-posting.functions.ts'
 import { formatDateTime } from '#/utils/date.ts'
 import { getDepartmentTitle } from '#/utils/department.ts'
@@ -13,7 +14,6 @@ import { Markdown } from '#shared/components/ui/markdown.tsx'
 import { Separator } from '#shared/components/ui/separator.tsx'
 import { Typography } from '#shared/components/ui/typography.tsx'
 import { employmentTypeLabel } from '#shared/constants/employment.ts'
-import { formatJobPostingSalary } from '#/features/job-posting/utils/job-posting.utils.ts'
 
 export const Route = createFileRoute('/dashboard/job-openings/show/$id')({
   beforeLoad: async ({ params, context }) => {

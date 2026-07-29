@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { useRouteContext, useRouter } from '@tanstack/react-router'
 import { Trash, TriangleAlert } from 'lucide-react'
-import { toast } from '#/shared/components/ui/toast'
 import { deleteUserFn } from '#/features/user/server-fn/user.functions'
 import { Alert, AlertTitle } from '#/shared/components/ui/alert'
 import { Button } from '#/shared/components/ui/button'
@@ -21,6 +20,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '#/shared/components/ui/dialog'
+import { toast } from '#/shared/components/ui/toast'
 import { useReauth } from '#/shared/hooks/auth/use-reauth'
 import { authClient } from '#/shared/integrations/auth/auth-client'
 import { useAppForm } from '#/shared/integrations/form/form-hook'

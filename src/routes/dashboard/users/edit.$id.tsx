@@ -1,7 +1,6 @@
 import { useQueryClient } from '@tanstack/react-query'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { BanIcon, CircleOffIcon, ShieldXIcon } from 'lucide-react'
-import { toast } from '#/shared/components/ui/toast'
 import { DashboardHeading } from '#/features/dashboard/components/dashboard-heading.tsx'
 import { BanUserDialog } from '#/features/user/components/admin/ban-user-dialog.tsx'
 import { useUserAdminMutations } from '#/features/user/hooks/use-user-admin-mutations.tsx'
@@ -19,6 +18,7 @@ import {
   CardTitle,
 } from '#/shared/components/ui/card.tsx'
 import { Field, FieldGroup, FieldLabel } from '#/shared/components/ui/field'
+import { toast } from '#/shared/components/ui/toast'
 import { Tooltip, TooltipContent, TooltipTrigger } from '#/shared/components/ui/tooltip.tsx'
 import { allRoles, getRoleLevel, getUserRoleMaxLevel } from '#/shared/constants/roles.ts'
 import { useAppForm } from '#/shared/integrations/form/form-hook.ts'

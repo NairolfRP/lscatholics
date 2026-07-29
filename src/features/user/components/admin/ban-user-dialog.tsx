@@ -1,6 +1,5 @@
 import type { PropsWithChildren, ReactElement } from 'react'
 import { useState } from 'react'
-import { toast } from '#/shared/components/ui/toast'
 import { Button } from '#/shared/components/ui/button'
 import {
   ResponsiveDialog,
@@ -12,6 +11,7 @@ import {
   ResponsiveDialogTitle,
   ResponsiveDialogTrigger,
 } from '#/shared/components/ui/responsive-dialog'
+import { toast } from '#/shared/components/ui/toast'
 import { authClient } from '#/shared/integrations/auth/auth-client'
 import { useAppForm } from '#/shared/integrations/form/form-hook'
 import type { User } from '#/shared/lib/types/auth'
