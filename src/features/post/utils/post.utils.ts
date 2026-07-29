@@ -1,7 +1,7 @@
-import type { User } from '#/shared/lib/types/auth.ts'
 import { generateExcerpt } from '#/utils/string.ts'
 import { isAdmin } from '#/utils/user.ts'
 import { POST_STATUS } from '#shared/constants/post-status.ts'
+import type { User } from '#shared/lib/types/auth.ts'
 
 export function canEditPost({ user, authorId }: { user: User; authorId: string | null }): boolean {
   if (isAdmin(user)) {
