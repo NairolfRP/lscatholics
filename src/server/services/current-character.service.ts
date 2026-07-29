@@ -1,10 +1,11 @@
-import { deleteCookie, getCookie, setCookie } from '@tanstack/react-start/server'
+import { deleteCookie, getCookie, setCookie, setResponseStatus } from '@tanstack/react-start/server'
 import { isAPIError } from 'better-auth/api'
 import { env } from '#/config/env.server'
 import type { Character, CharacterWithFaction } from '#/shared/types/character.types'
 import { logger } from '../integrations/logger'
 import { logout, revokeAllSessions } from './auth.service'
 import { getAllUserCharacters, getAllUserCharactersWithFactions } from './character.service'
+import { resolvePermissions } from './permission.service'
 
 export const CURRENT_CHARACTER_COOKIE_NAME = 'lscatholics.current_character'
 
@@ -113,4 +114,40 @@ export function setCurrentCharacter(characterId: number) {
     path: '/',
     maxAge: 60 * 60 * 24 * 30,
   })
+}
+
+export async function updateCurrentCharacter({
+  characterId,
+  characters,
+  session,
+}: {
+  characterId: number
+  characters: CharacterWithFaction[]
+  session: { user: { role: string } }
+}) {
+  if (characters.length === 0) {
+    await Promise.all([revokeAllSessions(), logout()])
+    throw new Error('Cannot switch character. The user has no more characters')
+  }
+
+  const character = characters.find((char) => char.id === characterId)
+
+  if (!character) {
+    setResponseStatus(400)
+    throw new Error('Not owner of the character or the character does not exist anymore')
+  }
+
+  setCurrentCharacter(character.id)
+
+  const permissions = resolvePermissions(session.user.role, character)
+
+  return {
+    success: true,
+    data: {
+      characters,
+      currentCharacter: character,
+      canAccessDashboard: permissions.dashboard.includes('access'),
+      permissions,
+    },
+  }
 }
