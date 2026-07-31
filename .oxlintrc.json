@@ -5,7 +5,9 @@
         "correctness": "warn"
     },
     "env": {
-        "builtin": true
+        "builtin": true,
+        "node": true,
+        "browser": true
     },
     "ignorePatterns": [
         "node_modules",
