@@ -16,7 +16,7 @@ export const getGameContextFn = createServerFn({ method: 'GET' })
 
     const { session, characters, currentCharacter } = context
     const permissions = resolvePermissions(session.user.role, currentCharacter)
-    const canAccessDashboard = permissions.dashboard.includes('access')
+    const canAccessDashboard = permissions.dashboard?.includes('access') ?? false
 
     return { user: session.user, characters, currentCharacter, canAccessDashboard, permissions }
   })

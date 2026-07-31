@@ -146,7 +146,7 @@ export async function updateCurrentCharacter({
     data: {
       characters,
       currentCharacter: character,
-      canAccessDashboard: permissions.dashboard.includes('access'),
+      canAccessDashboard: permissions.dashboard?.includes('access') ?? false,
       permissions,
     },
   }
