@@ -19,6 +19,11 @@
             "type": "remote",
             "url": "https://mcp.better-auth.com/mcp",
             "enabled": true
+        },
+        "playwright": {
+            "type": "local",
+            "command": ["bunx", "@playwright/mcp@latest"],
+            "enabled": true
         }
     }
 }
