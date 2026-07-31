@@ -11,6 +11,10 @@ vi.mock('@/server/auth', () => ({
 
 vi.mock('@tanstack/react-start/server', () => ({
   getRequestHeaders: () => new Headers(),
+  setResponseStatus: vi.fn(),
+  setCookie: vi.fn(),
+  getCookie: vi.fn(),
+  deleteCookie: vi.fn(),
 }))
 
 vi.mock('@/server/logger', () => ({
@@ -20,6 +24,22 @@ vi.mock('@/server/logger', () => ({
       warn: vi.fn(),
       error: vi.fn(),
     }),
+  },
+}))
+
+vi.mock('#server/integrations/logger', () => ({
+  logger: {
+    child: () => ({
+      info: vi.fn(),
+      warn: vi.fn(),
+      error: vi.fn(),
+    }),
+  },
+}))
+
+vi.mock('@tanstack/react-router', () => ({
+  notFound: () => {
+    throw new Error('NOT_FOUND')
   },
 }))
 

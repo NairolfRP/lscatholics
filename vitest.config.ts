@@ -32,6 +32,9 @@ export default defineConfig(({ mode }) => ({
         },
         resolve: {
           tsconfigPaths: true,
+          alias: {
+            'drizzle-orm/libsql/web': 'drizzle-orm/libsql/node',
+          },
         },
       },
       {
