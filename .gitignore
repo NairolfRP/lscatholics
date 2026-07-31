@@ -16,3 +16,5 @@ tmp
 __unconfig*
 todos.json
 .vercel
+playwright-report
+test-results
