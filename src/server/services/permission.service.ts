@@ -9,7 +9,11 @@ const FACTION_RANK_RULES = [
   {
     factionId: env.ROLEPLAY_FACTION_ID,
     minRank: env.ROLEPLAY_FACTION_MINIMAL_RANK_DASHBOARD_ACCESS,
-    permission: { dashboard: ['access'] },
+    permission: {
+      dashboard: ['access'],
+      post: ['read', 'create'],
+      event: ['read', 'create', 'update', 'delete'],
+    },
   },
   {
     factionId: env.ROLEPLAY_FACTION_ID,
