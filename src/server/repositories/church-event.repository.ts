@@ -1,8 +1,10 @@
 import type { AnySQLiteColumn } from 'drizzle-orm/sqlite-core'
-import { and, count, eq, gte, isNull, like, lt, or } from 'drizzle-orm'
+import { and, asc, count, eq, gte, isNotNull, isNull, like, lt, or } from 'drizzle-orm'
+import { getMonthBounds } from '#/utils/date.ts'
 import { db } from '#server/db'
 import { churchEvents } from '#server/db/schema'
 import type { UsersColumns } from '#server/repositories/user.repository.ts'
+import { CHURCH_EVENT_RETENTION_DAYS } from '#shared/constants/church-event.constants.ts'
 import { lower } from '#shared/lib/sql.ts'
 import type { OrderBy } from '#shared/types/database.types.ts'
 import { BaseRepository } from './base.repository'
@@ -22,7 +24,7 @@ class ChurchEventRepository extends BaseRepository<typeof churchEvents> {
     return this.db.query.churchEvents.findMany({
       limit,
       columns,
-      orderBy: (schema, { asc }) => [asc(schema.startDate)],
+      orderBy: [asc(this.schema.startDate)],
       where: this.#activeChurchEventSQLFilter(),
     })
   }
@@ -108,7 +110,7 @@ class ChurchEventRepository extends BaseRepository<typeof churchEvents> {
         limit: pageSize,
         offset: (page - 1) * pageSize,
         where: whereClause,
-        orderBy: (schema, { desc, asc }) =>
+        orderBy: (schema, { desc }) =>
           orderBy.map((raw) => {
             const [column, order] = raw.split('.') as [keyof typeof schema, 'asc' | 'desc']
             return order === 'asc' ? asc(schema[column]) : desc(schema[column])
@@ -121,6 +123,37 @@ class ChurchEventRepository extends BaseRepository<typeof churchEvents> {
     ])
 
     return { churchEvents: data, total: total[0].churchEventsCount }
+  }
+
+  async getChurchEventsByYearMonth<TColumns extends EventsColumns>(
+    options: {
+      columns?: TColumns
+      period?: { year: number; month: number }
+      includeEndedEvents?: boolean
+    } = {}
+  ) {
+    const {
+      columns,
+      period = { year: new Date().getFullYear(), month: new Date().getMonth() + 1 },
+      includeEndedEvents,
+    } = options
+
+    const { from: monthStart, to: monthEnd } = getMonthBounds(period)
+
+    const monthOverlap = and(
+      lt(this.schema.startDate, monthEnd),
+      or(
+        and(isNotNull(this.schema.endDate), gte(this.schema.endDate, monthStart)),
+        and(isNull(this.schema.endDate), gte(this.schema.startDate, monthStart))
+      )
+    )
+    const notEnded = or(isNull(this.schema.endDate), gte(this.schema.endDate, new Date()))
+
+    return db.query.churchEvents.findMany({
+      columns,
+      where: and(monthOverlap, includeEndedEvents ? undefined : notEnded),
+      orderBy: asc(this.schema.startDate),
+    })
   }
 
   async deleteChurchEvent({ id }: { id: string }) {
@@ -139,7 +172,7 @@ class ChurchEventRepository extends BaseRepository<typeof churchEvents> {
 
   async cleanup() {
     const now = new Date()
-    const fourDaysAgo = new Date(now.getTime() - 4 * 24 * 60 * 60 * 1000)
+    const fourDaysAgo = new Date(now.getTime() - CHURCH_EVENT_RETENTION_DAYS * 24 * 60 * 60 * 1000)
     const result = await this.db
       .delete(this.schema)
       .where(

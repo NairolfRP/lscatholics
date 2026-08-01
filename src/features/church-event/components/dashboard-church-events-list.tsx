@@ -1,8 +1,13 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useRouter } from '@tanstack/react-router'
-import { dashboardChurchEventColumns } from '#/features/church-event/constants/dashboard-church-event-columns.tsx'
-import type { DashboardChurchEventsTableMeta } from '#/features/church-event/types/dashboard-church-event.types.ts'
-import { deleteChurchEventFn } from '#/server-fn/church-event.functions.ts'
+import {
+  dashboardChurchEventColumns,
+} from '#/features/church-event/constants/dashboard-church-event-columns.tsx'
+import { churchEventsDashboardQueryOptions } from '#/features/church-event/queries.ts'
+import { deleteChurchEventFn } from '#/features/church-event/server-fn/church-event.functions.ts'
+import type {
+  DashboardChurchEventsTableMeta,
+} from '#/features/church-event/types/dashboard-church-event.types.ts'
 import { toast } from '#/shared/components/ui/toast'
 import { DashboardList } from '#shared/components/dashboard/list.tsx'
 import { Spinner } from '#shared/components/ui/spinner.tsx'
@@ -11,7 +16,6 @@ import {
   DASHBOARD_PAGINATION_LIMIT,
 } from '#shared/constants/dashboard.ts'
 import { useDashboardList } from '#shared/hooks/dashboard/use-dashboard-list.tsx'
-import { churchEventsDashboardQueryOptions } from '#shared/queries/church-event.queries.ts'
 
 export function DashboardChurchEventsList() {
   const router = useRouter()

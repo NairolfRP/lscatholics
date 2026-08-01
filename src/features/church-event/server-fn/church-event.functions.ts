@@ -1,9 +1,17 @@
 import { createServerFn } from '@tanstack/react-start'
-import { baseChurchEventInteractionSchema } from '#/features/church-event/schemas/church-event.schema'
-import { requirePermission } from '#/middleware/permission.middleware'
-import * as churchEventService from '#server/services/church-event.service'
-import { looseObjectSchema } from '#shared/schemas/common.schema'
-import { dashboardSearchSchema } from '#shared/schemas/dashboard/search.schema'
+import {
+  baseChurchEventInteractionSchema,
+  churchEventsPageFnSchema,
+} from '#/features/church-event/schemas/church-event.schema.ts'
+import * as churchEventService from '#/features/church-event/server/church-event.service.ts'
+import { getChurchEventsByYearMonth } from '#/features/church-event/server/church-event.service.ts'
+import { requirePermission } from '#/middleware/permission.middleware.ts'
+import { looseObjectSchema } from '#shared/schemas/common.schema.ts'
+import { dashboardSearchSchema } from '#shared/schemas/dashboard/search.schema.ts'
+
+export const getChurchEventsByYearMonthFn = createServerFn({ method: 'GET' })
+  .validator(churchEventsPageFnSchema)
+  .handler(async ({ data }) => getChurchEventsByYearMonth(data))
 
 export const getDashboardChurchEventFn = createServerFn({ method: 'GET' })
   .middleware([requirePermission('event', 'read')])

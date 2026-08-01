@@ -1,6 +1,8 @@
 import { createFileRoute, Link, stripSearchParams } from '@tanstack/react-router'
 import { PlusIcon } from 'lucide-react'
-import { DashboardChurchEventsList } from '#/features/church-event/components/dashboard-church-events-list.tsx'
+import {
+  DashboardChurchEventsList,
+} from '#/features/church-event/components/dashboard-church-events-list.tsx'
 import { DashboardHeading } from '#/features/dashboard/components/dashboard-heading.tsx'
 import { pageMetadata } from '#/utils/seo.ts'
 import { DebouncedInput } from '#shared/components/debounced-input.tsx'
@@ -13,9 +15,9 @@ import {
   CardTitle,
 } from '#shared/components/ui/card.tsx'
 import { DASHBOARD_LIST_INITIAL_FILTERS } from '#shared/constants/dashboard.ts'
-import { churchEventsDashboardQueryOptions } from '#shared/queries/church-event.queries.ts'
 import { dashboardSearchSchema } from '#shared/schemas/dashboard/search.schema.ts'
 import { sortBySchema } from '#shared/schemas/pagination.schema.ts'
+import { churchEventsDashboardQueryOptions } from '#/features/church-event/queries.ts'
 
 export const Route = createFileRoute('/dashboard/events/')({
   head: () => ({

@@ -4,14 +4,38 @@ import { z } from 'zod'
 import {
   createChurchEventSchema,
   editChurchEventSchema,
-} from '#/features/church-event/schemas/church-event.schema'
-import { getFieldErrors } from '#/utils/form'
-import { resolveSlug } from '#/utils/slug'
-import { NotFoundException } from '#server/exceptions/http-exception'
-import { logger } from '#server/integrations/logger'
-import { churchEventRepository } from '#server/repositories/church-event.repository'
-import { DASHBOARD_PAGINATION_LIMIT } from '#shared/constants/dashboard'
-import type { User } from '#shared/lib/types/auth'
+} from '#/features/church-event/schemas/church-event.schema.ts'
+import { getFieldErrors } from '#/utils/form.ts'
+import { resolveSlug } from '#/utils/slug.ts'
+import { NotFoundException } from '#server/exceptions/http-exception.ts'
+import { logger } from '#server/integrations/logger.ts'
+import { churchEventRepository } from '#server/repositories/church-event.repository.ts'
+import { DASHBOARD_PAGINATION_LIMIT } from '#shared/constants/dashboard.ts'
+import type { User } from '#shared/lib/types/auth.ts'
+
+export async function getChurchEventsByYearMonth(period: { year: number; month: number }) {
+  try {
+    const currentDate = new Date()
+    const isCurrentMonth =
+      period.year === currentDate.getFullYear() && period.month === currentDate.getMonth() + 1
+
+    return churchEventRepository.getChurchEventsByYearMonth({
+      columns: {
+        slug: true,
+        title: true,
+        description: true,
+        coverImageUrl: true,
+        startDate: true,
+        endDate: true,
+      },
+      period,
+      includeEndedEvents: !isCurrentMonth,
+    })
+  } catch (err) {
+    logger.error({ err }, 'Failed to get church events')
+    throw err
+  }
+}
 
 export async function getDashboardChurchEvent({ id }: { id: string }) {
   const churchEvent = await churchEventRepository.getChurchEventWithAuthor({

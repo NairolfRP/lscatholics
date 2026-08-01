@@ -1,8 +1,10 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { EditIcon, EyeIcon } from 'lucide-react'
 import { envClient } from '#/config/env-client.ts'
+import {
+  getDashboardChurchEventFn,
+} from '#/features/church-event/server-fn/church-event.functions.ts'
 import { DashboardHeading } from '#/features/dashboard/components/dashboard-heading.tsx'
-import { getDashboardChurchEventFn } from '#/server-fn/church-event.functions.ts'
 import { formatDateTime } from '#/utils/date.ts'
 import { pageMetadata } from '#/utils/seo.ts'
 import { Badge } from '#shared/components/ui/badge.tsx'

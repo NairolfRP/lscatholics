@@ -1,12 +1,16 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { DashboardChurchEventForm } from '#/features/church-event/components/dashboard-church-event-form.tsx'
-import type { EditChurchEventFormInput } from '#/features/church-event/schemas/church-event.schema.ts'
+import {
+  DashboardChurchEventForm,
+} from '#/features/church-event/components/dashboard-church-event-form.tsx'
+import type {
+  EditChurchEventFormInput,
+} from '#/features/church-event/schemas/church-event.schema.ts'
 import { editChurchEventSchema } from '#/features/church-event/schemas/church-event.schema.ts'
-import { DashboardHeading } from '#/features/dashboard/components/dashboard-heading.tsx'
 import {
   getDashboardChurchEventFn,
   updateChurchEventFn,
-} from '#/server-fn/church-event.functions.ts'
+} from '#/features/church-event/server-fn/church-event.functions.ts'
+import { DashboardHeading } from '#/features/dashboard/components/dashboard-heading.tsx'
 import { toast } from '#/shared/components/ui/toast'
 import { pageMetadata } from '#/utils/seo.ts'
 import { useAppForm } from '#shared/integrations/form/form-hook.ts'

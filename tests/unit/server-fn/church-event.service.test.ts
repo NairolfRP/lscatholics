@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
+import * as churchEventService from '#/features/church-event/server/church-event.service.ts'
 import type { ChurchEvent } from '#/features/church-event/types/church-event.types.ts'
 import { churchEventRepository } from '#server/repositories/church-event.repository'
-import * as churchEventService from '#server/services/church-event.service'
 import { mockUser } from '../../utils/test-unit.utils.ts'
 
 vi.mock('#server/repositories/church-event.repository', () => ({

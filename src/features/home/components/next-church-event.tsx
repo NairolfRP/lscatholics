@@ -1,10 +1,10 @@
 import { useQuery } from '@tanstack/react-query'
 import { Link } from '@tanstack/react-router'
 import { ChevronRight } from 'lucide-react'
+import { latestEventsQueryOptions } from '#/features/home/queries.ts'
 import { Button } from '#/shared/components/ui/button'
 import { Skeleton } from '#/shared/components/ui/skeleton'
 import { formatDate } from '#/utils/date'
-import { latestEventsQueryOptions } from '#shared/queries/church-event.queries.ts'
 
 export function NextChurchEvent() {
   const { data: events, isPending, isError } = useQuery(latestEventsQueryOptions)

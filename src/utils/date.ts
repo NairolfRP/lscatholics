@@ -1,9 +1,10 @@
-export function formatDate(date: Date | string): string {
+export function formatDate(date: Date | string, override: Intl.DateTimeFormatOptions = {}): string {
   if (typeof date === 'string') {
     return new Date(date).toLocaleDateString('fr-FR', {
       day: 'numeric',
       month: 'long',
       year: 'numeric',
+      ...override,
     })
   }
 
@@ -11,10 +12,28 @@ export function formatDate(date: Date | string): string {
     day: 'numeric',
     month: 'long',
     year: 'numeric',
+    ...override,
   })
 }
 
-export function formatDateTime(date: Date | string): string {
+export function formatYearMonth(date: Date | string, override: Intl.DateTimeFormatOptions = {}) {
+  const localeOptions: Intl.DateTimeFormatOptions = {
+    month: 'long',
+    year: 'numeric',
+    ...override,
+  } as const
+
+  if (typeof date === 'string') {
+    return new Date(date).toLocaleDateString('fr-FR', localeOptions)
+  }
+
+  return date.toLocaleDateString('fr-FR', localeOptions)
+}
+
+export function formatDateTime(
+  date: Date | string,
+  override: Intl.DateTimeFormatOptions = {}
+): string {
   const localeOptions: Intl.DateTimeFormatOptions = {
     day: 'numeric',
     month: 'long',
@@ -22,6 +41,7 @@ export function formatDateTime(date: Date | string): string {
     hourCycle: 'h23',
     hour: '2-digit',
     minute: '2-digit',
+    ...override,
   } as const
 
   if (typeof date === 'string') {
@@ -40,4 +60,15 @@ export function yearsBetween(date1: Date, date2: Date): number {
     years--
   }
   return years
+}
+
+export function getMonthBounds({ year, month }: { year: number; month: number }) {
+  const from = new Date(year, month - 1, 1)
+  const to = new Date(year, month, 1)
+
+  return { from, to }
+}
+
+export function addMonths(date: Date, amount: number) {
+  return new Date(date.getFullYear(), date.getMonth() + amount, 1)
 }

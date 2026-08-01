@@ -1,8 +1,39 @@
 import { z } from 'zod'
 import { formatDateTime } from '#/utils/date.ts'
+import {
+  CHURCH_EVENT_FORWARD_YEARS,
+  CHURCH_EVENT_LOOKBACK_MONTHS,
+} from '#shared/constants/church-event.constants.ts'
 import { PARISH_VALUES } from '#shared/constants/parish.ts'
 import { slugSchema } from '#shared/schemas/common.schema.ts'
 import { emptyToNull } from '#shared/schemas/utils.schema.ts'
+
+const toMonthIndex = (y: number, m: number) => y * 12 + (m - 1)
+const MIN_MONTH_INDEX =
+  toMonthIndex(new Date().getFullYear(), new Date().getMonth()) - CHURCH_EVENT_LOOKBACK_MONTHS
+const MAX_MONTH_INDEX = toMonthIndex(new Date().getFullYear() + CHURCH_EVENT_FORWARD_YEARS, 12)
+
+export const churchEventsSearchSchema = z
+  .object({
+    year: z
+      .int()
+      .positive()
+      .catch(() => new Date().getFullYear())
+      .default(() => new Date().getFullYear()),
+    month: z
+      .int()
+      .min(1)
+      .max(12)
+      .catch(() => new Date().getMonth() + 1)
+      .default(() => new Date().getMonth() + 1),
+  })
+  .superRefine(({ year, month }, ctx) => {
+    const idx = toMonthIndex(year, month)
+    if (idx < MIN_MONTH_INDEX || idx > MAX_MONTH_INDEX)
+      ctx.addIssue({ code: 'custom', message: 'Mois hors de la période consultable.' })
+  })
+
+export const churchEventsPageFnSchema = churchEventsSearchSchema
 
 export const baseChurchEventInteractionSchema = z.object({ churchEventId: z.uuidv4() })
 
