@@ -53,11 +53,16 @@ export class Logger implements ILogger {
     })
   }
 
-  public debug: LogFn = (...args: unknown[]) => this.logger.debug.bind(null, ...args)
-  public info: LogFn = (...args: unknown[]) => this.logger.info.bind(null, ...args)
-  public warn: LogFn = (...args: unknown[]) => this.logger.warn.bind(null, ...args)
-  public error: LogFn = (...args: unknown[]) => this.logger.error.bind(null, ...args)
-  public fatal: LogFn = (...args: unknown[]) => this.logger.fatal.bind(null, ...args)
+  public debug: LogFn = (...args: unknown[]) =>
+    this.logger.debug(...(args as Parameters<PinoLogger['debug']>))
+  public info: LogFn = (...args: unknown[]) =>
+    this.logger.info(...(args as Parameters<PinoLogger['info']>))
+  public warn: LogFn = (...args: unknown[]) =>
+    this.logger.warn(...(args as Parameters<PinoLogger['warn']>))
+  public error: LogFn = (...args: unknown[]) =>
+    this.logger.error(...(args as Parameters<PinoLogger['error']>))
+  public fatal: LogFn = (...args: unknown[]) =>
+    this.logger.fatal(...(args as Parameters<PinoLogger['fatal']>))
   public child(bindings: LogContext): ILogger {
     return new Logger(this.logger.child(bindings))
   }
