@@ -2,6 +2,7 @@ import { queryOptions } from '@tanstack/react-query'
 import {
   getChurchEventsByYearMonthFn,
   getDashboardChurchEventsFn,
+  getSingleChurchEventFn,
 } from '#/features/church-event/server-fn/church-event.functions.ts'
 import type { DashboardSearch } from '#shared/schemas/dashboard/search.schema.ts'
 
@@ -9,6 +10,14 @@ export const churchEventsQueryOptions = ({ month, year }: { month: number; year:
   return queryOptions({
     queryKey: ['events', year, month],
     queryFn: () => getChurchEventsByYearMonthFn({ data: { year, month } }),
+    staleTime: 60_000, // 1 minute
+  })
+}
+
+export const singleChurchEventQueryOptions = (slug: string) => {
+  return queryOptions({
+    queryKey: ['event', slug],
+    queryFn: () => getSingleChurchEventFn({ data: slug }),
     staleTime: 60_000, // 1 minute
   })
 }

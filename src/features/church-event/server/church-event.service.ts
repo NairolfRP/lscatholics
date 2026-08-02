@@ -37,6 +37,33 @@ export async function getChurchEventsByYearMonth(period: { year: number; month: 
   }
 }
 
+export async function getSingleChurchEvent({ slug }: { slug: string }) {
+  const churchEvent = await churchEventRepository.getChurchEvent({
+    slug,
+    columns: {
+      title: true,
+      slug: true,
+      description: true,
+      content: true,
+      location: true,
+      parish: true,
+      coverImageUrl: true,
+      flyerUrl: true,
+      registrationRequired: true,
+      maxParticipants: true,
+      startDate: true,
+      endDate: true,
+    },
+    includeEndedEvent: true,
+  })
+
+  if (!churchEvent) {
+    throw notFound()
+  }
+
+  return churchEvent
+}
+
 export async function getDashboardChurchEvent({ id }: { id: string }) {
   const churchEvent = await churchEventRepository.getChurchEventWithAuthor({
     id,

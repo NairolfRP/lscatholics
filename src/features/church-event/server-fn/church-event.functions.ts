@@ -6,12 +6,16 @@ import {
 import * as churchEventService from '#/features/church-event/server/church-event.service.ts'
 import { getChurchEventsByYearMonth } from '#/features/church-event/server/church-event.service.ts'
 import { requirePermission } from '#/middleware/permission.middleware.ts'
-import { looseObjectSchema } from '#shared/schemas/common.schema.ts'
+import { looseObjectSchema, slugSchema } from '#shared/schemas/common.schema.ts'
 import { dashboardSearchSchema } from '#shared/schemas/dashboard/search.schema.ts'
 
 export const getChurchEventsByYearMonthFn = createServerFn({ method: 'GET' })
   .validator(churchEventsPageFnSchema)
   .handler(async ({ data }) => getChurchEventsByYearMonth(data))
+
+export const getSingleChurchEventFn = createServerFn({ method: 'GET' })
+  .validator(slugSchema)
+  .handler(async ({ data: slug }) => churchEventService.getSingleChurchEvent({ slug }))
 
 export const getDashboardChurchEventFn = createServerFn({ method: 'GET' })
   .middleware([requirePermission('event', 'read')])
