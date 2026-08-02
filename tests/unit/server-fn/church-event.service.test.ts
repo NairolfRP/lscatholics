@@ -1,94 +1,84 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { eq } from 'drizzle-orm'
+import { describe, expect, it } from 'vitest'
 import * as churchEventService from '#/features/church-event/server/church-event.service.ts'
-import type { ChurchEvent } from '#/features/church-event/types/church-event.types.ts'
-import { churchEventRepository } from '#server/repositories/church-event.repository'
+import { db } from '#server/db'
+import { churchEvents } from '#server/db/schema'
 import { mockUser } from '../../utils/test-unit.utils.ts'
 
-vi.mock('#server/repositories/church-event.repository', () => ({
-  churchEventRepository: {
-    getChurchEventWithAuthor: vi.fn(),
-    getChurchEvents: vi.fn(),
-    getChurchEvent: vi.fn(),
-    deleteChurchEvent: vi.fn(),
-    update: vi.fn(),
-    create: vi.fn(),
-    existsBySlug: vi.fn(),
-  },
-}))
+async function insertEvent(overrides: Partial<typeof churchEvents.$inferInsert> = {}) {
+  const [event] = await db
+    .insert(churchEvents)
+    .values({
+      title: 'Messe dominicale',
+      slug: 'messe-dominicale',
+      description: 'La messe dominicale de la paroisse',
+      content: 'Contenu complet',
+      location: 'Cathédrale Saint-Michel',
+      coverImageUrl: 'https://example.com/messe.webp',
+      startDate: new Date('2026-01-11T10:00:00Z'),
+      ...overrides,
+    })
+    .returning()
 
-const mockEvent: ChurchEvent = {
-  id: 'event-1',
-  title: 'Community Gathering',
-  slug: 'community-gathering',
-  description: 'A gathering',
-  content: 'Full content',
-  location: 'Church Hall',
-  parish: null,
-  coverImageUrl: 'https://example.com/image.jpg',
-  flyerUrl: null,
-  registrationRequired: false,
-  maxParticipants: null,
-  startDate: new Date('2025-06-01'),
-  endDate: new Date('2025-06-01'),
-  createdAt: new Date('2025-06-01'),
-  updatedAt: new Date('2025-06-01'),
-  authorId: null,
+  return event
 }
 
-beforeEach(() => {
-  vi.clearAllMocks()
+describe('getSingleChurchEvent', () => {
+  it('returns the event for a known slug', async () => {
+    await insertEvent()
+
+    const result = await churchEventService.getSingleChurchEvent({ slug: 'messe-dominicale' })
+
+    expect(result).toMatchObject({
+      slug: 'messe-dominicale',
+      title: 'Messe dominicale',
+      description: 'La messe dominicale de la paroisse',
+      location: 'Cathédrale Saint-Michel',
+    })
+  })
+
+  it('throws notFound for an unknown slug', async () => {
+    await expect(churchEventService.getSingleChurchEvent({ slug: 'inconnu' })).rejects.toThrow(
+      'NOT_FOUND'
+    )
+  })
 })
 
 describe('getDashboardChurchEvent', () => {
-  it('returns a church event when it exists', async () => {
-    vi.mocked(churchEventRepository.getChurchEventWithAuthor).mockResolvedValue(
-      mockEvent as unknown as Awaited<
-        ReturnType<typeof churchEventRepository.getChurchEventWithAuthor>
-      >
-    )
+  it('returns the event for a known id', async () => {
+    const event = await insertEvent()
 
-    const result = await churchEventService.getDashboardChurchEvent({ id: 'event-1' })
+    const result = await churchEventService.getDashboardChurchEvent({ id: event.id })
 
-    expect(result).toEqual(mockEvent)
+    expect(result.title).toBe('Messe dominicale')
   })
 
-  it('throws notFound when the event does not exist', async () => {
-    vi.mocked(churchEventRepository.getChurchEventWithAuthor).mockResolvedValue(
-      null as unknown as Awaited<ReturnType<typeof churchEventRepository.getChurchEventWithAuthor>>
-    )
-
-    await expect(churchEventService.getDashboardChurchEvent({ id: 'missing' })).rejects.toThrow(
+  it('throws notFound for an unknown id', async () => {
+    await expect(churchEventService.getDashboardChurchEvent({ id: 'inconnu' })).rejects.toThrow(
       'NOT_FOUND'
     )
   })
 })
 
 describe('deleteChurchEvent', () => {
-  it('deletes and returns success when the event exists', async () => {
-    vi.mocked(churchEventRepository.getChurchEvent).mockResolvedValue({
-      ...mockEvent,
-      id: 'event-1',
-    })
+  it('deletes the event', async () => {
+    const event = await insertEvent()
 
     const result = await churchEventService.deleteChurchEvent({
-      churchEventId: 'event-1',
-      user: { ...mockUser, id: 'user-1', name: 'Test', role: 'admin' },
+      churchEventId: event.id,
+      user: mockUser,
     })
 
     expect(result).toEqual({ success: true })
-    expect(churchEventRepository.deleteChurchEvent).toHaveBeenCalledWith({ id: 'event-1' })
+
+    const [remaining] = await db.select().from(churchEvents).where(eq(churchEvents.id, event.id))
+
+    expect(remaining).toBeUndefined()
   })
 
-  it('throws NotFoundException when the event does not exist', async () => {
-    vi.mocked(churchEventRepository.getChurchEvent).mockResolvedValue(
-      null as unknown as Awaited<ReturnType<typeof churchEventRepository.getChurchEvent>>
-    )
-
+  it('throws NotFoundException for an unknown id', async () => {
     await expect(
-      churchEventService.deleteChurchEvent({
-        churchEventId: 'missing',
-        user: { ...mockUser, id: 'user-1', name: 'Test', role: 'admin' },
-      })
+      churchEventService.deleteChurchEvent({ churchEventId: 'inconnu', user: mockUser })
     ).rejects.toThrow('Church Event not found')
   })
 })
