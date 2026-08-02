@@ -13,6 +13,7 @@ import { Route as AppRouteImport } from './routes/_app'
 import { Route as DashboardRouteRouteImport } from './routes/dashboard/route'
 import { Route as AppIndexRouteImport } from './routes/_app/index'
 import { Route as AppAccountRouteRouteImport } from './routes/_app/account/route'
+import { Route as AppCareersRouteImport } from './routes/_app/careers'
 import { Route as AppEventsRouteImport } from './routes/_app/events'
 import { Route as AppNewsroomRouteImport } from './routes/_app/newsroom'
 import { Route as AppParishesRouteImport } from './routes/_app/parishes'
@@ -24,7 +25,6 @@ import { Route as AppAccountIndexRouteImport } from './routes/_app/account/index
 import { Route as AppAccountSessionsRouteImport } from './routes/_app/account/sessions'
 import { Route as AppAccountSettingsRouteImport } from './routes/_app/account/settings'
 import { Route as AppEventSlugRouteImport } from './routes/_app/event/$slug'
-import { Route as AppJobSlugRouteImport } from './routes/_app/job.$slug'
 import { Route as AppPostSlugRouteImport } from './routes/_app/post/$slug'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 import { Route as DashboardEventsIndexRouteImport } from './routes/dashboard/events/index'
@@ -34,6 +34,8 @@ import { Route as DashboardJobOpeningsCreateRouteImport } from './routes/dashboa
 import { Route as DashboardPostsIndexRouteImport } from './routes/dashboard/posts/index'
 import { Route as DashboardPostsCreateRouteImport } from './routes/dashboard/posts/create'
 import { Route as DashboardUsersIndexRouteImport } from './routes/dashboard/users/index'
+import { Route as AppJobSlugIndexRouteImport } from './routes/_app/job/$slug.index'
+import { Route as AppJobSlugApplyRouteImport } from './routes/_app/job/$slug.apply'
 import { Route as DashboardEventsEditIdRouteImport } from './routes/dashboard/events/edit.$id'
 import { Route as DashboardEventsShowIdRouteImport } from './routes/dashboard/events/show.$id'
 import { Route as DashboardJobOpeningsEditIdRouteImport } from './routes/dashboard/job-openings/edit.$id'
@@ -59,6 +61,11 @@ const AppIndexRoute = AppIndexRouteImport.update({
 const AppAccountRouteRoute = AppAccountRouteRouteImport.update({
   id: '/account',
   path: '/account',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppCareersRoute = AppCareersRouteImport.update({
+  id: '/careers',
+  path: '/careers',
   getParentRoute: () => AppRoute,
 } as any)
 const AppEventsRoute = AppEventsRouteImport.update({
@@ -116,11 +123,6 @@ const AppEventSlugRoute = AppEventSlugRouteImport.update({
   path: '/event/$slug',
   getParentRoute: () => AppRoute,
 } as any)
-const AppJobSlugRoute = AppJobSlugRouteImport.update({
-  id: '/job/$slug',
-  path: '/job/$slug',
-  getParentRoute: () => AppRoute,
-} as any)
 const AppPostSlugRoute = AppPostSlugRouteImport.update({
   id: '/post/$slug',
   path: '/post/$slug',
@@ -168,6 +170,16 @@ const DashboardUsersIndexRoute = DashboardUsersIndexRouteImport.update({
   path: '/',
   getParentRoute: () => DashboardUsersRouteRoute,
 } as any)
+const AppJobSlugIndexRoute = AppJobSlugIndexRouteImport.update({
+  id: '/job/$slug/',
+  path: '/job/$slug/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppJobSlugApplyRoute = AppJobSlugApplyRouteImport.update({
+  id: '/job/$slug/apply',
+  path: '/job/$slug/apply',
+  getParentRoute: () => AppRoute,
+} as any)
 const DashboardEventsEditIdRoute = DashboardEventsEditIdRouteImport.update({
   id: '/events/edit/$id',
   path: '/events/edit/$id',
@@ -211,6 +223,7 @@ export interface FileRoutesByFullPath {
   '/': typeof AppIndexRoute
   '/account': typeof AppAccountRouteRouteWithChildren
   '/dashboard/users': typeof DashboardUsersRouteRouteWithChildren
+  '/careers': typeof AppCareersRoute
   '/events': typeof AppEventsRoute
   '/newsroom': typeof AppNewsroomRoute
   '/parishes': typeof AppParishesRoute
@@ -220,7 +233,6 @@ export interface FileRoutesByFullPath {
   '/account/sessions': typeof AppAccountSessionsRoute
   '/account/settings': typeof AppAccountSettingsRoute
   '/event/$slug': typeof AppEventSlugRoute
-  '/job/$slug': typeof AppJobSlugRoute
   '/post/$slug': typeof AppPostSlugRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/dashboard/events/create': typeof DashboardEventsCreateRoute
@@ -231,6 +243,7 @@ export interface FileRoutesByFullPath {
   '/dashboard/job-openings/': typeof DashboardJobOpeningsIndexRoute
   '/dashboard/posts/': typeof DashboardPostsIndexRoute
   '/dashboard/users/': typeof DashboardUsersIndexRoute
+  '/job/$slug/apply': typeof AppJobSlugApplyRoute
   '/dashboard/events/edit/$id': typeof DashboardEventsEditIdRoute
   '/dashboard/events/show/$id': typeof DashboardEventsShowIdRoute
   '/dashboard/job-openings/edit/$id': typeof DashboardJobOpeningsEditIdRoute
@@ -238,8 +251,10 @@ export interface FileRoutesByFullPath {
   '/dashboard/posts/edit/$id': typeof DashboardPostsEditIdRoute
   '/dashboard/posts/show/$id': typeof DashboardPostsShowIdRoute
   '/dashboard/users/edit/$id': typeof DashboardUsersEditIdRoute
+  '/job/$slug/': typeof AppJobSlugIndexRoute
 }
 export interface FileRoutesByTo {
+  '/careers': typeof AppCareersRoute
   '/events': typeof AppEventsRoute
   '/newsroom': typeof AppNewsroomRoute
   '/parishes': typeof AppParishesRoute
@@ -250,7 +265,6 @@ export interface FileRoutesByTo {
   '/account/sessions': typeof AppAccountSessionsRoute
   '/account/settings': typeof AppAccountSettingsRoute
   '/event/$slug': typeof AppEventSlugRoute
-  '/job/$slug': typeof AppJobSlugRoute
   '/post/$slug': typeof AppPostSlugRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/dashboard/events/create': typeof DashboardEventsCreateRoute
@@ -261,6 +275,7 @@ export interface FileRoutesByTo {
   '/dashboard/job-openings': typeof DashboardJobOpeningsIndexRoute
   '/dashboard/posts': typeof DashboardPostsIndexRoute
   '/dashboard/users': typeof DashboardUsersIndexRoute
+  '/job/$slug/apply': typeof AppJobSlugApplyRoute
   '/dashboard/events/edit/$id': typeof DashboardEventsEditIdRoute
   '/dashboard/events/show/$id': typeof DashboardEventsShowIdRoute
   '/dashboard/job-openings/edit/$id': typeof DashboardJobOpeningsEditIdRoute
@@ -268,6 +283,7 @@ export interface FileRoutesByTo {
   '/dashboard/posts/edit/$id': typeof DashboardPostsEditIdRoute
   '/dashboard/posts/show/$id': typeof DashboardPostsShowIdRoute
   '/dashboard/users/edit/$id': typeof DashboardUsersEditIdRoute
+  '/job/$slug': typeof AppJobSlugIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -275,6 +291,7 @@ export interface FileRoutesById {
   '/_app': typeof AppRouteWithChildren
   '/_app/account': typeof AppAccountRouteRouteWithChildren
   '/dashboard/users': typeof DashboardUsersRouteRouteWithChildren
+  '/_app/careers': typeof AppCareersRoute
   '/_app/events': typeof AppEventsRoute
   '/_app/newsroom': typeof AppNewsroomRoute
   '/_app/parishes': typeof AppParishesRoute
@@ -285,7 +302,6 @@ export interface FileRoutesById {
   '/_app/account/sessions': typeof AppAccountSessionsRoute
   '/_app/account/settings': typeof AppAccountSettingsRoute
   '/_app/event/$slug': typeof AppEventSlugRoute
-  '/_app/job/$slug': typeof AppJobSlugRoute
   '/_app/post/$slug': typeof AppPostSlugRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/dashboard/events/create': typeof DashboardEventsCreateRoute
@@ -296,6 +312,7 @@ export interface FileRoutesById {
   '/dashboard/job-openings/': typeof DashboardJobOpeningsIndexRoute
   '/dashboard/posts/': typeof DashboardPostsIndexRoute
   '/dashboard/users/': typeof DashboardUsersIndexRoute
+  '/_app/job/$slug/apply': typeof AppJobSlugApplyRoute
   '/dashboard/events/edit/$id': typeof DashboardEventsEditIdRoute
   '/dashboard/events/show/$id': typeof DashboardEventsShowIdRoute
   '/dashboard/job-openings/edit/$id': typeof DashboardJobOpeningsEditIdRoute
@@ -303,6 +320,7 @@ export interface FileRoutesById {
   '/dashboard/posts/edit/$id': typeof DashboardPostsEditIdRoute
   '/dashboard/posts/show/$id': typeof DashboardPostsShowIdRoute
   '/dashboard/users/edit/$id': typeof DashboardUsersEditIdRoute
+  '/_app/job/$slug/': typeof AppJobSlugIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -311,6 +329,7 @@ export interface FileRouteTypes {
     | '/'
     | '/account'
     | '/dashboard/users'
+    | '/careers'
     | '/events'
     | '/newsroom'
     | '/parishes'
@@ -320,7 +339,6 @@ export interface FileRouteTypes {
     | '/account/sessions'
     | '/account/settings'
     | '/event/$slug'
-    | '/job/$slug'
     | '/post/$slug'
     | '/api/auth/$'
     | '/dashboard/events/create'
@@ -331,6 +349,7 @@ export interface FileRouteTypes {
     | '/dashboard/job-openings/'
     | '/dashboard/posts/'
     | '/dashboard/users/'
+    | '/job/$slug/apply'
     | '/dashboard/events/edit/$id'
     | '/dashboard/events/show/$id'
     | '/dashboard/job-openings/edit/$id'
@@ -338,8 +357,10 @@ export interface FileRouteTypes {
     | '/dashboard/posts/edit/$id'
     | '/dashboard/posts/show/$id'
     | '/dashboard/users/edit/$id'
+    | '/job/$slug/'
   fileRoutesByTo: FileRoutesByTo
   to:
+    | '/careers'
     | '/events'
     | '/newsroom'
     | '/parishes'
@@ -350,7 +371,6 @@ export interface FileRouteTypes {
     | '/account/sessions'
     | '/account/settings'
     | '/event/$slug'
-    | '/job/$slug'
     | '/post/$slug'
     | '/api/auth/$'
     | '/dashboard/events/create'
@@ -361,6 +381,7 @@ export interface FileRouteTypes {
     | '/dashboard/job-openings'
     | '/dashboard/posts'
     | '/dashboard/users'
+    | '/job/$slug/apply'
     | '/dashboard/events/edit/$id'
     | '/dashboard/events/show/$id'
     | '/dashboard/job-openings/edit/$id'
@@ -368,12 +389,14 @@ export interface FileRouteTypes {
     | '/dashboard/posts/edit/$id'
     | '/dashboard/posts/show/$id'
     | '/dashboard/users/edit/$id'
+    | '/job/$slug'
   id:
     | '__root__'
     | '/dashboard'
     | '/_app'
     | '/_app/account'
     | '/dashboard/users'
+    | '/_app/careers'
     | '/_app/events'
     | '/_app/newsroom'
     | '/_app/parishes'
@@ -384,7 +407,6 @@ export interface FileRouteTypes {
     | '/_app/account/sessions'
     | '/_app/account/settings'
     | '/_app/event/$slug'
-    | '/_app/job/$slug'
     | '/_app/post/$slug'
     | '/api/auth/$'
     | '/dashboard/events/create'
@@ -395,6 +417,7 @@ export interface FileRouteTypes {
     | '/dashboard/job-openings/'
     | '/dashboard/posts/'
     | '/dashboard/users/'
+    | '/_app/job/$slug/apply'
     | '/dashboard/events/edit/$id'
     | '/dashboard/events/show/$id'
     | '/dashboard/job-openings/edit/$id'
@@ -402,6 +425,7 @@ export interface FileRouteTypes {
     | '/dashboard/posts/edit/$id'
     | '/dashboard/posts/show/$id'
     | '/dashboard/users/edit/$id'
+    | '/_app/job/$slug/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -438,6 +462,13 @@ declare module '@tanstack/react-router' {
       path: '/account'
       fullPath: '/account'
       preLoaderRoute: typeof AppAccountRouteRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/careers': {
+      id: '/_app/careers'
+      path: '/careers'
+      fullPath: '/careers'
+      preLoaderRoute: typeof AppCareersRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/events': {
@@ -517,13 +548,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppEventSlugRouteImport
       parentRoute: typeof AppRoute
     }
-    '/_app/job/$slug': {
-      id: '/_app/job/$slug'
-      path: '/job/$slug'
-      fullPath: '/job/$slug'
-      preLoaderRoute: typeof AppJobSlugRouteImport
-      parentRoute: typeof AppRoute
-    }
     '/_app/post/$slug': {
       id: '/_app/post/$slug'
       path: '/post/$slug'
@@ -586,6 +610,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/dashboard/users/'
       preLoaderRoute: typeof DashboardUsersIndexRouteImport
       parentRoute: typeof DashboardUsersRouteRoute
+    }
+    '/_app/job/$slug/': {
+      id: '/_app/job/$slug/'
+      path: '/job/$slug'
+      fullPath: '/job/$slug/'
+      preLoaderRoute: typeof AppJobSlugIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/job/$slug/apply': {
+      id: '/_app/job/$slug/apply'
+      path: '/job/$slug/apply'
+      fullPath: '/job/$slug/apply'
+      preLoaderRoute: typeof AppJobSlugApplyRouteImport
+      parentRoute: typeof AppRoute
     }
     '/dashboard/events/edit/$id': {
       id: '/dashboard/events/edit/$id'
@@ -708,6 +746,7 @@ const AppAccountRouteRouteWithChildren = AppAccountRouteRoute._addFileChildren(
 
 interface AppRouteChildren {
   AppAccountRouteRoute: typeof AppAccountRouteRouteWithChildren
+  AppCareersRoute: typeof AppCareersRoute
   AppEventsRoute: typeof AppEventsRoute
   AppNewsroomRoute: typeof AppNewsroomRoute
   AppParishesRoute: typeof AppParishesRoute
@@ -715,12 +754,14 @@ interface AppRouteChildren {
   AppRegisterParishionerRoute: typeof AppRegisterParishionerRoute
   AppIndexRoute: typeof AppIndexRoute
   AppEventSlugRoute: typeof AppEventSlugRoute
-  AppJobSlugRoute: typeof AppJobSlugRoute
   AppPostSlugRoute: typeof AppPostSlugRoute
+  AppJobSlugApplyRoute: typeof AppJobSlugApplyRoute
+  AppJobSlugIndexRoute: typeof AppJobSlugIndexRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
   AppAccountRouteRoute: AppAccountRouteRouteWithChildren,
+  AppCareersRoute: AppCareersRoute,
   AppEventsRoute: AppEventsRoute,
   AppNewsroomRoute: AppNewsroomRoute,
   AppParishesRoute: AppParishesRoute,
@@ -728,8 +769,9 @@ const AppRouteChildren: AppRouteChildren = {
   AppRegisterParishionerRoute: AppRegisterParishionerRoute,
   AppIndexRoute: AppIndexRoute,
   AppEventSlugRoute: AppEventSlugRoute,
-  AppJobSlugRoute: AppJobSlugRoute,
   AppPostSlugRoute: AppPostSlugRoute,
+  AppJobSlugApplyRoute: AppJobSlugApplyRoute,
+  AppJobSlugIndexRoute: AppJobSlugIndexRoute,
 }
 
 const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)

@@ -1,7 +1,12 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useRouter } from '@tanstack/react-router'
-import { dashboardJobPostingColumns } from '#/features/job-posting/constants/dashboard-job-posting-columns.tsx'
-import type { DashboardJobPostingsTableMeta } from '#/features/job-posting/types/job-posting.types.ts'
+import {
+  dashboardJobPostingColumns,
+} from '#/features/job-posting/constants/dashboard-job-posting-columns.tsx'
+import { jobPostingsDashboardQueryOptions } from '#/features/job-posting/queries.ts'
+import type {
+  DashboardJobPostingsTableMeta,
+} from '#/features/job-posting/types/job-posting.types.ts'
 import {
   jobPostingDeleteFn,
   toggleJobPostingActiveStateFn,
@@ -16,7 +21,6 @@ import {
 } from '#shared/constants/dashboard.ts'
 import { useDashboardList } from '#shared/hooks/dashboard/use-dashboard-list.tsx'
 import { authClient } from '#shared/integrations/auth/auth-client.ts'
-import { jobPostingsDashboardQueryOptions } from '#shared/queries/job-posting.queries.ts'
 
 export function DashboardJobPostingsList() {
   const router = useRouter()

@@ -11,7 +11,82 @@ import { NotFoundException } from '#server/exceptions/http-exception'
 import { logger } from '#server/integrations/logger'
 import { jobPostingRepository } from '#server/repositories/job-posting.repository'
 import { DASHBOARD_PAGINATION_LIMIT } from '#shared/constants/dashboard'
+import { escapeLike } from '#shared/lib/sql.ts'
 import type { User } from '#shared/lib/types/auth'
+import type { DepartmentId } from '#shared/types/department.types.ts'
+import type { EmploymentType } from '#shared/types/employment.types.ts'
+
+export async function getSingleJobPosting({ slug }: { slug: string }) {
+  const jobPosting = await jobPostingRepository.getJobPosting({
+    slug,
+    columns: {
+      title: true,
+      slug: true,
+      description: true,
+      reportsTo: true,
+      department: true,
+      responsibilities: true,
+      requirements: true,
+      skills: true,
+      salaryMin: true,
+      salaryMax: true,
+      employmentType: true,
+      postedAt: true,
+      expiresAt: true,
+    },
+    includeExpired: true,
+  })
+
+  if (!jobPosting) {
+    throw notFound()
+  }
+
+  return jobPosting
+}
+
+export async function getJobPostings({
+  page,
+  search,
+  department,
+  type,
+}: {
+  page: number
+  search?: string
+  department?: DepartmentId
+  type?: EmploymentType[]
+}) {
+  return jobPostingRepository.getJobPostings({
+    columns: {
+      title: true,
+      slug: true,
+      department: true,
+      postedAt: true,
+      employmentType: true,
+      salaryMin: true,
+      expiresAt: true,
+    },
+    departments: department ? [department] : undefined,
+    employmentTypes: type,
+    searchText: search
+      ? [
+          {
+            column: 'title',
+            text: `%${escapeLike(search)}%`,
+          },
+          {
+            column: 'description',
+            text: `%${escapeLike(search)}%`,
+          },
+          {
+            column: 'responsibilities',
+            text: `%${escapeLike(search)}%`,
+          },
+        ]
+      : undefined,
+    page,
+    orderBy: ['postedAt.asc'],
+  })
+}
 
 export async function getDashboardJobPosting({ id }: { id: string }) {
   const jobPosting = await jobPostingRepository.getJobPostingWithAuthor({
@@ -55,8 +130,8 @@ export async function getDashboardJobPostings({
     includeInactives: true,
     searchText: data.search
       ? [
-          { column: 'title', text: `%${data.search}%` },
-          { column: 'description', text: `%${data.search}%` },
+          { column: 'title', text: `%${escapeLike(data.search)}%` },
+          { column: 'description', text: `%${escapeLike(data.search)}%` },
         ]
       : undefined,
   })

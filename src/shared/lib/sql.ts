@@ -5,3 +5,7 @@ import { sql } from 'drizzle-orm'
 export function lower(column: AnySQLiteColumn): SQL {
   return sql`lower(${column})`
 }
+
+export function escapeLike(text: string): string {
+  return text.replace(/[\\%_]/g, (char) => `\\${char}`)
+}

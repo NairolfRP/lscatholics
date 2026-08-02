@@ -1,11 +1,14 @@
 import type { AnySQLiteColumn } from 'drizzle-orm/sqlite-core'
-import { and, count, eq, gte, like, or } from 'drizzle-orm'
+import { and, count, eq, gte, or, sql } from 'drizzle-orm'
+import { CAREERS_PAGINATION_LIMIT } from '#/features/job-posting/constants/job-posting.constants.ts'
 import { db } from '#server/db'
 import { jobPostings } from '#server/db/schema/job-posting-schema'
 import { BaseRepository } from '#server/repositories/base.repository.ts'
 import type { UsersColumns } from '#server/repositories/user.repository.ts'
 import { lower } from '#shared/lib/sql.ts'
 import type { OrderBy } from '#shared/types/database.types.ts'
+import type { DepartmentId } from '#shared/types/department.types.ts'
+import type { EmploymentType } from '#shared/types/employment.types.ts'
 
 type EventSchemaKeys = keyof typeof jobPostings.$inferSelect
 
@@ -76,27 +79,37 @@ class JobPostingRepository extends BaseRepository<typeof jobPostings> {
       includeInactives?: boolean
       includeExpired?: boolean
       orderBy?: OrderBy<TColumns>[]
+      departments?: DepartmentId[]
+      employmentTypes?: EmploymentType[]
       searchText?: { column: keyof JobPostingsColumns; text: string }[]
     } = {}
   ) {
     const {
       columns,
       page = 1,
-      pageSize = 6,
+      pageSize = CAREERS_PAGINATION_LIMIT,
       includeInactives,
       includeExpired,
       orderBy = ['createdAt.asc'],
+      departments = [],
+      employmentTypes = [],
       searchText,
     } = options
 
     const whereClause = and(
       !includeInactives ? this.#activeJobOpeningSQLFilter() : undefined,
       !includeExpired ? this.#notExpiredJobOpeningSQLFilter() : undefined,
+      departments.length > 0
+        ? or(...departments.map((dep) => eq(this.schema.department, dep)))
+        : undefined,
+      employmentTypes.length > 0
+        ? or(...employmentTypes.map((type) => eq(this.schema.employmentType, type)))
+        : undefined,
       searchText && searchText.length > 0
         ? or(
             ...searchText.map((s) => {
               const column = s.column as keyof typeof this.schema
-              return like(lower(this.schema[column] as AnySQLiteColumn), s.text.toLowerCase())
+              return sql`${lower(this.schema[column] as AnySQLiteColumn)} LIKE ${s.text.toLowerCase()} ESCAPE '\\'`
             })
           )
         : undefined

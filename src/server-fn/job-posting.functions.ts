@@ -1,9 +1,21 @@
 import { createServerFn } from '@tanstack/react-start'
-import { baseJobPostingInteractionSchema } from '#/features/job-posting/schemas/job-posting.schema'
+import {
+  baseJobPostingInteractionSchema,
+  jobPostingsSearchSchema,
+} from '#/features/job-posting/schemas/job-posting.schema'
 import { requirePermission } from '#/middleware/permission.middleware'
 import * as jobPostingService from '#server/services/job-posting.service'
-import { looseObjectSchema } from '#shared/schemas/common.schema'
+import { getJobPostings, getSingleJobPosting } from '#server/services/job-posting.service'
+import { looseObjectSchema, slugSchema } from '#shared/schemas/common.schema'
 import { dashboardSearchSchema } from '#shared/schemas/dashboard/search.schema'
+
+export const getSingleJobPostingFn = createServerFn({ method: 'GET' })
+  .validator(slugSchema)
+  .handler(async ({ data: slug }) => getSingleJobPosting({ slug }))
+
+export const getJobPostingsFn = createServerFn({ method: 'GET' })
+  .validator(jobPostingsSearchSchema)
+  .handler(async ({ data }) => getJobPostings(data))
 
 export const getDashboardJobPostingFn = createServerFn({ method: 'GET' })
   .middleware([requirePermission('job', 'read')])

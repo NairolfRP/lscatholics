@@ -1,0 +1,1 @@
+export const CAREERS_PAGINATION_LIMIT = 10

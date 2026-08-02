@@ -93,6 +93,25 @@ describe('toggleJobPostingActiveState', () => {
   })
 })
 
+describe('getJobPostings', () => {
+  it('escapes LIKE wildcards in the search text', async () => {
+    vi.mocked(jobPostingRepository.getJobPostings).mockResolvedValue({
+      jobPostings: [],
+      total: 0,
+    } as unknown as Awaited<ReturnType<typeof jobPostingRepository.getJobPostings>>)
+
+    await jobPostingService.getJobPostings({ page: 1, search: '50%_\\' })
+
+    const searchText =
+      vi.mocked(jobPostingRepository.getJobPostings).mock.calls[0][0].searchText
+    expect(searchText).toEqual([
+      { column: 'title', text: '%50\\%\\_\\\\%' },
+      { column: 'description', text: '%50\\%\\_\\\\%' },
+      { column: 'responsibilities', text: '%50\\%\\_\\\\%' },
+    ])
+  })
+})
+
 describe('createJobPosting', () => {
   it('creates a job posting and returns its id', async () => {
     const validData = {

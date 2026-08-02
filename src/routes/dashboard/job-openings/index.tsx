@@ -1,7 +1,10 @@
 import { createFileRoute, Link, stripSearchParams } from '@tanstack/react-router'
 import { PlusIcon } from 'lucide-react'
 import { DashboardHeading } from '#/features/dashboard/components/dashboard-heading.tsx'
-import { DashboardJobPostingsList } from '#/features/job-posting/components/dashboard-job-postings-list.tsx'
+import {
+  DashboardJobPostingsList,
+} from '#/features/job-posting/components/dashboard-job-postings-list.tsx'
+import { jobPostingsDashboardQueryOptions } from '#/features/job-posting/queries.ts'
 import { pageMetadata } from '#/utils/seo.ts'
 import { DebouncedInput } from '#shared/components/debounced-input.tsx'
 import { buttonVariants } from '#shared/components/ui/button.tsx'
@@ -13,7 +16,6 @@ import {
   CardTitle,
 } from '#shared/components/ui/card.tsx'
 import { DASHBOARD_LIST_INITIAL_FILTERS } from '#shared/constants/dashboard.ts'
-import { jobPostingsDashboardQueryOptions } from '#shared/queries/job-posting.queries.ts'
 import { dashboardSearchSchema } from '#shared/schemas/dashboard/search.schema.ts'
 
 export const Route = createFileRoute('/dashboard/job-openings/')({
