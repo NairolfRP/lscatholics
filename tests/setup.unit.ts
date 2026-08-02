@@ -1,5 +1,6 @@
-import { beforeEach, vi } from 'vitest'
+import { afterEach, beforeAll, beforeEach, vi } from 'vitest'
 import { mockGetSession, setupAuthenticatedUser } from './utils/test-unit.utils'
+import { resetDb, setupTestDb } from './utils/test-db'
 
 vi.mock('@/server/auth', () => ({
   auth: {
@@ -42,6 +43,10 @@ vi.mock('@tanstack/react-router', () => ({
     throw new Error('NOT_FOUND')
   },
 }))
+
+beforeAll(setupTestDb)
+
+afterEach(resetDb)
 
 beforeEach(() => {
   vi.clearAllMocks()
