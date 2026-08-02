@@ -60,11 +60,11 @@ export function pageMetadata(pageTitle?: string, options: Options = {}): AnyRout
     },
     {
       property: 'og:site_name',
-      content: import.meta.env.VITE_APP_NAME,
+      content: envClient.VITE_APP_TITLE,
     },
     {
       property: 'og:locale',
-      content: import.meta.env.VITE_LANGUAGE === 'fr' ? 'fr_FR' : 'en_US',
+      content: envClient.VITE_LANGUAGE === 'fr' ? 'fr_FR' : 'en_US',
     },
     {
       property: 'og:type',
