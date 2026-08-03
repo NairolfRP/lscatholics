@@ -14,6 +14,7 @@ import { Route as DashboardRouteRouteImport } from './routes/dashboard/route'
 import { Route as AppIndexRouteImport } from './routes/_app/index'
 import { Route as AppAboutRouteImport } from './routes/_app/about'
 import { Route as AppAccountRouteRouteImport } from './routes/_app/account/route'
+import { Route as AppArchbishopRouteImport } from './routes/_app/archbishop'
 import { Route as AppCareersRouteImport } from './routes/_app/careers'
 import { Route as AppEventsRouteImport } from './routes/_app/events'
 import { Route as AppNewsroomRouteImport } from './routes/_app/newsroom'
@@ -67,6 +68,11 @@ const AppAboutRoute = AppAboutRouteImport.update({
 const AppAccountRouteRoute = AppAccountRouteRouteImport.update({
   id: '/account',
   path: '/account',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppArchbishopRoute = AppArchbishopRouteImport.update({
+  id: '/archbishop',
+  path: '/archbishop',
   getParentRoute: () => AppRoute,
 } as any)
 const AppCareersRoute = AppCareersRouteImport.update({
@@ -230,6 +236,7 @@ export interface FileRoutesByFullPath {
   '/account': typeof AppAccountRouteRouteWithChildren
   '/dashboard/users': typeof DashboardUsersRouteRouteWithChildren
   '/about': typeof AppAboutRoute
+  '/archbishop': typeof AppArchbishopRoute
   '/careers': typeof AppCareersRoute
   '/events': typeof AppEventsRoute
   '/newsroom': typeof AppNewsroomRoute
@@ -262,6 +269,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/about': typeof AppAboutRoute
+  '/archbishop': typeof AppArchbishopRoute
   '/careers': typeof AppCareersRoute
   '/events': typeof AppEventsRoute
   '/newsroom': typeof AppNewsroomRoute
@@ -300,6 +308,7 @@ export interface FileRoutesById {
   '/_app/account': typeof AppAccountRouteRouteWithChildren
   '/dashboard/users': typeof DashboardUsersRouteRouteWithChildren
   '/_app/about': typeof AppAboutRoute
+  '/_app/archbishop': typeof AppArchbishopRoute
   '/_app/careers': typeof AppCareersRoute
   '/_app/events': typeof AppEventsRoute
   '/_app/newsroom': typeof AppNewsroomRoute
@@ -339,6 +348,7 @@ export interface FileRouteTypes {
     | '/account'
     | '/dashboard/users'
     | '/about'
+    | '/archbishop'
     | '/careers'
     | '/events'
     | '/newsroom'
@@ -371,6 +381,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/about'
+    | '/archbishop'
     | '/careers'
     | '/events'
     | '/newsroom'
@@ -408,6 +419,7 @@ export interface FileRouteTypes {
     | '/_app/account'
     | '/dashboard/users'
     | '/_app/about'
+    | '/_app/archbishop'
     | '/_app/careers'
     | '/_app/events'
     | '/_app/newsroom'
@@ -481,6 +493,13 @@ declare module '@tanstack/react-router' {
       path: '/account'
       fullPath: '/account'
       preLoaderRoute: typeof AppAccountRouteRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/archbishop': {
+      id: '/_app/archbishop'
+      path: '/archbishop'
+      fullPath: '/archbishop'
+      preLoaderRoute: typeof AppArchbishopRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/careers': {
@@ -766,6 +785,7 @@ const AppAccountRouteRouteWithChildren = AppAccountRouteRoute._addFileChildren(
 interface AppRouteChildren {
   AppAccountRouteRoute: typeof AppAccountRouteRouteWithChildren
   AppAboutRoute: typeof AppAboutRoute
+  AppArchbishopRoute: typeof AppArchbishopRoute
   AppCareersRoute: typeof AppCareersRoute
   AppEventsRoute: typeof AppEventsRoute
   AppNewsroomRoute: typeof AppNewsroomRoute
@@ -782,6 +802,7 @@ interface AppRouteChildren {
 const AppRouteChildren: AppRouteChildren = {
   AppAccountRouteRoute: AppAccountRouteRouteWithChildren,
   AppAboutRoute: AppAboutRoute,
+  AppArchbishopRoute: AppArchbishopRoute,
   AppCareersRoute: AppCareersRoute,
   AppEventsRoute: AppEventsRoute,
   AppNewsroomRoute: AppNewsroomRoute,
