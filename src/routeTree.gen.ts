@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as AppRouteImport } from './routes/_app'
 import { Route as DashboardRouteRouteImport } from './routes/dashboard/route'
 import { Route as AppIndexRouteImport } from './routes/_app/index'
+import { Route as AppAboutRouteImport } from './routes/_app/about'
 import { Route as AppAccountRouteRouteImport } from './routes/_app/account/route'
 import { Route as AppCareersRouteImport } from './routes/_app/careers'
 import { Route as AppEventsRouteImport } from './routes/_app/events'
@@ -56,6 +57,11 @@ const DashboardRouteRoute = DashboardRouteRouteImport.update({
 const AppIndexRoute = AppIndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAboutRoute = AppAboutRouteImport.update({
+  id: '/about',
+  path: '/about',
   getParentRoute: () => AppRoute,
 } as any)
 const AppAccountRouteRoute = AppAccountRouteRouteImport.update({
@@ -223,6 +229,7 @@ export interface FileRoutesByFullPath {
   '/': typeof AppIndexRoute
   '/account': typeof AppAccountRouteRouteWithChildren
   '/dashboard/users': typeof DashboardUsersRouteRouteWithChildren
+  '/about': typeof AppAboutRoute
   '/careers': typeof AppCareersRoute
   '/events': typeof AppEventsRoute
   '/newsroom': typeof AppNewsroomRoute
@@ -254,6 +261,7 @@ export interface FileRoutesByFullPath {
   '/job/$slug/': typeof AppJobSlugIndexRoute
 }
 export interface FileRoutesByTo {
+  '/about': typeof AppAboutRoute
   '/careers': typeof AppCareersRoute
   '/events': typeof AppEventsRoute
   '/newsroom': typeof AppNewsroomRoute
@@ -291,6 +299,7 @@ export interface FileRoutesById {
   '/_app': typeof AppRouteWithChildren
   '/_app/account': typeof AppAccountRouteRouteWithChildren
   '/dashboard/users': typeof DashboardUsersRouteRouteWithChildren
+  '/_app/about': typeof AppAboutRoute
   '/_app/careers': typeof AppCareersRoute
   '/_app/events': typeof AppEventsRoute
   '/_app/newsroom': typeof AppNewsroomRoute
@@ -329,6 +338,7 @@ export interface FileRouteTypes {
     | '/'
     | '/account'
     | '/dashboard/users'
+    | '/about'
     | '/careers'
     | '/events'
     | '/newsroom'
@@ -360,6 +370,7 @@ export interface FileRouteTypes {
     | '/job/$slug/'
   fileRoutesByTo: FileRoutesByTo
   to:
+    | '/about'
     | '/careers'
     | '/events'
     | '/newsroom'
@@ -396,6 +407,7 @@ export interface FileRouteTypes {
     | '/_app'
     | '/_app/account'
     | '/dashboard/users'
+    | '/_app/about'
     | '/_app/careers'
     | '/_app/events'
     | '/_app/newsroom'
@@ -455,6 +467,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof AppIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/about': {
+      id: '/_app/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AppAboutRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/account': {
@@ -746,6 +765,7 @@ const AppAccountRouteRouteWithChildren = AppAccountRouteRoute._addFileChildren(
 
 interface AppRouteChildren {
   AppAccountRouteRoute: typeof AppAccountRouteRouteWithChildren
+  AppAboutRoute: typeof AppAboutRoute
   AppCareersRoute: typeof AppCareersRoute
   AppEventsRoute: typeof AppEventsRoute
   AppNewsroomRoute: typeof AppNewsroomRoute
@@ -761,6 +781,7 @@ interface AppRouteChildren {
 
 const AppRouteChildren: AppRouteChildren = {
   AppAccountRouteRoute: AppAccountRouteRouteWithChildren,
+  AppAboutRoute: AppAboutRoute,
   AppCareersRoute: AppCareersRoute,
   AppEventsRoute: AppEventsRoute,
   AppNewsroomRoute: AppNewsroomRoute,
