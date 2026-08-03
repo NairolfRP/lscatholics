@@ -1,0 +1,40 @@
+# IDE / Editors
+.idea
+.vscode
+.agents
+.DS_Store
+
+# Deps / arterfacts
+node_modules
+.output
+.nitro
+.vinxi
+.vite-hooks
+dist
+dist-ssr
+.tanstack
+.wrangler
+
+# Local environment and secrets
+.env
+.env.local
+.env.test
+.env.e2e
+*.local
+
+# Local database and temp files
+tmp
+*.db
+
+# Tests and reports
+playwright-report
+test-results
+tests
+e2e
+
+# Documentation
+*.md
+LICENSE
+
+# Vercel
+.vercel
