@@ -24,6 +24,11 @@
             "type": "local",
             "command": ["bunx", "@playwright/mcp@latest"],
             "enabled": true
+        },
+        "vercel": {
+            "type": "remote",
+            "url": "https://mcp.vercel.com",
+            "enabled": true
         }
     }
 }
