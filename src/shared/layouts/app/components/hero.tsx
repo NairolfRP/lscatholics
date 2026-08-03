@@ -140,9 +140,15 @@ function Content({
         })
       )}
       {subtitle && (
-        <p className="max-w-2xl text-base/relaxed font-medium text-white/80 sm:text-lg">
-          {subtitle}
-        </p>
+        <>
+          {typeof subtitle === 'string' ? (
+            <p className="max-w-2xl text-base/relaxed font-medium text-white/80 sm:text-lg">
+              {subtitle}
+            </p>
+          ) : (
+            <div className="text-base/relaxed font-medium text-white/80 sm:text-lg">{subtitle}</div>
+          )}
+        </>
       )}
       {!!actions?.length && <Actions actions={actions} align={align} />}
       {children}
