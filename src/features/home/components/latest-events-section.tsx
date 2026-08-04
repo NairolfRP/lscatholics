@@ -1,7 +1,7 @@
 import { Fragment } from 'react/jsx-runtime'
 import { useQuery } from '@tanstack/react-query'
 import { Link } from '@tanstack/react-router'
-import { AlertCircleIcon } from 'lucide-react'
+import { AlertCircleIcon, ChevronRightIcon } from 'lucide-react'
 import { latestEventsQueryOptions } from '#/features/home/queries'
 import { Alert, AlertDescription, AlertTitle } from '#/shared/components/ui/alert'
 import { Button } from '#/shared/components/ui/button'
@@ -18,33 +18,56 @@ export function LatestEventsSection() {
   if (events.length === 0) return <p>Aucun événement à venir</p>
 
   return (
-    <div className="flex flex-col gap-8">
-      {events.map((event, index) => (
-        <Link
-          to="/event/$slug"
-          params={{ slug: event.slug }}
-          className="hover:text-primary"
-          key={event.id}
-        >
-          <time className="text-sm text-muted-foreground">
-            {formatDate(event.startDate.toISOString())}
-          </time>
-          <Typography variant="h4">{event.title}</Typography>
-          {index + 1 < events.length && <Separator className="mt-4" />}
-        </Link>
-      ))}
+    <div className="flex flex-col gap-3">
+      {events.map((event) => {
+        const startDate = event.startDate
+        const day = startDate.getDate()
+        const month = startDate.toLocaleDateString('fr-FR', { month: 'short' })
+
+        return (
+          <Link
+            to="/event/$slug"
+            params={{ slug: event.slug }}
+            key={event.id}
+            className="group flex items-center gap-4 rounded-xl p-3 ring-1 ring-foreground/10 transition duration-300 hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          >
+            <time
+              dateTime={startDate.toISOString()}
+              className="flex h-14 w-14 shrink-0 flex-col items-center justify-center rounded-lg bg-secondary text-secondary-foreground"
+            >
+              <span className="text-xl leading-none font-bold">{day}</span>
+              <span className="mt-0.5 text-xs tracking-wide uppercase">{month}</span>
+            </time>
+            <div className="min-w-0">
+              <Typography
+                variant="h4"
+                className="truncate transition-colors group-hover:text-catholic-gold"
+              >
+                {event.title}
+              </Typography>
+              <time className="text-sm text-muted-foreground">
+                {formatDate(startDate.toISOString(), { weekday: 'short' })}
+              </time>
+            </div>
+            <ChevronRightIcon className="ml-auto size-5 shrink-0 text-muted-foreground transition-all group-hover:translate-x-1 group-hover:text-catholic-gold" />
+          </Link>
+        )
+      })}
     </div>
   )
 }
 
 function UpcomingEventsSkeleton() {
   return (
-    <div className="flex flex-col gap-8">
+    <div className="flex flex-col gap-3">
       {Array.from({ length: 3 }).map((_item, index) => (
         <Fragment key={index}>
-          <div className="space-y-3">
-            <Skeleton className="h-3 w-20" />
-            <Skeleton className="h-5 w-2/4" />
+          <div className="flex items-center gap-4 rounded-xl p-3 ring-1 ring-foreground/10">
+            <Skeleton className="h-14 w-14 shrink-0 rounded-lg" />
+            <div className="flex flex-1 flex-col gap-2">
+              <Skeleton className="h-5 w-2/4" />
+              <Skeleton className="h-3 w-28" />
+            </div>
           </div>
           {index >= 0 && index < 2 ? <Separator /> : null}
         </Fragment>

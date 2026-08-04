@@ -2,7 +2,6 @@ import { useQuery } from '@tanstack/react-query'
 import { Link } from '@tanstack/react-router'
 import { ChevronRight } from 'lucide-react'
 import { latestEventsQueryOptions } from '#/features/home/queries.ts'
-import { Button } from '#/shared/components/ui/button'
 import { Skeleton } from '#/shared/components/ui/skeleton'
 import { formatDate } from '#/utils/date'
 
@@ -23,40 +22,30 @@ export function NextChurchEvent() {
     <Link
       to="/event/$slug"
       params={{ slug: nextEvent.slug }}
-      className="flex flex-col items-center pt-10 text-background transition-opacity hover:opacity-80 dark:text-foreground"
+      className="group inline-flex max-w-full flex-col items-center rounded-2xl border border-white/25 bg-black/25 px-8 py-5 text-center text-white backdrop-blur-sm transition hover:border-white/50 hover:bg-black/35 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary"
     >
-      <h3 className="mb-2 border-b border-muted-foreground font-semibold">Prochain événement</h3>
-      <div className="space-y-1 text-xs">
-        <div className="text-center">{formatDate(nextEvent.startDate.toISOString())}</div>
-
-        <div className="font-bold">{nextEvent.title}</div>
-        <div className="mt-4 flex justify-center">
-          <Button variant="ghost" size="sm">
-            Plus d'infos <ChevronRight className="ml-1 size-4" />
-          </Button>
-        </div>
-      </div>
+      <span className="text-xs font-semibold tracking-[0.25em] text-secondary uppercase">
+        Prochain événement
+      </span>
+      <time className="mt-2 text-sm text-white/85">
+        {formatDate(nextEvent.startDate.toISOString())}
+      </time>
+      <strong className="mt-1 text-lg leading-snug font-bold">{nextEvent.title}</strong>
+      <span className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-secondary">
+        Plus d'infos
+        <ChevronRight className="size-4 transition-transform group-hover:translate-x-1" />
+      </span>
     </Link>
   )
 }
 
 function NextChurchEventSkeleton() {
   return (
-    <div className="flex flex-col items-center pt-10">
-      <Skeleton className="mb-2 h-4 w-40" />
-      <div className="space-y-1 text-xs">
-        <div className="flex justify-center">
-          <Skeleton className="h-3 w-24" />
-        </div>
-
-        <div className="flex justify-center">
-          <Skeleton className="h-4 w-32" />
-        </div>
-
-        <div className="mt-4 flex justify-center">
-          <Skeleton className="h-5 w-28 rounded-md" />
-        </div>
-      </div>
+    <div className="flex max-w-full flex-col items-center rounded-2xl border border-white/25 bg-black/25 px-8 py-5">
+      <Skeleton className="h-3 w-36 bg-white/20" />
+      <Skeleton className="mt-2 h-3 w-24 bg-white/20" />
+      <Skeleton className="mt-1 h-4 w-40 bg-white/20" />
+      <Skeleton className="mt-3 h-4 w-28 bg-white/20" />
     </div>
   )
 }

@@ -2,7 +2,7 @@ import { Fragment } from 'react/jsx-runtime'
 import { useQuery } from '@tanstack/react-query'
 import { Link } from '@tanstack/react-router'
 import { Image } from '@unpic/react'
-import { AlertCircleIcon } from 'lucide-react'
+import { AlertCircleIcon, CalendarIcon } from 'lucide-react'
 import { Alert, AlertDescription, AlertTitle } from '#/shared/components/ui/alert'
 import { Badge } from '#/shared/components/ui/badge'
 import { Button } from '#/shared/components/ui/button'
@@ -23,44 +23,60 @@ export function LatestPostsSection() {
   const otherPosts = posts.slice(1)
 
   return (
-    <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-      <Link to="/post/$slug" params={{ slug: latestPost.slug }} className="hover:text-primary">
-        <div className="space-y-3 ">
+    <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+      <Link
+        to="/post/$slug"
+        params={{ slug: latestPost.slug }}
+        className="group block rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+      >
+        <div className="overflow-hidden rounded-xl ring-1 ring-foreground/10 transition duration-300 group-hover:shadow-md">
           <Image
             src={latestPost.coverImageUrl}
-            className="aspect-video w-full object-cover shadow-xs md:aspect-2/2"
+            className="aspect-video w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
             width={500}
             height={300}
             alt={latestPost.title}
             loading="lazy"
           />
-          {latestPost.category && <Badge className="uppercase">{latestPost.category}</Badge>}
-          <Typography variant="h4">{latestPost.title}</Typography>
         </div>
-
-        <time className=" text-sm text-muted-foreground">
+        {latestPost.category && (
+          <Badge variant="secondary" className="mt-4 uppercase">
+            {latestPost.category}
+          </Badge>
+        )}
+        <Typography variant="h4" className="mt-2 transition-colors group-hover:text-catholic-gold">
+          {latestPost.title}
+        </Typography>
+        <time className="mt-2 flex items-center gap-1.5 text-sm text-muted-foreground">
+          <CalendarIcon className="size-3.5" />
           {formatDate(latestPost.publishedAt!.toISOString())}
         </time>
       </Link>
 
-      <Separator className="block md:hidden data-horizontal:h-1" />
-
-      <div className="flex flex-col gap-5">
+      <div className="flex flex-col gap-1">
         {otherPosts.map((post, index) => (
           <Fragment key={post.id}>
-            <div className="space-y-3">
-              <Link
-                to="/post/$slug"
-                params={{ slug: post.slug }}
-                className="contents hover:text-primary"
+            <Link
+              to="/post/$slug"
+              params={{ slug: post.slug }}
+              className="group block rounded-xl px-3 py-4 transition hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            >
+              {post.category && (
+                <Badge variant="secondary" className="uppercase">
+                  {post.category}
+                </Badge>
+              )}
+              <Typography
+                variant="h4"
+                className="mt-2 transition-colors group-hover:text-catholic-gold"
               >
-                {post.category && <Badge className="uppercase">{post.category}</Badge>}
-                <Typography variant="h4">{post.title}</Typography>
-                <time className="text-sm text-muted-foreground">
-                  {formatDate(post.publishedAt!.toISOString())}
-                </time>
-              </Link>
-            </div>
+                {post.title}
+              </Typography>
+              <time className="mt-2 flex items-center gap-1.5 text-sm text-muted-foreground">
+                <CalendarIcon className="size-3.5" />
+                {formatDate(post.publishedAt!.toISOString())}
+              </time>
+            </Link>
             {index + 1 < otherPosts.length ? <Separator /> : null}
           </Fragment>
         ))}
@@ -71,25 +87,25 @@ export function LatestPostsSection() {
 
 function LatestPostsSkeleton() {
   return (
-    <div className="grid grid-cols-2 gap-5">
+    <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
       <div className="space-y-4">
-        <Skeleton className="aspect-16/10 w-full rounded-lg" />
-        <Skeleton className="h-5 w-10 rounded-full" />
+        <Skeleton className="aspect-16/10 w-full rounded-xl" />
+        <Skeleton className="h-5 w-24 rounded-full" />
         <div className="flex flex-col gap-1.5">
           <Skeleton className="h-5 w-full" />
           <Skeleton className="h-5 w-3/4" />
         </div>
-        <Skeleton className="h-3 w-20" />
+        <Skeleton className="h-3 w-32" />
       </div>
 
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-1">
         {Array.from({ length: 3 }).map((_item, index) => (
           <Fragment key={index}>
-            <div className="space-y-3">
-              <Skeleton className="h-5 w-10 rounded-full" />
+            <div className="space-y-3 rounded-xl px-3 py-4">
+              <Skeleton className="h-5 w-20 rounded-full" />
               <Skeleton className="h-4 w-full" />
               <Skeleton className="h-4 w-4/5" />
-              <Skeleton className="h-3 w-18" />
+              <Skeleton className="h-3 w-24" />
             </div>
             {index >= 0 && index < 2 ? <Separator /> : null}
           </Fragment>
@@ -101,7 +117,7 @@ function LatestPostsSkeleton() {
 
 function LatestPostsError({ onRetry }: { onRetry: () => void }) {
   return (
-    <div className="col-span-2">
+    <div className="md:col-span-2">
       <Alert variant="destructive" className="flex w-full flex-col gap-2">
         <div className="flex items-center gap-2">
           <AlertCircleIcon />
