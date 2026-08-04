@@ -24,3 +24,95 @@
   -ms-transform: translate(0, -105%);
   transform: translate(0, -105%);
 }
+
+/**
+ * GTA V map (Leaflet)
+ */
+
+.gta5-map .leaflet-container {
+  background: #0f1115;
+  font-family: var(--font-sans);
+}
+
+.gta5-map .leaflet-control-zoom {
+  overflow: hidden;
+  border: none;
+  border-radius: 0.75rem;
+  box-shadow: 0 1px 3px rgb(0 0 0 / 0.3);
+}
+
+.gta5-map .leaflet-control-zoom a {
+  width: 2rem;
+  height: 2rem;
+  line-height: 2rem;
+  font-size: 1.125rem;
+  color: var(--foreground);
+  background: var(--card);
+  border-color: var(--border);
+}
+
+.gta5-map .leaflet-control-zoom a:hover {
+  color: var(--foreground);
+  background: var(--muted);
+}
+
+.gta5-map .leaflet-control-layers {
+  overflow: hidden;
+  border: none;
+  border-radius: 0.75rem;
+  box-shadow: 0 1px 3px rgb(0 0 0 / 0.3);
+}
+
+.gta5-map .leaflet-control-layers-expanded {
+  padding: 0.375rem 0.75rem;
+  color: var(--popover-foreground);
+  background: var(--popover);
+}
+
+.gta5-map .leaflet-control-layers label span {
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.gta5-map .leaflet-control-attribution {
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  font-size: 0.625rem;
+  color: rgb(255 255 255 / 0.85);
+  background: rgb(0 0 0 / 0.55);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+}
+
+.gta5-map .leaflet-control-attribution a {
+  color: inherit;
+}
+
+.gta5-marker {
+  border: none;
+  background: transparent;
+}
+
+.gta5-marker svg {
+  display: block;
+  transition: transform 0.15s ease;
+  transform-origin: 50% 100%;
+  filter: drop-shadow(0 2px 3px rgb(0 0 0 / 0.35));
+}
+
+.gta5-marker:hover svg {
+  transform: scale(1.1);
+}
+
+.gta5-map .leaflet-popup-content-wrapper {
+  border-radius: 0.75rem;
+  color: var(--popover-foreground);
+  background: var(--popover);
+  box-shadow: 0 8px 24px rgb(0 0 0 / 0.18);
+}
+
+.gta5-map .leaflet-popup-content {
+  margin: 0.75rem 1rem;
+  font-family: var(--font-sans);
+}
+
