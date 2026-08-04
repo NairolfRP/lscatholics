@@ -35,7 +35,7 @@ function PostsComponent() {
         subtitle="Restez informé de la vie de notre archidiocèse"
       />
 
-      <section className="container mx-auto px-2 pt-10 pb-20">
+      <section className="container mx-auto px-4 pt-14 pb-24">
         <PostsGrid />
       </section>
     </>
