@@ -188,7 +188,7 @@ function DirectorSection({ director }: { director: DepartmentTeamMember }) {
         />
       )}
       <div>
-        <p className="text-sm font-bold tracking-wide text-catholic-red uppercase">Direction</p>
+        <p className="text-sm font-bold tracking-wide text-catholic-red dark:text-red-400 uppercase">Direction</p>
         <h3 className="mt-1 text-3xl font-bold uppercase">{director.name || 'Poste vacant'}</h3>
         <p className="mt-1 font-semibold text-secondary">{director.position || 'N/A'}</p>
         {director.phone && (

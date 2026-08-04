@@ -15,7 +15,7 @@ export function ProgramCard({ program }: { program: Program }) {
         <span className="flex size-12 shrink-0 items-center justify-center rounded-full bg-catholic-red/10 text-catholic-red transition group-hover:bg-catholic-red group-hover:text-white dark:text-red-400">
           <Icon className="size-6" />
         </span>
-        <ArrowRightIcon className="size-5 text-muted-foreground transition group-hover:translate-x-1 group-hover:text-catholic-red" />
+        <ArrowRightIcon className="size-5 text-muted-foreground transition group-hover:translate-x-1 group-hover:text-catholic-red dark:group-hover:text-red-400" />
       </div>
       <Badge
         variant="outline"

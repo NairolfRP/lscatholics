@@ -18,7 +18,7 @@ export const serviceCategories: Record<ChurchServiceCategory, ServiceCategoryMet
     title: 'Sacrements de la vie chrétienne',
     description:
       "Les sacrements, signes sensibles de la grâce de Dieu, accompagnent le chrétien de sa naissance à son dernier souffle.",
-    chip: 'bg-catholic-blue/10 text-catholic-blue dark:text-catholic-blue/80',
+    chip: 'bg-catholic-blue/10 text-catholic-blue dark:text-blue-400',
     accent: 'bg-catholic-blue',
     hero: 'bg-linear-to-r from-catholic-blue to-catholic-blue/80',
   },
@@ -36,7 +36,7 @@ export const serviceCategories: Record<ChurchServiceCategory, ServiceCategoryMet
     title: 'Accompagnement et célébrations',
     description:
       "Écoute, médiation, enseignement et traditions : l'Église se tient aux côtés de chacun, dans les joies comme dans les épreuves.",
-    chip: 'bg-catholic-red/10 text-catholic-red dark:text-catholic-red/80',
+    chip: 'bg-catholic-red/10 text-catholic-red dark:text-red-400',
     accent: 'bg-catholic-red',
     hero: 'bg-linear-to-r from-catholic-red to-catholic-red/80',
   },

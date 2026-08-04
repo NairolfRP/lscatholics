@@ -40,7 +40,7 @@ function AboutUsPage() {
             </span>
             <br />
             Une <span className="text-primary">Famille</span> de{' '}
-            <span className="text-catholic-purple">Familles</span>
+            <span className="text-catholic-purple dark:text-catholic-purple-light">Familles</span>
           </Typography>
         }
         subtitle={
