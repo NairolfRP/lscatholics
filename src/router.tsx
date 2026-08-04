@@ -15,6 +15,7 @@ export function getRouter() {
     routeTree,
     context,
     scrollRestoration: true,
+    defaultViewTransition: true,
     defaultPreload: 'intent',
     defaultPreloadStaleTime: 0,
     defaultErrorComponent: DefaultErrorComponent,
