@@ -16,6 +16,7 @@ import { Route as AppAboutRouteImport } from './routes/_app/about'
 import { Route as AppAccountRouteRouteImport } from './routes/_app/account/route'
 import { Route as AppArchbishopRouteImport } from './routes/_app/archbishop'
 import { Route as AppCareersRouteImport } from './routes/_app/careers'
+import { Route as AppCharitiesRouteRouteImport } from './routes/_app/charities/route'
 import { Route as AppDepartmentsRouteImport } from './routes/_app/departments'
 import { Route as AppEventsRouteImport } from './routes/_app/events'
 import { Route as AppNewsroomRouteImport } from './routes/_app/newsroom'
@@ -29,6 +30,7 @@ import { Route as DashboardUsersRouteRouteImport } from './routes/dashboard/user
 import { Route as AppAccountIndexRouteImport } from './routes/_app/account/index'
 import { Route as AppAccountSessionsRouteImport } from './routes/_app/account/sessions'
 import { Route as AppAccountSettingsRouteImport } from './routes/_app/account/settings'
+import { Route as AppCharitiesIndexRouteImport } from './routes/_app/charities/index'
 import { Route as AppDepartmentSlugRouteImport } from './routes/_app/department/$slug'
 import { Route as AppEventSlugRouteImport } from './routes/_app/event/$slug'
 import { Route as AppPostSlugRouteImport } from './routes/_app/post/$slug'
@@ -41,6 +43,7 @@ import { Route as DashboardJobOpeningsCreateRouteImport } from './routes/dashboa
 import { Route as DashboardPostsIndexRouteImport } from './routes/dashboard/posts/index'
 import { Route as DashboardPostsCreateRouteImport } from './routes/dashboard/posts/create'
 import { Route as DashboardUsersIndexRouteImport } from './routes/dashboard/users/index'
+import { Route as AppCharitiesProgramSlugRouteImport } from './routes/_app/charities/program/$slug'
 import { Route as AppJobSlugIndexRouteImport } from './routes/_app/job/$slug.index'
 import { Route as AppJobSlugApplyRouteImport } from './routes/_app/job/$slug.apply'
 import { Route as DashboardEventsEditIdRouteImport } from './routes/dashboard/events/edit.$id'
@@ -83,6 +86,11 @@ const AppArchbishopRoute = AppArchbishopRouteImport.update({
 const AppCareersRoute = AppCareersRouteImport.update({
   id: '/careers',
   path: '/careers',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppCharitiesRouteRoute = AppCharitiesRouteRouteImport.update({
+  id: '/charities',
+  path: '/charities',
   getParentRoute: () => AppRoute,
 } as any)
 const AppDepartmentsRoute = AppDepartmentsRouteImport.update({
@@ -150,6 +158,11 @@ const AppAccountSettingsRoute = AppAccountSettingsRouteImport.update({
   path: '/settings',
   getParentRoute: () => AppAccountRouteRoute,
 } as any)
+const AppCharitiesIndexRoute = AppCharitiesIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AppCharitiesRouteRoute,
+} as any)
 const AppDepartmentSlugRoute = AppDepartmentSlugRouteImport.update({
   id: '/department/$slug',
   path: '/department/$slug',
@@ -212,6 +225,11 @@ const DashboardUsersIndexRoute = DashboardUsersIndexRouteImport.update({
   path: '/',
   getParentRoute: () => DashboardUsersRouteRoute,
 } as any)
+const AppCharitiesProgramSlugRoute = AppCharitiesProgramSlugRouteImport.update({
+  id: '/program/$slug',
+  path: '/program/$slug',
+  getParentRoute: () => AppCharitiesRouteRoute,
+} as any)
 const AppJobSlugIndexRoute = AppJobSlugIndexRouteImport.update({
   id: '/job/$slug/',
   path: '/job/$slug/',
@@ -264,6 +282,7 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof DashboardRouteRouteWithChildren
   '/': typeof AppIndexRoute
   '/account': typeof AppAccountRouteRouteWithChildren
+  '/charities': typeof AppCharitiesRouteRouteWithChildren
   '/dashboard/users': typeof DashboardUsersRouteRouteWithChildren
   '/about': typeof AppAboutRoute
   '/archbishop': typeof AppArchbishopRoute
@@ -288,10 +307,12 @@ export interface FileRoutesByFullPath {
   '/dashboard/job-openings/create': typeof DashboardJobOpeningsCreateRoute
   '/dashboard/posts/create': typeof DashboardPostsCreateRoute
   '/account/': typeof AppAccountIndexRoute
+  '/charities/': typeof AppCharitiesIndexRoute
   '/dashboard/events/': typeof DashboardEventsIndexRoute
   '/dashboard/job-openings/': typeof DashboardJobOpeningsIndexRoute
   '/dashboard/posts/': typeof DashboardPostsIndexRoute
   '/dashboard/users/': typeof DashboardUsersIndexRoute
+  '/charities/program/$slug': typeof AppCharitiesProgramSlugRoute
   '/job/$slug/apply': typeof AppJobSlugApplyRoute
   '/dashboard/events/edit/$id': typeof DashboardEventsEditIdRoute
   '/dashboard/events/show/$id': typeof DashboardEventsShowIdRoute
@@ -327,10 +348,12 @@ export interface FileRoutesByTo {
   '/dashboard/job-openings/create': typeof DashboardJobOpeningsCreateRoute
   '/dashboard/posts/create': typeof DashboardPostsCreateRoute
   '/account': typeof AppAccountIndexRoute
+  '/charities': typeof AppCharitiesIndexRoute
   '/dashboard/events': typeof DashboardEventsIndexRoute
   '/dashboard/job-openings': typeof DashboardJobOpeningsIndexRoute
   '/dashboard/posts': typeof DashboardPostsIndexRoute
   '/dashboard/users': typeof DashboardUsersIndexRoute
+  '/charities/program/$slug': typeof AppCharitiesProgramSlugRoute
   '/job/$slug/apply': typeof AppJobSlugApplyRoute
   '/dashboard/events/edit/$id': typeof DashboardEventsEditIdRoute
   '/dashboard/events/show/$id': typeof DashboardEventsShowIdRoute
@@ -346,6 +369,7 @@ export interface FileRoutesById {
   '/dashboard': typeof DashboardRouteRouteWithChildren
   '/_app': typeof AppRouteWithChildren
   '/_app/account': typeof AppAccountRouteRouteWithChildren
+  '/_app/charities': typeof AppCharitiesRouteRouteWithChildren
   '/dashboard/users': typeof DashboardUsersRouteRouteWithChildren
   '/_app/about': typeof AppAboutRoute
   '/_app/archbishop': typeof AppArchbishopRoute
@@ -371,10 +395,12 @@ export interface FileRoutesById {
   '/dashboard/job-openings/create': typeof DashboardJobOpeningsCreateRoute
   '/dashboard/posts/create': typeof DashboardPostsCreateRoute
   '/_app/account/': typeof AppAccountIndexRoute
+  '/_app/charities/': typeof AppCharitiesIndexRoute
   '/dashboard/events/': typeof DashboardEventsIndexRoute
   '/dashboard/job-openings/': typeof DashboardJobOpeningsIndexRoute
   '/dashboard/posts/': typeof DashboardPostsIndexRoute
   '/dashboard/users/': typeof DashboardUsersIndexRoute
+  '/_app/charities/program/$slug': typeof AppCharitiesProgramSlugRoute
   '/_app/job/$slug/apply': typeof AppJobSlugApplyRoute
   '/dashboard/events/edit/$id': typeof DashboardEventsEditIdRoute
   '/dashboard/events/show/$id': typeof DashboardEventsShowIdRoute
@@ -391,6 +417,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/'
     | '/account'
+    | '/charities'
     | '/dashboard/users'
     | '/about'
     | '/archbishop'
@@ -415,10 +442,12 @@ export interface FileRouteTypes {
     | '/dashboard/job-openings/create'
     | '/dashboard/posts/create'
     | '/account/'
+    | '/charities/'
     | '/dashboard/events/'
     | '/dashboard/job-openings/'
     | '/dashboard/posts/'
     | '/dashboard/users/'
+    | '/charities/program/$slug'
     | '/job/$slug/apply'
     | '/dashboard/events/edit/$id'
     | '/dashboard/events/show/$id'
@@ -454,10 +483,12 @@ export interface FileRouteTypes {
     | '/dashboard/job-openings/create'
     | '/dashboard/posts/create'
     | '/account'
+    | '/charities'
     | '/dashboard/events'
     | '/dashboard/job-openings'
     | '/dashboard/posts'
     | '/dashboard/users'
+    | '/charities/program/$slug'
     | '/job/$slug/apply'
     | '/dashboard/events/edit/$id'
     | '/dashboard/events/show/$id'
@@ -472,6 +503,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/_app'
     | '/_app/account'
+    | '/_app/charities'
     | '/dashboard/users'
     | '/_app/about'
     | '/_app/archbishop'
@@ -497,10 +529,12 @@ export interface FileRouteTypes {
     | '/dashboard/job-openings/create'
     | '/dashboard/posts/create'
     | '/_app/account/'
+    | '/_app/charities/'
     | '/dashboard/events/'
     | '/dashboard/job-openings/'
     | '/dashboard/posts/'
     | '/dashboard/users/'
+    | '/_app/charities/program/$slug'
     | '/_app/job/$slug/apply'
     | '/dashboard/events/edit/$id'
     | '/dashboard/events/show/$id'
@@ -567,6 +601,13 @@ declare module '@tanstack/react-router' {
       path: '/careers'
       fullPath: '/careers'
       preLoaderRoute: typeof AppCareersRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/charities': {
+      id: '/_app/charities'
+      path: '/charities'
+      fullPath: '/charities'
+      preLoaderRoute: typeof AppCharitiesRouteRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/departments': {
@@ -660,6 +701,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppAccountSettingsRouteImport
       parentRoute: typeof AppAccountRouteRoute
     }
+    '/_app/charities/': {
+      id: '/_app/charities/'
+      path: '/'
+      fullPath: '/charities/'
+      preLoaderRoute: typeof AppCharitiesIndexRouteImport
+      parentRoute: typeof AppCharitiesRouteRoute
+    }
     '/_app/department/$slug': {
       id: '/_app/department/$slug'
       path: '/department/$slug'
@@ -743,6 +791,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/dashboard/users/'
       preLoaderRoute: typeof DashboardUsersIndexRouteImport
       parentRoute: typeof DashboardUsersRouteRoute
+    }
+    '/_app/charities/program/$slug': {
+      id: '/_app/charities/program/$slug'
+      path: '/program/$slug'
+      fullPath: '/charities/program/$slug'
+      preLoaderRoute: typeof AppCharitiesProgramSlugRouteImport
+      parentRoute: typeof AppCharitiesRouteRoute
     }
     '/_app/job/$slug/': {
       id: '/_app/job/$slug/'
@@ -877,8 +932,22 @@ const AppAccountRouteRouteWithChildren = AppAccountRouteRoute._addFileChildren(
   AppAccountRouteRouteChildren,
 )
 
+interface AppCharitiesRouteRouteChildren {
+  AppCharitiesIndexRoute: typeof AppCharitiesIndexRoute
+  AppCharitiesProgramSlugRoute: typeof AppCharitiesProgramSlugRoute
+}
+
+const AppCharitiesRouteRouteChildren: AppCharitiesRouteRouteChildren = {
+  AppCharitiesIndexRoute: AppCharitiesIndexRoute,
+  AppCharitiesProgramSlugRoute: AppCharitiesProgramSlugRoute,
+}
+
+const AppCharitiesRouteRouteWithChildren =
+  AppCharitiesRouteRoute._addFileChildren(AppCharitiesRouteRouteChildren)
+
 interface AppRouteChildren {
   AppAccountRouteRoute: typeof AppAccountRouteRouteWithChildren
+  AppCharitiesRouteRoute: typeof AppCharitiesRouteRouteWithChildren
   AppAboutRoute: typeof AppAboutRoute
   AppArchbishopRoute: typeof AppArchbishopRoute
   AppCareersRoute: typeof AppCareersRoute
@@ -901,6 +970,7 @@ interface AppRouteChildren {
 
 const AppRouteChildren: AppRouteChildren = {
   AppAccountRouteRoute: AppAccountRouteRouteWithChildren,
+  AppCharitiesRouteRoute: AppCharitiesRouteRouteWithChildren,
   AppAboutRoute: AppAboutRoute,
   AppArchbishopRoute: AppArchbishopRoute,
   AppCareersRoute: AppCareersRoute,
