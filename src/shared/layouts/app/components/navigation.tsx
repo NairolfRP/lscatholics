@@ -95,6 +95,7 @@ export default function Navigation() {
                         <li key={subItem.label}>
                           <NavigationMenuLink
                             className={triggerButtonClasses}
+                            closeOnClick
                             render={
                               <Link
                                 to={subItem.to}
