@@ -16,6 +16,7 @@ import { Route as AppAboutRouteImport } from './routes/_app/about'
 import { Route as AppAccountRouteRouteImport } from './routes/_app/account/route'
 import { Route as AppArchbishopRouteImport } from './routes/_app/archbishop'
 import { Route as AppCareersRouteImport } from './routes/_app/careers'
+import { Route as AppDepartmentsRouteImport } from './routes/_app/departments'
 import { Route as AppEventsRouteImport } from './routes/_app/events'
 import { Route as AppNewsroomRouteImport } from './routes/_app/newsroom'
 import { Route as AppParishesRouteImport } from './routes/_app/parishes'
@@ -27,6 +28,7 @@ import { Route as DashboardUsersRouteRouteImport } from './routes/dashboard/user
 import { Route as AppAccountIndexRouteImport } from './routes/_app/account/index'
 import { Route as AppAccountSessionsRouteImport } from './routes/_app/account/sessions'
 import { Route as AppAccountSettingsRouteImport } from './routes/_app/account/settings'
+import { Route as AppDepartmentSlugRouteImport } from './routes/_app/department/$slug'
 import { Route as AppEventSlugRouteImport } from './routes/_app/event/$slug'
 import { Route as AppPostSlugRouteImport } from './routes/_app/post/$slug'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
@@ -79,6 +81,11 @@ const AppArchbishopRoute = AppArchbishopRouteImport.update({
 const AppCareersRoute = AppCareersRouteImport.update({
   id: '/careers',
   path: '/careers',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppDepartmentsRoute = AppDepartmentsRouteImport.update({
+  id: '/departments',
+  path: '/departments',
   getParentRoute: () => AppRoute,
 } as any)
 const AppEventsRoute = AppEventsRouteImport.update({
@@ -135,6 +142,11 @@ const AppAccountSettingsRoute = AppAccountSettingsRouteImport.update({
   id: '/settings',
   path: '/settings',
   getParentRoute: () => AppAccountRouteRoute,
+} as any)
+const AppDepartmentSlugRoute = AppDepartmentSlugRouteImport.update({
+  id: '/department/$slug',
+  path: '/department/$slug',
+  getParentRoute: () => AppRoute,
 } as any)
 const AppEventSlugRoute = AppEventSlugRouteImport.update({
   id: '/event/$slug',
@@ -244,6 +256,7 @@ export interface FileRoutesByFullPath {
   '/about': typeof AppAboutRoute
   '/archbishop': typeof AppArchbishopRoute
   '/careers': typeof AppCareersRoute
+  '/departments': typeof AppDepartmentsRoute
   '/events': typeof AppEventsRoute
   '/newsroom': typeof AppNewsroomRoute
   '/parishes': typeof AppParishesRoute
@@ -253,6 +266,7 @@ export interface FileRoutesByFullPath {
   '/dashboard/': typeof DashboardIndexRoute
   '/account/sessions': typeof AppAccountSessionsRoute
   '/account/settings': typeof AppAccountSettingsRoute
+  '/department/$slug': typeof AppDepartmentSlugRoute
   '/event/$slug': typeof AppEventSlugRoute
   '/post/$slug': typeof AppPostSlugRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
@@ -278,6 +292,7 @@ export interface FileRoutesByTo {
   '/about': typeof AppAboutRoute
   '/archbishop': typeof AppArchbishopRoute
   '/careers': typeof AppCareersRoute
+  '/departments': typeof AppDepartmentsRoute
   '/events': typeof AppEventsRoute
   '/newsroom': typeof AppNewsroomRoute
   '/parishes': typeof AppParishesRoute
@@ -288,6 +303,7 @@ export interface FileRoutesByTo {
   '/dashboard': typeof DashboardIndexRoute
   '/account/sessions': typeof AppAccountSessionsRoute
   '/account/settings': typeof AppAccountSettingsRoute
+  '/department/$slug': typeof AppDepartmentSlugRoute
   '/event/$slug': typeof AppEventSlugRoute
   '/post/$slug': typeof AppPostSlugRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
@@ -318,6 +334,7 @@ export interface FileRoutesById {
   '/_app/about': typeof AppAboutRoute
   '/_app/archbishop': typeof AppArchbishopRoute
   '/_app/careers': typeof AppCareersRoute
+  '/_app/departments': typeof AppDepartmentsRoute
   '/_app/events': typeof AppEventsRoute
   '/_app/newsroom': typeof AppNewsroomRoute
   '/_app/parishes': typeof AppParishesRoute
@@ -328,6 +345,7 @@ export interface FileRoutesById {
   '/dashboard/': typeof DashboardIndexRoute
   '/_app/account/sessions': typeof AppAccountSessionsRoute
   '/_app/account/settings': typeof AppAccountSettingsRoute
+  '/_app/department/$slug': typeof AppDepartmentSlugRoute
   '/_app/event/$slug': typeof AppEventSlugRoute
   '/_app/post/$slug': typeof AppPostSlugRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
@@ -359,6 +377,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/archbishop'
     | '/careers'
+    | '/departments'
     | '/events'
     | '/newsroom'
     | '/parishes'
@@ -368,6 +387,7 @@ export interface FileRouteTypes {
     | '/dashboard/'
     | '/account/sessions'
     | '/account/settings'
+    | '/department/$slug'
     | '/event/$slug'
     | '/post/$slug'
     | '/api/auth/$'
@@ -393,6 +413,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/archbishop'
     | '/careers'
+    | '/departments'
     | '/events'
     | '/newsroom'
     | '/parishes'
@@ -403,6 +424,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/account/sessions'
     | '/account/settings'
+    | '/department/$slug'
     | '/event/$slug'
     | '/post/$slug'
     | '/api/auth/$'
@@ -432,6 +454,7 @@ export interface FileRouteTypes {
     | '/_app/about'
     | '/_app/archbishop'
     | '/_app/careers'
+    | '/_app/departments'
     | '/_app/events'
     | '/_app/newsroom'
     | '/_app/parishes'
@@ -442,6 +465,7 @@ export interface FileRouteTypes {
     | '/dashboard/'
     | '/_app/account/sessions'
     | '/_app/account/settings'
+    | '/_app/department/$slug'
     | '/_app/event/$slug'
     | '/_app/post/$slug'
     | '/api/auth/$'
@@ -521,6 +545,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppCareersRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/departments': {
+      id: '/_app/departments'
+      path: '/departments'
+      fullPath: '/departments'
+      preLoaderRoute: typeof AppDepartmentsRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/events': {
       id: '/_app/events'
       path: '/events'
@@ -597,6 +628,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/account/settings'
       preLoaderRoute: typeof AppAccountSettingsRouteImport
       parentRoute: typeof AppAccountRouteRoute
+    }
+    '/_app/department/$slug': {
+      id: '/_app/department/$slug'
+      path: '/department/$slug'
+      fullPath: '/department/$slug'
+      preLoaderRoute: typeof AppDepartmentSlugRouteImport
+      parentRoute: typeof AppRoute
     }
     '/_app/event/$slug': {
       id: '/_app/event/$slug'
@@ -806,6 +844,7 @@ interface AppRouteChildren {
   AppAboutRoute: typeof AppAboutRoute
   AppArchbishopRoute: typeof AppArchbishopRoute
   AppCareersRoute: typeof AppCareersRoute
+  AppDepartmentsRoute: typeof AppDepartmentsRoute
   AppEventsRoute: typeof AppEventsRoute
   AppNewsroomRoute: typeof AppNewsroomRoute
   AppParishesRoute: typeof AppParishesRoute
@@ -813,6 +852,7 @@ interface AppRouteChildren {
   AppRegisterParishionerRoute: typeof AppRegisterParishionerRoute
   AppVocationsRoute: typeof AppVocationsRoute
   AppIndexRoute: typeof AppIndexRoute
+  AppDepartmentSlugRoute: typeof AppDepartmentSlugRoute
   AppEventSlugRoute: typeof AppEventSlugRoute
   AppPostSlugRoute: typeof AppPostSlugRoute
   AppJobSlugApplyRoute: typeof AppJobSlugApplyRoute
@@ -824,6 +864,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppAboutRoute: AppAboutRoute,
   AppArchbishopRoute: AppArchbishopRoute,
   AppCareersRoute: AppCareersRoute,
+  AppDepartmentsRoute: AppDepartmentsRoute,
   AppEventsRoute: AppEventsRoute,
   AppNewsroomRoute: AppNewsroomRoute,
   AppParishesRoute: AppParishesRoute,
@@ -831,6 +872,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppRegisterParishionerRoute: AppRegisterParishionerRoute,
   AppVocationsRoute: AppVocationsRoute,
   AppIndexRoute: AppIndexRoute,
+  AppDepartmentSlugRoute: AppDepartmentSlugRoute,
   AppEventSlugRoute: AppEventSlugRoute,
   AppPostSlugRoute: AppPostSlugRoute,
   AppJobSlugApplyRoute: AppJobSlugApplyRoute,

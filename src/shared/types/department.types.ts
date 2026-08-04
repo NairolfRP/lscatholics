@@ -1,7 +1,8 @@
-import type React from 'react'
 import type { DEPARTMENT } from '#shared/constants/department.ts'
 
 export type DepartmentId = (typeof DEPARTMENT)[keyof typeof DEPARTMENT]
+
+export type DepartmentCategory = 'curia' | 'services' | 'charities'
 
 export type Department = {
   id: DepartmentId
@@ -9,6 +10,7 @@ export type Department = {
   shortTitle?: string
   title: string
   description: string
+  category: DepartmentCategory
   page: DepartmentPage
 }
 
@@ -45,7 +47,7 @@ export type DepartmentPage = {
         image?: never
         color: string
       }
-  content?: React.ReactNode
+  content?: string[]
   director: DepartmentDirector
   teams?: DepartmentTeam[]
 }
