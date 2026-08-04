@@ -10,6 +10,11 @@ if (!sentryDsn) {
   Sentry.init({
     dsn: sentryDsn,
     enabled: isProduction,
+    enableLogs: isProduction,
+    integrations: [
+      Sentry.pinoIntegration({ error: { levels: ['warn', 'error'] } }),
+      Sentry.zodErrorsIntegration(),
+    ],
     environment: isProduction ? 'production' : isTest ? 'test' : 'development',
     // Adds request headers and IP for users, for more info visit:
     // https://docs.sentry.io/platforms/javascript/guides/tanstackstart-react/configuration/options/#sendDefaultPii
