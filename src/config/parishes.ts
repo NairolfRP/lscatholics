@@ -9,6 +9,7 @@ export const parishes: ParishInfo[] = [
     address: 'Ginger street, Little Seoul, Los Santos, SA 90010',
     pastorOffice: 'Curé-archiprêtre',
     pastor: 'Don Giuseppe Benedetti',
+    imageUrl: '/assets/images/olscathedral.webp',
     coords: [-709.148, -759.794],
   },
   {
@@ -17,6 +18,7 @@ export const parishes: ParishInfo[] = [
     address: 'Boulevard Del Perro, Rockford Hills, Los Santos, SA 90210-3298',
     pastorOffice: 'Doyen',
     pastor: 'Don Giuseppe Benedetti',
+    imageUrl: '/assets/images/rockfordhills_church.webp',
     coords: [-23.6121, -766.689],
   },
   {
@@ -27,6 +29,7 @@ export const parishes: ParishInfo[] = [
     address: 'Old Mexican Plaza, Alta, Los Santos, SA 90012',
     pastorOffice: 'Doyen',
     pastor: 'Don Giuseppe Benedetti',
+    imageUrl: '/assets/images/iglesia.webp',
     coords: [-338.861, 402.143],
   },
 ]
