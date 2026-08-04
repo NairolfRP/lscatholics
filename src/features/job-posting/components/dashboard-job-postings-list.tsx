@@ -1,18 +1,15 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useRouter } from '@tanstack/react-router'
-import {
-  dashboardJobPostingColumns,
-} from '#/features/job-posting/constants/dashboard-job-posting-columns.tsx'
+import { dashboardJobPostingColumns } from '#/features/job-posting/constants/dashboard-job-posting-columns.tsx'
 import { jobPostingsDashboardQueryOptions } from '#/features/job-posting/queries.ts'
-import type {
-  DashboardJobPostingsTableMeta,
-} from '#/features/job-posting/types/job-posting.types.ts'
+import type { DashboardJobPostingsTableMeta } from '#/features/job-posting/types/job-posting.types.ts'
 import {
   jobPostingDeleteFn,
   toggleJobPostingActiveStateFn,
 } from '#/server-fn/job-posting.functions.ts'
 import { toast } from '#/shared/components/ui/toast'
-import { isAdmin } from '#/utils/user.ts'
+import { usePermissions } from '#/shared/hooks/use-permissions'
+import { hasPermission } from '#/shared/utils/permissions'
 import { DashboardList } from '#shared/components/dashboard/list.tsx'
 import { Spinner } from '#shared/components/ui/spinner.tsx'
 import {
@@ -20,12 +17,11 @@ import {
   DASHBOARD_PAGINATION_LIMIT,
 } from '#shared/constants/dashboard.ts'
 import { useDashboardList } from '#shared/hooks/dashboard/use-dashboard-list.tsx'
-import { authClient } from '#shared/integrations/auth/auth-client.ts'
 
 export function DashboardJobPostingsList() {
   const router = useRouter()
   const queryClient = useQueryClient()
-  const { data: session, isPending: isSessionPending } = authClient.useSession()
+  const permissions = usePermissions()
 
   const list = useDashboardList({
     routeId: '/dashboard/job-openings/',
@@ -36,7 +32,7 @@ export function DashboardJobPostingsList() {
 
   const toggleJobPostingActiveStateMutation = useMutation({
     mutationFn: async (jobPostingId: string) => {
-      if (!session || !isAdmin(session.user)) {
+      if (!hasPermission(permissions, 'job', 'update')) {
         return { error: true, message: "Vous n'êtes pas autorisé à faire ça." }
       }
 
@@ -76,7 +72,7 @@ export function DashboardJobPostingsList() {
     },
   })
 
-  if (isSessionPending || list.isPending) {
+  if (list.isPending) {
     return <Spinner />
   }
 
@@ -105,7 +101,8 @@ export function DashboardJobPostingsList() {
       onResetFilters={list.resetFilters}
       meta={
         {
-          canDelete: !session ? false : isAdmin(session.user),
+          canUpdate: hasPermission(permissions, 'job', 'update'),
+          canDelete: hasPermission(permissions, 'job', 'delete'),
           onDelete: (jobPostingId) => deleteJobPostingMutation.mutateAsync(jobPostingId),
           onToggleActiveState: (jobPostingId) =>
             toggleJobPostingActiveStateMutation.mutateAsync(jobPostingId),

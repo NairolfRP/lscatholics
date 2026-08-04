@@ -1,10 +1,9 @@
-import { createFileRoute, Link } from '@tanstack/react-router'
+import { createFileRoute, Link, redirect } from '@tanstack/react-router'
 import { EditIcon, EyeIcon } from 'lucide-react'
 import { envClient } from '#/config/env-client.ts'
-import {
-  getDashboardChurchEventFn,
-} from '#/features/church-event/server-fn/church-event.functions.ts'
+import { getDashboardChurchEventFn } from '#/features/church-event/server-fn/church-event.functions.ts'
 import { DashboardHeading } from '#/features/dashboard/components/dashboard-heading.tsx'
+import { hasPermission } from '#/shared/utils/permissions'
 import { formatDateTime } from '#/utils/date.ts'
 import { pageMetadata } from '#/utils/seo.ts'
 import { Badge } from '#shared/components/ui/badge.tsx'
@@ -17,16 +16,22 @@ import { getParishInfo } from '#shared/constants/parish.ts'
 
 export const Route = createFileRoute('/dashboard/events/show/$id')({
   beforeLoad: async ({ params, context }) => {
+    if (!hasPermission(context.gameContext.permissions, 'event', 'read')) {
+      throw redirect({ to: '/dashboard', replace: true })
+    }
+
     const { author, ...churchEvent } = await getDashboardChurchEventFn({ data: params.id })
 
     const isAdmin = context.gameContext.user.role.includes('admin')
+    const canEdit = hasPermission(context.gameContext.permissions, 'event', 'update')
 
-    return { churchEvent, author: isAdmin ? author : null, isAdmin }
+    return { churchEvent, author: isAdmin ? author : null, isAdmin, canEdit }
   },
   loader: ({ context }) => ({
     churchEvent: context.churchEvent,
     author: context.author,
     isAdmin: context.isAdmin,
+    canEdit: context.canEdit,
   }),
   head: ({ loaderData }) => {
     if (!loaderData) return {}
@@ -37,7 +42,7 @@ export const Route = createFileRoute('/dashboard/events/show/$id')({
 })
 
 function RouteComponent() {
-  const { churchEvent, author, isAdmin } = Route.useLoaderData()
+  const { churchEvent, author, isAdmin, canEdit } = Route.useLoaderData()
 
   const parish = churchEvent.parish ? getParishInfo(churchEvent.parish) : null
 
@@ -64,14 +69,16 @@ function RouteComponent() {
                 <EyeIcon className="mr-2 h-4 w-4" />
                 Voir
               </Link>
-              <Link
-                to="/dashboard/events/edit/$id"
-                params={{ id: churchEvent.id }}
-                className={buttonVariants()}
-              >
-                <EditIcon className="mr-2 h-4 w-4" />
-                Modifier
-              </Link>
+              {canEdit ? (
+                <Link
+                  to="/dashboard/events/edit/$id"
+                  params={{ id: churchEvent.id }}
+                  className={buttonVariants()}
+                >
+                  <EditIcon className="mr-2 h-4 w-4" />
+                  Modifier
+                </Link>
+              ) : null}
             </div>
           }
         />

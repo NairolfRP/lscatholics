@@ -1,9 +1,10 @@
-import { createFileRoute, Link, stripSearchParams } from '@tanstack/react-router'
+import { createFileRoute, Link, redirect, stripSearchParams } from '@tanstack/react-router'
 import { PlusIcon } from 'lucide-react'
-import {
-  DashboardChurchEventsList,
-} from '#/features/church-event/components/dashboard-church-events-list.tsx'
+import { DashboardChurchEventsList } from '#/features/church-event/components/dashboard-church-events-list.tsx'
+import { churchEventsDashboardQueryOptions } from '#/features/church-event/queries.ts'
 import { DashboardHeading } from '#/features/dashboard/components/dashboard-heading.tsx'
+import { usePermissions } from '#/shared/hooks/use-permissions'
+import { hasPermission } from '#/shared/utils/permissions'
 import { pageMetadata } from '#/utils/seo.ts'
 import { DebouncedInput } from '#shared/components/debounced-input.tsx'
 import { buttonVariants } from '#shared/components/ui/button.tsx'
@@ -17,7 +18,6 @@ import {
 import { DASHBOARD_LIST_INITIAL_FILTERS } from '#shared/constants/dashboard.ts'
 import { dashboardSearchSchema } from '#shared/schemas/dashboard/search.schema.ts'
 import { sortBySchema } from '#shared/schemas/pagination.schema.ts'
-import { churchEventsDashboardQueryOptions } from '#/features/church-event/queries.ts'
 
 export const Route = createFileRoute('/dashboard/events/')({
   head: () => ({
@@ -31,6 +31,11 @@ export const Route = createFileRoute('/dashboard/events/')({
       stripSearchParams({ ...DASHBOARD_LIST_INITIAL_FILTERS, sortBy: 'startDate.asc' }),
     ],
   },
+  beforeLoad: ({ context }) => {
+    if (!hasPermission(context.gameContext.permissions, 'event', 'read')) {
+      throw redirect({ to: '/dashboard', replace: true })
+    }
+  },
   loaderDeps: ({ search }) => search,
   loader: async ({ deps, context }) => {
     await context.queryClient.prefetchQuery(churchEventsDashboardQueryOptions(deps))
@@ -41,6 +46,8 @@ export const Route = createFileRoute('/dashboard/events/')({
 function RouteComponent() {
   const navigate = Route.useNavigate()
   const searchParams = Route.useSearch()
+  const permissions = usePermissions()
+  const canCreate = hasPermission(permissions, 'event', 'create')
 
   const handleSearch = (value: string) => {
     const trimmed = value.trim()
@@ -61,10 +68,15 @@ function RouteComponent() {
           title="Liste des événements"
           description="Gérez les événements de l'archidiocèse sur l'application"
           right={
-            <Link to="/dashboard/events/create" className={buttonVariants({ variant: 'default' })}>
-              <PlusIcon className="mr-2 h-4 w-4" />
-              Nouvel événement
-            </Link>
+            canCreate ? (
+              <Link
+                to="/dashboard/events/create"
+                className={buttonVariants({ variant: 'default' })}
+              >
+                <PlusIcon className="mr-2 h-4 w-4" />
+                Nouvel événement
+              </Link>
+            ) : undefined
           }
         />
 

@@ -9,7 +9,9 @@ import {
   TableRow,
 } from '#/shared/components/ui/table.tsx'
 import { toast } from '#/shared/components/ui/toast'
+import { usePermissions } from '#/shared/hooks/use-permissions'
 import { authClient } from '#/shared/integrations/auth/auth-client.ts'
+import { hasPermission } from '#/shared/utils/permissions'
 import { DashboardList } from '#shared/components/dashboard/list.tsx'
 import {
   DASHBOARD_LIST_INITIAL_FILTERS,
@@ -25,6 +27,7 @@ export function DashboardPostsList() {
   const router = useRouter()
   const queryClient = useQueryClient()
   const { data: session, isPending: isSessionPending } = authClient.useSession()
+  const permissions = usePermissions()
 
   const list = useDashboardList({
     routeId: '/dashboard/posts/',
@@ -80,6 +83,12 @@ export function DashboardPostsList() {
       meta={
         {
           canEditPost: (authorId) => canEditPost({ user: session!.user, authorId }),
+          canUpdatePost: (authorId) =>
+            hasPermission(permissions, 'post', 'update') &&
+            canEditPost({ user: session!.user, authorId }),
+          canDeletePost: (authorId) =>
+            hasPermission(permissions, 'post', 'delete') &&
+            canEditPost({ user: session!.user, authorId }),
           onDelete: (postId) => deletePostMutation.mutateAsync(postId),
         } satisfies DashboardPostsTableMeta
       }

@@ -1,15 +1,20 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, redirect } from '@tanstack/react-router'
 import { DashboardHeading } from '#/features/dashboard/components/dashboard-heading.tsx'
 import { DashboardJobPostingForm } from '#/features/job-posting/components/dashboard-job-posting-form.tsx'
 import type { EditJobPostingFormInput } from '#/features/job-posting/schemas/job-posting.schema.ts'
 import { editJobPostingSchema } from '#/features/job-posting/schemas/job-posting.schema.ts'
 import { getDashboardJobPostingFn, updateJobPostingFn } from '#/server-fn/job-posting.functions.ts'
 import { toast } from '#/shared/components/ui/toast'
+import { hasPermission } from '#/shared/utils/permissions'
 import { pageMetadata } from '#/utils/seo.ts'
 import { useAppForm } from '#shared/integrations/form/form-hook.ts'
 
 export const Route = createFileRoute('/dashboard/job-openings/edit/$id')({
-  beforeLoad: async ({ params }) => {
+  beforeLoad: async ({ params, context }) => {
+    if (!hasPermission(context.gameContext.permissions, 'job', 'update')) {
+      throw redirect({ to: '/dashboard/job-openings', replace: true })
+    }
+
     const jobPosting = await getDashboardJobPostingFn({ data: params.id })
     return { jobPosting }
   },

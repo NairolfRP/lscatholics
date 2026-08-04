@@ -87,25 +87,29 @@ export const dashboardChurchEventColumns = [
       const meta = info.table.options.meta as DashboardChurchEventsTableMeta
       return (
         <ButtonGroup>
-          <Link
-            to="/dashboard/events/edit/$id"
-            params={{ id: info.row.original.id }}
-            className={buttonVariants({ variant: 'ghost', size: 'icon' })}
-            aria-label="Éditer l'événement"
-          >
-            <EditIcon className="h-4 w-4" />
-          </Link>
-          <ActionButton
-            variant="ghost"
-            size="icon"
-            areYouSureTitle="Êtes-vous sûr de vouloir supprimer cet événement ?"
-            title={`Supprimer « ${info.row.original.title} »`}
-            aria-label={`Supprimer « ${info.row.original.title} »`}
-            action={() => meta.onDelete(info.row.original.id)}
-            requireAreYouSure
-          >
-            <Trash2Icon className="h-4 w-4 text-red-600" />
-          </ActionButton>
+          {meta.canUpdate ? (
+            <Link
+              to="/dashboard/events/edit/$id"
+              params={{ id: info.row.original.id }}
+              className={buttonVariants({ variant: 'ghost', size: 'icon' })}
+              aria-label="Éditer l'événement"
+            >
+              <EditIcon className="h-4 w-4" />
+            </Link>
+          ) : null}
+          {meta.canDelete ? (
+            <ActionButton
+              variant="ghost"
+              size="icon"
+              areYouSureTitle="Êtes-vous sûr de vouloir supprimer cet événement ?"
+              title={`Supprimer « ${info.row.original.title} »`}
+              aria-label={`Supprimer « ${info.row.original.title} »`}
+              action={() => meta.onDelete(info.row.original.id)}
+              requireAreYouSure
+            >
+              <Trash2Icon className="h-4 w-4 text-red-600" />
+            </ActionButton>
+          ) : null}
         </ButtonGroup>
       )
     },

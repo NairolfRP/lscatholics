@@ -94,39 +94,43 @@ export const dashboardJobPostingColumns = [
       const meta = info.table.options.meta as DashboardJobPostingsTableMeta
       return (
         <ButtonGroup>
-          <Link
-            to="/dashboard/job-openings/edit/$id"
-            params={{ id: info.row.original.id }}
-            className={buttonVariants({ variant: 'ghost', size: 'icon' })}
-            aria-label="Éditer l'article"
-          >
-            <EditIcon className="h-4 w-4" />
-          </Link>
-          {isActive ? (
-            <ActionButton
-              variant="ghost"
-              size="icon"
-              areYouSureTitle="Êtes-vous sûr de vouloir fermer cette offre d'emploi ?"
-              title={`Clôre « ${info.row.original.title} »`}
-              aria-label={`Clôre « ${info.row.original.title} »`}
-              action={() => meta.onToggleActiveState(info.row.original.id)}
-              requireAreYouSure
+          {meta.canUpdate ? (
+            <Link
+              to="/dashboard/job-openings/edit/$id"
+              params={{ id: info.row.original.id }}
+              className={buttonVariants({ variant: 'ghost', size: 'icon' })}
+              aria-label="Éditer l'article"
             >
-              <LockIcon className="h-4 w-4 text-warning" />
-            </ActionButton>
-          ) : (
-            <ActionButton
-              variant="ghost"
-              size="icon"
-              areYouSureTitle="Êtes-vous sûr de vouloir rouvrir cette offre d'emploi ?"
-              title={`Rouvrir « ${info.row.original.title} »`}
-              aria-label={`Rouvrir « ${info.row.original.title} »`}
-              action={() => meta.onToggleActiveState(info.row.original.id)}
-              requireAreYouSure
-            >
-              <UnlockIcon className="h-4 w-4 text-success" />
-            </ActionButton>
-          )}
+              <EditIcon className="h-4 w-4" />
+            </Link>
+          ) : null}
+          {meta.canUpdate ? (
+            isActive ? (
+              <ActionButton
+                variant="ghost"
+                size="icon"
+                areYouSureTitle="Êtes-vous sûr de vouloir fermer cette offre d'emploi ?"
+                title={`Clôre « ${info.row.original.title} »`}
+                aria-label={`Clôre « ${info.row.original.title} »`}
+                action={() => meta.onToggleActiveState(info.row.original.id)}
+                requireAreYouSure
+              >
+                <LockIcon className="h-4 w-4 text-warning" />
+              </ActionButton>
+            ) : (
+              <ActionButton
+                variant="ghost"
+                size="icon"
+                areYouSureTitle="Êtes-vous sûr de vouloir rouvrir cette offre d'emploi ?"
+                title={`Rouvrir « ${info.row.original.title} »`}
+                aria-label={`Rouvrir « ${info.row.original.title} »`}
+                action={() => meta.onToggleActiveState(info.row.original.id)}
+                requireAreYouSure
+              >
+                <UnlockIcon className="h-4 w-4 text-success" />
+              </ActionButton>
+            )
+          ) : null}
           {meta.canDelete ? (
             <ActionButton
               variant="ghost"

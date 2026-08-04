@@ -1,10 +1,6 @@
-import { createFileRoute } from '@tanstack/react-router'
-import {
-  DashboardChurchEventForm,
-} from '#/features/church-event/components/dashboard-church-event-form.tsx'
-import type {
-  EditChurchEventFormInput,
-} from '#/features/church-event/schemas/church-event.schema.ts'
+import { createFileRoute, redirect } from '@tanstack/react-router'
+import { DashboardChurchEventForm } from '#/features/church-event/components/dashboard-church-event-form.tsx'
+import type { EditChurchEventFormInput } from '#/features/church-event/schemas/church-event.schema.ts'
 import { editChurchEventSchema } from '#/features/church-event/schemas/church-event.schema.ts'
 import {
   getDashboardChurchEventFn,
@@ -12,11 +8,16 @@ import {
 } from '#/features/church-event/server-fn/church-event.functions.ts'
 import { DashboardHeading } from '#/features/dashboard/components/dashboard-heading.tsx'
 import { toast } from '#/shared/components/ui/toast'
+import { hasPermission } from '#/shared/utils/permissions'
 import { pageMetadata } from '#/utils/seo.ts'
 import { useAppForm } from '#shared/integrations/form/form-hook.ts'
 
 export const Route = createFileRoute('/dashboard/events/edit/$id')({
-  beforeLoad: async ({ params }) => {
+  beforeLoad: async ({ params, context }) => {
+    if (!hasPermission(context.gameContext.permissions, 'event', 'update')) {
+      throw redirect({ to: '/dashboard/events', replace: true })
+    }
+
     const churchEvent = await getDashboardChurchEventFn({ data: params.id })
     return { churchEvent }
   },

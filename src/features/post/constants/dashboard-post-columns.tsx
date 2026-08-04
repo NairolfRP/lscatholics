@@ -64,28 +64,28 @@ export const dashboardPostColumns = [
       const meta = info.table.options.meta as DashboardPostsTableMeta
       return (
         <ButtonGroup>
-          {meta.canEditPost(info.row.original.authorId) && (
-            <>
-              <Link
-                to="/dashboard/posts/edit/$id"
-                params={{ id: info.row.original.id }}
-                className={buttonVariants({ variant: 'ghost', size: 'icon' })}
-                aria-label="Éditer l'article"
-              >
-                <EditIcon className="h-4 w-4" />
-              </Link>
-              <ActionButton
-                variant="ghost"
-                size="icon"
-                areYouSureTitle="Êtes-vous sûr de vouloir supprimer cet article ?"
-                title={`Supprimer « ${info.row.original.title} »`}
-                aria-label={`Supprimer « ${info.row.original.title} »`}
-                action={() => meta.onDelete(info.row.original.id)}
-                requireAreYouSure
-              >
-                <Trash2Icon className="h-4 w-4 text-red-600" />
-              </ActionButton>
-            </>
+          {meta.canUpdatePost(info.row.original.authorId) && (
+            <Link
+              to="/dashboard/posts/edit/$id"
+              params={{ id: info.row.original.id }}
+              className={buttonVariants({ variant: 'ghost', size: 'icon' })}
+              aria-label="Éditer l'article"
+            >
+              <EditIcon className="h-4 w-4" />
+            </Link>
+          )}
+          {meta.canDeletePost(info.row.original.authorId) && (
+            <ActionButton
+              variant="ghost"
+              size="icon"
+              areYouSureTitle="Êtes-vous sûr de vouloir supprimer cet article ?"
+              title={`Supprimer « ${info.row.original.title} »`}
+              aria-label={`Supprimer « ${info.row.original.title} »`}
+              action={() => meta.onDelete(info.row.original.id)}
+              requireAreYouSure
+            >
+              <Trash2Icon className="h-4 w-4 text-red-600" />
+            </ActionButton>
           )}
         </ButtonGroup>
       )

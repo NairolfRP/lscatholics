@@ -1,10 +1,10 @@
-import { createFileRoute, Link, stripSearchParams } from '@tanstack/react-router'
+import { createFileRoute, Link, redirect, stripSearchParams } from '@tanstack/react-router'
 import { PlusIcon } from 'lucide-react'
 import { DashboardHeading } from '#/features/dashboard/components/dashboard-heading.tsx'
-import {
-  DashboardJobPostingsList,
-} from '#/features/job-posting/components/dashboard-job-postings-list.tsx'
+import { DashboardJobPostingsList } from '#/features/job-posting/components/dashboard-job-postings-list.tsx'
 import { jobPostingsDashboardQueryOptions } from '#/features/job-posting/queries.ts'
+import { usePermissions } from '#/shared/hooks/use-permissions'
+import { hasPermission } from '#/shared/utils/permissions'
 import { pageMetadata } from '#/utils/seo.ts'
 import { DebouncedInput } from '#shared/components/debounced-input.tsx'
 import { buttonVariants } from '#shared/components/ui/button.tsx'
@@ -26,6 +26,11 @@ export const Route = createFileRoute('/dashboard/job-openings/')({
   search: {
     middlewares: [stripSearchParams(DASHBOARD_LIST_INITIAL_FILTERS)],
   },
+  beforeLoad: ({ context }) => {
+    if (!hasPermission(context.gameContext.permissions, 'job', 'read')) {
+      throw redirect({ to: '/dashboard', replace: true })
+    }
+  },
   loaderDeps: ({ search }) => search,
   loader: async ({ deps, context }) => {
     await context.queryClient.prefetchQuery(jobPostingsDashboardQueryOptions(deps))
@@ -36,6 +41,8 @@ export const Route = createFileRoute('/dashboard/job-openings/')({
 function RouteComponent() {
   const navigate = Route.useNavigate()
   const searchParams = Route.useSearch()
+  const permissions = usePermissions()
+  const canCreate = hasPermission(permissions, 'job', 'create')
 
   const handleSearch = (value: string) => {
     const trimmed = value.trim()
@@ -56,13 +63,15 @@ function RouteComponent() {
           title="Offres d'emplois"
           description="Gérez les offres d'emplois sur l'application"
           right={
-            <Link
-              to="/dashboard/job-openings/create"
-              className={buttonVariants({ variant: 'default' })}
-            >
-              <PlusIcon className="mr-2 h-4 w-4" />
-              Ajouter une offre
-            </Link>
+            canCreate ? (
+              <Link
+                to="/dashboard/job-openings/create"
+                className={buttonVariants({ variant: 'default' })}
+              >
+                <PlusIcon className="mr-2 h-4 w-4" />
+                Ajouter une offre
+              </Link>
+            ) : undefined
           }
         />
 

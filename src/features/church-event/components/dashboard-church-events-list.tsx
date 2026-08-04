@@ -1,14 +1,12 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useRouter } from '@tanstack/react-router'
-import {
-  dashboardChurchEventColumns,
-} from '#/features/church-event/constants/dashboard-church-event-columns.tsx'
+import { dashboardChurchEventColumns } from '#/features/church-event/constants/dashboard-church-event-columns.tsx'
 import { churchEventsDashboardQueryOptions } from '#/features/church-event/queries.ts'
 import { deleteChurchEventFn } from '#/features/church-event/server-fn/church-event.functions.ts'
-import type {
-  DashboardChurchEventsTableMeta,
-} from '#/features/church-event/types/dashboard-church-event.types.ts'
+import type { DashboardChurchEventsTableMeta } from '#/features/church-event/types/dashboard-church-event.types.ts'
 import { toast } from '#/shared/components/ui/toast'
+import { usePermissions } from '#/shared/hooks/use-permissions'
+import { hasPermission } from '#/shared/utils/permissions'
 import { DashboardList } from '#shared/components/dashboard/list.tsx'
 import { Spinner } from '#shared/components/ui/spinner.tsx'
 import {
@@ -20,6 +18,7 @@ import { useDashboardList } from '#shared/hooks/dashboard/use-dashboard-list.tsx
 export function DashboardChurchEventsList() {
   const router = useRouter()
   const queryClient = useQueryClient()
+  const permissions = usePermissions()
 
   const list = useDashboardList({
     routeId: '/dashboard/events/',
@@ -74,6 +73,8 @@ export function DashboardChurchEventsList() {
       onResetFilters={list.resetFilters}
       meta={
         {
+          canUpdate: hasPermission(permissions, 'event', 'update'),
+          canDelete: hasPermission(permissions, 'event', 'delete'),
           onDelete: (churchEventId) => deleteChurchEventMutation.mutateAsync(churchEventId),
         } satisfies DashboardChurchEventsTableMeta
       }

@@ -2,7 +2,9 @@ import { createFileRoute, isNotFound, Link, notFound, redirect } from '@tanstack
 import { EditIcon, EyeIcon } from 'lucide-react'
 import { envClient } from '#/config/env-client.ts'
 import { DashboardHeading } from '#/features/dashboard/components/dashboard-heading.tsx'
+import { canEditPost } from '#/features/post/utils/post.utils'
 import { getDashboardPostFn } from '#/server-fn/post.functions.ts'
+import { hasPermission } from '#/shared/utils/permissions'
 import { formatDateTime } from '#/utils/date.ts'
 import { pageMetadata } from '#/utils/seo.ts'
 import { Badge } from '#shared/components/ui/badge.tsx'
@@ -15,11 +17,18 @@ import { Typography } from '#shared/components/ui/typography.tsx'
 
 export const Route = createFileRoute('/dashboard/posts/show/$id')({
   beforeLoad: async ({ params, context }) => {
+    if (!hasPermission(context.gameContext.permissions, 'post', 'read')) {
+      throw redirect({ to: '/dashboard', replace: true })
+    }
+
     try {
       const { author, ...post } = await getDashboardPostFn({ data: params.id })
       const isAdmin = context.gameContext.user.role.includes('admin')
+      const canEdit =
+        hasPermission(context.gameContext.permissions, 'post', 'update') &&
+        canEditPost({ user: context.gameContext.user, authorId: post.authorId })
 
-      return { post, author: isAdmin ? author : null, isAdmin }
+      return { post, author: isAdmin ? author : null, isAdmin, canEdit }
     } catch (err) {
       if (isNotFound(err)) {
         throw notFound()
@@ -41,6 +50,7 @@ export const Route = createFileRoute('/dashboard/posts/show/$id')({
     post: context.post,
     author: context.author,
     isAdmin: context.isAdmin,
+    canEdit: context.canEdit,
   }),
   head: ({ loaderData }) => {
     if (!loaderData) return {}
@@ -51,7 +61,7 @@ export const Route = createFileRoute('/dashboard/posts/show/$id')({
 })
 
 function RouteComponent() {
-  const { post, author, isAdmin } = Route.useLoaderData()
+  const { post, author, isAdmin, canEdit } = Route.useLoaderData()
   return (
     <>
       <DashboardHeading
@@ -75,14 +85,16 @@ function RouteComponent() {
               <EyeIcon className="mr-2 h-4 w-4" />
               Voir
             </Link>
-            <Link
-              to="/dashboard/posts/edit/$id"
-              params={{ id: post.id }}
-              className={buttonVariants()}
-            >
-              <EditIcon className="mr-2 h-4 w-4" />
-              Modifier
-            </Link>
+            {canEdit ? (
+              <Link
+                to="/dashboard/posts/edit/$id"
+                params={{ id: post.id }}
+                className={buttonVariants()}
+              >
+                <EditIcon className="mr-2 h-4 w-4" />
+                Modifier
+              </Link>
+            ) : null}
           </div>
         }
       />

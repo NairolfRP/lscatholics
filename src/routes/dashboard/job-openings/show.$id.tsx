@@ -1,9 +1,10 @@
-import { createFileRoute, Link } from '@tanstack/react-router'
+import { createFileRoute, Link, redirect } from '@tanstack/react-router'
 import { EditIcon, EyeIcon } from 'lucide-react'
 import { envClient } from '#/config/env-client.ts'
 import { DashboardHeading } from '#/features/dashboard/components/dashboard-heading.tsx'
 import { formatJobPostingSalary } from '#/features/job-posting/utils/job-posting.utils.ts'
 import { getDashboardJobPostingFn } from '#/server-fn/job-posting.functions.ts'
+import { hasPermission } from '#/shared/utils/permissions'
 import { formatDateTime } from '#/utils/date.ts'
 import { getDepartmentTitle } from '#/utils/department.ts'
 import { pageMetadata } from '#/utils/seo.ts'
@@ -17,15 +18,21 @@ import { employmentTypeLabel } from '#shared/constants/employment.ts'
 
 export const Route = createFileRoute('/dashboard/job-openings/show/$id')({
   beforeLoad: async ({ params, context }) => {
+    if (!hasPermission(context.gameContext.permissions, 'job', 'read')) {
+      throw redirect({ to: '/dashboard', replace: true })
+    }
+
     const { author, ...jobPosting } = await getDashboardJobPostingFn({ data: params.id })
     const isAdmin = context.gameContext.user.role.includes('admin')
+    const canEdit = hasPermission(context.gameContext.permissions, 'job', 'update')
 
-    return { jobPosting, author: isAdmin ? author : null, isAdmin }
+    return { jobPosting, author: isAdmin ? author : null, isAdmin, canEdit }
   },
   loader: ({ context }) => ({
     jobPosting: context.jobPosting,
     author: context.author,
     isAdmin: context.isAdmin,
+    canEdit: context.canEdit,
   }),
   head: ({ loaderData }) => {
     if (!loaderData) return {}
@@ -36,7 +43,7 @@ export const Route = createFileRoute('/dashboard/job-openings/show/$id')({
 })
 
 function RouteComponent() {
-  const { jobPosting, author, isAdmin } = Route.useLoaderData()
+  const { jobPosting, author, isAdmin, canEdit } = Route.useLoaderData()
 
   return (
     <div className="container mx-auto pt-5">
@@ -60,14 +67,16 @@ function RouteComponent() {
                 <EyeIcon className="mr-2 h-4 w-4" />
                 Voir
               </Link>
-              <Link
-                to="/dashboard/job-openings/edit/$id"
-                params={{ id: jobPosting.id }}
-                className={buttonVariants()}
-              >
-                <EditIcon className="mr-2 h-4 w-4" />
-                Modifier
-              </Link>
+              {canEdit ? (
+                <Link
+                  to="/dashboard/job-openings/edit/$id"
+                  params={{ id: jobPosting.id }}
+                  className={buttonVariants()}
+                >
+                  <EditIcon className="mr-2 h-4 w-4" />
+                  Modifier
+                </Link>
+              ) : null}
             </div>
           }
         />

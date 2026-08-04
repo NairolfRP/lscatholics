@@ -5,11 +5,16 @@ import type { EditPostFormInput } from '#/features/post/schemas/post.schema.ts'
 import { editPostSchema } from '#/features/post/schemas/post.schema.ts'
 import { getDashboardPostFn, updatePostFn } from '#/server-fn/post.functions.ts'
 import { toast } from '#/shared/components/ui/toast'
+import { hasPermission } from '#/shared/utils/permissions'
 import { pageMetadata } from '#/utils/seo.ts'
 import { useAppForm } from '#shared/integrations/form/form-hook.ts'
 
 export const Route = createFileRoute('/dashboard/posts/edit/$id')({
-  beforeLoad: async ({ params }) => {
+  beforeLoad: async ({ params, context }) => {
+    if (!hasPermission(context.gameContext.permissions, 'post', 'update')) {
+      throw redirect({ to: '/dashboard/posts', replace: true })
+    }
+
     try {
       const post = await getDashboardPostFn({ data: params.id })
 

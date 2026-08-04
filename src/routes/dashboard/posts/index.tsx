@@ -1,4 +1,4 @@
-import { createFileRoute, Link, stripSearchParams } from '@tanstack/react-router'
+import { createFileRoute, Link, redirect, stripSearchParams } from '@tanstack/react-router'
 import { PlusIcon } from 'lucide-react'
 import { DashboardHeading } from '#/features/dashboard/components/dashboard-heading.tsx'
 import { DashboardPostsList } from '#/features/post/components/dashboard-posts-list.tsx'
@@ -11,6 +11,8 @@ import {
   CardHeader,
   CardTitle,
 } from '#/shared/components/ui/card.tsx'
+import { usePermissions } from '#/shared/hooks/use-permissions'
+import { hasPermission } from '#/shared/utils/permissions'
 import { pageMetadata } from '#/utils/seo.ts'
 import { DASHBOARD_LIST_INITIAL_FILTERS } from '#shared/constants/dashboard.ts'
 import { postsDashboardQueryOptions } from '#shared/queries/post.queries.ts'
@@ -20,6 +22,11 @@ export const Route = createFileRoute('/dashboard/posts/')({
   head: () => ({
     meta: pageMetadata('Liste des articles'),
   }),
+  beforeLoad: ({ context }) => {
+    if (!hasPermission(context.gameContext.permissions, 'post', 'read')) {
+      throw redirect({ to: '/dashboard', replace: true })
+    }
+  },
   validateSearch: dashboardSearchSchema,
   search: {
     middlewares: [stripSearchParams(DASHBOARD_LIST_INITIAL_FILTERS)],
@@ -34,6 +41,8 @@ export const Route = createFileRoute('/dashboard/posts/')({
 function RouteComponent() {
   const navigate = Route.useNavigate()
   const searchParams = Route.useSearch()
+  const permissions = usePermissions()
+  const canCreate = hasPermission(permissions, 'post', 'create')
 
   const handleSearch = (value: string) => {
     const trimmed = value.trim()
@@ -54,10 +63,12 @@ function RouteComponent() {
           title="Articles"
           description="Gérez les articles sur le site"
           right={
-            <Link to="/dashboard/posts/create" className={buttonVariants({ variant: 'default' })}>
-              <PlusIcon className="mr-2 h-4 w-4" />
-              Nouvel article
-            </Link>
+            canCreate ? (
+              <Link to="/dashboard/posts/create" className={buttonVariants({ variant: 'default' })}>
+                <PlusIcon className="mr-2 h-4 w-4" />
+                Nouvel article
+              </Link>
+            ) : undefined
           }
         />
 

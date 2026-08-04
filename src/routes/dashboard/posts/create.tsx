@@ -1,17 +1,23 @@
 import { useQueryClient } from '@tanstack/react-query'
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, redirect } from '@tanstack/react-router'
 import { DashboardHeading } from '#/features/dashboard/components/dashboard-heading.tsx'
 import { DashboardPostForm } from '#/features/post/components/dashboard-post-form.tsx'
 import type { CreatePostFormInput } from '#/features/post/schemas/post.schema.ts'
 import { createPostSchema } from '#/features/post/schemas/post.schema.ts'
 import { createPostFn } from '#/server-fn/post.functions.ts'
 import { toast } from '#/shared/components/ui/toast'
+import { hasPermission } from '#/shared/utils/permissions'
 import { pageMetadata } from '#/utils/seo.ts'
 import { POST_STATUS } from '#shared/constants/post-status.ts'
 import { useAppForm } from '#shared/integrations/form/form-hook.ts'
 
 export const Route = createFileRoute('/dashboard/posts/create')({
   head: () => ({ meta: pageMetadata('Créer un article') }),
+  beforeLoad: ({ context }) => {
+    if (!hasPermission(context.gameContext.permissions, 'post', 'create')) {
+      throw redirect({ to: '/dashboard/posts', replace: true })
+    }
+  },
   component: RouteComponent,
 })
 

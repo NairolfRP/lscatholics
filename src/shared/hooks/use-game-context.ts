@@ -16,5 +16,6 @@ export function useGameContext() {
     characters: query.data?.characters,
     currentCharacter: query.data?.currentCharacter,
     canAccessDashboard: query.data?.canAccessDashboard ?? false,
+    permissions: query.data?.permissions ?? {},
   }
 }
