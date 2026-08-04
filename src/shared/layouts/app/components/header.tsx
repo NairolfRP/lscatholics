@@ -8,7 +8,7 @@ import { Skeleton } from '#/shared/components/ui/skeleton'
 import { Spinner } from '#/shared/components/ui/spinner'
 import { toast } from '#/shared/components/ui/toast'
 import UserMenu from '#/shared/components/user-menu'
-import { useWindowScroll } from '#/shared/hooks/use-window-scroll'
+import { useIsScrolled } from '#/shared/hooks/use-is-scrolled'
 import { authClient } from '#/shared/integrations/auth/auth-client'
 import { cn } from '#/shared/lib/utils'
 import Navigation, { MobileNavigation } from './navigation'
@@ -17,8 +17,7 @@ const SCROLL_THRESHOLD = 50
 
 export function Header() {
   const [mobileNavOpen, setMobileNavOpen] = useState<boolean>(false)
-  const [{ y }] = useWindowScroll()
-  const isScrolled = !mobileNavOpen && typeof y === 'number' && y > SCROLL_THRESHOLD
+  const isScrolled = useIsScrolled(SCROLL_THRESHOLD) && !mobileNavOpen
 
   return (
     <>
