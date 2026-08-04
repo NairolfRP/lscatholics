@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import { Link, useRouteContext } from '@tanstack/react-router'
+import { Link, useRouteContext, useRouterState } from '@tanstack/react-router'
 import {
   ArrowBigLeftIcon,
   ArrowRightLeftIcon,
@@ -9,6 +9,7 @@ import {
   UserIcon,
 } from 'lucide-react'
 import { dashboardMenuItems } from '#/features/dashboard/constants/dashboard-menu-items'
+import type { DashboardMenuItem } from '#/features/dashboard/types/dashboard.types'
 import { Logo } from '#/shared/components/logo'
 import { Avatar, AvatarFallback, AvatarImage } from '#/shared/components/ui/avatar'
 import {
@@ -85,6 +86,7 @@ export function DashboardSidebar() {
 function DashboardSidebarItems() {
   const context = useRouteContext({ from: '/dashboard' })
   const resolved = context.gameContext.permissions
+  const pathname = useRouterState({ select: (state) => state.location.pathname })
 
   const menuItems = useMemo(
     () =>
@@ -96,12 +98,23 @@ function DashboardSidebarItems() {
     [resolved]
   )
 
+  const isItemActive = (item: DashboardMenuItem) => {
+    const normalized = pathname.replace(/\/+$/, '')
+    if (item.to === '/dashboard') {
+      return normalized === '/dashboard'
+    }
+    return normalized.startsWith(item.to)
+  }
+
   return (
     <SidebarGroup>
       <SidebarMenu>
         {menuItems.map((item) => (
           <SidebarMenuItem key={item.label}>
-            <SidebarMenuButton render={<Link to={item.to} preload={false} />}>
+            <SidebarMenuButton
+              isActive={isItemActive(item)}
+              render={<Link to={item.to} preload={false} />}
+            >
               <item.icon />
               <span>{item.label}</span>
             </SidebarMenuButton>
