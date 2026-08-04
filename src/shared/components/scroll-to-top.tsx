@@ -89,7 +89,7 @@ function animateScrollStep(
   const elapsed = currentTime - startTime
   const progress = Math.min(elapsed / SCROLL_DURATION, 1)
 
-  window.scrollTo(0, startY * (1 - progress > 1 ? 1 : easeOutCubic(progress)))
+  window.scrollTo(0, startY * (1 - easeOutCubic(progress)))
 
   if (progress < 1) {
     requestAnimationFrame((t) => animateScrollStep(startY, startTime, t, onDone))
