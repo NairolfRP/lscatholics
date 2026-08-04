@@ -4,14 +4,15 @@
 
 .nav-trigger-button:hover,
 .nav-trigger-button:focus,
-.nav-trigger-button[data-state='open'],
-.nav-trigger-button[data-state='open']:hover,
-.nav-trigger-button[data-state='open']:focus {
+.nav-trigger-button[data-popup-open],
+.nav-trigger-button[data-popup-open]:hover,
+.nav-trigger-button[data-popup-open]:focus {
   background-color: transparent;
   color: var(--accent);
 }
 
-.nav-trigger-button:hover:before {
+.nav-trigger-button:hover:before,
+.nav-trigger-button[data-popup-open]:before {
   position: absolute;
   top: 0;
   left: 0;
