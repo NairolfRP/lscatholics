@@ -22,6 +22,7 @@ import { Route as AppNewsroomRouteImport } from './routes/_app/newsroom'
 import { Route as AppParishesRouteImport } from './routes/_app/parishes'
 import { Route as AppPrivacyRouteImport } from './routes/_app/privacy'
 import { Route as AppRegisterParishionerRouteImport } from './routes/_app/register-parishioner'
+import { Route as AppServicesRouteImport } from './routes/_app/services'
 import { Route as AppVocationsRouteImport } from './routes/_app/vocations'
 import { Route as DashboardIndexRouteImport } from './routes/dashboard/index'
 import { Route as DashboardUsersRouteRouteImport } from './routes/dashboard/users/route'
@@ -31,6 +32,7 @@ import { Route as AppAccountSettingsRouteImport } from './routes/_app/account/se
 import { Route as AppDepartmentSlugRouteImport } from './routes/_app/department/$slug'
 import { Route as AppEventSlugRouteImport } from './routes/_app/event/$slug'
 import { Route as AppPostSlugRouteImport } from './routes/_app/post/$slug'
+import { Route as AppServiceSlugRouteImport } from './routes/_app/service/$slug'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 import { Route as DashboardEventsIndexRouteImport } from './routes/dashboard/events/index'
 import { Route as DashboardEventsCreateRouteImport } from './routes/dashboard/events/create'
@@ -113,6 +115,11 @@ const AppRegisterParishionerRoute = AppRegisterParishionerRouteImport.update({
   path: '/register-parishioner',
   getParentRoute: () => AppRoute,
 } as any)
+const AppServicesRoute = AppServicesRouteImport.update({
+  id: '/services',
+  path: '/services',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppVocationsRoute = AppVocationsRouteImport.update({
   id: '/vocations',
   path: '/vocations',
@@ -156,6 +163,11 @@ const AppEventSlugRoute = AppEventSlugRouteImport.update({
 const AppPostSlugRoute = AppPostSlugRouteImport.update({
   id: '/post/$slug',
   path: '/post/$slug',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppServiceSlugRoute = AppServiceSlugRouteImport.update({
+  id: '/service/$slug',
+  path: '/service/$slug',
   getParentRoute: () => AppRoute,
 } as any)
 const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
@@ -262,6 +274,7 @@ export interface FileRoutesByFullPath {
   '/parishes': typeof AppParishesRoute
   '/privacy': typeof AppPrivacyRoute
   '/register-parishioner': typeof AppRegisterParishionerRoute
+  '/services': typeof AppServicesRoute
   '/vocations': typeof AppVocationsRoute
   '/dashboard/': typeof DashboardIndexRoute
   '/account/sessions': typeof AppAccountSessionsRoute
@@ -269,6 +282,7 @@ export interface FileRoutesByFullPath {
   '/department/$slug': typeof AppDepartmentSlugRoute
   '/event/$slug': typeof AppEventSlugRoute
   '/post/$slug': typeof AppPostSlugRoute
+  '/service/$slug': typeof AppServiceSlugRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/dashboard/events/create': typeof DashboardEventsCreateRoute
   '/dashboard/job-openings/create': typeof DashboardJobOpeningsCreateRoute
@@ -298,6 +312,7 @@ export interface FileRoutesByTo {
   '/parishes': typeof AppParishesRoute
   '/privacy': typeof AppPrivacyRoute
   '/register-parishioner': typeof AppRegisterParishionerRoute
+  '/services': typeof AppServicesRoute
   '/vocations': typeof AppVocationsRoute
   '/': typeof AppIndexRoute
   '/dashboard': typeof DashboardIndexRoute
@@ -306,6 +321,7 @@ export interface FileRoutesByTo {
   '/department/$slug': typeof AppDepartmentSlugRoute
   '/event/$slug': typeof AppEventSlugRoute
   '/post/$slug': typeof AppPostSlugRoute
+  '/service/$slug': typeof AppServiceSlugRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/dashboard/events/create': typeof DashboardEventsCreateRoute
   '/dashboard/job-openings/create': typeof DashboardJobOpeningsCreateRoute
@@ -340,6 +356,7 @@ export interface FileRoutesById {
   '/_app/parishes': typeof AppParishesRoute
   '/_app/privacy': typeof AppPrivacyRoute
   '/_app/register-parishioner': typeof AppRegisterParishionerRoute
+  '/_app/services': typeof AppServicesRoute
   '/_app/vocations': typeof AppVocationsRoute
   '/_app/': typeof AppIndexRoute
   '/dashboard/': typeof DashboardIndexRoute
@@ -348,6 +365,7 @@ export interface FileRoutesById {
   '/_app/department/$slug': typeof AppDepartmentSlugRoute
   '/_app/event/$slug': typeof AppEventSlugRoute
   '/_app/post/$slug': typeof AppPostSlugRoute
+  '/_app/service/$slug': typeof AppServiceSlugRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/dashboard/events/create': typeof DashboardEventsCreateRoute
   '/dashboard/job-openings/create': typeof DashboardJobOpeningsCreateRoute
@@ -383,6 +401,7 @@ export interface FileRouteTypes {
     | '/parishes'
     | '/privacy'
     | '/register-parishioner'
+    | '/services'
     | '/vocations'
     | '/dashboard/'
     | '/account/sessions'
@@ -390,6 +409,7 @@ export interface FileRouteTypes {
     | '/department/$slug'
     | '/event/$slug'
     | '/post/$slug'
+    | '/service/$slug'
     | '/api/auth/$'
     | '/dashboard/events/create'
     | '/dashboard/job-openings/create'
@@ -419,6 +439,7 @@ export interface FileRouteTypes {
     | '/parishes'
     | '/privacy'
     | '/register-parishioner'
+    | '/services'
     | '/vocations'
     | '/'
     | '/dashboard'
@@ -427,6 +448,7 @@ export interface FileRouteTypes {
     | '/department/$slug'
     | '/event/$slug'
     | '/post/$slug'
+    | '/service/$slug'
     | '/api/auth/$'
     | '/dashboard/events/create'
     | '/dashboard/job-openings/create'
@@ -460,6 +482,7 @@ export interface FileRouteTypes {
     | '/_app/parishes'
     | '/_app/privacy'
     | '/_app/register-parishioner'
+    | '/_app/services'
     | '/_app/vocations'
     | '/_app/'
     | '/dashboard/'
@@ -468,6 +491,7 @@ export interface FileRouteTypes {
     | '/_app/department/$slug'
     | '/_app/event/$slug'
     | '/_app/post/$slug'
+    | '/_app/service/$slug'
     | '/api/auth/$'
     | '/dashboard/events/create'
     | '/dashboard/job-openings/create'
@@ -587,6 +611,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppRegisterParishionerRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/services': {
+      id: '/_app/services'
+      path: '/services'
+      fullPath: '/services'
+      preLoaderRoute: typeof AppServicesRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/vocations': {
       id: '/_app/vocations'
       path: '/vocations'
@@ -648,6 +679,13 @@ declare module '@tanstack/react-router' {
       path: '/post/$slug'
       fullPath: '/post/$slug'
       preLoaderRoute: typeof AppPostSlugRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/service/$slug': {
+      id: '/_app/service/$slug'
+      path: '/service/$slug'
+      fullPath: '/service/$slug'
+      preLoaderRoute: typeof AppServiceSlugRouteImport
       parentRoute: typeof AppRoute
     }
     '/api/auth/$': {
@@ -850,11 +888,13 @@ interface AppRouteChildren {
   AppParishesRoute: typeof AppParishesRoute
   AppPrivacyRoute: typeof AppPrivacyRoute
   AppRegisterParishionerRoute: typeof AppRegisterParishionerRoute
+  AppServicesRoute: typeof AppServicesRoute
   AppVocationsRoute: typeof AppVocationsRoute
   AppIndexRoute: typeof AppIndexRoute
   AppDepartmentSlugRoute: typeof AppDepartmentSlugRoute
   AppEventSlugRoute: typeof AppEventSlugRoute
   AppPostSlugRoute: typeof AppPostSlugRoute
+  AppServiceSlugRoute: typeof AppServiceSlugRoute
   AppJobSlugApplyRoute: typeof AppJobSlugApplyRoute
   AppJobSlugIndexRoute: typeof AppJobSlugIndexRoute
 }
@@ -870,11 +910,13 @@ const AppRouteChildren: AppRouteChildren = {
   AppParishesRoute: AppParishesRoute,
   AppPrivacyRoute: AppPrivacyRoute,
   AppRegisterParishionerRoute: AppRegisterParishionerRoute,
+  AppServicesRoute: AppServicesRoute,
   AppVocationsRoute: AppVocationsRoute,
   AppIndexRoute: AppIndexRoute,
   AppDepartmentSlugRoute: AppDepartmentSlugRoute,
   AppEventSlugRoute: AppEventSlugRoute,
   AppPostSlugRoute: AppPostSlugRoute,
+  AppServiceSlugRoute: AppServiceSlugRoute,
   AppJobSlugApplyRoute: AppJobSlugApplyRoute,
   AppJobSlugIndexRoute: AppJobSlugIndexRoute,
 }
