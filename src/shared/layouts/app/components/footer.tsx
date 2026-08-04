@@ -4,11 +4,13 @@ import { Typography } from '#/shared/components/ui/typography'
 import { socials } from '#/shared/constants/socials'
 import { footerNavItems } from '../constants/nav.constants'
 
+const currentYear = new Date().getFullYear()
+
 export function Footer() {
   return (
-    <footer className="laptop:px-20 bg-catholic-purple px-5 pb-safe text-catholic-purple-foreground">
+    <footer className="bg-catholic-purple px-5 pb-safe text-catholic-purple-foreground">
       <div className="container mx-auto py-12">
-        <div className="mobile:grid-cols-2 grid gap-8 md:grid-cols-4">
+        <div className="grid gap-8 sm:grid-cols-2 md:grid-cols-4">
           {footerNavItems.map((item) => (
             <div key={item.label}>
               <Typography variant="h4" className="mb-4">
@@ -83,17 +85,17 @@ export function Footer() {
       <div className="mb-10 border-t border-catholic-purple-foreground/20 md:mb-0">
         <div className="container mx-auto py-6 md:px-4">
           <div className="mb-4 text-sm md:flex md:items-center md:justify-between">
-            <div className="mb-4 text-center opacity-80 md:mb-0 md:text-left">
-              <p>&copy; 2025 Archidiocèse de Los Santos. Tous droits réservés.</p>
-            </div>
-            <div className="flex flex-col items-end justify-center gap-4 text-center md:text-left">
+            <p className="mb-4 text-center opacity-80 md:mb-0 md:text-left">
+              &copy; {currentYear} Archidiocèse de Los Santos. Tous droits réservés.
+            </p>
+            <p className="text-center md:text-right">
               <Link
                 to="/privacy"
                 className="underline opacity-80 transition-colors hover:text-catholic-gold hover:opacity-100"
               >
                 Politique de confidentialité
               </Link>
-            </div>
+            </p>
           </div>
           <div className="px-2 text-center text-sm opacity-60">
             <p>

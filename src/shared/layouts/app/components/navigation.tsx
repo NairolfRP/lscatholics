@@ -1,5 +1,5 @@
 import type { Dispatch, SetStateAction } from 'react'
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { Link } from '@tanstack/react-router'
 import { HandHeart } from 'lucide-react'
 import {
@@ -161,12 +161,39 @@ export function MobileNavigation({
   open: boolean
   setOpen: Dispatch<SetStateAction<boolean>>
 }) {
+  useEffect(() => {
+    if (!open) {
+      return
+    }
+
+    document.body.dataset.scrollLocked = 'true'
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setOpen(false)
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+
+    return () => {
+      delete document.body.dataset.scrollLocked
+      window.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [open, setOpen])
+
   if (!open) {
     return null
   }
 
   return (
-    <div className="pointer-events-auto fixed inset-0 z-30 overflow-y-auto bg-primary px-6 pt-40 text-primary-foreground opacity-100 transition-all duration-300 min-[65.875rem]:hidden">
+    <div
+      id="mobile-navigation"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Menu de navigation"
+      className="pointer-events-auto fixed inset-0 z-30 overflow-y-auto bg-primary px-6 pt-40 text-primary-foreground opacity-100 transition-all duration-300 min-[65.875rem]:hidden"
+    >
       <nav className="flex flex-col items-center gap-4 p-4">
         <Accordion className="w-full gap-5">
           {navItems.map((item) => (

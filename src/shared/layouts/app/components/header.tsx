@@ -55,6 +55,8 @@ export function Header() {
                 variant="ghost"
                 size="icon"
                 onClick={() => setMobileNavOpen((prev) => !prev)}
+                aria-expanded={mobileNavOpen}
+                aria-controls="mobile-navigation"
                 aria-label={
                   mobileNavOpen ? 'Fermer le menu de navigation' : 'Ouvrir le menu de navigation'
                 }
