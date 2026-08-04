@@ -56,9 +56,16 @@ export function DashboardSidebar() {
   return (
     <Sidebar collapsible="icon" variant="inset">
       {open && (
-        <SidebarHeader className="mb-5 items-center">
-          <Link to="/">
-            <Logo width={80} height={80} loading="eager" />
+        <SidebarHeader className="mb-5">
+          <Link
+            to="/"
+            className="flex items-center gap-3 rounded-lg px-2 py-1 transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+          >
+            <Logo width={56} height={56} loading="eager" className="size-14 shrink-0" />
+            <div className="grid flex-1 gap-0.5 overflow-hidden">
+              <span className="truncate text-base leading-tight font-semibold">LS Catholics</span>
+              <span className="truncate text-xs text-muted-foreground">Tableau de bord</span>
+            </div>
           </Link>
         </SidebarHeader>
       )}
