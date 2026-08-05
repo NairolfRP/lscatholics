@@ -1,4 +1,4 @@
-import type { ComponentPropsWithRef } from 'react'
+import type { ComponentPropsWithRef, ReactNode } from 'react'
 import type { AnyFormApi } from '@tanstack/react-form'
 import { useFormContext } from '#/shared/integrations/form/form-hook'
 import { Button } from '../ui/button'
@@ -12,7 +12,7 @@ type SubmitButtonProps<TFormValues = unknown> = Omit<
   ComponentPropsWithRef<typeof Button>,
   'disabled'
 > & {
-  label: string | ((state: FormState<TFormValues>) => string)
+  label: string | ReactNode | ((state: FormState<TFormValues>) => string | ReactNode)
   submittingLabel?: string | ((state: FormState<TFormValues>) => string)
   disabled?: boolean | ((state: FormState<TFormValues>) => boolean)
 }
@@ -23,6 +23,7 @@ export function SubmitButton<TFormValues = unknown>({
   label,
   submittingLabel,
   disabled,
+  form: formId,
   ...props
 }: SubmitButtonProps<TFormValues>) {
   const form = useFormContext()
@@ -44,7 +45,7 @@ export function SubmitButton<TFormValues = unknown>({
       }}
     >
       {([isDisabled, isSubmitting, resolvedLabel, resolvedSubmittingLabel]) => (
-        <Button type="submit" disabled={isDisabled} {...props}>
+        <Button form={formId || form.formId} type="submit" disabled={isDisabled} {...props}>
           {resolvedSubmittingLabel && isSubmitting ? (
             <SubmittingLabel label={resolvedSubmittingLabel} />
           ) : (

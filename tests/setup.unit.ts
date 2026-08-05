@@ -1,6 +1,6 @@
 import { afterEach, beforeAll, beforeEach, vi } from 'vitest'
-import { mockGetSession, setupAuthenticatedUser } from './utils/test-unit.utils'
 import { resetDb, setupTestDb } from './utils/test-db'
+import { mockGetSession, setupAuthenticatedUser } from './utils/test-unit.utils'
 
 vi.mock('@/server/auth', () => ({
   auth: {
@@ -30,10 +30,18 @@ vi.mock('@/server/logger', () => ({
 
 vi.mock('#server/integrations/logger', () => ({
   logger: {
+    debug: vi.fn(),
+    info: vi.fn(),
+    warn: vi.fn(),
+    error: vi.fn(),
+    fatal: vi.fn(),
     child: () => ({
+      debug: vi.fn(),
       info: vi.fn(),
       warn: vi.fn(),
       error: vi.fn(),
+      fatal: vi.fn(),
+      child: vi.fn(),
     }),
   },
 }))
