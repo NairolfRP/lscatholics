@@ -1,9 +1,17 @@
 import { createFileRoute } from '@tanstack/react-router'
+import { pageMetadata } from '#/utils/seo.ts'
+import {
+  RegisterParishionerPage,
+} from '#/features/parishioner/components/register-parishioner-page.tsx'
 
 export const Route = createFileRoute('/_app/register-parishioner')({
-  component: RouteComponent,
+  head: () => ({
+    meta: pageMetadata("S'enregistrer comme paroissien", {
+      metadata: {
+        description:
+          "Nous sommes ravis que vous vous intéressiez à rejoindre notre famille de familles. L'enregistrement aide les paroisses de l'Archidiocèse de Los Santos à mieux vous servir et vous permet de rester en contact avec elles.",
+      },
+    }),
+  }),
+  component: RegisterParishionerPage,
 })
-
-function RouteComponent() {
-  return <div>Hello "/_app/register-parishioner"!</div>
-}

@@ -28,6 +28,7 @@ export const env = createEnv({
     ROLEPLAY_FACTION_MINIMAL_RANK_DASHBOARD_ACCESS: z.int().min(1).max(15).optional().default(9),
 
     CONTACT_DISCORD_WEBHOOK: z.url().optional(),
+    PARISHIONER_REGISTRATION_DISCORD_WEBHOOK: z.url().optional(),
   },
 
   /**

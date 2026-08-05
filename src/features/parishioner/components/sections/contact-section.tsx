@@ -1,0 +1,71 @@
+import {
+  DistrictSelectField,
+} from '#/features/parishioner/components/fields/district-select-field.tsx'
+import { DISTRICT_GROUPS } from '#/features/parishioner/constants/districts.constants.ts'
+import {
+  getParishionerDefaultValues,
+} from '#/features/parishioner/constants/parishioner-defaults.ts'
+import { FieldLegend, FieldSet } from '#shared/components/ui/field.tsx'
+import { withForm } from '#shared/integrations/form/form-hook.ts'
+
+export const ContactSection = withForm({
+  defaultValues: getParishionerDefaultValues(null),
+  render: ({ form }) => (
+    <FieldSet>
+      <FieldLegend>Vos coordonnées</FieldLegend>
+
+      <div className="grid grid-cols-1 items-start gap-7 sm:grid-cols-2">
+        <form.AppField name="phone">
+          {(field) => (
+            <field.InputField
+              type="tel"
+              inputMode="tel"
+              label="Numéro de téléphone"
+              description="Le numéro doit contenir entre 3 et 8 chiffres."
+              placeholder="12345"
+              required
+              autoComplete="off"
+            />
+          )}
+        </form.AppField>
+
+        <form.AppField name="emergencyPhone">
+          {(field) => (
+            <field.InputField
+              type="tel"
+              inputMode="tel"
+              label="N° à appeler en cas d'urgence"
+              placeholder="Optionnel"
+              autoComplete="off"
+            />
+          )}
+        </form.AppField>
+
+        <form.AppField name="address">
+          {(field) => (
+            <field.InputField
+              label="Adresse"
+              placeholder="Ex. 12 Ginger Street"
+              description="(( De préférence, indiquez le nom d'une propriété existante. Autrement, nous pourrons pas vous envoyer des lettres/colis via le script in-game. ))"
+              required
+              autoComplete="off"
+            />
+          )}
+        </form.AppField>
+
+        <form.AppField name="district">
+          {() => (
+            <DistrictSelectField
+              label="Quartier / Ville"
+              description="Choisissez la ville ou le quartier dans lequel votre adresse se situe."
+              descriptionPos="after"
+              placeholder="Sélectionnez un quartier"
+              values={DISTRICT_GROUPS}
+              required
+            />
+          )}
+        </form.AppField>
+      </div>
+    </FieldSet>
+  ),
+})
