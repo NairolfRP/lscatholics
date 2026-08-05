@@ -18,6 +18,7 @@ import { Route as AppArchbishopRouteImport } from './routes/_app/archbishop'
 import { Route as AppCareersRouteImport } from './routes/_app/careers'
 import { Route as AppCharitiesRouteRouteImport } from './routes/_app/charities/route'
 import { Route as AppContactRouteImport } from './routes/_app/contact'
+import { Route as AppDailyReadingsRouteImport } from './routes/_app/daily-readings'
 import { Route as AppDepartmentsRouteImport } from './routes/_app/departments'
 import { Route as AppEventsRouteImport } from './routes/_app/events'
 import { Route as AppNewsroomRouteImport } from './routes/_app/newsroom'
@@ -97,6 +98,11 @@ const AppCharitiesRouteRoute = AppCharitiesRouteRouteImport.update({
 const AppContactRoute = AppContactRouteImport.update({
   id: '/contact',
   path: '/contact',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppDailyReadingsRoute = AppDailyReadingsRouteImport.update({
+  id: '/daily-readings',
+  path: '/daily-readings',
   getParentRoute: () => AppRoute,
 } as any)
 const AppDepartmentsRoute = AppDepartmentsRouteImport.update({
@@ -294,6 +300,7 @@ export interface FileRoutesByFullPath {
   '/archbishop': typeof AppArchbishopRoute
   '/careers': typeof AppCareersRoute
   '/contact': typeof AppContactRoute
+  '/daily-readings': typeof AppDailyReadingsRoute
   '/departments': typeof AppDepartmentsRoute
   '/events': typeof AppEventsRoute
   '/newsroom': typeof AppNewsroomRoute
@@ -335,6 +342,7 @@ export interface FileRoutesByTo {
   '/archbishop': typeof AppArchbishopRoute
   '/careers': typeof AppCareersRoute
   '/contact': typeof AppContactRoute
+  '/daily-readings': typeof AppDailyReadingsRoute
   '/departments': typeof AppDepartmentsRoute
   '/events': typeof AppEventsRoute
   '/newsroom': typeof AppNewsroomRoute
@@ -383,6 +391,7 @@ export interface FileRoutesById {
   '/_app/archbishop': typeof AppArchbishopRoute
   '/_app/careers': typeof AppCareersRoute
   '/_app/contact': typeof AppContactRoute
+  '/_app/daily-readings': typeof AppDailyReadingsRoute
   '/_app/departments': typeof AppDepartmentsRoute
   '/_app/events': typeof AppEventsRoute
   '/_app/newsroom': typeof AppNewsroomRoute
@@ -432,6 +441,7 @@ export interface FileRouteTypes {
     | '/archbishop'
     | '/careers'
     | '/contact'
+    | '/daily-readings'
     | '/departments'
     | '/events'
     | '/newsroom'
@@ -473,6 +483,7 @@ export interface FileRouteTypes {
     | '/archbishop'
     | '/careers'
     | '/contact'
+    | '/daily-readings'
     | '/departments'
     | '/events'
     | '/newsroom'
@@ -520,6 +531,7 @@ export interface FileRouteTypes {
     | '/_app/archbishop'
     | '/_app/careers'
     | '/_app/contact'
+    | '/_app/daily-readings'
     | '/_app/departments'
     | '/_app/events'
     | '/_app/newsroom'
@@ -627,6 +639,13 @@ declare module '@tanstack/react-router' {
       path: '/contact'
       fullPath: '/contact'
       preLoaderRoute: typeof AppContactRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/daily-readings': {
+      id: '/_app/daily-readings'
+      path: '/daily-readings'
+      fullPath: '/daily-readings'
+      preLoaderRoute: typeof AppDailyReadingsRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/departments': {
@@ -971,6 +990,7 @@ interface AppRouteChildren {
   AppArchbishopRoute: typeof AppArchbishopRoute
   AppCareersRoute: typeof AppCareersRoute
   AppContactRoute: typeof AppContactRoute
+  AppDailyReadingsRoute: typeof AppDailyReadingsRoute
   AppDepartmentsRoute: typeof AppDepartmentsRoute
   AppEventsRoute: typeof AppEventsRoute
   AppNewsroomRoute: typeof AppNewsroomRoute
@@ -995,6 +1015,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppArchbishopRoute: AppArchbishopRoute,
   AppCareersRoute: AppCareersRoute,
   AppContactRoute: AppContactRoute,
+  AppDailyReadingsRoute: AppDailyReadingsRoute,
   AppDepartmentsRoute: AppDepartmentsRoute,
   AppEventsRoute: AppEventsRoute,
   AppNewsroomRoute: AppNewsroomRoute,
