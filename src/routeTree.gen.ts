@@ -19,6 +19,7 @@ import { Route as AppCareersRouteImport } from './routes/_app/careers'
 import { Route as AppCharitiesRouteRouteImport } from './routes/_app/charities/route'
 import { Route as AppContactRouteImport } from './routes/_app/contact'
 import { Route as AppDailyReadingsRouteImport } from './routes/_app/daily-readings'
+import { Route as AppDecreesRouteRouteImport } from './routes/_app/decrees/route'
 import { Route as AppDepartmentsRouteImport } from './routes/_app/departments'
 import { Route as AppEventsRouteImport } from './routes/_app/events'
 import { Route as AppNewsroomRouteImport } from './routes/_app/newsroom'
@@ -33,6 +34,8 @@ import { Route as AppAccountIndexRouteImport } from './routes/_app/account/index
 import { Route as AppAccountSessionsRouteImport } from './routes/_app/account/sessions'
 import { Route as AppAccountSettingsRouteImport } from './routes/_app/account/settings'
 import { Route as AppCharitiesIndexRouteImport } from './routes/_app/charities/index'
+import { Route as AppDecreesIndexRouteImport } from './routes/_app/decrees/index'
+import { Route as AppDecreesUidRouteImport } from './routes/_app/decrees/$uid'
 import { Route as AppDepartmentSlugRouteImport } from './routes/_app/department/$slug'
 import { Route as AppEventSlugRouteImport } from './routes/_app/event/$slug'
 import { Route as AppPostSlugRouteImport } from './routes/_app/post/$slug'
@@ -105,6 +108,11 @@ const AppDailyReadingsRoute = AppDailyReadingsRouteImport.update({
   path: '/daily-readings',
   getParentRoute: () => AppRoute,
 } as any)
+const AppDecreesRouteRoute = AppDecreesRouteRouteImport.update({
+  id: '/decrees',
+  path: '/decrees',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppDepartmentsRoute = AppDepartmentsRouteImport.update({
   id: '/departments',
   path: '/departments',
@@ -174,6 +182,16 @@ const AppCharitiesIndexRoute = AppCharitiesIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => AppCharitiesRouteRoute,
+} as any)
+const AppDecreesIndexRoute = AppDecreesIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AppDecreesRouteRoute,
+} as any)
+const AppDecreesUidRoute = AppDecreesUidRouteImport.update({
+  id: '/$uid',
+  path: '/$uid',
+  getParentRoute: () => AppDecreesRouteRoute,
 } as any)
 const AppDepartmentSlugRoute = AppDepartmentSlugRouteImport.update({
   id: '/department/$slug',
@@ -295,6 +313,7 @@ export interface FileRoutesByFullPath {
   '/': typeof AppIndexRoute
   '/account': typeof AppAccountRouteRouteWithChildren
   '/charities': typeof AppCharitiesRouteRouteWithChildren
+  '/decrees': typeof AppDecreesRouteRouteWithChildren
   '/dashboard/users': typeof DashboardUsersRouteRouteWithChildren
   '/about': typeof AppAboutRoute
   '/archbishop': typeof AppArchbishopRoute
@@ -312,6 +331,7 @@ export interface FileRoutesByFullPath {
   '/dashboard/': typeof DashboardIndexRoute
   '/account/sessions': typeof AppAccountSessionsRoute
   '/account/settings': typeof AppAccountSettingsRoute
+  '/decrees/$uid': typeof AppDecreesUidRoute
   '/department/$slug': typeof AppDepartmentSlugRoute
   '/event/$slug': typeof AppEventSlugRoute
   '/post/$slug': typeof AppPostSlugRoute
@@ -322,6 +342,7 @@ export interface FileRoutesByFullPath {
   '/dashboard/posts/create': typeof DashboardPostsCreateRoute
   '/account/': typeof AppAccountIndexRoute
   '/charities/': typeof AppCharitiesIndexRoute
+  '/decrees/': typeof AppDecreesIndexRoute
   '/dashboard/events/': typeof DashboardEventsIndexRoute
   '/dashboard/job-openings/': typeof DashboardJobOpeningsIndexRoute
   '/dashboard/posts/': typeof DashboardPostsIndexRoute
@@ -355,6 +376,7 @@ export interface FileRoutesByTo {
   '/dashboard': typeof DashboardIndexRoute
   '/account/sessions': typeof AppAccountSessionsRoute
   '/account/settings': typeof AppAccountSettingsRoute
+  '/decrees/$uid': typeof AppDecreesUidRoute
   '/department/$slug': typeof AppDepartmentSlugRoute
   '/event/$slug': typeof AppEventSlugRoute
   '/post/$slug': typeof AppPostSlugRoute
@@ -365,6 +387,7 @@ export interface FileRoutesByTo {
   '/dashboard/posts/create': typeof DashboardPostsCreateRoute
   '/account': typeof AppAccountIndexRoute
   '/charities': typeof AppCharitiesIndexRoute
+  '/decrees': typeof AppDecreesIndexRoute
   '/dashboard/events': typeof DashboardEventsIndexRoute
   '/dashboard/job-openings': typeof DashboardJobOpeningsIndexRoute
   '/dashboard/posts': typeof DashboardPostsIndexRoute
@@ -386,6 +409,7 @@ export interface FileRoutesById {
   '/_app': typeof AppRouteWithChildren
   '/_app/account': typeof AppAccountRouteRouteWithChildren
   '/_app/charities': typeof AppCharitiesRouteRouteWithChildren
+  '/_app/decrees': typeof AppDecreesRouteRouteWithChildren
   '/dashboard/users': typeof DashboardUsersRouteRouteWithChildren
   '/_app/about': typeof AppAboutRoute
   '/_app/archbishop': typeof AppArchbishopRoute
@@ -404,6 +428,7 @@ export interface FileRoutesById {
   '/dashboard/': typeof DashboardIndexRoute
   '/_app/account/sessions': typeof AppAccountSessionsRoute
   '/_app/account/settings': typeof AppAccountSettingsRoute
+  '/_app/decrees/$uid': typeof AppDecreesUidRoute
   '/_app/department/$slug': typeof AppDepartmentSlugRoute
   '/_app/event/$slug': typeof AppEventSlugRoute
   '/_app/post/$slug': typeof AppPostSlugRoute
@@ -414,6 +439,7 @@ export interface FileRoutesById {
   '/dashboard/posts/create': typeof DashboardPostsCreateRoute
   '/_app/account/': typeof AppAccountIndexRoute
   '/_app/charities/': typeof AppCharitiesIndexRoute
+  '/_app/decrees/': typeof AppDecreesIndexRoute
   '/dashboard/events/': typeof DashboardEventsIndexRoute
   '/dashboard/job-openings/': typeof DashboardJobOpeningsIndexRoute
   '/dashboard/posts/': typeof DashboardPostsIndexRoute
@@ -436,6 +462,7 @@ export interface FileRouteTypes {
     | '/'
     | '/account'
     | '/charities'
+    | '/decrees'
     | '/dashboard/users'
     | '/about'
     | '/archbishop'
@@ -453,6 +480,7 @@ export interface FileRouteTypes {
     | '/dashboard/'
     | '/account/sessions'
     | '/account/settings'
+    | '/decrees/$uid'
     | '/department/$slug'
     | '/event/$slug'
     | '/post/$slug'
@@ -463,6 +491,7 @@ export interface FileRouteTypes {
     | '/dashboard/posts/create'
     | '/account/'
     | '/charities/'
+    | '/decrees/'
     | '/dashboard/events/'
     | '/dashboard/job-openings/'
     | '/dashboard/posts/'
@@ -496,6 +525,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/account/sessions'
     | '/account/settings'
+    | '/decrees/$uid'
     | '/department/$slug'
     | '/event/$slug'
     | '/post/$slug'
@@ -506,6 +536,7 @@ export interface FileRouteTypes {
     | '/dashboard/posts/create'
     | '/account'
     | '/charities'
+    | '/decrees'
     | '/dashboard/events'
     | '/dashboard/job-openings'
     | '/dashboard/posts'
@@ -526,6 +557,7 @@ export interface FileRouteTypes {
     | '/_app'
     | '/_app/account'
     | '/_app/charities'
+    | '/_app/decrees'
     | '/dashboard/users'
     | '/_app/about'
     | '/_app/archbishop'
@@ -544,6 +576,7 @@ export interface FileRouteTypes {
     | '/dashboard/'
     | '/_app/account/sessions'
     | '/_app/account/settings'
+    | '/_app/decrees/$uid'
     | '/_app/department/$slug'
     | '/_app/event/$slug'
     | '/_app/post/$slug'
@@ -554,6 +587,7 @@ export interface FileRouteTypes {
     | '/dashboard/posts/create'
     | '/_app/account/'
     | '/_app/charities/'
+    | '/_app/decrees/'
     | '/dashboard/events/'
     | '/dashboard/job-openings/'
     | '/dashboard/posts/'
@@ -646,6 +680,13 @@ declare module '@tanstack/react-router' {
       path: '/daily-readings'
       fullPath: '/daily-readings'
       preLoaderRoute: typeof AppDailyReadingsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/decrees': {
+      id: '/_app/decrees'
+      path: '/decrees'
+      fullPath: '/decrees'
+      preLoaderRoute: typeof AppDecreesRouteRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/departments': {
@@ -745,6 +786,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/charities/'
       preLoaderRoute: typeof AppCharitiesIndexRouteImport
       parentRoute: typeof AppCharitiesRouteRoute
+    }
+    '/_app/decrees/': {
+      id: '/_app/decrees/'
+      path: '/'
+      fullPath: '/decrees/'
+      preLoaderRoute: typeof AppDecreesIndexRouteImport
+      parentRoute: typeof AppDecreesRouteRoute
+    }
+    '/_app/decrees/$uid': {
+      id: '/_app/decrees/$uid'
+      path: '/$uid'
+      fullPath: '/decrees/$uid'
+      preLoaderRoute: typeof AppDecreesUidRouteImport
+      parentRoute: typeof AppDecreesRouteRoute
     }
     '/_app/department/$slug': {
       id: '/_app/department/$slug'
@@ -983,9 +1038,24 @@ const AppCharitiesRouteRouteChildren: AppCharitiesRouteRouteChildren = {
 const AppCharitiesRouteRouteWithChildren =
   AppCharitiesRouteRoute._addFileChildren(AppCharitiesRouteRouteChildren)
 
+interface AppDecreesRouteRouteChildren {
+  AppDecreesUidRoute: typeof AppDecreesUidRoute
+  AppDecreesIndexRoute: typeof AppDecreesIndexRoute
+}
+
+const AppDecreesRouteRouteChildren: AppDecreesRouteRouteChildren = {
+  AppDecreesUidRoute: AppDecreesUidRoute,
+  AppDecreesIndexRoute: AppDecreesIndexRoute,
+}
+
+const AppDecreesRouteRouteWithChildren = AppDecreesRouteRoute._addFileChildren(
+  AppDecreesRouteRouteChildren,
+)
+
 interface AppRouteChildren {
   AppAccountRouteRoute: typeof AppAccountRouteRouteWithChildren
   AppCharitiesRouteRoute: typeof AppCharitiesRouteRouteWithChildren
+  AppDecreesRouteRoute: typeof AppDecreesRouteRouteWithChildren
   AppAboutRoute: typeof AppAboutRoute
   AppArchbishopRoute: typeof AppArchbishopRoute
   AppCareersRoute: typeof AppCareersRoute
@@ -1011,6 +1081,7 @@ interface AppRouteChildren {
 const AppRouteChildren: AppRouteChildren = {
   AppAccountRouteRoute: AppAccountRouteRouteWithChildren,
   AppCharitiesRouteRoute: AppCharitiesRouteRouteWithChildren,
+  AppDecreesRouteRoute: AppDecreesRouteRouteWithChildren,
   AppAboutRoute: AppAboutRoute,
   AppArchbishopRoute: AppArchbishopRoute,
   AppCareersRoute: AppCareersRoute,
