@@ -2,7 +2,7 @@ import { setResponseStatus } from '@tanstack/react-start/server'
 import { z } from 'zod'
 import { env } from '#/config/env.server.ts'
 import { parishes } from '#/config/parishes.ts'
-import { getDistrictLabel } from '#/features/parishioner/constants/districts.constants.ts'
+import { getDistrictLabel } from '#shared/constants/districts.constants.ts'
 import {
   civilTitleLabels,
   ethnicCommunityLabels,

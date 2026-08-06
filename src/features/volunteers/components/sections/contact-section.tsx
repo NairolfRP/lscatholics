@@ -1,11 +1,11 @@
 import { DISTRICT_GROUPS } from '#shared/constants/districts.constants.ts'
 import { DistrictSelectField } from '#shared/components/form/district-select-field.tsx'
-import { getParishionerDefaultValues } from '#/features/parishioner/constants/parishioner-defaults.ts'
+import { getVolunteerDefaults } from '#/features/volunteers/constants/volunteer-defaults.ts'
 import { FieldLegend, FieldSet } from '#shared/components/ui/field.tsx'
 import { withForm } from '#shared/integrations/form/form-hook.ts'
 
 export const ContactSection = withForm({
-  defaultValues: getParishionerDefaultValues(null),
+  defaultValues: getVolunteerDefaults(null),
   render: ({ form }) => (
     <FieldSet>
       <FieldLegend>Vos coordonnées</FieldLegend>
@@ -31,7 +31,8 @@ export const ContactSection = withForm({
               type="tel"
               inputMode="tel"
               label="N° à appeler en cas d'urgence"
-              placeholder="Optionnel"
+              description="Optionnel — une personne à prévenir en cas de besoin."
+              placeholder="12345"
               autoComplete="off"
             />
           )}
@@ -42,7 +43,6 @@ export const ContactSection = withForm({
             <field.InputField
               label="Adresse"
               placeholder="Ex. 12 Ginger Street"
-              description="(( De préférence, indiquez le nom d'une propriété existante. Autrement, nous pourrons pas vous envoyer des lettres/colis via le script in-game. ))"
               required
               autoComplete="off"
             />

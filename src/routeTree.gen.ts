@@ -28,6 +28,7 @@ import { Route as AppPrivacyRouteImport } from './routes/_app/privacy'
 import { Route as AppRegisterParishionerRouteImport } from './routes/_app/register-parishioner'
 import { Route as AppServicesRouteImport } from './routes/_app/services'
 import { Route as AppVocationsRouteImport } from './routes/_app/vocations'
+import { Route as AppVolunteersRouteImport } from './routes/_app/volunteers'
 import { Route as DashboardIndexRouteImport } from './routes/dashboard/index'
 import { Route as DashboardUsersRouteRouteImport } from './routes/dashboard/users/route'
 import { Route as AppAccountIndexRouteImport } from './routes/_app/account/index'
@@ -151,6 +152,11 @@ const AppServicesRoute = AppServicesRouteImport.update({
 const AppVocationsRoute = AppVocationsRouteImport.update({
   id: '/vocations',
   path: '/vocations',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppVolunteersRoute = AppVolunteersRouteImport.update({
+  id: '/volunteers',
+  path: '/volunteers',
   getParentRoute: () => AppRoute,
 } as any)
 const DashboardIndexRoute = DashboardIndexRouteImport.update({
@@ -328,6 +334,7 @@ export interface FileRoutesByFullPath {
   '/register-parishioner': typeof AppRegisterParishionerRoute
   '/services': typeof AppServicesRoute
   '/vocations': typeof AppVocationsRoute
+  '/volunteers': typeof AppVolunteersRoute
   '/dashboard/': typeof DashboardIndexRoute
   '/account/sessions': typeof AppAccountSessionsRoute
   '/account/settings': typeof AppAccountSettingsRoute
@@ -372,6 +379,7 @@ export interface FileRoutesByTo {
   '/register-parishioner': typeof AppRegisterParishionerRoute
   '/services': typeof AppServicesRoute
   '/vocations': typeof AppVocationsRoute
+  '/volunteers': typeof AppVolunteersRoute
   '/': typeof AppIndexRoute
   '/dashboard': typeof DashboardIndexRoute
   '/account/sessions': typeof AppAccountSessionsRoute
@@ -424,6 +432,7 @@ export interface FileRoutesById {
   '/_app/register-parishioner': typeof AppRegisterParishionerRoute
   '/_app/services': typeof AppServicesRoute
   '/_app/vocations': typeof AppVocationsRoute
+  '/_app/volunteers': typeof AppVolunteersRoute
   '/_app/': typeof AppIndexRoute
   '/dashboard/': typeof DashboardIndexRoute
   '/_app/account/sessions': typeof AppAccountSessionsRoute
@@ -477,6 +486,7 @@ export interface FileRouteTypes {
     | '/register-parishioner'
     | '/services'
     | '/vocations'
+    | '/volunteers'
     | '/dashboard/'
     | '/account/sessions'
     | '/account/settings'
@@ -521,6 +531,7 @@ export interface FileRouteTypes {
     | '/register-parishioner'
     | '/services'
     | '/vocations'
+    | '/volunteers'
     | '/'
     | '/dashboard'
     | '/account/sessions'
@@ -572,6 +583,7 @@ export interface FileRouteTypes {
     | '/_app/register-parishioner'
     | '/_app/services'
     | '/_app/vocations'
+    | '/_app/volunteers'
     | '/_app/'
     | '/dashboard/'
     | '/_app/account/sessions'
@@ -743,6 +755,13 @@ declare module '@tanstack/react-router' {
       path: '/vocations'
       fullPath: '/vocations'
       preLoaderRoute: typeof AppVocationsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/volunteers': {
+      id: '/_app/volunteers'
+      path: '/volunteers'
+      fullPath: '/volunteers'
+      preLoaderRoute: typeof AppVolunteersRouteImport
       parentRoute: typeof AppRoute
     }
     '/dashboard/': {
@@ -1069,6 +1088,7 @@ interface AppRouteChildren {
   AppRegisterParishionerRoute: typeof AppRegisterParishionerRoute
   AppServicesRoute: typeof AppServicesRoute
   AppVocationsRoute: typeof AppVocationsRoute
+  AppVolunteersRoute: typeof AppVolunteersRoute
   AppIndexRoute: typeof AppIndexRoute
   AppDepartmentSlugRoute: typeof AppDepartmentSlugRoute
   AppEventSlugRoute: typeof AppEventSlugRoute
@@ -1095,6 +1115,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppRegisterParishionerRoute: AppRegisterParishionerRoute,
   AppServicesRoute: AppServicesRoute,
   AppVocationsRoute: AppVocationsRoute,
+  AppVolunteersRoute: AppVolunteersRoute,
   AppIndexRoute: AppIndexRoute,
   AppDepartmentSlugRoute: AppDepartmentSlugRoute,
   AppEventSlugRoute: AppEventSlugRoute,

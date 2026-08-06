@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { DISTRICT_VALUES } from '#/features/parishioner/constants/districts.constants.ts'
+import { DISTRICT_VALUES } from '#shared/constants/districts.constants.ts'
 import {
   BAPTIZED_VALUES,
   CIVIL_TITLE_VALUES,

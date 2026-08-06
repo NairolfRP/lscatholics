@@ -2,7 +2,13 @@ import type { ComponentPropsWithoutRef } from 'react'
 import { useId } from 'react'
 import { useFieldContext } from '#/shared/integrations/form/form-hook.ts'
 import type { FieldComponentProps } from '#/shared/lib/types/form.ts'
-import { Field, FieldContent, FieldDescription, FieldError, FieldLabel } from '#shared/components/ui/field.tsx'
+import {
+  Field,
+  FieldContent,
+  FieldDescription,
+  FieldError,
+  FieldLabel,
+} from '#shared/components/ui/field.tsx'
 import {
   Select,
   SelectContent,
@@ -12,7 +18,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '#shared/components/ui/select.tsx'
-import type { DistrictGroup } from '#/features/parishioner/constants/districts.constants.ts'
+import type { DistrictGroup } from '#shared/constants/districts.constants.ts'
 
 type DistrictSelectFieldProps = FieldComponentProps<
   typeof Select,
@@ -22,10 +28,7 @@ type DistrictSelectFieldProps = FieldComponentProps<
     descriptionPos?: 'before' | 'after'
     placeholder?: string
     values: DistrictGroup[]
-    selectTriggerProps?: Omit<
-      ComponentPropsWithoutRef<typeof SelectTrigger>,
-      'id' | 'aria-invalid'
-    >
+    selectTriggerProps?: Omit<ComponentPropsWithoutRef<typeof SelectTrigger>, 'id' | 'aria-invalid'>
   },
   'onValueChange'
 >
@@ -56,7 +59,9 @@ export function DistrictSelectField({
         <FieldLabel required={required} {...fieldLabelProps} htmlFor={fieldId}>
           {label}
         </FieldLabel>
-        {description && descriptionPos === 'before' && <FieldDescription>{description}</FieldDescription>}
+        {description && descriptionPos === 'before' && (
+          <FieldDescription>{description}</FieldDescription>
+        )}
       </FieldContent>
 
       <Select
@@ -84,7 +89,9 @@ export function DistrictSelectField({
         </SelectContent>
       </Select>
 
-      {description && descriptionPos === 'after' && <FieldDescription>{description}</FieldDescription>}
+      {description && descriptionPos === 'after' && (
+        <FieldDescription>{description}</FieldDescription>
+      )}
       {isInvalid && <FieldError errors={field.state.meta.errors} />}
     </Field>
   )
