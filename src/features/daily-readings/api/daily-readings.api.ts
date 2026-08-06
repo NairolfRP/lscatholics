@@ -1,7 +1,5 @@
 import ky, { HTTPError } from 'ky'
-import {
-  aelfReadingsResponseSchema,
-} from '#/features/daily-readings/schemas/daily-readings.schema.ts'
+import { aelfReadingsResponseSchema } from '#/features/daily-readings/schemas/daily-readings.schema.ts'
 import type { AELFReadingsResponse } from '#/features/daily-readings/types/aelf.types.ts'
 
 const aelfClient = ky.create({

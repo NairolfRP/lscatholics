@@ -1,6 +1,6 @@
 import type { AnySQLiteTable } from 'drizzle-orm/sqlite-core'
-import { SQLiteTable } from 'drizzle-orm/sqlite-core'
 import { sql } from 'drizzle-orm'
+import { SQLiteTable } from 'drizzle-orm/sqlite-core'
 import { db } from '#server/db'
 import * as schema from '#server/db/schema'
 

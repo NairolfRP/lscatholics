@@ -1,10 +1,6 @@
 import { ScrollTextIcon } from 'lucide-react'
-import {
-  RegisterParishionerBenefits,
-} from '#/features/parishioner/components/register-parishioner-benefits.tsx'
-import {
-  RegisterParishionerForm,
-} from '#/features/parishioner/components/register-parishioner-form.tsx'
+import { RegisterParishionerBenefits } from '#/features/parishioner/components/register-parishioner-benefits.tsx'
+import { RegisterParishionerForm } from '#/features/parishioner/components/register-parishioner-form.tsx'
 import { buttonVariants } from '#shared/components/ui/button.tsx'
 import { Typography } from '#shared/components/ui/typography.tsx'
 import Hero from '#shared/layouts/app/components/hero.tsx'

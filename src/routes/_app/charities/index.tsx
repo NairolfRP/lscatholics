@@ -1,7 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
-import {
-  CatholicCharitiesPage,
-} from '#/features/catholic-charities/components/catholic-charities-page'
+import { CatholicCharitiesPage } from '#/features/catholic-charities/components/catholic-charities-page'
 import { pageMetadata } from '#/utils/seo'
 
 export const Route = createFileRoute('/_app/charities/')({

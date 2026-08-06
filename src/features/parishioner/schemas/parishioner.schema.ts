@@ -1,5 +1,4 @@
 import { z } from 'zod'
-import { DISTRICT_VALUES } from '#shared/constants/districts.constants.ts'
 import {
   BAPTIZED_VALUES,
   CIVIL_TITLE_VALUES,
@@ -11,6 +10,7 @@ import {
   MARITAL_STATUS_VALUES,
   RELIGION_VALUES,
 } from '#/features/parishioner/constants/person.constants.ts'
+import { DISTRICT_VALUES } from '#shared/constants/districts.constants.ts'
 import { PARISH_VALUES } from '#shared/constants/parish.ts'
 
 const nameSchema = (label: string) =>

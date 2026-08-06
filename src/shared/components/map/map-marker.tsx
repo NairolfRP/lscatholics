@@ -1,7 +1,7 @@
 import type { LatLngExpression } from 'leaflet'
-import L from 'leaflet'
 import type { ReactNode } from 'react'
 import { forwardRef, useImperativeHandle, useMemo, useRef } from 'react'
+import L from 'leaflet'
 import { Marker, Popup } from 'react-leaflet'
 
 type MarkerVariant = 'default' | 'cross'

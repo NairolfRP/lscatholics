@@ -1,8 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
+import { RegisterParishionerPage } from '#/features/parishioner/components/register-parishioner-page.tsx'
 import { pageMetadata } from '#/utils/seo.ts'
-import {
-  RegisterParishionerPage,
-} from '#/features/parishioner/components/register-parishioner-page.tsx'
 
 export const Route = createFileRoute('/_app/register-parishioner')({
   head: () => ({

@@ -22,7 +22,7 @@ export function NextChurchEvent() {
     <Link
       to="/event/$slug"
       params={{ slug: nextEvent.slug }}
-      className="group inline-flex max-w-full flex-col items-center rounded-2xl border border-white/25 bg-black/25 px-8 py-5 text-center text-white backdrop-blur-sm transition hover:border-white/50 hover:bg-black/35 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary"
+      className="group inline-flex max-w-full flex-col items-center rounded-2xl border border-white/25 bg-black/25 px-8 py-5 text-center text-white backdrop-blur-sm transition hover:border-white/50 hover:bg-black/35 focus-visible:ring-2 focus-visible:ring-secondary focus-visible:outline-none"
     >
       <span className="text-xs font-semibold tracking-[0.25em] text-secondary uppercase">
         Prochain événement

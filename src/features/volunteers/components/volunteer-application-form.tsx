@@ -2,20 +2,12 @@ import { HeartHandshakeIcon } from 'lucide-react'
 import { ContactSection } from '#/features/volunteers/components/sections/contact-section.tsx'
 import { EngagementSection } from '#/features/volunteers/components/sections/engagement-section.tsx'
 import { IdentitySection } from '#/features/volunteers/components/sections/identity-section.tsx'
-import {
-  RequiredHoursSection,
-} from '#/features/volunteers/components/sections/required-hours-section.tsx'
+import { RequiredHoursSection } from '#/features/volunteers/components/sections/required-hours-section.tsx'
 import { SourceSection } from '#/features/volunteers/components/sections/source-section.tsx'
-import {
-  VolunteerApplicationFormSkeleton,
-} from '#/features/volunteers/components/volunteer-application-form-skeleton.tsx'
+import { VolunteerApplicationFormSkeleton } from '#/features/volunteers/components/volunteer-application-form-skeleton.tsx'
 import { getVolunteerDefaults } from '#/features/volunteers/constants/volunteer-defaults.ts'
-import {
-  volunteerApplicationSchema,
-} from '#/features/volunteers/schemas/volunteer-application.schema.ts'
-import {
-  submitVolunteerApplicationFn,
-} from '#/features/volunteers/server-fn/volunteer-application.functions.ts'
+import { volunteerApplicationSchema } from '#/features/volunteers/schemas/volunteer-application.schema.ts'
+import { submitVolunteerApplicationFn } from '#/features/volunteers/server-fn/volunteer-application.functions.ts'
 import { RequireAuth } from '#shared/components/auth/require-auth.tsx'
 import {
   Card,

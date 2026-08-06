@@ -1,4 +1,6 @@
 import type { LucideIcon } from 'lucide-react'
+import { useQuery } from '@tanstack/react-query'
+import { Link } from '@tanstack/react-router'
 import {
   AlertCircleIcon,
   ArrowRightIcon,
@@ -10,8 +12,6 @@ import {
   ScrollTextIcon,
   StampIcon,
 } from 'lucide-react'
-import { useQuery } from '@tanstack/react-query'
-import { Link } from '@tanstack/react-router'
 import type { DecreeCategory } from '#/features/decree/constants/decree.constants.ts'
 import {
   DECREE_CATEGORIES,

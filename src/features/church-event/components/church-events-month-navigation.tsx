@@ -104,7 +104,7 @@ export function ChurchEventsMonthNavigationSkeleton() {
   return (
     <div className="mx-auto flex w-full max-w-3xl items-center justify-between gap-2 rounded-2xl bg-card p-3 shadow-xs ring-1 ring-foreground/10 sm:gap-4 sm:p-4">
       <Skeleton className="h-9 w-10 sm:w-28" />
-      <Skeleton className="h-7 w-36 sm:w-44 rounded-md" />
+      <Skeleton className="h-7 w-36 rounded-md sm:w-44" />
       <Skeleton className="h-9 w-10 sm:w-28" />
     </div>
   )

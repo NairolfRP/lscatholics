@@ -17,7 +17,7 @@ export const serviceCategories: Record<ChurchServiceCategory, ServiceCategoryMet
     id: 'sacrements',
     title: 'Sacrements de la vie chrétienne',
     description:
-      "Les sacrements, signes sensibles de la grâce de Dieu, accompagnent le chrétien de sa naissance à son dernier souffle.",
+      'Les sacrements, signes sensibles de la grâce de Dieu, accompagnent le chrétien de sa naissance à son dernier souffle.',
     chip: 'bg-catholic-blue/10 text-catholic-blue dark:text-blue-400',
     accent: 'bg-catholic-blue',
     hero: 'bg-linear-to-r from-catholic-blue to-catholic-blue/80',

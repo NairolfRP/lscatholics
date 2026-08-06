@@ -12,7 +12,7 @@ export function CTACard({ item: { icon: Icon, ...item } }: { item: CTA }) {
           </span>
         )}
         <div>
-          <div className="font-bold leading-snug">{item.title}</div>
+          <div className="leading-snug font-bold">{item.title}</div>
           {item.description && (
             <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
               {item.description}
@@ -33,7 +33,7 @@ export function CTACard({ item: { icon: Icon, ...item } }: { item: CTA }) {
         href={item.href}
         target="_blank"
         rel="noopener noreferrer"
-        className="rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        className="rounded-2xl focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
       >
         {content()}
       </a>
@@ -43,7 +43,7 @@ export function CTACard({ item: { icon: Icon, ...item } }: { item: CTA }) {
   return (
     <Link
       to={item.to}
-      className="rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+      className="rounded-2xl focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
     >
       {content()}
     </Link>

@@ -1,4 +1,6 @@
 import type { LucideIcon } from 'lucide-react'
+import type { Components } from 'react-markdown'
+import { createFileRoute, Link, notFound } from '@tanstack/react-router'
 import {
   ArrowLeftIcon,
   ArrowRightIcon,
@@ -17,9 +19,7 @@ import {
   ShieldIcon,
   UserRoundIcon,
 } from 'lucide-react'
-import type { Components } from 'react-markdown'
 import ReactMarkdown from 'react-markdown'
-import { createFileRoute, Link, notFound } from '@tanstack/react-router'
 import { serviceCategories } from '#/config/service-categories.ts'
 import { services } from '#/config/services.ts'
 import { pageMetadata } from '#/utils/seo.ts'

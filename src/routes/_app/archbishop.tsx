@@ -98,7 +98,9 @@ function ArchbishopPage() {
                 </div>
                 <Separator className="bg-catholic-red" />
                 <div className="space-y-3">
-                  <h4 className="font-semibold text-catholic-red dark:text-red-400">Description héraldique</h4>
+                  <h4 className="font-semibold text-catholic-red dark:text-red-400">
+                    Description héraldique
+                  </h4>
                   <p className="text-sm leading-relaxed whitespace-pre-wrap text-muted-foreground">
                     {archbishop.heraldryDescription}
                   </p>

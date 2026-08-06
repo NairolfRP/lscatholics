@@ -1,7 +1,5 @@
 import { HandHeartIcon } from 'lucide-react'
-import {
-  VolunteerApplicationForm,
-} from '#/features/volunteers/components/volunteer-application-form.tsx'
+import { VolunteerApplicationForm } from '#/features/volunteers/components/volunteer-application-form.tsx'
 import { VolunteerBenefits } from '#/features/volunteers/components/volunteer-benefits.tsx'
 import { VolunteersSidebar } from '#/features/volunteers/components/volunteer-sidebar.tsx'
 import { buttonVariants } from '#shared/components/ui/button.tsx'

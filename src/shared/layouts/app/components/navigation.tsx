@@ -118,7 +118,9 @@ export default function Navigation() {
                                 <Link
                                   to={subItem.to}
                                   params={subItem.params}
-                                  aria-current={isPathActive(subItem.to, pathname) ? 'page' : undefined}
+                                  aria-current={
+                                    isPathActive(subItem.to, pathname) ? 'page' : undefined
+                                  }
                                   className="group block space-y-1 rounded-md p-3 leading-none no-underline transition-colors outline-none select-none hover:bg-transparent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                                 />
                               }
@@ -189,8 +191,8 @@ export function MobileNavigation({
 }) {
   const containerRef = useRef<HTMLDivElement>(null)
   const { pathname } = useLocation()
-  const activeParentLabel = navItems.find(
-    (item) => item.children?.some((child) => child.to && isPathActive(child.to, pathname))
+  const activeParentLabel = navItems.find((item) =>
+    item.children?.some((child) => child.to && isPathActive(child.to, pathname))
   )?.label
 
   useEffect(() => {
@@ -315,7 +317,11 @@ function SiteMobileNavigationItem({ item, onClose }: { item: NavItem; onClose: (
       onClick={onClose}
       target={item.target}
       aria-current={active ? 'page' : undefined}
-      className={cn(mobileNavigationLinkClasses, 'font-bold uppercase', active && 'text-catholic-gold')}
+      className={cn(
+        mobileNavigationLinkClasses,
+        'font-bold uppercase',
+        active && 'text-catholic-gold'
+      )}
     >
       {item.label}
     </Link>

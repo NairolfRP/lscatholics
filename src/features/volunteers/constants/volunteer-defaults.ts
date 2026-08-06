@@ -1,6 +1,4 @@
-import type {
-  VolunteerApplicationInput,
-} from '#/features/volunteers/schemas/volunteer-application.schema.ts'
+import type { VolunteerApplicationInput } from '#/features/volunteers/schemas/volunteer-application.schema.ts'
 import type { Character } from '#shared/types/character.types.ts'
 
 export function getVolunteerDefaults(currentCharacter: Character | null | undefined) {

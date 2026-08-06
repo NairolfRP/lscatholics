@@ -1,12 +1,8 @@
 import { useQueryClient } from '@tanstack/react-query'
 import { createFileRoute, redirect } from '@tanstack/react-router'
 import { DashboardHeading } from '#/features/dashboard/components/dashboard-heading.tsx'
-import {
-  DashboardJobPostingForm,
-} from '#/features/job-posting/components/dashboard-job-posting-form.tsx'
-import {
-  genericDashboardJobPostingFormOptions,
-} from '#/features/job-posting/forms/job-posting-form-options.ts'
+import { DashboardJobPostingForm } from '#/features/job-posting/components/dashboard-job-posting-form.tsx'
+import { genericDashboardJobPostingFormOptions } from '#/features/job-posting/forms/job-posting-form-options.ts'
 import { createJobPostingSchema } from '#/features/job-posting/schemas/job-posting.schema.ts'
 import { createJobPostingFn } from '#/server-fn/job-posting.functions.ts'
 import { toast } from '#/shared/components/ui/toast'

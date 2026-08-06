@@ -12,9 +12,7 @@ import {
   PencilIcon,
   UsersIcon,
 } from 'lucide-react'
-import type {
-  VocationsSelfTestResult,
-} from '#/features/vocations/components/vocations-self-test.tsx'
+import type { VocationsSelfTestResult } from '#/features/vocations/components/vocations-self-test.tsx'
 import { VocationsSelfTest } from '#/features/vocations/components/vocations-self-test.tsx'
 import { pageMetadata } from '#/utils/seo.ts'
 import { buttonVariants } from '#shared/components/ui/button'

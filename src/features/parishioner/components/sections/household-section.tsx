@@ -1,10 +1,6 @@
 import { UsersRoundIcon } from 'lucide-react'
-import {
-  HouseholdMemberCard,
-} from '#/features/parishioner/components/sections/household-member-card.tsx'
-import {
-  getParishionerDefaultValues,
-} from '#/features/parishioner/constants/parishioner-defaults.ts'
+import { HouseholdMemberCard } from '#/features/parishioner/components/sections/household-member-card.tsx'
+import { getParishionerDefaultValues } from '#/features/parishioner/constants/parishioner-defaults.ts'
 import {
   Accordion,
   AccordionContent,

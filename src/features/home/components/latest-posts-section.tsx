@@ -27,7 +27,7 @@ export function LatestPostsSection() {
       <Link
         to="/post/$slug"
         params={{ slug: latestPost.slug }}
-        className="group block rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        className="group block rounded-2xl focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
       >
         <div className="overflow-hidden rounded-xl ring-1 ring-foreground/10 transition duration-300 group-hover:shadow-md">
           <Image
@@ -59,7 +59,7 @@ export function LatestPostsSection() {
             <Link
               to="/post/$slug"
               params={{ slug: post.slug }}
-              className="group block rounded-xl px-3 py-4 transition hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              className="group block rounded-xl px-3 py-4 transition hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
             >
               {post.category && (
                 <Badge variant="secondary" className="uppercase">

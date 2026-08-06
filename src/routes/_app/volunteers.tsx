@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { pageMetadata } from '#/utils/seo.ts'
 import { VolunteersPage } from '#/features/volunteers/components/volunteers-page.tsx'
+import { pageMetadata } from '#/utils/seo.ts'
 
 export const Route = createFileRoute('/_app/volunteers')({
   head: () => ({

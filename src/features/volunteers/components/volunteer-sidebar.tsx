@@ -13,8 +13,8 @@ export function VolunteersSidebar() {
         </CardHeader>
         <CardContent>
           <blockquote className="border-l-2 border-primary pl-4">
-            <Typography className="italic text-muted-foreground">
-              <strong className="not-italic text-foreground">Mission :</strong> Catholic Charities
+            <Typography className="text-muted-foreground italic">
+              <strong className="text-foreground not-italic">Mission :</strong> Catholic Charities
               s'engage à témoigner du message du Christ en menant des actions auprès de diverses
               communautés, au service des pauvres et des plus vulnérables, afin de promouvoir la
               dignité humaine et défendre la justice sociale.

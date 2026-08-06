@@ -1,11 +1,7 @@
 import { useQueryClient } from '@tanstack/react-query'
 import { createFileRoute, redirect } from '@tanstack/react-router'
-import {
-  DashboardChurchEventForm,
-} from '#/features/church-event/components/dashboard-church-event-form.tsx'
-import type {
-  CreateChurchEventFormInput,
-} from '#/features/church-event/schemas/church-event.schema.ts'
+import { DashboardChurchEventForm } from '#/features/church-event/components/dashboard-church-event-form.tsx'
+import type { CreateChurchEventFormInput } from '#/features/church-event/schemas/church-event.schema.ts'
 import { createChurchEventSchema } from '#/features/church-event/schemas/church-event.schema.ts'
 import { createChurchEventFn } from '#/features/church-event/server-fn/church-event.functions.ts'
 import { DashboardHeading } from '#/features/dashboard/components/dashboard-heading.tsx'

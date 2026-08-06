@@ -9,10 +9,10 @@ import {
 } from '#/features/volunteers/constants/volunteer.constants.ts'
 import { volunteerApplicationSchema } from '#/features/volunteers/schemas/volunteer-application.schema.ts'
 import { getFieldErrors } from '#/utils/form.ts'
-import { getDistrictLabel } from '#shared/constants/districts.constants.ts'
 import { logger } from '#server/integrations/logger.ts'
 import type { DiscordEmbed } from '#server/services/discord.service.ts'
 import { sendWebhookMessage } from '#server/services/discord.service.ts'
+import { getDistrictLabel } from '#shared/constants/districts.constants.ts'
 import type { User } from '#shared/lib/types/auth.ts'
 
 export const VOLUNTEER_APPLICATION_EMBED_COLOR = 0xd4a017
@@ -27,7 +27,7 @@ export async function submit({ data, user }: { data: unknown; user: User }) {
       return {
         success: false,
         error:
-          "Les candidatures de bénévolat sont temporairement désactivées. Réessayez plus tard.",
+          'Les candidatures de bénévolat sont temporairement désactivées. Réessayez plus tard.',
       }
     }
 
@@ -91,7 +91,9 @@ function buildFollowUpEmbeds(data: z.output<typeof volunteerApplicationSchema>):
   if (data.otherLanguages.length > 0) {
     fields.push({
       name: 'Autres langues maîtrisées',
-      value: data.otherLanguages.map((language) => `* ${spokenLanguageLabels[language]}`).join('\n'),
+      value: data.otherLanguages
+        .map((language) => `* ${spokenLanguageLabels[language]}`)
+        .join('\n'),
     })
   }
 
@@ -119,9 +121,7 @@ function buildFollowUpEmbeds(data: z.output<typeof volunteerApplicationSchema>):
   ]
 }
 
-function buildMainInfoEmbed(
-  data: z.output<typeof volunteerApplicationSchema>
-): DiscordEmbed {
+function buildMainInfoEmbed(data: z.output<typeof volunteerApplicationSchema>): DiscordEmbed {
   const fields: DiscordEmbed['fields'] = [
     { name: 'Identité', value: buildFullName(data), inline: true },
     { name: 'Âge', value: `${data.age} ans`, inline: true },
@@ -155,10 +155,7 @@ function buildMainInfoEmbed(
       inline: true,
     })
 
-    if (
-      data.applicantSource.type === 'employeeReferral' &&
-      data.applicantSource.employeeReferral
-    ) {
+    if (data.applicantSource.type === 'employeeReferral' && data.applicantSource.employeeReferral) {
       fields.push({
         name: 'Employé référent',
         value: data.applicantSource.employeeReferral,
@@ -199,16 +196,13 @@ function buildRequiredHoursEmbed(
     .join('\n')
 
   return {
-    title: 'CANDIDATURE DANS LE CADRE D’UNE OBLIGATION DE RÉALISER UN SERVICE COMMUNAUTAIRE OU UN BÉNÉVOLAT',
+    title:
+      'CANDIDATURE DANS LE CADRE D’UNE OBLIGATION DE RÉALISER UN SERVICE COMMUNAUTAIRE OU UN BÉNÉVOLAT',
     description,
   }
 }
 
-function buildFullName(data: {
-  firstname: string
-  middleName?: string
-  lastname: string
-}): string {
+function buildFullName(data: { firstname: string; middleName?: string; lastname: string }): string {
   const middleInitial = data.middleName ? ` ${data.middleName.charAt(0).toUpperCase()}.` : ''
   return `${data.firstname}${middleInitial} ${data.lastname}`
 }

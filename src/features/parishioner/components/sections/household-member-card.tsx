@@ -29,12 +29,7 @@ export const HouseholdMemberCard = withForm({
           <div className="grid grid-cols-1 items-start gap-7 pr-10 sm:grid-cols-2">
             <form.AppField name={`familyMembers[${index}].firstname`}>
               {(field) => (
-                <field.InputField
-                  label="Prénom"
-                  placeholder="Prénom"
-                  required
-                  autoComplete="off"
-                />
+                <field.InputField label="Prénom" placeholder="Prénom" required autoComplete="off" />
               )}
             </form.AppField>
 
@@ -51,12 +46,7 @@ export const HouseholdMemberCard = withForm({
 
             <form.AppField name={`familyMembers[${index}].age`}>
               {(field) => (
-                <field.InputField
-                  label="Âge"
-                  placeholder="25"
-                  inputMode="numeric"
-                  required
-                />
+                <field.InputField label="Âge" placeholder="25" inputMode="numeric" required />
               )}
             </form.AppField>
 

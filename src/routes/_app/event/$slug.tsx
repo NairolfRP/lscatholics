@@ -1,8 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { envClient } from '#/config/env-client.ts'
-import {
-  ChurchEventSinglePage,
-} from '#/features/church-event/components/church-event-single-page.tsx'
+import { ChurchEventSinglePage } from '#/features/church-event/components/church-event-single-page.tsx'
 import { singleChurchEventQueryOptions } from '#/features/church-event/queries.ts'
 import { pageMetadata } from '#/utils/seo.ts'
 

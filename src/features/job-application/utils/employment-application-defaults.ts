@@ -1,6 +1,4 @@
-import type {
-  EmploymentApplicationInput,
-} from '#/features/job-application/schemas/employment-application.schema.ts'
+import type { EmploymentApplicationInput } from '#/features/job-application/schemas/employment-application.schema.ts'
 import type { Character } from '#shared/types/character.types.ts'
 
 export function getEmploymentApplicationDefaults(currentCharacter: Character | null | undefined) {

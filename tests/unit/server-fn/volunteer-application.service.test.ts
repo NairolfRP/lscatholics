@@ -5,11 +5,8 @@ import {
   REQUIRED_HOURS_REASON,
   SPOKEN_LANGUAGE,
 } from '#/features/volunteers/constants/volunteer.constants.ts'
-import * as volunteerApplicationService
-  from '#/features/volunteers/server/volunteer-application.service.ts'
-import {
-  VOLUNTEER_APPLICATION_EMBED_COLOR,
-} from '#/features/volunteers/server/volunteer-application.service.ts'
+import * as volunteerApplicationService from '#/features/volunteers/server/volunteer-application.service.ts'
+import { VOLUNTEER_APPLICATION_EMBED_COLOR } from '#/features/volunteers/server/volunteer-application.service.ts'
 import { mockUser } from '../../utils/test-unit.utils.ts'
 
 const postMock = vi.hoisted(() => vi.fn<(url: string, options?: unknown) => Promise<unknown>>())

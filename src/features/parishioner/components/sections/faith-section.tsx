@@ -1,14 +1,10 @@
 import { parishes } from '#/config/parishes.ts'
-import {
-  getParishionerDefaultValues,
-} from '#/features/parishioner/constants/parishioner-defaults.ts'
+import { getParishionerDefaultValues } from '#/features/parishioner/constants/parishioner-defaults.ts'
 import {
   baptizedOptions,
   religionOptions,
 } from '#/features/parishioner/constants/person.constants.ts'
-import {
-  PARISHIONER_PARISH_UNSURE_VALUE,
-} from '#/features/parishioner/schemas/parishioner.schema.ts'
+import { PARISHIONER_PARISH_UNSURE_VALUE } from '#/features/parishioner/schemas/parishioner.schema.ts'
 import { FieldLegend, FieldSet } from '#shared/components/ui/field.tsx'
 import { withForm } from '#shared/integrations/form/form-hook.ts'
 

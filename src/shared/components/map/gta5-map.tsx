@@ -1,7 +1,7 @@
 import type { LatLngExpression } from 'leaflet'
-import L from 'leaflet'
 import type { HTMLAttributes, PropsWithChildren } from 'react'
 import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react'
+import L from 'leaflet'
 import { LayersControl, MapContainer, useMap } from 'react-leaflet'
 import { cn } from '#/shared/lib/utils'
 import { createGta5Crs } from './custom-crs'

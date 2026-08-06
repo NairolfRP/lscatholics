@@ -29,7 +29,7 @@ export function LatestEventsSection() {
             to="/event/$slug"
             params={{ slug: event.slug }}
             key={event.id}
-            className="group flex items-center gap-4 rounded-xl p-3 ring-1 ring-foreground/10 transition duration-300 hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            className="group flex items-center gap-4 rounded-xl p-3 ring-1 ring-foreground/10 transition duration-300 hover:-translate-y-0.5 hover:shadow-md focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
           >
             <time
               dateTime={startDate.toISOString()}

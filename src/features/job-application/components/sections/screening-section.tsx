@@ -2,9 +2,7 @@ import {
   APPLICATION_SOURCE,
   applicationSourceOptions,
 } from '#/features/job-application/constants/employment-application.constants.tsx'
-import {
-  getEmploymentApplicationDefaults,
-} from '#/features/job-application/utils/employment-application-defaults.ts'
+import { getEmploymentApplicationDefaults } from '#/features/job-application/utils/employment-application-defaults.ts'
 import {
   FieldDescription,
   FieldGroup,

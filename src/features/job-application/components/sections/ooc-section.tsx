@@ -1,9 +1,5 @@
-import {
-  EMPLOYMENT_APPLICATION_MAX_LENGTHS,
-} from '#/features/job-application/constants/employment-application.constants.tsx'
-import {
-  getEmploymentApplicationDefaults,
-} from '#/features/job-application/utils/employment-application-defaults.ts'
+import { EMPLOYMENT_APPLICATION_MAX_LENGTHS } from '#/features/job-application/constants/employment-application.constants.tsx'
+import { getEmploymentApplicationDefaults } from '#/features/job-application/utils/employment-application-defaults.ts'
 import {
   Accordion,
   AccordionContent,

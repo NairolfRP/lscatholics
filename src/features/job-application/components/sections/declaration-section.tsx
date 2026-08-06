@@ -1,9 +1,5 @@
-import {
-  APPLICANT_STATEMENTS,
-} from '#/features/job-application/constants/employment-application.constants.tsx'
-import {
-  getEmploymentApplicationDefaults,
-} from '#/features/job-application/utils/employment-application-defaults.ts'
+import { APPLICANT_STATEMENTS } from '#/features/job-application/constants/employment-application.constants.tsx'
+import { getEmploymentApplicationDefaults } from '#/features/job-application/utils/employment-application-defaults.ts'
 import { FieldDescription, FieldLegend, FieldSet } from '#shared/components/ui/field.tsx'
 import { ScrollArea } from '#shared/components/ui/scroll-area.tsx'
 import { withForm } from '#shared/integrations/form/form-hook.ts'

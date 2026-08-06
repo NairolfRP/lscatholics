@@ -1,10 +1,7 @@
 import { setResponseStatus } from '@tanstack/react-start/server'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import * as registerParishionerService
-  from '#/features/parishioner/server/register-parishioner.service.ts'
-import {
-  PARISHIONER_EMBED_COLOR,
-} from '#/features/parishioner/server/register-parishioner.service.ts'
+import * as registerParishionerService from '#/features/parishioner/server/register-parishioner.service.ts'
+import { PARISHIONER_EMBED_COLOR } from '#/features/parishioner/server/register-parishioner.service.ts'
 import { mockUser } from '../../utils/test-unit.utils.ts'
 
 const postMock = vi.hoisted(() => vi.fn<(url: string, options?: unknown) => Promise<unknown>>())

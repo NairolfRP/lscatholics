@@ -1,11 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { envClient } from '#/config/env-client.ts'
-import {
-  EmploymentApplicationPageSkeleton,
-} from '#/features/job-application/components/employment-application-page-skeleton.tsx'
-import {
-  EmploymentApplicationPage,
-} from '#/features/job-application/components/employment-application-page.tsx'
+import { EmploymentApplicationPageSkeleton } from '#/features/job-application/components/employment-application-page-skeleton.tsx'
+import { EmploymentApplicationPage } from '#/features/job-application/components/employment-application-page.tsx'
 import { singleJobPostingQueryOptions } from '#/features/job-posting/queries.ts'
 import { pageMetadata } from '#/utils/seo.ts'
 

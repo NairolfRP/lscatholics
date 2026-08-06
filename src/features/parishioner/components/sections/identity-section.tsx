@@ -1,3 +1,4 @@
+import { getParishionerDefaultValues } from '#/features/parishioner/constants/parishioner-defaults.ts'
 import {
   civilTitleOptions,
   ethnicCommunityOptions,
@@ -5,18 +6,15 @@ import {
   maritalStatusOptions,
 } from '#/features/parishioner/constants/person.constants.ts'
 import {
-  getParishionerDefaultValues,
-} from '#/features/parishioner/constants/parishioner-defaults.ts'
-import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from '#shared/components/ui/accordion.tsx'
-import { FieldLegend, FieldSet } from '#shared/components/ui/field.tsx'
-import type { Character } from '#shared/types/character.types.ts'
-import { withForm } from '#shared/integrations/form/form-hook.ts'
 import { Badge } from '#shared/components/ui/badge.tsx'
+import { FieldLegend, FieldSet } from '#shared/components/ui/field.tsx'
+import { withForm } from '#shared/integrations/form/form-hook.ts'
+import type { Character } from '#shared/types/character.types.ts'
 
 export const IdentitySection = withForm({
   defaultValues: getParishionerDefaultValues(null),

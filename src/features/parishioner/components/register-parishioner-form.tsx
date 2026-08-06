@@ -1,18 +1,12 @@
-import {
-  RegisterParishionerFormSkeleton,
-} from '#/features/parishioner/components/register-parishioner-form-skeleton.tsx'
+import { RegisterParishionerFormSkeleton } from '#/features/parishioner/components/register-parishioner-form-skeleton.tsx'
 import { ContactSection } from '#/features/parishioner/components/sections/contact-section.tsx'
 import { FaithSection } from '#/features/parishioner/components/sections/faith-section.tsx'
 import { HouseholdSection } from '#/features/parishioner/components/sections/household-section.tsx'
 import { IdentitySection } from '#/features/parishioner/components/sections/identity-section.tsx'
 import { OocSection } from '#/features/parishioner/components/sections/ooc-section.tsx'
-import {
-  getParishionerDefaultValues,
-} from '#/features/parishioner/constants/parishioner-defaults.ts'
+import { getParishionerDefaultValues } from '#/features/parishioner/constants/parishioner-defaults.ts'
 import { parishionerSchema } from '#/features/parishioner/schemas/parishioner.schema.ts'
-import {
-  submitRegisterParishionerFn,
-} from '#/features/parishioner/server-fn/register-parishioner.functions.ts'
+import { submitRegisterParishionerFn } from '#/features/parishioner/server-fn/register-parishioner.functions.ts'
 import { RequireAuth } from '#shared/components/auth/require-auth.tsx'
 import {
   Card,

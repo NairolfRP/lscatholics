@@ -6,8 +6,7 @@ export const services: ChurchService[] = [
     id: CHURCH_SERVICE.INITIATION,
     slug: 'christian-initiation',
     title: "Sacrements de l'initiation chrétienne",
-    description:
-      'Devenir chrétien. Baptême, première communion et confirmation.',
+    description: 'Devenir chrétien. Baptême, première communion et confirmation.',
     category: 'sacrements',
     content: [
       {
@@ -119,7 +118,7 @@ export const services: ChurchService[] = [
       },
       {
         type: 'paragraph',
-        text: "Au début de la liturgie, le prêtre annoncera à quelle intention la messe est dite.",
+        text: 'Au début de la liturgie, le prêtre annoncera à quelle intention la messe est dite.',
       },
     ],
   },
@@ -142,10 +141,7 @@ export const services: ChurchService[] = [
       },
       {
         type: 'list',
-        items: [
-          'Le pénitent doit être baptisé.',
-          'Le pénitent doit regretter ses péchés.',
-        ],
+        items: ['Le pénitent doit être baptisé.', 'Le pénitent doit regretter ses péchés.'],
       },
       {
         type: 'paragraph',
@@ -168,7 +164,7 @@ export const services: ChurchService[] = [
         items: [
           "Vous pouvez commencer par dire : *« Bénissez-moi mon père, parce que j'ai péché »*.",
           "Le prêtre vous bénit et dit une phrase d'accueil.",
-          "Vous pouvez, facultativement, dire depuis combien de temps vous ne vous êtes pas confessé.",
+          'Vous pouvez, facultativement, dire depuis combien de temps vous ne vous êtes pas confessé.',
           "Listez tous vos péchés, même les plus petits, contre Dieu, contre vous-même et contre votre prochain. Le prêtre n'a pas besoin de tous les détails, simplement ce qu'il faut pour comprendre la nature du péché.",
           'Le prêtre peut vous poser des questions, amorcer un dialogue et donner des conseils.',
           'Le prêtre vous propose un acte de pénitence à réaliser après la confession, pour assurer la réparation du péché et prouver votre bonne volonté.',
@@ -267,9 +263,9 @@ export const services: ChurchService[] = [
       {
         type: 'list',
         items: [
-          "Le mariage chrétien est uniquement **entre un homme et une femme**.",
+          'Le mariage chrétien est uniquement **entre un homme et une femme**.',
           'Les deux futurs époux doivent avoir au moins **18 ans**.',
-          "Au moins **un** des futurs époux doit être **baptisé**.",
+          'Au moins **un** des futurs époux doit être **baptisé**.',
           "Ne pas avoir déjà été marié(e) à l'Église et ne pas être marié(e) civilement à une autre personne que son ou sa futur(e) époux(se). (1)",
           'Les futurs époux doivent être en accord avec les **4 piliers du mariage chrétien**.',
         ],
@@ -292,14 +288,14 @@ export const services: ChurchService[] = [
       },
       {
         type: 'paragraph',
-        text: "Il est **très recommandé** de réfléchir à ces éléments **avant la réunion de préparation** :",
+        text: 'Il est **très recommandé** de réfléchir à ces éléments **avant la réunion de préparation** :',
       },
       {
         type: 'list',
         items: [
           "Plusieurs dates et heures pour la célébration (l'officiant peut les refuser s'il n'est pas disponible).",
           "Plusieurs choix de musiques d'entrée : l'officiant procédera par élimination dans votre ordre de préférence, en s'assurant que la musique est acceptable dans une église. La musique doit obligatoirement évoquer l'amour.",
-          "Les noms des témoins de chaque futur époux (au moins 1 par époux, et au moins 1 pour chacun doit être baptisé). *(( En cas de carence de joueurs, ces témoins peuvent être des PNJ. ))*",
+          'Les noms des témoins de chaque futur époux (au moins 1 par époux, et au moins 1 pour chacun doit être baptisé). *(( En cas de carence de joueurs, ces témoins peuvent être des PNJ. ))*',
         ],
       },
     ],
@@ -447,7 +443,7 @@ export const services: ChurchService[] = [
         type: 'list',
         items: [
           "Il n'y a aucune condition, sauf celle de couvrir les frais associés (déplacement, repas, hébergement, ...). Voir aussi la grille tarifaire.",
-          "Ces demandes nécessitent un traitement préalable et, si acceptée, une préparation. Envisagez de soumettre votre demande au moins deux semaines avant la date envisagée.",
+          'Ces demandes nécessitent un traitement préalable et, si acceptée, une préparation. Envisagez de soumettre votre demande au moins deux semaines avant la date envisagée.',
         ],
       },
     ],
@@ -497,7 +493,7 @@ export const services: ChurchService[] = [
         items: [
           "La jeune fille doit avoir atteint l'âge de **15 ans**.",
           "La jeune fille doit avoir **reçu tous ses sacrements de l'initiation chrétienne** : baptême, première communion et confirmation.",
-          "La famille doit être **enregistrée comme paroissienne**. Nous ne célébrons pas les Quinceañera des non-paroissiens.",
+          'La famille doit être **enregistrée comme paroissienne**. Nous ne célébrons pas les Quinceañera des non-paroissiens.',
           'La famille doit avoir versé son offrande avant la célébration (voir grille tarifaire).',
         ],
       },

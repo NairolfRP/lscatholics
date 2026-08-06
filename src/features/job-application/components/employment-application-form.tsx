@@ -1,33 +1,15 @@
 import { SendIcon } from 'lucide-react'
-import {
-  EmploymentApplicationFormSkeleton,
-} from '#/features/job-application/components/employment-application-form-skeleton.tsx'
+import { EmploymentApplicationFormSkeleton } from '#/features/job-application/components/employment-application-form-skeleton.tsx'
 import { ContactSection } from '#/features/job-application/components/sections/contact-section.tsx'
-import {
-  DeclarationSection,
-} from '#/features/job-application/components/sections/declaration-section.tsx'
-import {
-  EducationSection,
-} from '#/features/job-application/components/sections/education-section.tsx'
-import {
-  ExperienceSection,
-} from '#/features/job-application/components/sections/experience-section.tsx'
-import {
-  IdentitySection,
-} from '#/features/job-application/components/sections/identity-section.tsx'
+import { DeclarationSection } from '#/features/job-application/components/sections/declaration-section.tsx'
+import { EducationSection } from '#/features/job-application/components/sections/education-section.tsx'
+import { ExperienceSection } from '#/features/job-application/components/sections/experience-section.tsx'
+import { IdentitySection } from '#/features/job-application/components/sections/identity-section.tsx'
 import { OocSection } from '#/features/job-application/components/sections/ooc-section.tsx'
-import {
-  ScreeningSection,
-} from '#/features/job-application/components/sections/screening-section.tsx'
-import {
-  employmentApplicationSchema,
-} from '#/features/job-application/schemas/employment-application.schema.ts'
-import {
-  submitEmploymentApplicationFn,
-} from '#/features/job-application/server-fn/employment-application.functions.ts'
-import {
-  getEmploymentApplicationDefaults,
-} from '#/features/job-application/utils/employment-application-defaults.ts'
+import { ScreeningSection } from '#/features/job-application/components/sections/screening-section.tsx'
+import { employmentApplicationSchema } from '#/features/job-application/schemas/employment-application.schema.ts'
+import { submitEmploymentApplicationFn } from '#/features/job-application/server-fn/employment-application.functions.ts'
+import { getEmploymentApplicationDefaults } from '#/features/job-application/utils/employment-application-defaults.ts'
 import { RequireAuth } from '#shared/components/auth/require-auth.tsx'
 import {
   Card,
