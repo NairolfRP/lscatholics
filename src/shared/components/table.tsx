@@ -1,15 +1,19 @@
 import type {
+  CellData,
   ColumnDef,
   OnChangeFn,
-  PaginationOptions,
   PaginationState,
   RowData,
   SortingState,
+  TableFeatures,
   TableMeta,
+  TableOptions,
 } from '@tanstack/react-table'
-import { flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table'
+import { flexRender, useTable } from '@tanstack/react-table'
 import { ArrowDownAZIcon, ArrowUpAZIcon, FunnelIcon } from 'lucide-react'
 import { DebouncedInput } from '#/shared/components/debounced-input'
+import { dashboardTableFeatures } from '#shared/lib/table-features'
+import type { DashboardTableFeatures } from '#shared/lib/table-features'
 import type { Filters } from '../lib/types/table'
 import { cn } from '../lib/utils'
 import { Pagination } from './pagination'
@@ -27,14 +31,17 @@ export const DEFAULT_PAGE_SIZE = 10
 
 type Props<T extends Record<string, unknown>> = {
   data: T[]
-  columns: ColumnDef<T, unknown>[]
+  columns: ColumnDef<DashboardTableFeatures, T, unknown>[]
   pagination: PaginationState
-  paginationOptions: Pick<PaginationOptions, 'onPaginationChange' | 'rowCount'>
+  paginationOptions: Pick<
+    TableOptions<DashboardTableFeatures, T>,
+    'onPaginationChange' | 'rowCount'
+  >
   filters: Filters<T>
   onFilterChange: (dataFilters: Partial<Filters<T>>) => void
   sorting: SortingState
   onSortingChange: OnChangeFn<SortingState>
-  meta: TableMeta<T>
+  meta: TableMeta<DashboardTableFeatures, T>
 }
 
 // oxlint-disable-next-line react/react-compiler : False positive about TanStack Table
@@ -49,7 +56,8 @@ export function Table<T extends Record<string, unknown>>({
   onSortingChange,
   meta,
 }: Props<T>) {
-  const table = useReactTable({
+  const table = useTable({
+    features: dashboardTableFeatures,
     data,
     columns,
     state: { pagination, sorting },
@@ -58,7 +66,6 @@ export function Table<T extends Record<string, unknown>>({
     manualFiltering: true,
     manualSorting: true,
     manualPagination: true,
-    getCoreRowModel: getCoreRowModel(),
     meta,
   })
 
@@ -141,7 +148,11 @@ export function Table<T extends Record<string, unknown>>({
 
 declare module '@tanstack/react-table' {
   // oxlint-disable-next-line @typescript-eslint/no-unused-vars
-  interface ColumnMeta<TData extends RowData, TValue> {
+  interface ColumnMeta<
+    in out TFeatures extends TableFeatures,
+    in out TData extends RowData,
+    TValue extends CellData = CellData,
+  > {
     filterKey?: keyof TData
     filterVariant?: 'text' | 'number'
   }

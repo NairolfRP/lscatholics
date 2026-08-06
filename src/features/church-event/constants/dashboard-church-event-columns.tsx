@@ -1,5 +1,4 @@
 import { Link } from '@tanstack/react-router'
-import type { ColumnDef } from '@tanstack/react-table'
 import { createColumnHelper } from '@tanstack/react-table'
 import { CalendarIcon, EditIcon, Trash2Icon } from 'lucide-react'
 import type { ChurchEvent } from '#/features/church-event/types/church-event.types.ts'
@@ -8,10 +7,11 @@ import { formatDateTime } from '#/utils/date.ts'
 import { ActionButton } from '#shared/components/action-button.tsx'
 import { ButtonGroup } from '#shared/components/ui/button-group.tsx'
 import { buttonVariants } from '#shared/components/ui/button.tsx'
+import type { DashboardTableFeatures } from '#shared/lib/table-features.ts'
 
-const columnHelper = createColumnHelper<ChurchEvent>()
+const columnHelper = createColumnHelper<DashboardTableFeatures, ChurchEvent>()
 
-export const dashboardChurchEventColumns = [
+export const dashboardChurchEventColumns = columnHelper.columns([
   columnHelper.accessor('title', {
     header: () => 'Événement',
     cell: (info) => {
@@ -114,4 +114,4 @@ export const dashboardChurchEventColumns = [
       )
     },
   }),
-] as unknown as ColumnDef<ChurchEvent, unknown>[]
+])

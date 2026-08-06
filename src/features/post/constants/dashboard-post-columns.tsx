@@ -1,5 +1,4 @@
 import { Link } from '@tanstack/react-router'
-import type { ColumnDef } from '@tanstack/react-table'
 import { createColumnHelper } from '@tanstack/react-table'
 import { EditIcon, Trash2Icon } from 'lucide-react'
 import { ActionButton } from '#/shared/components/action-button.tsx'
@@ -7,12 +6,13 @@ import { Badge } from '#/shared/components/ui/badge.tsx'
 import { ButtonGroup } from '#/shared/components/ui/button-group.tsx'
 import { buttonVariants } from '#/shared/components/ui/button.tsx'
 import { formatDate } from '#/utils/date.ts'
+import type { DashboardTableFeatures } from '#shared/lib/table-features.ts'
 import type { Post } from '#shared/types/post.types.ts'
 import type { DashboardPostsTableMeta } from '../types/dashboard-post.types'
 
-const columnHelper = createColumnHelper<Post>()
+const columnHelper = createColumnHelper<DashboardTableFeatures, Post>()
 
-export const dashboardPostColumns = [
+export const dashboardPostColumns = columnHelper.columns([
   columnHelper.accessor('title', {
     header: () => 'Titre',
     cell: (info) => {
@@ -91,4 +91,4 @@ export const dashboardPostColumns = [
       )
     },
   }),
-] as unknown as ColumnDef<Post, unknown>[]
+])

@@ -1,5 +1,4 @@
 import { Link } from '@tanstack/react-router'
-import type { ColumnDef } from '@tanstack/react-table'
 import { createColumnHelper } from '@tanstack/react-table'
 import { EditIcon, LockIcon, Trash2Icon, UnlockIcon } from 'lucide-react'
 import type {
@@ -13,10 +12,11 @@ import { Badge } from '#shared/components/ui/badge.tsx'
 import { ButtonGroup } from '#shared/components/ui/button-group.tsx'
 import { buttonVariants } from '#shared/components/ui/button.tsx'
 import { employmentTypeLabel } from '#shared/constants/employment.ts'
+import type { DashboardTableFeatures } from '#shared/lib/table-features.ts'
 
-const columnHelper = createColumnHelper<JobPosting>()
+const columnHelper = createColumnHelper<DashboardTableFeatures, JobPosting>()
 
-export const dashboardJobPostingColumns = [
+export const dashboardJobPostingColumns = columnHelper.columns([
   columnHelper.accessor('isActive', {
     header: () => 'État',
     cell: (info) => {
@@ -148,4 +148,4 @@ export const dashboardJobPostingColumns = [
       )
     },
   }),
-] as unknown as ColumnDef<JobPosting, unknown>[]
+])

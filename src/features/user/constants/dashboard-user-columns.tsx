@@ -1,16 +1,16 @@
 import { Link } from '@tanstack/react-router'
-import type { ColumnDef } from '@tanstack/react-table'
 import { createColumnHelper } from '@tanstack/react-table'
 import { Badge } from '#/shared/components/ui/badge.tsx'
 import type { User } from '#/shared/lib/types/auth.ts'
 import { formatDate } from '#/utils/date.ts'
 import { parseCsvString } from '#/utils/string.ts'
+import type { DashboardTableFeatures } from '#shared/lib/table-features.ts'
 import type { UsersTableMeta } from '../types/user.types'
 import { UserActionsCell } from '../components/admin/users-actions-cell'
 
-const columnHelper = createColumnHelper<User>()
+const columnHelper = createColumnHelper<DashboardTableFeatures, User>()
 
-export const userColumns = [
+export const userColumns = columnHelper.columns([
   columnHelper.accessor('name', {
     header: () => "Nom d'utilisateur GTAW",
     cell: (info) => (
@@ -62,4 +62,4 @@ export const userColumns = [
     },
     enableSorting: false,
   }),
-] as unknown as ColumnDef<User, unknown>[]
+])
