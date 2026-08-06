@@ -10,6 +10,7 @@ import { CurrencyField } from '#shared/components/form/currency-field.tsx'
 import { RadioField } from '#shared/components/form/radio-field.tsx'
 import { TextareaField } from '#shared/components/form/textarea-field.tsx'
 import { YesNoField } from '#shared/components/form/yes-no-field.tsx'
+import { DistrictSelectField } from '#shared/components/form/district-select-field.tsx'
 
 export const { fieldContext, useFieldContext, formContext, useFormContext } =
   createFormHookContexts()
@@ -25,6 +26,7 @@ export const { useAppForm, withForm } = createFormHook({
     CurrencyField,
     YesNoField,
     RadioField,
+    DistrictSelectField,
   },
   formComponents: {
     FieldGroup,

@@ -64,8 +64,8 @@ describe('submit', () => {
 
   it('sends the validated parishioner registration to the discord webhook in two messages', async () => {
     postMock
-      .mockResolvedValueOnce({ json: async () => ({ channel_id: '1234567890' }) })
-      .mockResolvedValue({ json: async () => ({}) })
+      .mockResolvedValueOnce({ json: () => ({ channel_id: '1234567890' }) })
+      .mockResolvedValue({ json: () => ({}) })
 
     const result = await registerParishionerService.submit({
       data: validData,
@@ -143,7 +143,7 @@ describe('submit', () => {
   })
 
   it('only creates the forum thread when there is no OOC content to send', async () => {
-    postMock.mockResolvedValueOnce({ json: async () => ({ channel_id: '1234567890' }) })
+    postMock.mockResolvedValueOnce({ json: () => ({ channel_id: '1234567890' }) })
 
     const result = await registerParishionerService.submit({
       data: { ...validData, characterSacraments: [], oocAdditionalInformation: '' },

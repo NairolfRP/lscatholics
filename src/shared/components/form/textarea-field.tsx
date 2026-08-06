@@ -71,7 +71,7 @@ export function TextareaField({
           {maxLength ? (
             <InputGroupAddon align="block-end">
               <InputGroupText className="ml-auto">
-                {field.state.value?.length ?? 0}/{maxLength}
+                {field.state.value.length}/{maxLength}
               </InputGroupText>
             </InputGroupAddon>
           ) : undefined}

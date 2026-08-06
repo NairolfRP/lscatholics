@@ -2,9 +2,9 @@ import type { APIMessage, APIPublicThreadChannel, APIThreadMetadata } from 'disc
 import { HTTPError } from 'ky'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import {
-  DECREES_CHANNEL_ID,
   DECREE_CATEGORIES,
   DECREE_ENACTED_TAG,
+  DECREES_CHANNEL_ID,
 } from '#/features/decree/constants/decree.constants.ts'
 import { getDecree, getDecrees } from '#/features/decree/server/decree.service.ts'
 
@@ -45,7 +45,7 @@ function makeThread(
     applied_tags: [CATEGORY_TAGS.executive, DECREE_ENACTED_TAG],
     thread_metadata: makeThreadMetadata('2026-01-01T00:00:00.000Z'),
     ...overrides,
-  } as APIPublicThreadChannel
+  }
 }
 
 function makeEmbed(overrides: Record<string, unknown> = {}) {

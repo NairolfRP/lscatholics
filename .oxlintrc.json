@@ -167,6 +167,12 @@
                     }
                 ]
             }
+        },
+        {
+            "files": ["tests/**/*.{test,spec}.{ts,tsx}", "e2e/**/*.{test,spec,e2e}.ts"],
+            "rules": {
+                "typescript/unbound-method": "off"
+            }
         }
     ]
 }

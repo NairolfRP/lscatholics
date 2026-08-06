@@ -1,5 +1,4 @@
 import path from 'node:path'
-import { tanstackRouter } from '@tanstack/router-plugin/vite'
 import codspeedPlugin from '@codspeed/vitest-plugin'
 import react from '@vitejs/plugin-react'
 import { playwright } from '@vitest/browser-playwright'
@@ -9,14 +8,7 @@ import { defineConfig } from 'vitest/config'
 const resolve = (filePath: string) => path.resolve(import.meta.dirname, filePath)
 
 export default defineConfig(({ mode }) => ({
-  plugins: [
-    react(),
-    tanstackRouter({
-      routesDirectory: './src/routes',
-      generatedRouteTree: './src/routeTree.gen.ts',
-      disableLogging: true,
-    }),
-  ],
+  plugins: [react()],
   test: {
     env: loadEnv(mode, process.cwd(), ''),
     typecheck: { enabled: true },

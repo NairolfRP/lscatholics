@@ -9,7 +9,7 @@ export function getFieldErrors(error: z.ZodError): Record<string, { message: str
   }, {})
 }
 
-function formatErrorPath(path: ReadonlyArray<z.ZodIssue['path'][number]>): string {
+function formatErrorPath(path: readonly z.core.$ZodIssue['path'][number][]): string {
   let key = ''
   for (const segment of path) {
     if (typeof segment === 'number') {

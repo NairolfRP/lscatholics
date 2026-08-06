@@ -85,7 +85,7 @@ function DeleteUserConfirmation({ closeDialog }: { closeDialog: () => void }) {
             } as unknown as Parameters<typeof formApi.setErrorMap>[0])
           }
 
-          if (result.error.status !== 500) {
+          if (result.error && result.error.status !== 500) {
             closeDialog()
             throw result.error
           }

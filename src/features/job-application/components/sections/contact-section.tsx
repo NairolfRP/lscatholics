@@ -1,9 +1,7 @@
 import {
   getEmploymentApplicationDefaults,
 } from '#/features/job-application/utils/employment-application-defaults.ts'
-import { DistrictSelectField } from '#shared/components/form/district-select-field.tsx'
 import { FieldLegend, FieldSet } from '#shared/components/ui/field.tsx'
-import { DISTRICT_GROUPS } from '#shared/constants/districts.constants.ts'
 import { withForm } from '#shared/integrations/form/form-hook.ts'
 
 export const ContactSection = withForm({
@@ -27,13 +25,12 @@ export const ContactSection = withForm({
         </form.AppField>
 
         <form.AppField name="district">
-          {() => (
-            <DistrictSelectField
+          {(field) => (
+            <field.DistrictSelectField
               label="District"
               description="Sélectionnez le district dans lequel votre adresse se situe."
               descriptionPos="after"
               placeholder="Sélectionnez un district"
-              values={DISTRICT_GROUPS}
               required
             />
           )}

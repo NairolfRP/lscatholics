@@ -14,6 +14,10 @@ export const ac = createAccessControl(statement)
 export const ROLE_PERMISSIONS = {
   user: {
     ...userAc.statements,
+    dashboard: [],
+    post: [],
+    event: [],
+    job: [],
   },
   admin: {
     ...adminAc.statements,

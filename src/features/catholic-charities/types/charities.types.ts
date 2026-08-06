@@ -20,8 +20,6 @@ export type ProgramDetail = Program & {
   contact: CharitiesContact
 }
 
-export type ProgramDetailData = Omit<ProgramDetail, 'icon'>
-
 export type HelpCard = {
   icon: LucideIcon
   title: string

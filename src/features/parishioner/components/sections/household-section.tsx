@@ -80,7 +80,7 @@ export const HouseholdSection = withForm({
                         firstname: '',
                         lastname: '',
                         age: '',
-                        role: '',
+                        role: '' as never,
                         isNpc: false,
                       })
                     }
@@ -102,7 +102,7 @@ export const HouseholdSection = withForm({
                     maxLength={300}
                   />
                   <div className="flex items-center justify-end gap-2 text-xs text-muted-foreground">
-                    <span className="tabular-nums">{field.state.value.length}/300</span>
+                    <span className="tabular-nums">{field.state.value?.length}/300</span>
                   </div>
                 </div>
               )}

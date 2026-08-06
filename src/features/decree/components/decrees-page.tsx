@@ -63,7 +63,6 @@ export function DecreesPage() {
 
           {!isPending &&
             !isError &&
-            data &&
             (data.total === 0 ? <DecreesEmpty /> : <DecreesContent data={data} />)}
         </div>
       </main>

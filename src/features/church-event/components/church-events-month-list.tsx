@@ -7,6 +7,7 @@ import {
   ChurchEventsMonthNavigation,
   ChurchEventsMonthNavigationSkeleton,
 } from '#/features/church-event/components/church-events-month-navigation.tsx'
+import { churchEventsQueryOptions } from '#/features/church-event/queries.ts'
 import type { ChurchEvent } from '#/features/church-event/types/church-event.types.ts'
 import { formatDate, formatDateTime } from '#/utils/date.ts'
 import { Alert, AlertAction, AlertDescription, AlertTitle } from '#shared/components/ui/alert.tsx'
@@ -21,7 +22,6 @@ import {
 } from '#shared/components/ui/card.tsx'
 import { Skeleton } from '#shared/components/ui/skeleton.tsx'
 import { Typography } from '#shared/components/ui/typography.tsx'
-import { churchEventsQueryOptions } from '#/features/church-event/queries.ts'
 
 export function ChurchEventsMonthList() {
   const search = useSearch({ from: '/_app/events' })
@@ -45,7 +45,7 @@ export function ChurchEventsMonthList() {
     )
   }
 
-  if (!churchEvents || churchEvents.length === 0) {
+  if (churchEvents.length === 0) {
     return (
       <div className="space-y-10">
         <ChurchEventsMonthNavigation />
@@ -92,7 +92,7 @@ function ChurchEventCard({ event }: { event: ChurchEvent }) {
     <Link
       to="/event/$slug"
       params={{ slug: event.slug }}
-      className="group block h-full rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+      className="group block h-full rounded-xl focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
     >
       <Card className="h-full pt-0 shadow-xs transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-lg">
         <div className="overflow-hidden">

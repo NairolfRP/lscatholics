@@ -18,7 +18,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '#shared/components/ui/select.tsx'
-import type { DistrictGroup } from '#shared/constants/districts.constants.ts'
+import { DISTRICT_GROUPS } from '#shared/constants/districts.constants.ts'
 
 type DistrictSelectFieldProps = FieldComponentProps<
   typeof Select,
@@ -27,8 +27,8 @@ type DistrictSelectFieldProps = FieldComponentProps<
     description?: string
     descriptionPos?: 'before' | 'after'
     placeholder?: string
-    values: DistrictGroup[]
     selectTriggerProps?: Omit<ComponentPropsWithoutRef<typeof SelectTrigger>, 'id' | 'aria-invalid'>
+    nullable?: boolean
   },
   'onValueChange'
 >
@@ -37,17 +37,17 @@ export function DistrictSelectField({
   fieldProps,
   fieldContentProps,
   fieldLabelProps,
-  values,
   label,
   placeholder,
   description,
   descriptionPos = 'before',
   selectTriggerProps,
   required,
+  nullable,
   ...props
 }: DistrictSelectFieldProps) {
   const generatedId = useId()
-  const field = useFieldContext<string>()
+  const field = useFieldContext<string | null>()
 
   const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
 
@@ -65,10 +65,10 @@ export function DistrictSelectField({
       </FieldContent>
 
       <Select
-        items={values.flatMap((group) => group.options)}
+        items={DISTRICT_GROUPS.flatMap((group) => group.options)}
         name={field.name}
         value={field.state.value}
-        onValueChange={field.handleChange}
+        onValueChange={(v) => field.handleChange(v as string | null)}
         required={required}
         {...props}
       >
@@ -76,7 +76,12 @@ export function DistrictSelectField({
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>
         <SelectContent>
-          {values.map((group) => (
+          {nullable ? (
+            <SelectGroup>
+              <SelectItem value={null}>{placeholder ?? 'Sélectionnez un district'}</SelectItem>
+            </SelectGroup>
+          ) : null}
+          {DISTRICT_GROUPS.map((group) => (
             <SelectGroup key={group.label}>
               <SelectLabel>{group.label}</SelectLabel>
               {group.options.map((option) => (

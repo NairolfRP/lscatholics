@@ -2,7 +2,6 @@ import { setResponseStatus } from '@tanstack/react-start/server'
 import { z } from 'zod'
 import { env } from '#/config/env.server.ts'
 import { parishes } from '#/config/parishes.ts'
-import { getDistrictLabel } from '#shared/constants/districts.constants.ts'
 import {
   civilTitleLabels,
   ethnicCommunityLabels,
@@ -21,6 +20,7 @@ import { getFieldErrors } from '#/utils/form.ts'
 import { logger } from '#server/integrations/logger.ts'
 import type { DiscordEmbed } from '#server/services/discord.service.ts'
 import { sendWebhookMessage } from '#server/services/discord.service.ts'
+import { getDistrictLabel } from '#shared/constants/districts.constants.ts'
 import type { User } from '#shared/lib/types/auth.ts'
 
 export const PARISHIONER_EMBED_COLOR = 0x7c3aed
@@ -93,8 +93,9 @@ export async function submit({ data, user }: { data: unknown; user: User }) {
 
 function buildEthnicTags(ethnicCommunity: string | undefined): string[] | undefined {
   if (!ethnicCommunity) return undefined
-  const tag =
-    PARISHIONER_ETHNIC_DISCORD_TAGS[ethnicCommunity as keyof typeof PARISHIONER_ETHNIC_DISCORD_TAGS]
+  const tag = PARISHIONER_ETHNIC_DISCORD_TAGS[
+    ethnicCommunity as keyof typeof PARISHIONER_ETHNIC_DISCORD_TAGS
+  ] as unknown as string | undefined
   return tag ? [tag] : undefined
 }
 
@@ -129,12 +130,12 @@ function buildIdentityEmbed(data: ParishionerFormOutput): DiscordEmbed {
     fields: [
       {
         name: 'Titre de civilité',
-        value: data.civilTitle ? civilTitleLabels[data.civilTitle] : 'N/A',
+        value: civilTitleLabels[data.civilTitle],
         inline: true,
       },
       {
         name: 'État matrimonial',
-        value: data.maritalStatus ? maritalStatusLabels[data.maritalStatus] : 'N/A',
+        value: maritalStatusLabels[data.maritalStatus],
         inline: true,
       },
       { name: 'Identité', value: `${data.firstname} ${data.lastname}`, inline: true },

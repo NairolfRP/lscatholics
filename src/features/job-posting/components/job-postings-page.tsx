@@ -34,8 +34,8 @@ export default function JobPostingsPage() {
   const routeSearch = useSearch({ from: '/_app/careers' })
   const { data, isFetching } = useSuspenseQuery(jobPostingsQueryOptions(routeSearch))
 
-  const jobs = data.jobPostings ?? []
-  const totalPages = data.jobPostings ? Math.ceil(data.total / CAREERS_PAGINATION_LIMIT) : 0
+  const jobs = data.jobPostings
+  const totalPages = Math.ceil(data.total / CAREERS_PAGINATION_LIMIT)
 
   const handleInputSearch = (text: string) => {
     const trimmed = text.trim()
@@ -88,7 +88,7 @@ export default function JobPostingsPage() {
                       placeholder="Rechercher..."
                       aria-label="Rechercher..."
                       className="pl-9"
-                      value={routeSearch.search ?? ''}
+                      value={routeSearch.search}
                       onChange={(v) => handleInputSearch(v as string)}
                       disabled={isFetching}
                       debounce={500}
@@ -138,15 +138,15 @@ export default function JobPostingsPage() {
                       <div key={type} className="flex items-center space-x-3">
                         <Checkbox
                           id={`type-${type}`}
-                          checked={routeSearch.type?.includes(type)}
+                          checked={routeSearch.type.includes(type)}
                           onCheckedChange={(checked) => {
                             void navigate({
                               search: (prev) => ({
                                 ...prev,
                                 page: 1,
                                 type: checked
-                                  ? [...(prev.type || []), type]
-                                  : (prev.type || []).filter((v) => v !== type),
+                                  ? [...prev.type, type]
+                                  : prev.type.filter((v) => v !== type),
                               }),
                             })
                           }}

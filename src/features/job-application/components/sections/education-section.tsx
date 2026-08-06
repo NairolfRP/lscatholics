@@ -32,8 +32,7 @@ export const EducationSection = withForm({
 
       <form.Subscribe
         selector={(state) => {
-          const level = state.values.education.highestLevel
-          return !!level && !SCHOOL_LEVELS_WITHOUT_FIELD_OF_STUDY.includes(level)
+          return !SCHOOL_LEVELS_WITHOUT_FIELD_OF_STUDY.includes(state.values.education.highestLevel)
         }}
       >
         {(requiresFieldOfStudy) =>

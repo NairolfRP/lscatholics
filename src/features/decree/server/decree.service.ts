@@ -74,9 +74,9 @@ export async function getDecree({ threadId }: { threadId: string }): Promise<Dec
 
 function toListItem(thread: APIPublicThreadChannel, category: DecreeCategory): DecreeListItem {
   return {
-    uid: buildDecreeUid(thread.id, thread.name ?? 'Décret'),
+    uid: buildDecreeUid(thread.id, thread.name),
     threadId: thread.id,
-    title: thread.name ?? 'Décret',
+    title: thread.name,
     category,
     publishedAt: thread.thread_metadata?.create_timestamp ?? null,
   }
@@ -95,10 +95,11 @@ function toDecreeDetail(
     return null
   }
 
-  const embed = messages[0]?.embeds[0]
-  if (!embed) return null
+  if (messages.length === 0 || messages[0].embeds.length === 0) return null
 
-  const title = channel.name ?? 'Décret'
+  const embed = messages[0].embeds[0]
+
+  const title = channel.name
   const decree: Decree = {
     threadId: channel.id,
     uid: buildDecreeUid(channel.id, title),

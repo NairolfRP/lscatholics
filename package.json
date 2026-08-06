@@ -31,7 +31,7 @@
         "db:studio": "drizzle-kit studio"
     },
     "dependencies": {
-        "@base-ui/react": "^1.6.0",
+        "@base-ui/react": "^1.7.0",
         "@better-auth/drizzle-adapter": "^1.6.25",
         "@better-auth/i18n": "^1.6.25",
         "@faker-js/faker": "^10.5.0",

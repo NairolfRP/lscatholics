@@ -1,9 +1,7 @@
-'use client'
-
 import type { DayButton, Locale } from 'react-day-picker'
+import { DayPicker, getDefaultClassNames } from 'react-day-picker'
 import * as React from 'react'
 import { ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon } from 'lucide-react'
-import { DayPicker, getDefaultClassNames } from 'react-day-picker'
 import { Button, buttonVariants } from '#/shared/components/ui/button.tsx'
 import { cn } from '#/shared/lib/utils.ts'
 
@@ -115,7 +113,12 @@ function Calendar({
       components={{
         Root: ({ className: rootClassName, rootRef, ...rootProps }) => {
           return (
-            <div data-slot="calendar" ref={rootRef} className={cn(rootClassName)} {...rootProps} />
+            <div
+              data-slot="calendar"
+              ref={rootRef as React.Ref<HTMLDivElement>}
+              className={cn(rootClassName)}
+              {...rootProps}
+            />
           )
         },
         Chevron: ({ className: chevronClassName, orientation, ...chevronProps }) => {
@@ -124,10 +127,10 @@ function Calendar({
           }
 
           if (orientation === 'right') {
-            return <ChevronRightIcon className={cn('size-4', chevronClassName)} {...chevronProps} />
+            return <ChevronRightIcon className={cn('size-4', className)} {...chevronProps} />
           }
 
-          return <ChevronDownIcon className={cn('size-4', chevronClassName)} {...chevronProps} />
+          return <ChevronDownIcon className={cn('size-4', className)} {...chevronProps} />
         },
         DayButton: ({ ...dayButtonProps }) => (
           <CalendarDayButton locale={locale} {...dayButtonProps} />

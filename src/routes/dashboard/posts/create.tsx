@@ -55,7 +55,11 @@ function RouteComponent() {
 
       await queryClient.invalidateQueries({ queryKey: ['posts'] })
 
-      void navigate({ to: '/dashboard/posts/show/$id', params: { id: result.postId } })
+      if (result.postId) {
+        void navigate({ to: '/dashboard/posts/show/$id', params: { id: result.postId } })
+      } else {
+        void navigate({ to: '/dashboard/posts' })
+      }
       toast.success('Article créé !')
     },
   })

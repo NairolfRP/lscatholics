@@ -2,7 +2,6 @@ import { Briefcase, Globe, Home, HouseHeart, ShieldAlert, Utensils, WineOff } fr
 import type {
   CharitiesContact,
   ProgramDetail,
-  ProgramDetailData,
 } from '#/features/catholic-charities/types/charities.types'
 
 export const CHARITIES_CONTACT: CharitiesContact = {
@@ -161,14 +160,15 @@ export const programs: ProgramDetail[] = [
   },
 ]
 
-export const getProgramBySlug = (slug: string): ProgramDetailData | undefined => {
-  const program = programs.find((program) => program.slug === slug)
+export const getProgramBySlug = (slug: string) => {
+  const program = programs.find((p) => p.slug === slug)
 
   if (!program) {
     return undefined
   }
 
   return {
+    icon: program.icon,
     title: program.title,
     slug: program.slug,
     description: program.description,
@@ -179,6 +179,3 @@ export const getProgramBySlug = (slug: string): ProgramDetailData | undefined =>
     contact: program.contact,
   }
 }
-
-export const getProgramIcon = (slug: string) =>
-  programs.find((program) => program.slug === slug)?.icon ?? Utensils

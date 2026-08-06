@@ -67,8 +67,8 @@ describe('submit', () => {
 
   it('sends the validated volunteer application to the discord webhook in two messages', async () => {
     postMock
-      .mockResolvedValueOnce({ json: async () => ({ channel_id: '1234567890' }) })
-      .mockResolvedValue({ json: async () => ({}) })
+      .mockResolvedValueOnce({ json: () => ({ channel_id: '1234567890' }) })
+      .mockResolvedValue({ json: () => ({}) })
 
     const result = await volunteerApplicationService.submit({
       data: validData,
@@ -132,7 +132,7 @@ describe('submit', () => {
             {
               title: 'Engagement & disponibilités',
               description:
-                '**Autres langues maîtrisées**\n* Espagnol\n\n**Quels types de tâches ou d\'activités vous intéresseraient ?**\nDistributions alimentaires et accompagnement.\n\n**Disponibilités hebdomadaires pour le bénévolat**\nWeekends et soirées.',
+                "**Autres langues maîtrisées**\n* Espagnol\n\n**Quels types de tâches ou d'activités vous intéresseraient ?**\nDistributions alimentaires et accompagnement.\n\n**Disponibilités hebdomadaires pour le bénévolat**\nWeekends et soirées.",
             },
           ],
         },
@@ -141,7 +141,7 @@ describe('submit', () => {
   })
 
   it('only creates the forum thread when there is no optional content', async () => {
-    postMock.mockResolvedValueOnce({ json: async () => ({ channel_id: '1234567890' }) })
+    postMock.mockResolvedValueOnce({ json: () => ({ channel_id: '1234567890' }) })
 
     const result = await volunteerApplicationService.submit({
       data: {

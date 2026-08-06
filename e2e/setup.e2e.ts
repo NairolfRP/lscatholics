@@ -1,7 +1,7 @@
 import type { FullConfig } from 'playwright/test'
 import { execSync } from 'node:child_process'
 
-export default async function globalSetup(_config: FullConfig) {
+export default function globalSetup(_config: FullConfig) {
   console.log('⏳ Proceed database synchronisation...')
 
   try {

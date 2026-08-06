@@ -11,15 +11,7 @@ import type { User } from '#shared/lib/types/auth.ts'
 
 export const CONTACT_EMBED_COLOR = 0x7c3aed
 
-export async function submit({
-  data,
-  user,
-  currentCharacter,
-}: {
-  data: unknown
-  user: User
-  currentCharacter: { firstname?: string; lastname?: string } | null
-}) {
+export async function submit({ data, user }: { data: unknown; user: User }) {
   const webhookUrl = env.CONTACT_DISCORD_WEBHOOK
 
   try {
@@ -57,12 +49,7 @@ export async function submit({
   }
 }
 
-function buildContactEmbeds({
-  data,
-}: {
-  data: z.infer<typeof contactSchema>
-  currentCharacter: { firstname?: string; lastname?: string } | null
-}): DiscordEmbed[] {
+function buildContactEmbeds({ data }: { data: z.infer<typeof contactSchema> }): DiscordEmbed[] {
   return [
     {
       title: `Nouvelle demande de contact — ${contactSubjectLabels[data.subject]}`,

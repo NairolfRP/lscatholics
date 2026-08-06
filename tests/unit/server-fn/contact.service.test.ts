@@ -52,7 +52,6 @@ describe('submit', () => {
     const result = await contactService.submit({
       data: validData,
       user: mockUser,
-      currentCharacter: { firstname: 'Jean', lastname: 'Valjean' },
     })
 
     expect(result).toEqual({ success: true })
@@ -97,7 +96,6 @@ describe('submit', () => {
     const result = await contactService.submit({
       data: validData,
       user: mockUser,
-      currentCharacter: null,
     })
 
     expect(result).toEqual({ success: false, error: 'Une erreur est survenue' })
@@ -112,7 +110,6 @@ describe('submit', () => {
     const result = await freshService.submit({
       data: validData,
       user: mockUser,
-      currentCharacter: null,
     })
 
     expect(result).toEqual({
@@ -127,7 +124,6 @@ describe('submit', () => {
     const result = await contactService.submit({
       data: { ...validData, message: 'court' },
       user: mockUser,
-      currentCharacter: null,
     })
 
     expect(result.success).toBe(false)

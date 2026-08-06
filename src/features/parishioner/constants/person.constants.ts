@@ -198,7 +198,13 @@ export function getIndividualSacramentLabel(value: string) {
 }
 
 export function getSacramentPrerequisites(value: string): string[] {
-  return (
-    individualSacramentRequirements[value as keyof typeof individualSacramentRequirements] ?? []
-  )
+  if (
+    !INDIVIDUAL_SACRAMENT_VALUES.includes(
+      value as unknown as keyof typeof individualSacramentRequirements
+    )
+  ) {
+    return []
+  }
+
+  return individualSacramentRequirements[value as keyof typeof individualSacramentRequirements]
 }

@@ -14,7 +14,7 @@ export async function createTestUser(
   const email = `user-${crypto.randomUUID()}@test.com`
 
   const user = testUtils.createUser({
-    name: `Test ${role ?? 'user'}`,
+    name: `Test ${role}`,
     email,
     emailVerified: false,
     role,

@@ -8,14 +8,8 @@ import {
   MapPinIcon,
   PhoneIcon,
 } from 'lucide-react'
-import {
-  getProgramIcon,
-  programs,
-} from '#/features/catholic-charities/constants/programs.constants'
-import type {
-  ProgramDetail,
-  ProgramDetailData,
-} from '#/features/catholic-charities/types/charities.types'
+import { programs } from '#/features/catholic-charities/constants/programs.constants'
+import type { ProgramDetail } from '#/features/catholic-charities/types/charities.types'
 import { Badge } from '#shared/components/ui/badge'
 import { buttonVariants } from '#shared/components/ui/button'
 
@@ -26,8 +20,8 @@ const sections = [
   { id: 'contact', label: 'Nous contacter' },
 ] as const
 
-export function ProgramShowPage({ program }: { program: ProgramDetailData }) {
-  const Icon = getProgramIcon(program.slug)
+export function ProgramShowPage({ program }: { program: ProgramDetail }) {
+  const Icon = program.icon
   const currentIndex = programs.findIndex((p) => p.slug === program.slug)
   const previous = currentIndex > 0 ? programs[currentIndex - 1] : undefined
   const next = currentIndex < programs.length - 1 ? programs[currentIndex + 1] : undefined

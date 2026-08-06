@@ -1,4 +1,5 @@
 import type { Snowflake } from 'discord-api-types/v10'
+import type { DecreeCategory } from '#/features/decree/constants/decree.constants.ts'
 import {
   DECREE_CATEGORIES,
   DECREE_CATEGORY_BY_TAG_ID,
@@ -6,7 +7,6 @@ import {
   DECREE_IGNORED_TAGS,
   DECREE_IN_EFFECT_TAG,
 } from '#/features/decree/constants/decree.constants.ts'
-import type { DecreeCategory } from '#/features/decree/constants/decree.constants.ts'
 import { createSlug } from '#/utils/string.ts'
 
 /** Snowflakes are 17–20 digit decimal strings. */
@@ -14,7 +14,7 @@ const SNOWFLAKE_PATTERN = /^\d{17,20}$/
 
 export function getThreadCategory(tags: readonly Snowflake[]): DecreeCategory | null {
   for (const tag of tags) {
-    const category = DECREE_CATEGORY_BY_TAG_ID[tag]
+    const category = DECREE_CATEGORY_BY_TAG_ID[tag] as DecreeCategory | undefined
     if (category) return category
   }
   return null

@@ -161,7 +161,7 @@ export const ExperienceSection = withForm({
                 size="lg"
                 className="w-full sm:w-auto"
                 disabled={experiences.length >= MAX_EXPERIENCES}
-                onClick={() => void form.pushFieldValue('professionalExperience', EMPTY_EXPERIENCE)}
+                onClick={() => form.pushFieldValue('professionalExperience', EMPTY_EXPERIENCE)}
               >
                 <PlusIcon />
                 Ajouter une expérience professionnelle
