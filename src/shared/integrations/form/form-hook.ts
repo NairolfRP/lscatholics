@@ -7,7 +7,9 @@ import { SubmitButton } from '#/shared/components/form/submit-button'
 import { FieldGroup } from '#/shared/components/ui/field'
 import { CheckboxField } from '#shared/components/form/checkbox-field.tsx'
 import { CurrencyField } from '#shared/components/form/currency-field.tsx'
+import { RadioField } from '#shared/components/form/radio-field.tsx'
 import { TextareaField } from '#shared/components/form/textarea-field.tsx'
+import { YesNoField } from '#shared/components/form/yes-no-field.tsx'
 
 export const { fieldContext, useFieldContext, formContext, useFormContext } =
   createFormHookContexts()
@@ -21,6 +23,8 @@ export const { useAppForm, withForm } = createFormHook({
     DateTimePickerField,
     CheckboxField,
     CurrencyField,
+    YesNoField,
+    RadioField,
   },
   formComponents: {
     FieldGroup,

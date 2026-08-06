@@ -30,6 +30,7 @@ export const env = createEnv({
     CONTACT_DISCORD_WEBHOOK: z.url().optional(),
     PARISHIONER_REGISTRATION_DISCORD_WEBHOOK: z.url().optional(),
     VOLUNTEER_APPLICATION_DISCORD_WEBHOOK: z.url().optional(),
+    JOB_APPLICATION_DISCORD_WEBHOOK: z.url().optional(),
   },
 
   /**

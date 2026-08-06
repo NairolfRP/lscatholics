@@ -65,3 +65,7 @@ function stripMarkdown(markdown: string): string {
     .replace(/^[-*+]\s+/gm, '')
     .replace(/`([^`]+)`/g, '$1')
 }
+
+export function truncate(str: string, max: number): string {
+  return str.length > max ? str.slice(0, max - 3) + '...' : str
+}

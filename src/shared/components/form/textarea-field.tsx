@@ -1,8 +1,14 @@
 import type { ReactNode } from 'react'
 import { useId } from 'react'
 import { Field, FieldDescription, FieldError, FieldLabel } from '#shared/components/ui/field.tsx'
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupText,
+  InputGroupTextarea,
+} from '#shared/components/ui/input-group.tsx'
 import { MarkdownTextarea } from '#shared/components/ui/markdown-textarea.tsx'
-import { Textarea } from '#shared/components/ui/textarea.tsx'
+import type { Textarea } from '#shared/components/ui/textarea.tsx'
 import { useFieldContext } from '#shared/integrations/form/form-hook.ts'
 import type { FieldComponentProps } from '#shared/lib/types/form.ts'
 
@@ -21,6 +27,7 @@ export function TextareaField({
   description,
   markdown,
   required,
+  maxLength,
   ...props
 }: TextareaFieldProps) {
   const generatedId = useId()
@@ -44,20 +51,31 @@ export function TextareaField({
           required={required}
           aria-required={required}
           aria-invalid={isInvalid}
+          maxLength={maxLength}
           {...props}
         />
       ) : (
-        <Textarea
-          id={fieldId}
-          name={field.name}
-          value={field.state.value}
-          onBlur={field.handleBlur}
-          onChange={(e) => field.handleChange(e.target.value)}
-          required={required}
-          aria-required={required}
-          aria-invalid={isInvalid}
-          {...props}
-        />
+        <InputGroup>
+          <InputGroupTextarea
+            id={fieldId}
+            name={field.name}
+            value={field.state.value}
+            onBlur={field.handleBlur}
+            onChange={(e) => field.handleChange(e.target.value)}
+            required={required}
+            aria-required={required}
+            aria-invalid={isInvalid}
+            maxLength={maxLength}
+            {...props}
+          />
+          {maxLength ? (
+            <InputGroupAddon align="block-end">
+              <InputGroupText className="ml-auto">
+                {field.state.value?.length ?? 0}/{maxLength}
+              </InputGroupText>
+            </InputGroupAddon>
+          ) : undefined}
+        </InputGroup>
       )}
       {description && <FieldDescription>{description}</FieldDescription>}
       {isInvalid && <FieldError errors={field.state.meta.errors} />}

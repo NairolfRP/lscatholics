@@ -78,7 +78,7 @@ export function SelectField({
       <Select
         items={values}
         name={field.name}
-        value={field.state.value}
+        value={field.state.value ?? null}
         onValueChange={(v) =>
           onValueChange
             ? onValueChange(v as string | null | undefined, field.handleChange)
