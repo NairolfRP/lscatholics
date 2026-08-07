@@ -1,8 +1,5 @@
 import { getVolunteerDefaults } from '#/features/volunteers/constants/volunteer-defaults.ts'
-import {
-  ethnicGroupOptions,
-  spokenLanguageOptions,
-} from '#/features/volunteers/constants/volunteer.constants.ts'
+import { spokenLanguageOptions } from '#/features/volunteers/constants/volunteer.constants.ts'
 import {
   Accordion,
   AccordionContent,
@@ -12,6 +9,7 @@ import {
 import { Badge } from '#shared/components/ui/badge.tsx'
 import { FieldDescription, FieldLegend, FieldSet } from '#shared/components/ui/field.tsx'
 import { withForm } from '#shared/integrations/form/form-hook.ts'
+import { ethnicGroupOptions } from '#shared/constants/ethnicity.ts'
 
 export const EngagementSection = withForm({
   defaultValues: getVolunteerDefaults(null),

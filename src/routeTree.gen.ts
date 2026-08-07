@@ -21,6 +21,7 @@ import { Route as AppContactRouteImport } from './routes/_app/contact'
 import { Route as AppDailyReadingsRouteImport } from './routes/_app/daily-readings'
 import { Route as AppDecreesRouteRouteImport } from './routes/_app/decrees/route'
 import { Route as AppDepartmentsRouteImport } from './routes/_app/departments'
+import { Route as AppDonateRouteImport } from './routes/_app/donate'
 import { Route as AppEventsRouteImport } from './routes/_app/events'
 import { Route as AppNewsroomRouteImport } from './routes/_app/newsroom'
 import { Route as AppParishesRouteImport } from './routes/_app/parishes'
@@ -52,6 +53,9 @@ import { Route as DashboardUsersIndexRouteImport } from './routes/dashboard/user
 import { Route as AppCharitiesProgramSlugRouteImport } from './routes/_app/charities/program/$slug'
 import { Route as AppJobSlugIndexRouteImport } from './routes/_app/job/$slug.index'
 import { Route as AppJobSlugApplyRouteImport } from './routes/_app/job/$slug.apply'
+import { Route as ApiPaymentFleecaCallbackRouteImport } from './routes/api/payment/fleeca/callback'
+import { Route as ApiPaymentFleecaWebhookRouteImport } from './routes/api/payment/fleeca/webhook'
+import { Route as ApiPaymentStatusPaymentIdRouteImport } from './routes/api/payment/status/$paymentId'
 import { Route as DashboardEventsEditIdRouteImport } from './routes/dashboard/events/edit.$id'
 import { Route as DashboardEventsShowIdRouteImport } from './routes/dashboard/events/show.$id'
 import { Route as DashboardJobOpeningsEditIdRouteImport } from './routes/dashboard/job-openings/edit.$id'
@@ -117,6 +121,11 @@ const AppDecreesRouteRoute = AppDecreesRouteRouteImport.update({
 const AppDepartmentsRoute = AppDepartmentsRouteImport.update({
   id: '/departments',
   path: '/departments',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppDonateRoute = AppDonateRouteImport.update({
+  id: '/donate',
+  path: '/donate',
   getParentRoute: () => AppRoute,
 } as any)
 const AppEventsRoute = AppEventsRouteImport.update({
@@ -276,6 +285,23 @@ const AppJobSlugApplyRoute = AppJobSlugApplyRouteImport.update({
   path: '/job/$slug/apply',
   getParentRoute: () => AppRoute,
 } as any)
+const ApiPaymentFleecaCallbackRoute =
+  ApiPaymentFleecaCallbackRouteImport.update({
+    id: '/api/payment/fleeca/callback',
+    path: '/api/payment/fleeca/callback',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ApiPaymentFleecaWebhookRoute = ApiPaymentFleecaWebhookRouteImport.update({
+  id: '/api/payment/fleeca/webhook',
+  path: '/api/payment/fleeca/webhook',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPaymentStatusPaymentIdRoute =
+  ApiPaymentStatusPaymentIdRouteImport.update({
+    id: '/api/payment/status/$paymentId',
+    path: '/api/payment/status/$paymentId',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const DashboardEventsEditIdRoute = DashboardEventsEditIdRouteImport.update({
   id: '/events/edit/$id',
   path: '/events/edit/$id',
@@ -327,6 +353,7 @@ export interface FileRoutesByFullPath {
   '/contact': typeof AppContactRoute
   '/daily-readings': typeof AppDailyReadingsRoute
   '/departments': typeof AppDepartmentsRoute
+  '/donate': typeof AppDonateRoute
   '/events': typeof AppEventsRoute
   '/newsroom': typeof AppNewsroomRoute
   '/parishes': typeof AppParishesRoute
@@ -356,6 +383,9 @@ export interface FileRoutesByFullPath {
   '/dashboard/users/': typeof DashboardUsersIndexRoute
   '/charities/program/$slug': typeof AppCharitiesProgramSlugRoute
   '/job/$slug/apply': typeof AppJobSlugApplyRoute
+  '/api/payment/fleeca/callback': typeof ApiPaymentFleecaCallbackRoute
+  '/api/payment/fleeca/webhook': typeof ApiPaymentFleecaWebhookRoute
+  '/api/payment/status/$paymentId': typeof ApiPaymentStatusPaymentIdRoute
   '/dashboard/events/edit/$id': typeof DashboardEventsEditIdRoute
   '/dashboard/events/show/$id': typeof DashboardEventsShowIdRoute
   '/dashboard/job-openings/edit/$id': typeof DashboardJobOpeningsEditIdRoute
@@ -372,6 +402,7 @@ export interface FileRoutesByTo {
   '/contact': typeof AppContactRoute
   '/daily-readings': typeof AppDailyReadingsRoute
   '/departments': typeof AppDepartmentsRoute
+  '/donate': typeof AppDonateRoute
   '/events': typeof AppEventsRoute
   '/newsroom': typeof AppNewsroomRoute
   '/parishes': typeof AppParishesRoute
@@ -402,6 +433,9 @@ export interface FileRoutesByTo {
   '/dashboard/users': typeof DashboardUsersIndexRoute
   '/charities/program/$slug': typeof AppCharitiesProgramSlugRoute
   '/job/$slug/apply': typeof AppJobSlugApplyRoute
+  '/api/payment/fleeca/callback': typeof ApiPaymentFleecaCallbackRoute
+  '/api/payment/fleeca/webhook': typeof ApiPaymentFleecaWebhookRoute
+  '/api/payment/status/$paymentId': typeof ApiPaymentStatusPaymentIdRoute
   '/dashboard/events/edit/$id': typeof DashboardEventsEditIdRoute
   '/dashboard/events/show/$id': typeof DashboardEventsShowIdRoute
   '/dashboard/job-openings/edit/$id': typeof DashboardJobOpeningsEditIdRoute
@@ -425,6 +459,7 @@ export interface FileRoutesById {
   '/_app/contact': typeof AppContactRoute
   '/_app/daily-readings': typeof AppDailyReadingsRoute
   '/_app/departments': typeof AppDepartmentsRoute
+  '/_app/donate': typeof AppDonateRoute
   '/_app/events': typeof AppEventsRoute
   '/_app/newsroom': typeof AppNewsroomRoute
   '/_app/parishes': typeof AppParishesRoute
@@ -455,6 +490,9 @@ export interface FileRoutesById {
   '/dashboard/users/': typeof DashboardUsersIndexRoute
   '/_app/charities/program/$slug': typeof AppCharitiesProgramSlugRoute
   '/_app/job/$slug/apply': typeof AppJobSlugApplyRoute
+  '/api/payment/fleeca/callback': typeof ApiPaymentFleecaCallbackRoute
+  '/api/payment/fleeca/webhook': typeof ApiPaymentFleecaWebhookRoute
+  '/api/payment/status/$paymentId': typeof ApiPaymentStatusPaymentIdRoute
   '/dashboard/events/edit/$id': typeof DashboardEventsEditIdRoute
   '/dashboard/events/show/$id': typeof DashboardEventsShowIdRoute
   '/dashboard/job-openings/edit/$id': typeof DashboardJobOpeningsEditIdRoute
@@ -479,6 +517,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/daily-readings'
     | '/departments'
+    | '/donate'
     | '/events'
     | '/newsroom'
     | '/parishes'
@@ -508,6 +547,9 @@ export interface FileRouteTypes {
     | '/dashboard/users/'
     | '/charities/program/$slug'
     | '/job/$slug/apply'
+    | '/api/payment/fleeca/callback'
+    | '/api/payment/fleeca/webhook'
+    | '/api/payment/status/$paymentId'
     | '/dashboard/events/edit/$id'
     | '/dashboard/events/show/$id'
     | '/dashboard/job-openings/edit/$id'
@@ -524,6 +566,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/daily-readings'
     | '/departments'
+    | '/donate'
     | '/events'
     | '/newsroom'
     | '/parishes'
@@ -554,6 +597,9 @@ export interface FileRouteTypes {
     | '/dashboard/users'
     | '/charities/program/$slug'
     | '/job/$slug/apply'
+    | '/api/payment/fleeca/callback'
+    | '/api/payment/fleeca/webhook'
+    | '/api/payment/status/$paymentId'
     | '/dashboard/events/edit/$id'
     | '/dashboard/events/show/$id'
     | '/dashboard/job-openings/edit/$id'
@@ -576,6 +622,7 @@ export interface FileRouteTypes {
     | '/_app/contact'
     | '/_app/daily-readings'
     | '/_app/departments'
+    | '/_app/donate'
     | '/_app/events'
     | '/_app/newsroom'
     | '/_app/parishes'
@@ -606,6 +653,9 @@ export interface FileRouteTypes {
     | '/dashboard/users/'
     | '/_app/charities/program/$slug'
     | '/_app/job/$slug/apply'
+    | '/api/payment/fleeca/callback'
+    | '/api/payment/fleeca/webhook'
+    | '/api/payment/status/$paymentId'
     | '/dashboard/events/edit/$id'
     | '/dashboard/events/show/$id'
     | '/dashboard/job-openings/edit/$id'
@@ -620,6 +670,9 @@ export interface RootRouteChildren {
   DashboardRouteRoute: typeof DashboardRouteRouteWithChildren
   AppRoute: typeof AppRouteWithChildren
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
+  ApiPaymentFleecaCallbackRoute: typeof ApiPaymentFleecaCallbackRoute
+  ApiPaymentFleecaWebhookRoute: typeof ApiPaymentFleecaWebhookRoute
+  ApiPaymentStatusPaymentIdRoute: typeof ApiPaymentStatusPaymentIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -706,6 +759,13 @@ declare module '@tanstack/react-router' {
       path: '/departments'
       fullPath: '/departments'
       preLoaderRoute: typeof AppDepartmentsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/donate': {
+      id: '/_app/donate'
+      path: '/donate'
+      fullPath: '/donate'
+      preLoaderRoute: typeof AppDonateRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/events': {
@@ -925,6 +985,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppJobSlugApplyRouteImport
       parentRoute: typeof AppRoute
     }
+    '/api/payment/fleeca/callback': {
+      id: '/api/payment/fleeca/callback'
+      path: '/api/payment/fleeca/callback'
+      fullPath: '/api/payment/fleeca/callback'
+      preLoaderRoute: typeof ApiPaymentFleecaCallbackRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/payment/fleeca/webhook': {
+      id: '/api/payment/fleeca/webhook'
+      path: '/api/payment/fleeca/webhook'
+      fullPath: '/api/payment/fleeca/webhook'
+      preLoaderRoute: typeof ApiPaymentFleecaWebhookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/payment/status/$paymentId': {
+      id: '/api/payment/status/$paymentId'
+      path: '/api/payment/status/$paymentId'
+      fullPath: '/api/payment/status/$paymentId'
+      preLoaderRoute: typeof ApiPaymentStatusPaymentIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/dashboard/events/edit/$id': {
       id: '/dashboard/events/edit/$id'
       path: '/events/edit/$id'
@@ -1081,6 +1162,7 @@ interface AppRouteChildren {
   AppContactRoute: typeof AppContactRoute
   AppDailyReadingsRoute: typeof AppDailyReadingsRoute
   AppDepartmentsRoute: typeof AppDepartmentsRoute
+  AppDonateRoute: typeof AppDonateRoute
   AppEventsRoute: typeof AppEventsRoute
   AppNewsroomRoute: typeof AppNewsroomRoute
   AppParishesRoute: typeof AppParishesRoute
@@ -1108,6 +1190,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppContactRoute: AppContactRoute,
   AppDailyReadingsRoute: AppDailyReadingsRoute,
   AppDepartmentsRoute: AppDepartmentsRoute,
+  AppDonateRoute: AppDonateRoute,
   AppEventsRoute: AppEventsRoute,
   AppNewsroomRoute: AppNewsroomRoute,
   AppParishesRoute: AppParishesRoute,
@@ -1131,6 +1214,9 @@ const rootRouteChildren: RootRouteChildren = {
   DashboardRouteRoute: DashboardRouteRouteWithChildren,
   AppRoute: AppRouteWithChildren,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
+  ApiPaymentFleecaCallbackRoute: ApiPaymentFleecaCallbackRoute,
+  ApiPaymentFleecaWebhookRoute: ApiPaymentFleecaWebhookRoute,
+  ApiPaymentStatusPaymentIdRoute: ApiPaymentStatusPaymentIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

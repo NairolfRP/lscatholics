@@ -23,6 +23,7 @@
         "typecheck": "tsc --noEmit",
         "start": "node --import ./.output/server/instrument.server.mjs .output/server/index.mjs",
         "dev:seed": "tsx --env-file=.env.local scripts/dev-seed.ts",
+        "simulate:webhook": "tsx --env-file=.env.local scripts/simulate-fleeca-webhook.ts",
         "db:dev": "turso dev --db-file tmp/dev.db",
         "db:generate": "drizzle-kit generate",
         "db:migrate": "drizzle-kit migrate",

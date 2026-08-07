@@ -31,6 +31,15 @@ export const env = createEnv({
     PARISHIONER_REGISTRATION_DISCORD_WEBHOOK: z.url().optional(),
     VOLUNTEER_APPLICATION_DISCORD_WEBHOOK: z.url().optional(),
     JOB_APPLICATION_DISCORD_WEBHOOK: z.url().optional(),
+
+    FLEECA_API_KEY: z.string().optional(),
+    FLEECA_BASE_URL: z.url().optional().default('https://fleeca.gta.world/api/v2'),
+    PAYMENT_ENCRYPTION_KEY:
+      process.env.NODE_ENV === 'production'
+        ? z.string().min(16)
+        : z.string().min(16).optional(),
+    DONATE_PRIVATE_NOTIFICATION_WEBHOOK: z.url().optional(),
+    DONATE_PUBLIC_NOTIFICATION_WEBHOOK: z.url().optional(),
   },
 
   /**

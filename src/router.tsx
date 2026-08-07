@@ -8,7 +8,7 @@ import { getContext } from './shared/integrations/tanstack-query/root-provider'
 import { AppLayout } from './shared/layouts/app/components/app-layout'
 
 export function getRouter() {
-  const nonce = getGlobalStartContext()?.nonce
+  const nonce = (getGlobalStartContext() as { nonce?: string } | undefined)?.nonce
   const context = getContext()
 
   const router = createTanStackRouter({

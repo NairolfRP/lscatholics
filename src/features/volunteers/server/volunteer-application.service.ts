@@ -3,16 +3,18 @@ import { z } from 'zod'
 import { env } from '#/config/env.server.ts'
 import {
   applicationSourceLabels,
-  ethnicGroupLabels,
   requiredHoursReasonLabels,
   spokenLanguageLabels,
 } from '#/features/volunteers/constants/volunteer.constants.ts'
-import { volunteerApplicationSchema } from '#/features/volunteers/schemas/volunteer-application.schema.ts'
+import {
+  volunteerApplicationSchema,
+} from '#/features/volunteers/schemas/volunteer-application.schema.ts'
 import { getFieldErrors } from '#/utils/form.ts'
 import { logger } from '#server/integrations/logger.ts'
 import type { DiscordEmbed } from '#server/services/discord.service.ts'
 import { sendWebhookMessage } from '#server/services/discord.service.ts'
 import { getDistrictLabel } from '#shared/constants/districts.constants.ts'
+import { ethnicGroupLabels } from '#shared/constants/ethnicity.ts'
 import type { User } from '#shared/lib/types/auth.ts'
 
 export const VOLUNTEER_APPLICATION_EMBED_COLOR = 0xd4a017

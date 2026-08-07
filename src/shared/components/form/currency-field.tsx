@@ -61,8 +61,8 @@ export function CurrencyField<TType extends HTMLInputTypeAttribute | undefined =
         <NumericFormat
           customInput={InputGroupInput}
           thousandSeparator=" "
-          decimalScale={0} // Force 2 décimales
-          fixedDecimalScale // Ajoute les .00 si on tape juste 1000
+          decimalScale={0}
+          fixedDecimalScale
           allowNegative={false}
 
           id={fieldId}
