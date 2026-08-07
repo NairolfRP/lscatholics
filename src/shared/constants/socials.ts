@@ -18,7 +18,7 @@ export const socials: Record<string, Social> = {
     icon: YoutubeIcon,
   },
   discord: {
-    label: '(( Serveur discord de LS Catholcis ))',
+    label: '(( Serveur discord de LS Catholics ))',
     href: 'https://discord.gg/CXVKwfP6cs',
     className: 'bg-blue-600 hover:bg-blue-700 text-white',
     icon: DiscordIcon,
@@ -27,7 +27,7 @@ export const socials: Record<string, Social> = {
     },
   },
   github: {
-    label: "(( Code source de l'applciation web LSCatholics ))",
+    label: "(( Code source de l'application web LSCatholics ))",
     href: 'https://github.com/NairolfRP/lscatholics',
     className: 'bg-[#181717] hover:bg-[#4752c4] text-white',
     icon: GithubIcon,
