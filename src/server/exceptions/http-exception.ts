@@ -17,7 +17,7 @@ export class HttpException extends Error {
 
     Object.setPrototypeOf(this, HttpException.prototype)
 
-    setResponseStatus(401)
+    setResponseStatus(this.status)
   }
 
   /** Converts the exception into a Response */
