@@ -129,9 +129,9 @@ describe('createPayment', () => {
       json: () => Promise.reject({ isNetworkError: true }),
     }))
 
-    await expect(
-      fleecaClient.createPayment({ amount: 500, mode: 0 })
-    ).rejects.toMatchObject({ code: 'NETWORK' })
+    await expect(fleecaClient.createPayment({ amount: 500, mode: 0 })).rejects.toMatchObject({
+      code: 'NETWORK',
+    })
     await expect(fleecaClient.createPayment({ amount: 500, mode: 0 })).rejects.toBeInstanceOf(
       FleecaClientError
     )
@@ -143,9 +143,9 @@ describe('createPayment', () => {
       json: () => Promise.reject({ isHTTPError: true, response: { status: 422 } }),
     }))
 
-    await expect(
-      fleecaClient.createPayment({ amount: 500, mode: 0 })
-    ).rejects.toMatchObject({ code: 'HTTP' })
+    await expect(fleecaClient.createPayment({ amount: 500, mode: 0 })).rejects.toMatchObject({
+      code: 'HTTP',
+    })
   })
 
   it('maps an unknown error to a PROCESSING FleecaClientError', async () => {
@@ -154,9 +154,9 @@ describe('createPayment', () => {
       json: () => Promise.reject(new Error('boom')),
     }))
 
-    await expect(
-      fleecaClient.createPayment({ amount: 500, mode: 0 })
-    ).rejects.toMatchObject({ code: 'PROCESSING' })
+    await expect(fleecaClient.createPayment({ amount: 500, mode: 0 })).rejects.toMatchObject({
+      code: 'PROCESSING',
+    })
   })
 })
 
@@ -231,20 +231,15 @@ describe('getPayment', () => {
     })
   })
 
-  it.each([
-    '../balance',
-    '..%2Fbalance',
-    'foo/bar',
-    'foo?x=1',
-    'foo#bar',
-    'a'.repeat(65),
-    '',
-  ])('rejects the unsafe payment id "%s" before calling the API', async (paymentId) => {
-    const { fleecaClient } = await import('#server/services/fleeca.service.ts')
+  it.each(['../balance', '..%2Fbalance', 'foo/bar', 'foo?x=1', 'foo#bar', 'a'.repeat(65), ''])(
+    'rejects the unsafe payment id "%s" before calling the API',
+    async (paymentId) => {
+      const { fleecaClient } = await import('#server/services/fleeca.service.ts')
 
-    await expect(fleecaClient.getPayment(paymentId)).rejects.toMatchObject({
-      code: 'INVALID_PAYMENT_ID',
-    })
-    expect(hoisted.get).not.toHaveBeenCalled()
-  })
+      await expect(fleecaClient.getPayment(paymentId)).rejects.toMatchObject({
+        code: 'INVALID_PAYMENT_ID',
+      })
+      expect(hoisted.get).not.toHaveBeenCalled()
+    }
+  )
 })

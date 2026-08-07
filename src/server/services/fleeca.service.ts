@@ -12,8 +12,7 @@ export const [FLEECA_PAYMENT_MODE] = createEnum({
   LIVE: 1,
 })
 
-export type FleecaPaymentMode =
-  (typeof FLEECA_PAYMENT_MODE)[keyof typeof FLEECA_PAYMENT_MODE]
+export type FleecaPaymentMode = (typeof FLEECA_PAYMENT_MODE)[keyof typeof FLEECA_PAYMENT_MODE]
 
 export type FleecaPaymentStatus = 'payment_successful' | 'payment_failed' | 'pending'
 
@@ -63,8 +62,12 @@ export class FleecaClientError extends Error {
 
   constructor(
     message: string,
-    readonly code: 'UNCONFIGURED' | 'NETWORK' | 'HTTP' | 'PROCESSING' | 'INVALID_PAYMENT_ID' =
-      'PROCESSING',
+    readonly code:
+      | 'UNCONFIGURED'
+      | 'NETWORK'
+      | 'HTTP'
+      | 'PROCESSING'
+      | 'INVALID_PAYMENT_ID' = 'PROCESSING',
     options?: ErrorOptions & { status?: number }
   ) {
     super(message, options)
@@ -117,9 +120,9 @@ class FleecaClient {
           backoffLimit: 4_000,
         },
         headers: {
-          Accept: 'application/json',
+          'Accept': 'application/json',
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${this.#apiKey}`,
+          'Authorization': `Bearer ${this.#apiKey}`,
         },
       })
     }
@@ -129,7 +132,9 @@ class FleecaClient {
 
   async createPayment(payload: FleecaCreatePaymentRequest): Promise<FleecaCreatePaymentResponse> {
     try {
-      return await this.#client().post('payment', { json: payload }).json<FleecaCreatePaymentResponse>()
+      return await this.#client()
+        .post('payment', { json: payload })
+        .json<FleecaCreatePaymentResponse>()
     } catch (err) {
       throw this.#toClientError(err, 'createPayment')
     }

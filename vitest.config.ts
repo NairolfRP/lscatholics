@@ -1,9 +1,9 @@
 import fs from 'node:fs'
 import path from 'node:path'
-import dotenv from 'dotenv'
 import codspeedPlugin from '@codspeed/vitest-plugin'
 import react from '@vitejs/plugin-react'
 import { playwright } from '@vitest/browser-playwright'
+import dotenv from 'dotenv'
 import { defineConfig } from 'vitest/config'
 
 const resolve = (filePath: string) => path.resolve(import.meta.dirname, filePath)

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { useSearch } from '@tanstack/react-router'
+import { formatDonationAmount } from '#/features/donate/utils/format.ts'
 import {
   Card,
   CardContent,
@@ -9,7 +10,6 @@ import {
 } from '#shared/components/ui/card.tsx'
 import { Typography } from '#shared/components/ui/typography.tsx'
 import { cn } from '#shared/lib/utils.ts'
-import { formatDonationAmount } from '#/features/donate/utils/format.ts'
 
 type PaymentStatus = 'payment_successful' | 'payment_failed' | 'pending' | 'expired' | 'not_found'
 

@@ -8,8 +8,8 @@ import {
 } from '#shared/components/ui/accordion.tsx'
 import { Badge } from '#shared/components/ui/badge.tsx'
 import { FieldDescription, FieldLegend, FieldSet } from '#shared/components/ui/field.tsx'
-import { withForm } from '#shared/integrations/form/form-hook.ts'
 import { ethnicGroupOptions } from '#shared/constants/ethnicity.ts'
+import { withForm } from '#shared/integrations/form/form-hook.ts'
 
 export const EngagementSection = withForm({
   defaultValues: getVolunteerDefaults(null),

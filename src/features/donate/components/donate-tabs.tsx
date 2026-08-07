@@ -1,11 +1,6 @@
 import { DonateForm } from '#/features/donate/components/donate-form.tsx'
 import { DonateRecurring } from '#/features/donate/components/donate-recurring.tsx'
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from '#shared/components/ui/tabs.tsx'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '#shared/components/ui/tabs.tsx'
 
 export function DonateTabs() {
   return (

@@ -1,9 +1,12 @@
 import { z } from 'zod'
-import { DONATION_MIN_AMOUNT, FLEECA_MAX_AMOUNT } from '#/features/donate/constants/donate.constants.ts'
+import {
+  DONATION_MIN_AMOUNT,
+  FLEECA_MAX_AMOUNT,
+} from '#/features/donate/constants/donate.constants.ts'
 import { formatDonationAmount } from '#/features/donate/utils/format.ts'
 import { DISTRICT_VALUES } from '#shared/constants/districts.constants.ts'
-import { emptyToNull } from '#shared/schemas/utils.schema.ts'
 import { ETHNIC_GROUP_VALUES } from '#shared/constants/ethnicity.ts'
+import { emptyToNull } from '#shared/schemas/utils.schema.ts'
 
 const ORGANIZATION_NAME_MAX = 100
 

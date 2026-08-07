@@ -6,8 +6,8 @@ import {
   SPOKEN_LANGUAGE_VALUES,
 } from '#/features/volunteers/constants/volunteer.constants.ts'
 import { DISTRICT_VALUES } from '#shared/constants/districts.constants.ts'
-import { emptyToNull } from '#shared/schemas/utils.schema.ts'
 import { ETHNIC_GROUP_VALUES } from '#shared/constants/ethnicity.ts'
+import { emptyToNull } from '#shared/schemas/utils.schema.ts'
 
 const nameSchema = (label: string) =>
   z

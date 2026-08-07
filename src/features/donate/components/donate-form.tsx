@@ -1,17 +1,9 @@
 import { HandHeartIcon } from 'lucide-react'
 import { DonateFormSkeleton } from '#/features/donate/components/donate-form-skeleton.tsx'
-import {
-  DonateAddressSection,
-} from '#/features/donate/components/sections/donate-address-section.tsx'
-import {
-  DonateAmountSection,
-} from '#/features/donate/components/sections/donate-amount-section.tsx'
-import {
-  DonateIdentitySection,
-} from '#/features/donate/components/sections/donate-identity-section.tsx'
-import {
-  DonateOptionsSection,
-} from '#/features/donate/components/sections/donate-options-section.tsx'
+import { DonateAddressSection } from '#/features/donate/components/sections/donate-address-section.tsx'
+import { DonateAmountSection } from '#/features/donate/components/sections/donate-amount-section.tsx'
+import { DonateIdentitySection } from '#/features/donate/components/sections/donate-identity-section.tsx'
+import { DonateOptionsSection } from '#/features/donate/components/sections/donate-options-section.tsx'
 import { getDonationDefaults } from '#/features/donate/constants/donate-defaults.ts'
 import { usePaymentPopup } from '#/features/donate/hooks/use-payment-popup.ts'
 import type { DonationInput } from '#/features/donate/schemas/donate.schema.ts'

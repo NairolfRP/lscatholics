@@ -88,7 +88,11 @@ function handlePaymentSuccess(
   onSuccess()
 }
 
-function handlePaymentError(data: PaymentPopupMessage, popup: Window, handler: (e: MessageEvent) => void) {
+function handlePaymentError(
+  data: PaymentPopupMessage,
+  popup: Window,
+  handler: (e: MessageEvent) => void
+) {
   toast.add({
     type: 'error',
     title: data.title || 'Erreur de paiement',

@@ -6,9 +6,7 @@ import {
   requiredHoursReasonLabels,
   spokenLanguageLabels,
 } from '#/features/volunteers/constants/volunteer.constants.ts'
-import {
-  volunteerApplicationSchema,
-} from '#/features/volunteers/schemas/volunteer-application.schema.ts'
+import { volunteerApplicationSchema } from '#/features/volunteers/schemas/volunteer-application.schema.ts'
 import { getFieldErrors } from '#/utils/form.ts'
 import { logger } from '#server/integrations/logger.ts'
 import type { DiscordEmbed } from '#server/services/discord.service.ts'

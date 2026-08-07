@@ -236,8 +236,7 @@ export class PaymentService {
     let deleted = 0
 
     for (const pending of expired) {
-      const { reconciled: isReconciled, deleted: isDeleted } =
-        await this.#reconcileExpired(pending)
+      const { reconciled: isReconciled, deleted: isDeleted } = await this.#reconcileExpired(pending)
       if (isReconciled) {
         reconciled += 1
       } else if (isDeleted) {

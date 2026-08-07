@@ -26,10 +26,7 @@ const encryptionKey = createHash('sha256')
 export function encryptMetadata<T>(value: T): string {
   const iv = randomBytes(IV_LENGTH)
   const cipher = createCipheriv(ALGORITHM, encryptionKey, iv)
-  const encrypted = Buffer.concat([
-    cipher.update(JSON.stringify(value), 'utf8'),
-    cipher.final(),
-  ])
+  const encrypted = Buffer.concat([cipher.update(JSON.stringify(value), 'utf8'), cipher.final()])
 
   return JSON.stringify({
     iv: iv.toString('base64'),
@@ -44,10 +41,7 @@ export function decryptMetadata<T>(payload: string): T {
   const decipher = createDecipheriv(ALGORITHM, encryptionKey, Buffer.from(iv, 'base64'))
   decipher.setAuthTag(Buffer.from(tag, 'base64'))
 
-  const decrypted = Buffer.concat([
-    decipher.update(Buffer.from(data, 'base64')),
-    decipher.final(),
-  ])
+  const decrypted = Buffer.concat([decipher.update(Buffer.from(data, 'base64')), decipher.final()])
 
   return JSON.parse(decrypted.toString('utf8')) as T
 }
