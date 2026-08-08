@@ -13,7 +13,7 @@ export const env = createEnv({
     DATABASE_URL: z.url().or(z.literal(':memory:')),
     DATABASE_AUTH_TOKEN: z.string().optional(),
     BETTER_AUTH_URL: z.url(),
-    BETTER_AUTH_SECRET: z.string(),
+    BETTER_AUTH_SECRET: z.string().length(32),
     OAUTH_PROXY_SECRET: z.string(),
     GTAW_SERVER: z.enum(['en', 'fr']).optional().default('en'),
     GTAW_OAUTH_CLIENT_ID: z.string(),
@@ -35,7 +35,7 @@ export const env = createEnv({
     FLEECA_API_KEY: z.string().optional(),
     FLEECA_BASE_URL: z.url().optional().default('https://fleeca.gta.world/api/v2'),
     PAYMENT_ENCRYPTION_KEY:
-      process.env.NODE_ENV === 'production' ? z.string().min(16) : z.string().min(16).optional(),
+      process.env.NODE_ENV === 'production' ? z.string().length(32) : z.string().min(32).optional(),
     DONATE_PRIVATE_NOTIFICATION_WEBHOOK: z.url().optional(),
     DONATE_PUBLIC_NOTIFICATION_WEBHOOK: z.url().optional(),
   },
