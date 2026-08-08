@@ -20,10 +20,28 @@ export const env = createEnv({
     DISCORD_CLIENT_SECRET: z.string(),
     DISCORD_GUILD_ID: z.string(),
     DISCORD_BOT_TOKEN: z.string(),
-    ROLEPLAY_FACTION_ID: z.int().positive().optional().default(563),
-    ROLEPLAY_FACTION_LOWEST_LEADERSHIP_RANK: z.int().min(1).max(15).optional().default(14),
-    ROLEPLAY_FACTION_LOWEST_SUPERVISOR_RANK: z.int().min(1).max(15).optional().default(10),
-    ROLEPLAY_FACTION_MINIMAL_RANK_DASHBOARD_ACCESS: z.int().min(1).max(15).optional().default(9),
+    ROLEPLAY_FACTION_ID: z.coerce.number().int().positive().optional().default(563),
+    ROLEPLAY_FACTION_LOWEST_LEADERSHIP_RANK: z.coerce
+      .number()
+      .int()
+      .min(1)
+      .max(15)
+      .optional()
+      .default(14),
+    ROLEPLAY_FACTION_LOWEST_SUPERVISOR_RANK: z.coerce
+      .number()
+      .int()
+      .min(1)
+      .max(15)
+      .optional()
+      .default(10),
+    ROLEPLAY_FACTION_MINIMAL_RANK_DASHBOARD_ACCESS: z.coerce
+      .number()
+      .int()
+      .min(1)
+      .max(15)
+      .optional()
+      .default(9),
 
     CONTACT_DISCORD_WEBHOOK: z.url().optional(),
     PARISHIONER_REGISTRATION_DISCORD_WEBHOOK: z.url().optional(),
