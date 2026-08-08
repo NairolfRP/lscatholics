@@ -16,6 +16,10 @@ import * as authSchema from '#server/db/schema/auth-schema'
 
 export const auth = betterAuth({
   appName: envClient.VITE_APP_TITLE,
+  trustedOrigins: [
+    'http://localhost:3000',
+    ...(process.env.VERCEL_URL ? [`https://${process.env.VERCEL_URL}`] : []),
+  ],
   database: drizzleAdapter(db, {
     schema: authSchema,
     provider: 'sqlite',
@@ -35,6 +39,10 @@ export const auth = betterAuth({
     },
   },
   plugins: [
+    oAuthProxy({
+      productionURL: 'https://lscatholics.vercel.app',
+      secret: env.OAUTH_PROXY_SECRET,
+    }),
     admin({
       ac,
       roles,
@@ -52,14 +60,6 @@ export const auth = betterAuth({
         }),
       ],
     }),
-    ...(isProd
-      ? [
-          oAuthProxy({
-            productionURL: 'https://lscatholics.vercel.app',
-            secret: env.OAUTH_PROXY_SECRET,
-          }),
-        ]
-      : []),
     ...(isDev ? [openAPI()] : []),
     ...(isTest ? [testUtils()] : []),
     i18n({
