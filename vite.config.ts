@@ -57,9 +57,6 @@ const config = defineConfig(({ mode }) => {
       ...(isDev ? [devtools()] : []),
       nitro({
         experimental: { tasks: true },
-        rolldownConfig: {
-          external: [/^@sentry\//],
-        },
         tasks: {
           cleanup: {
             handler: fileURLToPath(new URL('./src/server/tasks/cleanup.ts', import.meta.url)),
