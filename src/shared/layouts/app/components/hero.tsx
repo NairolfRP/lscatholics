@@ -1,5 +1,7 @@
 import type { ComponentProps, ReactNode } from 'react'
 import React from 'react'
+import { Image } from '@unpic/react'
+import type { ImageProps } from '@unpic/react'
 import { Link } from '@tanstack/react-router'
 import type { Button } from '#/shared/components/ui/button'
 import { buttonVariants } from '#/shared/components/ui/button'
@@ -172,13 +174,16 @@ export function ImageHero({
   return (
     <section className={cn('relative flex w-full overflow-hidden', sizes[size], className)}>
       {imageSrc && (
-        <img
-          src={imageSrc}
-          alt={imageAlt}
-          fetchPriority="high"
-          decoding="async"
-          className="absolute inset-0 h-full w-full object-cover"
-          style={{ objectPosition: imagePosition }}
+        <Image
+          {...({
+            src: imageSrc,
+            alt: imageAlt,
+            layout: 'fullWidth',
+            fetchPriority: 'high',
+            decoding: 'async',
+            className: 'absolute inset-0 h-full w-full object-cover',
+            style: { objectPosition: imagePosition },
+          } as ImageProps)}
         />
       )}
       <Overlay opacity={overlayOpacity} />

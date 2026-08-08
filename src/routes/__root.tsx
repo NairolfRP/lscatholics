@@ -8,7 +8,7 @@ import ScrollToTopButton from '#/shared/components/scroll-to-top'
 import { Toaster } from '#/shared/components/ui/toast'
 import { ThemeProvider } from '#/shared/providers/theme-provider'
 import { pageMetadata } from '#/utils/seo'
-import appCss from '../styles/globals.css?url'
+import '#/styles/globals.css'
 
 const LazyAppDevtools = import.meta.env.DEV
   ? lazy(() =>
@@ -27,8 +27,35 @@ export const Route = createRootRouteWithContext<RouterContext>()({
     meta: pageMetadata(),
     links: [
       {
+        rel: 'preconnect',
+        href: 'https://fonts.bunny.net',
+        crossOrigin: '',
+      },
+      {
         rel: 'stylesheet',
-        href: appCss,
+        href: 'https://fonts.bunny.net/css?family=crimson-pro:200,300,400,500,600,700,800,900|geist-mono:400,600|inter:200,300,400,500,600,700,800,900&display=swap',
+      },
+      {
+        rel: 'preload',
+        as: 'font',
+        type: 'font/woff2',
+        href: 'https://fonts.bunny.net/inter/files/inter-latin-400-normal.woff2',
+        crossOrigin: '',
+        fetchPriority: 'high',
+      },
+      {
+        rel: 'preload',
+        as: 'font',
+        type: 'font/woff2',
+        href: 'https://fonts.bunny.net/inter/files/inter-latin-700-normal.woff2',
+        crossOrigin: '',
+      },
+      {
+        rel: 'preload',
+        as: 'font',
+        type: 'font/woff2',
+        href: 'https://fonts.bunny.net/crimson-pro/files/crimson-pro-latin-400-normal.woff2',
+        crossOrigin: '',
       },
       {
         rel: 'icon',
@@ -64,11 +91,6 @@ function RootDocument() {
   return (
     <html lang={envClient.VITE_LANGUAGE} suppressHydrationWarning>
       <head>
-        <link rel="preconnect" href="https://fonts.bunny.net" />
-        <link
-          href="https://fonts.bunny.net/css?family=crimson-pro:200,300,400,500,600,700,800,900|geist-mono:400,600|inter:200,300,400,500,600,700,800,900&display=swap"
-          rel="stylesheet"
-        />
         <HeadContent />
       </head>
       <body
