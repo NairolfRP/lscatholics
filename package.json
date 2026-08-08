@@ -31,7 +31,7 @@
         "preview": "vite preview",
         "test": "vitest --exclude '**/*.bench.*'",
         "pretest:e2e": "rm -f tmp/e2e.db*",
-        "test:e2e": "playwright test --headed",
+        "test:e2e": "playwright test",
         "posttest:e2e": "rm -f tmp/e2e.db*",
         "bench": "vitest bench --run --project bench",
         "lint": "oxlint --type-aware --disable-nested-config && eslint",
