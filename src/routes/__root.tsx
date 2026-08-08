@@ -1,8 +1,6 @@
-import { TanStackDevtools } from '@tanstack/react-devtools'
-import { formDevtoolsPlugin } from '@tanstack/react-form-devtools'
+import { lazy, Suspense } from 'react'
 import type { QueryClient } from '@tanstack/react-query'
 import { createRootRouteWithContext, HeadContent, Outlet, Scripts } from '@tanstack/react-router'
-import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/react'
 import { envClient } from '#/config/env-client'
@@ -10,8 +8,15 @@ import ScrollToTopButton from '#/shared/components/scroll-to-top'
 import { Toaster } from '#/shared/components/ui/toast'
 import { ThemeProvider } from '#/shared/providers/theme-provider'
 import { pageMetadata } from '#/utils/seo'
-import TanStackQueryDevtools from '../shared/integrations/tanstack-query/devtools'
 import appCss from '../styles/globals.css?url'
+
+const LazyAppDevtools = import.meta.env.DEV
+  ? lazy(() =>
+      import('#shared/components/app-devtools').then((m) => ({
+        default: m.AppDevtools,
+      }))
+    )
+  : null
 
 interface RouterContext {
   queryClient: QueryClient
@@ -75,20 +80,10 @@ function RootDocument() {
           <ScrollToTopButton />
           <Toaster />
         </ThemeProvider>
-        {import.meta.env.DEV && (
-          <TanStackDevtools
-            config={{
-              position: 'bottom-left',
-            }}
-            plugins={[
-              {
-                name: 'Tanstack Router',
-                render: <TanStackRouterDevtoolsPanel />,
-              },
-              TanStackQueryDevtools,
-              formDevtoolsPlugin(),
-            ]}
-          />
+        {LazyAppDevtools && (
+          <Suspense fallback={null}>
+            <LazyAppDevtools />
+          </Suspense>
         )}
         <Scripts />
         <Analytics debug={false} />
