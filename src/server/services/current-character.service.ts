@@ -74,7 +74,11 @@ export async function getCurrentCharacter({
     const currentCharacterIdFromCookie = getCookie(CURRENT_CHARACTER_COOKIE_NAME)
 
     if (!currentCharacterIdFromCookie) {
-      return userCharacters[0]
+      if (!withAllCharacters) {
+        return userCharacters[0]
+      }
+
+      return { currentCharacter: userCharacters[0], characters: userCharacters }
     }
 
     const currentCharacter = userCharacters.find(
@@ -84,7 +88,12 @@ export async function getCurrentCharacter({
     const isValidCharacter = !!currentCharacter
     if (!isValidCharacter) {
       deleteCookie(CURRENT_CHARACTER_COOKIE_NAME)
-      return userCharacters[0]
+
+      if (!withAllCharacters) {
+        return userCharacters[0]
+      }
+
+      return { currentCharacter: userCharacters[0], characters: userCharacters }
     }
 
     if (!withAllCharacters) {
