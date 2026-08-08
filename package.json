@@ -25,9 +25,9 @@
         "#shared/*": "./src/shared/*"
     },
     "scripts": {
-        "dev": "dotenv -e .env.local -- sh -c \"NODE_OPTIONS='--import ./instrument.server.mjs' vite --port 3000\"",
+        "dev": "dotenv -e .env.local -- sh -c \"vite --port 3000\"",
         "generate-routes": "tsr generate",
-        "build": "vite build && cp instrument.server.mjs .output/server",
+        "build": "vite build",
         "preview": "vite preview",
         "test": "vitest --exclude '**/*.bench.*'",
         "pretest:e2e": "rm -f tmp/e2e.db*",
@@ -38,7 +38,7 @@
         "format": "oxfmt",
         "check": "oxfmt --check",
         "typecheck": "tsc --noEmit",
-        "start": "node --import ./.output/server/instrument.server.mjs .output/server/index.mjs",
+        "start": "node .output/server/index.mjs",
         "dev:seed": "tsx --env-file=.env.local scripts/dev-seed.ts",
         "simulate:webhook": "tsx --env-file=.env.local scripts/simulate-fleeca-webhook.ts",
         "db:dev": "turso dev --db-file tmp/dev.db",
