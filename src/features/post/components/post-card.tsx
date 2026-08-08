@@ -51,7 +51,7 @@ export default function PostCard({
               />
             </div>
           )}
-          <CardHeader className="gap-3">
+          <CardHeader className="flex flex-1 flex-col gap-3">
             <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
               <Badge variant="secondary" className="uppercase">
                 {category}
