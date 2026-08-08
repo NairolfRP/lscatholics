@@ -17,7 +17,7 @@ jobs:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK_URL }}
           VERSION: ${{ github.event.release.tag_name }}
           NOTES: ${{ github.event.release.body }}
-          FOOTER: "archls.infos.st · Un bug ou un commentaire sur l'application ? N'hésite pas à le signaler à @nairolf.rp."
+          FOOTER: "lscatholics.vercel.app · Un bug ou un commentaire sur l'application ? N'hésite pas à le signaler à @nairolf.rp."
         run: |
           jq -n \
             --arg version "$VERSION" \
@@ -27,11 +27,11 @@ jobs:
               embeds: [{
                 author: {
                   name: "LS Catholics",
-                  url: "https://archls.infos.st",
+                  url: "https://lscatholics.vercel.app",
                   icon_url: "https://i.imgur.com/zkPlrIe.png"
                 },
                 title: ("📋 Mise à jour " + $version),
-                url: "https://archls.infos.st",
+                url: "https://lscatholics.vercel.app",
                 description: $notes,
                 color: 16766720,
                 footer: { text: $footer },

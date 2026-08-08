@@ -47,13 +47,18 @@ export const auth = betterAuth({
           clientId: env.GTAW_OAUTH_CLIENT_ID,
           clientSecret: env.GTAW_OAUTH_CLIENT_SECRET,
           server: env.GTAW_SERVER,
-          redirectURI: 'https://archls.infos.st/api/auth/callback/gtaw',
+          redirectURI: 'https://lscatholics.vercel.app/api/auth/oauth2/callback/gtaw',
           overrideUserInfoOnSignIn: true,
         }),
       ],
     }),
     ...(isProd
-      ? [oAuthProxy({ productionURL: 'https://archls.infos.st', secret: env.OAUTH_PROXY_SECRET })]
+      ? [
+          oAuthProxy({
+            productionURL: 'https://lscatholics.vercel.app',
+            secret: env.OAUTH_PROXY_SECRET,
+          }),
+        ]
       : []),
     ...(isDev ? [openAPI()] : []),
     ...(isTest ? [testUtils()] : []),

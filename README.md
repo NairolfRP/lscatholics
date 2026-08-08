@@ -50,7 +50,7 @@ This project is built with the following technologies:
 
 ## 🔗 Links
 
-- **Hosted application**: Soon
+- **Hosted application**: https://lscatholics.vercel.app
 - **Project Repository**: [https://github.com/NairolfRP/lscatholics](https://github.com/NairolfRP/lscatholics)
 
 ## 📜 License
@@ -65,8 +65,8 @@ Feel free to contribute and help improve the roleplay experience! ✝️
 [gh-workflow-url]: https://github.com/nairolfrp/lscatholics/actions/workflows/test.yml
 [codspeed-image]: https://img.shields.io/endpoint?url=https://codspeed.io/badge.json&style=for-the-badge
 [codspeed-url]: https://app.codspeed.io/NairolfRP/lscatholics-start?utm_source=badge
-[website-image]: https://img.shields.io/website?url=https%3A%2F%2Farchls.infos.st%2F&style=for-the-badge
-[website-url]: https://archls.infos.st/
+[website-image]: https://img.shields.io/website?url=https://lscatholics.vercel.app&style=for-the-badge
+[website-url]: https://lscatholics.vercel.app/
 [release-image]: https://img.shields.io/github/v/release/nairolfrp/lscatholics?style=for-the-badge
 [release-url]: https://github.com/NairolfRP/lscatholics/releases
 [license-image]: https://img.shields.io/github/license/nairolfrp/lscatholics?style=for-the-badge
