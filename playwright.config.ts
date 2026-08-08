@@ -68,7 +68,7 @@ export default defineConfig({
   /* Run your local dev server before starting the tests */
   webServer: [
     {
-      command: 'turso dev --db-file tmp/e2e.db --port 8080',
+      command: 'mkdir -p tmp && turso dev --db-file tmp/e2e.db --port 8080',
       port: 8080,
       reuseExistingServer: !process.env.CI,
       stdout: 'pipe',

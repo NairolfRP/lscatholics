@@ -35,7 +35,6 @@ jobs:
         run: bun run check
 
       - name: Install Playwright deps
-        if: steps.playwright-cache.outputs.cache-hit == 'true'
         run: bunx playwright install --with-deps
 
       - name: Install Turso CLI
