@@ -1,4 +1,5 @@
-import pino, { Logger as PinoLogger, stdSerializers } from 'pino'
+import type { Logger as PinoLogger } from 'pino'
+import pino, { stdSerializers } from 'pino'
 import { env } from '#/config/env.server'
 import { inDev } from '#server/services/app.service.ts'
 
