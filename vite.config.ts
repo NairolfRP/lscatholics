@@ -79,13 +79,13 @@ const config = defineConfig(({ mode }) => {
       babel({ presets: [reactCompilerPreset()] }),
       ...(shouldUseSentryPlugin
         ? [
-          sentryTanstackStart({
-            org: env.VITE_SENTRY_ORG,
-            project: env.VITE_SENTRY_PROJECT,
-            authToken: process.env.SENTRY_AUTH_TOKEN,
-            telemetry: false,
-          }),
-        ]
+            sentryTanstackStart({
+              org: env.VITE_SENTRY_ORG,
+              project: env.VITE_SENTRY_PROJECT,
+              authToken: process.env.SENTRY_AUTH_TOKEN,
+              telemetry: false,
+            }),
+          ]
         : []),
     ],
   }
