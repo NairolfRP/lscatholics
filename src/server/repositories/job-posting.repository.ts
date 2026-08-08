@@ -1,5 +1,5 @@
 import type { AnySQLiteColumn } from 'drizzle-orm/sqlite-core'
-import { and, count, eq, gte, or, sql } from 'drizzle-orm'
+import { and, count, eq, gte, isNull, or, sql } from 'drizzle-orm'
 import { CAREERS_PAGINATION_LIMIT } from '#/features/job-posting/constants/job-posting.constants.ts'
 import { db } from '#server/db'
 import { jobPostings } from '#server/db/schema/job-posting-schema'
@@ -155,7 +155,7 @@ class JobPostingRepository extends BaseRepository<typeof jobPostings> {
   }
 
   #notExpiredJobOpeningSQLFilter() {
-    return gte(this.schema.expiresAt, new Date())
+    return or(isNull(this.schema.expiresAt), gte(this.schema.expiresAt, new Date()))
   }
 }
 
