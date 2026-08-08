@@ -11,7 +11,7 @@ export const Route = createFileRoute('/_app/charities/program/$slug')({
       throw notFound()
     }
 
-    return program
+    return { title: program.title, description: program.description }
   },
   head: ({ loaderData }) => ({
     meta: loaderData
@@ -20,11 +20,5 @@ export const Route = createFileRoute('/_app/charities/program/$slug')({
         })
       : [],
   }),
-  component: ProgramShowRouteComponent,
+  component: ProgramShowPage,
 })
-
-function ProgramShowRouteComponent() {
-  const program = Route.useLoaderData()
-
-  return <ProgramShowPage program={program} />
-}

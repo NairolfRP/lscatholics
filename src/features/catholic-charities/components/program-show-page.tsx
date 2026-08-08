@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import { Link } from '@tanstack/react-router'
+import { Link, useParams } from '@tanstack/react-router'
 import {
   ArrowLeftIcon,
   ArrowRightIcon,
@@ -8,7 +8,10 @@ import {
   MapPinIcon,
   PhoneIcon,
 } from 'lucide-react'
-import { programs } from '#/features/catholic-charities/constants/programs.constants'
+import {
+  getProgramBySlug,
+  programs,
+} from '#/features/catholic-charities/constants/programs.constants'
 import type { ProgramDetail } from '#/features/catholic-charities/types/charities.types'
 import { Badge } from '#shared/components/ui/badge'
 import { buttonVariants } from '#shared/components/ui/button'
@@ -20,7 +23,10 @@ const sections = [
   { id: 'contact', label: 'Nous contacter' },
 ] as const
 
-export function ProgramShowPage({ program }: { program: ProgramDetail }) {
+export function ProgramShowPage() {
+  const { slug } = useParams({ from: '/_app/charities/program/$slug' })
+  const program = getProgramBySlug(slug)!
+
   const Icon = program.icon
   const currentIndex = programs.findIndex((p) => p.slug === program.slug)
   const previous = currentIndex > 0 ? programs[currentIndex - 1] : undefined
