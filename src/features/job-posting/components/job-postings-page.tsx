@@ -36,6 +36,9 @@ export default function JobPostingsPage() {
 
   const jobs = data.jobPostings
   const totalPages = Math.ceil(data.total / CAREERS_PAGINATION_LIMIT)
+  const hasActiveFilters = Boolean(
+    routeSearch.search?.trim() || routeSearch.department || routeSearch.type.length > 0
+  )
 
   const handleInputSearch = (text: string) => {
     const trimmed = text.trim()
@@ -186,9 +189,11 @@ export default function JobPostingsPage() {
                   <p className="text-lg font-medium text-muted-foreground">
                     Aucune offre ne correspond à vos critères.
                   </p>
-                  <Button variant="link" onClick={() => handleClearFilters()}>
-                    Réinitialiser les filtres
-                  </Button>
+                  {hasActiveFilters && (
+                    <Button variant="link" onClick={() => handleClearFilters()}>
+                      Réinitialiser les filtres
+                    </Button>
+                  )}
                 </div>
               )}
 
