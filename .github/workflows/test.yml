@@ -41,7 +41,7 @@ jobs:
       - name: Install Turso CLI
         run: |
           curl -sSfL https://get.tur.so/install.sh | bash
-          echo "$HOME/.turso/bin" >> $GITHUB_PATH
+          echo "$HOME/.turso" >> $GITHUB_PATH
 
       - name: Testing (unit & browser)
         run: bun run test
