@@ -1,6 +1,6 @@
-import type { Logger as PinoLogger } from 'pino'
-import pino, { stdSerializers } from 'pino'
+import pino, { Logger as PinoLogger, stdSerializers } from 'pino'
 import { env } from '#/config/env.server'
+import { inDev } from '#server/services/app.service.ts'
 
 export interface LogContext {
   [key: string]: unknown
@@ -25,11 +25,9 @@ export class Logger implements ILogger {
   constructor(private logger: PinoLogger = Logger.createRootLogger()) {}
 
   private static createRootLogger(): PinoLogger {
-    const isDev = env.NODE_ENV !== 'production'
-
     return pino({
       name: 'app-logger',
-      level: env.LOG_LEVEL || (isDev ? 'debug' : 'info'),
+      level: env.LOG_LEVEL || (inDev ? 'debug' : 'info'),
       serializers: {
         err: stdSerializers.err,
         req: stdSerializers.req,
@@ -46,10 +44,14 @@ export class Logger implements ILogger {
         censor: '[REDACTED]',
       },
 
-      transport: {
-        target: 'pino-pretty',
-        options: { colorize: true, translateTime: 'SYS:standard' },
-      },
+      ...(inDev
+        ? {
+            transport: {
+              target: 'pino-pretty',
+              options: { colorize: true, translateTime: 'SYS:standard' },
+            },
+          }
+        : {}),
     })
   }
 

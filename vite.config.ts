@@ -58,7 +58,7 @@ const config = defineConfig(({ mode }) => {
       nitro({
         experimental: { tasks: true },
         rolldownConfig: {
-          external: [/^@sentry\//, 'pino', 'pino-pretty'],
+          external: [/^@sentry\//],
         },
         tasks: {
           cleanup: {
