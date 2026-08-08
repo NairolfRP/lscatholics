@@ -86,6 +86,7 @@ const config = defineConfig(({ mode }) => {
             org: env.VITE_SENTRY_ORG,
             project: env.VITE_SENTRY_PROJECT,
             authToken: process.env.SENTRY_AUTH_TOKEN,
+            telemetry: false,
           }),
         ]
         : []),
