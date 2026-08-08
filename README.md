@@ -63,8 +63,8 @@ Feel free to contribute and help improve the roleplay experience! ✝️
 
 [gh-workflow-image]: https://img.shields.io/github/check-runs/nairolfrp/lscatholics/prod?style=for-the-badge
 [gh-workflow-url]: https://github.com/nairolfrp/lscatholics/actions/workflows/test.yml
-[codspeed-image]: https://img.shields.io/endpoint?url=https://codspeed.io/badge.json&style=for-the-badge
-[codspeed-url]: https://app.codspeed.io/NairolfRP/lscatholics-start?utm_source=badge
+[codspeed-image]: https://img.shields.io/endpoint?url=https://app.codspeed.io//badge.json&style=for-the-badge
+[codspeed-url]: https://app.codspeed.io//NairolfRP/lscatholics?utm_source=badge
 [website-image]: https://img.shields.io/website?url=https://lscatholics.vercel.app&style=for-the-badge
 [website-url]: https://lscatholics.vercel.app/
 [release-image]: https://img.shields.io/github/v/release/nairolfrp/lscatholics?style=for-the-badge
