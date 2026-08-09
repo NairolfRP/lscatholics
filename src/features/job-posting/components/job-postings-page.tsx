@@ -37,7 +37,7 @@ export default function JobPostingsPage() {
   const jobs = data.jobPostings
   const totalPages = Math.ceil(data.total / CAREERS_PAGINATION_LIMIT)
   const hasActiveFilters = Boolean(
-    routeSearch.search?.trim() || routeSearch.department || routeSearch.type.length > 0
+    routeSearch.search.trim() || routeSearch.department || routeSearch.type.length > 0
   )
 
   const handleInputSearch = (text: string) => {
