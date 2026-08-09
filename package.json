@@ -69,7 +69,7 @@
         "@tanstack/router-plugin": "^1.168.27",
         "@unpic/react": "^1.0.2",
         "@vercel/analytics": "^2.0.1",
-        "@vercel/functions": "^3.8.0",
+        "@vercel/functions": "^3.9.1",
         "@vercel/speed-insights": "^2.0.0",
         "better-auth": "^1.6.26",
         "class-variance-authority": "^0.7.1",
@@ -142,5 +142,5 @@
     "engines": {
         "node": ">=24.0.0"
     },
-    "packageManager": "bun@1.3.14"
+    "packageManager": "pnpm@11.20.0+sha512.9a6f330a95b66446ea088faf1521405a8a01f07fde7124cc9958dfed52d4bb436737e65b08f85f37b46fcba375092558ac51262b816844b22f63406ed166bfee"
 }

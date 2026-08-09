@@ -23,7 +23,7 @@ This project is built with the following technologies:
 
 - [Node.js](https://nodejs.org) ≥ 24.x
 - [Turso CLI](https://docs.turso.tech/cli/introduction)
-- [Bun Package Manager](https://bun.com/docs/pm/)
+- [pnpm](https://pnpm.io/) ≥ 11.x
 
 ### Setup
 
@@ -34,18 +34,18 @@ This project is built with the following technologies:
    ```
 2. Install dependencies:
    ```sh
-   bun install
+   pnpm install
    ```
 3. Configure environment variables:
    - Copy `.env.example` to `.env`
    - Set up database credentials and other necessary configurations
 4. Run database migrations and seeders:
    ```sh
-   bun run db:migrate && bun run db:seed
+   pnpm run db:migrate && pnpm run db:seed
    ```
 5. Start the development server:
    ```sh
-   bun run dev
+   pnpm run dev
    ```
 
 ## 🔗 Links

@@ -42,7 +42,7 @@ function parseArgs(argv: string[]): ParsedArgs {
 
 function printUsage() {
   console.log(
-    'Usage: bun run simulate:webhook -- --id <payment_id> --status payment_successful|payment_failed|pending [--amount <number>] [--url <base_url>]'
+    'Usage: pnpm run simulate:webhook -- --id <payment_id> --status payment_successful|payment_failed|pending [--amount <number>] [--url <base_url>]'
   )
 }
 

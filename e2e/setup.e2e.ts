@@ -5,7 +5,7 @@ export default function globalSetup(_config: FullConfig) {
   console.log('⏳ Proceed database synchronisation...')
 
   try {
-    execSync('bun run db:push', {
+    execSync('pnpm run db:push', {
       stdio: 'inherit',
       env: process.env,
     })

@@ -1,0 +1,19 @@
+engineStrict: true
+minimumReleaseAge: 1440 # 1 day
+autoInstallPeers: true
+strictPeerDependencies: false
+peerDependencyRules:
+  allowAny:
+    - vite
+    - vitest
+  allowedVersions:
+    vite: '*'
+    vitest: '*'
+minimumReleaseAgeExclude:
+  - '@types/node'
+  - 'typescript'
+  - 'react'
+  - 'react-dom'
+allowBuilds:
+  '@sentry/cli': true
+  esbuild: true

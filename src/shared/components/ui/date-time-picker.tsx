@@ -4,7 +4,7 @@
  * DateTimePicker — shadcn/ui (Base UI) component
  *
  * Dependencies:
- *   bunx shadcn@latest add popover calendar button input label
+ *   pnpx shadcn@latest add popover calendar button input label
  *   date-fns (bundled with react-day-picker)
  *
  * Usage:
