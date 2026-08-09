@@ -7,7 +7,7 @@ import { pageMetadata } from '#/utils/seo'
 import { Alert, AlertDescription } from '#shared/components/ui/alert.tsx'
 import { Card, CardContent, CardHeader, CardTitle } from '#shared/components/ui/card.tsx'
 
-const lastUpdated = '27 juillet 2025'
+const lastUpdated = '9 août 2026'
 
 export const Route = createFileRoute('/_app/privacy')({
   head: () => ({
@@ -284,7 +284,7 @@ function RouteComponent() {
             <p>Nous utilisons les outils suivants pour améliorer l'expérience utilisateur :</p>
 
             <Typography as="h3" variant="h4" className="mt-6">
-              8.1 Vercel Analytics
+              6.1 Vercel Analytics
             </Typography>
             <p>
               Vercel Analytics est un outil d'analyse respectueux de la vie privée qui ne collecte{' '}
@@ -304,7 +304,7 @@ function RouteComponent() {
             </p>
 
             <Typography as="h3" variant="h4" className="mt-6">
-              8.2 Vercel Speed Insights
+              6.2 Vercel Speed Insights
             </Typography>
             <p>
               Vercel Speed Insights mesure les performances de l'application (Web Vitals). Comme
