@@ -23,7 +23,8 @@ export const helpCards: HelpCard[] = [
     title: "Demander de l'aide",
     body: 'Vous traversez une période difficile ? Nos équipes sont là, sans jugement, avec discrétion.',
     cta: 'Nous contacter',
-    to: '#contact',
+    to: '.',
+    hash: 'contact',
     accent: 'bg-catholic-red',
   },
 ]

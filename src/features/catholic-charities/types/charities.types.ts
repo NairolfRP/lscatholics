@@ -26,5 +26,6 @@ export type HelpCard = {
   body: string
   cta: string
   to: string
+  hash?: string
   accent: string
 }

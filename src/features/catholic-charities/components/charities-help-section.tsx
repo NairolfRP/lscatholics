@@ -1,3 +1,4 @@
+import { Link } from '@tanstack/react-router'
 import { ArrowRightIcon } from 'lucide-react'
 import { helpCards } from '#/features/catholic-charities/constants/charities.constants'
 import { buttonVariants } from '#shared/components/ui/button'
@@ -18,7 +19,7 @@ export function CharitiesHelpSection() {
           <Ornament className="mt-6 text-catholic-red dark:text-red-400" />
         </div>
         <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-          {helpCards.map(({ icon: Icon, title, body, cta, to, accent }) => (
+          {helpCards.map(({ icon: Icon, title, body, cta, to, hash, accent }) => (
             <article
               key={title}
               className="flex flex-col overflow-hidden rounded-2xl bg-background ring-1 ring-foreground/10 transition hover:-translate-y-1 hover:shadow-xl"
@@ -30,13 +31,15 @@ export function CharitiesHelpSection() {
                 </span>
                 <h3 className="text-2xl font-bold text-foreground">{title}</h3>
                 <p className="flex-1 leading-relaxed text-muted-foreground">{body}</p>
-                <a
-                  href={to}
+                <Link
+                  to={to}
+                  hash={hash}
+                  activeOptions={{ includeHash: !!hash?.length }}
                   className={buttonVariants({ className: 'mt-2 w-full gap-2 uppercase' })}
                 >
                   {cta}
                   <ArrowRightIcon className="size-4" />
-                </a>
+                </Link>
               </div>
             </article>
           ))}
