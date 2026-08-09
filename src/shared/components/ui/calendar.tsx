@@ -113,12 +113,7 @@ function Calendar({
       components={{
         Root: ({ className: rootClassName, rootRef, ...rootProps }) => {
           return (
-            <div
-              data-slot="calendar"
-              ref={rootRef as React.Ref<HTMLDivElement>}
-              className={cn(rootClassName)}
-              {...rootProps}
-            />
+            <div data-slot="calendar" ref={rootRef} className={cn(rootClassName)} {...rootProps} />
           )
         },
         Chevron: ({ className: chevronClassName, orientation, ...chevronProps }) => {
