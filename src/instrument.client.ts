@@ -9,8 +9,8 @@ if (!sentryDSN) {
     enabled: import.meta.env.PROD,
     dsn: sentryDSN,
     enableLogs: true,
-    tracesSampleRate: 1.0,
-    replaysSessionSampleRate: 1.0,
+    tracesSampleRate: 0.1,
+    replaysSessionSampleRate: 0.1,
     replaysOnErrorSampleRate: 1.0,
     tracePropagationTargets: [/^https:\/\/.*\.vercel\.app/],
   })
