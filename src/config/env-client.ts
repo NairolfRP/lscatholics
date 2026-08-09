@@ -9,9 +9,6 @@ export const envClient = createEnv({
   clientPrefix: 'VITE_',
 
   client: {
-    VITE_SENTRY_DSN: z.url(),
-    VITE_SENTRY_ORG: z.string(),
-    VITE_SENTRY_PROJECT: z.string(),
     VITE_APP_TITLE: z.string().min(1).optional().default('LS Catholics'),
     VITE_APP_URL: z.url(),
     VITE_LANGUAGE: z.string().min(2).optional().default('en'),

@@ -1,7 +1,6 @@
 import { createRouter as createTanStackRouter } from '@tanstack/react-router'
 import { setupRouterSsrQueryIntegration } from '@tanstack/react-router-ssr-query'
 import { getGlobalStartContext } from '@tanstack/react-start'
-import * as Sentry from '@sentry/tanstackstart-react'
 import { routeTree } from './routeTree.gen'
 import { DefaultErrorComponent } from './shared/components/ui/fallbacks/default-error'
 import { DefaultNotFound } from './shared/components/ui/fallbacks/default-not-found'
@@ -31,10 +30,6 @@ export function getRouter() {
   })
 
   setupRouterSsrQueryIntegration({ router, queryClient: context.queryClient })
-
-  if (import.meta.env.PROD && !router.isServer) {
-    Sentry.addIntegration(Sentry.tanstackRouterBrowserTracingIntegration(router))
-  }
 
   return router
 }

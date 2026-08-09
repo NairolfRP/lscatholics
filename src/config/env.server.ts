@@ -7,7 +7,6 @@ export const env = createEnv({
     LOG_LEVEL: z.enum(['fatal', 'error', 'warn', 'info', 'debug', 'trace']).optional(),
     CRON_SECRET:
       process.env.NODE_ENV === 'production' ? z.string().min(64) : z.string().min(64).optional(),
-    SENTRY_AUTH_TOKEN: z.string().optional(),
     DATABASE_URL: z.url().or(z.literal(':memory:')),
     DATABASE_AUTH_TOKEN: z.string().optional(),
     BETTER_AUTH_URL: z.url(),

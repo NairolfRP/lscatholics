@@ -2,17 +2,14 @@ import { fileURLToPath } from 'node:url'
 import { devtools } from '@tanstack/devtools-vite'
 import { tanstackStart } from '@tanstack/react-start/plugin/vite'
 import babel from '@rolldown/plugin-babel'
-import { sentryTanstackStart } from '@sentry/tanstackstart-react/vite'
 import tailwindcss from '@tailwindcss/vite'
 import viteReact, { reactCompilerPreset } from '@vitejs/plugin-react'
 import { nitro } from 'nitro/vite'
 import { defineConfig, loadEnv } from 'vite'
 
 const isDev = process.env.NODE_ENV !== 'production'
-const isProd = process.env.NODE_ENV === 'production'
 
-const shouldUseSentryPlugin = isProd && Boolean(process.env.SENTRY_AUTH_TOKEN)
-const shouldBuildSourcemaps = shouldUseSentryPlugin || process.env.BUILD_SOURCEMAPS === 'true'
+const shouldBuildSourcemaps = process.env.BUILD_SOURCEMAPS === 'true'
 
 const config = defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
@@ -77,17 +74,6 @@ const config = defineConfig(({ mode }) => {
       }),
       viteReact(),
       babel({ presets: [reactCompilerPreset()] }),
-      ...(shouldUseSentryPlugin
-        ? [
-            sentryTanstackStart({
-              org: process.env.VITE_SENTRY_ORG,
-              project: process.env.VITE_SENTRY_PROJECT,
-              authToken: process.env.SENTRY_AUTH_TOKEN,
-              autoInstrumentMiddleware: true,
-              telemetry: false,
-            }),
-          ]
-        : []),
     ],
   }
 })

@@ -15,5 +15,4 @@ minimumReleaseAgeExclude:
   - 'react'
   - 'react-dom'
 allowBuilds:
-  '@sentry/cli': true
   esbuild: true
