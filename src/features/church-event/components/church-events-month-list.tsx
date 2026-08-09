@@ -132,8 +132,12 @@ function ChurchEventCard({ event }: { event: ChurchEvent }) {
 }
 
 function ChurchEventsMonthListEmpty() {
+  const { month, year } = useSearch({ from: '/_app/events' })
   const navigate = useNavigate({ from: '/events' })
   const now = new Date()
+
+  const currentYearMonth = { year: now.getFullYear(), month: now.getMonth() + 1 }
+  const isCurrentMonth = year === currentYearMonth.year && month === currentYearMonth.month
 
   return (
     <div className="flex flex-col items-center gap-5 rounded-2xl border border-dashed py-16 text-center">
@@ -147,11 +151,15 @@ function ChurchEventsMonthListEmpty() {
           parcourez les mois voisins.
         </p>
       </div>
-      <Button
-        onClick={() => navigate({ search: { year: now.getFullYear(), month: now.getMonth() + 1 } })}
-      >
-        <CalendarDaysIcon /> Voir le mois en cours
-      </Button>
+      {!isCurrentMonth && (
+        <Button
+          onClick={() =>
+            navigate({ search: { year: now.getFullYear(), month: now.getMonth() + 1 } })
+          }
+        >
+          <CalendarDaysIcon /> Voir le mois en cours
+        </Button>
+      )}
     </div>
   )
 }
