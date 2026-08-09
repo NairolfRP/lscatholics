@@ -28,6 +28,7 @@
         "dev": "dotenv -e .env.local -- sh -c \"vite --port 3000\"",
         "generate-routes": "tsr generate",
         "build": "vite build",
+        "vercel-build": "vite build && ([ \"$VERCEL_ENV\" != \"production\" ] || drizzle-kit migrate)",
         "preview": "vite preview",
         "test": "vitest --exclude '**/*.bench.*'",
         "pretest:e2e": "rm -f tmp/e2e.db*",
