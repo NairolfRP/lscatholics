@@ -1,5 +1,6 @@
-import { relations, sql } from 'drizzle-orm'
+import { relations } from 'drizzle-orm'
 import { index, integer, sqliteTable, text, unique } from 'drizzle-orm/sqlite-core'
+import { timestamps } from '#server/db/helpers.ts'
 import { jobPostings } from '#server/db/schema/job-posting-schema.ts'
 import { churchEvents } from './church-event-schema'
 import { posts } from './post-schema'
@@ -10,13 +11,7 @@ export const users = sqliteTable('users', {
   email: text('email').notNull().unique(),
   emailVerified: integer('email_verified', { mode: 'boolean' }).default(false).notNull(),
   image: text('image'),
-  createdAt: integer('created_at', { mode: 'timestamp_ms' })
-    .default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
-    .notNull(),
-  updatedAt: integer('updated_at', { mode: 'timestamp_ms' })
-    .default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
-    .$onUpdate(() => /* @__PURE__ */ new Date())
-    .notNull(),
+  ...timestamps(),
   role: text('role').notNull(),
   banned: integer('banned', { mode: 'boolean' }).notNull(),
   banReason: text('ban_reason'),
@@ -29,12 +24,7 @@ export const sessions = sqliteTable(
     id: text('id').primaryKey(),
     expiresAt: integer('expires_at', { mode: 'timestamp_ms' }).notNull(),
     token: text('token').notNull().unique(),
-    createdAt: integer('created_at', { mode: 'timestamp_ms' })
-      .default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
-      .notNull(),
-    updatedAt: integer('updated_at', { mode: 'timestamp_ms' })
-      .$onUpdate(() => /* @__PURE__ */ new Date())
-      .notNull(),
+    ...timestamps(),
     ipAddress: text('ip_address'),
     userAgent: text('user_agent'),
     userId: text('user_id')
@@ -65,12 +55,7 @@ export const accounts = sqliteTable(
     }),
     scope: text('scope'),
     password: text('password'),
-    createdAt: integer('created_at', { mode: 'timestamp_ms' })
-      .default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
-      .notNull(),
-    updatedAt: integer('updated_at', { mode: 'timestamp_ms' })
-      .$onUpdate(() => /* @__PURE__ */ new Date())
-      .notNull(),
+    ...timestamps(),
   },
   (table) => [
     index('accounts_user_id_idx').on(table.userId),

@@ -1,5 +1,5 @@
-import { sql } from 'drizzle-orm'
 import { index, integer, sqliteTable, text } from 'drizzle-orm/sqlite-core'
+import { timestamps } from '#server/db/helpers.ts'
 
 export const pendingPayments = sqliteTable(
   'pending_payments',
@@ -10,13 +10,7 @@ export const pendingPayments = sqliteTable(
     mode: integer('mode').notNull().default(0),
     metadata: text('metadata').notNull().default(''),
     expiresAt: integer('expires_at', { mode: 'timestamp_ms' }).notNull(),
-    createdAt: integer('created_at', { mode: 'timestamp_ms' })
-      .default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
-      .notNull(),
-    updatedAt: integer('updated_at', { mode: 'timestamp_ms' })
-      .default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
-      .$onUpdate(() => new Date())
-      .notNull(),
+    ...timestamps(),
   },
   (table) => [index('pending_payments_expires_at_idx').on(table.expiresAt)]
 )

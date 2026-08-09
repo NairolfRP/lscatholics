@@ -1,6 +1,7 @@
 import { relations, sql } from 'drizzle-orm'
 import { index, integer, sqliteTable, text } from 'drizzle-orm/sqlite-core'
 import { users } from '#server/db/schema/auth-schema.ts'
+import { timestamps } from '#server/db/helpers.ts'
 import { DEPARTMENT_VALUES } from '#shared/constants/department.ts'
 import { EMPLOYMENT_TYPE_VALUES } from '#shared/constants/employment.ts'
 
@@ -32,13 +33,7 @@ export const jobPostings = sqliteTable(
     postedAt: integer('posted_at', { mode: 'timestamp_ms' }),
     expiresAt: integer('expires_at', { mode: 'timestamp_ms' }),
 
-    createdAt: integer('created_at', { mode: 'timestamp_ms' })
-      .default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
-      .notNull(),
-    updatedAt: integer('updated_at', { mode: 'timestamp_ms' })
-      .default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
-      .$onUpdate(() => /* @__PURE__ */ new Date())
-      .notNull(),
+    ...timestamps(),
 
     authorId: text('author_id').references(() => users.id, { onDelete: 'set null' }),
   },

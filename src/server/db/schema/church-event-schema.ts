@@ -1,5 +1,6 @@
-import { relations, sql } from 'drizzle-orm'
+import { relations } from 'drizzle-orm'
 import { index, integer, sqliteTable, text } from 'drizzle-orm/sqlite-core'
+import { timestamps } from '#server/db/helpers.ts'
 import { PARISH_VALUES } from '#/shared/constants/parish'
 import { users } from './auth-schema'
 
@@ -21,13 +22,7 @@ export const churchEvents = sqliteTable(
     maxParticipants: integer('max_participants'),
     startDate: integer('start_date', { mode: 'timestamp_ms' }).notNull(),
     endDate: integer('end_date', { mode: 'timestamp_ms' }),
-    createdAt: integer('created_at', { mode: 'timestamp_ms' })
-      .default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
-      .notNull(),
-    updatedAt: integer('updated_at', { mode: 'timestamp_ms' })
-      .default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
-      .$onUpdate(() => /* @__PURE__ */ new Date())
-      .notNull(),
+    ...timestamps(),
     authorId: text('author_id').references(() => users.id, { onDelete: 'set null' }),
   },
   (table) => [
