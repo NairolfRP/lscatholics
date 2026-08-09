@@ -1,8 +1,8 @@
 import { z } from 'zod'
 import { DEPARTMENT_VALUES } from '#shared/constants/department.ts'
 import { EMPLOYMENT_TYPE_VALUES } from '#shared/constants/employment.ts'
-import { slugSchema } from '#shared/schemas/slug.schema.ts'
 import { pageSchema } from '#shared/schemas/pagination.schema.ts'
+import { slugSchema } from '#shared/schemas/slug.schema.ts'
 import { emptyToNull } from '#shared/schemas/utils.schema.ts'
 
 export const jobPostingsSearchSchema = z.object({

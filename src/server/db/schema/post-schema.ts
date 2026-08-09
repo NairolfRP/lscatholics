@@ -1,7 +1,7 @@
 import { relations, sql } from 'drizzle-orm'
 import { index, integer, sqliteTable, text } from 'drizzle-orm/sqlite-core'
-import { timestamps } from '#server/db/helpers.ts'
 import { POST_STATUS, POST_STATUS_VALUES } from '#/shared/constants/post-status'
+import { timestamps } from '#server/db/helpers.ts'
 import { users } from './auth-schema'
 
 export const posts = sqliteTable(

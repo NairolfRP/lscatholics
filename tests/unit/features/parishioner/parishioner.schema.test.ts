@@ -122,9 +122,9 @@ describe('parishionerSchema', () => {
   })
 
   it('rejects a message longer than 300 characters', () => {
-    expect(() =>
-      parishionerSchema.parse({ ...validInput, message: 'a'.repeat(301) })
-    ).toThrow(/ne doit pas faire plus de 300 caractères/)
+    expect(() => parishionerSchema.parse({ ...validInput, message: 'a'.repeat(301) })).toThrow(
+      /ne doit pas faire plus de 300 caractères/
+    )
   })
 
   it('rejects additional information longer than 700 characters', () => {

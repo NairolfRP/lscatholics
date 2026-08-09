@@ -1,6 +1,5 @@
 import { createServerFn } from '@tanstack/react-start'
-import * as volunteerApplicationService
-  from '#/features/volunteers/server/volunteer-application.service'
+import * as volunteerApplicationService from '#/features/volunteers/server/volunteer-application.service'
 import { requireGameMiddleware } from '#/middleware/game.middleware.ts'
 import { looseObjectSchema } from '#shared/schemas/utils.schema.ts'
 

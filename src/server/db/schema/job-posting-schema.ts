@@ -1,7 +1,7 @@
 import { relations, sql } from 'drizzle-orm'
 import { index, integer, sqliteTable, text } from 'drizzle-orm/sqlite-core'
-import { users } from '#server/db/schema/auth-schema.ts'
 import { timestamps } from '#server/db/helpers.ts'
+import { users } from '#server/db/schema/auth-schema.ts'
 import { DEPARTMENT_VALUES } from '#shared/constants/department.ts'
 import { EMPLOYMENT_TYPE_VALUES } from '#shared/constants/employment.ts'
 

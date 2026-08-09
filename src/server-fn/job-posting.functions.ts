@@ -6,8 +6,8 @@ import {
 import { requirePermission } from '#/middleware/permission.middleware'
 import * as jobPostingService from '#server/services/job-posting.service'
 import { getJobPostings, getSingleJobPosting } from '#server/services/job-posting.service'
-import { slugSchema } from '#shared/schemas/slug.schema.ts'
 import { dashboardSearchSchema } from '#shared/schemas/dashboard/search.schema'
+import { slugSchema } from '#shared/schemas/slug.schema.ts'
 import { looseObjectSchema } from '#shared/schemas/utils.schema.ts'
 
 export const getSingleJobPostingFn = createServerFn({ method: 'GET' })

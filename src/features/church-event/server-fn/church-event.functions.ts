@@ -6,8 +6,8 @@ import {
 import * as churchEventService from '#/features/church-event/server/church-event.service.ts'
 import { getChurchEventsByYearMonth } from '#/features/church-event/server/church-event.service.ts'
 import { requirePermission } from '#/middleware/permission.middleware.ts'
-import { slugSchema } from '#shared/schemas/slug.schema.ts'
 import { dashboardSearchSchema } from '#shared/schemas/dashboard/search.schema.ts'
+import { slugSchema } from '#shared/schemas/slug.schema.ts'
 import { looseObjectSchema } from '#shared/schemas/utils.schema.ts'
 
 export const getChurchEventsByYearMonthFn = createServerFn({ method: 'GET' })

@@ -77,9 +77,9 @@ describe('employmentApplicationSchema', () => {
   })
 
   it('rejects an unknown district', () => {
-    expect(() => employmentApplicationSchema.parse({ ...validInput, district: 'atlantis' })).toThrow(
-      'Sélectionnez un district valide.'
-    )
+    expect(() =>
+      employmentApplicationSchema.parse({ ...validInput, district: 'atlantis' })
+    ).toThrow('Sélectionnez un district valide.')
   })
 
   it('rejects a missing firstname', () => {
@@ -146,7 +146,12 @@ describe('employmentApplicationSchema', () => {
     })
 
     expect(result.professionalExperience).toEqual([
-      { isCurrentPosition: true, companyName: 'Los Santos Transport', position: 'Driver', startDate: '2020-01' },
+      {
+        isCurrentPosition: true,
+        companyName: 'Los Santos Transport',
+        position: 'Driver',
+        startDate: '2020-01',
+      },
     ])
   })
 

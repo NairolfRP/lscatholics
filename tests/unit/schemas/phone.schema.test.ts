@@ -15,9 +15,7 @@ describe('phoneSchema', () => {
   })
 
   it('rejects a phone number with fewer than 3 digits', () => {
-    expect(() => phoneSchema.parse('12')).toThrow(
-      'Le numéro doit contenir entre 3 et 8 chiffres.'
-    )
+    expect(() => phoneSchema.parse('12')).toThrow('Le numéro doit contenir entre 3 et 8 chiffres.')
   })
 
   it('rejects a phone number with more than 8 digits', () => {
