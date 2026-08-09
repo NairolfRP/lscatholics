@@ -6,7 +6,7 @@ import {
 import { formatDonationAmount } from '#/features/donate/utils/format.ts'
 import { DISTRICT_VALUES } from '#shared/constants/districts.constants.ts'
 import { ETHNIC_GROUP_VALUES } from '#shared/constants/ethnicity.ts'
-import { emptyToNull } from '#shared/schemas/utils.schema.ts'
+import { emptyToNull, optionalEnumSchema } from '#shared/schemas/utils.schema.ts'
 
 const ORGANIZATION_NAME_MAX = 100
 
@@ -83,22 +83,24 @@ const optionalAddressSchema = z
   .optional()
   .transform((value) => (value ? value : undefined))
 
-const optionalEnumSchema = <const T extends readonly string[]>(values: T) =>
-  z
-    .union([z.enum(values, { error: 'Sélectionnez une réponse valide.' }), z.literal('')])
-    .optional()
-    .transform((value) => (value ? value : undefined))
-
 export const donationSchema = z
   .object({
     amount: amountSchema,
     firstname: nameSchema('prénom'),
     lastname: nameSchema('nom de famille'),
     age: optionalAgeSchema,
-    ethnicity: emptyToNull(optionalEnumSchema(ETHNIC_GROUP_VALUES)),
+    ethnicity: emptyToNull(
+      optionalEnumSchema(ETHNIC_GROUP_VALUES, {
+        errorMessage: 'Sélectionnez une réponse valide.',
+      })
+    ),
     phone: optionalPhoneSchema,
     address: optionalAddressSchema,
-    district: emptyToNull(optionalEnumSchema(DISTRICT_VALUES)),
+    district: emptyToNull(
+      optionalEnumSchema(DISTRICT_VALUES, {
+        errorMessage: 'Sélectionnez une réponse valide.',
+      })
+    ),
     isOrganization: z.boolean(),
     organizationName: z
       .string()

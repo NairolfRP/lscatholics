@@ -8,3 +8,11 @@ export const dashboardSearchSchema = z.object({
 })
 
 export type DashboardSearch = z.infer<typeof dashboardSearchSchema>
+
+export const dashboardFiltersSchema = z.object({
+  search: z.string().default(''),
+  page: z.int().positive().default(1),
+  sortBy: z.string().default('createdAt.desc'),
+})
+
+export type DashboardFilters = z.infer<typeof dashboardFiltersSchema>

@@ -1,5 +1,7 @@
 import { createEnum } from '#shared/lib/enum.ts'
 
+export { GENDER, GENDER_VALUES, genderLabels, genderOptions } from '#shared/constants/gender.ts'
+
 export const [CIVIL_TITLE, CIVIL_TITLE_VALUES] = createEnum({
   MR: 'mr',
   MRS: 'mrs',
@@ -66,21 +68,6 @@ export const maritalStatusLabels = Object.freeze({
 export const maritalStatusOptions = MARITAL_STATUS_VALUES.map((value) => ({
   value,
   label: maritalStatusLabels[value],
-}))
-
-export const [GENDER, GENDER_VALUES] = createEnum({
-  MALE: 'male',
-  FEMALE: 'female',
-})
-
-export const genderLabels = Object.freeze({
-  [GENDER.MALE]: 'Homme',
-  [GENDER.FEMALE]: 'Femme',
-})
-
-export const genderOptions = GENDER_VALUES.map((value) => ({
-  value,
-  label: genderLabels[value],
 }))
 
 export const [BAPTIZED, BAPTIZED_VALUES] = createEnum({

@@ -12,50 +12,17 @@ import {
 } from '#/features/parishioner/constants/person.constants.ts'
 import { DISTRICT_VALUES } from '#shared/constants/districts.constants.ts'
 import { PARISH_VALUES } from '#shared/constants/parish.ts'
-
-const nameSchema = (label: string) =>
-  z
-    .string({ error: `Le ${label} est requis.` })
-    .trim()
-    .min(2, { error: (iss) => `Le ${label} doit comporter au moins ${iss.minimum} caractères.` })
-    .max(50, { error: (iss) => `Le ${label} ne doit pas dépasser ${iss.maximum} caractères.` })
-
-const ageSchema = (requiredMessage: string, min: number) =>
-  z
-    .string({ error: requiredMessage })
-    .trim()
-    .refine((value) => /^\d{1,3}$/.test(value), { error: 'Veuillez saisir un âge valide.' })
-    .transform((value) => Number(value))
-    .pipe(
-      z
-        .number()
-        .int()
-        .min(min, {
-          error: (iss) =>
-            min === 18
-              ? "L'âge minimum pour s'enregistrer est de 18 ans."
-              : `L'âge ne peut pas être inférieur à ${iss.minimum}.`,
-        })
-        .max(120, { error: "L'âge ne peut pas dépasser 120 ans." })
-    )
-
-const phoneSchema = z
-  .string({ error: 'Le numéro de téléphone est requis.' })
-  .trim()
-  .regex(/^\d{3,8}$/, { error: 'Le numéro doit contenir entre 3 et 8 chiffres.' })
-
-const optionalEnum = <const T extends readonly string[]>(values: T) =>
-  z
-    .union([z.enum(values, { error: 'Réponse invalide.' }), z.literal('')])
-    .optional()
-    .transform((value) => (value ? value : undefined))
+import { addressSchema, districtSchema } from '#shared/schemas/location.schema.ts'
+import { ageSchema, nameSchema } from '#shared/schemas/person.schema.ts'
+import { phoneSchema } from '#shared/schemas/phone.schema.ts'
+import { optionalEnumSchema } from '#shared/schemas/utils.schema'
 
 export const PARISHIONER_PARISH_UNSURE_VALUE = 'unsure'
 
 const familyMemberSchema = z.object({
   firstname: nameSchema('prénom'),
   lastname: nameSchema('nom'),
-  age: ageSchema("Veuillez saisir l'âge de ce membre du foyer.", 0),
+  age: ageSchema({ requiredMessage: "Veuillez saisir l'âge de ce membre du foyer.", min: 0 }),
   role: z.enum(HOUSEHOLD_ROLE_VALUES, {
     error: (iss) =>
       iss.input === undefined
@@ -81,8 +48,8 @@ export const parishionerSchema = z.object({
   gender: z.enum(GENDER_VALUES, {
     error: (iss) => (iss.input === undefined ? 'Le sexe est requis.' : 'Le sexe est invalide.'),
   }),
-  age: ageSchema('Veuillez saisir votre âge.', 18),
-  ethnicCommunity: optionalEnum(ETHNIC_COMMUNITY_VALUES),
+  age: ageSchema({ requiredMessage: 'Veuillez saisir votre âge.', min: 18 }),
+  ethnicCommunity: optionalEnumSchema(ETHNIC_COMMUNITY_VALUES),
   occupation: z
     .string()
     .trim()
@@ -93,23 +60,13 @@ export const parishionerSchema = z.object({
     .union([phoneSchema, z.literal('')])
     .optional()
     .transform((value) => (value ? value : undefined)),
-  address: z
-    .string({
-      error: (iss) => (iss.input === undefined ? "L'adresse est requise." : 'Adresse invalide.'),
-    })
-    .trim()
-    .min(10, { error: (iss) => `L'adresse doit contenir au minimum ${iss.minimum} caractères.` })
-    .max(60, { error: (iss) => `L'adresse ne peut pas dépasser ${iss.maximum} caractères.` }),
-  district: z
-    .string({ error: 'Le quartier est requis.' })
-    .refine((value) => DISTRICT_VALUES.includes(value), {
-      error: 'Sélectionnez un quartier valide.',
-    }),
+  address: addressSchema(60),
+  district: districtSchema(DISTRICT_VALUES, 'quartier'),
   baptized: z.enum(BAPTIZED_VALUES, {
     error: (iss) =>
       iss.input === undefined ? 'Veuillez indiquer si vous êtes baptisé.' : 'Réponse invalide.',
   }),
-  religion: optionalEnum(RELIGION_VALUES),
+  religion: optionalEnumSchema(RELIGION_VALUES),
   parish: z
     .union([
       z.enum(PARISH_VALUES, { error: 'Paroisse invalide.' }),

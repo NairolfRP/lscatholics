@@ -1,83 +1,33 @@
 import { z } from 'zod'
 import {
   APPLICATION_MAX_LENGTHS,
-  APPLICATION_SOURCE_VALUES,
   REQUIRED_HOURS_REASON_VALUES,
-  SPOKEN_LANGUAGE_VALUES,
 } from '#/features/volunteers/constants/volunteer.constants.ts'
+import { APPLICATION_SOURCE_VALUES } from '#shared/constants/application-source.ts'
 import { DISTRICT_VALUES } from '#shared/constants/districts.constants.ts'
 import { ETHNIC_GROUP_VALUES } from '#shared/constants/ethnicity.ts'
-import { emptyToNull } from '#shared/schemas/utils.schema.ts'
-
-const nameSchema = (label: string) =>
-  z
-    .string({ error: `Le ${label} est requis.` })
-    .trim()
-    .min(2, { error: (iss) => `Le ${label} doit comporter au moins ${iss.minimum} caractères.` })
-    .max(APPLICATION_MAX_LENGTHS.FIRSTNAME, {
-      error: (iss) => `Le ${label} ne doit pas dépasser ${iss.maximum} caractères.`,
-    })
-
-const ageSchema = z
-  .string({ error: 'Veuillez saisir votre âge.' })
-  .trim()
-  .refine((value) => /^\d{1,3}$/.test(value), { error: 'Veuillez saisir un âge valide.' })
-  .transform((value) => Number(value))
-  .pipe(
-    z
-      .number()
-      .int()
-      .min(APPLICATION_MAX_LENGTHS.MIN_AGE, {
-        error: (iss) => `L'âge minimum pour devenir bénévole est de ${iss.minimum} ans.`,
-      })
-      .max(APPLICATION_MAX_LENGTHS.MAX_AGE, {
-        error: (iss) => `L'âge ne peut pas dépasser ${iss.maximum} ans.`,
-      })
-  )
-
-const phoneSchema = z
-  .string({ error: 'Le numéro de téléphone est requis.' })
-  .trim()
-  .regex(/^\d{3,8}$/, { error: 'Le numéro doit contenir entre 3 et 8 chiffres.' })
-
-const optionalPhoneSchema = z
-  .union([phoneSchema, z.literal('')])
-  .optional()
-  .transform((value) => (value ? value : undefined))
-
-const optionalShortTextSchema = (max: number) =>
-  z
-    .string()
-    .trim()
-    .max(max, { error: (iss) => `Ne doit pas dépasser ${iss.maximum} caractères.` })
-    .optional()
-    .transform((value) => (value ? value : undefined))
-
-const optionalEnumSchema = <const T extends readonly string[]>(values: T) =>
-  z
-    .union([z.enum(values, { error: 'Réponse invalide.' }), z.literal('')])
-    .optional()
-    .transform((value) => (value ? value : undefined))
+import { SPOKEN_LANGUAGE_VALUES } from '#shared/constants/languages.ts'
+import { addressSchema, districtSchema } from '#shared/schemas/location.schema.ts'
+import { ageSchema, nameSchema } from '#shared/schemas/person.schema.ts'
+import { optionalPhoneSchema, phoneSchema } from '#shared/schemas/phone.schema.ts'
+import {
+  emptyToNull,
+  optionalEnumSchema,
+  optionalShortTextSchema,
+} from '#shared/schemas/utils.schema.ts'
 
 export const volunteerApplicationSchema = z.object({
   firstname: nameSchema('prénom'),
   middleName: optionalShortTextSchema(APPLICATION_MAX_LENGTHS.MIDDLE_NAME),
   lastname: nameSchema('nom de famille'),
-  age: ageSchema,
-  address: z
-    .string({
-      error: (iss) => (iss.input === undefined ? "L'adresse est requise." : 'Adresse invalide.'),
-    })
-    .trim()
-    .min(10, { error: (iss) => `L'adresse doit contenir au minimum ${iss.minimum} caractères.` })
-    .max(APPLICATION_MAX_LENGTHS.ADDRESS, {
-      error: (iss) => `L'adresse ne peut pas dépasser ${iss.maximum} caractères.`,
-    }),
-  district: z
-    .string({ error: 'Le quartier est requis.' })
-    .refine((value) => DISTRICT_VALUES.includes(value), {
-      error: 'Sélectionnez un quartier valide.',
-    }),
+  age: ageSchema({
+    requiredMessage: 'Veuillez saisir votre âge.',
+    min: APPLICATION_MAX_LENGTHS.MIN_AGE,
+    minErrorMessage: `L'âge minimum pour devenir bénévole est de ${APPLICATION_MAX_LENGTHS.MIN_AGE} ans.`,
+    maxErrorMessage: `L'âge ne peut pas dépasser ${APPLICATION_MAX_LENGTHS.MAX_AGE} ans.`,
+  }),
+  address: addressSchema(APPLICATION_MAX_LENGTHS.ADDRESS),
+  district: districtSchema(DISTRICT_VALUES, 'quartier'),
   phone: phoneSchema,
   emergencyPhone: optionalPhoneSchema,
   interestedActivities: optionalShortTextSchema(APPLICATION_MAX_LENGTHS.INTERESTED_ACTIVITIES),

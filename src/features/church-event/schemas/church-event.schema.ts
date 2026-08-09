@@ -5,7 +5,7 @@ import {
   CHURCH_EVENT_LOOKBACK_MONTHS,
 } from '#shared/constants/church-event.constants.ts'
 import { PARISH_VALUES } from '#shared/constants/parish.ts'
-import { slugSchema } from '#shared/schemas/common.schema.ts'
+import { slugSchema } from '#shared/schemas/slug.schema.ts'
 import { emptyToNull } from '#shared/schemas/utils.schema.ts'
 
 const toMonthIndex = (y: number, m: number) => y * 12 + (m - 1)

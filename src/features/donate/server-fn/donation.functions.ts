@@ -1,6 +1,6 @@
 import { createServerFn } from '@tanstack/react-start'
 import * as donationPaymentService from '#/features/donate/server/donation-payment.service'
-import { looseObjectSchema } from '#shared/schemas/common.schema.ts'
+import { looseObjectSchema } from '#shared/schemas/utils.schema.ts'
 
 export const initiateDonationFn = createServerFn({ method: 'POST' })
   .validator(looseObjectSchema)

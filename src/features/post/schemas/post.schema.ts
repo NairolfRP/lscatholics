@@ -1,7 +1,7 @@
 import z from 'zod'
 import { pageSchema } from '#/shared/schemas/pagination.schema'
 import { POST_STATUS, POST_STATUS_VALUES } from '#shared/constants/post-status.ts'
-import { slugSchema } from '#shared/schemas/common.schema.ts'
+import { slugSchema } from '#shared/schemas/slug.schema.ts'
 
 export const basePostInteractionSchema = z.object({ postId: z.uuidv4() })
 export const postStatusSchema = z.enum(POST_STATUS_VALUES, {

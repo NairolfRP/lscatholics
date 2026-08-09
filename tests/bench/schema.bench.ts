@@ -3,7 +3,6 @@ import {
   createChurchEventSchema,
   editChurchEventSchema,
 } from '#/features/church-event/schemas/church-event.schema'
-import { dashboardFiltersSchema } from '#/features/dashboard/schemas/dashboard-filters.schema'
 import { editJobPostingSchema } from '#/features/job-posting/schemas/job-posting.schema'
 import { createPostSchema, postsSearchSchema } from '#/features/post/schemas/post.schema'
 import { getFieldErrors } from '#/utils/form'
@@ -11,6 +10,7 @@ import { DEPARTMENT } from '#shared/constants/department.ts'
 import { EMPLOYMENT_TYPE } from '#shared/constants/employment.ts'
 import { PARISH } from '#shared/constants/parish.ts'
 import { POST_STATUS } from '#shared/constants/post-status.ts'
+import { dashboardFiltersSchema } from '#shared/schemas/dashboard/search.schema'
 
 const validPost = {
   title: 'Bénédiction de la nouvelle église Saint-Michel',

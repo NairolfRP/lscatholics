@@ -1,7 +1,7 @@
 import { createServerFn } from '@tanstack/react-start'
 import * as contactService from '#/features/contact/server/contact.service'
 import { requireGameMiddleware } from '#/middleware/game.middleware.ts'
-import { looseObjectSchema } from '#shared/schemas/common.schema.ts'
+import { looseObjectSchema } from '#shared/schemas/utils.schema.ts'
 
 export const submitContactFn = createServerFn({ method: 'POST' })
   .middleware([requireGameMiddleware])

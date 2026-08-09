@@ -2,8 +2,8 @@ import { createServerFn } from '@tanstack/react-start'
 import { basePostInteractionSchema, postsSearchSchema } from '#/features/post/schemas/post.schema'
 import { requirePermission } from '#/middleware/permission.middleware'
 import * as postService from '#server/services/post.service'
-import { looseObjectSchema } from '#shared/schemas/common.schema'
 import { dashboardSearchSchema } from '#shared/schemas/dashboard/search.schema'
+import { looseObjectSchema } from '#shared/schemas/utils.schema.ts'
 
 export const getPostFn = createServerFn({ method: 'GET' })
   .validator((slug: string) => slug)

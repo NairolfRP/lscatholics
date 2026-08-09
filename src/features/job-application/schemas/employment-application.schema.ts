@@ -1,27 +1,22 @@
 import { z } from 'zod'
 import {
-  APPLICATION_SOURCE,
-  APPLICATION_SOURCE_VALUES,
   EMPLOYMENT_APPLICATION_MAX_LENGTHS,
-  GENDER_VALUES,
   SCHOOL_LEVEL_VALUES,
   SCHOOL_LEVELS_WITHOUT_FIELD_OF_STUDY,
-  SPOKEN_LANGUAGE_VALUES,
 } from '#/features/job-application/constants/employment-application.constants.tsx'
+import {
+  APPLICATION_SOURCE,
+  APPLICATION_SOURCE_VALUES,
+} from '#shared/constants/application-source.ts'
 import { DISTRICT_VALUES } from '#shared/constants/districts.constants.ts'
+import { GENDER_VALUES } from '#shared/constants/gender.ts'
+import { SPOKEN_LANGUAGE_VALUES } from '#shared/constants/languages.ts'
+import { addressSchema, districtSchema } from '#shared/schemas/location.schema.ts'
+import { ageSchema, nameSchema } from '#shared/schemas/person.schema.ts'
+import { phoneSchema } from '#shared/schemas/phone.schema.ts'
+import { optionalEnumSchema } from '#shared/schemas/utils.schema'
 
 const MAX = EMPLOYMENT_APPLICATION_MAX_LENGTHS
-
-const nameSchema = (label: string) =>
-  z
-    .string({ error: `Le ${label} est requis.` })
-    .trim()
-    .min(2, {
-      error: (iss) => `Le ${label} doit comporter au moins ${iss.minimum} caractères.`,
-    })
-    .max(MAX.NAME, {
-      error: (iss) => `Le ${label} ne doit pas dépasser ${iss.maximum} caractères.`,
-    })
 
 const optionalShortTextSchema = (max: number, label: string) =>
   z
@@ -31,34 +26,6 @@ const optionalShortTextSchema = (max: number, label: string) =>
       error: (iss) => `${label} ne doit pas dépasser ${iss.maximum} caractères.`,
     })
     .optional()
-
-const ageSchema = z
-  .string({ error: 'Veuillez saisir votre âge.' })
-  .trim()
-  .regex(/^\d{1,3}$/, { error: 'Veuillez saisir un âge valide.' })
-  .transform(Number)
-  .pipe(
-    z
-      .number()
-      .int()
-      .min(18, { error: (iss) => `Vous devez être âgé d'au moins ${iss.minimum} ans.` })
-      .max(115, { error: (iss) => `Vous ne pouvez pas être âgé de plus de ${iss.maximum} ans.` })
-  )
-
-const phoneSchema = z
-  .string({ error: 'Le numéro de téléphone est requis.' })
-  .trim()
-  .regex(/^\d{3,8}$/, { error: 'Le numéro doit contenir entre 3 et 8 chiffres.' })
-
-const addressSchema = z
-  .string({
-    error: (iss) => (iss.input === undefined ? "L'adresse est requise." : 'Adresse invalide.'),
-  })
-  .trim()
-  .min(10, { error: (iss) => `L'adresse doit contenir au minimum ${iss.minimum} caractères.` })
-  .max(MAX.ADDRESS, {
-    error: (iss) => `L'adresse ne peut pas dépasser ${iss.maximum} caractères.`,
-  })
 
 const yesNoBooleanSchema = z.boolean({
   error: (iss) => (iss.input === undefined ? 'Cette question est requise.' : 'Réponse invalide.'),
@@ -71,14 +38,6 @@ const requiredEnumSchema = <const T extends readonly [string, ...string[]]>(
   z.enum(values, {
     error: (iss) => (iss.input == null ? requiredMessage : 'Réponse invalide.'),
   })
-
-const optionalEnumSchema = <const T extends readonly string[]>(values: T) =>
-  z
-    .union([z.enum(values, { error: 'Réponse invalide.' }), z.null()], {
-      error: 'Réponse invalide.',
-    })
-    .optional()
-    .transform((value) => value ?? undefined)
 
 const yearMonthSchema = z
   .string({ error: 'Veuillez saisir une date.' })
@@ -93,7 +52,7 @@ const yearMonthSchema = z
 
 const applicationSourceSchema = z
   .object({
-    type: optionalEnumSchema(APPLICATION_SOURCE_VALUES),
+    type: optionalEnumSchema(APPLICATION_SOURCE_VALUES, { emptyValue: null }),
     employeeReferral: optionalShortTextSchema(
       MAX.EMPLOYEE_REFERRAL,
       "Le nom de l'employé référent"
@@ -220,14 +179,16 @@ export const employmentApplicationSchema = z.object({
   firstname: nameSchema('prénom'),
   lastname: nameSchema('nom de famille'),
   middleName: optionalShortTextSchema(MAX.NAME, 'Le deuxième prénom'),
-  age: ageSchema,
+  age: ageSchema({
+    requiredMessage: 'Veuillez saisir votre âge.',
+    min: 18,
+    max: 115,
+    minErrorMessage: "Vous devez être âgé d'au moins 18 ans.",
+    maxErrorMessage: 'Vous ne pouvez pas être âgé de plus de 115 ans.',
+  }),
   gender: requiredEnumSchema(GENDER_VALUES, 'Veuillez indiquer votre genre.'),
-  district: z
-    .string({ error: 'Le district est requis.' })
-    .refine((value) => DISTRICT_VALUES.includes(value), {
-      error: 'Sélectionnez un district valide.',
-    }),
-  address: addressSchema,
+  district: districtSchema(DISTRICT_VALUES, 'district'),
+  address: addressSchema(MAX.ADDRESS),
   phone: phoneSchema,
   isPracticingCatholic: yesNoBooleanSchema,
   hasDriverLicense: yesNoBooleanSchema,
