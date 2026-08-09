@@ -126,8 +126,8 @@ importers:
         specifier: ^0.4.6
         version: 0.4.6(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       nitro:
-        specifier: npm:nitro-nightly@3.0.1-20260731-205209-52abde8a
-        version: nitro-nightly@3.0.1-20260731-205209-52abde8a(@libsql/client@0.17.4)(@vercel/functions@3.9.1(ws@8.21.3))(chokidar@5.0.0)(dotenv@17.4.2)(drizzle-orm@0.45.2(@libsql/client@0.17.4)(@opentelemetry/api@1.9.1)(kysely@0.29.4))(jiti@2.7.0)(lru-cache@11.5.2)(vite@8.2.1(@types/node@26.2.0)(esbuild@0.25.12)(jiti@2.7.0)(tsx@4.23.11)(yaml@2.9.0))
+        specifier: 3.0.260610-beta
+        version: 3.0.260610-beta(@libsql/client@0.17.4)(@vercel/functions@3.9.1(ws@8.21.3))(chokidar@5.0.0)(dotenv@17.4.2)(drizzle-orm@0.45.2(@libsql/client@0.17.4)(@opentelemetry/api@1.9.1)(kysely@0.29.4))(jiti@2.7.0)(lru-cache@11.5.2)(vite@8.2.1(@types/node@26.2.0)(esbuild@0.25.12)(jiti@2.7.0)(tsx@4.23.11)(yaml@2.9.0))
       pino:
         specifier: ^10.3.1
         version: 10.3.1
@@ -3916,15 +3916,6 @@ packages:
   graceful-fs@4.2.11:
     resolution: {integrity: sha512-RbJ5/jmFcNNCcDV5o9eTnBLJ/HszWV0P73bc+Ff4nS/rJj+YaS6IGyiOL0VoBYX+l1Wrl3k63h/KrH+nhJ0XvQ==}
 
-  h3-rules@0.1.0:
-    resolution: {integrity: sha512-MrUUH1E/yoM7hvpKVbLs/CFeindwiTn7Fcfo+zXDpfuRYbcpJDPkYGGttCSiHNJmjUQNYQ5yn9veUIqFonYXuw==}
-    peerDependencies:
-      h3: ^2.0.1-rc.25
-      ocache: '>=0.2.0'
-    peerDependenciesMeta:
-      ocache:
-        optional: true
-
   h3@2.0.1-rc.20:
     resolution: {integrity: sha512-28ljodXuUp0fZovdiSRq4G9OgrxCztrJe5VdYzXAB7ueRvI7pIUqLU14Xi3XqdYJ/khXjfpUOOD2EQa6CmBgsg==}
     engines: {node: '>=20.11.1'}
@@ -3935,12 +3926,12 @@ packages:
       crossws:
         optional: true
 
-  h3@2.0.1-rc.26:
-    resolution: {integrity: sha512-GDxlvDsKxgjRvG5UBRJYyGJTMWLV30CJ4cV+e7QCTgftDHihrvio1fVPbNembhEr6J4WNm8IWy3fookgyTweLw==}
+  h3@2.0.1-rc.22:
+    resolution: {integrity: sha512-Esv0DMIuPkCTSWCA0vO73vcTqwzH1wjSrAO1TXNu/K3up1sZHa9EKMapbmxCDYBeymC3fVTk4qxp7ogQWQ+KgA==}
     engines: {node: '>=20.11.1'}
     hasBin: true
     peerDependencies:
-      crossws: ^0.4.9
+      crossws: ^0.4.1
     peerDependenciesMeta:
       crossws:
         optional: true
@@ -4629,19 +4620,19 @@ packages:
   nf3@0.3.23:
     resolution: {integrity: sha512-RWVLAWozmVD3AaDmaU3qMGB3v+yNlH5d9qqStI4e/WLlNQVnJ4YErGDbYCIrGFyrHdbF6I6Baf0Ae6c7tFYmSg==}
 
-  nitro-nightly@3.0.1-20260731-205209-52abde8a:
-    resolution: {integrity: sha512-KI1rwOJPgD0U57mE+1AefoEPjd+aJPJ4GCTLym0cXyfBBi8JtVsHmtB/4D3g1RaDwntjoz8H5nWnWGg7agYnuA==}
+  nitro@3.0.260610-beta:
+    resolution: {integrity: sha512-KPb4L5yaF/Rx/xoGMpgHRJvZhbhGiqbRKOwwPLCH9jKTKTsEUHLjnJas85AeCzaswqa8Wi52eQBtRsODC4PS0Q==}
     engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
     peerDependencies:
-      '@vercel/queue': ^0.4.0
+      '@vercel/queue': ^0.3.0
       dotenv: '*'
       giget: '*'
       jiti: ^2.7.0
-      rollup: ^4.62.2
+      rollup: ^4.61.1
       vite: ^7 || ^8
       xml2js: ^0.6.2
-      zephyr-agent: ^1.1.2
+      zephyr-agent: ^0.2.0
     peerDependenciesMeta:
       '@vercel/queue':
         optional: true
@@ -4692,8 +4683,8 @@ packages:
     resolution: {integrity: sha512-4a+OsYv9UktOJKE+l1A4OufDgdRF9PifWj+tJnHURo/P+WOxpG4GzUFL9qCalmWauao6ogiG+QvnCovwPoyAWA==}
     engines: {node: '>=12.20.0'}
 
-  ocache@0.2.0:
-    resolution: {integrity: sha512-QE+SxXf/A8yR01rEOg2X5KwUe+mARHo1xQXl+iwLMzLIH06S5lBOZhhHQWp7T5etfFa8nOnRhvjGuo9YBCWwig==}
+  ocache@0.1.5:
+    resolution: {integrity: sha512-kNNnkkVQup/QDvmTz8Q84wc2ntiyoVHDxa6eHWKt5qdGAmFRBIxy83rxgCYEjW0x06UJ9E3P6VgM2yY4rOBH4w==}
 
   ofetch@2.0.0-alpha.3:
     resolution: {integrity: sha512-zpYTCs2byOuft65vI3z43Dd6iSdFbOZZLb9/d21aCpx2rGastVU9dOCv0lu4ykc1Ur1anAYjDi3SUvR0vq50JA==}
@@ -5117,9 +5108,6 @@ packages:
   rou3@0.8.1:
     resolution: {integrity: sha512-ePa+XGk00/3HuCqrEnK3LxJW7I0SdNg6EFzKUJG73hMAdDcOUC/i/aSz7LSDwLrGr33kal/rqOGydzwl6U7zBA==}
 
-  rou3@0.9.1:
-    resolution: {integrity: sha512-z/sSmzvtwMDDnxsPVhfWMuG6F6mbmhFDXoVqLmMfbpDD9qfV3GDmSQpf0+W296/ZDIpW2wcMmBfpVFzcnOi/nA==}
-
   router@2.2.0:
     resolution: {integrity: sha512-nLTrUKm2UyiL7rlhapu/Zl45FwNgkZGaCpZbIHajDYgwlJCOzLSk+cIPAnsEqV955GjILJnKbdQC1nVPz+gAYQ==}
     engines: {node: '>= 18'}
@@ -5271,11 +5259,6 @@ packages:
 
   srvx@0.11.22:
     resolution: {integrity: sha512-LqZxxBDMKuMAZzFzJnDCkFOrs9MZQZr0LvHiO/SuSZVdQaXD7xQ5UWTUxheJrQPve1qk9MG2B/yttUvJxw8egQ==}
-    engines: {node: '>=20.16.0'}
-    hasBin: true
-
-  srvx@0.12.5:
-    resolution: {integrity: sha512-IuvtDNQg5EIwv3c6dleyau7u8hCyGQ7D6+V/QM799Aud07z0wCUcurKLTRfyG33C8oUY+UWcVBFkfHMcbtmRLA==}
     engines: {node: '>=20.16.0'}
     hasBin: true
 
@@ -9024,14 +9007,6 @@ snapshots:
 
   graceful-fs@4.2.11: {}
 
-  h3-rules@0.1.0(h3@2.0.1-rc.26(crossws@0.4.10(srvx@0.11.22)))(ocache@0.2.0):
-    dependencies:
-      h3: 2.0.1-rc.26(crossws@0.4.10(srvx@0.11.22))
-      rou3: 0.9.1
-      ufo: 1.6.4
-    optionalDependencies:
-      ocache: 0.2.0
-
   h3@2.0.1-rc.20(crossws@0.4.10(srvx@0.11.22)):
     dependencies:
       rou3: 0.8.1
@@ -9039,10 +9014,10 @@ snapshots:
     optionalDependencies:
       crossws: 0.4.10(srvx@0.11.22)
 
-  h3@2.0.1-rc.26(crossws@0.4.10(srvx@0.11.22)):
+  h3@2.0.1-rc.22(crossws@0.4.10(srvx@0.11.22)):
     dependencies:
-      rou3: 0.9.1
-      srvx: 0.12.5
+      rou3: 0.8.1
+      srvx: 0.11.22
     optionalDependencies:
       crossws: 0.4.10(srvx@0.11.22)
 
@@ -9752,21 +9727,19 @@ snapshots:
 
   nf3@0.3.23: {}
 
-  nitro-nightly@3.0.1-20260731-205209-52abde8a(@libsql/client@0.17.4)(@vercel/functions@3.9.1(ws@8.21.3))(chokidar@5.0.0)(dotenv@17.4.2)(drizzle-orm@0.45.2(@libsql/client@0.17.4)(@opentelemetry/api@1.9.1)(kysely@0.29.4))(jiti@2.7.0)(lru-cache@11.5.2)(vite@8.2.1(@types/node@26.2.0)(esbuild@0.25.12)(jiti@2.7.0)(tsx@4.23.11)(yaml@2.9.0)):
+  nitro@3.0.260610-beta(@libsql/client@0.17.4)(@vercel/functions@3.9.1(ws@8.21.3))(chokidar@5.0.0)(dotenv@17.4.2)(drizzle-orm@0.45.2(@libsql/client@0.17.4)(@opentelemetry/api@1.9.1)(kysely@0.29.4))(jiti@2.7.0)(lru-cache@11.5.2)(vite@8.2.1(@types/node@26.2.0)(esbuild@0.25.12)(jiti@2.7.0)(tsx@4.23.11)(yaml@2.9.0)):
     dependencies:
       consola: 3.4.2
       crossws: 0.4.10(srvx@0.11.22)
       db0: 0.3.4(@libsql/client@0.17.4)(drizzle-orm@0.45.2(@libsql/client@0.17.4)(@opentelemetry/api@1.9.1)(kysely@0.29.4))
       env-runner: 0.1.16
-      h3: 2.0.1-rc.26(crossws@0.4.10(srvx@0.11.22))
-      h3-rules: 0.1.0(h3@2.0.1-rc.26(crossws@0.4.10(srvx@0.11.22)))(ocache@0.2.0)
+      h3: 2.0.1-rc.22(crossws@0.4.10(srvx@0.11.22))
       hookable: 6.1.1
       nf3: 0.3.23
-      ocache: 0.2.0
+      ocache: 0.1.5
       ofetch: 2.0.0-alpha.3
       ohash: 2.0.11
       rolldown: 1.2.3
-      rou3: 0.9.1
       srvx: 0.11.22
       unenv: 2.0.0-rc.24
       unstorage: 2.0.0-alpha.7(@vercel/functions@3.9.1(ws@8.21.3))(chokidar@5.0.0)(db0@0.3.4(@libsql/client@0.17.4)(drizzle-orm@0.45.2(@libsql/client@0.17.4)(@opentelemetry/api@1.9.1)(kysely@0.29.4)))(lru-cache@11.5.2)(ofetch@2.0.0-alpha.3)
@@ -9827,7 +9800,7 @@ snapshots:
 
   obug@2.1.4: {}
 
-  ocache@0.2.0:
+  ocache@0.1.5:
     dependencies:
       ohash: 2.0.11
 
@@ -10341,8 +10314,6 @@ snapshots:
 
   rou3@0.8.1: {}
 
-  rou3@0.9.1: {}
-
   router@2.2.0:
     dependencies:
       debug: 4.4.3
@@ -10532,8 +10503,6 @@ snapshots:
   split2@4.2.0: {}
 
   srvx@0.11.22: {}
-
-  srvx@0.12.5: {}
 
   stack-trace@1.0.0-pre2: {}
 
