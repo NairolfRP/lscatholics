@@ -70,17 +70,13 @@ export async function getDiscordAccount({ user }: { user: User }) {
 
   const headers = getRequestHeaders()
   const discordUserInfo = await auth.api.accountInfo({
-    query: { accountId: account.accountId },
+    query: { accountId: account.id },
     headers,
   })
 
-  if (!discordUserInfo) {
-    return null
-  }
-
   return {
-    id: account.accountId,
-    username: discordUserInfo.data.username,
+    id: account.id,
+    username: (discordUserInfo.data as { username: string }).username,
     avatar: discordUserInfo.user.image,
   }
 }

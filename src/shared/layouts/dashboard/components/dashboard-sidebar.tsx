@@ -215,7 +215,7 @@ function DashboardSidebarFooter({
                     className="cursor-pointer"
                     onClick={async () => {
                       await authClient.signOut({
-                        query: { callbackURL: '/' },
+                        callbackURL: window.location.href,
                       })
                     }}
                     variant="destructive"

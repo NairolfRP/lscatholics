@@ -1,5 +1,6 @@
 CREATE TABLE `accounts` (
 	`id` text PRIMARY KEY NOT NULL,
+	`issuer` text NOT NULL,
 	`account_id` text NOT NULL,
 	`provider_id` text NOT NULL,
 	`user_id` text NOT NULL,
@@ -11,22 +12,22 @@ CREATE TABLE `accounts` (
 	`scope` text,
 	`password` text,
 	`created_at` integer DEFAULT (cast(unixepoch('subsecond') * 1000 as integer)) NOT NULL,
-	`updated_at` integer NOT NULL,
+	`updated_at` integer DEFAULT (cast(unixepoch('subsecond') * 1000 as integer)) NOT NULL,
 	FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON UPDATE no action ON DELETE cascade
 );
 --> statement-breakpoint
+CREATE UNIQUE INDEX `accounts_issuer_account_id_uidx` ON `accounts` (`issuer`,`account_id`);--> statement-breakpoint
 CREATE INDEX `accounts_user_id_idx` ON `accounts` (`user_id`);--> statement-breakpoint
-CREATE UNIQUE INDEX `accounts_user_id_provider_id_unique` ON `accounts` (`user_id`,`provider_id`);--> statement-breakpoint
 CREATE TABLE `sessions` (
 	`id` text PRIMARY KEY NOT NULL,
 	`expires_at` integer NOT NULL,
 	`token` text NOT NULL,
-	`created_at` integer DEFAULT (cast(unixepoch('subsecond') * 1000 as integer)) NOT NULL,
-	`updated_at` integer NOT NULL,
 	`ip_address` text,
 	`user_agent` text,
 	`user_id` text NOT NULL,
 	`impersonated_by` text,
+	`created_at` integer DEFAULT (cast(unixepoch('subsecond') * 1000 as integer)) NOT NULL,
+	`updated_at` integer DEFAULT (cast(unixepoch('subsecond') * 1000 as integer)) NOT NULL,
 	FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON UPDATE no action ON DELETE cascade
 );
 --> statement-breakpoint
@@ -38,12 +39,12 @@ CREATE TABLE `users` (
 	`email` text NOT NULL,
 	`email_verified` integer DEFAULT false NOT NULL,
 	`image` text,
-	`created_at` integer DEFAULT (cast(unixepoch('subsecond') * 1000 as integer)) NOT NULL,
-	`updated_at` integer DEFAULT (cast(unixepoch('subsecond') * 1000 as integer)) NOT NULL,
 	`role` text NOT NULL,
 	`banned` integer NOT NULL,
 	`ban_reason` text,
-	`ban_expires` integer
+	`ban_expires` integer,
+	`created_at` integer DEFAULT (cast(unixepoch('subsecond') * 1000 as integer)) NOT NULL,
+	`updated_at` integer DEFAULT (cast(unixepoch('subsecond') * 1000 as integer)) NOT NULL
 );
 --> statement-breakpoint
 CREATE UNIQUE INDEX `users_email_unique` ON `users` (`email`);--> statement-breakpoint
@@ -90,7 +91,7 @@ CREATE TABLE `posts` (
 );
 --> statement-breakpoint
 CREATE UNIQUE INDEX `posts_slug_unique` ON `posts` (`slug`);--> statement-breakpoint
-CREATE INDEX `posts_status_published_at_idx` ON `posts` (`status`,"published_at" desc);--> statement-breakpoint
+CREATE INDEX `posts_status_published_at_idx` ON `posts` (`status`,`published_at`);--> statement-breakpoint
 CREATE INDEX `posts_author_id_idx` ON `posts` (`author_id`);--> statement-breakpoint
 CREATE TABLE `job_postings` (
 	`id` text PRIMARY KEY NOT NULL,
@@ -118,4 +119,16 @@ CREATE UNIQUE INDEX `job_postings_slug_unique` ON `job_postings` (`slug`);--> st
 CREATE INDEX `job_postings_department_idx` ON `job_postings` (`department`);--> statement-breakpoint
 CREATE INDEX `job_postings_employment_type_idx` ON `job_postings` (`employment_type`);--> statement-breakpoint
 CREATE INDEX `job_postings_active_idx` ON `job_postings` (`is_active`);--> statement-breakpoint
-CREATE INDEX `job_postings_expires_at_idx` ON `job_postings` (`expires_at`);
+CREATE INDEX `job_postings_expires_at_idx` ON `job_postings` (`expires_at`);--> statement-breakpoint
+CREATE TABLE `pending_payments` (
+	`id` text PRIMARY KEY NOT NULL,
+	`source` text NOT NULL,
+	`amount` integer NOT NULL,
+	`mode` integer DEFAULT 0 NOT NULL,
+	`metadata` text DEFAULT '' NOT NULL,
+	`expires_at` integer NOT NULL,
+	`created_at` integer DEFAULT (cast(unixepoch('subsecond') * 1000 as integer)) NOT NULL,
+	`updated_at` integer DEFAULT (cast(unixepoch('subsecond') * 1000 as integer)) NOT NULL
+);
+--> statement-breakpoint
+CREATE INDEX `pending_payments_expires_at_idx` ON `pending_payments` (`expires_at`);

@@ -101,9 +101,9 @@ function Account() {
       disabled={loading}
       onClick={() => {
         setLoading(true)
-        void authClient.signIn.oauth2(
+        void authClient.signIn.social(
           {
-            providerId: 'gtaw',
+            provider: 'gtaw',
             callbackURL: window.location.href,
             errorCallbackURL: window.location.href,
           },

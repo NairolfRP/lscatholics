@@ -30,7 +30,7 @@ export function RequireReauthProvider({
   const handleConfirm = async () => {
     setOpen(false)
     await authClient.signOut()
-    void authClient.signIn.oauth2({ providerId: 'gtaw', callbackURL: window.location.pathname })
+    void authClient.signIn.social({ provider: 'gtaw', callbackURL: window.location.pathname })
   }
 
   const handleCancel = () => {

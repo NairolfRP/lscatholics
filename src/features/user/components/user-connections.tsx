@@ -53,7 +53,7 @@ function DiscordConnection() {
 
   const unlinkMutation = useMutation({
     mutationFn: async () => {
-      const { error } = await authClient.unlinkAccount({ providerId: 'discord' })
+      const { error } = await authClient.unlinkAccount({ accountId: discordAccount?.id ?? '' })
       if (error) {
         return { error: true, message: error.message }
       }

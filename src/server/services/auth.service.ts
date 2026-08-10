@@ -35,16 +35,30 @@ export async function logout() {
   return await auth.api.signOut({ headers })
 }
 
-export async function getAccessToken(
-  options: { providerId?: string; accountId?: string; userId?: string } = {}
-) {
-  const { providerId = 'gtaw', ...body } = options
+export async function getAccessToken({
+  accountId,
+  providerId = 'gtaw',
+  userId,
+}: {
+  accountId?: string
+  providerId?: string
+  userId?: string
+} = {}) {
   const headers = getRequestHeaders()
+
+  if (!accountId) {
+    const accounts = await auth.api.listUserAccounts({ headers })
+    const account = accounts.find((acc) => acc.providerId === providerId)
+
+    if (!account) {
+      throw UnauthorizedException(`No ${providerId} account linked to the current user`)
+    }
+
+    accountId = account.id
+  }
+
   return auth.api.getAccessToken({
-    body: {
-      providerId,
-      ...body,
-    },
+    body: { accountId, userId },
     headers,
   })
 }

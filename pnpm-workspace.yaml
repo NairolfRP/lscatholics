@@ -14,5 +14,6 @@ minimumReleaseAgeExclude:
   - 'typescript'
   - 'react'
   - 'react-dom'
+  - '@gtaw-oauth-providers/better-auth@2.2.1-next.1'
 allowBuilds:
   esbuild: true

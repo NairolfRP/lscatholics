@@ -2,7 +2,7 @@ import { drizzleAdapter } from '@better-auth/drizzle-adapter'
 import { i18n } from '@better-auth/i18n'
 import { gtaworld } from '@gtaw-oauth-providers/better-auth'
 import { waitUntil } from '@vercel/functions'
-import { APIError, createAuthMiddleware } from 'better-auth/api'
+import { APIError, createAuthMiddleware, getSessionFromCtx } from 'better-auth/api'
 import { betterAuth } from 'better-auth/minimal'
 import { admin, genericOAuth, oAuthProxy, openAPI, testUtils } from 'better-auth/plugins'
 import { tanstackStartCookies } from 'better-auth/tanstack-start'
@@ -55,8 +55,8 @@ export const auth = betterAuth({
           clientId: env.GTAW_OAUTH_CLIENT_ID,
           clientSecret: env.GTAW_OAUTH_CLIENT_SECRET,
           server: env.GTAW_SERVER,
-          redirectURI: 'https://lscatholics.vercel.app/api/auth/oauth2/callback/gtaw',
-          overrideUserInfoOnSignIn: true,
+          redirectURI: 'https://lscatholics.vercel.app/api/auth/callback/gtaw',
+          overrideUserInfo: true,
         }),
       ],
     }),
@@ -142,6 +142,7 @@ export const auth = betterAuth({
     cookiePrefix: 'lscatholics',
     database: {
       generateId: 'uuid',
+      joins: true,
     },
     backgroundTasks: {
       handler: waitUntil,
@@ -163,7 +164,8 @@ export const auth = betterAuth({
           )
 
           if (nbOfProviderAccounts > 0) {
-            throw new APIError('FORBIDDEN', {
+            throw APIError.from('FORBIDDEN', {
+              code: 'ONE_ACCOUNT_PER_SOCIAL_PROVIDER',
               message: 'User can only have one account per provider',
             })
           }
@@ -178,21 +180,39 @@ export const auth = betterAuth({
     before: createAuthMiddleware(async (ctx) => {
       if (ctx.path === '/sign-in/social') {
         if (ctx.body?.provider !== 'gtaw') {
-          throw new APIError('FORBIDDEN', {
+          throw APIError.from('FORBIDDEN', {
+            code: 'FORBIDDEN_SIGN_IN_PROVIDER',
             message: 'Only GTA World sign-in is allowed',
           })
         }
       }
 
-      if (ctx.body?.provider === 'gtaw') {
-        throw new APIError('FORBIDDEN', {
-          message: 'Cannot unlink GTA World account - this is your primary authentication method',
-        })
+      if (ctx.path === '/unlink-account') {
+        const session = await getSessionFromCtx(ctx)
+        if (!session?.session) {
+          throw APIError.from('UNAUTHORIZED', { code: 'UNAUTHORIZED', message: 'Unauthorized' })
+        }
+
+        const { accountId } = ctx.body
+        const accounts = await ctx.context.internalAdapter.findAccounts(session.user.id)
+
+        if (accounts.length > 0) {
+          const isGTAWAccount = accounts.find(
+            (account) => account.id === accountId && account.providerId === 'gtaw'
+          )
+
+          if (isGTAWAccount) {
+            throw APIError.from('FORBIDDEN', {
+              code: 'CANT_UNLINK_GTAW_ACCOUNT',
+              message:
+                'Cannot unlink GTA World account - this is your primary authentication method',
+            })
+          }
+        }
       }
     }),
   },
   telemetry: {
     enabled: false,
   },
-  experimental: { joins: true },
 })
