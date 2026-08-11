@@ -7,7 +7,7 @@ import { pageMetadata } from '#/utils/seo'
 import { Alert, AlertDescription } from '#shared/components/ui/alert.tsx'
 import { Card, CardContent, CardHeader, CardTitle } from '#shared/components/ui/card.tsx'
 
-const lastUpdated = '9 août 2026'
+const lastUpdated = '11 août 2026'
 
 export const Route = createFileRoute('/_app/privacy')({
   head: () => ({
@@ -179,9 +179,11 @@ function RouteComponent() {
               3.4 Données de session
             </Typography>
             <p>
-              Les sessions sont stockées dans des cookies sécurisés et cryptés et en base de
-              données. Les informations suivantes sont enregistrées :
+              Les sessions sont stockées de manière sécurisée en base de données. Un cache de
+              session à court terme (5 minutes), signé pour garantir son intégrité, est également
+              conservé dans un cookie afin d'améliorer l'expérience utilisateur.
             </p>
+            <p>Les informations suivantes sont enregistrées :</p>
             <ul>
               <li>
                 <strong>Adresse IP</strong> (pour la gestion des sessions et la sécurité)
