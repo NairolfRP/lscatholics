@@ -7,5 +7,7 @@ export const gameContextQueryOptions = queryOptions({
     const { user: _, ...result } = await getGameContextFn()
     return result
   },
-  staleTime: 60_000,
+  staleTime: 5 * 60_000,
+  refetchOnWindowFocus: false,
+  refetchOnReconnect: false,
 })
