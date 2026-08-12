@@ -83,7 +83,7 @@ export function remapCharacter(character: GTAWCharacter): Character {
     id: character.id,
     firstname: character.firstname,
     lastname: character.lastname,
-    bankRoutingNumber: character.bankRoutingNumber,
+    bankRoutingNumber: character.bank_routing_number,
   }
 }
 
