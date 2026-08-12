@@ -2,7 +2,7 @@ import { Ornament } from './ornament'
 
 export function CharitiesMission() {
   return (
-    <section className="bg-zinc-950 py-24 text-center md:py-32">
+    <section className="bg-catholic-blue py-24 text-center md:py-32">
       <div className="container mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
         <p className="text-xs font-semibold tracking-[0.3em] text-amber-400 uppercase">
           Notre mission

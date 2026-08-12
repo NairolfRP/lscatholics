@@ -9,23 +9,23 @@ export function ProgramCard({ program }: { program: Program }) {
     <Link
       to="/charities/program/$slug"
       params={{ slug: program.slug }}
-      className="group flex h-full flex-col rounded-2xl bg-muted p-8 ring-1 ring-foreground/10 transition hover:-translate-y-1 hover:shadow-xl hover:ring-catholic-red/40"
+      className="group flex h-full flex-col rounded-2xl bg-muted p-8 ring-1 ring-foreground/10 transition hover:-translate-y-1 hover:shadow-xl hover:ring-primary/40"
     >
       <div className="flex items-start justify-between gap-4">
-        <span className="flex size-12 shrink-0 items-center justify-center rounded-full bg-catholic-red/10 text-catholic-red transition group-hover:bg-catholic-red group-hover:text-white dark:text-red-400">
+        <span className="flex size-12 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary transition group-hover:bg-primary group-hover:text-white ">
           <Icon className="size-6" />
         </span>
-        <ArrowRightIcon className="size-5 text-muted-foreground transition group-hover:translate-x-1 group-hover:text-catholic-red dark:group-hover:text-red-400" />
+        <ArrowRightIcon className="size-5 text-muted-foreground transition group-hover:translate-x-1 group-hover:text-primary " />
       </div>
       <Badge
         variant="outline"
-        className="mt-6 w-fit text-[10px] tracking-widest text-catholic-red uppercase dark:border-red-400/40 dark:text-red-400"
+        className="mt-6 w-fit text-[10px] tracking-widest text-primary uppercase "
       >
         {program.tag}
       </Badge>
       <h3 className="mt-4 text-xl font-bold text-foreground">{program.title}</h3>
       <p className="mt-3 leading-relaxed text-muted-foreground">{program.description}</p>
-      <span className="mt-6 inline-flex items-center gap-2 text-xs font-semibold tracking-widest text-catholic-red uppercase dark:text-red-400">
+      <span className="mt-6 inline-flex items-center gap-2 text-xs font-semibold tracking-widest text-primary uppercase ">
         En savoir plus
         <ArrowRightIcon className="size-3.5" />
       </span>
