@@ -15,7 +15,8 @@ import {
 import type { VocationsSelfTestResult } from '#/features/vocations/components/vocations-self-test.tsx'
 import { VocationsSelfTest } from '#/features/vocations/components/vocations-self-test.tsx'
 import { pageMetadata } from '#/utils/seo.ts'
-import { buttonVariants } from '#shared/components/ui/button'
+import { Button, buttonVariants } from '#shared/components/ui/button'
+import { Tooltip, TooltipContent, TooltipTrigger } from '#shared/components/ui/tooltip.tsx'
 import { cn } from '#shared/lib/utils.ts'
 
 const signs = [
@@ -60,34 +61,47 @@ const paths = [
   {
     number: '01',
     icon: ChurchIcon,
-    title: 'La prêtrise',
+    title: 'Le Presbytérat',
     question: 'Qu’est-ce qu’un prêtre ?',
     description:
-      'Un homme baptisé, ordonné par l’évêque, appelé à agir au nom du Christ, Tête et Pasteur de l’Église. Curé, père spirituel, confesseur : il donne sa vie pour sa paroisse.',
+      "Un homme baptisé, ordonné par l’évêque, appelé à servir le Christ et Son Église. Il donne sa vie pour guider les brebis fidèles et égarées, comme Jésus lui-même s'est donné en sacrifice pour la rémission de nos péchés.",
     dutiesLabel: 'Ce que fait le prêtre',
     duties: [
-      'Célèbre les sacrements — surtout l’Eucharistie, cœur de la vie chrétienne',
-      'Annonce la Parole de Dieu et prêche à la messe',
-      'Accompagne les fidèles de la naissance à la mort : baptêmes, mariages, funérailles',
-      'Conduit sa communauté et veille sur elle, en lien avec l’évêque',
+      "Annonce l'Évangile et prêche",
+      'Administre et célèbre les 7 sacrements chrétiens (baptême, mariage, confession, onction des malades) ainsi que les funérailles',
+      'Célèbre la messe et les liturgies quotidiennes',
+      "Prêche, transmet et enseigne la foi de l'Église",
+      "Guide, conseille et prend soin du Peuple de Dieu qui lui est confié par l'évêque",
     ],
-    note: 'Dans l’Église latine, le prêtre s’engage au célibat.',
+    note: "Le prêtre s'engage au célibat et à l'obéissance",
+    button: {
+      label: 'Devenir prêtre',
+      link: '/clergy-application',
+      className: 'bg-black hover:bg-neutral-950',
+    },
   },
   {
     number: '02',
     icon: HeartHandshakeIcon,
-    title: 'Le diaconat',
+    title: 'Le Diaconat',
     question: 'Qu’est-ce qu’un diacre ?',
     description:
-      '« Diakonia » signifie service. Ordonné pour servir, le diacre est le serviteur de la charité, de la Parole et de l’autel, aux côtés de l’évêque et des prêtres.',
+      '« Diakonia » signifie service. Ordonné pour servir, le diacre est le serviteur de la Parole, de la liturgie et de la charité et assiste les prêtres et les évêques.',
     dutiesLabel: 'Ce que fait le diacre',
     duties: [
       'Annonce l’Évangile et prêche',
-      'Administre le baptême, bénit les mariages, préside les funérailles',
-      'Se rend proche des pauvres, des malades et des personnes isolées',
-      'Assiste les prêtres à l’autel de l’Eucharistie',
+      'Administre le baptême, bénit les mariages et préside les funérailles',
+      "Distribue la communion lors de la messe et l'apporte aux personnes malades ou isolées",
+      "Durant la messe : fait la lecture de l'Évangile et assiste les prêtres et les évêques",
+      'Visite les prisonniers et les malades, aide les personnes dans le besoin. Au service de la Charité, il se rend proche des pauvres, des malades et des exclus.',
+      "Se fait « yeux et oreilles » de l'évêque au sein de la communauté",
     ],
-    note: 'Le diacre permanent peut être marié et avoir un travail.',
+    note: 'Appelé à vivre au milieu de la cité, le diacre permanent peut se marier et exercer une activité professionnelle',
+    button: {
+      label: 'Devenir Diacre',
+      link: '/clergy-application',
+      className: 'bg-gray-500 hover:bg-gray-600',
+    },
   },
   {
     number: '03',
@@ -95,14 +109,18 @@ const paths = [
     title: 'La vie religieuse et consacrée',
     question: 'Qu’est-ce qu’un religieux, une religieuse ?',
     description:
-      'Un homme ou une femme qui donne sa vie entière à Dieu par les vœux de pauvreté, de chasteté et d’obéissance, au sein d’une communauté.',
+      "Un homme ou une femme qui donne sa vie entière à Dieu par les vœux de pauvreté, de chasteté et d’obéissance, au sein d’une congrégation ou d'un Ordre.",
     dutiesLabel: 'Ce que font religieux et religieuses',
     duties: [
-      'Consacrent leur vie à la prière et au service, selon le charisme de leur congrégation',
-      'Vivent en communauté : monastère, couvent, maison de congrégation',
-      'Servent là où l’Église a besoin : enseignement, charité, soins, mission',
+      'Consacrent leur vie à la prière, au travail et au service, en conformité avec la mission et la vie prescrite par la Règle de leur communauté',
+      'Vivent en communauté : dans un monastère, dans un couvent, une maison de congrégation',
+      "Servent là où l'Église a besoin : enseignement, recherche, charité, soins médicaux, administration, activité missionnaire, aumônerie",
     ],
-    note: 'Religieux comme religieuses ; certains sont aussi prêtres.',
+    note: 'Parmi les religieux, certains sont ordonnés prêtres',
+    button: {
+      label: 'Consacrer sa vie à Dieu',
+      className: 'bg-amber-900 hover:bg-amber-950',
+    },
   },
 ]
 
@@ -294,7 +312,17 @@ function PathsSection() {
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {paths.map(
             (
-              { number, icon: Icon, title, question, description, dutiesLabel, duties, note },
+              {
+                number,
+                icon: Icon,
+                title,
+                question,
+                description,
+                dutiesLabel,
+                duties,
+                note,
+                button,
+              },
               index
             ) => (
               <article
@@ -335,6 +363,28 @@ function PathsSection() {
                 <p className="min-h-[4.2rem] border-t border-foreground/10 pt-5 text-sm leading-relaxed text-muted-foreground italic">
                   {note}
                 </p>
+                {button.link ? (
+                  <Link
+                    to={button.link}
+                    className={cn(buttonVariants({ size: 'lg' }), 'mt-10 py-7', button.className)}
+                  >
+                    {button.label}
+                  </Link>
+                ) : (
+                  <Tooltip>
+                    <TooltipTrigger
+                      className="mt-10 py-7"
+                      render={
+                        <Button size="lg" className={button.className} disabled>
+                          {button.label}
+                        </Button>
+                      }
+                    />
+                    <TooltipContent>
+                      <p>Indisponible pour le moment. Prenez contact par téléphone.</p>
+                    </TooltipContent>
+                  </Tooltip>
+                )}
               </article>
             )
           )}

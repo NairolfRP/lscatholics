@@ -1,6 +1,7 @@
 import { createFileRoute, Outlet } from '@tanstack/react-router'
 import { DefaultNotFound } from '#/shared/components/ui/fallbacks/default-not-found'
 import { AppLayout } from '#/shared/layouts/app/components/app-layout'
+import { TooltipProvider } from '#shared/components/ui/tooltip.tsx'
 import appCss from '#/styles/app.css?url'
 
 export const Route = createFileRoute('/_app')({
@@ -18,8 +19,10 @@ export const Route = createFileRoute('/_app')({
 
 function RouteComponent() {
   return (
-    <AppLayout>
-      <Outlet />
-    </AppLayout>
+    <TooltipProvider>
+      <AppLayout>
+        <Outlet />
+      </AppLayout>
+    </TooltipProvider>
   )
 }

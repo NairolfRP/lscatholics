@@ -13,7 +13,7 @@ type InputFieldProps<TType extends HTMLInputTypeAttribute | undefined> = FieldCo
   typeof Input,
   {
     label: ReactNode
-    description?: string
+    description?: ReactNode
     type?: TType
   },
   'type'

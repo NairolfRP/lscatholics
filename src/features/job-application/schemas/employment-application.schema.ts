@@ -14,6 +14,7 @@ import { SPOKEN_LANGUAGE_VALUES } from '#shared/constants/languages.ts'
 import { addressSchema, districtSchema } from '#shared/schemas/location.schema.ts'
 import { ageSchema, nameSchema } from '#shared/schemas/person.schema.ts'
 import { phoneSchema } from '#shared/schemas/phone.schema.ts'
+import { discordUsernameSchema } from '#shared/schemas/social.schema.ts'
 import { optionalEnumSchema } from '#shared/schemas/utils.schema'
 
 const MAX = EMPLOYMENT_APPLICATION_MAX_LENGTHS
@@ -147,23 +148,6 @@ const applicantDeclarationAcceptedSchema = z
   })
   .refine((value) => value, {
     error: 'Vous devez comprendre et accepter la déclaration pour postuler.',
-  })
-
-const discordUsernameSchema = z
-  .string({
-    error: (iss) =>
-      iss.input === undefined
-        ? "Vous devez indiquer votre nom d'utilisateur Discord."
-        : 'Valeur invalide.',
-  })
-  .trim()
-  .min(2, { error: "Un nom d'utilisateur Discord doit contenir au moins 2 caractères." })
-  .max(MAX.DISCORD_USERNAME, {
-    error: (iss) => `Un nom d'utilisateur Discord ne peut pas dépasser ${iss.maximum} caractères.`,
-  })
-  .regex(/^(?!.*\.\.)[a-z0-9._]+$/, {
-    error:
-      "Ce n'est pas un nom d'utilisateur valide. Vérifiez que vous indiquez bien le nom d'utilisateur, et non le nom d'affichage.",
   })
 
 const motivationsOOCSchema = z

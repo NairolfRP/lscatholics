@@ -19,6 +19,7 @@ import { Route as AppAccountRouteRouteImport } from './routes/_app/account/route
 import { Route as AppArchbishopRouteImport } from './routes/_app/archbishop'
 import { Route as AppCareersRouteImport } from './routes/_app/careers'
 import { Route as AppCharitiesRouteRouteImport } from './routes/_app/charities/route'
+import { Route as AppClergyApplicationRouteImport } from './routes/_app/clergy-application'
 import { Route as AppContactRouteImport } from './routes/_app/contact'
 import { Route as AppDailyReadingsRouteImport } from './routes/_app/daily-readings'
 import { Route as AppDecreesRouteRouteImport } from './routes/_app/decrees/route'
@@ -113,6 +114,11 @@ const AppCareersRoute = AppCareersRouteImport.update({
 const AppCharitiesRouteRoute = AppCharitiesRouteRouteImport.update({
   id: '/charities',
   path: '/charities',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppClergyApplicationRoute = AppClergyApplicationRouteImport.update({
+  id: '/clergy-application',
+  path: '/clergy-application',
   getParentRoute: () => AppRoute,
 } as any)
 const AppContactRoute = AppContactRouteImport.update({
@@ -364,6 +370,7 @@ export interface FileRoutesByFullPath {
   '/about': typeof AppAboutRoute
   '/archbishop': typeof AppArchbishopRoute
   '/careers': typeof AppCareersRoute
+  '/clergy-application': typeof AppClergyApplicationRoute
   '/contact': typeof AppContactRoute
   '/daily-readings': typeof AppDailyReadingsRoute
   '/departments': typeof AppDepartmentsRoute
@@ -415,6 +422,7 @@ export interface FileRoutesByTo {
   '/about': typeof AppAboutRoute
   '/archbishop': typeof AppArchbishopRoute
   '/careers': typeof AppCareersRoute
+  '/clergy-application': typeof AppClergyApplicationRoute
   '/contact': typeof AppContactRoute
   '/daily-readings': typeof AppDailyReadingsRoute
   '/departments': typeof AppDepartmentsRoute
@@ -474,6 +482,7 @@ export interface FileRoutesById {
   '/_app/about': typeof AppAboutRoute
   '/_app/archbishop': typeof AppArchbishopRoute
   '/_app/careers': typeof AppCareersRoute
+  '/_app/clergy-application': typeof AppClergyApplicationRoute
   '/_app/contact': typeof AppContactRoute
   '/_app/daily-readings': typeof AppDailyReadingsRoute
   '/_app/departments': typeof AppDepartmentsRoute
@@ -534,6 +543,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/archbishop'
     | '/careers'
+    | '/clergy-application'
     | '/contact'
     | '/daily-readings'
     | '/departments'
@@ -585,6 +595,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/archbishop'
     | '/careers'
+    | '/clergy-application'
     | '/contact'
     | '/daily-readings'
     | '/departments'
@@ -643,6 +654,7 @@ export interface FileRouteTypes {
     | '/_app/about'
     | '/_app/archbishop'
     | '/_app/careers'
+    | '/_app/clergy-application'
     | '/_app/contact'
     | '/_app/daily-readings'
     | '/_app/departments'
@@ -771,6 +783,13 @@ declare module '@tanstack/react-router' {
       path: '/charities'
       fullPath: '/charities'
       preLoaderRoute: typeof AppCharitiesRouteRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/clergy-application': {
+      id: '/_app/clergy-application'
+      path: '/clergy-application'
+      fullPath: '/clergy-application'
+      preLoaderRoute: typeof AppClergyApplicationRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/contact': {
@@ -1199,6 +1218,7 @@ interface AppRouteChildren {
   AppAboutRoute: typeof AppAboutRoute
   AppArchbishopRoute: typeof AppArchbishopRoute
   AppCareersRoute: typeof AppCareersRoute
+  AppClergyApplicationRoute: typeof AppClergyApplicationRoute
   AppContactRoute: typeof AppContactRoute
   AppDailyReadingsRoute: typeof AppDailyReadingsRoute
   AppDepartmentsRoute: typeof AppDepartmentsRoute
@@ -1227,6 +1247,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppAboutRoute: AppAboutRoute,
   AppArchbishopRoute: AppArchbishopRoute,
   AppCareersRoute: AppCareersRoute,
+  AppClergyApplicationRoute: AppClergyApplicationRoute,
   AppContactRoute: AppContactRoute,
   AppDailyReadingsRoute: AppDailyReadingsRoute,
   AppDepartmentsRoute: AppDepartmentsRoute,

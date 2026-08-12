@@ -1,8 +1,8 @@
 'use client'
 
 import type { VariantProps } from 'class-variance-authority'
-import * as React from 'react'
 import { cva } from 'class-variance-authority'
+import * as React from 'react'
 import { Button } from '#/shared/components/ui/button.tsx'
 import { Input } from '#/shared/components/ui/input.tsx'
 import { Textarea } from '#/shared/components/ui/textarea.tsx'
@@ -128,7 +128,7 @@ function InputGroupTextarea({ className, ...props }: React.ComponentProps<'texta
     <Textarea
       data-slot="input-group-control"
       className={cn(
-        'flex-1 resize-none rounded-none border-0 bg-transparent py-2 shadow-none ring-0 focus-visible:ring-0 aria-invalid:ring-0 dark:bg-transparent',
+        'flex-1 resize-none rounded-none border-0 bg-transparent py-2 wrap-anywhere shadow-none ring-0 focus-visible:ring-0 aria-invalid:ring-0 dark:bg-transparent',
         className
       )}
       {...props}
