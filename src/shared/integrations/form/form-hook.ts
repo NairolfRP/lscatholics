@@ -8,6 +8,7 @@ import { FieldGroup } from '#/shared/components/ui/field'
 import { CheckboxField } from '#shared/components/form/checkbox-field.tsx'
 import { CurrencyField } from '#shared/components/form/currency-field.tsx'
 import { DistrictSelectField } from '#shared/components/form/district-select-field.tsx'
+import { IbanField } from '#shared/components/form/iban-field.tsx'
 import { RadioField } from '#shared/components/form/radio-field.tsx'
 import { TextareaField } from '#shared/components/form/textarea-field.tsx'
 import { YesNoField } from '#shared/components/form/yes-no-field.tsx'
@@ -27,6 +28,7 @@ export const { useAppForm, withForm } = createFormHook({
     YesNoField,
     RadioField,
     DistrictSelectField,
+    IbanField,
   },
   formComponents: {
     FieldGroup,
