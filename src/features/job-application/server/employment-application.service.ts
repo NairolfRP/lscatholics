@@ -9,8 +9,13 @@ import {
   schoolLevelLabels,
   spokenLanguageLabels,
 } from '#/features/job-application/constants/employment-application.constants.tsx'
-import type { EmploymentApplicationOutput } from '#/features/job-application/schemas/employment-application.schema.ts'
-import { employmentApplicationSchema } from '#/features/job-application/schemas/employment-application.schema.ts'
+import type {
+  EmploymentApplicationOutput,
+} from '#/features/job-application/schemas/employment-application.schema.ts'
+import {
+  employmentApplicationSchema,
+} from '#/features/job-application/schemas/employment-application.schema.ts'
+import { formatIban } from '#/utils/bank.ts'
 import { getFieldErrors } from '#/utils/form.ts'
 import { truncate } from '#/utils/string.ts'
 import { logger } from '#server/integrations/logger.ts'
@@ -110,23 +115,21 @@ function buildMainInfoEmbed(jobTitle: string, data: EmploymentApplicationOutput)
     {
       name: 'Genre',
       value: data.gender === GENDER.FEMALE ? ':female_sign:' : ':male_sign:',
-      inline: true,
     },
-    { name: 'Âge', value: `${data.age}`, inline: true },
+    { name: 'Âge', value: `${data.age}` },
     {
       name: 'Adresse',
       value: `${data.address}${districtLabel ? ` (${districtLabel})` : ''}`,
     },
     { name: 'Numéro de téléphone', value: data.phone, inline: true },
+    { name: 'IBAN', value: '``' + formatIban(data.iban) + '``', inline: true },
     {
       name: 'Catholique pratiquant ?',
       value: data.isPracticingCatholic ? ':ballot_box_with_check:' : ':x:',
-      inline: true,
     },
     {
       name: 'Permis de conduire ?',
       value: data.hasDriverLicense ? ':ballot_box_with_check:' : ':x:',
-      inline: true,
     }
   )
 

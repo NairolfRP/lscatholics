@@ -11,6 +11,7 @@ import {
 import { DISTRICT_VALUES } from '#shared/constants/districts.constants.ts'
 import { GENDER_VALUES } from '#shared/constants/gender.ts'
 import { SPOKEN_LANGUAGE_VALUES } from '#shared/constants/languages.ts'
+import { individualIban } from '#shared/schemas/banking.schema.ts'
 import { addressSchema, districtSchema } from '#shared/schemas/location.schema.ts'
 import { ageSchema, nameSchema } from '#shared/schemas/person.schema.ts'
 import { phoneSchema } from '#shared/schemas/phone.schema.ts'
@@ -174,6 +175,7 @@ export const employmentApplicationSchema = z.object({
   district: districtSchema(DISTRICT_VALUES, 'district'),
   address: addressSchema(MAX.ADDRESS),
   phone: phoneSchema,
+  iban: individualIban,
   isPracticingCatholic: yesNoBooleanSchema,
   hasDriverLicense: yesNoBooleanSchema,
   applicationSource: applicationSourceSchema,
