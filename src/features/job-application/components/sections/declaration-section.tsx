@@ -1,11 +1,15 @@
-import { APPLICANT_STATEMENTS } from '#/features/job-application/constants/employment-application.constants.tsx'
-import { getEmploymentApplicationDefaults } from '#/features/job-application/utils/employment-application-defaults.ts'
+import {
+  APPLICANT_STATEMENTS,
+} from '#/features/job-application/constants/employment-application.constants.tsx'
+import {
+  employmentApplicationFormOptions,
+} from '#/features/job-application/form/employment-application-form-options.ts'
 import { FieldDescription, FieldLegend, FieldSet } from '#shared/components/ui/field.tsx'
 import { ScrollArea } from '#shared/components/ui/scroll-area.tsx'
 import { withForm } from '#shared/integrations/form/form-hook.ts'
 
 export const DeclarationSection = withForm({
-  defaultValues: getEmploymentApplicationDefaults(null),
+  ...employmentApplicationFormOptions,
   render: ({ form }) => (
     <FieldSet>
       <FieldLegend className="mb-5 w-full border-b pb-2 font-extrabold">

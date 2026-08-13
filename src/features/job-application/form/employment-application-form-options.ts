@@ -1,16 +1,20 @@
-import type { EmploymentApplicationInput } from '#/features/job-application/schemas/employment-application.schema.ts'
-import type { Character } from '#shared/types/character.types.ts'
+import { formOptions } from '@tanstack/react-form'
+import type {
+  EmploymentApplicationInput,
+} from '#/features/job-application/schemas/employment-application.schema.ts'
 
-export function getEmploymentApplicationDefaults(currentCharacter: Character | null | undefined) {
-  return {
-    firstname: currentCharacter?.firstname ?? '',
-    lastname: currentCharacter?.lastname ?? '',
+export const employmentApplicationFormOptions = formOptions({
+  formId: 'employment-application-submission-form',
+  defaultValues: {
+    firstname: '',
+    lastname: '',
     middleName: '',
     age: '',
     gender: undefined,
     district: '',
     address: '',
     phone: '',
+    iban: '',
     isPracticingCatholic: undefined,
     hasDriverLicense: undefined,
     applicationSource: {
@@ -26,5 +30,5 @@ export function getEmploymentApplicationDefaults(currentCharacter: Character | n
     applicantDeclarationAccepted: undefined,
     discordUsername: '',
     motivationsOOC: '',
-  } as unknown as EmploymentApplicationInput
-}
+  } as unknown as EmploymentApplicationInput,
+})

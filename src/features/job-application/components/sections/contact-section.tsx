@@ -1,10 +1,16 @@
-import { getEmploymentApplicationDefaults } from '#/features/job-application/utils/employment-application-defaults.ts'
+import {
+  employmentApplicationFormOptions,
+} from '#/features/job-application/form/employment-application-form-options.ts'
 import { FieldLegend, FieldSet } from '#shared/components/ui/field.tsx'
 import { withForm } from '#shared/integrations/form/form-hook.ts'
+import type { CharacterWithFaction } from '#shared/types/character.types.ts'
 
 export const ContactSection = withForm({
-  defaultValues: getEmploymentApplicationDefaults(null),
-  render: ({ form }) => (
+  ...employmentApplicationFormOptions,
+  props: {
+    currentCharacter: null as CharacterWithFaction | null | undefined,
+  },
+  render: ({ form, currentCharacter }) => (
     <FieldSet>
       <FieldLegend className="mb-5 w-full border-b pb-2 font-extrabold">
         Vos coordonnées
@@ -42,6 +48,17 @@ export const ContactSection = withForm({
               label="Numéro de téléphone"
               description="Le numéro doit contenir entre 3 et 8 chiffres."
               placeholder="12345678"
+              required
+              autoComplete="off"
+            />
+          )}
+        </form.AppField>
+
+        <form.AppField name="iban" defaultValue={currentCharacter?.bankRoutingNumber ?? ''}>
+          {(field) => (
+            <field.IbanField
+              label="IBAN"
+              description="Indiquez votre IBAN personnel pour les versements de salaires et de primes."
               required
               autoComplete="off"
             />

@@ -1,5 +1,9 @@
-import { EMPLOYMENT_APPLICATION_MAX_LENGTHS } from '#/features/job-application/constants/employment-application.constants.tsx'
-import { getEmploymentApplicationDefaults } from '#/features/job-application/utils/employment-application-defaults.ts'
+import {
+  EMPLOYMENT_APPLICATION_MAX_LENGTHS,
+} from '#/features/job-application/constants/employment-application.constants.tsx'
+import {
+  employmentApplicationFormOptions,
+} from '#/features/job-application/form/employment-application-form-options.ts'
 import {
   Accordion,
   AccordionContent,
@@ -13,7 +17,7 @@ import { withForm } from '#shared/integrations/form/form-hook.ts'
 const MAX_MOTIVATIONS = EMPLOYMENT_APPLICATION_MAX_LENGTHS.MOTIVATIONS
 
 export const OocSection = withForm({
-  defaultValues: getEmploymentApplicationDefaults(null),
+  ...employmentApplicationFormOptions,
   render: ({ form }) => (
     <Accordion
       multiple

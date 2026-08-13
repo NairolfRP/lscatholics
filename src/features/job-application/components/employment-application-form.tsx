@@ -1,15 +1,36 @@
+import { useSuspenseQuery } from '@tanstack/react-query'
+import { useParams } from '@tanstack/react-router'
 import { SendIcon } from 'lucide-react'
-import { EmploymentApplicationFormSkeleton } from '#/features/job-application/components/employment-application-form-skeleton.tsx'
+import {
+  EmploymentApplicationFormSkeleton,
+} from '#/features/job-application/components/employment-application-form-skeleton.tsx'
 import { ContactSection } from '#/features/job-application/components/sections/contact-section.tsx'
-import { DeclarationSection } from '#/features/job-application/components/sections/declaration-section.tsx'
-import { EducationSection } from '#/features/job-application/components/sections/education-section.tsx'
-import { ExperienceSection } from '#/features/job-application/components/sections/experience-section.tsx'
-import { IdentitySection } from '#/features/job-application/components/sections/identity-section.tsx'
+import {
+  DeclarationSection,
+} from '#/features/job-application/components/sections/declaration-section.tsx'
+import {
+  EducationSection,
+} from '#/features/job-application/components/sections/education-section.tsx'
+import {
+  ExperienceSection,
+} from '#/features/job-application/components/sections/experience-section.tsx'
+import {
+  IdentitySection,
+} from '#/features/job-application/components/sections/identity-section.tsx'
 import { OocSection } from '#/features/job-application/components/sections/ooc-section.tsx'
-import { ScreeningSection } from '#/features/job-application/components/sections/screening-section.tsx'
-import { employmentApplicationSchema } from '#/features/job-application/schemas/employment-application.schema.ts'
-import { submitEmploymentApplicationFn } from '#/features/job-application/server-fn/employment-application.functions.ts'
-import { getEmploymentApplicationDefaults } from '#/features/job-application/utils/employment-application-defaults.ts'
+import {
+  ScreeningSection,
+} from '#/features/job-application/components/sections/screening-section.tsx'
+import {
+  employmentApplicationFormOptions,
+} from '#/features/job-application/form/employment-application-form-options.ts'
+import {
+  employmentApplicationSchema,
+} from '#/features/job-application/schemas/employment-application.schema.ts'
+import {
+  submitEmploymentApplicationFn,
+} from '#/features/job-application/server-fn/employment-application.functions.ts'
+import { singleJobPostingQueryOptions } from '#/features/job-posting/queries.ts'
 import { RequireAuth } from '#shared/components/auth/require-auth.tsx'
 import {
   Card,
@@ -25,26 +46,22 @@ import { toast } from '#shared/components/ui/toast.tsx'
 import { useGameContext } from '#shared/hooks/use-game-context.ts'
 import { useAppForm } from '#shared/integrations/form/form-hook.ts'
 
-export function EmploymentApplicationForm({
-  jobTitle,
-  jobSlug,
-}: {
-  jobTitle: string
-  jobSlug: string
-}) {
+export function EmploymentApplicationForm() {
+  const { slug } = useParams({ from: '/_app/job/$slug/apply' })
+  const { data: job } = useSuspenseQuery(singleJobPostingQueryOptions(slug))
+
   const { currentCharacter, isLoading } = useGameContext()
 
   const form = useAppForm({
-    formId: 'employment-application-submission-form',
+    ...employmentApplicationFormOptions,
     validators: {
       onChange: employmentApplicationSchema,
       onSubmit: employmentApplicationSchema,
     },
-    defaultValues: getEmploymentApplicationDefaults(currentCharacter),
     onSubmit: async ({ value, formApi }) => {
       try {
         const result = await submitEmploymentApplicationFn({
-          data: { slug: jobSlug, data: value },
+          data: { slug, data: value },
         })
 
         if (!result.success) {
@@ -62,7 +79,7 @@ export function EmploymentApplicationForm({
         toast.add({
           type: 'success',
           title: 'Candidature envoyée',
-          description: `Votre candidature pour le poste de ${jobTitle} a bien été transmise. Le Département RH vous recontactera dans les plus brefs délais.`,
+          description: `Votre candidature pour le poste de ${job.title} a bien été transmise. Le Département RH vous recontactera dans les plus brefs délais.`,
         })
         formApi.reset()
       } catch {
@@ -74,7 +91,7 @@ export function EmploymentApplicationForm({
   return (
     <Card className="rounded-2xl">
       <CardHeader>
-        <CardTitle className="text-xl font-bold">Candidature — {jobTitle}</CardTitle>
+        <CardTitle className="text-xl font-bold">Candidature — {job.title}</CardTitle>
         <CardDescription>
           Remplissez le formulaire ci-dessous pour postuler. Seuls les champs marqués d'un
           astérisque sont obligatoires. Vos informations restent strictement confidentielles.
@@ -95,7 +112,7 @@ export function EmploymentApplicationForm({
             <CardContent>
               <FieldGroup>
                 <IdentitySection form={form} currentCharacter={currentCharacter} />
-                <ContactSection form={form} />
+                <ContactSection form={form} currentCharacter={currentCharacter} />
                 <ScreeningSection form={form} />
                 <EducationSection form={form} />
                 <ExperienceSection form={form} />

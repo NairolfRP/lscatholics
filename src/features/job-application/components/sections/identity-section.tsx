@@ -1,33 +1,32 @@
-import { genderOptions } from '#/features/job-application/constants/employment-application.constants.tsx'
-import { getEmploymentApplicationDefaults } from '#/features/job-application/utils/employment-application-defaults.ts'
+import {
+  genderOptions,
+} from '#/features/job-application/constants/employment-application.constants.tsx'
+import {
+  employmentApplicationFormOptions,
+} from '#/features/job-application/form/employment-application-form-options.ts'
 import { FieldLegend, FieldSet } from '#shared/components/ui/field.tsx'
 import { withForm } from '#shared/integrations/form/form-hook.ts'
 import type { Character } from '#shared/types/character.types.ts'
 
 export const IdentitySection = withForm({
-  defaultValues: getEmploymentApplicationDefaults(null),
-  props: {} as { currentCharacter: Character | null | undefined },
+  ...employmentApplicationFormOptions,
+  props: {
+    currentCharacter: null as Character | null | undefined,
+  },
   render: ({ form, currentCharacter }) => (
     <FieldSet>
       <FieldLegend className="mb-5 w-full border-b pb-2 font-extrabold">Votre identité</FieldLegend>
 
       <div className="grid grid-cols-1 items-start gap-7 sm:grid-cols-2">
-        <form.AppField name="firstname">
+        <form.AppField name="firstname" defaultValue={currentCharacter?.firstname ?? ''}>
           {(field) => (
-            <field.InputField
-              key={`current-character-firstname-${currentCharacter?.id ?? 'unknown'}`}
-              label="Prénom"
-              placeholder="John"
-              required
-              autoComplete="off"
-            />
+            <field.InputField label="Prénom" placeholder="John" required autoComplete="off" />
           )}
         </form.AppField>
 
-        <form.AppField name="lastname">
+        <form.AppField name="lastname" defaultValue={currentCharacter?.lastname ?? ''}>
           {(field) => (
             <field.InputField
-              key={`current-character-lastname-${currentCharacter?.id ?? 'unknown'}`}
               label="Nom de famille"
               placeholder="Doe"
               required

@@ -2,8 +2,12 @@ import { useSuspenseQuery } from '@tanstack/react-query'
 import { Link, useParams } from '@tanstack/react-router'
 import { isPast } from 'date-fns'
 import { AlertCircleIcon, ArrowLeftIcon } from 'lucide-react'
-import { EmploymentApplicationForm } from '#/features/job-application/components/employment-application-form.tsx'
-import { EmploymentApplicationSidebar } from '#/features/job-application/components/employment-application-sidebar.tsx'
+import {
+  EmploymentApplicationForm,
+} from '#/features/job-application/components/employment-application-form.tsx'
+import {
+  EmploymentApplicationSidebar,
+} from '#/features/job-application/components/employment-application-sidebar.tsx'
 import { singleJobPostingQueryOptions } from '#/features/job-posting/queries.ts'
 import { Alert, AlertDescription, AlertTitle } from '#shared/components/ui/alert.tsx'
 import { buttonVariants } from '#shared/components/ui/button.tsx'
@@ -68,7 +72,7 @@ export function EmploymentApplicationPage() {
                   </CardDescription>
                 </CardHeader>
               </Card>
-              <EmploymentApplicationForm jobTitle={job.title} jobSlug={slug} />
+              <EmploymentApplicationForm />
             </div>
             <div className="flex flex-col gap-5 lg:sticky lg:top-28 lg:col-span-2">
               <EmploymentApplicationSidebar job={job} />

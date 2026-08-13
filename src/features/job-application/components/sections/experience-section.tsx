@@ -1,6 +1,10 @@
 import { BriefcaseBusinessIcon, PlusIcon, TrashIcon } from 'lucide-react'
-import { EMPLOYMENT_APPLICATION_MAX_LENGTHS } from '#/features/job-application/constants/employment-application.constants.tsx'
-import { getEmploymentApplicationDefaults } from '#/features/job-application/utils/employment-application-defaults.ts'
+import {
+  EMPLOYMENT_APPLICATION_MAX_LENGTHS,
+} from '#/features/job-application/constants/employment-application.constants.tsx'
+import {
+  employmentApplicationFormOptions,
+} from '#/features/job-application/form/employment-application-form-options.ts'
 import { Button } from '#shared/components/ui/button.tsx'
 import { Empty, EmptyDescription, EmptyMedia, EmptyTitle } from '#shared/components/ui/empty.tsx'
 import { FieldDescription, FieldLegend, FieldSet } from '#shared/components/ui/field.tsx'
@@ -16,7 +20,7 @@ const EMPTY_EXPERIENCE = {
 } as const
 
 export const ExperienceSection = withForm({
-  defaultValues: getEmploymentApplicationDefaults(null),
+  ...employmentApplicationFormOptions,
   render: ({ form }) => (
     <FieldSet>
       <FieldLegend className="mb-5 w-full border-b pb-2 font-extrabold">

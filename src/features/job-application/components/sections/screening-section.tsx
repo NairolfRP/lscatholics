@@ -2,7 +2,9 @@ import {
   APPLICATION_SOURCE,
   applicationSourceOptions,
 } from '#/features/job-application/constants/employment-application.constants.tsx'
-import { getEmploymentApplicationDefaults } from '#/features/job-application/utils/employment-application-defaults.ts'
+import {
+  employmentApplicationFormOptions,
+} from '#/features/job-application/form/employment-application-form-options.ts'
 import {
   FieldDescription,
   FieldGroup,
@@ -29,7 +31,7 @@ const YES_NO_QUESTIONS: readonly {
 ]
 
 export const ScreeningSection = withForm({
-  defaultValues: getEmploymentApplicationDefaults(null),
+  ...employmentApplicationFormOptions,
   render: ({ form }) => (
     <>
       <FieldSet>
