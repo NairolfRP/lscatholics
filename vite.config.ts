@@ -9,8 +9,6 @@ import { defineConfig, loadEnv } from 'vite'
 
 const isDev = process.env.NODE_ENV !== 'production'
 
-const shouldBuildSourcemaps = process.env.BUILD_SOURCEMAPS === 'true'
-
 const config = defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
 
@@ -21,38 +19,13 @@ const config = defineConfig(({ mode }) => {
     },
     env,
     build: {
-      chunkSizeWarningLimit: 4_000,
       minify: 'oxc',
-      sourcemap: shouldBuildSourcemaps,
-      reportCompressedSize: false,
-      rolldownOptions: {
-        output: {
-          codeSplitting: {
-            groups: [
-              {
-                test: /[\\/]node_modules[\\/]@tanstack[\\/](react-start|start-)/,
-                name: 'tanstack-start',
-              },
-              {
-                test: /[\\/]node_modules[\\/]@tanstack[\\/](react-router|router-core|history)/,
-                name: 'tanstack-router',
-              },
-              {
-                test: /[\\/]node_modules[\\/]@tanstack[\\/](react-query|query-core)/,
-                name: 'tanstack-query',
-              },
-              {
-                test: /[\\/]node_modules[\\/](react-dom|react|scheduler)[\\/]/,
-                name: 'react',
-              },
-            ],
-          },
-        },
-      },
+      sourcemap: false,
     },
     plugins: [
       ...(isDev ? [devtools()] : []),
       nitro({
+        sourcemap: false,
         experimental: { tasks: true },
         tasks: {
           cleanup: {
