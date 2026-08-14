@@ -60,7 +60,7 @@ describe('donationSchema', () => {
 
   it('rejects an amount below the minimum', () => {
     expect(() => donationSchema.parse({ ...validInput, amount: 199 })).toThrow(
-      /Le montant minimum pour un don est de 200/
+      /Le montant minimum pour un don est de \$200/
     )
   })
 

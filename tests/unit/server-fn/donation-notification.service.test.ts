@@ -64,7 +64,7 @@ describe('sendPrivateDonationNotification', () => {
                 { name: 'Ethnie', value: 'Blanc' },
                 { name: 'Téléphone', value: '123456' },
                 { name: 'Adresse', value: '12 Ginger Street (Little Seoul)' },
-                { name: 'Montant du don', value: expect.stringMatching(/500.*\$US/) },
+                { name: 'Montant du don', value: expect.stringMatching(/\$500/) },
                 {
                   name: 'Le don peut-il être rendu public ?',
                   value: '✅ OUI',
