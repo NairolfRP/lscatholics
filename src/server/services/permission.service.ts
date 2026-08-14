@@ -25,6 +25,11 @@ const FACTION_RANK_RULES = [
     minRank: env.ROLEPLAY_FACTION_LOWEST_LEADERSHIP_RANK,
     permission: { dashboard: ['manage'] },
   },
+  {
+    factionId: env.ROLEPLAY_FACTION_ID,
+    minRank: env.ROLEPLAY_FACTION_MINIMAL_RANK_FINANCES,
+    permission: { finances: ['read', 'transaction'] },
+  },
 ]
 
 function mergePermissions(base: PermissionMap, extra: PermissionMap): PermissionMap {

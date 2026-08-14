@@ -243,3 +243,133 @@ describe('getPayment', () => {
     }
   )
 })
+
+describe('getBalance', () => {
+  it('returns the merchant account balance from the API response', async () => {
+    const { fleecaClient } = await import('#server/services/fleeca.service.ts')
+    hoisted.get.mockImplementation(() => ({
+      json: () => ({
+        success: true,
+        data: { account_name: 'LS Catholics', routing_number: '010012345', balance: 100000 },
+      }),
+    }))
+
+    const balance = await fleecaClient.getBalance()
+
+    expect(balance).toBe(100000)
+    expect(hoisted.get).toHaveBeenCalledWith('balance')
+  })
+
+  it('throws a PROCESSING error when the API response has no data', async () => {
+    const { fleecaClient, FleecaClientError } = await import('#server/services/fleeca.service.ts')
+    hoisted.get.mockImplementation(() => ({ json: () => null }))
+
+    await expect(fleecaClient.getBalance()).rejects.toBeInstanceOf(FleecaClientError)
+    await expect(fleecaClient.getBalance()).rejects.toMatchObject({ code: 'PROCESSING' })
+  })
+
+  it('throws a UNCONFIGURED error when no API key is set', async () => {
+    vi.stubEnv('FLEECA_API_KEY', '')
+    vi.resetModules()
+    const { fleecaClient } = await import('#server/services/fleeca.service.ts')
+
+    await expect(fleecaClient.getBalance()).rejects.toMatchObject({ code: 'UNCONFIGURED' })
+  })
+
+  it('maps a network error to a NETWORK FleecaClientError', async () => {
+    const { fleecaClient } = await import('#server/services/fleeca.service.ts')
+    hoisted.get.mockImplementation(() => ({
+      json: () => Promise.reject({ isNetworkError: true }),
+    }))
+
+    await expect(fleecaClient.getBalance()).rejects.toMatchObject({ code: 'NETWORK' })
+  })
+
+  it('maps an HTTP error to a HTTP FleecaClientError', async () => {
+    const { fleecaClient } = await import('#server/services/fleeca.service.ts')
+    hoisted.get.mockImplementation(() => ({
+      json: () => Promise.reject({ isHTTPError: true, response: { status: 422 } }),
+    }))
+
+    await expect(fleecaClient.getBalance()).rejects.toMatchObject({ code: 'HTTP' })
+  })
+})
+
+describe('makeTransfer', () => {
+  it('creates an outbound transfer through the Fleeca API', async () => {
+    const { fleecaClient } = await import('#server/services/fleeca.service.ts')
+    hoisted.post.mockImplementation(() => ({
+      json: () => ({
+        new_balance: 99500,
+        data: [
+          {
+            transfer_id: 42,
+            routing: '010012345',
+            recipient_name: 'Jean Valjean',
+            payer_name: 'LS Catholics',
+            status: 'success',
+            description: 'Achat de fournitures',
+          },
+        ],
+      }),
+    }))
+
+    const result = await fleecaClient.makeTransfer({
+      routing: '010012345',
+      amount: 500,
+      description: 'Achat de fournitures',
+    })
+
+    expect(result).toEqual({
+      newBalance: 99500,
+      data: {
+        transferId: 42,
+        routing: '010012345',
+        recipientName: 'Jean Valjean',
+        payerName: 'LS Catholics',
+        status: 'success',
+        description: 'Achat de fournitures',
+      },
+    })
+    expect(hoisted.post).toHaveBeenCalledWith('transfers', {
+      body: JSON.stringify({
+        recipients: [{ routing: '010012345', amount: 500, description: 'Achat de fournitures' }],
+      }),
+    })
+  })
+
+  it('throws a PROCESSING error when the API response has no body', async () => {
+    const { fleecaClient, FleecaClientError } = await import('#server/services/fleeca.service.ts')
+    hoisted.post.mockImplementation(() => ({ json: () => null }))
+
+    await expect(
+      fleecaClient.makeTransfer({ routing: '010012345', amount: 500 })
+    ).rejects.toBeInstanceOf(FleecaClientError)
+    await expect(
+      fleecaClient.makeTransfer({ routing: '010012345', amount: 500 })
+    ).rejects.toMatchObject({ code: 'PROCESSING' })
+  })
+
+  it('throws a PROCESSING error when the API response has no transfer data', async () => {
+    const { fleecaClient, FleecaClientError } = await import('#server/services/fleeca.service.ts')
+    hoisted.post.mockImplementation(() => ({ json: () => ({ new_balance: 100000, data: [] }) }))
+
+    await expect(
+      fleecaClient.makeTransfer({ routing: '010012345', amount: 500 })
+    ).rejects.toBeInstanceOf(FleecaClientError)
+    await expect(
+      fleecaClient.makeTransfer({ routing: '010012345', amount: 500 })
+    ).rejects.toMatchObject({ code: 'PROCESSING' })
+  })
+
+  it('maps an HTTP error to a HTTP FleecaClientError', async () => {
+    const { fleecaClient } = await import('#server/services/fleeca.service.ts')
+    hoisted.post.mockImplementation(() => ({
+      json: () => Promise.reject({ isHTTPError: true, response: { status: 422 } }),
+    }))
+
+    await expect(
+      fleecaClient.makeTransfer({ routing: '010012345', amount: 500 })
+    ).rejects.toMatchObject({ code: 'HTTP' })
+  })
+})

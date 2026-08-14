@@ -1,6 +1,6 @@
 import { env } from '#/config/env.server.ts'
 import type { DonationNotificationData } from '#/features/donate/types/donate.types.ts'
-import { formatDonationAmount } from '#/features/donate/utils/format.ts'
+import { formatCurrency } from '#/utils/number.ts'
 import { logger } from '#server/integrations/logger.ts'
 import type { DiscordEmbed } from '#server/services/discord.service.ts'
 import { sendWebhookMessage } from '#server/services/discord.service.ts'
@@ -91,7 +91,7 @@ function buildPrivateEmbed(data: DonationNotificationData): DiscordEmbed {
   }
 
   fields.push(
-    { name: 'Montant du don', value: formatDonationAmount(data.amount) },
+    { name: 'Montant du don', value: formatCurrency(data.amount) },
     {
       name: 'Le don peut-il être rendu public ?',
       value: data.anonymous ? '⛔ NON' : '✅ OUI',
@@ -121,7 +121,7 @@ function buildPublicDescription(data: DonationNotificationData): string {
     ? `l'organisation **${data.organizationName ?? ''}**, et son représentant **${data.firstname} ${data.lastname}**`
     : `**${data.firstname} ${data.lastname}**`
   const age = data.age ? ` (${data.age} ans)` : ''
-  const formattedAmount = formatDonationAmount(data.amount)
+  const formattedAmount = formatCurrency(data.amount)
   const suffix = data.isOrganization
     ? `Merci pour votre engagement ! Nous prions pour **${data.organizationName}**. N'oubliez pas de prier pour nous et tout le Peuple de Dieu, particulièrement pour les plus vulnérables 💖`
     : "Merci pour votre générosité et que la joie de Dieu vous comble. N'oubliez pas de prier pour nous et tout le Peuple de Dieu, particulièrement pour les plus vulnérables 💖"

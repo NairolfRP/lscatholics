@@ -2,6 +2,7 @@ import {
   BriefcaseBusinessIcon,
   CalendarIcon,
   FileTextIcon,
+  LandmarkIcon,
   LayoutDashboardIcon,
   UsersIcon,
 } from 'lucide-react'
@@ -31,6 +32,12 @@ export const dashboardMenuItems: DashboardMenuItem[] = [
     icon: BriefcaseBusinessIcon,
     to: '/dashboard/job-openings',
     permissions: { job: ['read'] },
+  },
+  {
+    label: 'Finances',
+    icon: LandmarkIcon,
+    to: '/dashboard/finances',
+    permissions: { finances: ['read'] },
   },
   {
     label: 'Utilisateurs',

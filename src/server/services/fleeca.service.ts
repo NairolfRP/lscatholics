@@ -57,6 +57,33 @@ export interface FleecaPaymentDetails {
   updated_at: string
 }
 
+export interface FleccaMerchantAccountBalanceResponse {
+  success: true
+  data: {
+    account_name: string
+    routing_number: string
+    balance: number
+  }
+}
+
+export interface TransferPayload {
+  routing: string
+  amount: number
+  description?: string
+}
+
+export interface OutboundTransfersReponse {
+  new_balance: number
+  data: {
+    transfer_id: number
+    routing: string
+    recipient_name: string | null
+    payer_name: string
+    status: 'success' | 'failed'
+    description?: string
+  }[]
+}
+
 export class FleecaClientError extends Error {
   readonly status?: number
 
@@ -158,6 +185,62 @@ class FleecaClient {
       return res.data
     } catch (err) {
       throw this.#toClientError(err, 'getPayment')
+    }
+  }
+
+  async getBalance(): Promise<number> {
+    try {
+      const res = await this.#client()
+        .get('balance')
+        .json<FleccaMerchantAccountBalanceResponse | null>()
+      if (!res) {
+        throw new FleecaClientError(`Fleeca API response for balance has no data`, 'PROCESSING')
+      }
+      return res.data.balance
+    } catch (err) {
+      throw this.#toClientError(err, 'getBalance')
+    }
+  }
+
+  async makeTransfer({ routing, amount, description }: TransferPayload) {
+    try {
+      const res = await this.#client()
+        .post('transfers', {
+          body: JSON.stringify({
+            recipients: [{ routing, amount, description }],
+          }),
+        })
+        .json<OutboundTransfersReponse | null>()
+
+      if (!res) {
+        throw new FleecaClientError(
+          `Fleeca API response for makeTransfer has no body`,
+          'PROCESSING'
+        )
+      }
+
+      if (res.data.length === 0) {
+        throw new FleecaClientError(
+          `Fleeca API response for makeTransfer has no transfer data`,
+          'PROCESSING'
+        )
+      }
+
+      const data = res.data[0]
+
+      return {
+        newBalance: res.new_balance,
+        data: {
+          transferId: data.transfer_id,
+          routing: data.routing,
+          recipientName: data.recipient_name,
+          payerName: data.payer_name,
+          status: data.status,
+          description: data.description,
+        },
+      }
+    } catch (err) {
+      throw this.#toClientError(err, 'makeTransfer')
     }
   }
 

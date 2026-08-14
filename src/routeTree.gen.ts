@@ -48,6 +48,8 @@ import { Route as AppServiceSlugRouteImport } from './routes/_app/service/$slug'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 import { Route as DashboardEventsIndexRouteImport } from './routes/dashboard/events/index'
 import { Route as DashboardEventsCreateRouteImport } from './routes/dashboard/events/create'
+import { Route as DashboardFinancesIndexRouteImport } from './routes/dashboard/finances/index'
+import { Route as DashboardFinancesTransferRouteImport } from './routes/dashboard/finances/transfer'
 import { Route as DashboardJobOpeningsIndexRouteImport } from './routes/dashboard/job-openings/index'
 import { Route as DashboardJobOpeningsCreateRouteImport } from './routes/dashboard/job-openings/create'
 import { Route as DashboardPostsIndexRouteImport } from './routes/dashboard/posts/index'
@@ -261,6 +263,17 @@ const DashboardEventsCreateRoute = DashboardEventsCreateRouteImport.update({
   path: '/events/create',
   getParentRoute: () => DashboardRouteRoute,
 } as any)
+const DashboardFinancesIndexRoute = DashboardFinancesIndexRouteImport.update({
+  id: '/finances/',
+  path: '/finances/',
+  getParentRoute: () => DashboardRouteRoute,
+} as any)
+const DashboardFinancesTransferRoute =
+  DashboardFinancesTransferRouteImport.update({
+    id: '/finances/transfer',
+    path: '/finances/transfer',
+    getParentRoute: () => DashboardRouteRoute,
+  } as any)
 const DashboardJobOpeningsIndexRoute =
   DashboardJobOpeningsIndexRouteImport.update({
     id: '/job-openings/',
@@ -393,12 +406,14 @@ export interface FileRoutesByFullPath {
   '/service/$slug': typeof AppServiceSlugRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/dashboard/events/create': typeof DashboardEventsCreateRoute
+  '/dashboard/finances/transfer': typeof DashboardFinancesTransferRoute
   '/dashboard/job-openings/create': typeof DashboardJobOpeningsCreateRoute
   '/dashboard/posts/create': typeof DashboardPostsCreateRoute
   '/account/': typeof AppAccountIndexRoute
   '/charities/': typeof AppCharitiesIndexRoute
   '/decrees/': typeof AppDecreesIndexRoute
   '/dashboard/events/': typeof DashboardEventsIndexRoute
+  '/dashboard/finances/': typeof DashboardFinancesIndexRoute
   '/dashboard/job-openings/': typeof DashboardJobOpeningsIndexRoute
   '/dashboard/posts/': typeof DashboardPostsIndexRoute
   '/dashboard/users/': typeof DashboardUsersIndexRoute
@@ -446,12 +461,14 @@ export interface FileRoutesByTo {
   '/service/$slug': typeof AppServiceSlugRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/dashboard/events/create': typeof DashboardEventsCreateRoute
+  '/dashboard/finances/transfer': typeof DashboardFinancesTransferRoute
   '/dashboard/job-openings/create': typeof DashboardJobOpeningsCreateRoute
   '/dashboard/posts/create': typeof DashboardPostsCreateRoute
   '/account': typeof AppAccountIndexRoute
   '/charities': typeof AppCharitiesIndexRoute
   '/decrees': typeof AppDecreesIndexRoute
   '/dashboard/events': typeof DashboardEventsIndexRoute
+  '/dashboard/finances': typeof DashboardFinancesIndexRoute
   '/dashboard/job-openings': typeof DashboardJobOpeningsIndexRoute
   '/dashboard/posts': typeof DashboardPostsIndexRoute
   '/dashboard/users': typeof DashboardUsersIndexRoute
@@ -506,12 +523,14 @@ export interface FileRoutesById {
   '/_app/service/$slug': typeof AppServiceSlugRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/dashboard/events/create': typeof DashboardEventsCreateRoute
+  '/dashboard/finances/transfer': typeof DashboardFinancesTransferRoute
   '/dashboard/job-openings/create': typeof DashboardJobOpeningsCreateRoute
   '/dashboard/posts/create': typeof DashboardPostsCreateRoute
   '/_app/account/': typeof AppAccountIndexRoute
   '/_app/charities/': typeof AppCharitiesIndexRoute
   '/_app/decrees/': typeof AppDecreesIndexRoute
   '/dashboard/events/': typeof DashboardEventsIndexRoute
+  '/dashboard/finances/': typeof DashboardFinancesIndexRoute
   '/dashboard/job-openings/': typeof DashboardJobOpeningsIndexRoute
   '/dashboard/posts/': typeof DashboardPostsIndexRoute
   '/dashboard/users/': typeof DashboardUsersIndexRoute
@@ -566,12 +585,14 @@ export interface FileRouteTypes {
     | '/service/$slug'
     | '/api/auth/$'
     | '/dashboard/events/create'
+    | '/dashboard/finances/transfer'
     | '/dashboard/job-openings/create'
     | '/dashboard/posts/create'
     | '/account/'
     | '/charities/'
     | '/decrees/'
     | '/dashboard/events/'
+    | '/dashboard/finances/'
     | '/dashboard/job-openings/'
     | '/dashboard/posts/'
     | '/dashboard/users/'
@@ -619,12 +640,14 @@ export interface FileRouteTypes {
     | '/service/$slug'
     | '/api/auth/$'
     | '/dashboard/events/create'
+    | '/dashboard/finances/transfer'
     | '/dashboard/job-openings/create'
     | '/dashboard/posts/create'
     | '/account'
     | '/charities'
     | '/decrees'
     | '/dashboard/events'
+    | '/dashboard/finances'
     | '/dashboard/job-openings'
     | '/dashboard/posts'
     | '/dashboard/users'
@@ -678,12 +701,14 @@ export interface FileRouteTypes {
     | '/_app/service/$slug'
     | '/api/auth/$'
     | '/dashboard/events/create'
+    | '/dashboard/finances/transfer'
     | '/dashboard/job-openings/create'
     | '/dashboard/posts/create'
     | '/_app/account/'
     | '/_app/charities/'
     | '/_app/decrees/'
     | '/dashboard/events/'
+    | '/dashboard/finances/'
     | '/dashboard/job-openings/'
     | '/dashboard/posts/'
     | '/dashboard/users/'
@@ -988,6 +1013,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardEventsCreateRouteImport
       parentRoute: typeof DashboardRouteRoute
     }
+    '/dashboard/finances/': {
+      id: '/dashboard/finances/'
+      path: '/finances'
+      fullPath: '/dashboard/finances/'
+      preLoaderRoute: typeof DashboardFinancesIndexRouteImport
+      parentRoute: typeof DashboardRouteRoute
+    }
+    '/dashboard/finances/transfer': {
+      id: '/dashboard/finances/transfer'
+      path: '/finances/transfer'
+      fullPath: '/dashboard/finances/transfer'
+      preLoaderRoute: typeof DashboardFinancesTransferRouteImport
+      parentRoute: typeof DashboardRouteRoute
+    }
     '/dashboard/job-openings/': {
       id: '/dashboard/job-openings/'
       path: '/job-openings'
@@ -1134,9 +1173,11 @@ interface DashboardRouteRouteChildren {
   DashboardUsersRouteRoute: typeof DashboardUsersRouteRouteWithChildren
   DashboardIndexRoute: typeof DashboardIndexRoute
   DashboardEventsCreateRoute: typeof DashboardEventsCreateRoute
+  DashboardFinancesTransferRoute: typeof DashboardFinancesTransferRoute
   DashboardJobOpeningsCreateRoute: typeof DashboardJobOpeningsCreateRoute
   DashboardPostsCreateRoute: typeof DashboardPostsCreateRoute
   DashboardEventsIndexRoute: typeof DashboardEventsIndexRoute
+  DashboardFinancesIndexRoute: typeof DashboardFinancesIndexRoute
   DashboardJobOpeningsIndexRoute: typeof DashboardJobOpeningsIndexRoute
   DashboardPostsIndexRoute: typeof DashboardPostsIndexRoute
   DashboardEventsEditIdRoute: typeof DashboardEventsEditIdRoute
@@ -1151,9 +1192,11 @@ const DashboardRouteRouteChildren: DashboardRouteRouteChildren = {
   DashboardUsersRouteRoute: DashboardUsersRouteRouteWithChildren,
   DashboardIndexRoute: DashboardIndexRoute,
   DashboardEventsCreateRoute: DashboardEventsCreateRoute,
+  DashboardFinancesTransferRoute: DashboardFinancesTransferRoute,
   DashboardJobOpeningsCreateRoute: DashboardJobOpeningsCreateRoute,
   DashboardPostsCreateRoute: DashboardPostsCreateRoute,
   DashboardEventsIndexRoute: DashboardEventsIndexRoute,
+  DashboardFinancesIndexRoute: DashboardFinancesIndexRoute,
   DashboardJobOpeningsIndexRoute: DashboardJobOpeningsIndexRoute,
   DashboardPostsIndexRoute: DashboardPostsIndexRoute,
   DashboardEventsEditIdRoute: DashboardEventsEditIdRoute,

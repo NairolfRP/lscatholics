@@ -3,7 +3,7 @@ import {
   DONATION_MIN_AMOUNT,
   FLEECA_MAX_AMOUNT,
 } from '#/features/donate/constants/donate.constants.ts'
-import { formatDonationAmount } from '#/features/donate/utils/format.ts'
+import { formatCurrency } from '#/utils/number.ts'
 import { DISTRICT_VALUES } from '#shared/constants/districts.constants.ts'
 import { ETHNIC_GROUP_VALUES } from '#shared/constants/ethnicity.ts'
 import { emptyToNull, optionalEnumSchema } from '#shared/schemas/utils.schema.ts'
@@ -18,12 +18,10 @@ const amountSchema = z
         : 'Le montant doit être un nombre entier valide.',
   })
   .min(DONATION_MIN_AMOUNT, {
-    error: (iss) =>
-      `Le montant minimum pour un don est de ${formatDonationAmount(Number(iss.minimum))}.`,
+    error: (iss) => `Le montant minimum pour un don est de ${formatCurrency(Number(iss.minimum))}.`,
   })
   .max(FLEECA_MAX_AMOUNT, {
-    error: (iss) =>
-      `Le montant maximum pour un don est de ${formatDonationAmount(Number(iss.maximum))}.`,
+    error: (iss) => `Le montant maximum pour un don est de ${formatCurrency(Number(iss.maximum))}.`,
   })
 
 const nameSchema = (label: string) =>

@@ -1,0 +1,10 @@
+export const BANK_TRANSFER_FORM_MAX_LENGTH = Object.freeze({
+  AMOUNT: 1_000_000,
+  DESCRIPTION: 50,
+  COMMENT: 1000,
+})
+
+export const BANK_TRANSFER_FORM_MIN_LENGTH = Object.freeze({
+  AMOUNT: 500,
+  DESCRIPTION: 2,
+})

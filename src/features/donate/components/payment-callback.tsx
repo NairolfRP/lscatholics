@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { useSearch } from '@tanstack/react-router'
-import { formatDonationAmount } from '#/features/donate/utils/format.ts'
+import { formatCurrency } from '#/utils/number.ts'
 import {
   Card,
   CardContent,
@@ -186,7 +186,7 @@ function getTitle(status: PaymentStatus): string {
 }
 
 function getMessage(status: PaymentStatus, amount?: number): string {
-  const formattedAmount = typeof amount === 'number' ? formatDonationAmount(amount) : ''
+  const formattedAmount = typeof amount === 'number' ? formatCurrency(amount) : ''
 
   switch (status) {
     case 'payment_successful':

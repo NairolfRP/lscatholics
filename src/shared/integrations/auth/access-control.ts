@@ -7,6 +7,7 @@ const statement = {
   post: ['create', 'read', 'update', 'delete'],
   event: ['create', 'read', 'update', 'delete'],
   job: ['create', 'read', 'update', 'delete'],
+  finances: ['read', 'transaction'],
 } as const
 
 export const ac = createAccessControl(statement)
@@ -18,6 +19,7 @@ export const ROLE_PERMISSIONS = {
     post: [],
     event: [],
     job: [],
+    finances: [],
   },
   admin: {
     ...adminAc.statements,
@@ -25,6 +27,7 @@ export const ROLE_PERMISSIONS = {
     post: ['create', 'read', 'update', 'delete'],
     event: ['create', 'read', 'update', 'delete'],
     job: ['create', 'read', 'update', 'delete'],
+    finances: ['read'],
   },
 } as const
 
