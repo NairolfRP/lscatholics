@@ -13,6 +13,7 @@ export function getDonationDefaults(currentCharacter: Character | null | undefin
     district: '',
     isOrganization: false,
     organizationName: '',
+    message: '',
     anonymous: false,
     fleecaConfirmation: false,
   } as unknown as DonationInput

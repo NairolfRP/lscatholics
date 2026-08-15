@@ -22,6 +22,7 @@ const data: DonationNotificationData = {
   district: 'little_seoul',
   isOrganization: false,
   organizationName: '',
+  message: '',
   anonymous: false,
 }
 

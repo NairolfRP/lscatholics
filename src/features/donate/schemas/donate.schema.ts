@@ -9,6 +9,7 @@ import { ETHNIC_GROUP_VALUES } from '#shared/constants/ethnicity.ts'
 import { emptyToNull, optionalEnumSchema } from '#shared/schemas/utils.schema.ts'
 
 const ORGANIZATION_NAME_MAX = 100
+const DONATION_MESSAGE_MAX = 280
 
 const amountSchema = z
   .int({
@@ -105,6 +106,14 @@ export const donationSchema = z
       .trim()
       .max(ORGANIZATION_NAME_MAX, {
         error: `Le nom de l'organisation ne doit pas dépasser ${ORGANIZATION_NAME_MAX} caractères.`,
+      })
+      .optional()
+      .transform((value) => (value ? value : undefined)),
+    message: z
+      .string()
+      .trim()
+      .max(DONATION_MESSAGE_MAX, {
+        error: `Le message ne doit pas dépasser ${DONATION_MESSAGE_MAX} caractères.`,
       })
       .optional()
       .transform((value) => (value ? value : undefined)),

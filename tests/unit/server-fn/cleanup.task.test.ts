@@ -77,6 +77,7 @@ describe('cleanup task', () => {
       district: 'little_seoul',
       isOrganization: false,
       organizationName: '',
+      message: '',
       anonymous: false,
     }
 

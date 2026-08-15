@@ -20,6 +20,20 @@ export const DonateOptionsSection = withForm({
 
       <Separator />
 
+      <form.AppField name="message">
+        {(field) => (
+          <field.TextareaField
+            label="Message"
+            description="Facultatif. Un court message pour accompagner votre don."
+            placeholder="Écrire ici"
+            maxLength={280}
+            rows={3}
+          />
+        )}
+      </form.AppField>
+
+      <Separator />
+
       <form.AppField name="fleecaConfirmation">
         {(field) => (
           <field.CheckboxField

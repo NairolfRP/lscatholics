@@ -98,6 +98,10 @@ function buildPrivateEmbed(data: DonationNotificationData): DiscordEmbed {
     }
   )
 
+  if (data.message) {
+    fields.push({ name: 'Message du donateur', value: '```' + data.message + '```' })
+  }
+
   return {
     title: 'Don réalisé en ligne !',
     color: DONATION_EMBED_COLOR,
@@ -126,7 +130,9 @@ function buildPublicDescription(data: DonationNotificationData): string {
     ? `Merci pour votre engagement ! Nous prions pour **${data.organizationName}**. N'oubliez pas de prier pour nous et tout le Peuple de Dieu, particulièrement pour les plus vulnérables 💖`
     : "Merci pour votre générosité et que la joie de Dieu vous comble. N'oubliez pas de prier pour nous et tout le Peuple de Dieu, particulièrement pour les plus vulnérables 💖"
 
-  return `🙏 Prions pour ${donatorName}${age} et son don de **${formattedAmount}** !\n\n${suffix}`
+  const message = data.message ? `\n\n> *« ${data.message} »*` : ''
+
+  return `🙏 Prions pour ${donatorName}${age} et son don de **${formattedAmount}** !\n\n${suffix}${message}`
 }
 
 function resolveEmbedColor(amount: number): number {
