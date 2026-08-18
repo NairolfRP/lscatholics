@@ -3,9 +3,7 @@ import {
   schoolLevelOptions,
   spokenLanguageOptions,
 } from '#/features/job-application/constants/employment-application.constants.tsx'
-import {
-  employmentApplicationFormOptions,
-} from '#/features/job-application/form/employment-application-form-options.ts'
+import { employmentApplicationFormOptions } from '#/features/job-application/form/employment-application-form-options.ts'
 import { FieldDescription, FieldLegend, FieldSet } from '#shared/components/ui/field.tsx'
 import { withForm } from '#shared/integrations/form/form-hook.ts'
 

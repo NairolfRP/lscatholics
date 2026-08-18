@@ -52,9 +52,9 @@ describe('clergyApplicationSchema', () => {
         sanctions: 'https://example.com/record/abc',
       })
     ).toThrow('Lien de partage de dossier serveur invalide')
-    expect(() =>
-      clergyApplicationSchema('priest').parse({ ...validInput, sanctions: '' })
-    ).toThrow('Lien de partage de dossier serveur invalide')
+    expect(() => clergyApplicationSchema('priest').parse({ ...validInput, sanctions: '' })).toThrow(
+      'Lien de partage de dossier serveur invalide'
+    )
     expect(() =>
       clergyApplicationSchema('priest').parse({ ...validInput, sanctions: undefined })
     ).toThrow('Le lien vers votre dossier serveur est requis.')

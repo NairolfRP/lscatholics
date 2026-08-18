@@ -1,35 +1,17 @@
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { useParams } from '@tanstack/react-router'
 import { SendIcon } from 'lucide-react'
-import {
-  EmploymentApplicationFormSkeleton,
-} from '#/features/job-application/components/employment-application-form-skeleton.tsx'
+import { EmploymentApplicationFormSkeleton } from '#/features/job-application/components/employment-application-form-skeleton.tsx'
 import { ContactSection } from '#/features/job-application/components/sections/contact-section.tsx'
-import {
-  DeclarationSection,
-} from '#/features/job-application/components/sections/declaration-section.tsx'
-import {
-  EducationSection,
-} from '#/features/job-application/components/sections/education-section.tsx'
-import {
-  ExperienceSection,
-} from '#/features/job-application/components/sections/experience-section.tsx'
-import {
-  IdentitySection,
-} from '#/features/job-application/components/sections/identity-section.tsx'
+import { DeclarationSection } from '#/features/job-application/components/sections/declaration-section.tsx'
+import { EducationSection } from '#/features/job-application/components/sections/education-section.tsx'
+import { ExperienceSection } from '#/features/job-application/components/sections/experience-section.tsx'
+import { IdentitySection } from '#/features/job-application/components/sections/identity-section.tsx'
 import { OocSection } from '#/features/job-application/components/sections/ooc-section.tsx'
-import {
-  ScreeningSection,
-} from '#/features/job-application/components/sections/screening-section.tsx'
-import {
-  employmentApplicationFormOptions,
-} from '#/features/job-application/form/employment-application-form-options.ts'
-import {
-  employmentApplicationSchema,
-} from '#/features/job-application/schemas/employment-application.schema.ts'
-import {
-  submitEmploymentApplicationFn,
-} from '#/features/job-application/server-fn/employment-application.functions.ts'
+import { ScreeningSection } from '#/features/job-application/components/sections/screening-section.tsx'
+import { employmentApplicationFormOptions } from '#/features/job-application/form/employment-application-form-options.ts'
+import { employmentApplicationSchema } from '#/features/job-application/schemas/employment-application.schema.ts'
+import { submitEmploymentApplicationFn } from '#/features/job-application/server-fn/employment-application.functions.ts'
 import { singleJobPostingQueryOptions } from '#/features/job-posting/queries.ts'
 import { RequireAuth } from '#shared/components/auth/require-auth.tsx'
 import {

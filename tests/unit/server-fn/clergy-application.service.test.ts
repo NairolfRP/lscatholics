@@ -4,11 +4,8 @@ import {
   CLERGY_APPLICATION_DISCORD_PENDING_THREAD_TAG,
   clergyApplicationDiscordThreadTag,
 } from '#/features/clergy-application/constants/clergy-application.constants.ts'
-import * as clergyApplicationService
-  from '#/features/clergy-application/server/clergy-application.service.ts'
-import {
-  CLERGY_APPLICATION_EMBED_COLOR,
-} from '#/features/clergy-application/server/clergy-application.service.ts'
+import * as clergyApplicationService from '#/features/clergy-application/server/clergy-application.service.ts'
+import { CLERGY_APPLICATION_EMBED_COLOR } from '#/features/clergy-application/server/clergy-application.service.ts'
 import { mockUser } from '../../utils/test-unit.utils.ts'
 
 const postMock = vi.hoisted(() => vi.fn<(url: string, options?: unknown) => Promise<unknown>>())

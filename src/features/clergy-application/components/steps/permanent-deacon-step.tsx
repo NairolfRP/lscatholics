@@ -1,17 +1,11 @@
 import { useNavigate } from '@tanstack/react-router'
-import {
-  ClergyApplicationForm,
-} from '#/features/clergy-application/components/clergy-application-form.tsx'
-import {
-  CLERGY_ROLE,
-} from '#/features/clergy-application/constants/clergy-application.constants.ts'
+import { ClergyApplicationForm } from '#/features/clergy-application/components/clergy-application-form.tsx'
+import { CLERGY_ROLE } from '#/features/clergy-application/constants/clergy-application.constants.ts'
 import {
   clergyApplicationFormOpts,
   handleSubmitClergyApplication,
 } from '#/features/clergy-application/form/shared-clergy-application-form.ts'
-import {
-  permanentDeaconApplicationSchema,
-} from '#/features/clergy-application/schemas/clergy-application.schema.ts'
+import { permanentDeaconApplicationSchema } from '#/features/clergy-application/schemas/clergy-application.schema.ts'
 import { withForm } from '#shared/integrations/form/form-hook.ts'
 
 export const PermanentDeaconStep = withForm({

@@ -1,20 +1,14 @@
 import { useNavigate, useSearch } from '@tanstack/react-router'
 import { CheckCircle2Icon, CrossIcon, HeartHandshakeIcon, ShieldCheckIcon } from 'lucide-react'
-import {
-  PermanentDeaconStep,
-} from '#/features/clergy-application/components/steps/permanent-deacon-step.tsx'
+import { PermanentDeaconStep } from '#/features/clergy-application/components/steps/permanent-deacon-step.tsx'
 import { PriestStep } from '#/features/clergy-application/components/steps/priest-step.tsx'
-import {
-  TemporaryDeaconStep,
-} from '#/features/clergy-application/components/steps/temporary-deacon-step.tsx'
+import { TemporaryDeaconStep } from '#/features/clergy-application/components/steps/temporary-deacon-step.tsx'
 import {
   CLERGY_APPLICATION_MAX_LENGTHS,
   CLERGY_ROLE,
   clergyRoleOptions,
 } from '#/features/clergy-application/constants/clergy-application.constants.ts'
-import {
-  clergyApplicationFormOpts,
-} from '#/features/clergy-application/form/shared-clergy-application-form.ts'
+import { clergyApplicationFormOpts } from '#/features/clergy-application/form/shared-clergy-application-form.ts'
 import { Card, CardContent } from '#shared/components/ui/card.tsx'
 import {
   Field,

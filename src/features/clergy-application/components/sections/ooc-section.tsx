@@ -1,12 +1,6 @@
-import type {
-  ClergyRole,
-} from '#/features/clergy-application/constants/clergy-application.constants.ts'
-import {
-  CLERGY_APPLICATION_MAX_LENGTHS,
-} from '#/features/clergy-application/constants/clergy-application.constants.ts'
-import {
-  clergyApplicationFormOpts,
-} from '#/features/clergy-application/form/shared-clergy-application-form.ts'
+import type { ClergyRole } from '#/features/clergy-application/constants/clergy-application.constants.ts'
+import { CLERGY_APPLICATION_MAX_LENGTHS } from '#/features/clergy-application/constants/clergy-application.constants.ts'
+import { clergyApplicationFormOpts } from '#/features/clergy-application/form/shared-clergy-application-form.ts'
 import { Field, FieldLabel, FieldLegend, FieldSet } from '#shared/components/ui/field.tsx'
 import { authClient } from '#shared/integrations/auth/auth-client.ts'
 import { withForm } from '#shared/integrations/form/form-hook.ts'

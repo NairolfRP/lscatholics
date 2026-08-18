@@ -9,12 +9,8 @@ import {
   schoolLevelLabels,
   spokenLanguageLabels,
 } from '#/features/job-application/constants/employment-application.constants.tsx'
-import type {
-  EmploymentApplicationOutput,
-} from '#/features/job-application/schemas/employment-application.schema.ts'
-import {
-  employmentApplicationSchema,
-} from '#/features/job-application/schemas/employment-application.schema.ts'
+import type { EmploymentApplicationOutput } from '#/features/job-application/schemas/employment-application.schema.ts'
+import { employmentApplicationSchema } from '#/features/job-application/schemas/employment-application.schema.ts'
 import { formatIban } from '#/utils/bank.ts'
 import { getFieldErrors } from '#/utils/form.ts'
 import { truncate } from '#/utils/string.ts'

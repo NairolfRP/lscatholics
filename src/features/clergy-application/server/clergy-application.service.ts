@@ -1,21 +1,15 @@
 import { setResponseStatus } from '@tanstack/react-start/server'
 import { z } from 'zod'
 import { env } from '#/config/env.server.ts'
-import type {
-  ClergyRole,
-} from '#/features/clergy-application/constants/clergy-application.constants.ts'
+import type { ClergyRole } from '#/features/clergy-application/constants/clergy-application.constants.ts'
 import {
   CLERGY_APPLICATION_DISCORD_PENDING_THREAD_TAG,
   clergyApplicationDiscordThreadTag,
   clergyMaritalStatusLabels,
   clergyRoleLabels,
 } from '#/features/clergy-application/constants/clergy-application.constants.ts'
-import type {
-  ClergyApplicationOutput,
-} from '#/features/clergy-application/schemas/clergy-application.schema.ts'
-import {
-  clergyApplicationSchema,
-} from '#/features/clergy-application/schemas/clergy-application.schema.ts'
+import type { ClergyApplicationOutput } from '#/features/clergy-application/schemas/clergy-application.schema.ts'
+import { clergyApplicationSchema } from '#/features/clergy-application/schemas/clergy-application.schema.ts'
 import { getFieldErrors } from '#/utils/form.ts'
 import { truncate } from '#/utils/string.ts'
 import { logger } from '#server/integrations/logger.ts'

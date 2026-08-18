@@ -1,14 +1,10 @@
-import type {
-  ClergyRole,
-} from '#/features/clergy-application/constants/clergy-application.constants.ts'
+import type { ClergyRole } from '#/features/clergy-application/constants/clergy-application.constants.ts'
 import {
   CLERGY_APPLICATION_MAX_LENGTHS,
   CLERGY_ROLE,
   clergyMaritalStatusOptions,
 } from '#/features/clergy-application/constants/clergy-application.constants.ts'
-import {
-  clergyApplicationFormOpts,
-} from '#/features/clergy-application/form/shared-clergy-application-form.ts'
+import { clergyApplicationFormOpts } from '#/features/clergy-application/form/shared-clergy-application-form.ts'
 import { FieldLegend, FieldSet } from '#shared/components/ui/field.tsx'
 import { withForm } from '#shared/integrations/form/form-hook.ts'
 

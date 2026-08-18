@@ -1,8 +1,8 @@
 'use client'
 
 import type { VariantProps } from 'class-variance-authority'
-import { cva } from 'class-variance-authority'
 import * as React from 'react'
+import { cva } from 'class-variance-authority'
 import { Button } from '#/shared/components/ui/button.tsx'
 import { Input } from '#/shared/components/ui/input.tsx'
 import { Textarea } from '#/shared/components/ui/textarea.tsx'

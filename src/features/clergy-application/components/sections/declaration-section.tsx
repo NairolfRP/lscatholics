@@ -1,9 +1,5 @@
-import type {
-  ClergyRole,
-} from '#/features/clergy-application/constants/clergy-application.constants.ts'
-import {
-  clergyApplicationFormOpts,
-} from '#/features/clergy-application/form/shared-clergy-application-form.ts'
+import type { ClergyRole } from '#/features/clergy-application/constants/clergy-application.constants.ts'
+import { clergyApplicationFormOpts } from '#/features/clergy-application/form/shared-clergy-application-form.ts'
 import { FieldDescription, FieldLegend, FieldSet } from '#shared/components/ui/field.tsx'
 import { withForm } from '#shared/integrations/form/form-hook.ts'
 

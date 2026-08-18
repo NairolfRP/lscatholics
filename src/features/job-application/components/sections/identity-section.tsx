@@ -1,9 +1,5 @@
-import {
-  genderOptions,
-} from '#/features/job-application/constants/employment-application.constants.tsx'
-import {
-  employmentApplicationFormOptions,
-} from '#/features/job-application/form/employment-application-form-options.ts'
+import { genderOptions } from '#/features/job-application/constants/employment-application.constants.tsx'
+import { employmentApplicationFormOptions } from '#/features/job-application/form/employment-application-form-options.ts'
 import { FieldLegend, FieldSet } from '#shared/components/ui/field.tsx'
 import { withForm } from '#shared/integrations/form/form-hook.ts'
 import type { Character } from '#shared/types/character.types.ts'

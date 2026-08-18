@@ -2,12 +2,8 @@ import { useSuspenseQuery } from '@tanstack/react-query'
 import { Link, useParams } from '@tanstack/react-router'
 import { isPast } from 'date-fns'
 import { AlertCircleIcon, ArrowLeftIcon } from 'lucide-react'
-import {
-  EmploymentApplicationForm,
-} from '#/features/job-application/components/employment-application-form.tsx'
-import {
-  EmploymentApplicationSidebar,
-} from '#/features/job-application/components/employment-application-sidebar.tsx'
+import { EmploymentApplicationForm } from '#/features/job-application/components/employment-application-form.tsx'
+import { EmploymentApplicationSidebar } from '#/features/job-application/components/employment-application-sidebar.tsx'
 import { singleJobPostingQueryOptions } from '#/features/job-posting/queries.ts'
 import { Alert, AlertDescription, AlertTitle } from '#shared/components/ui/alert.tsx'
 import { buttonVariants } from '#shared/components/ui/button.tsx'

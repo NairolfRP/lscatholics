@@ -1,6 +1,4 @@
-import {
-  employmentApplicationFormOptions,
-} from '#/features/job-application/form/employment-application-form-options.ts'
+import { employmentApplicationFormOptions } from '#/features/job-application/form/employment-application-form-options.ts'
 import { FieldLegend, FieldSet } from '#shared/components/ui/field.tsx'
 import { withForm } from '#shared/integrations/form/form-hook.ts'
 import type { CharacterWithFaction } from '#shared/types/character.types.ts'

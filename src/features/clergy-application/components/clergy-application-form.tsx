@@ -1,21 +1,11 @@
 import type { AnyFormGroupApi } from '@tanstack/react-form'
 import { CrossIcon } from 'lucide-react'
-import {
-  ClergyApplicationFormSkeleton,
-} from '#/features/clergy-application/components/clergy-application-form-skeleton.tsx'
-import {
-  CharacterSection,
-} from '#/features/clergy-application/components/sections/character-section.tsx'
-import {
-  DeclarationSection,
-} from '#/features/clergy-application/components/sections/declaration-section.tsx'
+import { ClergyApplicationFormSkeleton } from '#/features/clergy-application/components/clergy-application-form-skeleton.tsx'
+import { CharacterSection } from '#/features/clergy-application/components/sections/character-section.tsx'
+import { DeclarationSection } from '#/features/clergy-application/components/sections/declaration-section.tsx'
 import { OocSection } from '#/features/clergy-application/components/sections/ooc-section.tsx'
-import type {
-  ClergyRole,
-} from '#/features/clergy-application/constants/clergy-application.constants.ts'
-import {
-  clergyApplicationFormOpts,
-} from '#/features/clergy-application/form/shared-clergy-application-form.ts'
+import type { ClergyRole } from '#/features/clergy-application/constants/clergy-application.constants.ts'
+import { clergyApplicationFormOpts } from '#/features/clergy-application/form/shared-clergy-application-form.ts'
 import { RequireAuth } from '#shared/components/auth/require-auth.tsx'
 import { Button } from '#shared/components/ui/button.tsx'
 import {

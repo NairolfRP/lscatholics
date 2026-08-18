@@ -1,7 +1,5 @@
 import { z } from 'zod'
-import type {
-  ClergyRole,
-} from '#/features/clergy-application/constants/clergy-application.constants.ts'
+import type { ClergyRole } from '#/features/clergy-application/constants/clergy-application.constants.ts'
 import {
   CLERGY_APPLICATION_MAX_LENGTHS,
   CLERGY_APPLICATION_MIN_LENGTHS,

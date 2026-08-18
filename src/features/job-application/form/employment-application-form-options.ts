@@ -1,7 +1,5 @@
 import { formOptions } from '@tanstack/react-form'
-import type {
-  EmploymentApplicationInput,
-} from '#/features/job-application/schemas/employment-application.schema.ts'
+import type { EmploymentApplicationInput } from '#/features/job-application/schemas/employment-application.schema.ts'
 
 export const employmentApplicationFormOptions = formOptions({
   formId: 'employment-application-submission-form',
