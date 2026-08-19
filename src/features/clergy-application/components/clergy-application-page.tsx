@@ -1,14 +1,20 @@
 import { useNavigate, useSearch } from '@tanstack/react-router'
 import { CheckCircle2Icon, CrossIcon, HeartHandshakeIcon, ShieldCheckIcon } from 'lucide-react'
-import { PermanentDeaconStep } from '#/features/clergy-application/components/steps/permanent-deacon-step.tsx'
+import {
+  PermanentDeaconStep,
+} from '#/features/clergy-application/components/steps/permanent-deacon-step.tsx'
 import { PriestStep } from '#/features/clergy-application/components/steps/priest-step.tsx'
-import { TemporaryDeaconStep } from '#/features/clergy-application/components/steps/temporary-deacon-step.tsx'
+import {
+  TemporaryDeaconStep,
+} from '#/features/clergy-application/components/steps/temporary-deacon-step.tsx'
 import {
   CLERGY_APPLICATION_MAX_LENGTHS,
   CLERGY_ROLE,
   clergyRoleOptions,
 } from '#/features/clergy-application/constants/clergy-application.constants.ts'
-import { clergyApplicationFormOpts } from '#/features/clergy-application/form/shared-clergy-application-form.ts'
+import {
+  clergyApplicationFormOpts,
+} from '#/features/clergy-application/form/shared-clergy-application-form.ts'
 import { Card, CardContent } from '#shared/components/ui/card.tsx'
 import {
   Field,
@@ -81,13 +87,13 @@ export function ClergyApplicationPage() {
       />
 
       <div className="border-b bg-muted">
-        <div className="container mx-auto max-w-4xl px-2 py-10">
+        <div className="container mx-auto max-w-4xl px-4 py-10 sm:px-6">
           <FieldSet>
             <FieldLegend
-              className="mt-3 mb-10 border-b pb-5 text-center font-extrabold tracking-tight text-balance text-foreground data-[variant=legend]:text-4xl md:data-[variant=legend]:text-5xl"
+              className="mt-3 mb-10 border-b pb-5 text-center font-extrabold tracking-tight text-foreground data-[variant=legend]:text-2xl sm:data-[variant=legend]:text-3xl md:data-[variant=legend]:text-4xl lg:data-[variant=legend]:text-5xl"
               required
             >
-              Quel <span className="text-amber-700 dark:text-amber-400">rôle</span> voulez-vous{' '}
+              Quel <span className="text-amber-700 dark:text-amber-400">rôle</span> voulez&#8209;vous{' '}
               <span className="text-amber-700 dark:text-amber-400">jouer</span> ?
             </FieldLegend>
             <RadioGroup
@@ -100,7 +106,7 @@ export function ClergyApplicationPage() {
               {clergyRoleOptions.map((clergyRole) => {
                 const radioGroupId = `form-clergy-application-role-${clergyRole.value}`
                 return (
-                  <FieldLabel key={clergyRole.value} htmlFor={radioGroupId}>
+                  <FieldLabel key={clergyRole.value} htmlFor={radioGroupId} className="pr-3">
                     <Field orientation="horizontal">
                       <FieldContent>
                         <FieldTitle className="text-xl font-bold tracking-tight text-balance">
