@@ -1,5 +1,5 @@
 /** Discord forum channel that archives the decrees of the Archdiocese. */
-export const DECREES_CHANNEL_ID = '1253466164294582332'
+export const DECREES_CHANNEL_ID = '1539521428188041246'
 
 export type DecreeCategory = 'executive' | 'law' | 'administrative' | 'judicial'
 
@@ -24,25 +24,25 @@ export interface DecreeCategoryConfig {
 
 export const DECREE_CATEGORIES: Record<DecreeCategory, DecreeCategoryConfig> = {
   executive: {
-    tagId: '1253567271410864178',
+    tagId: '1539521783781392544',
     label: 'Exécutif',
     description: "Les décisions d'application prises par l'Archevêque ou son délégué.",
     requiresEnactment: true,
   },
   law: {
-    tagId: '1253567318722613319',
+    tagId: '1539521868040773672',
     label: 'Lois canoniques',
     description: "Les textes législatifs du droit propre de l'Archidiocèse.",
     requiresEnactment: true,
   },
   administrative: {
-    tagId: '1253567373227724891',
+    tagId: '1539521940719407144',
     label: 'Administratif',
-    description: 'Les actes de gestion courante émis par la Chancellerie.',
+    description: 'Les actes de gestion courante, dont les nominations.',
     requiresEnactment: false,
   },
   judicial: {
-    tagId: '1253567421843902484',
+    tagId: '1539522000907796520',
     label: 'Judiciaire',
     description:
       'Les décisions rendues dans le cadre du pouvoir judiciaire du siège archiépiscopal.',
@@ -55,10 +55,10 @@ export const DECREE_CATEGORY_BY_TAG_ID = Object.fromEntries(
 ) as Record<string, DecreeCategory>
 
 /** Threads carrying one of these tags are never exposed (drafts, internal notes…). */
-export const DECREE_IGNORED_TAGS = new Set<string>(['1253567595970301992', '1415400158560256111'])
+export const DECREE_IGNORED_TAGS = new Set<string>(['1539522126258765925', '1539522206520840292'])
 
 /** Tag applied once a decree has been promulgated. */
-export const DECREE_ENACTED_TAG = '1253567512705237033'
+export const DECREE_ENACTED_TAG = '1539522086933102663'
 
 /** Tag applied once a decree is in effect. */
-export const DECREE_IN_EFFECT_TAG = '1253567463568965714'
+export const DECREE_IN_EFFECT_TAG = '1539522049708654622'
