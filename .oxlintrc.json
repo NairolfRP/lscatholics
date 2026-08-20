@@ -149,8 +149,7 @@
                 "react/no-array-index-key": "off",
                 "react/no-danger": "warn",
                 "react/rules-of-hooks": "error",
-                "react/exhaustive-deps": "warn",
-                "react/react-compiler": "warn"
+                "react/exhaustive-deps": "warn"
             },
             "env": {
                 "es2020": true,
