@@ -1,9 +1,19 @@
-import type { ClergyRole } from '#/features/clergy-application/constants/clergy-application.constants.ts'
-import { CLERGY_APPLICATION_MAX_LENGTHS } from '#/features/clergy-application/constants/clergy-application.constants.ts'
-import { clergyApplicationFormOpts } from '#/features/clergy-application/form/shared-clergy-application-form.ts'
+import { Suspense } from 'react'
+import { useQuery } from '@tanstack/react-query'
+import type {
+  ClergyRole,
+} from '#/features/clergy-application/constants/clergy-application.constants.ts'
+import {
+  CLERGY_APPLICATION_MAX_LENGTHS,
+} from '#/features/clergy-application/constants/clergy-application.constants.ts'
+import {
+  clergyApplicationFormOpts,
+} from '#/features/clergy-application/form/shared-clergy-application-form.ts'
 import { Field, FieldLabel, FieldLegend, FieldSet } from '#shared/components/ui/field.tsx'
+import { Spinner } from '#shared/components/ui/spinner.tsx'
 import { authClient } from '#shared/integrations/auth/auth-client.ts'
 import { withForm } from '#shared/integrations/form/form-hook.ts'
+import { accountQueryOptions } from '#shared/queries/account.queries.ts'
 
 const MAX = CLERGY_APPLICATION_MAX_LENGTHS
 
@@ -13,7 +23,11 @@ export const OocSection = withForm({
     step: '' as unknown as ClergyRole,
   },
   render: ({ form, step }) => {
-    const { data: session } = authClient.useSession()
+    const { data: session, isPending } = authClient.useSession()
+
+    if (isPending) {
+      return <Spinner />
+    }
 
     return (
       <FieldSet>
@@ -50,18 +64,9 @@ export const OocSection = withForm({
                 label="Lien de votre dossier de sanctions GTA World"
                 placeholder="Ex. https://ucp-fr.gta.world/view/record/aBcDeFG"
                 description={
-                  <span>
-                    <a
-                      href="https://ucp-fr.gta.world/view/user/123456"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-primary"
-                    >
-                      Paramètres UCP GTA World
-                    </a>{' '}
-                    -{'>'} Dossier du serveur -{'>'} Dossier complet -{'>'} SHARE RECORD -{'>'}{' '}
-                    Copiez le lien qui apparaît dans la bulle de notification
-                  </span>
+                  <Suspense>
+                    <GTAWSanctionsDescription sessionId={session!.session.id} />
+                  </Suspense>
                 }
                 maxLength={255}
                 required
@@ -73,3 +78,26 @@ export const OocSection = withForm({
     )
   },
 })
+
+function GTAWSanctionsDescription({ sessionId }: { sessionId: string }) {
+  const { data: gtawAccount, isLoading } = useQuery(accountQueryOptions(sessionId, 'gtaw'))
+
+  if (isLoading) {
+    return <Spinner />
+  }
+
+  return (
+    <span>
+      <a
+        href={`https://ucp-fr.gta.world/view/user/${gtawAccount?.accountId}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-primary"
+      >
+        Paramètres UCP GTA World
+      </a>{' '}
+      -{'>'} Dossier du serveur -{'>'} Dossier complet -{'>'} SHARE RECORD -{'>'} Copiez le lien qui
+      apparaît dans la bulle de notification
+    </span>
+  )
+}
