@@ -46,17 +46,15 @@ export function ThemeProvider({
   defaultTheme = 'system',
   storageKey = 'theme',
 }: ThemeProviderProps) {
-  const [theme, setThemeState] = useState<Theme>(defaultTheme)
+  const [theme, setThemeState] = useState<Theme>(() => {
+    const stored = localStorage.getItem(storageKey)
+    return stored === 'light' || stored === 'dark' || stored === 'system' ? stored : defaultTheme
+  })
   const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
-    const stored = localStorage.getItem(storageKey)
-    // oxlint-disable-next-line react/react-compiler
-    setThemeState(
-      stored === 'light' || stored === 'dark' || stored === 'system' ? stored : defaultTheme
-    )
     setMounted(true)
-  }, [defaultTheme, storageKey])
+  }, [])
 
   useEffect(() => {
     if (!mounted) return

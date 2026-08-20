@@ -11,6 +11,6 @@ export const accountQueryOptions = (sessionId: string, providerId: string) =>
         throw new Error(error.message)
       }
 
-      return data?.find((account) => account.providerId === providerId)
+      return data.find((account) => account.providerId === providerId)
     },
   })

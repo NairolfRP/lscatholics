@@ -54,7 +54,7 @@ export function ContactInfoPanel() {
         <CardContent>
           <div className="flex flex-wrap gap-3">
             {Object.entries(socials)
-              .filter(([_, social]) => !social.metadata?.isOOC && !social.metadata?.only)
+              .filter(([, social]) => !social.metadata?.isOOC && !social.metadata?.only)
               .map(([socialId, social]) => (
                 <a
                   key={socialId}
