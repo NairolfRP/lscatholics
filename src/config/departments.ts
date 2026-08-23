@@ -11,7 +11,7 @@ export const departments: Department[] = [
     category: 'curia',
     page: {
       director: {
-        name: 'Cardinal Ronan Callahan',
+        name: 'Cardinal Edmund Hennessy',
         position: 'Archevêque de Los Santos',
         phone: '700',
         image: '/assets/images/cardinal_callahan_officiel_portrait.webp',
@@ -27,7 +27,7 @@ export const departments: Department[] = [
         },
       ],
       content: [
-        "Le Bureau de l'Archevêque sert de lien entre les paroisses, les départements et l'Archevêque. Il assure le secrétariat et le soutien administratif de Son Éminence le Cardinal Ronan Callahan, 7e archevêque de Los Santos, et coordonne son agenda pastoral, ses audiences et sa correspondance.",
+        "Le Bureau de l'Archevêque sert de lien entre les paroisses, les départements et l'Archevêque. Il assure le secrétariat et le soutien administratif de Son Éminence le Cardinal Edmund Hennessy, 7e archevêque de Los Santos, et coordonne son agenda pastoral, ses audiences et sa correspondance.",
         "Les fidèles souhaitant écrire à l'Archevêque, solliciter une bénédiction spéciale ou demander une rencontre sont invités à contacter le bureau par téléphone ou par écrit.",
       ],
     },
@@ -42,10 +42,9 @@ export const departments: Department[] = [
     category: 'curia',
     page: {
       director: {
-        name: 'Don Giuseppe Benedetti',
-        position: 'Vicaire Général et Modérateur de la Curie',
+        name: 'P. Julián Mateo Villaseñor, O.F.M.',
+        position: 'Vicaire général',
         phone: '700',
-        image: '/assets/images/don-benedetti.webp',
       },
       content: [
         "Le Vicaire général est le principal collaborateur de l'Archevêque dans le gouvernement de l'Archidiocèse. Il le seconde dans l'exercice de ses responsabilités spirituelles, administratives et exécutives et traite, en son absence, les affaires courantes de l'Archidiocèse. En cas de vacance du siège, ses pouvoirs s'éteignent avec le siège vacant, sauf dispositions du droit canonique.",

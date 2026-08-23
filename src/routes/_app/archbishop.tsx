@@ -15,26 +15,25 @@ import Hero from '#shared/layouts/app/components/hero.tsx'
 
 const archbishop = {
   portraitUrl: '/assets/images/cardinal_callahan_officiel_portrait.webp',
-  coatOfArmsUrl: '/assets/images/cardinal_callahan_armoiries.webp',
+  coatOfArmsUrl: '/assets/images/cardinal_hennessy_coat_of_arms.webp',
   socials: {
-    facebrowser: 'https://face-fr.gta.world/profile/cardinalcallahan',
+    facebrowser: 'https://face-fr.gta.world/profile/cardinalhennessy',
   },
   biography: [
-    "Le cardinal Ronan Callahan a été nommé 7e archevêque de Los Santos le 22 février 2025 par le pape François. Né le 26 janvier 1960 à Worcester dans le Massachusetts, il est le deuxième enfant de l'union de Seamus (1936-2005) et Bridget (1938-2015) Callahan, une famille irlandais-américaine immigrée dans l'est des États-Unis depuis le 19e siècle.",
-    "Il commence ses études à l'école élémentaire catholique de la Sainte Famille (Holy Family Academy) de Gardner (Massachusetts), puis poursuit au lycée de Saint Jean (St John's High School) à Shrewsbury (Massachusetts) avant d'entrer au Séminaire Saint Jean à Boston et poursuivre ses études en vue d'être prêtre au Collège pontifical nord-américain à Rome.",
-    "Il est ordonné prêtre en 1987 pour l'archidiocèse de Boston. Il est vicaire de paroisse de 1987 à 1989, puis curé d'une paroisse de 1989 à 1995. De 1995 à 2002, il est professeur au Séminaire Saint Jean à Boston.",
-    "En 2002, il est nommé évêque auxiliaire de l'archidiocèse de Boston par le pape saint Jean-Paul II et reçoit la consécration épiscopale des mains du cardinal Bernard Law. En 2011, le pape Benoit XVI le nomme évêque de Bridport (Connecticut), puis en 2018, le pape François le transfert en Ohio comme Archevêque de Cincinnati.",
-    "Lors du consistoire du 29 juin 2018, Sa Sainteté le Pape François le créé cardinal. A Rome, il est actuellement membre du Dicastère pour l'Évangélisation et du Dicastère pour la Culture et l'Éducation.",
-    'En mai 2025, il participe au conclave qui élit le pape Léon XIV.',
-    'Sa devise épiscopale est « Qui est semblable au Seigneur notre Dieu ? » (Ps 113:5)',
+    'Le Cardinal Edmund Michael Hennessy a été nommé 6e archevêque de Los Santos le 26 juin 2026 par le pape Léon XIV. Il était précédemment archevêque de Saint Louis (Missouri) par Benoit XVI. Le Pape François le crée Cardinal lors du consistoire du 12 janvier 2014.',
+    "Né un 14 septembre, il y a 63 ans à Providence dans le Rhode Island, il est le deuxième des quatre enfants de Margaret et Michael Hennessy. Il a un frère ainé, Patrick, une sœur cadette, Mary, et un frère cadet, Thomas. Il commence sa scolarité à l'école paroissiale Saint-Pierre de Providence, poursuit ses études secondaires à La Salle Academy puis entre au séminaire Our Lady of Providence.",
+    "Ordonné prêtre à 25 ans pour l'archidiocèse de Providence, il sert deux paroisses comme vicaire puis rejoint Rome pour poursuivre une licence en théologie sacrée à l'Université pontificale Saint-Thomas-d'Aquin. Il enseigne au Collège pontifical nord-américain pendant deux ans, avant de retourner à Providence et être nommé curé de paroisse.",
+    "A l'âge de 45 ans, il est nommé évêque auxiliaire de Providence par le Pape Benoit XVI et choisit comme devise épiscopale « Seigneur, où vas-tu ? » (Jn 13:36). A 50 ans, le Pape Benoit XVI le nomme par la suite archevêque de Saint-Louis, Missouri puis le pape François le crée Cardinal lors du consistoire de février de l'année suivante.",
+    'A Rome, le Cardinal Hennessy est actuellement membre du dicastère pour le Clergé.',
+    'En mai 2025, il participe comme cardinal-électeur au conclave qui élit le Pape Léon XIV.',
   ],
   heraldryDescription:
-    "Parti : au premier d'azur à trois vols d'or, rangés deux et un, chacun sommé d'une rose d'or ; au second de sinople, au croissant d'argent en chef à dextre, à la harpe d'or en chef à senestre et à l'aigle éployé de gueules en pointe. Timbré de la croix archiépiscopale d'or à deux traverses, sommé du chapeau de cardinal de gueules à quinze houppes de même de chaque côté ; au listel d'argent chargé de la devise : QUIS UT DEUS.",
+    "Parti, au premier d'azur à trois vols d'or, rangés deux et un, chacun sommé d'une rose du même ; au second, de sinople à la croix de gueules, à l'étoile de cinq rais d'or brochante sur la croisée, chargée d'un trèfle du champ",
 }
 
 export const Route = createFileRoute('/_app/archbishop')({
   head: () => ({
-    meta: pageMetadata('Cardinal Ronan Callahan'),
+    meta: pageMetadata('Cardinal Edmund Hennessy'),
   }),
   component: ArchbishopPage,
 })
@@ -44,13 +43,13 @@ function ArchbishopPage() {
     <>
       <Hero
         variant="minimal"
-        title="Son Éminence le Cardinal Ronan Callahan"
-        subtitle="Cardinal de l'Église catholique et 7e archevêque de Los Santos"
+        title="Son Éminence le Cardinal Edmund Hennessy"
+        subtitle="Cardinal de l'Église catholique et 6e archevêque de Los Santos"
         backgroundColor="bg-catholic-red/90"
       />
       <div className="container mx-auto space-y-6 px-4 pt-15 sm:px-6 lg:px-8">
         <h1 className="pb-15 text-center text-4xl font-extrabold tracking-tight md:text-5xl">
-          Son Éminence, le Cardinal Ronan Callahan
+          Son Éminence, le Cardinal Edmund Hennessy
           <br />
           Archevêque de Los Santos
         </h1>
@@ -62,7 +61,7 @@ function ArchbishopPage() {
                 <div className="relative aspect-2/3 overflow-hidden rounded-2xl shadow-lg ring-2 ring-catholic-red">
                   <Image
                     src={archbishop.portraitUrl}
-                    alt="Portrait officiel de Son Éminence le Cardinal Ronan Callahan"
+                    alt="Portrait officiel de Son Éminence le Cardinal Edmund Hennessy"
                     layout="fullWidth"
                     className="object-cover"
                     loading="eager"
@@ -90,7 +89,7 @@ function ArchbishopPage() {
                   <div className="relative h-64 w-64">
                     <Image
                       src={archbishop.coatOfArmsUrl}
-                      alt="Armoiries de Son Éminence le Cardinal Ronan Callahan"
+                      alt="Armoiries de Son Éminence le Cardinal Edmund Hennessy"
                       layout="fullWidth"
                       className="h-full w-full object-contain"
                     />

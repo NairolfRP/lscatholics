@@ -67,10 +67,10 @@ const faqItems: FAQItem[] = [
     ),
   },
   {
-    question: 'Comment contacter le Cardinal Ronan Callahan ?',
+    question: 'Comment contacter le Cardinal Edmund Hennessy ?',
     answer: (
       <p>
-        Vous pouvez écrire au Cardinal via le formulaire avec le sujet « Cardinal Ronan Callahan ».
+        Vous pouvez écrire au Cardinal via le formulaire avec le sujet « Cardinal Edmund Hennessy ».
         Si vous souhaitez être reçu en audience privée, vous devez en détailler les raisons afin que
         la demande puisse être traitée. Découvrez également son{' '}
         <Link to="/archbishop">portrait et sa mission</Link> comme Archevêque de Los Santos.

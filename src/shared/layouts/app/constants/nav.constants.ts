@@ -9,7 +9,7 @@ export const navItems: NavItem[] = [
         to: '/about',
       },
       {
-        label: 'Cardinal Ronan Callahan',
+        label: 'Cardinal Edmund Hennessy',
         to: '/archbishop',
       },
       {
@@ -99,7 +99,7 @@ export const footerNavItems: NavItem[] = [
         to: '/about',
       },
       {
-        label: 'Cardinal Ronan Callahan',
+        label: 'Cardinal Edmund Hennessy',
         to: '/archbishop',
       },
       {

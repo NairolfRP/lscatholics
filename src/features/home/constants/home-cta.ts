@@ -5,7 +5,7 @@ import type { CTA } from '../types/home.types'
 export const homeCTA: CTA[] = [
   {
     icon: ChessBishop,
-    title: 'Cardinal Ronan Callahan',
+    title: 'Cardinal Edmund Hennessy',
     to: '/archbishop',
     description: "Découvrez l'Archevêque de Los Santos : sa biographie, son blason, sa devise.",
   },

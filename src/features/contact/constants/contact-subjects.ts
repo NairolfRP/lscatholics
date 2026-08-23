@@ -16,7 +16,7 @@ export const [CONTACT_SUBJECT, CONTACT_SUBJECT_VALUES] = createEnum({
 
 export const contactSubjectLabels = Object.freeze({
   [CONTACT_SUBJECT.SACRAMENTS]: 'Sacrements',
-  [CONTACT_SUBJECT.ARCHBISHOP]: 'Cardinal Ronan Callahan',
+  [CONTACT_SUBJECT.ARCHBISHOP]: 'Cardinal Edmund Hennessy',
   [CONTACT_SUBJECT.CHANCERY]: 'Chancellerie',
   [CONTACT_SUBJECT.VOCATIONS]: 'Vocations',
   [CONTACT_SUBJECT.PARISHES]: 'Paroisses',
