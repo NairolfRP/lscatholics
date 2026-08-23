@@ -132,18 +132,13 @@ export function ContactForm() {
 
               <form.AppField name="message">
                 {(field) => (
-                  <div className="flex flex-col gap-1">
-                    <field.TextareaField
-                      label="Message"
-                      placeholder="Décrivez votre demande en détail..."
-                      rows={10}
-                      maxLength={2000}
-                      required
-                    />
-                    <div className="flex items-center justify-end gap-2 text-xs text-muted-foreground">
-                      <span className="tabular-nums">{field.state.value.length}/2000</span>
-                    </div>
-                  </div>
+                  <field.TextareaField
+                    label="Message"
+                    placeholder="Décrivez votre demande en détail..."
+                    rows={10}
+                    maxLength={2000}
+                    required
+                  />
                 )}
               </form.AppField>
             </FieldGroup>
