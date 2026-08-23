@@ -27,8 +27,16 @@ const archbishop = {
     'A Rome, le Cardinal Hennessy est actuellement membre du dicastère pour le Clergé.',
     'En mai 2025, il participe comme cardinal-électeur au conclave qui élit le Pape Léon XIV.',
   ],
-  heraldryDescription:
-    "Parti, au premier d'azur à trois vols d'or, rangés deux et un, chacun sommé d'une rose du même ; au second, de sinople à la croix de gueules, à l'étoile de cinq rais d'or brochante sur la croisée, chargée d'un trèfle du champ",
+  heraldryDescription: [
+    <span className="italic">
+      Parti, au premier d'azur à trois vols d'or, rangés deux et un, chacun sommé d'une rose du même
+      ; au second, de sinople à la croix de gueules, à l'étoile de cinq rais d'or brochante sur la
+      croisée, chargée d'un trèfle du champ
+    </span>,
+    <span className="font-bold uppercase">Explication :</span>,
+    "Les armoiries du Cardinal se composent d'un écu sur lequel figure des « meubles », une devise et des ornements hiérarchiques. Aux États-Unis, la coutume veut que l'écu incorpore les armoiries propre à la juridiction de l'évêque. Ainsi, sur cet écu, la partie gauche représente les armoiries de l'archidiocèse Los Santos tandis que la partie gauche contient les armoiries personnelles du Cardinal.",
+    "Les armoiries du Cardinal rappellent les origines de sa famille, qui a quittée l'Irlande pour les États-Unis au cours du 18e siècle. La Croix représente le Christ et le rouge son sacrifice sur la croix : le tout symbolise que Jésus est la structure. Au sommet de la croix, les États-Unis (représentée par l'étoile en or) et l'Irlande (représentée par le trèfle et le fond vert) sont réunis. Le trèfle représente notamment Saint Patrick et la Sainte Trinité (Père, Fils et Saint Esprit), et l'étoile, la lumière divine. Au bas des armoiries, figure sa devise épiscopale. Elle reprend la question de saint Pierre à Jésus dans Jean 13:36 : « Seigneur, où vas-tu ? » (Domine, quo vadis?).",
+  ],
 }
 
 export const Route = createFileRoute('/_app/archbishop')({
@@ -100,9 +108,14 @@ function ArchbishopPage() {
                   <h4 className="font-semibold text-catholic-red dark:text-red-400">
                     Description héraldique
                   </h4>
-                  <p className="text-sm leading-relaxed whitespace-pre-wrap text-muted-foreground">
-                    {archbishop.heraldryDescription}
-                  </p>
+                  {archbishop.heraldryDescription.map((paragraph, index) => (
+                    <p
+                      className="text-sm leading-relaxed whitespace-pre-wrap text-muted-foreground"
+                      key={index}
+                    >
+                      {paragraph}
+                    </p>
+                  ))}
                 </div>
               </CardContent>
             </Card>
