@@ -37,7 +37,9 @@ minimumReleaseAgeExclude:
   - '@tanstack/start-server-core@1.169.31'
   - '@tanstack/start-storage-context@1.167.29'
   - '@tanstack/router-cli@1.167.33'
-  - '@tanstack/query-core@5.102.0'
-  - '@tanstack/react-query@5.102.0'
+  - '@tanstack/query-core@5.102.2'
+  - '@tanstack/react-query@5.102.2'
+  - '@tanstack/query-devtools@5.102.2'
+  - '@tanstack/react-query-devtools@5.102.2'
 allowBuilds:
   esbuild: true
