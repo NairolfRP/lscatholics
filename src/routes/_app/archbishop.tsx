@@ -20,11 +20,11 @@ const archbishop = {
     facebrowser: 'https://face-fr.gta.world/profile/cardinalhennessy',
   },
   biography: [
-    'Le Cardinal Edmund Michael Hennessy a été nommé 6e archevêque de Los Santos le 26 juin 2026 par le pape Léon XIV. Il était précédemment archevêque de Saint Louis (Missouri) par Benoit XVI. Le Pape François le crée Cardinal lors du consistoire du 12 janvier 2014.',
+    'Le Cardinal Edmund Michael Hennessy a été nommé 6e archevêque de Los Santos le 26 juin 2026 par le pape Léon XIV. Il était précédemment archevêque de Saint Louis (Missouri) par Benoit XVI. Le Pape François le crée Cardinal lors du consistoire de 2014.',
     "Né un 14 septembre, il y a 63 ans à Providence dans le Rhode Island, il est le deuxième des quatre enfants de Margaret et Michael Hennessy. Il a un frère ainé, Patrick, une sœur cadette, Mary, et un frère cadet, Thomas. Il commence sa scolarité à l'école paroissiale Saint-Pierre de Providence, poursuit ses études secondaires à La Salle Academy puis entre au séminaire Our Lady of Providence.",
-    "Ordonné prêtre à 25 ans pour l'archidiocèse de Providence, il sert deux paroisses comme vicaire puis rejoint Rome pour poursuivre une licence en théologie sacrée à l'Université pontificale Saint-Thomas-d'Aquin. Il enseigne au Collège pontifical nord-américain pendant deux ans, avant de retourner à Providence et être nommé curé de paroisse.",
-    "A l'âge de 45 ans, il est nommé évêque auxiliaire de Providence par le Pape Benoit XVI et choisit comme devise épiscopale « Seigneur, où vas-tu ? » (Jn 13:36). A 50 ans, le Pape Benoit XVI le nomme par la suite archevêque de Saint-Louis, Missouri puis le pape François le crée Cardinal lors du consistoire de février de l'année suivante.",
-    'A Rome, le Cardinal Hennessy est actuellement membre du dicastère pour le Clergé.',
+    "Ordonné prêtre à 25 ans pour le diocèse de Providence, il sert deux paroisses comme vicaire puis rejoint Rome pour poursuivre une licence en théologie sacrée à l'Université pontificale Saint-Thomas-d'Aquin. Il enseigne au Collège pontifical nord-américain pendant deux ans, avant de retourner à Providence et être nommé curé de paroisse.",
+    "À l'âge de 45 ans, il est nommé évêque auxiliaire de Providence par le Pape Benoit XVI et choisit comme devise épiscopale « Seigneur, où vas-tu ? » (Jn 13:36). A 50 ans, le Pape Benoit XVI le nomme par la suite archevêque de Saint-Louis, Missouri, puis le pape François le crée Cardinal lors du consistoire de février de l'année suivante.",
+    'À Rome, le Cardinal Hennessy est actuellement membre du dicastère pour le Clergé.',
     'En mai 2025, il participe comme cardinal-électeur au conclave qui élit le Pape Léon XIV.',
   ],
   heraldryDescription: [
@@ -34,7 +34,7 @@ const archbishop = {
       croisée, chargée d'un trèfle du champ
     </span>,
     <span className="font-bold uppercase">Explication :</span>,
-    "Les armoiries du Cardinal se composent d'un écu sur lequel figure des « meubles », une devise et des ornements hiérarchiques. Aux États-Unis, la coutume veut que l'écu incorpore les armoiries propre à la juridiction de l'évêque. Ainsi, sur cet écu, la partie gauche représente les armoiries de l'archidiocèse Los Santos tandis que la partie gauche contient les armoiries personnelles du Cardinal.",
+    "Les armoiries du Cardinal se composent d'un écu sur lequel figure des « meubles », une devise et des ornements hiérarchiques. Aux États-Unis, la coutume veut que l'écu incorpore les armoiries propre à la juridiction de l'évêque. Ainsi, sur cet écu, la partie gauche représente les armoiries de l'archidiocèse Los Santos tandis que la partie droite contient les armoiries personnelles du Cardinal.",
     "Les armoiries du Cardinal rappellent les origines de sa famille, qui a quittée l'Irlande pour les États-Unis au cours du 18e siècle. La Croix représente le Christ et le rouge son sacrifice sur la croix : le tout symbolise que Jésus est la structure. Au sommet de la croix, les États-Unis (représentée par l'étoile en or) et l'Irlande (représentée par le trèfle et le fond vert) sont réunis. Le trèfle représente notamment Saint Patrick et la Sainte Trinité (Père, Fils et Saint Esprit), et l'étoile, la lumière divine. Au bas des armoiries, figure sa devise épiscopale. Elle reprend la question de saint Pierre à Jésus dans Jean 13:36 : « Seigneur, où vas-tu ? » (Domine, quo vadis?).",
   ],
 }
