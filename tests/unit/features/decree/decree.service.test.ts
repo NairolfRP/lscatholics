@@ -2,8 +2,7 @@ import type { APIMessage, APIPublicThreadChannel, APIThreadMetadata } from 'disc
 import { HTTPError } from 'ky'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import {
-  DECREE_CATEGORIES,
-  DECREE_ENACTED_TAG,
+  DECREE_FORUM_TAG_ID,
   DECREES_CHANNEL_ID,
 } from '#/features/decree/constants/decree.constants.ts'
 import { getDecree, getDecrees } from '#/features/decree/server/decree.service.ts'
@@ -15,13 +14,6 @@ const discordApi = vi.hoisted(() => ({
 }))
 
 vi.mock('#/features/decree/server/discord.api.ts', () => discordApi)
-
-const CATEGORY_TAGS = {
-  executive: DECREE_CATEGORIES.executive.tagId,
-  law: DECREE_CATEGORIES.law.tagId,
-  administrative: DECREE_CATEGORIES.administrative.tagId,
-  judicial: DECREE_CATEGORIES.judicial.tagId,
-} as const
 
 function makeThreadMetadata(createTimestamp: string): APIThreadMetadata {
   return {
@@ -42,7 +34,7 @@ function makeThread(
     type: 11,
     parent_id: DECREES_CHANNEL_ID,
     name: `Décret ${id}`,
-    applied_tags: [CATEGORY_TAGS.executive, DECREE_ENACTED_TAG],
+    applied_tags: [DECREE_FORUM_TAG_ID.EXECUTIVE, DECREE_FORUM_TAG_ID.ENACTED],
     thread_metadata: makeThreadMetadata('2026-01-01T00:00:00.000Z'),
     ...overrides,
   }
@@ -84,19 +76,19 @@ describe('getDecrees', () => {
     discordApi.fetchArchivedPublicThreads.mockResolvedValue([
       makeThread('10000000000000000001', {
         name: 'Décret exécutif',
-        applied_tags: [CATEGORY_TAGS.executive, DECREE_ENACTED_TAG],
+        applied_tags: [DECREE_FORUM_TAG_ID.EXECUTIVE, DECREE_FORUM_TAG_ID.ENACTED],
       }),
       makeThread('10000000000000000002', {
         name: 'Loi canonique',
-        applied_tags: [CATEGORY_TAGS.law, DECREE_ENACTED_TAG],
+        applied_tags: [DECREE_FORUM_TAG_ID.LEGISLATIVE, DECREE_FORUM_TAG_ID.ENACTED],
       }),
       makeThread('10000000000000000003', {
         name: 'Acte administratif',
-        applied_tags: [CATEGORY_TAGS.administrative],
+        applied_tags: [DECREE_FORUM_TAG_ID.ADMINISTRATIVE],
       }),
       makeThread('10000000000000000004', {
         name: 'Jugement',
-        applied_tags: [CATEGORY_TAGS.judicial],
+        applied_tags: [DECREE_FORUM_TAG_ID.JUDICIARY],
       }),
     ])
 
@@ -112,7 +104,7 @@ describe('getDecrees', () => {
 
   it('filters out threads without a category tag', async () => {
     discordApi.fetchArchivedPublicThreads.mockResolvedValue([
-      makeThread('10000000000000000001', { applied_tags: [DECREE_ENACTED_TAG] }),
+      makeThread('10000000000000000001', { applied_tags: [DECREE_FORUM_TAG_ID.ENACTED] }),
     ])
 
     const result = await getDecrees()
@@ -123,7 +115,11 @@ describe('getDecrees', () => {
   it('filters out ignored threads even when enacted', async () => {
     discordApi.fetchArchivedPublicThreads.mockResolvedValue([
       makeThread('10000000000000000001', {
-        applied_tags: [CATEGORY_TAGS.executive, DECREE_ENACTED_TAG, '1253567595970301992'],
+        applied_tags: [
+          DECREE_FORUM_TAG_ID.EXECUTIVE,
+          DECREE_FORUM_TAG_ID.ENACTED,
+          DECREE_FORUM_TAG_ID.REPEALED_OR_EXPIRED,
+        ],
       }),
     ])
 
@@ -135,13 +131,13 @@ describe('getDecrees', () => {
   it('hides not-yet-enacted executive and legislative decrees', async () => {
     discordApi.fetchArchivedPublicThreads.mockResolvedValue([
       makeThread('10000000000000000001', {
-        applied_tags: [CATEGORY_TAGS.executive],
+        applied_tags: [DECREE_FORUM_TAG_ID.EXECUTIVE],
       }),
       makeThread('10000000000000000002', {
-        applied_tags: [CATEGORY_TAGS.law],
+        applied_tags: [DECREE_FORUM_TAG_ID.LEGISLATIVE],
       }),
       makeThread('10000000000000000003', {
-        applied_tags: [CATEGORY_TAGS.administrative],
+        applied_tags: [DECREE_FORUM_TAG_ID.ADMINISTRATIVE],
       }),
     ])
 
@@ -187,7 +183,7 @@ describe('getDecree', () => {
     discordApi.fetchDiscordChannel.mockResolvedValue(
       makeThread('10000000000000000001', {
         name: 'Décret exécutif',
-        applied_tags: [CATEGORY_TAGS.executive, DECREE_ENACTED_TAG],
+        applied_tags: [DECREE_FORUM_TAG_ID.EXECUTIVE, DECREE_FORUM_TAG_ID.ENACTED],
       })
     )
     discordApi.fetchChannelMessages.mockResolvedValue([makeMessage()])
@@ -225,7 +221,7 @@ describe('getDecree', () => {
 
   it('returns null when the thread has no category tag', async () => {
     discordApi.fetchDiscordChannel.mockResolvedValue(
-      makeThread('10000000000000000001', { applied_tags: [DECREE_ENACTED_TAG] })
+      makeThread('10000000000000000001', { applied_tags: [DECREE_FORUM_TAG_ID.ENACTED] })
     )
     discordApi.fetchChannelMessages.mockResolvedValue([makeMessage()])
 
@@ -234,7 +230,7 @@ describe('getDecree', () => {
 
   it('returns null when the thread is not publishable', async () => {
     discordApi.fetchDiscordChannel.mockResolvedValue(
-      makeThread('10000000000000000001', { applied_tags: [CATEGORY_TAGS.executive] })
+      makeThread('10000000000000000001', { applied_tags: [DECREE_FORUM_TAG_ID.EXECUTIVE] })
     )
     discordApi.fetchChannelMessages.mockResolvedValue([makeMessage()])
 
@@ -244,7 +240,7 @@ describe('getDecree', () => {
   it('returns null when the first message has no embed', async () => {
     discordApi.fetchDiscordChannel.mockResolvedValue(
       makeThread('10000000000000000001', {
-        applied_tags: [CATEGORY_TAGS.executive, DECREE_ENACTED_TAG],
+        applied_tags: [DECREE_FORUM_TAG_ID.EXECUTIVE, DECREE_FORUM_TAG_ID.ENACTED],
       })
     )
     discordApi.fetchChannelMessages.mockResolvedValue([makeMessage({ embeds: [] })])
