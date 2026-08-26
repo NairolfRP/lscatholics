@@ -1,6 +1,4 @@
-import {
-  getParishionerDefaultValues,
-} from '#/features/parishioner/constants/parishioner-defaults.ts'
+import { getParishionerDefaultValues } from '#/features/parishioner/constants/parishioner-defaults.ts'
 import {
   getSacramentPrerequisites,
   individualSacramentOptions,
