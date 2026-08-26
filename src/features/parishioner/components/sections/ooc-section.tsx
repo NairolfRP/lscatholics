@@ -1,4 +1,6 @@
-import { getParishionerDefaultValues } from '#/features/parishioner/constants/parishioner-defaults.ts'
+import {
+  getParishionerDefaultValues,
+} from '#/features/parishioner/constants/parishioner-defaults.ts'
 import {
   getSacramentPrerequisites,
   individualSacramentOptions,
@@ -46,17 +48,12 @@ export const OocSection = withForm({
 
             <form.AppField name="oocAdditionalInformation">
               {(field) => (
-                <div className="flex flex-col gap-1">
-                  <field.TextareaField
-                    label="Informations OOC supplémentaires"
-                    placeholder="Optionnellement, vous pouvez décrire ici ce que le clergé est déjà censé savoir IC sur votre personnage. Limité à 700 caractères."
-                    rows={5}
-                    maxLength={700}
-                  />
-                  <div className="flex items-center justify-end gap-2 text-xs text-muted-foreground">
-                    <span className="tabular-nums">{field.state.value?.length ?? '0'}/700</span>
-                  </div>
-                </div>
+                <field.TextareaField
+                  label="Informations OOC supplémentaires"
+                  placeholder="Optionnellement, vous pouvez décrire ici ce que le clergé est déjà censé savoir IC sur votre personnage. Limité à 700 caractères."
+                  rows={5}
+                  maxLength={700}
+                />
               )}
             </form.AppField>
           </FieldGroup>

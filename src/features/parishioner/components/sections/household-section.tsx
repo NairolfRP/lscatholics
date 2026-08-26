@@ -1,6 +1,10 @@
 import { UsersRoundIcon } from 'lucide-react'
-import { HouseholdMemberCard } from '#/features/parishioner/components/sections/household-member-card.tsx'
-import { getParishionerDefaultValues } from '#/features/parishioner/constants/parishioner-defaults.ts'
+import {
+  HouseholdMemberCard,
+} from '#/features/parishioner/components/sections/household-member-card.tsx'
+import {
+  getParishionerDefaultValues,
+} from '#/features/parishioner/constants/parishioner-defaults.ts'
 import {
   Accordion,
   AccordionContent,
@@ -90,17 +94,12 @@ export const HouseholdSection = withForm({
 
             <form.AppField name="message">
               {(field) => (
-                <div className="flex flex-col gap-1">
-                  <field.TextareaField
-                    label="Informations complémentaires"
-                    placeholder="Précisez tout détail utile (mode de vie, disponibilités, demande particulière...) dans la limite de 300 caractères."
-                    rows={5}
-                    maxLength={300}
-                  />
-                  <div className="flex items-center justify-end gap-2 text-xs text-muted-foreground">
-                    <span className="tabular-nums">{field.state.value?.length}/300</span>
-                  </div>
-                </div>
+                <field.TextareaField
+                  label="Informations complémentaires"
+                  placeholder="Précisez tout détail utile (mode de vie, disponibilités, demande particulière...) dans la limite de 300 caractères."
+                  rows={5}
+                  maxLength={300}
+                />
               )}
             </form.AppField>
           </FieldSet>

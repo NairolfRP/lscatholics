@@ -32,34 +32,24 @@ export const EngagementSection = withForm({
 
             <form.AppField name="interestedActivities">
               {(field) => (
-                <div className="flex flex-col gap-1">
-                  <field.TextareaField
-                    label="Quels types de tâches ou d'activités vous intéresseraient ?"
-                    description="Distributions alimentaires, groupes de soutien, animations, accompagnement, etc."
-                    placeholder="Écrivez ici..."
-                    rows={4}
-                    maxLength={250}
-                  />
-                  <div className="flex items-center justify-end gap-2 text-xs text-muted-foreground">
-                    <span className="tabular-nums">{field.state.value?.length ?? 0}/250</span>
-                  </div>
-                </div>
+                <field.TextareaField
+                  label="Quels types de tâches ou d'activités vous intéresseraient ?"
+                  description="Distributions alimentaires, groupes de soutien, animations, accompagnement, etc."
+                  placeholder="Écrivez ici..."
+                  rows={4}
+                  maxLength={250}
+                />
               )}
             </form.AppField>
 
             <form.AppField name="volunteerAvailability">
               {(field) => (
-                <div className="flex flex-col gap-1">
-                  <field.TextareaField
-                    label="Disponibilités hebdomadaires pour le bénévolat"
-                    placeholder="Indiquez vos disponibilités hebdomadaires pour accomplir des missions bénévoles"
-                    rows={4}
-                    maxLength={250}
-                  />
-                  <div className="flex items-center justify-end gap-2 text-xs text-muted-foreground">
-                    <span className="tabular-nums">{field.state.value?.length ?? 0}/250</span>
-                  </div>
-                </div>
+                <field.TextareaField
+                  label="Disponibilités hebdomadaires pour le bénévolat"
+                  placeholder="Indiquez vos disponibilités hebdomadaires pour accomplir des missions bénévoles"
+                  rows={4}
+                  maxLength={250}
+                />
               )}
             </form.AppField>
 
