@@ -1,7 +1,7 @@
+import { locales } from '@better-auth/i18n'
+
 export const frTranslations = {
-  USER_NOT_FOUND: 'Utilisateur non trouvé',
-  CREDENTIAL_ACCOUNT_NOT_FOUND: 'Aucun compte associé à ces identifiants',
-  SESSION_EXPIRED: 'Session expirée',
+  ...locales.fr,
   INVALID_CALLBACK_REQUEST: "Requête de retour d'authentification invalide",
   NO_CODE: "Code d'authentification non fourni",
   INVALID_CODE: "Code d'authentification invalide",
