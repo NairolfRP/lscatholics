@@ -1,6 +1,6 @@
 import { lazy, Suspense } from 'react'
 import type { QueryClient } from '@tanstack/react-query'
-import { createRootRouteWithContext, HeadContent, Outlet, Scripts } from '@tanstack/react-router'
+import { createRootRouteWithContext, HeadContent, Outlet, Scripts, useRouterState } from '@tanstack/react-router'
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/react'
 import { envClient } from '#/config/env-client'
@@ -88,6 +88,10 @@ export const Route = createRootRouteWithContext<RouterContext>()({
 })
 
 function RootDocument() {
+  const isDashboard = useRouterState({
+    select: (state) => state.location.pathname.startsWith('/dashboard'),
+  })
+
   return (
     <html lang={envClient.VITE_LANGUAGE} suppressHydrationWarning>
       <head>
@@ -108,8 +112,8 @@ function RootDocument() {
           </Suspense>
         )}
         <Scripts />
-        <Analytics debug={false} />
-        <SpeedInsights debug={false} />
+        {!isDashboard && <Analytics debug={false} />}
+        {!isDashboard && <SpeedInsights debug={false} />}
       </body>
     </html>
   )
