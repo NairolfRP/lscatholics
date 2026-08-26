@@ -12,8 +12,8 @@ export const socials: Record<string, Social> = {
     icon: FacebrowserIcon,
   },
   youtube: {
-    label: "Chaîne youtube de l'Archidiocèse de Los Santos",
-    href: 'https://www.youtube.com/@lscatholics',
+    label: "Chaîne EyefindTube de l'Archidiocèse de Los Santos",
+    href: 'https://eyefind.fr/video/chaine.php?handle=lscatholics',
     className: 'bg-red-600 hover:bg-red-700 text-white',
     icon: YoutubeIcon,
   },
