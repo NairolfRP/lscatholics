@@ -27,7 +27,7 @@ export const departments: Department[] = [
         },
       ],
       content: [
-        "Le Bureau de l'Archevêque sert de lien entre les paroisses, les départements et l'Archevêque. Il assure le secrétariat et le soutien administratif de Son Éminence le Cardinal Edmund Hennessy, 7e archevêque de Los Santos, et coordonne son agenda pastoral, ses audiences et sa correspondance.",
+        "Le Bureau de l'Archevêque sert de lien entre les paroisses, les départements et l'Archevêque. Il assure le secrétariat et le soutien administratif de Son Éminence le Cardinal Edmund Hennessy, 6e archevêque de Los Santos, et coordonne son agenda pastoral, ses audiences et sa correspondance.",
         "Les fidèles souhaitant écrire à l'Archevêque, solliciter une bénédiction spéciale ou demander une rencontre sont invités à contacter le bureau par téléphone ou par écrit.",
       ],
     },
