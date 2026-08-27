@@ -12,7 +12,6 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as AppRouteImport } from './routes/_app'
 import { Route as DashboardRouteRouteImport } from './routes/dashboard/route'
 import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
-import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as AppIndexRouteImport } from './routes/_app/index'
 import { Route as AppAboutRouteImport } from './routes/_app/about'
 import { Route as AppAccountRouteRouteImport } from './routes/_app/account/route'
@@ -81,11 +80,6 @@ const DashboardRouteRoute = DashboardRouteRouteImport.update({
 const RobotsDottxtRoute = RobotsDottxtRouteImport.update({
   id: '/robots.txt',
   path: '/robots.txt',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
-  id: '/sitemap.xml',
-  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AppIndexRoute = AppIndexRouteImport.update({
@@ -375,7 +369,6 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof DashboardRouteRouteWithChildren
   '/': typeof AppIndexRoute
   '/robots.txt': typeof RobotsDottxtRoute
-  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/account': typeof AppAccountRouteRouteWithChildren
   '/charities': typeof AppCharitiesRouteRouteWithChildren
   '/decrees': typeof AppDecreesRouteRouteWithChildren
@@ -433,7 +426,6 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/robots.txt': typeof RobotsDottxtRoute
-  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/about': typeof AppAboutRoute
   '/archbishop': typeof AppArchbishopRoute
   '/careers': typeof AppCareersRoute
@@ -491,7 +483,6 @@ export interface FileRoutesById {
   '/dashboard': typeof DashboardRouteRouteWithChildren
   '/_app': typeof AppRouteWithChildren
   '/robots.txt': typeof RobotsDottxtRoute
-  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/_app/account': typeof AppAccountRouteRouteWithChildren
   '/_app/charities': typeof AppCharitiesRouteRouteWithChildren
   '/_app/decrees': typeof AppDecreesRouteRouteWithChildren
@@ -554,7 +545,6 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/'
     | '/robots.txt'
-    | '/sitemap.xml'
     | '/account'
     | '/charities'
     | '/decrees'
@@ -612,7 +602,6 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/robots.txt'
-    | '/sitemap.xml'
     | '/about'
     | '/archbishop'
     | '/careers'
@@ -669,7 +658,6 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/_app'
     | '/robots.txt'
-    | '/sitemap.xml'
     | '/_app/account'
     | '/_app/charities'
     | '/_app/decrees'
@@ -731,7 +719,6 @@ export interface RootRouteChildren {
   DashboardRouteRoute: typeof DashboardRouteRouteWithChildren
   AppRoute: typeof AppRouteWithChildren
   RobotsDottxtRoute: typeof RobotsDottxtRoute
-  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
   ApiPaymentFleecaCallbackRoute: typeof ApiPaymentFleecaCallbackRoute
   ApiPaymentFleecaWebhookRoute: typeof ApiPaymentFleecaWebhookRoute
@@ -759,13 +746,6 @@ declare module '@tanstack/react-router' {
       path: '/robots.txt'
       fullPath: '/robots.txt'
       preLoaderRoute: typeof RobotsDottxtRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/sitemap.xml': {
-      id: '/sitemap.xml'
-      path: '/sitemap.xml'
-      fullPath: '/sitemap.xml'
-      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_app/': {
@@ -1318,7 +1298,6 @@ const rootRouteChildren: RootRouteChildren = {
   DashboardRouteRoute: DashboardRouteRouteWithChildren,
   AppRoute: AppRouteWithChildren,
   RobotsDottxtRoute: RobotsDottxtRoute,
-  SitemapDotxmlRoute: SitemapDotxmlRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
   ApiPaymentFleecaCallbackRoute: ApiPaymentFleecaCallbackRoute,
   ApiPaymentFleecaWebhookRoute: ApiPaymentFleecaWebhookRoute,
