@@ -17,7 +17,7 @@ const archbishop = {
   portraitUrl: '/assets/images/cardinal_callahan_officiel_portrait.webp',
   coatOfArmsUrl: '/assets/images/cardinal_hennessy_coat_of_arms.webp',
   socials: {
-    facebrowser: 'https://face-fr.gta.world/profile/cardinalhennessy',
+    facebrowser: 'https://face-fr.gta.world/page/cardinalhennessy',
   },
   biography: [
     'Le Cardinal Edmund Michael Hennessy a été nommé 6e archevêque de Los Santos le 26 juin 2026 par le pape Léon XIV. Il était précédemment archevêque de Saint Louis (Missouri) par Benoit XVI. Le Pape François le crée Cardinal lors du consistoire de 2014.',
