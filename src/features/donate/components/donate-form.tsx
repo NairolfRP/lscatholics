@@ -25,7 +25,7 @@ import { useAppForm } from '#shared/integrations/form/form-hook.ts'
 
 export function DonateForm() {
   const { currentCharacter, isLoading } = useGameContext()
-  const { openPayment } = usePaymentPopup()
+  const { openPayment, preparePaymentPopup, disposePaymentPopup } = usePaymentPopup()
 
   const form = useAppForm({
     formId: 'donation-submission-form',
@@ -40,6 +40,7 @@ export function DonateForm() {
 
         if (!result.success) {
           if (result.validationErrors) {
+            disposePaymentPopup()
             return formApi.setErrorMap({
               onServer: {
                 fields: result.validationErrors,
@@ -47,6 +48,7 @@ export function DonateForm() {
             } as unknown as Parameters<typeof formApi.setErrorMap>[0])
           }
 
+          disposePaymentPopup()
           return toast.add({
             type: 'error',
             title: result.error || 'Une erreur est survenue',
@@ -54,6 +56,7 @@ export function DonateForm() {
         }
 
         if (!result.paymentUrl) {
+          disposePaymentPopup()
           return toast.add({
             type: 'error',
             title: 'Échec',
@@ -63,6 +66,7 @@ export function DonateForm() {
 
         openPayment(result.paymentUrl, () => formApi.reset())
       } catch {
+        disposePaymentPopup()
         toast.add({ type: 'error', title: 'Une erreur est survenue' })
       }
     },
@@ -84,7 +88,8 @@ export function DonateForm() {
           id={form.formId}
           onSubmit={(e) => {
             e.preventDefault()
-            void form.handleSubmit()
+            preparePaymentPopup()
+            void form.handleSubmit().catch(() => disposePaymentPopup())
           }}
           className="contents"
         >

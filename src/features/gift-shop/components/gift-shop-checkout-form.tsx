@@ -29,7 +29,7 @@ export function GiftShopCheckoutForm({
   onClose,
 }: GiftShopCheckoutFormProps) {
   const { currentCharacter, isLoading } = useGameContext()
-  const { openPayment } = usePaymentPopup()
+  const { openPayment, preparePaymentPopup, disposePaymentPopup } = usePaymentPopup()
 
   const form = useAppForm({
     formId: 'gift-shop-checkout-form',
@@ -44,6 +44,7 @@ export function GiftShopCheckoutForm({
 
         if (!result.success) {
           if (result.validationErrors) {
+            disposePaymentPopup()
             return formApi.setErrorMap({
               onServer: {
                 fields: result.validationErrors,
@@ -51,6 +52,7 @@ export function GiftShopCheckoutForm({
             } as unknown as Parameters<typeof formApi.setErrorMap>[0])
           }
 
+          disposePaymentPopup()
           return toast.add({
             type: 'error',
             title: result.error || 'Une erreur est survenue',
@@ -58,6 +60,7 @@ export function GiftShopCheckoutForm({
         }
 
         if (!result.paymentUrl) {
+          disposePaymentPopup()
           return toast.add({
             type: 'error',
             title: 'Échec',
@@ -71,6 +74,7 @@ export function GiftShopCheckoutForm({
           onClose()
         })
       } catch {
+        disposePaymentPopup()
         toast.add({ type: 'error', title: 'Une erreur est survenue' })
       }
     },
@@ -89,7 +93,8 @@ export function GiftShopCheckoutForm({
       id={form.formId}
       onSubmit={(e) => {
         e.preventDefault()
-        void form.handleSubmit()
+        preparePaymentPopup()
+        void form.handleSubmit().catch(() => disposePaymentPopup())
       }}
       className="contents"
     >

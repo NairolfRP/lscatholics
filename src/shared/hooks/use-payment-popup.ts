@@ -7,9 +7,19 @@ const PAYMENT_POPUP_CONFIG = {
   closeCheckIntervalMs: 1000,
 } as const
 
+const PAYMENT_POPUP_TARGET = 'fleeca-payment'
+
+/**
+ * Popup opened synchronously during the user gesture (submit click). It starts
+ * as a blank splash and is redirected to the payment URL once it is available,
+ * because a delayed `window.open` is blocked by the browser in production.
+ */
+let preparedPopup: Window | null = null
+
 export function usePaymentPopup() {
   const openPayment = (paymentUrl: string, onSuccess: () => void) => {
-    const popup = createPaymentWindow(paymentUrl)
+    const popup = preparedPopup && !preparedPopup.closed ? preparedPopup : null
+    preparedPopup = null
 
     if (!popup) {
       toast.add({
@@ -20,24 +30,68 @@ export function usePaymentPopup() {
       return
     }
 
+    popup.location.href = paymentUrl
     setupPaymentHandlers(popup, onSuccess)
     setupAutoCloseTimer(popup)
   }
 
-  return { openPayment }
+  const preparePaymentPopup = () => {
+    const popup = preparedPopup && !preparedPopup.closed ? preparedPopup : createPaymentWindow()
+    if (!popup) return
+    preparedPopup = popup
+    renderPaymentPlaceholder(popup)
+  }
+
+  const disposePaymentPopup = () => {
+    if (preparedPopup && !preparedPopup.closed) {
+      preparedPopup.close()
+    }
+    preparedPopup = null
+  }
+
+  return { openPayment, preparePaymentPopup, disposePaymentPopup }
 }
 
-function createPaymentWindow(url: string) {
+function createPaymentWindow() {
   const { width, height, left, top } = calculateWindowPosition(
     PAYMENT_POPUP_CONFIG.width,
     PAYMENT_POPUP_CONFIG.height
   )
 
   return window.open(
-    url,
-    'fleeca-payment',
+    'about:blank',
+    PAYMENT_POPUP_TARGET,
     `width=${width},height=${height},top=${top},left=${left},scrollbars=yes,resizable=yes,toolbar=no,location=no`
   )
+}
+
+function renderPaymentPlaceholder(popup: Window) {
+  try {
+    popup.document.open()
+    popup.document.write(`
+      <!doctype html>
+      <html lang="fr">
+        <head>
+          <meta charset="utf-8" />
+          <title>Paiement…</title>
+          <style>
+            html, body { height: 100%; margin: 0; }
+            body {
+              display: flex; align-items: center; justify-content: center;
+              font-family: system-ui, sans-serif; color: #333;
+            }
+            .message { padding: 1.5rem; text-align: center; }
+          </style>
+        </head>
+        <body>
+          <div class="message">Préparation du paiement…</div>
+        </body>
+      </html>
+    `)
+    popup.document.close()
+  } catch {
+    // The popup already navigated (or is unreachable): leave it as is.
+  }
 }
 
 function calculateWindowPosition(width: number, height: number) {
