@@ -165,7 +165,7 @@ describe('createGiftOrder', () => {
       expect.objectContaining({
         amount: 10_470,
         mode: 0,
-        description: expect.stringMatching(/^Boutique — Commande GC-[A-Z2-9]{10} — 3 articles$/),
+        description: expect.stringMatching(/^Boutique - GC-[A-Z2-9]{10}$/),
       })
     )
 

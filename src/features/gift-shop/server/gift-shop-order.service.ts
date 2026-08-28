@@ -64,7 +64,6 @@ export async function createGiftOrder(data: unknown): Promise<CreateGiftOrderRes
     })
 
     const amount = items.reduce((sum, item) => sum + item.price * item.quantity, 0)
-    const itemCount = items.reduce((sum, item) => sum + item.quantity, 0)
 
     const reference = generateGiftOrderReference()
     const { fleecaConfirmation: _, ...metadata } = parsed
@@ -73,7 +72,7 @@ export async function createGiftOrder(data: unknown): Promise<CreateGiftOrderRes
       source: GIFT_ORDER_SOURCE,
       amount,
       metadata: { reference, ...metadata, items } satisfies GiftOrderMetadata,
-      description: `Boutique — Commande ${reference} — ${itemCount} article${itemCount > 1 ? 's' : ''}`,
+      description: `Boutique - ${reference}`,
     })
 
     return { success: true, paymentId, paymentUrl }
