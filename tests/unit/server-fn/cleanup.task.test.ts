@@ -102,4 +102,42 @@ describe('cleanup task', () => {
     )
     await expect(pendingPaymentRepository.findById('pay_1')).resolves.toBeUndefined()
   })
+
+  it('keeps a reconciled payment pending when the Fleeca amount does not match', async () => {
+    const metadata: DonationMetadata = {
+      amount: 500,
+      firstname: 'Jean',
+      lastname: 'Valjean',
+      age: 46,
+      ethnicity: 'white',
+      phone: '123456',
+      address: '12 Ginger Street',
+      district: 'little_seoul',
+      isOrganization: false,
+      organizationName: '',
+      message: '',
+      anonymous: false,
+    }
+
+    await pendingPaymentRepository.create({
+      id: 'pay_mismatch',
+      source: DONATION_SOURCE,
+      amount: 500,
+      mode: 1,
+      metadata: encryptMetadata(metadata),
+      expiresAt: new Date(Date.now() - 60_000),
+    })
+    mocks.fleecaClient.getPayment.mockResolvedValue({
+      payment_id: 'pay_mismatch',
+      status: 'payment_successful',
+      amount: 100,
+    })
+
+    await (cleanupTask.run as () => Promise<unknown>)()
+
+    expect(mocks.sendPrivateDonationNotification).not.toHaveBeenCalled()
+    await expect(pendingPaymentRepository.findById('pay_mismatch')).resolves.toMatchObject({
+      amount: 500,
+    })
+  })
 })

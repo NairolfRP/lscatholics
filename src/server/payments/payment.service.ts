@@ -208,6 +208,18 @@ export class PaymentService {
     try {
       const details = await fleecaClient.getPayment(pending.id)
       if (details.status === 'payment_successful' || details.status === 'payment_failed') {
+        if (details.amount !== pending.amount) {
+          logger.error(
+            {
+              paymentId: pending.id,
+              expectedAmount: pending.amount,
+              receivedAmount: details.amount,
+            },
+            'Reconciled payment amount mismatch — payment kept pending, not processed'
+          )
+          return { kind: 'error', err: new Error('Reconciled payment amount mismatch') }
+        }
+
         const claimed = await pendingPaymentRepository.claimAndDeleteById(pending.id)
         if (claimed) {
           await this.#runPaymentHandler(claimed, details.status)
