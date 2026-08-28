@@ -1,6 +1,5 @@
 import { useQueryClient } from '@tanstack/react-query'
 import { createFileRoute, redirect } from '@tanstack/react-router'
-import { TrafficConeIcon } from 'lucide-react'
 import {
   BANK_TRANSFER_FORM_MAX_LENGTH,
   BANK_TRANSFER_FORM_MIN_LENGTH,
@@ -11,7 +10,6 @@ import { bankTransferSchema } from '#/features/banking/schema/banking.schema.ts'
 import { bankTransferFn } from '#/features/banking/server-fn/banking.functions.ts'
 import { DashboardHeading } from '#/features/dashboard/components/dashboard-heading.tsx'
 import { formatCurrency } from '#/utils/number.ts'
-import { Alert, AlertDescription, AlertTitle } from '#shared/components/ui/alert.tsx'
 import { Card, CardContent } from '#shared/components/ui/card.tsx'
 import { FieldGroup } from '#shared/components/ui/field.tsx'
 import { toast } from '#shared/components/ui/toast.tsx'
@@ -24,10 +22,10 @@ export const Route = createFileRoute('/dashboard/finances/transfer')({
       throw redirect({ to: '/dashboard', replace: true })
     }
   },
-  component: import.meta.env.DEV ? WIPComponent : RouteComponent,
+  component: RouteComponent,
 })
 
-function WIPComponent() {
+function RouteComponent() {
   const queryClient = useQueryClient()
   const navigate = Route.useNavigate()
 
@@ -136,34 +134,6 @@ function WIPComponent() {
             </form.AppForm>
           </CardContent>
         </Card>
-      </div>
-    </div>
-  )
-}
-
-function RouteComponent() {
-  return (
-    <div className="container mx-auto pt-5">
-      <div className="space-y-6">
-        <DashboardHeading
-          title="Effectuer une transaction"
-          description="Effectuer une transaction bancaire depuis les comptes de l'Archidiocèse"
-          backButton={{
-            'to': '/dashboard/finances',
-            'aria-label': 'Retour sur la page des finances',
-            'preload': false,
-          }}
-        />
-        <div className="mx-auto max-w-2xl">
-          <Alert variant="info">
-            <TrafficConeIcon />
-            <AlertTitle>Bientôt disponible</AlertTitle>
-            <AlertDescription>
-              Cette fonctionnalité n'est pas encore disponible. J'attends que le serveur soit ouvert
-              pour effectuer des tests.
-            </AlertDescription>
-          </Alert>
-        </div>
       </div>
     </div>
   )
