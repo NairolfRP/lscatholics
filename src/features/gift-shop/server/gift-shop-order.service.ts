@@ -102,7 +102,7 @@ export async function createGiftOrder(data: unknown): Promise<CreateGiftOrderRes
       }
     }
 
-    logger.error({ err, data }, 'Failed to initiate a gift shop order payment')
+    logger.error({ err }, 'Failed to initiate a gift shop order payment')
     setResponseStatus(500)
     return {
       success: false,

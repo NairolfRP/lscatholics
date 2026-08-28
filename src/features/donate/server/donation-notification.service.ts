@@ -3,7 +3,7 @@ import type { DonationNotificationData } from '#/features/donate/types/donate.ty
 import { formatCurrency } from '#/utils/number.ts'
 import { logger } from '#server/integrations/logger.ts'
 import type { DiscordEmbed } from '#server/services/discord.service.ts'
-import { sendWebhookMessage } from '#server/services/discord.service.ts'
+import { escapeDiscordMarkdown, sendWebhookMessage } from '#server/services/discord.service.ts'
 import { getDistrictLabel } from '#shared/constants/districts.constants.ts'
 import { ethnicGroupLabels } from '#shared/constants/ethnicity.ts'
 
@@ -15,7 +15,7 @@ export async function sendPrivateDonationNotification(
   const webhookUrl = env.DONATE_PRIVATE_NOTIFICATION_WEBHOOK
   if (!webhookUrl) {
     logger.error(
-      { data },
+      { amount: data.amount },
       '[Donation] Failed to send private discord notification. DONATE_PRIVATE_NOTIFICATION_WEBHOOK is not configured'
     )
     return
@@ -26,6 +26,7 @@ export async function sendPrivateDonationNotification(
       url: webhookUrl,
       payload: {
         embeds: [buildPrivateEmbed(data)],
+        allowed_mentions: { parse: [] },
       },
     })
   } catch (err) {
@@ -41,7 +42,7 @@ export async function sendPublicDonationNotification(
   const webhookUrl = env.DONATE_PUBLIC_NOTIFICATION_WEBHOOK
   if (!webhookUrl) {
     logger.error(
-      { data },
+      { amount: data.amount },
       '[Donation] Failed to send public discord notification. DONATE_PUBLIC_NOTIFICATION_WEBHOOK is not configured'
     )
     return
@@ -54,6 +55,7 @@ export async function sendPublicDonationNotification(
         username: 'LS Catholics',
         avatar_url: 'https://i.imgur.com/0f4ZQS0.png',
         embeds: [buildPublicEmbed(data)],
+        allowed_mentions: { parse: [] },
       },
     })
   } catch (err) {
@@ -63,13 +65,16 @@ export async function sendPublicDonationNotification(
 
 function buildPrivateEmbed(data: DonationNotificationData): DiscordEmbed {
   const fields: DiscordEmbed['fields'] = [
-    { name: 'Identité', value: `${data.firstname} ${data.lastname}` },
+    {
+      name: 'Identité',
+      value: `${escapeDiscordMarkdown(data.firstname)} ${escapeDiscordMarkdown(data.lastname)}`,
+    },
   ]
 
   if (data.isOrganization && data.organizationName) {
     fields.push({
       name: "Au nom d'une société / organisation",
-      value: data.organizationName,
+      value: escapeDiscordMarkdown(data.organizationName),
     })
   }
 
@@ -87,7 +92,7 @@ function buildPrivateEmbed(data: DonationNotificationData): DiscordEmbed {
 
   if (data.address) {
     const district = data.district ? ` (${getDistrictLabel(data.district)})` : ''
-    fields.push({ name: 'Adresse', value: `${data.address}${district}` })
+    fields.push({ name: 'Adresse', value: `${escapeDiscordMarkdown(data.address)}${district}` })
   }
 
   fields.push(
@@ -99,7 +104,10 @@ function buildPrivateEmbed(data: DonationNotificationData): DiscordEmbed {
   )
 
   if (data.message) {
-    fields.push({ name: 'Message du donateur', value: '```' + data.message + '```' })
+    fields.push({
+      name: 'Message du donateur',
+      value: '```' + escapeDiscordMarkdown(data.message) + '```',
+    })
   }
 
   return {
@@ -122,15 +130,15 @@ function buildPublicEmbed(data: DonationNotificationData): DiscordEmbed {
 
 function buildPublicDescription(data: DonationNotificationData): string {
   const donatorName = data.isOrganization
-    ? `l'organisation **${data.organizationName ?? ''}**, et son représentant **${data.firstname} ${data.lastname}**`
-    : `**${data.firstname} ${data.lastname}**`
+    ? `l'organisation **${escapeDiscordMarkdown(data.organizationName ?? '')}**, et son représentant **${escapeDiscordMarkdown(data.firstname)} ${escapeDiscordMarkdown(data.lastname)}**`
+    : `**${escapeDiscordMarkdown(data.firstname)} ${escapeDiscordMarkdown(data.lastname)}**`
   const age = data.age ? ` (${data.age} ans)` : ''
   const formattedAmount = formatCurrency(data.amount)
   const suffix = data.isOrganization
-    ? `Merci pour votre engagement ! Nous prions pour **${data.organizationName}**. N'oubliez pas de prier pour nous et tout le Peuple de Dieu, particulièrement pour les plus vulnérables 💖`
+    ? `Merci pour votre engagement ! Nous prions pour **${escapeDiscordMarkdown(data.organizationName ?? '')}**. N'oubliez pas de prier pour nous et tout le Peuple de Dieu, particulièrement pour les plus vulnérables 💖`
     : "Merci pour votre générosité et que la joie de Dieu vous comble. N'oubliez pas de prier pour nous et tout le Peuple de Dieu, particulièrement pour les plus vulnérables 💖"
 
-  const message = data.message ? `\n\n> *« ${data.message} »*` : ''
+  const message = data.message ? `\n\n> *« ${escapeDiscordMarkdown(data.message)} »*` : ''
 
   return `🙏 Prions pour ${donatorName}${age} et son don de **${formattedAmount}** !\n\n${suffix}${message}`
 }

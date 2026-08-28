@@ -73,6 +73,7 @@ describe('sendPrivateDonationNotification', () => {
               ],
             },
           ],
+          allowed_mentions: { parse: [] },
         },
       })
     )
@@ -159,6 +160,7 @@ describe('sendPublicDonationNotification', () => {
               timestamp: mockDate.toISOString(),
             },
           ],
+          allowed_mentions: { parse: [] },
         },
       })
     )

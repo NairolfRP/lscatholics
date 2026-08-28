@@ -28,6 +28,7 @@ vi.mock('#/config/env.server.ts', async (importOriginal) => {
 
 vi.mock('#server/services/discord.service.ts', () => ({
   sendWebhookMessage: mocks.sendWebhookMessage,
+  escapeDiscordMarkdown: (value: string) => value,
 }))
 
 const DATA: GiftOrderNotificationData = {

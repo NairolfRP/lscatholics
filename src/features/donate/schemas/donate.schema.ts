@@ -76,7 +76,8 @@ const optionalAddressSchema = z
       .trim()
       .refine((value) => value.length >= 10, {
         error: "L'adresse doit contenir au minimum 10 caractères.",
-      }),
+      })
+      .max(120, { error: "L'adresse ne doit pas dépasser 120 caractères." }),
     z.literal(''),
   ])
   .optional()

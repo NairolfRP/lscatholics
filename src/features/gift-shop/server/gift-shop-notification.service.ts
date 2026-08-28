@@ -3,7 +3,7 @@ import type { GiftOrderNotificationData } from '#/features/gift-shop/types/gift-
 import { formatCurrency } from '#/utils/number.ts'
 import { logger } from '#server/integrations/logger.ts'
 import type { DiscordEmbed } from '#server/services/discord.service.ts'
-import { sendWebhookMessage } from '#server/services/discord.service.ts'
+import { escapeDiscordMarkdown, sendWebhookMessage } from '#server/services/discord.service.ts'
 import { civilTitleLabels } from '#shared/constants/civil-title.ts'
 
 export const GIFT_SHOP_EMBED_COLOR = 0x8b0000
@@ -17,7 +17,7 @@ export async function sendGiftShopNotification(data: GiftOrderNotificationData):
   const webhookUrl = env.GIFT_SHOP_NOTIFICATION_WEBHOOK
   if (!webhookUrl) {
     logger.error(
-      { data },
+      { amount: data.amount },
       '[GiftShop] Failed to send discord notification. GIFT_SHOP_NOTIFICATION_WEBHOOK is not configured'
     )
     return
@@ -57,11 +57,6 @@ function getHttpStatus(err: unknown): number | undefined {
     if (response && typeof response.status === 'number') return response.status
   }
   return undefined
-}
-
-/** Escape Discord markdown so user-supplied values render as plain text. */
-function escapeDiscordMarkdown(value: string): string {
-  return value.replace(/([\\`*_~|<>])/g, '\\$1')
 }
 
 export function buildGiftShopNotificationEmbeds(data: GiftOrderNotificationData): DiscordEmbed[] {

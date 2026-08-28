@@ -21,6 +21,11 @@ export type DiscordWebhookPayload = RESTPostAPIWebhookWithTokenJSONBody
 export type DiscordWebhookQuery = RESTPostAPIWebhookWithTokenQuery
 export type DiscordChannelMessagePayload = RESTPostAPIChannelMessageJSONBody
 
+/** Escape Discord markdown so user-supplied values render as plain text. */
+export function escapeDiscordMarkdown(value: string): string {
+  return value.replace(/([\\`*_~|<>])/g, '\\$1')
+}
+
 export interface SendWebhookMessageOptions {
   wait?: boolean
   threadId?: Snowflake

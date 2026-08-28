@@ -55,7 +55,7 @@ export async function initiateDonation(data: unknown): Promise<InitiateDonationR
       }
     }
 
-    logger.error({ err, data }, 'Failed to initiate a donation payment')
+    logger.error({ err }, 'Failed to initiate a donation payment')
     setResponseStatus(500)
     return {
       success: false,
