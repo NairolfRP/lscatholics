@@ -41,6 +41,7 @@ interface GiftShopCartProps {
   onSetQuantity: (productId: string, quantity: number) => void
   onRemove: (productId: string) => void
   onClearCart: () => void
+  onCheckoutComplete: () => void
 }
 
 export function GiftShopCart({
@@ -50,6 +51,7 @@ export function GiftShopCart({
   onSetQuantity,
   onRemove,
   onClearCart,
+  onCheckoutComplete,
 }: GiftShopCartProps) {
   const [isCheckoutOpen, setCheckoutOpen] = useState(false)
   const [checkoutIteration, setCheckoutIteration] = useState(0)
@@ -58,6 +60,11 @@ export function GiftShopCart({
   const openCheckout = () => {
     setCheckoutIteration((iteration) => iteration + 1)
     setCheckoutOpen(true)
+  }
+
+  const handleCheckoutComplete = () => {
+    setCheckoutOpen(false)
+    onCheckoutComplete()
   }
 
   const entries = lines.map((line) => ({ productId: line.productId, quantity: line.quantity }))
@@ -179,7 +186,7 @@ export function GiftShopCart({
               key={checkoutIteration}
               cartEntries={entries}
               onClearCart={onClearCart}
-              onClose={() => setCheckoutOpen(false)}
+              onClose={handleCheckoutComplete}
             />
           </ResponsiveDialogContent>
         </ResponsiveDialog>
@@ -220,7 +227,7 @@ export function GiftShopCart({
                 key={checkoutIteration}
                 cartEntries={entries}
                 onClearCart={onClearCart}
-                onClose={() => setCheckoutOpen(false)}
+                onClose={handleCheckoutComplete}
               />
             </div>
           </DrawerContent>

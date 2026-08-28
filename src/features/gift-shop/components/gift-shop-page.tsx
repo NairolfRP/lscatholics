@@ -86,6 +86,7 @@ export function GiftShopPage() {
               onSetQuantity={cart.setQuantity}
               onRemove={cart.removeItem}
               onClearCart={cart.clearCart}
+              onCheckoutComplete={() => setCartOpen(false)}
             />
           </ResponsiveDialogContent>
         </ResponsiveDialog>
