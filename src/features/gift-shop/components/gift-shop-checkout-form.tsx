@@ -1,5 +1,5 @@
-import { useEffect } from 'react'
-import { ShoppingBagIcon } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { LoaderCircle, ShoppingBagIcon } from 'lucide-react'
 import { GiftShopFormSkeleton } from '#/features/gift-shop/components/gift-shop-form-skeleton.tsx'
 import { GiftShopDetailsSection } from '#/features/gift-shop/components/sections/gift-shop-details-section.tsx'
 import { GiftShopIdentitySection } from '#/features/gift-shop/components/sections/gift-shop-identity-section.tsx'
@@ -30,7 +30,13 @@ export function GiftShopCheckoutForm({
   onClose,
 }: GiftShopCheckoutFormProps) {
   const { currentCharacter, isLoading } = useGameContext()
-  const { openPayment, blockedPaymentUrl } = usePaymentPopup()
+  const { openPayment, blockedPaymentUrl, cancelPayment } = usePaymentPopup()
+  const [isPaymentPending, setIsPaymentPending] = useState(false)
+
+  const handleCancel = () => {
+    cancelPayment()
+    setIsPaymentPending(false)
+  }
 
   const form = useAppForm({
     formId: 'gift-shop-checkout-form',
@@ -74,8 +80,10 @@ export function GiftShopCheckoutForm({
             onClearCart()
             onClose()
           },
-          onFailure: () => {},
+          onFailure: () => setIsPaymentPending(false),
         })
+
+        setIsPaymentPending(true)
       } catch {
         toast.add({ type: 'error', title: 'Une erreur est survenue' })
       }
@@ -95,7 +103,7 @@ export function GiftShopCheckoutForm({
       id={form.formId}
       onSubmit={(e) => {
         e.preventDefault()
-        if (blockedPaymentUrl) return
+        if (blockedPaymentUrl || isPaymentPending) return
         void form.handleSubmit()
       }}
       className="contents"
@@ -123,6 +131,26 @@ export function GiftShopCheckoutForm({
             <p className="text-xs text-muted-foreground sm:text-right">
               Votre panier sera vidé automatiquement une fois le paiement confirmé.
             </p>
+            <button
+              type="button"
+              onClick={handleCancel}
+              className="text-sm text-muted-foreground underline-offset-4 hover:underline"
+            >
+              Annuler et réessayer
+            </button>
+          </div>
+        ) : isPaymentPending ? (
+          <div className="flex w-full flex-col items-stretch gap-2 sm:items-end">
+            <Button disabled size="lg" className="w-full sm:w-auto">
+              <LoaderCircle className="animate-spin" /> Paiement en cours…
+            </Button>
+            <button
+              type="button"
+              onClick={handleCancel}
+              className="text-sm text-muted-foreground underline-offset-4 hover:underline"
+            >
+              Annuler et réessayer
+            </button>
           </div>
         ) : (
           <form.AppForm>

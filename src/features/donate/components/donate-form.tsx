@@ -1,4 +1,5 @@
-import { HandHeartIcon } from 'lucide-react'
+import { useState } from 'react'
+import { HandHeartIcon, LoaderCircle } from 'lucide-react'
 import { DonateFormSkeleton } from '#/features/donate/components/donate-form-skeleton.tsx'
 import { DonateAddressSection } from '#/features/donate/components/sections/donate-address-section.tsx'
 import { DonateAmountSection } from '#/features/donate/components/sections/donate-amount-section.tsx'
@@ -26,7 +27,13 @@ import { useAppForm } from '#shared/integrations/form/form-hook.ts'
 
 export function DonateForm() {
   const { currentCharacter, isLoading } = useGameContext()
-  const { openPayment, blockedPaymentUrl } = usePaymentPopup()
+  const { openPayment, blockedPaymentUrl, cancelPayment } = usePaymentPopup()
+  const [isPaymentPending, setIsPaymentPending] = useState(false)
+
+  const handleCancel = () => {
+    cancelPayment()
+    setIsPaymentPending(false)
+  }
 
   const form = useAppForm({
     formId: 'donation-submission-form',
@@ -66,8 +73,10 @@ export function DonateForm() {
           paymentId: result.paymentId,
           paymentUrl: result.paymentUrl,
           onSuccess: () => formApi.reset(),
-          onFailure: () => {},
+          onFailure: () => setIsPaymentPending(false),
         })
+
+        setIsPaymentPending(true)
       } catch {
         toast.add({ type: 'error', title: 'Une erreur est survenue' })
       }
@@ -90,7 +99,7 @@ export function DonateForm() {
           id={form.formId}
           onSubmit={(e) => {
             e.preventDefault()
-            if (blockedPaymentUrl) return
+            if (blockedPaymentUrl || isPaymentPending) return
             void form.handleSubmit()
           }}
           className="contents"
@@ -118,7 +127,27 @@ export function DonateForm() {
                 >
                   <HandHeartIcon /> Ouvrir le paiement
                 </Button>
+                <button
+                  type="button"
+                  onClick={handleCancel}
+                  className="text-sm text-muted-foreground underline-offset-4 hover:underline"
+                >
+                  Annuler et réessayer
+                </button>
               </div>
+            </CardFooter>
+          ) : isPaymentPending ? (
+            <CardFooter className="flex flex-col justify-end gap-3 sm:flex-row sm:items-center">
+              <Button disabled size="lg" className="w-full sm:w-auto">
+                <LoaderCircle className="animate-spin" /> Paiement en cours…
+              </Button>
+              <button
+                type="button"
+                onClick={handleCancel}
+                className="text-sm text-muted-foreground underline-offset-4 hover:underline"
+              >
+                Annuler et réessayer
+              </button>
             </CardFooter>
           ) : (
             <CardFooter className="flex justify-end gap-4">

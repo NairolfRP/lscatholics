@@ -34,18 +34,27 @@ interface OpenPaymentOptions {
  * status until it reaches a terminal state. The popup is a nice-to-have: if the
  * browser blocks it (e.g. Brave Shields), the caller renders a real link from
  * `blockedPaymentUrl`, which is never blocked. Cart/side effects happen through
- * `onSuccess`/`onFailure` regardless of how the popup was opened.
+ * `onSuccess`/`onFailure` regardless of how the popup was opened. `cancelPayment`
+ * closes the popup and stops tracking (used by a "cancel & retry" action).
  */
 export function usePaymentPopup() {
   const [blockedPaymentUrl, setBlockedPaymentUrl] = useState<string | null>(null)
   const cancelTrackingRef = useRef<(() => void) | undefined>(undefined)
+  const popupWindowRef = useRef<Window | null>(null)
 
-  useEffect(() => () => cancelTrackingRef.current?.(), [])
+  useEffect(
+    () => () => {
+      cancelTrackingRef.current?.()
+      popupWindowRef.current?.close()
+    },
+    []
+  )
 
   const openPayment = ({ paymentId, paymentUrl, onSuccess, onFailure }: OpenPaymentOptions) => {
     cancelTrackingRef.current?.()
 
     const popup = createPaymentWindow(paymentUrl)
+    popupWindowRef.current = popup
     if (!popup) {
       setBlockedPaymentUrl(paymentUrl)
     }
@@ -59,7 +68,20 @@ export function usePaymentPopup() {
     })
   }
 
-  return { openPayment, blockedPaymentUrl }
+  const cancelPayment = () => {
+    cancelTrackingRef.current?.()
+    cancelTrackingRef.current = undefined
+
+    const popup = popupWindowRef.current
+    popupWindowRef.current = null
+    if (popup && !popup.closed) {
+      popup.close()
+    }
+
+    setBlockedPaymentUrl(null)
+  }
+
+  return { openPayment, blockedPaymentUrl, cancelPayment }
 }
 
 function createPaymentWindow(url: string) {
