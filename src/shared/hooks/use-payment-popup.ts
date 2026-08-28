@@ -39,6 +39,7 @@ interface OpenPaymentOptions {
  */
 export function usePaymentPopup() {
   const [blockedPaymentUrl, setBlockedPaymentUrl] = useState<string | null>(null)
+  const [manualPaymentUrl, setManualPaymentUrl] = useState<string | null>(null)
   const cancelTrackingRef = useRef<(() => void) | undefined>(undefined)
   const popupWindowRef = useRef<Window | null>(null)
 
@@ -60,12 +61,29 @@ export function usePaymentPopup() {
     }
 
     cancelTrackingRef.current = trackPaymentStatus(paymentId, {
-      onSuccess,
+      onSuccess: () => {
+        setBlockedPaymentUrl(null)
+        setManualPaymentUrl(null)
+        onSuccess()
+      },
       onFailure: (reason) => {
         setBlockedPaymentUrl(null)
+        setManualPaymentUrl(null)
         onFailure(reason)
       },
     })
+  }
+
+  /**
+   * Opens the blocked payment in a real new tab. Script-opened tabs keep an
+   * opener, so the callback page can close itself after confirmation (a plain
+   * `<a target="_blank">` tab cannot call `window.close()`). If the browser
+   * blocks the script-open too, expose `manualPaymentUrl` for a plain link.
+   */
+  const openPaymentInTab = () => {
+    if (!blockedPaymentUrl) return
+    const win = window.open(blockedPaymentUrl, '_blank')
+    setManualPaymentUrl(win ? null : blockedPaymentUrl)
   }
 
   const cancelPayment = () => {
@@ -79,9 +97,10 @@ export function usePaymentPopup() {
     }
 
     setBlockedPaymentUrl(null)
+    setManualPaymentUrl(null)
   }
 
-  return { openPayment, blockedPaymentUrl, cancelPayment }
+  return { openPayment, blockedPaymentUrl, manualPaymentUrl, openPaymentInTab, cancelPayment }
 }
 
 function createPaymentWindow(url: string) {

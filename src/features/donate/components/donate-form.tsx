@@ -27,7 +27,8 @@ import { useAppForm } from '#shared/integrations/form/form-hook.ts'
 
 export function DonateForm() {
   const { currentCharacter, isLoading } = useGameContext()
-  const { openPayment, blockedPaymentUrl, cancelPayment } = usePaymentPopup()
+  const { openPayment, blockedPaymentUrl, manualPaymentUrl, openPaymentInTab, cancelPayment } =
+    usePaymentPopup()
   const [isPaymentPending, setIsPaymentPending] = useState(false)
 
   const handleCancel = () => {
@@ -120,13 +121,19 @@ export function DonateForm() {
                   Le popup de paiement a été bloqué par votre navigateur. Cliquez pour ouvrir le
                   paiement dans un nouvel onglet.
                 </p>
-                <Button
-                  render={<a href={blockedPaymentUrl} target="_blank" rel="noreferrer" />}
-                  size="lg"
-                  className="w-full sm:w-auto"
-                >
+                <Button type="button" size="lg" onClick={openPaymentInTab} className="w-full sm:w-auto">
                   <HandHeartIcon /> Ouvrir le paiement
                 </Button>
+                {manualPaymentUrl && (
+                  <a
+                    href={manualPaymentUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm text-muted-foreground underline underline-offset-4 hover:text-foreground"
+                  >
+                    Le navigateur bloque aussi l'ouverture automatique ? Ouvrez le lien à la main.
+                  </a>
+                )}
                 <button
                   type="button"
                   onClick={handleCancel}
