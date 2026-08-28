@@ -88,6 +88,11 @@ export const navItems: NavItem[] = [
     label: 'Actualités',
     to: '/newsroom',
   },
+
+  {
+    label: 'Boutique',
+    to: '/gift-shop',
+  },
 ] satisfies NavItem[]
 
 export const footerNavItems: NavItem[] = [

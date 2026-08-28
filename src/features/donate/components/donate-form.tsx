@@ -5,7 +5,6 @@ import { DonateAmountSection } from '#/features/donate/components/sections/donat
 import { DonateIdentitySection } from '#/features/donate/components/sections/donate-identity-section.tsx'
 import { DonateOptionsSection } from '#/features/donate/components/sections/donate-options-section.tsx'
 import { getDonationDefaults } from '#/features/donate/constants/donate-defaults.ts'
-import { usePaymentPopup } from '#/features/donate/hooks/use-payment-popup.ts'
 import type { DonationInput } from '#/features/donate/schemas/donate.schema.ts'
 import { donationSchema } from '#/features/donate/schemas/donate.schema.ts'
 import { initiateDonationFn } from '#/features/donate/server-fn/donation.functions.ts'
@@ -21,6 +20,7 @@ import {
 import { FieldGroup } from '#shared/components/ui/field.tsx'
 import { toast } from '#shared/components/ui/toast.tsx'
 import { useGameContext } from '#shared/hooks/use-game-context.ts'
+import { usePaymentPopup } from '#shared/hooks/use-payment-popup.ts'
 import { useAppForm } from '#shared/integrations/form/form-hook.ts'
 
 export function DonateForm() {

@@ -62,6 +62,8 @@ export const env = createEnv({
       process.env.NODE_ENV === 'production' ? z.string().min(32) : z.string().min(32).optional(),
     DONATE_PRIVATE_NOTIFICATION_WEBHOOK: z.url().optional(),
     DONATE_PUBLIC_NOTIFICATION_WEBHOOK: z.url().optional(),
+    GIFT_SHOP_NOTIFICATION_WEBHOOK:
+      process.env.NODE_ENV === 'production' ? z.url() : z.url().optional(),
   },
 
   /**

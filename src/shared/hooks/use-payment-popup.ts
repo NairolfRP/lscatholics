@@ -1,5 +1,11 @@
-import { PAYMENT_POPUP_CONFIG } from '#/features/donate/constants/donate.constants.ts'
 import { toast } from '#shared/components/ui/toast.tsx'
+
+const PAYMENT_POPUP_CONFIG = {
+  width: 800,
+  height: 800,
+  timeoutMs: 15 * 60 * 1000,
+  closeCheckIntervalMs: 1000,
+} as const
 
 export function usePaymentPopup() {
   const openPayment = (paymentUrl: string, onSuccess: () => void) => {

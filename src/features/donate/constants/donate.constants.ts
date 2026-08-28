@@ -9,13 +9,6 @@ export const DONATION_SOURCE = 'donation'
 
 export const FLEECA_STANDING_ORDER_IBAN = '0200 1914 4'
 
-export const PAYMENT_POPUP_CONFIG = {
-  width: 800,
-  height: 800,
-  timeoutMs: 15 * 60 * 1000,
-  closeCheckIntervalMs: 1000,
-} as const
-
 export const recurringDonationSteps = [
   {
     title: 'Connectez-vous à votre espace en ligne Fleeca',

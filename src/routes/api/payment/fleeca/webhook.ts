@@ -1,5 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
 import '#/features/donate/server/donation-payment.handler'
+import '#/features/gift-shop/server/gift-shop-payment.handler'
 import { paymentService } from '#server/payments/payment.service.ts'
 
 export const Route = createFileRoute('/api/payment/fleeca/webhook')({

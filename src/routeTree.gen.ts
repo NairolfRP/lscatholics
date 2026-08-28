@@ -25,6 +25,7 @@ import { Route as AppDecreesRouteRouteImport } from './routes/_app/decrees/route
 import { Route as AppDepartmentsRouteImport } from './routes/_app/departments'
 import { Route as AppDonateRouteImport } from './routes/_app/donate'
 import { Route as AppEventsRouteImport } from './routes/_app/events'
+import { Route as AppGiftShopRouteImport } from './routes/_app/gift-shop'
 import { Route as AppNewsroomRouteImport } from './routes/_app/newsroom'
 import { Route as AppParishesRouteImport } from './routes/_app/parishes'
 import { Route as AppPrivacyRouteImport } from './routes/_app/privacy'
@@ -145,6 +146,11 @@ const AppDonateRoute = AppDonateRouteImport.update({
 const AppEventsRoute = AppEventsRouteImport.update({
   id: '/events',
   path: '/events',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppGiftShopRoute = AppGiftShopRouteImport.update({
+  id: '/gift-shop',
+  path: '/gift-shop',
   getParentRoute: () => AppRoute,
 } as any)
 const AppNewsroomRoute = AppNewsroomRouteImport.update({
@@ -382,6 +388,7 @@ export interface FileRoutesByFullPath {
   '/departments': typeof AppDepartmentsRoute
   '/donate': typeof AppDonateRoute
   '/events': typeof AppEventsRoute
+  '/gift-shop': typeof AppGiftShopRoute
   '/newsroom': typeof AppNewsroomRoute
   '/parishes': typeof AppParishesRoute
   '/privacy': typeof AppPrivacyRoute
@@ -435,6 +442,7 @@ export interface FileRoutesByTo {
   '/departments': typeof AppDepartmentsRoute
   '/donate': typeof AppDonateRoute
   '/events': typeof AppEventsRoute
+  '/gift-shop': typeof AppGiftShopRoute
   '/newsroom': typeof AppNewsroomRoute
   '/parishes': typeof AppParishesRoute
   '/privacy': typeof AppPrivacyRoute
@@ -496,6 +504,7 @@ export interface FileRoutesById {
   '/_app/departments': typeof AppDepartmentsRoute
   '/_app/donate': typeof AppDonateRoute
   '/_app/events': typeof AppEventsRoute
+  '/_app/gift-shop': typeof AppGiftShopRoute
   '/_app/newsroom': typeof AppNewsroomRoute
   '/_app/parishes': typeof AppParishesRoute
   '/_app/privacy': typeof AppPrivacyRoute
@@ -558,6 +567,7 @@ export interface FileRouteTypes {
     | '/departments'
     | '/donate'
     | '/events'
+    | '/gift-shop'
     | '/newsroom'
     | '/parishes'
     | '/privacy'
@@ -611,6 +621,7 @@ export interface FileRouteTypes {
     | '/departments'
     | '/donate'
     | '/events'
+    | '/gift-shop'
     | '/newsroom'
     | '/parishes'
     | '/privacy'
@@ -671,6 +682,7 @@ export interface FileRouteTypes {
     | '/_app/departments'
     | '/_app/donate'
     | '/_app/events'
+    | '/_app/gift-shop'
     | '/_app/newsroom'
     | '/_app/parishes'
     | '/_app/privacy'
@@ -837,6 +849,13 @@ declare module '@tanstack/react-router' {
       path: '/events'
       fullPath: '/events'
       preLoaderRoute: typeof AppEventsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/gift-shop': {
+      id: '/_app/gift-shop'
+      path: '/gift-shop'
+      fullPath: '/gift-shop'
+      preLoaderRoute: typeof AppGiftShopRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/newsroom': {
@@ -1247,6 +1266,7 @@ interface AppRouteChildren {
   AppDepartmentsRoute: typeof AppDepartmentsRoute
   AppDonateRoute: typeof AppDonateRoute
   AppEventsRoute: typeof AppEventsRoute
+  AppGiftShopRoute: typeof AppGiftShopRoute
   AppNewsroomRoute: typeof AppNewsroomRoute
   AppParishesRoute: typeof AppParishesRoute
   AppPrivacyRoute: typeof AppPrivacyRoute
@@ -1276,6 +1296,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppDepartmentsRoute: AppDepartmentsRoute,
   AppDonateRoute: AppDonateRoute,
   AppEventsRoute: AppEventsRoute,
+  AppGiftShopRoute: AppGiftShopRoute,
   AppNewsroomRoute: AppNewsroomRoute,
   AppParishesRoute: AppParishesRoute,
   AppPrivacyRoute: AppPrivacyRoute,
