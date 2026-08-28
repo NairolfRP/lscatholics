@@ -9,6 +9,7 @@ import type { DonationInput } from '#/features/donate/schemas/donate.schema.ts'
 import { donationSchema } from '#/features/donate/schemas/donate.schema.ts'
 import { initiateDonationFn } from '#/features/donate/server-fn/donation.functions.ts'
 import { formatNumber } from '#/utils/number.ts'
+import { Button } from '#shared/components/ui/button.tsx'
 import {
   Card,
   CardContent,
@@ -25,7 +26,7 @@ import { useAppForm } from '#shared/integrations/form/form-hook.ts'
 
 export function DonateForm() {
   const { currentCharacter, isLoading } = useGameContext()
-  const { openPayment, preparePaymentPopup, disposePaymentPopup } = usePaymentPopup()
+  const { openPayment, blockedPaymentUrl } = usePaymentPopup()
 
   const form = useAppForm({
     formId: 'donation-submission-form',
@@ -40,7 +41,6 @@ export function DonateForm() {
 
         if (!result.success) {
           if (result.validationErrors) {
-            disposePaymentPopup()
             return formApi.setErrorMap({
               onServer: {
                 fields: result.validationErrors,
@@ -48,15 +48,13 @@ export function DonateForm() {
             } as unknown as Parameters<typeof formApi.setErrorMap>[0])
           }
 
-          disposePaymentPopup()
           return toast.add({
             type: 'error',
             title: result.error || 'Une erreur est survenue',
           })
         }
 
-        if (!result.paymentUrl) {
-          disposePaymentPopup()
+        if (!result.paymentId || !result.paymentUrl) {
           return toast.add({
             type: 'error',
             title: 'Échec',
@@ -64,9 +62,13 @@ export function DonateForm() {
           })
         }
 
-        openPayment(result.paymentUrl, () => formApi.reset())
+        openPayment({
+          paymentId: result.paymentId,
+          paymentUrl: result.paymentUrl,
+          onSuccess: () => formApi.reset(),
+          onFailure: () => {},
+        })
       } catch {
-        disposePaymentPopup()
         toast.add({ type: 'error', title: 'Une erreur est survenue' })
       }
     },
@@ -88,8 +90,8 @@ export function DonateForm() {
           id={form.formId}
           onSubmit={(e) => {
             e.preventDefault()
-            preparePaymentPopup()
-            void form.handleSubmit().catch(() => disposePaymentPopup())
+            if (blockedPaymentUrl) return
+            void form.handleSubmit()
           }}
           className="contents"
         >
@@ -102,26 +104,44 @@ export function DonateForm() {
             </FieldGroup>
           </CardContent>
 
-          <CardFooter className="flex justify-end gap-4">
-            <form.AppForm>
-              <form.SubmitButton
-                label={(state) => {
-                  const { values } = state as { values: DonationInput }
-                  return values.amount ? (
-                    <>
-                      <HandHeartIcon /> Donner {formatNumber(values.amount)}$
-                    </>
-                  ) : (
-                    <>
-                      <HandHeartIcon /> Faire un don
-                    </>
-                  )
-                }}
-                submittingLabel="Attente du paiement..."
-                size="lg"
-              />
-            </form.AppForm>
-          </CardFooter>
+          {blockedPaymentUrl ? (
+            <CardFooter className="flex flex-col justify-end gap-4 sm:flex-row sm:items-center">
+              <div className="flex flex-col items-stretch gap-2 sm:max-w-md sm:items-start">
+                <p className="text-sm text-muted-foreground">
+                  Le popup de paiement a été bloqué par votre navigateur. Cliquez pour ouvrir le
+                  paiement dans un nouvel onglet.
+                </p>
+                <Button
+                  render={<a href={blockedPaymentUrl} target="_blank" rel="noreferrer" />}
+                  size="lg"
+                  className="w-full sm:w-auto"
+                >
+                  <HandHeartIcon /> Ouvrir le paiement
+                </Button>
+              </div>
+            </CardFooter>
+          ) : (
+            <CardFooter className="flex justify-end gap-4">
+              <form.AppForm>
+                <form.SubmitButton
+                  label={(state) => {
+                    const { values } = state as { values: DonationInput }
+                    return values.amount ? (
+                      <>
+                        <HandHeartIcon /> Donner {formatNumber(values.amount)}$
+                      </>
+                    ) : (
+                      <>
+                        <HandHeartIcon /> Faire un don
+                      </>
+                    )
+                  }}
+                  submittingLabel="Attente du paiement..."
+                  size="lg"
+                />
+              </form.AppForm>
+            </CardFooter>
+          )}
         </form>
       )}
     </Card>

@@ -19,6 +19,7 @@ import './gift-shop-payment.handler'
 
 export interface CreateGiftOrderResult {
   success: boolean
+  paymentId?: string
   paymentUrl?: string
   validationErrors?: Record<string, { message: string }[]>
   error?: string
@@ -68,14 +69,14 @@ export async function createGiftOrder(data: unknown): Promise<CreateGiftOrderRes
     const reference = generateGiftOrderReference()
     const { fleecaConfirmation: _, ...metadata } = parsed
 
-    const { paymentUrl } = await paymentService.initiatePayment({
+    const { paymentId, paymentUrl } = await paymentService.initiatePayment({
       source: GIFT_ORDER_SOURCE,
       amount,
       metadata: { reference, ...metadata, items } satisfies GiftOrderMetadata,
       description: `Boutique — Commande ${reference} — ${itemCount} article${itemCount > 1 ? 's' : ''}`,
     })
 
-    return { success: true, paymentUrl }
+    return { success: true, paymentId, paymentUrl }
   } catch (err) {
     if (err instanceof z.ZodError) {
       const validationErrors = getFieldErrors(err)

@@ -101,20 +101,6 @@ export function PaymentCallbackPage() {
 
     const isPopup = window.opener && window.opener !== window
 
-    if (isPopup) {
-      window.opener.postMessage(
-        status === 'payment_successful'
-          ? {
-              type: 'PAYMENT_SUCCESS',
-              title: 'Paiement réussi !',
-              message: getMessage(status, amount),
-              amount,
-            }
-          : { type: 'PAYMENT_ERROR', title: getTitle(status), message: getMessage(status, amount) },
-        window.location.origin
-      )
-    }
-
     const close = () => {
       if (isPopup) window.close()
       else window.location.href = '/'

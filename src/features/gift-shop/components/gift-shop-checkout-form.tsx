@@ -11,6 +11,7 @@ import { giftOrderSchema } from '#/features/gift-shop/schemas/gift-shop.schema.t
 import { createGiftOrderFn } from '#/features/gift-shop/server-fn/gift-shop.functions.ts'
 import type { GiftShopCartEntry } from '#/features/gift-shop/types/gift-shop.types.ts'
 import { formatNumber } from '#/utils/number.ts'
+import { Button } from '#shared/components/ui/button.tsx'
 import { FieldGroup } from '#shared/components/ui/field.tsx'
 import { toast } from '#shared/components/ui/toast.tsx'
 import { useGameContext } from '#shared/hooks/use-game-context.ts'
@@ -29,7 +30,7 @@ export function GiftShopCheckoutForm({
   onClose,
 }: GiftShopCheckoutFormProps) {
   const { currentCharacter, isLoading } = useGameContext()
-  const { openPayment, preparePaymentPopup, disposePaymentPopup } = usePaymentPopup()
+  const { openPayment, blockedPaymentUrl } = usePaymentPopup()
 
   const form = useAppForm({
     formId: 'gift-shop-checkout-form',
@@ -44,7 +45,6 @@ export function GiftShopCheckoutForm({
 
         if (!result.success) {
           if (result.validationErrors) {
-            disposePaymentPopup()
             return formApi.setErrorMap({
               onServer: {
                 fields: result.validationErrors,
@@ -52,15 +52,13 @@ export function GiftShopCheckoutForm({
             } as unknown as Parameters<typeof formApi.setErrorMap>[0])
           }
 
-          disposePaymentPopup()
           return toast.add({
             type: 'error',
             title: result.error || 'Une erreur est survenue',
           })
         }
 
-        if (!result.paymentUrl) {
-          disposePaymentPopup()
+        if (!result.paymentId || !result.paymentUrl) {
           return toast.add({
             type: 'error',
             title: 'Échec',
@@ -68,13 +66,17 @@ export function GiftShopCheckoutForm({
           })
         }
 
-        openPayment(result.paymentUrl, () => {
-          formApi.reset()
-          onClearCart()
-          onClose()
+        openPayment({
+          paymentId: result.paymentId,
+          paymentUrl: result.paymentUrl,
+          onSuccess: () => {
+            formApi.reset()
+            onClearCart()
+            onClose()
+          },
+          onFailure: () => {},
         })
       } catch {
-        disposePaymentPopup()
         toast.add({ type: 'error', title: 'Une erreur est survenue' })
       }
     },
@@ -93,8 +95,8 @@ export function GiftShopCheckoutForm({
       id={form.formId}
       onSubmit={(e) => {
         e.preventDefault()
-        preparePaymentPopup()
-        void form.handleSubmit().catch(() => disposePaymentPopup())
+        if (blockedPaymentUrl) return
+        void form.handleSubmit()
       }}
       className="contents"
     >
@@ -105,30 +107,49 @@ export function GiftShopCheckoutForm({
       </FieldGroup>
 
       <div className="flex flex-col-reverse gap-2 pt-5 sm:flex-row sm:justify-end">
-        <form.AppForm>
-          <form.SubmitButton
-            label={(state) => {
-              const { values } = state as { values: GiftOrderInput }
-              const total = values.items.reduce((sum, item) => {
-                const product = GIFT_SHOP_PRODUCT_BY_ID.get(item.productId)
-                return product ? sum + product.price * item.quantity : sum
-              }, 0)
+        {blockedPaymentUrl ? (
+          <div className="flex w-full flex-col items-stretch gap-2 sm:items-end">
+            <p className="text-sm text-muted-foreground">
+              Le popup de paiement a été bloqué par votre navigateur. Cliquez pour ouvrir le
+              paiement dans un nouvel onglet.
+            </p>
+            <Button
+              render={<a href={blockedPaymentUrl} target="_blank" rel="noreferrer" />}
+              size="lg"
+              className="w-full sm:w-auto"
+            >
+              <ShoppingBagIcon /> Ouvrir le paiement
+            </Button>
+            <p className="text-xs text-muted-foreground sm:text-right">
+              Votre panier sera vidé automatiquement une fois le paiement confirmé.
+            </p>
+          </div>
+        ) : (
+          <form.AppForm>
+            <form.SubmitButton
+              label={(state) => {
+                const { values } = state as { values: GiftOrderInput }
+                const total = values.items.reduce((sum, item) => {
+                  const product = GIFT_SHOP_PRODUCT_BY_ID.get(item.productId)
+                  return product ? sum + product.price * item.quantity : sum
+                }, 0)
 
-              return total > 0 ? (
-                <>
-                  <ShoppingBagIcon /> Régler {formatNumber(total)}$
-                </>
-              ) : (
-                <>
-                  <ShoppingBagIcon /> Commander
-                </>
-              )
-            }}
-            submittingLabel="Attente du paiement..."
-            size="lg"
-            className="w-full sm:w-auto"
-          />
-        </form.AppForm>
+                return total > 0 ? (
+                  <>
+                    <ShoppingBagIcon /> Régler {formatNumber(total)}$
+                  </>
+                ) : (
+                  <>
+                    <ShoppingBagIcon /> Commander
+                  </>
+                )
+              }}
+              submittingLabel="Attente du paiement..."
+              size="lg"
+              className="w-full sm:w-auto"
+            />
+          </form.AppForm>
+        )}
       </div>
     </form>
   )

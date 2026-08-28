@@ -158,6 +158,7 @@ describe('createGiftOrder', () => {
 
     expect(result).toEqual({
       success: true,
+      paymentId: 'pay_123',
       paymentUrl: 'https://fleeca.example/pay_123',
     })
     expect(mocks.fleecaClient.createPayment).toHaveBeenCalledWith(
@@ -212,6 +213,7 @@ describe('createGiftOrder', () => {
 
     expect(result).toEqual({
       success: true,
+      paymentId: 'pay_456',
       paymentUrl: 'https://fleeca.example/pay_456',
     })
     expect(mocks.fleecaClient.createPayment).toHaveBeenCalledWith(

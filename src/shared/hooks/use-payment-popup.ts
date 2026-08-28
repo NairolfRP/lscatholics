@@ -1,97 +1,78 @@
+import { useEffect, useRef, useState } from 'react'
+import { formatCurrency } from '#/utils/number.ts'
 import { toast } from '#shared/components/ui/toast.tsx'
 
-const PAYMENT_POPUP_CONFIG = {
+const PAYMENT_WINDOW_CONFIG = {
   width: 800,
   height: 800,
-  timeoutMs: 15 * 60 * 1000,
-  closeCheckIntervalMs: 1000,
 } as const
 
-const PAYMENT_POPUP_TARGET = 'fleeca-payment'
+const PAYMENT_WINDOW_TARGET = 'fleeca-payment'
 
-/**
- * Popup opened synchronously during the user gesture (submit click). It starts
- * as a blank splash and is redirected to the payment URL once it is available,
- * because a delayed `window.open` is blocked by the browser in production.
- */
-let preparedPopup: Window | null = null
+const STATUS_POLL_INITIAL_MS = 2_000
+const STATUS_POLL_MAX_MS = 10_000
+const STATUS_POLL_BACKOFF_FACTOR = 2
+/** ~15 min polling window (2s → 4s → 8s → … → 10s backoff). */
+const STATUS_POLL_DURATION_MS = 15 * 60_000
 
-export function usePaymentPopup() {
-  const openPayment = (paymentUrl: string, onSuccess: () => void) => {
-    const popup = preparedPopup && !preparedPopup.closed ? preparedPopup : null
-    preparedPopup = null
+export type PaymentFailureReason = 'payment_failed' | 'expired' | 'not_found'
 
-    if (!popup) {
-      toast.add({
-        type: 'error',
-        title: 'Popup bloquée',
-        description: 'Veuillez autoriser les popups pour ce site.',
-      })
-      return
-    }
-
-    popup.location.href = paymentUrl
-    setupPaymentHandlers(popup, onSuccess)
-    setupAutoCloseTimer(popup)
-  }
-
-  const preparePaymentPopup = () => {
-    const popup = preparedPopup && !preparedPopup.closed ? preparedPopup : createPaymentWindow()
-    if (!popup) return
-    preparedPopup = popup
-    renderPaymentPlaceholder(popup)
-  }
-
-  const disposePaymentPopup = () => {
-    if (preparedPopup && !preparedPopup.closed) {
-      preparedPopup.close()
-    }
-    preparedPopup = null
-  }
-
-  return { openPayment, preparePaymentPopup, disposePaymentPopup }
+interface PaymentStatus {
+  status: 'pending' | 'payment_successful' | 'payment_failed' | 'expired'
+  amount?: number
 }
 
-function createPaymentWindow() {
+interface OpenPaymentOptions {
+  paymentId: string
+  paymentUrl: string
+  onSuccess: () => void
+  onFailure: (reason: PaymentFailureReason) => void
+}
+
+/**
+ * Opens the payment in a best-effort popup and tracks the server-side payment
+ * status until it reaches a terminal state. The popup is a nice-to-have: if the
+ * browser blocks it (e.g. Brave Shields), the caller renders a real link from
+ * `blockedPaymentUrl`, which is never blocked. Cart/side effects happen through
+ * `onSuccess`/`onFailure` regardless of how the popup was opened.
+ */
+export function usePaymentPopup() {
+  const [blockedPaymentUrl, setBlockedPaymentUrl] = useState<string | null>(null)
+  const cancelTrackingRef = useRef<(() => void) | undefined>(undefined)
+
+  useEffect(() => () => cancelTrackingRef.current?.(), [])
+
+  const openPayment = ({ paymentId, paymentUrl, onSuccess, onFailure }: OpenPaymentOptions) => {
+    cancelTrackingRef.current?.()
+
+    const popup = createPaymentWindow(paymentUrl)
+    if (!popup) {
+      setBlockedPaymentUrl(paymentUrl)
+    }
+
+    cancelTrackingRef.current = trackPaymentStatus(paymentId, {
+      onSuccess,
+      onFailure: (reason) => {
+        setBlockedPaymentUrl(null)
+        onFailure(reason)
+      },
+    })
+  }
+
+  return { openPayment, blockedPaymentUrl }
+}
+
+function createPaymentWindow(url: string) {
   const { width, height, left, top } = calculateWindowPosition(
-    PAYMENT_POPUP_CONFIG.width,
-    PAYMENT_POPUP_CONFIG.height
+    PAYMENT_WINDOW_CONFIG.width,
+    PAYMENT_WINDOW_CONFIG.height
   )
 
   return window.open(
-    'about:blank',
-    PAYMENT_POPUP_TARGET,
+    url,
+    PAYMENT_WINDOW_TARGET,
     `width=${width},height=${height},top=${top},left=${left},scrollbars=yes,resizable=yes,toolbar=no,location=no`
   )
-}
-
-function renderPaymentPlaceholder(popup: Window) {
-  try {
-    popup.document.open()
-    popup.document.write(`
-      <!doctype html>
-      <html lang="fr">
-        <head>
-          <meta charset="utf-8" />
-          <title>Paiement…</title>
-          <style>
-            html, body { height: 100%; margin: 0; }
-            body {
-              display: flex; align-items: center; justify-content: center;
-              font-family: system-ui, sans-serif; color: #333;
-            }
-            .message { padding: 1.5rem; text-align: center; }
-          </style>
-        </head>
-        <body>
-          <div class="message">Préparation du paiement…</div>
-        </body>
-      </html>
-    `)
-    popup.document.close()
-  } catch {
-    // The popup already navigated (or is unreachable): leave it as is.
-  }
 }
 
 function calculateWindowPosition(width: number, height: number) {
@@ -108,74 +89,95 @@ function calculateWindowPosition(width: number, height: number) {
   }
 }
 
-interface PaymentPopupMessage {
-  type?: string
-  title?: string
-  message?: string
-  amount?: number
+interface TrackPaymentStatusOptions {
+  onSuccess: () => void
+  onFailure: (reason: PaymentFailureReason) => void
 }
 
-function setupPaymentHandlers(popup: Window, onSuccess: () => void) {
-  const messageHandler = (event: MessageEvent) => {
-    if (event.origin !== window.location.origin) return
+function trackPaymentStatus(
+  paymentId: string,
+  { onSuccess, onFailure }: TrackPaymentStatusOptions
+): () => void {
+  let cancelled = false
+  let pollIntervalMs = STATUS_POLL_INITIAL_MS
+  const startedAt = Date.now()
 
-    const data = event.data as PaymentPopupMessage | null
+  const done = (status: 'payment_successful' | PaymentFailureReason, amount?: number) => {
+    if (status === 'payment_successful') {
+      toast.add({
+        type: 'success',
+        title: 'Paiement réussi !',
+        description:
+          amount !== undefined
+            ? `Votre paiement de ${formatCurrency(amount)} a été traité.`
+            : undefined,
+      })
+      onSuccess()
+      return
+    }
 
-    if (data?.type === 'PAYMENT_SUCCESS') {
-      handlePaymentSuccess(data, popup, messageHandler, onSuccess)
-    } else if (data?.type === 'PAYMENT_ERROR') {
-      handlePaymentError(data, popup, messageHandler)
+    if (status === 'payment_failed') {
+      toast.add({ type: 'error', title: 'Paiement refusé' })
+    } else if (status === 'expired') {
+      toast.add({
+        type: 'warning',
+        title: 'Session de paiement expirée',
+        description: "Vérifiez l'état du paiement dans votre espace Fleeca avant de réessayer.",
+      })
+    } else {
+      toast.add({ type: 'warning', title: 'Paiement introuvable' })
+    }
+    onFailure(status)
+  }
+
+  const schedule = () => {
+    if (cancelled) return
+    if (Date.now() - startedAt >= STATUS_POLL_DURATION_MS) {
+      done('expired')
+      return
+    }
+    pollIntervalMs = Math.min(pollIntervalMs * STATUS_POLL_BACKOFF_FACTOR, STATUS_POLL_MAX_MS)
+    window.setTimeout(poll, pollIntervalMs)
+  }
+
+  const poll = async () => {
+    if (cancelled) return
+    try {
+      const response = await fetch(`/api/payment/status/${paymentId}`)
+
+      if (response.status === 404) {
+        done('not_found')
+        return
+      }
+
+      if (!response.ok) {
+        schedule()
+        return
+      }
+
+      const data = (await response.json()) as PaymentStatus
+
+      switch (data.status) {
+        case 'payment_successful':
+          done('payment_successful', data.amount)
+          return
+        case 'payment_failed':
+          done('payment_failed', data.amount)
+          return
+        case 'expired':
+          done('expired')
+          return
+        default:
+          schedule()
+      }
+    } catch {
+      schedule()
     }
   }
 
-  window.addEventListener('message', messageHandler)
-  setupPopupCloseDetection(popup, messageHandler)
-}
+  void poll()
 
-function handlePaymentSuccess(
-  data: PaymentPopupMessage,
-  popup: Window,
-  handler: (e: MessageEvent) => void,
-  onSuccess: () => void
-) {
-  toast.add({
-    type: 'success',
-    title: data.title || 'Paiement réussi !',
-    description: data.message,
-  })
-  popup.close()
-  window.removeEventListener('message', handler)
-  onSuccess()
-}
-
-function handlePaymentError(
-  data: PaymentPopupMessage,
-  popup: Window,
-  handler: (e: MessageEvent) => void
-) {
-  toast.add({
-    type: 'error',
-    title: data.title || 'Erreur de paiement',
-    description: data.message || 'Une erreur est survenue lors du paiement',
-  })
-  popup.close()
-  window.removeEventListener('message', handler)
-}
-
-function setupPopupCloseDetection(popup: Window, handler: (e: MessageEvent) => void) {
-  const checkClosed = window.setInterval(() => {
-    if (popup.closed) {
-      window.clearInterval(checkClosed)
-      window.removeEventListener('message', handler)
-    }
-  }, PAYMENT_POPUP_CONFIG.closeCheckIntervalMs)
-}
-
-function setupAutoCloseTimer(popup: Window) {
-  window.setTimeout(() => {
-    if (!popup.closed) {
-      popup.close()
-      toast.add({ type: 'warning', title: 'Session de paiement expirée' })
-    }
-  }, PAYMENT_POPUP_CONFIG.timeoutMs)
+  return () => {
+    cancelled = true
+  }
 }

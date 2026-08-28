@@ -10,6 +10,7 @@ import './donation-payment.handler'
 
 export interface InitiateDonationResult {
   success: boolean
+  paymentId?: string
   paymentUrl?: string
   validationErrors?: Record<string, { message: string }[]>
   error?: string
@@ -21,14 +22,14 @@ export async function initiateDonation(data: unknown): Promise<InitiateDonationR
 
     const { fleecaConfirmation: _, ...metadata } = parsed
 
-    const { paymentUrl } = await paymentService.initiatePayment({
+    const { paymentId, paymentUrl } = await paymentService.initiatePayment({
       source: DONATION_SOURCE,
       amount: parsed.amount,
       metadata,
       description: `Don — ${parsed.firstname} ${parsed.lastname}`,
     })
 
-    return { success: true, paymentUrl }
+    return { success: true, paymentId, paymentUrl }
   } catch (err) {
     if (err instanceof z.ZodError) {
       const validationErrors = getFieldErrors(err)
