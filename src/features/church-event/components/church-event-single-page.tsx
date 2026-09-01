@@ -32,8 +32,8 @@ export function ChurchEventSinglePage() {
   const { slug } = useParams({ from: '/_app/event/$slug' })
   const { data: churchEvent } = useSuspenseQuery(singleChurchEventQueryOptions(slug))
 
-  const startDate = churchEvent.startDate
-  const endDate = churchEvent.endDate
+  const startDate = new Date(churchEvent.startDate)
+  const endDate = churchEvent.endDate ? new Date(churchEvent.endDate) : null
   const isSameDay = endDate && startDate.toDateString() === endDate.toDateString()
 
   const now = new Date()
