@@ -121,7 +121,12 @@ export function DonateForm() {
                   Le popup de paiement a été bloqué par votre navigateur. Cliquez pour ouvrir le
                   paiement dans un nouvel onglet.
                 </p>
-                <Button type="button" size="lg" onClick={openPaymentInTab} className="w-full sm:w-auto">
+                <Button
+                  type="button"
+                  size="lg"
+                  onClick={openPaymentInTab}
+                  className="w-full sm:w-auto"
+                >
                   <HandHeartIcon /> Ouvrir le paiement
                 </Button>
                 {manualPaymentUrl && (
