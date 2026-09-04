@@ -24,7 +24,7 @@ export function ContactInfoPanel() {
           <InfoRow
             icon={PhoneIcon}
             iconClassName="bg-primary/10 text-primary"
-            label="Téléphone (in-game)"
+            label="Téléphone"
             value={<span className="text-lg leading-7 font-bold text-foreground">700</span>}
           />
 
