@@ -2,6 +2,11 @@ import { notFound } from '@tanstack/react-router'
 import { setResponseStatus } from '@tanstack/react-start/server'
 import { z } from 'zod'
 import { createPostSchema, editPostSchema } from '#/features/post/schemas/post.schema'
+import {
+  deletePostNotification,
+  editPostNotification,
+  sendPostNotification,
+} from '#/features/post/server/post-notification.service'
 import { canEditPost, resolveExcerpt, resolvePublishedAt } from '#/features/post/utils/post.utils'
 import { getFieldErrors } from '#/utils/form'
 import { resolveSlug } from '#/utils/slug'
@@ -9,6 +14,7 @@ import { NotFoundException, UnauthorizedException } from '#server/exceptions/htt
 import { logger } from '#server/integrations/logger'
 import { postRepository } from '#server/repositories/post.repository'
 import { DASHBOARD_PAGINATION_LIMIT } from '#shared/constants/dashboard'
+import { POST_STATUS } from '#shared/constants/post-status'
 import type { User } from '#shared/lib/types/auth'
 
 export async function getPost({ slug }: { slug: string }) {
@@ -48,6 +54,7 @@ export async function getDashboardPost({ id, user }: { id: string; user: User })
       authorDisplayName: true,
       createdAt: true,
       updatedAt: true,
+      discordMessageId: true,
     },
     authorColumns: {
       id: true,
@@ -101,6 +108,7 @@ export async function getDashboardPosts({
       publishedAt: true,
       createdAt: true,
       authorId: true,
+      discordMessageId: true,
     },
     page: data.page,
     pageSize: DASHBOARD_PAGINATION_LIMIT,
@@ -151,6 +159,64 @@ export async function deletePost({ postId, user }: { postId: string; user: User 
   }
 }
 
+export async function sendExistingPostNotification({
+  postId,
+  user,
+}: {
+  postId: string
+  user: User
+}) {
+  const post = await postRepository.getPost({
+    id: postId,
+    status: null,
+    columns: {
+      id: true,
+      authorId: true,
+      title: true,
+      slug: true,
+      publishedAt: true,
+      status: true,
+      discordMessageId: true,
+    },
+  })
+
+  if (!post) {
+    setResponseStatus(404)
+    throw NotFoundException('Post not found')
+  }
+
+  if (!canEditPost({ user, authorId: post.authorId })) {
+    setResponseStatus(401)
+    throw UnauthorizedException('Not authorized to send notification for this post')
+  }
+
+  if (post.status !== POST_STATUS.PUBLISHED) {
+    return { success: false, error: 'Seuls les articles publiés peuvent être notifiés' }
+  }
+
+  try {
+    if (post.discordMessageId) {
+      await deletePostNotification({ messageId: post.discordMessageId })
+    }
+
+    const discordMessageId = await sendPostNotification({
+      title: post.title,
+      slug: post.slug,
+      publishedAt: post.publishedAt,
+    })
+
+    if (discordMessageId) {
+      await postRepository.update({ id: postId }, { discordMessageId })
+    }
+
+    return { success: true }
+  } catch (err) {
+    logger.error({ err, postId, userId: user.id }, 'Failed to send post notification')
+    setResponseStatus(500)
+    return { success: false, error: 'Une erreur est survenue' }
+  }
+}
+
 export async function updatePost({ data, user }: { data: unknown; user: User }) {
   const idSchema = z
     .object({
@@ -167,7 +233,7 @@ export async function updatePost({ data, user }: { data: unknown; user: User }) 
 
   const post = await postRepository.getPost({
     id: postId,
-    columns: { authorId: true, status: true },
+    columns: { authorId: true, status: true, discordMessageId: true },
   })
 
   if (!post) {
@@ -184,11 +250,22 @@ export async function updatePost({ data, user }: { data: unknown; user: User }) 
   try {
     const validatedData = await editPostSchema.parseAsync(values)
 
-    const slug = resolveSlug(validatedData.slug, validatedData.title)
-    const excerpt = resolveExcerpt(validatedData.excerpt, validatedData.content)
-    const publishedAt = resolvePublishedAt(validatedData.publishedAt, validatedData.status)
+    const { sendDiscordNotification: _, ...postValues } = validatedData
 
-    await postRepository.update({ id: postId }, { ...validatedData, slug, excerpt, publishedAt })
+    const slug = resolveSlug(postValues.slug, postValues.title)
+    const excerpt = resolveExcerpt(postValues.excerpt, postValues.content)
+    const publishedAt = resolvePublishedAt(postValues.publishedAt, postValues.status)
+
+    await postRepository.update({ id: postId }, { ...postValues, slug, excerpt, publishedAt })
+
+    if (post.discordMessageId && validatedData.status === POST_STATUS.PUBLISHED) {
+      await editPostNotification({
+        messageId: post.discordMessageId,
+        title: validatedData.title,
+        slug,
+        publishedAt,
+      })
+    }
 
     return { success: true }
   } catch (err) {
@@ -249,7 +326,21 @@ export async function createPost({
       { returning: ['id'] }
     )
 
-    return { success: true, postId: createdPost[0].id }
+    const postId = createdPost[0].id
+
+    if (validatedData.sendDiscordNotification && validatedData.status === POST_STATUS.PUBLISHED) {
+      const discordMessageId = await sendPostNotification({
+        title: validatedData.title,
+        slug,
+        publishedAt,
+      })
+
+      if (discordMessageId) {
+        await postRepository.update({ id: postId }, { discordMessageId })
+      }
+    }
+
+    return { success: true, postId }
   } catch (err) {
     if (err instanceof z.ZodError) {
       const validationErrors = getFieldErrors(err)

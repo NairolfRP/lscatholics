@@ -77,6 +77,49 @@ export async function sendWebhookMessage({
   return wait ? await response.json<APIMessage>() : undefined
 }
 
+function parseWebhookUrl(webhookUrl: string) {
+  const url = new URL(webhookUrl)
+  return {
+    id: url.pathname.split('/')[3],
+    token: url.pathname.split('/')[4],
+  }
+}
+
+export async function editWebhookMessage({
+  webhookUrl,
+  messageId,
+  payload,
+}: {
+  webhookUrl: string
+  messageId: string
+  payload: DiscordWebhookPayload
+}): Promise<APIMessage> {
+  const { id, token } = parseWebhookUrl(webhookUrl)
+
+  return ky
+    .patch(`${DISCORD_API_BASE_URL}/webhooks/${id}/${token}/messages/${messageId}`, {
+      json: payload,
+      timeout: REQUEST_TIMEOUT,
+      retry: 0,
+    })
+    .json<APIMessage>()
+}
+
+export async function deleteWebhookMessage({
+  webhookUrl,
+  messageId,
+}: {
+  webhookUrl: string
+  messageId: string
+}): Promise<void> {
+  const { id, token } = parseWebhookUrl(webhookUrl)
+
+  await ky.delete(`${DISCORD_API_BASE_URL}/webhooks/${id}/${token}/messages/${messageId}`, {
+    timeout: REQUEST_TIMEOUT,
+    retry: 0,
+  })
+}
+
 function botClient() {
   return ky.create({
     prefix: DISCORD_API_BASE_URL,

@@ -145,6 +145,26 @@ export const DashboardPostForm = withForm({
                     }
                   </form.Subscribe>
 
+                  {variant === 'create' && (
+                    <form.Subscribe selector={(state) => state.values.status}>
+                      {(status) =>
+                        status === 'published' && (
+                          <form.AppField name="sendDiscordNotification">
+                            {(field) => (
+                              <field.CheckboxField
+                                label="(( Envoyer une notification Discord ))"
+                                description="Notifie le communiqué sur le salon approprié du Discord"
+                                fieldProps={{
+                                  orientation: 'horizontal',
+                                }}
+                              />
+                            )}
+                          </form.AppField>
+                        )
+                      }
+                    </form.Subscribe>
+                  )}
+
                   <Field orientation="horizontal">
                     <form.SubmitButton<typeof form.state.values>
                       label={

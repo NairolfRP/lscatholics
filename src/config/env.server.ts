@@ -4,6 +4,7 @@ import { z } from 'zod'
 export const env = createEnv({
   server: {
     NODE_ENV: z.enum(['test', 'development', 'production']),
+    VITE_APP_URL: z.url(),
     LOG_LEVEL: z.enum(['fatal', 'error', 'warn', 'info', 'debug', 'trace']).optional(),
     CRON_SECRET:
       process.env.NODE_ENV === 'production' ? z.string().min(64) : z.string().min(64).optional(),
@@ -55,6 +56,7 @@ export const env = createEnv({
     JOB_APPLICATION_DISCORD_WEBHOOK: z.url().optional(),
     CLERGY_APPLICATION_DISCORD_WEBHOOK: z.url().optional(),
     BANKING_TRANSACTION_LOGS_DISCORD_WEBHOOK: z.url().optional(),
+    POST_DISCORD_WEBHOOK: z.url().optional(),
 
     FLEECA_API_KEY: z.string().optional(),
     FLEECA_BASE_URL: z.url().optional().default('https://fleeca.gta.world/api/v2'),

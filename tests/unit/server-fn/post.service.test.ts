@@ -30,6 +30,18 @@ vi.mock('#/utils/slug', () => ({
   ),
 }))
 
+const notificationMocks = vi.hoisted(() => ({
+  sendPostNotification: vi.fn(),
+  editPostNotification: vi.fn(),
+  deletePostNotification: vi.fn(),
+}))
+
+vi.mock('#/features/post/server/post-notification.service.ts', () => ({
+  sendPostNotification: notificationMocks.sendPostNotification,
+  editPostNotification: notificationMocks.editPostNotification,
+  deletePostNotification: notificationMocks.deletePostNotification,
+}))
+
 const mockUser: User = {
   id: 'user-1',
   name: 'Test User',
@@ -54,6 +66,7 @@ const mockPost: Post = {
   updatedAt: new Date('2025-01-01'),
   authorDisplayName: 'John Doe',
   authorId: null,
+  discordMessageId: null,
 }
 
 beforeEach(() => {
@@ -149,5 +162,153 @@ describe('createPost', () => {
 
     expect(result.success).toBe(false)
     expect(result).toHaveProperty('validationErrors')
+  })
+
+  it('sends notification when checkbox is checked and post is published', async () => {
+    notificationMocks.sendPostNotification.mockResolvedValue('msg-1')
+    vi.mocked(postRepository.existsBySlug).mockResolvedValue(false)
+    vi.mocked(postRepository.create).mockResolvedValue([{ ...mockPost, id: 'new-post-1' }])
+
+    await postService.createPost({
+      data: {
+        title: 'New Post',
+        content: 'Content here...',
+        coverImageUrl: 'https://example.com/image.jpg',
+        status: 'published',
+        publishedAt: new Date('2025-01-01'),
+        sendDiscordNotification: true,
+      },
+      user: mockUser,
+      currentCharacter: null,
+    })
+
+    expect(notificationMocks.sendPostNotification).toHaveBeenCalledWith({
+      title: 'New Post',
+      slug: 'new-post',
+      publishedAt: new Date('2025-01-01'),
+    })
+    expect(postRepository.update).toHaveBeenCalledWith(
+      { id: 'new-post-1' },
+      { discordMessageId: 'msg-1' }
+    )
+  })
+
+  it('does not send notification when checkbox is unchecked', async () => {
+    vi.mocked(postRepository.existsBySlug).mockResolvedValue(false)
+    vi.mocked(postRepository.create).mockResolvedValue([{ ...mockPost, id: 'new-post-1' }])
+
+    await postService.createPost({
+      data: {
+        title: 'New Post',
+        content: 'Content here...',
+        coverImageUrl: 'https://example.com/image.jpg',
+        status: 'published',
+        publishedAt: new Date('2025-01-01'),
+        sendDiscordNotification: false,
+      },
+      user: mockUser,
+      currentCharacter: null,
+    })
+
+    expect(notificationMocks.sendPostNotification).not.toHaveBeenCalled()
+  })
+
+  it('does not send notification when post is a draft', async () => {
+    vi.mocked(postRepository.existsBySlug).mockResolvedValue(false)
+    vi.mocked(postRepository.create).mockResolvedValue([{ ...mockPost, id: 'new-post-1' }])
+
+    await postService.createPost({
+      data: {
+        title: 'New Post',
+        content: 'Content here...',
+        coverImageUrl: 'https://example.com/image.jpg',
+        status: 'draft',
+        publishedAt: null,
+        sendDiscordNotification: true,
+      },
+      user: mockUser,
+      currentCharacter: null,
+    })
+
+    expect(notificationMocks.sendPostNotification).not.toHaveBeenCalled()
+  })
+})
+
+describe('sendExistingPostNotification', () => {
+  it('sends notification for a published post', async () => {
+    vi.mocked(postRepository.getPost).mockResolvedValue({
+      ...mockPost,
+      status: POST_STATUS.PUBLISHED,
+    })
+    vi.mocked(canEditPost).mockReturnValue(true)
+    notificationMocks.sendPostNotification.mockResolvedValue('msg-2')
+
+    const result = await postService.sendExistingPostNotification({
+      postId: 'post-1',
+      user: mockUser,
+    })
+
+    expect(result).toEqual({ success: true })
+    expect(notificationMocks.sendPostNotification).toHaveBeenCalledWith({
+      title: 'My Post',
+      slug: 'my-post',
+      publishedAt: mockPost.publishedAt,
+    })
+  })
+
+  it('returns error when post is not found', async () => {
+    vi.mocked(postRepository.getPost).mockResolvedValue(
+      null as unknown as Awaited<ReturnType<typeof postRepository.getPost>>
+    )
+
+    await expect(
+      postService.sendExistingPostNotification({ postId: 'missing', user: mockUser })
+    ).rejects.toThrow('Post not found')
+  })
+
+  it('returns error when post is not published', async () => {
+    vi.mocked(postRepository.getPost).mockResolvedValue({
+      ...mockPost,
+      status: POST_STATUS.DRAFT,
+    })
+
+    const result = await postService.sendExistingPostNotification({
+      postId: 'post-1',
+      user: mockUser,
+    })
+
+    expect(result).toEqual({
+      success: false,
+      error: 'Seuls les articles publiés peuvent être notifiés',
+    })
+  })
+
+  it('returns error when unauthorized', async () => {
+    vi.mocked(postRepository.getPost).mockResolvedValue({
+      ...mockPost,
+      authorId: 'other-user',
+    })
+    vi.mocked(canEditPost).mockReturnValue(false)
+
+    await expect(
+      postService.sendExistingPostNotification({ postId: 'post-1', user: mockUser })
+    ).rejects.toThrow('Not authorized to send notification for this post')
+  })
+
+  it('deletes old notification before sending a new one when discordMessageId exists', async () => {
+    vi.mocked(postRepository.getPost).mockResolvedValue({
+      ...mockPost,
+      status: POST_STATUS.PUBLISHED,
+      discordMessageId: 'old-msg-1',
+    })
+    vi.mocked(canEditPost).mockReturnValue(true)
+    notificationMocks.sendPostNotification.mockResolvedValue('new-msg-1')
+
+    await postService.sendExistingPostNotification({ postId: 'post-1', user: mockUser })
+
+    expect(notificationMocks.deletePostNotification).toHaveBeenCalledWith({
+      messageId: 'old-msg-1',
+    })
+    expect(notificationMocks.sendPostNotification).toHaveBeenCalledOnce()
   })
 })

@@ -49,3 +49,13 @@ export const createPostFn = createServerFn({ method: 'POST' })
       currentCharacter: context.currentCharacter,
     })
   )
+
+export const sendPostNotificationFn = createServerFn({ method: 'POST' })
+  .middleware([requirePermission('post', 'update')])
+  .validator(basePostInteractionSchema)
+  .handler(async ({ data, context }) =>
+    postService.sendExistingPostNotification({
+      postId: data.postId,
+      user: context.session.user,
+    })
+  )

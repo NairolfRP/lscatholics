@@ -23,6 +23,7 @@ export const posts = sqliteTable(
     ...timestamps(),
     authorDisplayName: text('author_display_name').notNull().default('John Doe'),
     authorId: text('author_id').references(() => users.id, { onDelete: 'set null' }),
+    discordMessageId: text('discord_message_id'),
   },
   (table) => [
     index('posts_status_published_at_idx').on(table.status, table.publishedAt),

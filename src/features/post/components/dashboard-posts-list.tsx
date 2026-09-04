@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useRouter } from '@tanstack/react-router'
-import { deletePostFn } from '#/server-fn/post.functions.ts'
+import { deletePostFn, sendPostNotificationFn } from '#/server-fn/post.functions.ts'
 import { Skeleton } from '#/shared/components/ui/skeleton.tsx'
 import {
   Table as TableShadcn,
@@ -53,6 +53,23 @@ export function DashboardPostsList() {
     },
   })
 
+  const sendNotificationMutation = useMutation({
+    mutationFn: async (postId: string) => {
+      const result = await sendPostNotificationFn({ data: { postId } })
+
+      if (!result.success) {
+        return { error: true, message: result.error ?? '(( Une erreur est survenue ))' }
+      }
+
+      toast.success('(( Notification Discord envoyée ! ))')
+      void queryClient.invalidateQueries({ queryKey: ['posts'] })
+      return { error: false }
+    },
+    onError: () => {
+      return { error: true, message: '(( Une erreur est survenue ))' }
+    },
+  })
+
   if (isSessionPending || list.isPending) {
     return <DashboardPostsListSkeletonRows />
   }
@@ -90,6 +107,7 @@ export function DashboardPostsList() {
             hasPermission(permissions, 'post', 'delete') &&
             canEditPost({ user: session!.user, authorId }),
           onDelete: (postId) => deletePostMutation.mutateAsync(postId),
+          onSendNotification: (postId) => sendNotificationMutation.mutateAsync(postId),
         } satisfies DashboardPostsTableMeta
       }
     />

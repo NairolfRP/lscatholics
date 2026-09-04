@@ -1,7 +1,14 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-import { discordBotClient, sendWebhookMessage } from '#server/services/discord.service.ts'
+import {
+  deleteWebhookMessage,
+  discordBotClient,
+  editWebhookMessage,
+  sendWebhookMessage,
+} from '#server/services/discord.service.ts'
 
 const postMock = vi.hoisted(() => vi.fn<(url: string, options?: unknown) => Promise<unknown>>())
+const patchMock = vi.hoisted(() => vi.fn<(url: string, options?: unknown) => Promise<unknown>>())
+const deleteMock = vi.hoisted(() => vi.fn<(url: string, options?: unknown) => Promise<unknown>>())
 const createMock = vi.hoisted(() => vi.fn<(options: unknown) => void>())
 const botInstance = vi.hoisted(() => ({
   get: vi.fn(),
@@ -13,6 +20,8 @@ const botInstance = vi.hoisted(() => ({
 vi.mock('ky', () => ({
   default: {
     post: postMock,
+    patch: patchMock,
+    delete: deleteMock,
     create: (options: unknown) => {
       createMock(options)
       return botInstance
@@ -28,6 +37,8 @@ const WEBHOOK_URL = 'https://discord.com/api/webhooks/id/token'
 
 beforeEach(() => {
   postMock.mockReset()
+  patchMock.mockReset()
+  deleteMock.mockReset()
   createMock.mockReset()
   botInstance.get.mockReset()
   botInstance.post.mockReset()
@@ -151,5 +162,47 @@ describe('discordBotClient', () => {
     await discordBotClient.removeGuildMemberRole({ guildId: '1', userId: '2', roleId: '3' })
 
     expect(botInstance.delete).toHaveBeenCalledWith('guilds/1/members/2/roles/3')
+  })
+})
+
+describe('editWebhookMessage', () => {
+  it('patches the webhook message with the embed payload', async () => {
+    const edited = { id: 'msg-1' }
+    patchMock.mockReturnValue({ json: vi.fn().mockResolvedValue(edited) })
+
+    const result = await editWebhookMessage({
+      webhookUrl: 'https://discord.com/api/webhooks/123/abc',
+      messageId: 'msg-1',
+      payload: { embeds: [{ title: 'Updated' }] },
+    })
+
+    expect(patchMock).toHaveBeenCalledWith(
+      'https://discord.com/api/v10/webhooks/123/abc/messages/msg-1',
+      {
+        json: { embeds: [{ title: 'Updated' }] },
+        timeout: 10000,
+        retry: 0,
+      }
+    )
+    expect(result).toEqual(edited)
+  })
+})
+
+describe('deleteWebhookMessage', () => {
+  it('deletes the webhook message by id', async () => {
+    deleteMock.mockResolvedValue(undefined)
+
+    await deleteWebhookMessage({
+      webhookUrl: 'https://discord.com/api/webhooks/123/abc',
+      messageId: 'msg-1',
+    })
+
+    expect(deleteMock).toHaveBeenCalledWith(
+      'https://discord.com/api/v10/webhooks/123/abc/messages/msg-1',
+      {
+        timeout: 10000,
+        retry: 0,
+      }
+    )
   })
 })

@@ -5,4 +5,5 @@ export type DashboardPostsTableMeta = {
   canUpdatePost: (authorId: string | null) => boolean
   canDeletePost: (authorId: string | null) => boolean
   onDelete: (postId: string) => ActionButtonReturnType
+  onSendNotification: (postId: string) => ActionButtonReturnType
 }
