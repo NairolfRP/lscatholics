@@ -7,7 +7,7 @@ import {
 } from '#server/services/discord.service.ts'
 
 const postMock = vi.hoisted(() => vi.fn<(url: string, options?: unknown) => Promise<unknown>>())
-const patchMock = vi.hoisted(() => vi.fn<(url: string, options?: unknown) => Promise<unknown>>())
+const patchMock = vi.hoisted(() => vi.fn<(url: string, options?: unknown) => { json: () => Promise<unknown> }>())
 const deleteMock = vi.hoisted(() => vi.fn<(url: string, options?: unknown) => Promise<unknown>>())
 const createMock = vi.hoisted(() => vi.fn<(options: unknown) => void>())
 const botInstance = vi.hoisted(() => ({
