@@ -31,8 +31,9 @@ export function TextareaField({
   ...props
 }: TextareaFieldProps) {
   const generatedId = useId()
-  const field = useFieldContext<string>()
+  const field = useFieldContext<string | undefined>()
 
+  const value = field.state.value ?? ''
   const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
   const fieldId = props.id ?? generatedId
 
@@ -45,7 +46,7 @@ export function TextareaField({
         <MarkdownTextarea
           id={fieldId}
           name={field.name}
-          value={field.state.value}
+          value={value}
           onBlur={field.handleBlur}
           onChange={field.handleChange}
           required={required}
@@ -59,7 +60,7 @@ export function TextareaField({
           <InputGroupTextarea
             id={fieldId}
             name={field.name}
-            value={field.state.value}
+            value={value}
             onBlur={field.handleBlur}
             onChange={(e) => field.handleChange(e.target.value)}
             required={required}
@@ -71,7 +72,7 @@ export function TextareaField({
           {maxLength ? (
             <InputGroupAddon align="block-end">
               <InputGroupText className="ml-auto">
-                {field.state.value.length}/{maxLength}
+                {value.length}/{maxLength}
               </InputGroupText>
             </InputGroupAddon>
           ) : undefined}
