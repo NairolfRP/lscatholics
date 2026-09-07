@@ -1,3 +1,4 @@
+import EyefindMatic from '#shared/components/icons/eyefind-matic'
 import type { Social } from '../types/social.types'
 import DiscordIcon from '../components/icons/discord'
 import FacebrowserIcon from '../components/icons/facebrowser'
@@ -16,6 +17,12 @@ export const socials: Record<string, Social> = {
     href: 'https://eyefind.fr/video/chaine.php?handle=lscatholics',
     className: 'bg-red-600 hover:bg-red-700 text-white',
     icon: YoutubeIcon,
+  },
+  eyefindMatic: {
+    label: 'Suivre LSCatholics sur EyefindMatic',
+    href: 'https://eyefind.fr/matic/profil.php?u=lscatholics',
+    className: 'bg-[#e1306c29] hover:bg-[#e1306c66] text-[#e1306c]',
+    icon: EyefindMatic,
   },
   discord: {
     label: '(( Serveur discord de LS Catholics ))',

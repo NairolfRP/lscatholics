@@ -1,6 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { Image } from '@unpic/react'
 import { pageMetadata } from '#/utils/seo.ts'
+import EyefindMatic from '#shared/components/icons/eyefind-matic.tsx'
 import FacebrowserIcon from '#shared/components/icons/facebrowser.tsx'
 import { buttonVariants } from '#shared/components/ui/button'
 import {
@@ -18,6 +19,7 @@ const archbishop = {
   coatOfArmsUrl: '/assets/images/cardinal_hennessy_coat_of_arms.webp',
   socials: {
     facebrowser: 'https://face-fr.gta.world/page/cardinalhennessy',
+    eyefindMatic: 'https://eyefind.fr/matic/profil.php?u=cardinalhennessy',
   },
   biography: [
     'Le Cardinal Edmund Michael Hennessy a été nommé 6e archevêque de Los Santos le 26 juin 2026 par le pape Léon XIV. Il était précédemment archevêque de Saint Louis (Missouri) par Benoit XVI. Le Pape François le crée Cardinal lors du consistoire de 2014.',
@@ -139,6 +141,18 @@ function ArchbishopPage() {
                 >
                   <FacebrowserIcon iconColor="#F5A800" />
                   Page Facebrowser
+                </a>
+                <a
+                  href={archbishop.socials.eyefindMatic}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={buttonVariants({
+                    variant: 'outline',
+                    className: 'h-12 w-full justify-start gap-3 text-base',
+                  })}
+                >
+                  <EyefindMatic iconColor="#e1306c" />
+                  Profil EyefindMatic
                 </a>
               </CardContent>
             </Card>
