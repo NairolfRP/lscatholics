@@ -91,14 +91,12 @@ async function forceRefresh<T extends readonly ForceRefreshType[]>(
   const promises = keys.map(async (type) => {
     switch (type) {
       case 'characters':
-        // @ts-expect-error There is a known typing issue that has already been fixed in https://github.com/nitrojs/nitro/pull/4377. Wait for release.
         await cachedUserCharacters.invalidate(event, accessToken)
         logger.debug(`User characters cache invalidated for token %s`, accessToken)
         results.characters = await cachedUserCharacters(event, accessToken)
         break
 
       case 'factions':
-        // @ts-expect-error There is a known typing issue that has already been fixed in https://github.com/nitrojs/nitro/pull/4377. Wait for release.
         await cachedUserFactions.invalidate(event, accessToken)
         logger.debug(`User factions cache invalidated for token %s`, accessToken)
         results.factions = await cachedUserFactions(event, accessToken)
