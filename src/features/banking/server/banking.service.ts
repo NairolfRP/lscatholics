@@ -2,7 +2,6 @@ import { setResponseStatus } from '@tanstack/react-start/server'
 import { z } from 'zod'
 import { env } from '#/config/env.server.ts'
 import { bankTransferSchema } from '#/features/banking/schema/banking.schema.ts'
-import { isDev } from '#/utils/environment.ts'
 import { getFieldErrors } from '#/utils/form.ts'
 import { formatCurrency } from '#/utils/number.ts'
 import { logger } from '#server/integrations/logger.ts'
@@ -28,13 +27,6 @@ export async function bankTransfer({
   user: User
   currentCharacter: CharacterWithFaction | null
 }) {
-  if (!isDev) {
-    setResponseStatus(501)
-    throw new Response(
-      JSON.stringify({ error: 'NOT_IMPLEMENTED', message: 'Not implemented. Soon!' })
-    )
-  }
-
   try {
     const validatedData = await bankTransferSchema.parseAsync(data)
 
