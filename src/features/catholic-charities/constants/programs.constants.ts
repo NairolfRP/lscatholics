@@ -1,4 +1,4 @@
-import { Briefcase, Globe, Home, HouseHeart, ShieldAlert, Utensils, WineOff } from 'lucide-react'
+import { Briefcase, Globe, Home, ShieldAlert, Utensils, WineOff } from 'lucide-react'
 import type {
   CharitiesContact,
   ProgramDetail,
@@ -69,27 +69,6 @@ export const programs: ProgramDetail[] = [
       "Personnes sans domicile fixe ou en situation d'expulsion imminente",
       'Ménages à faibles revenus',
       'Personnes en difficulté et ne pouvant pas être hébergé par autrui (violences conjugales, maltraitances, mineur isolé, ...)',
-    ],
-    contact: CHARITIES_CONTACT,
-  },
-  {
-    icon: HouseHeart,
-    title: "Services d'adoption",
-    slug: 'adoption-services',
-    description:
-      "Prise en charge de mineurs placés en famille d'accueil, recherche de familles aimantes et accompagnement juridique pour l'adoption.",
-    tag: 'Jeunesse',
-    about:
-      "Catholic Charities prend en charge les mineurs placés en famille d'accueil et offre des services d'adoption. Nous nous efforçons de trouver des familles stables pour les enfants en difficulté.",
-    services: [
-      'Accueil et hébergement des mineurs en situation difficile (orphelins, maltraitances, sans tuteur légal)',
-      'Suivi éducatif et psychologique des enfants',
-      'Recherche de familles adoptives responsables',
-      "Soutien juridique pour les démarches d'adoption",
-    ],
-    eligibility: [
-      "Familles souhaitant devenir famille d'accueil ou adoptive",
-      'Enfants confiés par les autorités compétentes',
     ],
     contact: CHARITIES_CONTACT,
   },
