@@ -2,7 +2,6 @@ import { createFileRoute, useRouteContext } from '@tanstack/react-router'
 import { envClient } from '#/config/env-client'
 import { DashboardHeading } from '#/features/dashboard/components/dashboard-heading'
 import { DashboardQuickLinks } from '#/features/dashboard/components/dashboard-quick-links'
-import { DashboardRecentActivity } from '#/features/dashboard/components/dashboard-recent-activity'
 import { Typography } from '#/shared/components/ui/typography'
 import { pageMetadata } from '#/utils/seo'
 
@@ -38,8 +37,6 @@ function RouteComponent() {
       />
 
       <DashboardQuickLinks />
-
-      <DashboardRecentActivity />
     </div>
   )
 }
