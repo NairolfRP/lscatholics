@@ -1,13 +1,13 @@
 import { useSuspenseQuery } from '@tanstack/react-query'
-import { useNavigate, useSearch } from '@tanstack/react-router'
-import { Filter, SearchIcon } from 'lucide-react'
+import { Link, useNavigate, useSearch } from '@tanstack/react-router'
+import { Filter, SearchIcon, SendIcon } from 'lucide-react'
 import { departments } from '#/config/departments.ts'
 import { JobPostingCard } from '#/features/job-posting/components/job-posting-card.tsx'
 import { CAREERS_PAGINATION_LIMIT } from '#/features/job-posting/constants/job-posting.constants.ts'
 import { jobPostingsQueryOptions } from '#/features/job-posting/queries.ts'
 import { DebouncedInput } from '#shared/components/debounced-input.tsx'
 import { Pagination } from '#shared/components/pagination.tsx'
-import { Button } from '#shared/components/ui/button'
+import { Button, buttonVariants } from '#shared/components/ui/button'
 import { Card, CardContent, CardHeader } from '#shared/components/ui/card'
 import { Checkbox } from '#shared/components/ui/checkbox'
 import { Label } from '#shared/components/ui/label'
@@ -30,8 +30,8 @@ const departmentItems = departments.map((department) => ({
 }))
 
 export default function JobPostingsPage() {
-  const navigate = useNavigate({ from: '/careers' })
-  const routeSearch = useSearch({ from: '/_app/careers' })
+  const navigate = useNavigate({ from: '/careers/' })
+  const routeSearch = useSearch({ from: '/_app/careers/' })
   const { data, isFetching } = useSuspenseQuery(jobPostingsQueryOptions(routeSearch))
 
   const jobs = data.jobPostings
@@ -70,6 +70,30 @@ export default function JobPostingsPage() {
         subtitle="Travaillez pour l'archidiocèse de Los Santos"
       />
       <div className="container mx-auto max-w-7xl px-4 pt-15 pb-20 sm:px-6 lg:px-8">
+        <Card className="mb-10 border-primary/20 bg-linear-to-br from-primary/5 to-transparent shadow-sm">
+          <CardContent className="flex flex-col items-start justify-between gap-6 p-6 sm:p-8 lg:flex-row lg:items-center">
+            <div className="max-w-2xl space-y-2">
+              <p className="text-xs font-semibold tracking-wider text-primary uppercase">
+                Candidature spontanée
+              </p>
+              <h2 className="text-2xl font-bold tracking-tight text-foreground">
+                Vous n'avez pas trouvé l'offre qu'il vous faut&nbsp;?
+              </h2>
+              <p className="text-muted-foreground">
+                Candidatez de manière spontanée&nbsp;: indiquez-nous vos compétences et
+                proposez-nous un poste. Le Département des Ressources Humaines étudiera votre
+                candidature et déterminera si cela répond à nos besoins.
+              </p>
+            </div>
+            <Link
+              to="/careers/spontaneous-apply"
+              className={buttonVariants({ variant: 'default', size: 'lg' })}
+            >
+              <SendIcon /> Déposer une candidature spontanée
+            </Link>
+          </CardContent>
+        </Card>
+
         <div className="flex flex-col gap-8 lg:flex-row">
           <aside className="w-full shrink-0 lg:w-72">
             <Card className="sticky top-[calc(var(--header-height)+25px)] shadow-sm">

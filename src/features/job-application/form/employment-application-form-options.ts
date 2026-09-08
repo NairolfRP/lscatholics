@@ -28,5 +28,6 @@ export const employmentApplicationFormOptions = formOptions({
     applicantDeclarationAccepted: undefined,
     discordUsername: '',
     motivationsOOC: '',
+    desiredPosition: '',
   } as unknown as EmploymentApplicationInput,
 })

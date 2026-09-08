@@ -2,7 +2,7 @@ import { createServerFn } from '@tanstack/react-start'
 import * as employmentApplicationService from '#/features/job-application/server/employment-application.service'
 import { requireGameMiddleware } from '#/middleware/game.middleware.ts'
 
-type SubmitEmploymentApplicationPayload = { slug: string; data: unknown }
+type SubmitEmploymentApplicationPayload = { slug: string | null; data: unknown }
 
 export const submitEmploymentApplicationFn = createServerFn({ method: 'POST' })
   .middleware([requireGameMiddleware])

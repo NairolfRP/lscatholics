@@ -9,8 +9,11 @@ import {
   schoolLevelLabels,
   spokenLanguageLabels,
 } from '#/features/job-application/constants/employment-application.constants.tsx'
+import {
+  spontaneousEmploymentApplicationSchema,
+  employmentApplicationSchema,
+} from '#/features/job-application/schemas/employment-application.schema.ts'
 import type { EmploymentApplicationOutput } from '#/features/job-application/schemas/employment-application.schema.ts'
-import { employmentApplicationSchema } from '#/features/job-application/schemas/employment-application.schema.ts'
 import { formatIban } from '#/utils/bank.ts'
 import { getFieldErrors } from '#/utils/form.ts'
 import { truncate } from '#/utils/string.ts'
@@ -23,7 +26,17 @@ import type { User } from '#shared/lib/types/auth.ts'
 
 export const JOB_APPLICATION_EMBED_COLOR = 0x1e40af
 
-export async function submit({ slug, data, user }: { slug: string; data: unknown; user: User }) {
+export async function submit({
+  slug,
+  data,
+  user,
+}: {
+  slug: string | null
+  data: unknown
+  user: User
+}) {
+  const isSpontaneous = slug == null
+
   const webhookUrl = env.JOB_APPLICATION_DISCORD_WEBHOOK
 
   try {
@@ -36,33 +49,43 @@ export async function submit({ slug, data, user }: { slug: string; data: unknown
       }
     }
 
-    const validatedData = await employmentApplicationSchema.parseAsync(data)
+    const validatedData = isSpontaneous
+      ? await spontaneousEmploymentApplicationSchema.parseAsync(data)
+      : await employmentApplicationSchema.parseAsync(data)
 
-    const job = await jobPostingRepository.getJobPosting({
-      slug,
-      columns: { title: true, isActive: true, expiresAt: true },
-      includeExpired: true,
-      includeInactive: true,
-    })
+    let jobTitle: string
 
-    if (!job) {
-      setResponseStatus(404)
-      return { success: false, error: "Cette offre d'emploi n'existe plus." }
+    if (isSpontaneous) {
+      jobTitle = `Candidature spontanée — ${validatedData.desiredPosition}`
+    } else {
+      const job = await jobPostingRepository.getJobPosting({
+        slug,
+        columns: { title: true, isActive: true, expiresAt: true },
+        includeExpired: true,
+        includeInactive: true,
+      })
+
+      if (!job) {
+        setResponseStatus(404)
+        return { success: false, error: "Cette offre d'emploi n'existe plus." }
+      }
+
+      if (!job.isActive || (job.expiresAt && isPast(new Date(job.expiresAt)))) {
+        setResponseStatus(410)
+        return { success: false, error: "Cette offre d'emploi n'accepte plus de candidatures." }
+      }
+
+      jobTitle = job.title
     }
 
-    if (!job.isActive || (job.expiresAt && isPast(new Date(job.expiresAt)))) {
-      setResponseStatus(410)
-      return { success: false, error: "Cette offre d'emploi n'accepte plus de candidatures." }
-    }
-
-    const threadName = truncate(`[${job.title}] ${buildFullName(validatedData)}`, 100)
+    const threadName = truncate(`[${jobTitle}] ${buildFullName(validatedData)}`, 100)
 
     const firstMessage = await sendWebhookMessage({
       url: webhookUrl,
       wait: true,
       payload: {
         thread_name: threadName,
-        embeds: buildMainEmbeds(job.title, validatedData),
+        embeds: buildMainEmbeds(jobTitle, validatedData),
       },
     })
 
@@ -128,6 +151,10 @@ function buildMainInfoEmbed(jobTitle: string, data: EmploymentApplicationOutput)
       value: data.hasDriverLicense ? ':ballot_box_with_check:' : ':x:',
     }
   )
+
+  if (data.desiredPosition) {
+    fields.push({ name: 'Poste recherché', value: data.desiredPosition })
+  }
 
   if (data.applicationSource.type) {
     fields.push({

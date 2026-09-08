@@ -38,6 +38,8 @@ import { Route as DashboardUsersRouteRouteImport } from './routes/dashboard/user
 import { Route as AppAccountIndexRouteImport } from './routes/_app/account/index'
 import { Route as AppAccountSessionsRouteImport } from './routes/_app/account/sessions'
 import { Route as AppAccountSettingsRouteImport } from './routes/_app/account/settings'
+import { Route as AppCareersIndexRouteImport } from './routes/_app/careers/index'
+import { Route as AppCareersSpontaneousApplyRouteImport } from './routes/_app/careers/spontaneous-apply'
 import { Route as AppCharitiesIndexRouteImport } from './routes/_app/charities/index'
 import { Route as AppDecreesIndexRouteImport } from './routes/_app/decrees/index'
 import { Route as AppDecreesUidRouteImport } from './routes/_app/decrees/$uid'
@@ -213,6 +215,17 @@ const AppAccountSettingsRoute = AppAccountSettingsRouteImport.update({
   path: '/settings',
   getParentRoute: () => AppAccountRouteRoute,
 } as any)
+const AppCareersIndexRoute = AppCareersIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AppCareersRoute,
+} as any)
+const AppCareersSpontaneousApplyRoute =
+  AppCareersSpontaneousApplyRouteImport.update({
+    id: '/spontaneous-apply',
+    path: '/spontaneous-apply',
+    getParentRoute: () => AppCareersRoute,
+  } as any)
 const AppCharitiesIndexRoute = AppCharitiesIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -381,7 +394,7 @@ export interface FileRoutesByFullPath {
   '/dashboard/users': typeof DashboardUsersRouteRouteWithChildren
   '/about': typeof AppAboutRoute
   '/archbishop': typeof AppArchbishopRoute
-  '/careers': typeof AppCareersRoute
+  '/careers': typeof AppCareersRouteWithChildren
   '/clergy-application': typeof AppClergyApplicationRoute
   '/contact': typeof AppContactRoute
   '/daily-readings': typeof AppDailyReadingsRoute
@@ -399,6 +412,7 @@ export interface FileRoutesByFullPath {
   '/dashboard/': typeof DashboardIndexRoute
   '/account/sessions': typeof AppAccountSessionsRoute
   '/account/settings': typeof AppAccountSettingsRoute
+  '/careers/spontaneous-apply': typeof AppCareersSpontaneousApplyRoute
   '/decrees/$uid': typeof AppDecreesUidRoute
   '/department/$slug': typeof AppDepartmentSlugRoute
   '/event/$slug': typeof AppEventSlugRoute
@@ -410,6 +424,7 @@ export interface FileRoutesByFullPath {
   '/dashboard/job-openings/create': typeof DashboardJobOpeningsCreateRoute
   '/dashboard/posts/create': typeof DashboardPostsCreateRoute
   '/account/': typeof AppAccountIndexRoute
+  '/careers/': typeof AppCareersIndexRoute
   '/charities/': typeof AppCharitiesIndexRoute
   '/decrees/': typeof AppDecreesIndexRoute
   '/dashboard/events/': typeof DashboardEventsIndexRoute
@@ -435,7 +450,6 @@ export interface FileRoutesByTo {
   '/robots.txt': typeof RobotsDottxtRoute
   '/about': typeof AppAboutRoute
   '/archbishop': typeof AppArchbishopRoute
-  '/careers': typeof AppCareersRoute
   '/clergy-application': typeof AppClergyApplicationRoute
   '/contact': typeof AppContactRoute
   '/daily-readings': typeof AppDailyReadingsRoute
@@ -454,6 +468,7 @@ export interface FileRoutesByTo {
   '/dashboard': typeof DashboardIndexRoute
   '/account/sessions': typeof AppAccountSessionsRoute
   '/account/settings': typeof AppAccountSettingsRoute
+  '/careers/spontaneous-apply': typeof AppCareersSpontaneousApplyRoute
   '/decrees/$uid': typeof AppDecreesUidRoute
   '/department/$slug': typeof AppDepartmentSlugRoute
   '/event/$slug': typeof AppEventSlugRoute
@@ -465,6 +480,7 @@ export interface FileRoutesByTo {
   '/dashboard/job-openings/create': typeof DashboardJobOpeningsCreateRoute
   '/dashboard/posts/create': typeof DashboardPostsCreateRoute
   '/account': typeof AppAccountIndexRoute
+  '/careers': typeof AppCareersIndexRoute
   '/charities': typeof AppCharitiesIndexRoute
   '/decrees': typeof AppDecreesIndexRoute
   '/dashboard/events': typeof DashboardEventsIndexRoute
@@ -497,7 +513,7 @@ export interface FileRoutesById {
   '/dashboard/users': typeof DashboardUsersRouteRouteWithChildren
   '/_app/about': typeof AppAboutRoute
   '/_app/archbishop': typeof AppArchbishopRoute
-  '/_app/careers': typeof AppCareersRoute
+  '/_app/careers': typeof AppCareersRouteWithChildren
   '/_app/clergy-application': typeof AppClergyApplicationRoute
   '/_app/contact': typeof AppContactRoute
   '/_app/daily-readings': typeof AppDailyReadingsRoute
@@ -516,6 +532,7 @@ export interface FileRoutesById {
   '/dashboard/': typeof DashboardIndexRoute
   '/_app/account/sessions': typeof AppAccountSessionsRoute
   '/_app/account/settings': typeof AppAccountSettingsRoute
+  '/_app/careers/spontaneous-apply': typeof AppCareersSpontaneousApplyRoute
   '/_app/decrees/$uid': typeof AppDecreesUidRoute
   '/_app/department/$slug': typeof AppDepartmentSlugRoute
   '/_app/event/$slug': typeof AppEventSlugRoute
@@ -527,6 +544,7 @@ export interface FileRoutesById {
   '/dashboard/job-openings/create': typeof DashboardJobOpeningsCreateRoute
   '/dashboard/posts/create': typeof DashboardPostsCreateRoute
   '/_app/account/': typeof AppAccountIndexRoute
+  '/_app/careers/': typeof AppCareersIndexRoute
   '/_app/charities/': typeof AppCharitiesIndexRoute
   '/_app/decrees/': typeof AppDecreesIndexRoute
   '/dashboard/events/': typeof DashboardEventsIndexRoute
@@ -578,6 +596,7 @@ export interface FileRouteTypes {
     | '/dashboard/'
     | '/account/sessions'
     | '/account/settings'
+    | '/careers/spontaneous-apply'
     | '/decrees/$uid'
     | '/department/$slug'
     | '/event/$slug'
@@ -589,6 +608,7 @@ export interface FileRouteTypes {
     | '/dashboard/job-openings/create'
     | '/dashboard/posts/create'
     | '/account/'
+    | '/careers/'
     | '/charities/'
     | '/decrees/'
     | '/dashboard/events/'
@@ -614,7 +634,6 @@ export interface FileRouteTypes {
     | '/robots.txt'
     | '/about'
     | '/archbishop'
-    | '/careers'
     | '/clergy-application'
     | '/contact'
     | '/daily-readings'
@@ -633,6 +652,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/account/sessions'
     | '/account/settings'
+    | '/careers/spontaneous-apply'
     | '/decrees/$uid'
     | '/department/$slug'
     | '/event/$slug'
@@ -644,6 +664,7 @@ export interface FileRouteTypes {
     | '/dashboard/job-openings/create'
     | '/dashboard/posts/create'
     | '/account'
+    | '/careers'
     | '/charities'
     | '/decrees'
     | '/dashboard/events'
@@ -694,6 +715,7 @@ export interface FileRouteTypes {
     | '/dashboard/'
     | '/_app/account/sessions'
     | '/_app/account/settings'
+    | '/_app/careers/spontaneous-apply'
     | '/_app/decrees/$uid'
     | '/_app/department/$slug'
     | '/_app/event/$slug'
@@ -705,6 +727,7 @@ export interface FileRouteTypes {
     | '/dashboard/job-openings/create'
     | '/dashboard/posts/create'
     | '/_app/account/'
+    | '/_app/careers/'
     | '/_app/charities/'
     | '/_app/decrees/'
     | '/dashboard/events/'
@@ -941,6 +964,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/account/settings'
       preLoaderRoute: typeof AppAccountSettingsRouteImport
       parentRoute: typeof AppAccountRouteRoute
+    }
+    '/_app/careers/': {
+      id: '/_app/careers/'
+      path: '/'
+      fullPath: '/careers/'
+      preLoaderRoute: typeof AppCareersIndexRouteImport
+      parentRoute: typeof AppCareersRoute
+    }
+    '/_app/careers/spontaneous-apply': {
+      id: '/_app/careers/spontaneous-apply'
+      path: '/spontaneous-apply'
+      fullPath: '/careers/spontaneous-apply'
+      preLoaderRoute: typeof AppCareersSpontaneousApplyRouteImport
+      parentRoute: typeof AppCareersRoute
     }
     '/_app/charities/': {
       id: '/_app/charities/'
@@ -1253,13 +1290,27 @@ const AppDecreesRouteRouteWithChildren = AppDecreesRouteRoute._addFileChildren(
   AppDecreesRouteRouteChildren,
 )
 
+interface AppCareersRouteChildren {
+  AppCareersSpontaneousApplyRoute: typeof AppCareersSpontaneousApplyRoute
+  AppCareersIndexRoute: typeof AppCareersIndexRoute
+}
+
+const AppCareersRouteChildren: AppCareersRouteChildren = {
+  AppCareersSpontaneousApplyRoute: AppCareersSpontaneousApplyRoute,
+  AppCareersIndexRoute: AppCareersIndexRoute,
+}
+
+const AppCareersRouteWithChildren = AppCareersRoute._addFileChildren(
+  AppCareersRouteChildren,
+)
+
 interface AppRouteChildren {
   AppAccountRouteRoute: typeof AppAccountRouteRouteWithChildren
   AppCharitiesRouteRoute: typeof AppCharitiesRouteRouteWithChildren
   AppDecreesRouteRoute: typeof AppDecreesRouteRouteWithChildren
   AppAboutRoute: typeof AppAboutRoute
   AppArchbishopRoute: typeof AppArchbishopRoute
-  AppCareersRoute: typeof AppCareersRoute
+  AppCareersRoute: typeof AppCareersRouteWithChildren
   AppClergyApplicationRoute: typeof AppClergyApplicationRoute
   AppContactRoute: typeof AppContactRoute
   AppDailyReadingsRoute: typeof AppDailyReadingsRoute
@@ -1289,7 +1340,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppDecreesRouteRoute: AppDecreesRouteRouteWithChildren,
   AppAboutRoute: AppAboutRoute,
   AppArchbishopRoute: AppArchbishopRoute,
-  AppCareersRoute: AppCareersRoute,
+  AppCareersRoute: AppCareersRouteWithChildren,
   AppClergyApplicationRoute: AppClergyApplicationRoute,
   AppContactRoute: AppContactRoute,
   AppDailyReadingsRoute: AppDailyReadingsRoute,

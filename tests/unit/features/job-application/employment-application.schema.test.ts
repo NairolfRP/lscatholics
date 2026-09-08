@@ -1,5 +1,8 @@
 import { describe, expect, it } from 'vitest'
-import { employmentApplicationSchema } from '#/features/job-application/schemas/employment-application.schema.ts'
+import {
+  employmentApplicationSchema,
+  spontaneousEmploymentApplicationSchema,
+} from '#/features/job-application/schemas/employment-application.schema.ts'
 
 const validInput = {
   firstname: ' Jean ',
@@ -187,5 +190,31 @@ describe('employmentApplicationSchema', () => {
         })),
       })
     ).toThrow('Vous ne pouvez pas ajouter plus de 3 expériences professionnelles.')
+  })
+})
+
+describe('spontaneousEmploymentApplicationSchema', () => {
+  it('extends the base application schema', () => {
+    const result = spontaneousEmploymentApplicationSchema.parse({
+      ...validInput,
+      desiredPosition: ' Secrétaire ',
+    })
+
+    expect(result.desiredPosition).toBe('Secrétaire')
+  })
+
+  it('requires a desired position', () => {
+    expect(() =>
+      spontaneousEmploymentApplicationSchema.parse({ ...validInput, desiredPosition: '' })
+    ).toThrow('Le poste recherché est requis.')
+  })
+
+  it('rejects a desired position that is too long', () => {
+    expect(() =>
+      spontaneousEmploymentApplicationSchema.parse({
+        ...validInput,
+        desiredPosition: 'X'.repeat(101),
+      })
+    ).toThrow('Le poste recherché ne doit pas dépasser 100 caractères.')
   })
 })

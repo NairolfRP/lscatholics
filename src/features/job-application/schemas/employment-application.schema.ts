@@ -187,7 +187,24 @@ export const employmentApplicationSchema = z.object({
   applicantDeclarationAccepted: applicantDeclarationAcceptedSchema,
   discordUsername: discordUsernameSchema,
   motivationsOOC: motivationsOOCSchema,
+  desiredPosition: optionalShortTextSchema(MAX.POSITION, 'Le poste recherché'),
+})
+
+export const spontaneousEmploymentApplicationSchema = employmentApplicationSchema.extend({
+  desiredPosition: z
+    .string({ error: 'Le poste recherché est requis.' })
+    .trim()
+    .min(1, { error: 'Le poste recherché est requis.' })
+    .max(MAX.POSITION, {
+      error: (iss) => `Le poste recherché ne doit pas dépasser ${iss.maximum} caractères.`,
+    }),
 })
 
 export type EmploymentApplicationInput = z.input<typeof employmentApplicationSchema>
 export type EmploymentApplicationOutput = z.output<typeof employmentApplicationSchema>
+export type SpontaneousEmploymentApplicationInput = z.input<
+  typeof spontaneousEmploymentApplicationSchema
+>
+export type SpontaneousEmploymentApplicationOutput = z.output<
+  typeof spontaneousEmploymentApplicationSchema
+>
