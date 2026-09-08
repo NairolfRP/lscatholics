@@ -35,7 +35,9 @@ export function DefaultErrorComponent({ error, reset }: ErrorComponentProps) {
                   <span className="text-xs transition-transform group-open:rotate-180">▾</span>
                 </summary>
                 <pre className="max-h-40 overflow-auto border-t px-3 py-2 text-xs text-muted-foreground">
-                  {error.stack ? error.stack : error.message ? error.message : 'N/A'}
+                  {error instanceof Error
+                    ? (error.stack || error.message || 'N/A')
+                    : 'N/A'}
                 </pre>
               </details>
             </CardContent>
