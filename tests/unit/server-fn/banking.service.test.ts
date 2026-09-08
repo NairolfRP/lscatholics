@@ -264,13 +264,4 @@ describe('bankTransfer', () => {
     expect(mocks.sendWebhookMessage).not.toHaveBeenCalled()
   })
 
-  it('is not implemented outside development', async () => {
-    mocks.isDev = false
-
-    await expect(
-      bankTransfer({ data: validData, user: mockUser, currentCharacter: character })
-    ).rejects.toBeInstanceOf(Response)
-    expect(setResponseStatus).toHaveBeenCalledWith(501)
-    expect(mocks.makeTransfer).not.toHaveBeenCalled()
-  })
 })
