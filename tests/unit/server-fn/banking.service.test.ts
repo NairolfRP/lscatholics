@@ -263,5 +263,4 @@ describe('bankTransfer', () => {
     expect(result.success).toBe(true)
     expect(mocks.sendWebhookMessage).not.toHaveBeenCalled()
   })
-
 })
