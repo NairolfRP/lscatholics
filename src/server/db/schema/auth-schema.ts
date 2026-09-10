@@ -1,5 +1,5 @@
 import { relations } from 'drizzle-orm'
-import { index, integer, sqliteTable, text, uniqueIndex } from 'drizzle-orm/sqlite-core'
+import { index, integer, sqliteTable, text } from 'drizzle-orm/sqlite-core'
 import { timestamps } from '#server/db/helpers.ts'
 import { jobPostings } from '#server/db/schema/job-posting-schema.ts'
 import { churchEvents } from './church-event-schema'
@@ -39,7 +39,6 @@ export const accounts = sqliteTable(
   'accounts',
   {
     id: text('id').primaryKey(),
-    issuer: text('issuer').notNull(),
     accountId: text('account_id').notNull(),
     providerId: text('provider_id').notNull(),
     userId: text('user_id')
@@ -58,10 +57,19 @@ export const accounts = sqliteTable(
     password: text('password'),
     ...timestamps(),
   },
-  (table) => [
-    uniqueIndex('accounts_issuer_account_id_uidx').on(table.issuer, table.accountId),
-    index('accounts_user_id_idx').on(table.userId),
-  ]
+  (table) => [index('accounts_user_id_idx').on(table.userId)]
+)
+
+export const verifications = sqliteTable(
+  'verifications',
+  {
+    id: text('id').primaryKey(),
+    identifier: text('identifier').notNull(),
+    value: text('value').notNull(),
+    expiresAt: integer('expires_at', { mode: 'timestamp_ms' }).notNull(),
+    ...timestamps(),
+  },
+  (table) => [index('verifications_identifier_idx').on(table.identifier)]
 )
 
 export const usersRelations = relations(users, ({ many }) => ({

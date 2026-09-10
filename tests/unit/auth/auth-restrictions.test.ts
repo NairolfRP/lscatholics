@@ -21,15 +21,10 @@ async function createUser(overrides: Record<string, unknown> = {}) {
   return test.saveUser(test.createUser({ role: 'user', banned: false, ...overrides }))
 }
 
-async function createAccount(
-  userId: string,
-  providerId: string,
-  accountId: string,
-  issuer = providerId
-) {
+async function createAccount(userId: string, providerId: string, accountId: string) {
   const [account] = await db
     .insert(accounts)
-    .values({ id: crypto.randomUUID(), userId, providerId, accountId, issuer })
+    .values({ id: crypto.randomUUID(), userId, providerId, accountId })
     .returning()
 
   return account
