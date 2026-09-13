@@ -19,6 +19,8 @@ const config = defineConfig(({ mode }) => {
     },
     env,
     build: {
+      target: 'chrome103',
+      cssTarget: 'chrome111',
       minify: 'oxc',
       sourcemap: false,
     },
