@@ -28,7 +28,7 @@ const csp = (nonce: string) => ({
   'object-src': [`'none'`],
   'base-uri': ["'self'"],
   'form-action': ["'self'"],
-  'frame-ancestors': ["'none'"],
+  'frame-ancestors': ['nui:', 'https://cfx-nui-client'],
 })
 
 export function cspConfig() {
