@@ -11,7 +11,7 @@ const csp = (nonce: string) => ({
     ...(import.meta.env.DEV ? ['https://cdn.jsdelivr.net'] : []),
   ],
   'style-src': ["'self'", `'unsafe-inline'`, 'https://fonts.bunny.net'],
-  'img-src': ["'self'", 'data:', 'https:'],
+  'img-src': ["'self'", 'data:', 'https:', 'https://proxy.duckduckgo.com'],
   'font-src': [
     "'self'",
     'https://fonts.bunny.net',

@@ -13,6 +13,7 @@ import {
 import { Skeleton } from '#/shared/components/ui/skeleton'
 import { cn } from '#/shared/lib/utils'
 import { formatDate } from '#/utils/date'
+import { imageUrl } from '#/utils/image'
 
 type Props = {
   slug: string
@@ -43,7 +44,7 @@ export default function PostCard({
           {image && (
             <div className="overflow-hidden">
               <Image
-                src={image}
+                src={imageUrl(image)}
                 alt={`Image de couverture - Article "${title}"`}
                 className="aspect-video w-full object-cover transition-transform duration-500 group-hover:scale-105"
                 loading="lazy"

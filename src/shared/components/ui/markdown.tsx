@@ -5,6 +5,7 @@ import ReactMarkdown from 'react-markdown'
 import rehypeSlug from 'rehype-slug'
 import remarkBreaks from 'remark-breaks'
 import { cn } from '#/shared/lib/utils'
+import { imageUrl } from '#/utils/image'
 import { toInternalPath } from '#/utils/link'
 import { Separator } from './separator'
 import { Typography } from './typography'
@@ -101,7 +102,7 @@ const MarkdownComponents: ReactMarkdownComponents = {
   },
   img: ({ src, alt, title }) => (
     <img
-      src={src}
+      src={src ? imageUrl(src) : undefined}
       alt={alt}
       title={title}
       className="my-6 h-auto max-w-full rounded-lg shadow-md"

@@ -10,6 +10,7 @@ import {
 import { churchEventsQueryOptions } from '#/features/church-event/queries.ts'
 import type { ChurchEvent } from '#/features/church-event/types/church-event.types.ts'
 import { formatDate, formatDateTime } from '#/utils/date.ts'
+import { imageUrl } from '#/utils/image.ts'
 import { Alert, AlertAction, AlertDescription, AlertTitle } from '#shared/components/ui/alert.tsx'
 import { Badge } from '#shared/components/ui/badge.tsx'
 import { Button } from '#shared/components/ui/button.tsx'
@@ -97,7 +98,7 @@ function ChurchEventCard({ event }: { event: ChurchEvent }) {
       <Card className="h-full pt-0 shadow-xs transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-lg">
         <div className="overflow-hidden">
           <Image
-            src={event.coverImageUrl}
+            src={imageUrl(event.coverImageUrl)}
             alt={`Image de couverture - Événement "${event.title}"`}
             loading="lazy"
             layout="fullWidth"

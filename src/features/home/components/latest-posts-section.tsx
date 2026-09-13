@@ -10,6 +10,7 @@ import { Separator } from '#/shared/components/ui/separator'
 import { Skeleton } from '#/shared/components/ui/skeleton'
 import { Typography } from '#/shared/components/ui/typography'
 import { formatDate } from '#/utils/date'
+import { imageUrl } from '#/utils/image'
 import { latestPostsQueryOptions } from '#shared/queries/post.queries.ts'
 
 export function LatestPostsSection() {
@@ -31,7 +32,7 @@ export function LatestPostsSection() {
       >
         <div className="overflow-hidden rounded-xl ring-1 ring-foreground/10 transition duration-300 group-hover:shadow-md">
           <Image
-            src={latestPost.coverImageUrl}
+            src={imageUrl(latestPost.coverImageUrl)}
             className="aspect-video w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
             width={500}
             height={300}

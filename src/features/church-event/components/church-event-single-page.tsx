@@ -12,6 +12,7 @@ import {
 } from 'lucide-react'
 import { singleChurchEventQueryOptions } from '#/features/church-event/queries.ts'
 import { formatDateTime } from '#/utils/date.ts'
+import { imageUrl } from '#/utils/image.ts'
 import { Alert, AlertTitle } from '#shared/components/ui/alert.tsx'
 import { Badge } from '#shared/components/ui/badge.tsx'
 import { buttonVariants } from '#shared/components/ui/button.tsx'
@@ -45,7 +46,7 @@ export function ChurchEventSinglePage() {
     <article className="contents">
       <Hero
         variant="image"
-        imageSrc={churchEvent.coverImageUrl}
+        imageSrc={imageUrl(churchEvent.coverImageUrl)}
         title={
           <>
             {parish && (

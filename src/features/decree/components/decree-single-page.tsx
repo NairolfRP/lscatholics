@@ -6,6 +6,7 @@ import { DECREE_CATEGORIES } from '#/features/decree/constants/decree.constants.
 import { decreeQueryOptions } from '#/features/decree/queries.ts'
 import type { Decree, DecreeField } from '#/features/decree/types/decree.types.ts'
 import { formatDate } from '#/utils/date.ts'
+import { imageUrl } from '#/utils/image.ts'
 import { Badge } from '#shared/components/ui/badge.tsx'
 import { buttonVariants } from '#shared/components/ui/button.tsx'
 import {
@@ -83,7 +84,7 @@ function DecreeContent({ decree }: { decree: Decree }) {
       {decree.image && (
         <div className="mx-auto max-w-lg p-6 sm:p-8">
           <Image
-            src={decree.image}
+            src={imageUrl(decree.image)}
             alt="Sceau ou emblème associé au décret"
             className="w-full object-contain"
             loading="lazy"

@@ -3,6 +3,7 @@ import { createFileRoute } from '@tanstack/react-router'
 import { Markdown } from '#/shared/components/ui/markdown'
 import Hero from '#/shared/layouts/app/components/hero'
 import { formatDate } from '#/utils/date'
+import { imageUrl } from '#/utils/image'
 import { pageMetadata } from '#/utils/seo'
 import { postQueryOptions } from '#shared/queries/post.queries.ts'
 
@@ -45,7 +46,7 @@ function PostPage() {
         <Hero
           variant="image"
           size="md"
-          imageSrc={post.coverImageUrl}
+          imageSrc={imageUrl(post.coverImageUrl)}
           imageAlt={`Image de couverture - Article "${post.title}"`}
           title={post.title}
           subtitle={

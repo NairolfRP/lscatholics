@@ -8,6 +8,7 @@ import {
 } from '#/features/gift-shop/constants/gift-shop.constants.ts'
 import type { GiftProduct } from '#/features/gift-shop/types/gift-shop.types.ts'
 import { cn } from '#/shared/lib/utils'
+import { imageUrl } from '#/utils/image.ts'
 import { formatNumber } from '#/utils/number.ts'
 import { Button } from '#shared/components/ui/button.tsx'
 import { Card, CardContent } from '#shared/components/ui/card.tsx'
@@ -160,7 +161,7 @@ function GiftShopCatalogCard({
   return (
     <Card className="justify-between rounded-xl">
       <img
-        src={product.imageSrc}
+        src={imageUrl(product.imageSrc)}
         alt={product.name}
         loading="lazy"
         decoding="async"
