@@ -15,6 +15,8 @@ export const auth = betterAuth({
   trustedOrigins: [
     'http://localhost:3000',
     ...(process.env.VERCEL_URL ? [`https://${process.env.VERCEL_URL}`] : []),
+    'https://cfx-nui-client',
+    'nui://',
   ],
   database: drizzleAdapter(db, {
     schema: authSchema,
