@@ -4,6 +4,7 @@ import { betterAuth } from 'better-auth/minimal'
 import { envClient } from '#/config/env-client'
 import { env } from '#/config/env.server'
 import { isDev, isProd } from '#/utils/environment.ts'
+import { isCEFRequest } from '#/utils/fivem'
 import { db } from '#server/db'
 import * as authSchema from '#server/db/schema/auth-schema'
 import { AUTH_PLUGINS } from '#server/integrations/auth/plugins.ts'
@@ -86,6 +87,15 @@ export const auth = betterAuth({
     },
     backgroundTasks: {
       handler: waitUntil,
+    },
+    cookies: {
+      oauth_state: {
+        attributes: {
+          httpOnly: true,
+          sameSite: isCEFRequest() ? 'none' : 'lax',
+          secure: true,
+        },
+      },
     },
   },
   logger: {
