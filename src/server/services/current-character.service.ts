@@ -2,6 +2,7 @@ import { deleteCookie, getCookie, setCookie, setResponseStatus } from '@tanstack
 import { isAPIError } from 'better-auth/api'
 import { env } from '#/config/env.server'
 import type { Character, CharacterWithFaction } from '#/shared/types/character.types'
+import { isCEFRequest } from '#/utils/fivem'
 import { logger } from '../integrations/logger'
 import { logout, revokeAllSessions } from './auth.service'
 import { getAllUserCharacters, getAllUserCharactersWithFactions } from './character.service'
@@ -116,10 +117,11 @@ export async function getCurrentCharacter({
 }
 
 export function setCurrentCharacter(characterId: number) {
+  const isCEF = isCEFRequest()
   setCookie(CURRENT_CHARACTER_COOKIE_NAME, String(characterId), {
     httpOnly: true,
-    secure: env.NODE_ENV === 'production',
-    sameSite: 'lax',
+    secure: isCEF || env.NODE_ENV === 'production',
+    sameSite: isCEF ? 'none' : 'lax',
     path: '/',
     maxAge: 60 * 60 * 24 * 30,
   })
