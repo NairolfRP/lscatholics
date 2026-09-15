@@ -1,5 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
 import { useSearch } from '@tanstack/react-router'
+import {
+  buildPaymentResultUrl,
+  consumePaymentReturn,
+} from '#shared/hooks/payment-return.ts'
 import { formatCurrency } from '#/utils/number.ts'
 import {
   Card,
@@ -97,13 +101,17 @@ export function PaymentCallbackPage() {
   }, [isPending, paymentId])
 
   useEffect(() => {
-    if (isPending) return
+    if (status === 'pending') return
 
     const isPopup = window.opener && window.opener !== window
 
     const close = () => {
       if (isPopup) window.close()
-      else window.location.href = '/'
+      else {
+        const pendingReturn = consumePaymentReturn()
+        const returnPath = pendingReturn?.returnPath ?? '/'
+        window.location.href = buildPaymentResultUrl(returnPath, status)
+      }
     }
 
     const timer = window.setInterval(() => {

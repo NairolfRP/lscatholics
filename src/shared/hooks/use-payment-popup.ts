@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
+import { isFiveMNui } from '#/utils/fivem-client.ts'
 import { formatCurrency } from '#/utils/number.ts'
 import { toast } from '#shared/components/ui/toast.tsx'
+import { persistPaymentReturn } from '#shared/hooks/payment-return.ts'
 
 const PAYMENT_WINDOW_CONFIG = {
   width: 800,
@@ -35,7 +37,9 @@ interface OpenPaymentOptions {
  * browser blocks it (e.g. Brave Shields), the caller renders a real link from
  * `blockedPaymentUrl`, which is never blocked. Cart/side effects happen through
  * `onSuccess`/`onFailure` regardless of how the popup was opened. `cancelPayment`
- * closes the popup and stops tracking (used by a "cancel & retry" action).
+ * closes the popup and stops tracking (used by a "cancel & retry" action). In the
+ * FiveM NUI iframe (no popups possible) the payment is opened via full in-app
+ * navigation and the return path is persisted for the callback page.
  */
 export function usePaymentPopup() {
   const [blockedPaymentUrl, setBlockedPaymentUrl] = useState<string | null>(null)
@@ -53,6 +57,12 @@ export function usePaymentPopup() {
 
   const openPayment = ({ paymentId, paymentUrl, onSuccess, onFailure }: OpenPaymentOptions) => {
     cancelTrackingRef.current?.()
+
+    if (isFiveMNui) {
+      persistPaymentReturn(window.location.pathname, paymentId)
+      window.location.assign(paymentUrl)
+      return
+    }
 
     const popup = createPaymentWindow(paymentUrl)
     popupWindowRef.current = popup

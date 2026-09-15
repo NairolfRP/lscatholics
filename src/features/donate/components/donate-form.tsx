@@ -23,9 +23,11 @@ import { FieldGroup } from '#shared/components/ui/field.tsx'
 import { toast } from '#shared/components/ui/toast.tsx'
 import { useGameContext } from '#shared/hooks/use-game-context.ts'
 import { usePaymentPopup } from '#shared/hooks/use-payment-popup.ts'
+import { usePaymentResultToast } from '#shared/hooks/use-payment-result-toast.ts'
 import { useAppForm } from '#shared/integrations/form/form-hook.ts'
 
 export function DonateForm() {
+  usePaymentResultToast()
   const { currentCharacter, isLoading } = useGameContext()
   const { openPayment, blockedPaymentUrl, manualPaymentUrl, openPaymentInTab, cancelPayment } =
     usePaymentPopup()
