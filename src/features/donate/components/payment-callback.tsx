@@ -1,9 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
 import { useSearch } from '@tanstack/react-router'
-import {
-  buildPaymentResultUrl,
-  consumePaymentReturn,
-} from '#shared/hooks/payment-return.ts'
 import { formatCurrency } from '#/utils/number.ts'
 import {
   Card,
@@ -13,6 +9,7 @@ import {
   CardTitle,
 } from '#shared/components/ui/card.tsx'
 import { Typography } from '#shared/components/ui/typography.tsx'
+import { buildPaymentResultUrl, consumePaymentReturn } from '#shared/hooks/payment-return.ts'
 import { cn } from '#shared/lib/utils.ts'
 
 type PaymentStatus = 'payment_successful' | 'payment_failed' | 'pending' | 'expired' | 'not_found'
