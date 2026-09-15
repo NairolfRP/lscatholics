@@ -25,6 +25,7 @@ vi.mock('@tanstack/react-start/server', () => ({
   deleteCookie: vi.fn(),
   setCookie: vi.fn(),
   setResponseStatus: vi.fn(),
+  getRequestHeaders: vi.fn(() => new Headers()),
 }))
 
 const mockCharacter = {
