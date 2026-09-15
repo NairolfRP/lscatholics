@@ -69,7 +69,7 @@
         "@tanstack/router-plugin": "^1.168.36",
         "@unpic/react": "^1.0.2",
         "@vercel/analytics": "^2.0.1",
-        "@vercel/functions": "^3.9.6",
+        "@vercel/functions": "^3.9.7",
         "@vercel/speed-insights": "^2.0.0",
         "better-auth": "^1.7.3",
         "class-variance-authority": "^0.7.1",
