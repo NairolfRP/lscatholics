@@ -40,6 +40,7 @@ export default function UserMenu({ username }: UserMenuProps) {
         <UserMenu.Trigger characterName={characterFullName} />
         <UserMenu.Content
           username={username}
+          characterName={characterFullName}
           canAccessDashboard={canAccessDashboard}
           onOpenSwitch={() => setIsSwitchOpen(true)}
         />
@@ -71,12 +72,14 @@ UserMenu.Trigger = function Trigger({ characterName }: UserMenuTriggerProps) {
 
 type UserMenuContentProps = {
   username: string
+  characterName: string
   canAccessDashboard: boolean
   onOpenSwitch: () => void
 }
 
 UserMenu.Content = function Content({
   username,
+  characterName,
   canAccessDashboard,
   onOpenSwitch,
 }: UserMenuContentProps) {
@@ -85,6 +88,7 @@ UserMenu.Content = function Content({
   return (
     <DropdownMenuContent className="w-56">
       <DropdownMenuGroup>
+        <DropdownMenuLabel className="text-center">{characterName}</DropdownMenuLabel>
         <DropdownMenuLabel>Mon compte - {username}</DropdownMenuLabel>
       </DropdownMenuGroup>
       <DropdownMenuSeparator />
