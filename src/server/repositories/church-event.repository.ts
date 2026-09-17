@@ -1,5 +1,18 @@
 import type { AnySQLiteColumn } from 'drizzle-orm/sqlite-core'
-import { and, asc, count, desc, eq, gte, isNotNull, isNull, like, lt, or } from 'drizzle-orm'
+import {
+  and,
+  asc,
+  count,
+  desc,
+  EmptyFilter,
+  eq,
+  gte,
+  isNotNull,
+  isNull,
+  like,
+  lt,
+  or,
+} from 'drizzle-orm'
 import { getMonthBounds } from '#/utils/date.ts'
 import { db } from '#server/db'
 import { churchEvents } from '#server/db/schema'
@@ -92,27 +105,22 @@ class ChurchEventRepository extends BaseRepository<typeof churchEvents> {
       searchText,
     } = options
 
-    const searchSql =
+    const searchSql = (table: typeof churchEvents) =>
       searchText && searchText.length > 0
         ? or(
             ...searchText.map((s) => {
-              const column = s.column as keyof typeof this.schema
-              return like(lower(this.schema[column] as AnySQLiteColumn), s.text.toLowerCase())
+              const column = s.column as keyof typeof table
+              return like(lower(table[column] as AnySQLiteColumn), s.text.toLowerCase())
             })
           )
         : undefined
 
     const whereFilter = {
       ...(!includeEndedEvents ? this.#activeChurchEventFilter() : {}),
-      ...(searchSql ? { RAW: searchSql } : {}),
+      ...(searchText && searchText.length > 0
+        ? { RAW: (table: typeof churchEvents) => searchSql(table) ?? EmptyFilter }
+        : {}),
     }
-
-    const whereClause = and(
-      !includeEndedEvents
-        ? and(gte(this.schema.startDate, new Date()), gte(this.schema.endDate, new Date()))
-        : undefined,
-      searchSql
-    )
 
     const [data, total] = await Promise.all([
       this.db.query.churchEvents.findMany({
@@ -130,7 +138,14 @@ class ChurchEventRepository extends BaseRepository<typeof churchEvents> {
       db
         .select({ churchEventsCount: count(churchEvents.slug) })
         .from(churchEvents)
-        .where(whereClause),
+        .where(
+          and(
+            !includeEndedEvents
+              ? and(gte(churchEvents.startDate, new Date()), gte(churchEvents.endDate, new Date()))
+              : undefined,
+            searchSql(churchEvents)
+          )
+        ),
     ])
 
     return { churchEvents: data, total: total[0].churchEventsCount }
@@ -151,18 +166,21 @@ class ChurchEventRepository extends BaseRepository<typeof churchEvents> {
 
     const { from: monthStart, to: monthEnd } = getMonthBounds(period)
 
-    const monthOverlap = and(
-      lt(this.schema.startDate, monthEnd),
-      or(
-        and(isNotNull(this.schema.endDate), gte(this.schema.endDate, monthStart)),
-        and(isNull(this.schema.endDate), gte(this.schema.startDate, monthStart))
-      )
-    )
-    const notEnded = or(isNull(this.schema.endDate), gte(this.schema.endDate, new Date()))
-
     return db.query.churchEvents.findMany({
       columns,
-      where: { RAW: and(monthOverlap, includeEndedEvents ? undefined : notEnded) },
+      where: {
+        RAW: (table) =>
+          and(
+            lt(table.startDate, monthEnd),
+            or(
+              and(isNotNull(table.endDate), gte(table.endDate, monthStart)),
+              and(isNull(table.endDate), gte(table.startDate, monthStart))
+            ),
+            includeEndedEvents
+              ? undefined
+              : or(isNull(table.endDate), gte(table.endDate, new Date()))
+          ) ?? EmptyFilter,
+      },
       orderBy: { startDate: 'asc' },
     })
   }

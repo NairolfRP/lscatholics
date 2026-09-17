@@ -1,5 +1,5 @@
 import type { AnySQLiteColumn } from 'drizzle-orm/sqlite-core'
-import { and, count, eq, gte, isNull, or, sql } from 'drizzle-orm'
+import { and, count, EmptyFilter, eq, gte, isNull, or, sql } from 'drizzle-orm'
 import { CAREERS_PAGINATION_LIMIT } from '#/features/job-posting/constants/job-posting.constants.ts'
 import { db } from '#server/db'
 import { jobPostings } from '#server/db/schema/job-posting-schema'
@@ -96,12 +96,12 @@ class JobPostingRepository extends BaseRepository<typeof jobPostings> {
       searchText,
     } = options
 
-    const searchSql =
+    const searchSql = (table: typeof jobPostings) =>
       searchText && searchText.length > 0
         ? or(
             ...searchText.map((s) => {
-              const column = s.column as keyof typeof this.schema
-              return sql`${lower(this.schema[column] as AnySQLiteColumn)} LIKE ${s.text.toLowerCase()} ESCAPE '\\'`
+              const column = s.column as keyof typeof table
+              return sql`${lower(table[column] as AnySQLiteColumn)} LIKE ${s.text.toLowerCase()} ESCAPE '\\'`
             })
           )
         : undefined
@@ -111,7 +111,9 @@ class JobPostingRepository extends BaseRepository<typeof jobPostings> {
       ...(!includeExpired ? this.#notExpiredFilter() : {}),
       ...(departments.length > 0 ? { department: { in: departments } } : {}),
       ...(employmentTypes.length > 0 ? { employmentType: { in: employmentTypes } } : {}),
-      ...(searchSql ? { RAW: searchSql } : {}),
+      ...(searchText && searchText.length > 0
+        ? { RAW: (table: typeof jobPostings) => searchSql(table) ?? EmptyFilter }
+        : {}),
     }
 
     const whereClause = and(
@@ -125,7 +127,7 @@ class JobPostingRepository extends BaseRepository<typeof jobPostings> {
       employmentTypes.length > 0
         ? or(...employmentTypes.map((type) => eq(this.schema.employmentType, type)))
         : undefined,
-      searchSql
+      searchSql(this.schema)
     )
 
     const [data, total] = await Promise.all([

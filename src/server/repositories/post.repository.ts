@@ -1,5 +1,5 @@
 import type { AnySQLiteColumn } from 'drizzle-orm/sqlite-core'
-import { and, asc, count, desc, eq, like, or } from 'drizzle-orm'
+import { and, asc, count, desc, EmptyFilter, eq, like, or } from 'drizzle-orm'
 import { POST_STATUS } from '#/shared/constants/post-status'
 import type { PostStatus } from '#/shared/types/post.types'
 import type { UsersColumns } from '#server/repositories/user.repository.ts'
@@ -83,22 +83,27 @@ class PostRepository extends BaseRepository<typeof posts> {
       searchText,
     } = options
 
-    const searchSql =
+    const searchSql = (table: typeof posts) =>
       searchText && searchText.length > 0
         ? or(
             ...searchText.map((s) => {
-              const column = s.column as keyof typeof this.schema
-              return like(lower(this.schema[column] as AnySQLiteColumn), s.text.toLowerCase())
+              const column = s.column as keyof typeof table
+              return like(lower(table[column] as AnySQLiteColumn), s.text.toLowerCase())
             })
           )
         : undefined
 
     const whereFilter = {
       ...(status !== null ? { status } : {}),
-      ...(searchSql ? { RAW: searchSql } : {}),
+      ...(searchText && searchText.length > 0
+        ? { RAW: (table: typeof posts) => searchSql(table) ?? EmptyFilter }
+        : {}),
     }
 
-    const whereClause = and(status !== null ? eq(this.schema.status, status) : undefined, searchSql)
+    const whereClause = and(
+      status !== null ? eq(this.schema.status, status) : undefined,
+      searchSql(this.schema)
+    )
 
     const [data, total] = await Promise.all([
       this.db.query.posts.findMany({
