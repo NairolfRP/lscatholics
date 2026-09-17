@@ -83,7 +83,7 @@ class PostRepository extends BaseRepository<typeof posts> {
       searchText,
     } = options
 
-    const searchSql = (table: typeof posts) =>
+    const searchFilter = (table: typeof posts) =>
       searchText && searchText.length > 0
         ? or(
             ...searchText.map((s) => {
@@ -93,16 +93,16 @@ class PostRepository extends BaseRepository<typeof posts> {
           )
         : undefined
 
+    const searchSql = (table: typeof posts) => searchFilter(table) ?? EmptyFilter
+
     const whereFilter = {
       ...(status !== null ? { status } : {}),
-      ...(searchText && searchText.length > 0
-        ? { RAW: (table: typeof posts) => searchSql(table) ?? EmptyFilter }
-        : {}),
+      RAW: searchSql,
     }
 
     const whereClause = and(
       status !== null ? eq(this.schema.status, status) : undefined,
-      searchSql(this.schema)
+      searchFilter(this.schema)
     )
 
     const [data, total] = await Promise.all([

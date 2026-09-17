@@ -96,7 +96,7 @@ class JobPostingRepository extends BaseRepository<typeof jobPostings> {
       searchText,
     } = options
 
-    const searchSql = (table: typeof jobPostings) =>
+    const searchFilter = (table: typeof jobPostings) =>
       searchText && searchText.length > 0
         ? or(
             ...searchText.map((s) => {
@@ -106,14 +106,14 @@ class JobPostingRepository extends BaseRepository<typeof jobPostings> {
           )
         : undefined
 
+    const searchSql = (table: typeof jobPostings) => searchFilter(table) ?? EmptyFilter
+
     const whereFilter = {
       ...(!includeInactives ? this.#activeFilter() : {}),
       ...(!includeExpired ? this.#notExpiredFilter() : {}),
       ...(departments.length > 0 ? { department: { in: departments } } : {}),
       ...(employmentTypes.length > 0 ? { employmentType: { in: employmentTypes } } : {}),
-      ...(searchText && searchText.length > 0
-        ? { RAW: (table: typeof jobPostings) => searchSql(table) ?? EmptyFilter }
-        : {}),
+      RAW: searchSql,
     }
 
     const whereClause = and(
@@ -127,7 +127,7 @@ class JobPostingRepository extends BaseRepository<typeof jobPostings> {
       employmentTypes.length > 0
         ? or(...employmentTypes.map((type) => eq(this.schema.employmentType, type)))
         : undefined,
-      searchSql(this.schema)
+      searchFilter(this.schema)
     )
 
     const [data, total] = await Promise.all([

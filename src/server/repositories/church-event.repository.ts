@@ -1,18 +1,5 @@
 import type { AnySQLiteColumn } from 'drizzle-orm/sqlite-core'
-import {
-  and,
-  asc,
-  count,
-  desc,
-  EmptyFilter,
-  eq,
-  gte,
-  isNotNull,
-  isNull,
-  like,
-  lt,
-  or,
-} from 'drizzle-orm'
+import { and, asc, count, desc, EmptyFilter, eq, gte, isNull, like, lt, or } from 'drizzle-orm'
 import { getMonthBounds } from '#/utils/date.ts'
 import { db } from '#server/db'
 import { churchEvents } from '#server/db/schema'
@@ -105,7 +92,7 @@ class ChurchEventRepository extends BaseRepository<typeof churchEvents> {
       searchText,
     } = options
 
-    const searchSql = (table: typeof churchEvents) =>
+    const searchFilter = (table: typeof churchEvents) =>
       searchText && searchText.length > 0
         ? or(
             ...searchText.map((s) => {
@@ -115,11 +102,11 @@ class ChurchEventRepository extends BaseRepository<typeof churchEvents> {
           )
         : undefined
 
+    const searchSql = (table: typeof churchEvents) => searchFilter(table) ?? EmptyFilter
+
     const whereFilter = {
       ...(!includeEndedEvents ? this.#activeChurchEventFilter() : {}),
-      ...(searchText && searchText.length > 0
-        ? { RAW: (table: typeof churchEvents) => searchSql(table) ?? EmptyFilter }
-        : {}),
+      RAW: searchSql,
     }
 
     const [data, total] = await Promise.all([
@@ -143,7 +130,7 @@ class ChurchEventRepository extends BaseRepository<typeof churchEvents> {
             !includeEndedEvents
               ? and(gte(churchEvents.startDate, new Date()), gte(churchEvents.endDate, new Date()))
               : undefined,
-            searchSql(churchEvents)
+            searchFilter(churchEvents)
           )
         ),
     ])
@@ -169,17 +156,22 @@ class ChurchEventRepository extends BaseRepository<typeof churchEvents> {
     return db.query.churchEvents.findMany({
       columns,
       where: {
-        RAW: (table) =>
-          and(
-            lt(table.startDate, monthEnd),
-            or(
-              and(isNotNull(table.endDate), gte(table.endDate, monthStart)),
-              and(isNull(table.endDate), gte(table.startDate, monthStart))
-            ),
-            includeEndedEvents
-              ? undefined
-              : or(isNull(table.endDate), gte(table.endDate, new Date()))
-          ) ?? EmptyFilter,
+        startDate: { lt: monthEnd },
+        AND: [
+          {
+            OR: [
+              { endDate: { isNotNull: true, gte: monthStart } } as const,
+              { endDate: { isNull: true }, startDate: { gte: monthStart } } as const,
+            ],
+          },
+          ...(includeEndedEvents
+            ? []
+            : [
+                {
+                  OR: [{ endDate: { isNull: true } } as const, { endDate: { gte: new Date() } }],
+                },
+              ]),
+        ],
       },
       orderBy: { startDate: 'asc' },
     })
