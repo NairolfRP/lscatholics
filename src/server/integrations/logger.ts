@@ -26,7 +26,7 @@ export class Logger implements ILogger {
   constructor(private logger: PinoLogger = Logger.createRootLogger()) {}
 
   private static createRootLogger(): PinoLogger {
-    return pino({
+    const options = {
       name: 'app-logger',
       level: env.LOG_LEVEL || (inDev ? 'debug' : 'info'),
       serializers: {
@@ -39,21 +39,25 @@ export class Logger implements ILogger {
           'password',
           'confirmPassword',
           'req.headers.authorization',
+          'req.headers.cookie',
           '*.creditCard',
           'token',
         ],
         censor: '[REDACTED]',
       },
+    }
 
-      ...(inDev
-        ? {
-            transport: {
-              target: 'pino-pretty',
-              options: { colorize: true, translateTime: 'SYS:standard' },
-            },
-          }
-        : {}),
-    })
+    if (inDev) {
+      return pino({
+        ...options,
+        transport: {
+          target: 'pino-pretty',
+          options: { colorize: true, translateTime: 'SYS:standard' },
+        },
+      })
+    }
+
+    return pino(options, pino.destination({ dest: 1, sync: true }))
   }
 
   public debug: LogFn = (...args: unknown[]) =>
