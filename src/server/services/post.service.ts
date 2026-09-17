@@ -11,6 +11,7 @@ import { canEditPost, resolveExcerpt, resolvePublishedAt } from '#/features/post
 import { getFieldErrors } from '#/utils/form'
 import { resolveSlug } from '#/utils/slug'
 import { NotFoundException, UnauthorizedException } from '#server/exceptions/http-exception'
+import { handleServiceError } from '#server/exceptions/service-error'
 import { logger } from '#server/integrations/logger'
 import { postRepository } from '#server/repositories/post.repository'
 import { DASHBOARD_PAGINATION_LIMIT } from '#shared/constants/dashboard'
@@ -18,80 +19,92 @@ import { POST_STATUS } from '#shared/constants/post-status'
 import type { User } from '#shared/lib/types/auth'
 
 export async function getPost({ slug }: { slug: string }) {
-  const post = await postRepository.getPost({
-    slug,
-    columns: {
-      id: true,
-      slug: true,
-      title: true,
-      excerpt: true,
-      content: true,
-      coverImageUrl: true,
-      publishedAt: true,
-      updatedAt: true,
-    },
-  })
+  try {
+    const post = await postRepository.getPost({
+      slug,
+      columns: {
+        id: true,
+        slug: true,
+        title: true,
+        excerpt: true,
+        content: true,
+        coverImageUrl: true,
+        publishedAt: true,
+        updatedAt: true,
+      },
+    })
 
-  if (!post) {
-    throw notFound()
+    if (!post) {
+      throw notFound()
+    }
+
+    return post
+  } catch (err) {
+    handleServiceError(err, { slug }, 'Failed to get post')
   }
-
-  return post
 }
 
 export async function getDashboardPost({ id, user }: { id: string; user: User }) {
-  const post = await postRepository.getPostWithAuthor({
-    id,
-    columns: {
-      id: true,
-      title: true,
-      slug: true,
-      excerpt: true,
-      content: true,
-      coverImageUrl: true,
-      publishedAt: true,
-      status: true,
-      authorDisplayName: true,
-      createdAt: true,
-      updatedAt: true,
-      discordMessageId: true,
-    },
-    authorColumns: {
-      id: true,
-      name: true,
-    },
-    status: null,
-  })
+  try {
+    const post = await postRepository.getPostWithAuthor({
+      id,
+      columns: {
+        id: true,
+        title: true,
+        slug: true,
+        excerpt: true,
+        content: true,
+        coverImageUrl: true,
+        publishedAt: true,
+        status: true,
+        authorDisplayName: true,
+        createdAt: true,
+        updatedAt: true,
+        discordMessageId: true,
+      },
+      authorColumns: {
+        id: true,
+        name: true,
+      },
+      status: null,
+    })
 
-  if (!post) {
-    throw notFound()
+    if (!post) {
+      throw notFound()
+    }
+
+    const isAuthorized = canEditPost({
+      user,
+      authorId: post.author?.id ?? null,
+    })
+
+    if (!isAuthorized) {
+      throw UnauthorizedException()
+    }
+
+    return post
+  } catch (err) {
+    handleServiceError(err, { id }, 'Failed to get dashboard post')
   }
-
-  const isAuthorized = canEditPost({
-    user,
-    authorId: post.author?.id ?? null,
-  })
-
-  if (!isAuthorized) {
-    throw UnauthorizedException()
-  }
-
-  return post
 }
 
 export async function getPosts({ data }: { data: { page: number } }) {
-  return postRepository.getPosts({
-    columns: {
-      id: true,
-      slug: true,
-      title: true,
-      excerpt: true,
-      category: true,
-      coverImageUrl: true,
-      publishedAt: true,
-    },
-    page: data.page,
-  })
+  try {
+    return await postRepository.getPosts({
+      columns: {
+        id: true,
+        slug: true,
+        title: true,
+        excerpt: true,
+        category: true,
+        coverImageUrl: true,
+        publishedAt: true,
+      },
+      page: data.page,
+    })
+  } catch (err) {
+    handleServiceError(err, { data }, 'Failed to get posts')
+  }
 }
 
 export async function getDashboardPosts({
@@ -99,29 +112,33 @@ export async function getDashboardPosts({
 }: {
   data: { page: number; sortBy: string; search?: string }
 }) {
-  return postRepository.getPosts({
-    columns: {
-      id: true,
-      slug: true,
-      title: true,
-      status: true,
-      publishedAt: true,
-      createdAt: true,
-      authorId: true,
-      discordMessageId: true,
-    },
-    page: data.page,
-    pageSize: DASHBOARD_PAGINATION_LIMIT,
-    orderBy: [data.sortBy],
-    status: null,
-    searchText: data.search
-      ? [
-          { column: 'title', text: `%${data.search}%` },
-          { column: 'excerpt', text: `%${data.search}%` },
-          { column: 'content', text: `%${data.search}%` },
-        ]
-      : undefined,
-  })
+  try {
+    return await postRepository.getPosts({
+      columns: {
+        id: true,
+        slug: true,
+        title: true,
+        status: true,
+        publishedAt: true,
+        createdAt: true,
+        authorId: true,
+        discordMessageId: true,
+      },
+      page: data.page,
+      pageSize: DASHBOARD_PAGINATION_LIMIT,
+      orderBy: [data.sortBy],
+      status: null,
+      searchText: data.search
+        ? [
+            { column: 'title', text: `%${data.search}%` },
+            { column: 'excerpt', text: `%${data.search}%` },
+            { column: 'content', text: `%${data.search}%` },
+          ]
+        : undefined,
+    })
+  } catch (err) {
+    handleServiceError(err, { data }, 'Failed to get dashboard posts')
+  }
 }
 
 export async function deletePost({ postId, user }: { postId: string; user: User }) {

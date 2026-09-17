@@ -4,6 +4,7 @@ import { env } from '#/config/env.server.ts'
 import { bankTransferSchema } from '#/features/banking/schema/banking.schema.ts'
 import { getFieldErrors } from '#/utils/form.ts'
 import { formatCurrency } from '#/utils/number.ts'
+import { handleServiceError } from '#server/exceptions/service-error.ts'
 import { logger } from '#server/integrations/logger.ts'
 import type { DiscordEmbed } from '#server/services/discord.service.ts'
 import { sendWebhookMessage } from '#server/services/discord.service.ts'
@@ -15,7 +16,11 @@ import type { CharacterWithFaction } from '#shared/types/character.types.ts'
 export const BANKING_TRANSACTION_EMBED_COLOR = 0x249046
 
 export async function getBankBalance() {
-  return fleecaClient.getBalance()
+  try {
+    return await fleecaClient.getBalance()
+  } catch (err) {
+    handleServiceError(err, {}, 'Failed to get bank balance')
+  }
 }
 
 export async function bankTransfer({

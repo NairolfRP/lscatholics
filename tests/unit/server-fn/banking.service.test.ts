@@ -90,10 +90,10 @@ describe('getBankBalance', () => {
     expect(mocks.getBalance).toHaveBeenCalledTimes(1)
   })
 
-  it('propagates an error from the Fleeca client', async () => {
+  it('sanitizes an error from the Fleeca client', async () => {
     mocks.getBalance.mockRejectedValue(new Error('boom'))
 
-    await expect(getBankBalance()).rejects.toThrow('boom')
+    await expect(getBankBalance()).rejects.toThrow('Internal error')
   })
 })
 

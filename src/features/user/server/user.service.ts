@@ -2,6 +2,7 @@ import { notFound } from '@tanstack/react-router'
 import { getRequestHeaders, setResponseStatus } from '@tanstack/react-start/server'
 import { isAPIError } from 'better-auth/api'
 import z from 'zod'
+import { handleServiceError } from '#/server/exceptions/service-error'
 import { auth } from '#/server/integrations/auth.server'
 import { logger } from '#/server/integrations/logger'
 import { accountRepository } from '#/server/repositories/account.repository'
@@ -59,25 +60,29 @@ export async function deleteUser({ data, user }: { data: unknown; user: User }) 
 }
 
 export async function getDiscordAccount({ user }: { user: User }) {
-  const account = await accountRepository.getDiscordAccount({
-    userId: user.id,
-    columns: { accountId: true },
-  })
+  try {
+    const account = await accountRepository.getDiscordAccount({
+      userId: user.id,
+      columns: { accountId: true },
+    })
 
-  if (!account) {
-    return null
-  }
+    if (!account) {
+      return null
+    }
 
-  const headers = getRequestHeaders()
-  const discordUserInfo = await auth.api.accountInfo({
-    query: { accountId: account.id },
-    headers,
-  })
+    const headers = getRequestHeaders()
+    const discordUserInfo = await auth.api.accountInfo({
+      query: { accountId: account.id },
+      headers,
+    })
 
-  return {
-    id: account.id,
-    username: (discordUserInfo.data as { username: string }).username,
-    avatar: discordUserInfo.user.image,
+    return {
+      id: account.id,
+      username: (discordUserInfo.data as { username: string }).username,
+      avatar: discordUserInfo.user.image,
+    }
+  } catch (err) {
+    handleServiceError(err, { userId: user.id }, 'Failed to get discord account')
   }
 }
 
@@ -86,21 +91,25 @@ export async function getUsersList({
 }: {
   data: { search: string; page: number; sortBy: string }
 }) {
-  const headers = getRequestHeaders()
+  try {
+    const headers = getRequestHeaders()
 
-  const sorting = data.sortBy.split('.')
+    const sorting = data.sortBy.split('.')
 
-  return auth.api.listUsers({
-    query: {
-      searchField: 'name',
-      searchValue: data.search,
-      limit: DASHBOARD_PAGINATION_LIMIT,
-      offset: (data.page - 1) * DASHBOARD_PAGINATION_LIMIT,
-      sortBy: sorting[0],
-      sortDirection: (['desc', 'asc'] as const).find((b) => sorting[1] === b) ?? 'desc',
-    },
-    headers,
-  }) as Promise<{ users: User[]; total: number }>
+    return (await auth.api.listUsers({
+      query: {
+        searchField: 'name',
+        searchValue: data.search,
+        limit: DASHBOARD_PAGINATION_LIMIT,
+        offset: (data.page - 1) * DASHBOARD_PAGINATION_LIMIT,
+        sortBy: sorting[0],
+        sortDirection: (['desc', 'asc'] as const).find((b) => sorting[1] === b) ?? 'desc',
+      },
+      headers,
+    })) as { users: User[]; total: number }
+  } catch (err) {
+    handleServiceError(err, { data }, 'Failed to get users list')
+  }
 }
 
 export async function getTargetUser({ data }: { data: { userId: string } }) {

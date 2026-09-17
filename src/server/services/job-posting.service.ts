@@ -8,6 +8,7 @@ import {
 import { getFieldErrors } from '#/utils/form'
 import { resolveSlug } from '#/utils/slug'
 import { NotFoundException } from '#server/exceptions/http-exception'
+import { handleServiceError } from '#server/exceptions/service-error'
 import { logger } from '#server/integrations/logger'
 import { jobPostingRepository } from '#server/repositories/job-posting.repository'
 import { DASHBOARD_PAGINATION_LIMIT } from '#shared/constants/dashboard'
@@ -17,31 +18,35 @@ import type { DepartmentId } from '#shared/types/department.types.ts'
 import type { EmploymentType } from '#shared/types/employment.types.ts'
 
 export async function getSingleJobPosting({ slug }: { slug: string }) {
-  const jobPosting = await jobPostingRepository.getJobPosting({
-    slug,
-    columns: {
-      title: true,
-      slug: true,
-      description: true,
-      reportsTo: true,
-      department: true,
-      responsibilities: true,
-      requirements: true,
-      skills: true,
-      salaryMin: true,
-      salaryMax: true,
-      employmentType: true,
-      postedAt: true,
-      expiresAt: true,
-    },
-    includeExpired: true,
-  })
+  try {
+    const jobPosting = await jobPostingRepository.getJobPosting({
+      slug,
+      columns: {
+        title: true,
+        slug: true,
+        description: true,
+        reportsTo: true,
+        department: true,
+        responsibilities: true,
+        requirements: true,
+        skills: true,
+        salaryMin: true,
+        salaryMax: true,
+        employmentType: true,
+        postedAt: true,
+        expiresAt: true,
+      },
+      includeExpired: true,
+    })
 
-  if (!jobPosting) {
-    throw notFound()
+    if (!jobPosting) {
+      throw notFound()
+    }
+
+    return jobPosting
+  } catch (err) {
+    handleServiceError(err, { slug }, 'Failed to get job posting')
   }
-
-  return jobPosting
 }
 
 export async function getJobPostings({
@@ -55,55 +60,63 @@ export async function getJobPostings({
   department?: DepartmentId
   type?: EmploymentType[]
 }) {
-  return jobPostingRepository.getJobPostings({
-    columns: {
-      title: true,
-      slug: true,
-      department: true,
-      postedAt: true,
-      employmentType: true,
-      salaryMin: true,
-      expiresAt: true,
-    },
-    departments: department ? [department] : undefined,
-    employmentTypes: type,
-    searchText: search
-      ? [
-          {
-            column: 'title',
-            text: `%${escapeLike(search)}%`,
-          },
-          {
-            column: 'description',
-            text: `%${escapeLike(search)}%`,
-          },
-          {
-            column: 'responsibilities',
-            text: `%${escapeLike(search)}%`,
-          },
-        ]
-      : undefined,
-    page,
-    orderBy: ['postedAt.asc'],
-  })
+  try {
+    return await jobPostingRepository.getJobPostings({
+      columns: {
+        title: true,
+        slug: true,
+        department: true,
+        postedAt: true,
+        employmentType: true,
+        salaryMin: true,
+        expiresAt: true,
+      },
+      departments: department ? [department] : undefined,
+      employmentTypes: type,
+      searchText: search
+        ? [
+            {
+              column: 'title',
+              text: `%${escapeLike(search)}%`,
+            },
+            {
+              column: 'description',
+              text: `%${escapeLike(search)}%`,
+            },
+            {
+              column: 'responsibilities',
+              text: `%${escapeLike(search)}%`,
+            },
+          ]
+        : undefined,
+      page,
+      orderBy: ['postedAt.asc'],
+    })
+  } catch (err) {
+    handleServiceError(err, { page, search, department, type }, 'Failed to get job postings')
+  }
 }
 
 export async function getDashboardJobPosting({ id }: { id: string }) {
-  const jobPosting = await jobPostingRepository.getJobPostingWithAuthor({
-    id,
-    authorColumns: {
-      id: true,
-      name: true,
-    },
-    includeInactive: true,
-    includeExpired: true,
-  })
+  try {
+    const jobPosting = await jobPostingRepository.getJobPostingWithAuthor({
+      id,
+      authorColumns: {
+        id: true,
+        name: true,
+      },
+      includeInactive: true,
+      includeExpired: true,
+    })
 
-  if (!jobPosting) {
-    throw notFound()
+    if (!jobPosting) {
+      throw notFound()
+    }
+
+    return jobPosting
+  } catch (err) {
+    handleServiceError(err, { id }, 'Failed to get dashboard job posting')
   }
-
-  return jobPosting
 }
 
 export async function getDashboardJobPostings({
@@ -111,30 +124,34 @@ export async function getDashboardJobPostings({
 }: {
   data: { page: number; sortBy: string; search?: string }
 }) {
-  return jobPostingRepository.getJobPostings({
-    columns: {
-      id: true,
-      slug: true,
-      title: true,
-      department: true,
-      employmentType: true,
-      isActive: true,
-      expiresAt: true,
-      postedAt: true,
-      createdAt: true,
-    },
-    page: data.page,
-    pageSize: DASHBOARD_PAGINATION_LIMIT,
-    orderBy: [data.sortBy],
-    includeExpired: true,
-    includeInactives: true,
-    searchText: data.search
-      ? [
-          { column: 'title', text: `%${escapeLike(data.search)}%` },
-          { column: 'description', text: `%${escapeLike(data.search)}%` },
-        ]
-      : undefined,
-  })
+  try {
+    return await jobPostingRepository.getJobPostings({
+      columns: {
+        id: true,
+        slug: true,
+        title: true,
+        department: true,
+        employmentType: true,
+        isActive: true,
+        expiresAt: true,
+        postedAt: true,
+        createdAt: true,
+      },
+      page: data.page,
+      pageSize: DASHBOARD_PAGINATION_LIMIT,
+      orderBy: [data.sortBy],
+      includeExpired: true,
+      includeInactives: true,
+      searchText: data.search
+        ? [
+            { column: 'title', text: `%${escapeLike(data.search)}%` },
+            { column: 'description', text: `%${escapeLike(data.search)}%` },
+          ]
+        : undefined,
+    })
+  } catch (err) {
+    handleServiceError(err, { data }, 'Failed to get dashboard job postings')
+  }
 }
 
 export async function deleteJobPosting({

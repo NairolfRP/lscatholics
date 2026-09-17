@@ -171,10 +171,10 @@ describe('getDecrees', () => {
     ])
   })
 
-  it('propagates upstream errors', async () => {
+  it('sanitizes upstream errors', async () => {
     discordApi.fetchArchivedPublicThreads.mockRejectedValue(new Error('network down'))
 
-    await expect(getDecrees()).rejects.toThrow('network down')
+    await expect(getDecrees()).rejects.toThrow('Internal error')
   })
 })
 
@@ -254,9 +254,9 @@ describe('getDecree', () => {
     await expect(getDecree({ threadId: '10000000000000000001' })).resolves.toBeNull()
   })
 
-  it('rethrows non-404 errors', async () => {
+  it('sanitizes non-404 errors', async () => {
     discordApi.fetchDiscordChannel.mockRejectedValue(httpError(500))
 
-    await expect(getDecree({ threadId: '10000000000000000001' })).rejects.toBeInstanceOf(HTTPError)
+    await expect(getDecree({ threadId: '10000000000000000001' })).rejects.toThrow('Internal error')
   })
 })

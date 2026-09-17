@@ -50,6 +50,8 @@ vi.mock('@tanstack/react-router', () => ({
   notFound: () => {
     throw new Error('NOT_FOUND')
   },
+  isNotFound: (err: unknown) => err instanceof Error && err.message === 'NOT_FOUND',
+  isRedirect: () => false,
 }))
 
 beforeAll(setupTestDb)

@@ -8,6 +8,7 @@ import {
 import { getFieldErrors } from '#/utils/form.ts'
 import { resolveSlug } from '#/utils/slug.ts'
 import { NotFoundException } from '#server/exceptions/http-exception.ts'
+import { handleServiceError } from '#server/exceptions/service-error.ts'
 import { logger } from '#server/integrations/logger.ts'
 import { churchEventRepository } from '#server/repositories/church-event.repository.ts'
 import { DASHBOARD_PAGINATION_LIMIT } from '#shared/constants/dashboard.ts'
@@ -32,53 +33,60 @@ export async function getChurchEventsByYearMonth(period: { year: number; month: 
       includeEndedEvents: !isCurrentMonth,
     })
   } catch (err) {
-    logger.error({ err }, 'Failed to get church events')
-    throw err
+    handleServiceError(err, { period }, 'Failed to get church events')
   }
 }
 
 export async function getSingleChurchEvent({ slug }: { slug: string }) {
-  const churchEvent = await churchEventRepository.getChurchEvent({
-    slug,
-    columns: {
-      title: true,
-      slug: true,
-      description: true,
-      content: true,
-      location: true,
-      parish: true,
-      coverImageUrl: true,
-      flyerUrl: true,
-      registrationRequired: true,
-      maxParticipants: true,
-      startDate: true,
-      endDate: true,
-    },
-    includeEndedEvent: true,
-  })
+  try {
+    const churchEvent = await churchEventRepository.getChurchEvent({
+      slug,
+      columns: {
+        title: true,
+        slug: true,
+        description: true,
+        content: true,
+        location: true,
+        parish: true,
+        coverImageUrl: true,
+        flyerUrl: true,
+        registrationRequired: true,
+        maxParticipants: true,
+        startDate: true,
+        endDate: true,
+      },
+      includeEndedEvent: true,
+    })
 
-  if (!churchEvent) {
-    throw notFound()
+    if (!churchEvent) {
+      throw notFound()
+    }
+
+    return churchEvent
+  } catch (err) {
+    handleServiceError(err, { slug }, 'Failed to get church event')
   }
-
-  return churchEvent
 }
 
 export async function getDashboardChurchEvent({ id }: { id: string }) {
-  const churchEvent = await churchEventRepository.getChurchEventWithAuthor({
-    id,
-    authorColumns: {
-      id: true,
-      name: true,
-    },
-    includeEndedEvent: true,
-  })
+  try {
+    const churchEvent = await churchEventRepository.getChurchEventWithAuthor({
+      id,
+      authorColumns: {
+        id: true,
+        name: true,
+      },
+      includeEndedEvent: true,
+    })
 
-  if (!churchEvent) {
-    throw notFound()
+    if (!churchEvent) {
+      throw notFound()
+    }
+
+    return churchEvent
+  } catch (err) {
+    handleServiceError(err, { id }, 'Failed to get dashboard church event')
   }
-
-  return churchEvent
 }
 
 export async function getDashboardChurchEvents({
@@ -86,29 +94,33 @@ export async function getDashboardChurchEvents({
 }: {
   data: { page: number; sortBy: string; search?: string }
 }) {
-  return churchEventRepository.getChurchEvents({
-    columns: {
-      id: true,
-      title: true,
-      location: true,
-      startDate: true,
-      endDate: true,
-      maxParticipants: true,
-      authorId: true,
-    },
-    page: data.page,
-    pageSize: DASHBOARD_PAGINATION_LIMIT,
-    orderBy: [data.sortBy],
-    includeEndedEvents: true,
-    searchText: data.search
-      ? [
-          { column: 'title', text: `%${data.search}%` },
-          { column: 'description', text: `%${data.search}%` },
-          { column: 'content', text: `%${data.search}%` },
-          { column: 'location', text: `%${data.search}%` },
-        ]
-      : undefined,
-  })
+  try {
+    return await churchEventRepository.getChurchEvents({
+      columns: {
+        id: true,
+        title: true,
+        location: true,
+        startDate: true,
+        endDate: true,
+        maxParticipants: true,
+        authorId: true,
+      },
+      page: data.page,
+      pageSize: DASHBOARD_PAGINATION_LIMIT,
+      orderBy: [data.sortBy],
+      includeEndedEvents: true,
+      searchText: data.search
+        ? [
+            { column: 'title', text: `%${data.search}%` },
+            { column: 'description', text: `%${data.search}%` },
+            { column: 'content', text: `%${data.search}%` },
+            { column: 'location', text: `%${data.search}%` },
+          ]
+        : undefined,
+    })
+  } catch (err) {
+    handleServiceError(err, { data }, 'Failed to get dashboard church events')
+  }
 }
 
 export async function deleteChurchEvent({

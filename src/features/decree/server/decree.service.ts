@@ -23,7 +23,7 @@ import {
   isThreadPublishable,
   slugifyTitle,
 } from '#/features/decree/utils/decree.utils.ts'
-import { logger } from '#server/integrations/logger.ts'
+import { handleServiceError } from '#server/exceptions/service-error.ts'
 
 export async function getDecrees(): Promise<DecreesIndex> {
   try {
@@ -51,8 +51,7 @@ export async function getDecrees(): Promise<DecreesIndex> {
 
     return { categories, total: items.length }
   } catch (err) {
-    logger.error({ err }, 'Failed to fetch decrees from Discord')
-    throw err
+    handleServiceError(err, {}, 'Failed to fetch decrees from Discord')
   }
 }
 
@@ -67,8 +66,7 @@ export async function getDecree({ threadId }: { threadId: string }): Promise<Dec
   } catch (err) {
     if (err instanceof HTTPError && err.response.status === 404) return null
 
-    logger.error({ err, threadId }, 'Failed to fetch decree from Discord')
-    throw err
+    handleServiceError(err, { threadId }, 'Failed to fetch decree from Discord')
   }
 }
 
