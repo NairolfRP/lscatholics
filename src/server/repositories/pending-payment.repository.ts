@@ -1,4 +1,4 @@
-import { eq, lt } from 'drizzle-orm'
+import { eq } from 'drizzle-orm'
 import { pendingPayments } from '#server/db/schema/pending-payment-schema.ts'
 import { BaseRepository } from '#server/repositories/base.repository.ts'
 
@@ -12,13 +12,13 @@ class PendingPaymentRepository extends BaseRepository<typeof pendingPayments> {
 
   async findById(id: string) {
     return this.db.query.pendingPayments.findFirst({
-      where: eq(pendingPayments.id, id),
+      where: { id },
     })
   }
 
   async findExpired(now = new Date()) {
     return this.db.query.pendingPayments.findMany({
-      where: lt(pendingPayments.expiresAt, now),
+      where: { expiresAt: { lt: now } },
     })
   }
 

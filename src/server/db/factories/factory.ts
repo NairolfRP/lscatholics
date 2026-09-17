@@ -1,17 +1,18 @@
-import type { Table } from 'drizzle-orm'
+import type { InferInsertModel } from 'drizzle-orm'
+import type { AnySQLiteTable, SQLiteInsertValue } from 'drizzle-orm/sqlite-core'
 import { Faker, faker as fakerJS } from '@faker-js/faker'
 import { db as dbClient } from '#/server/db'
 
-type DefineCallback<TSchema extends Table> = (context: {
+type DefineCallback<TSchema extends AnySQLiteTable> = (context: {
   schema: TSchema
   faker: Faker
-}) => TSchema['$inferInsert']
+}) => InferInsertModel<TSchema>
 
 type InsertOptions = {
   chunkSize?: number
 }
 
-export class Factory<TSchema extends Table> {
+export class Factory<TSchema extends AnySQLiteTable> {
   constructor(
     protected schema: TSchema,
     protected definition: DefineCallback<TSchema>,
@@ -19,20 +20,20 @@ export class Factory<TSchema extends Table> {
     protected faker: Faker = fakerJS
   ) {}
 
-  static define<TSchema extends Table>(
+  static define<TSchema extends AnySQLiteTable>(
     schema: TSchema,
     callback: DefineCallback<TSchema>
   ): Factory<TSchema> {
     return new Factory(schema, callback)
   }
 
-  make(nb: number = 1): TSchema['$inferInsert'][] {
+  make(nb: number = 1): InferInsertModel<TSchema>[] {
     return Array.from({ length: nb }, () =>
       this.definition({ schema: this.schema, faker: this.faker })
     )
   }
 
-  makeOne(): TSchema['$inferInsert'] {
+  makeOne(): InferInsertModel<TSchema> {
     return this.make(1)[0]
   }
 
@@ -42,12 +43,12 @@ export class Factory<TSchema extends Table> {
     for (let i = 0; i < values.length; i += chunkSize) {
       await this.db
         .insert(this.schema)
-        .values(values.slice(i, i + chunkSize))
+        .values(values.slice(i, i + chunkSize) as unknown as SQLiteInsertValue<TSchema>[])
         .onConflictDoNothing()
     }
   }
 
-  override(overrides: Partial<TSchema['$inferInsert']>): Factory<TSchema> {
+  override(overrides: Partial<InferInsertModel<TSchema>>): Factory<TSchema> {
     return new Factory(
       this.schema,
       (ctx) => ({ ...this.definition(ctx), ...overrides }),

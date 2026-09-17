@@ -1,4 +1,4 @@
-import { relations, sql } from 'drizzle-orm'
+import { sql } from 'drizzle-orm'
 import { index, integer, sqliteTable, text } from 'drizzle-orm/sqlite-core'
 import { POST_STATUS, POST_STATUS_VALUES } from '#/shared/constants/post-status'
 import { timestamps } from '#server/db/helpers.ts'
@@ -30,10 +30,3 @@ export const posts = sqliteTable(
     index('posts_author_id_idx').on(table.authorId),
   ]
 )
-
-export const postsRelations = relations(posts, ({ one }) => ({
-  author: one(users, {
-    fields: [posts.authorId],
-    references: [users.id],
-  }),
-}))

@@ -34,6 +34,11 @@
             "type": "remote",
             "url": "https://mcp.turso.ai/mcp",
             "enabled": true
+        },
+        "drizzle": {
+            "type": "local",
+            "command": ["pnpm", "drizzle-kit", "mcp"],
+            "enabled": true
         }
     }
 }

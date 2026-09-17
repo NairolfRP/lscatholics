@@ -1,9 +1,5 @@
-import { relations } from 'drizzle-orm'
 import { index, integer, sqliteTable, text } from 'drizzle-orm/sqlite-core'
 import { timestamps } from '#server/db/helpers.ts'
-import { jobPostings } from '#server/db/schema/job-posting-schema.ts'
-import { churchEvents } from './church-event-schema'
-import { posts } from './post-schema'
 
 export const users = sqliteTable('users', {
   id: text('id').primaryKey(),
@@ -71,25 +67,3 @@ export const verifications = sqliteTable(
   },
   (table) => [index('verifications_identifier_idx').on(table.identifier)]
 )
-
-export const usersRelations = relations(users, ({ many }) => ({
-  sessions: many(sessions),
-  accounts: many(accounts),
-  posts: many(posts),
-  churchEvents: many(churchEvents),
-  jobPostings: many(jobPostings),
-}))
-
-export const sessionsRelations = relations(sessions, ({ one }) => ({
-  users: one(users, {
-    fields: [sessions.userId],
-    references: [users.id],
-  }),
-}))
-
-export const accountsRelations = relations(accounts, ({ one }) => ({
-  users: one(users, {
-    fields: [accounts.userId],
-    references: [users.id],
-  }),
-}))

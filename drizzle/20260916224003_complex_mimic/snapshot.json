@@ -1,0 +1,1337 @@
+{
+    "version": "7",
+    "dialect": "sqlite",
+    "id": "50c4251c-1c95-4bb5-a838-b152524ca489",
+    "prevIds": ["4b6c1f5d-615b-47ad-acae-204e2d8bd810"],
+    "ddl": [
+        {
+            "name": "accounts",
+            "entityType": "tables"
+        },
+        {
+            "name": "sessions",
+            "entityType": "tables"
+        },
+        {
+            "name": "users",
+            "entityType": "tables"
+        },
+        {
+            "name": "verifications",
+            "entityType": "tables"
+        },
+        {
+            "name": "church_events",
+            "entityType": "tables"
+        },
+        {
+            "name": "job_postings",
+            "entityType": "tables"
+        },
+        {
+            "name": "pending_payments",
+            "entityType": "tables"
+        },
+        {
+            "name": "posts",
+            "entityType": "tables"
+        },
+        {
+            "type": "text",
+            "notNull": false,
+            "autoincrement": false,
+            "default": null,
+            "generated": null,
+            "name": "id",
+            "entityType": "columns",
+            "table": "accounts"
+        },
+        {
+            "type": "text",
+            "notNull": true,
+            "autoincrement": false,
+            "default": null,
+            "generated": null,
+            "name": "account_id",
+            "entityType": "columns",
+            "table": "accounts"
+        },
+        {
+            "type": "text",
+            "notNull": true,
+            "autoincrement": false,
+            "default": null,
+            "generated": null,
+            "name": "provider_id",
+            "entityType": "columns",
+            "table": "accounts"
+        },
+        {
+            "type": "text",
+            "notNull": true,
+            "autoincrement": false,
+            "default": null,
+            "generated": null,
+            "name": "user_id",
+            "entityType": "columns",
+            "table": "accounts"
+        },
+        {
+            "type": "text",
+            "notNull": false,
+            "autoincrement": false,
+            "default": null,
+            "generated": null,
+            "name": "access_token",
+            "entityType": "columns",
+            "table": "accounts"
+        },
+        {
+            "type": "text",
+            "notNull": false,
+            "autoincrement": false,
+            "default": null,
+            "generated": null,
+            "name": "refresh_token",
+            "entityType": "columns",
+            "table": "accounts"
+        },
+        {
+            "type": "text",
+            "notNull": false,
+            "autoincrement": false,
+            "default": null,
+            "generated": null,
+            "name": "id_token",
+            "entityType": "columns",
+            "table": "accounts"
+        },
+        {
+            "type": "integer",
+            "notNull": false,
+            "autoincrement": false,
+            "default": null,
+            "generated": null,
+            "name": "access_token_expires_at",
+            "entityType": "columns",
+            "table": "accounts"
+        },
+        {
+            "type": "integer",
+            "notNull": false,
+            "autoincrement": false,
+            "default": null,
+            "generated": null,
+            "name": "refresh_token_expires_at",
+            "entityType": "columns",
+            "table": "accounts"
+        },
+        {
+            "type": "text",
+            "notNull": false,
+            "autoincrement": false,
+            "default": null,
+            "generated": null,
+            "name": "scope",
+            "entityType": "columns",
+            "table": "accounts"
+        },
+        {
+            "type": "text",
+            "notNull": false,
+            "autoincrement": false,
+            "default": null,
+            "generated": null,
+            "name": "password",
+            "entityType": "columns",
+            "table": "accounts"
+        },
+        {
+            "type": "integer",
+            "notNull": true,
+            "autoincrement": false,
+            "default": "(cast(unixepoch('subsecond') * 1000 as integer))",
+            "generated": null,
+            "name": "created_at",
+            "entityType": "columns",
+            "table": "accounts"
+        },
+        {
+            "type": "integer",
+            "notNull": true,
+            "autoincrement": false,
+            "default": "(cast(unixepoch('subsecond') * 1000 as integer))",
+            "generated": null,
+            "name": "updated_at",
+            "entityType": "columns",
+            "table": "accounts"
+        },
+        {
+            "type": "text",
+            "notNull": false,
+            "autoincrement": false,
+            "default": null,
+            "generated": null,
+            "name": "id",
+            "entityType": "columns",
+            "table": "sessions"
+        },
+        {
+            "type": "integer",
+            "notNull": true,
+            "autoincrement": false,
+            "default": null,
+            "generated": null,
+            "name": "expires_at",
+            "entityType": "columns",
+            "table": "sessions"
+        },
+        {
+            "type": "text",
+            "notNull": true,
+            "autoincrement": false,
+            "default": null,
+            "generated": null,
+            "name": "token",
+            "entityType": "columns",
+            "table": "sessions"
+        },
+        {
+            "type": "text",
+            "notNull": false,
+            "autoincrement": false,
+            "default": null,
+            "generated": null,
+            "name": "ip_address",
+            "entityType": "columns",
+            "table": "sessions"
+        },
+        {
+            "type": "text",
+            "notNull": false,
+            "autoincrement": false,
+            "default": null,
+            "generated": null,
+            "name": "user_agent",
+            "entityType": "columns",
+            "table": "sessions"
+        },
+        {
+            "type": "text",
+            "notNull": true,
+            "autoincrement": false,
+            "default": null,
+            "generated": null,
+            "name": "user_id",
+            "entityType": "columns",
+            "table": "sessions"
+        },
+        {
+            "type": "text",
+            "notNull": false,
+            "autoincrement": false,
+            "default": null,
+            "generated": null,
+            "name": "impersonated_by",
+            "entityType": "columns",
+            "table": "sessions"
+        },
+        {
+            "type": "integer",
+            "notNull": true,
+            "autoincrement": false,
+            "default": "(cast(unixepoch('subsecond') * 1000 as integer))",
+            "generated": null,
+            "name": "created_at",
+            "entityType": "columns",
+            "table": "sessions"
+        },
+        {
+            "type": "integer",
+            "notNull": true,
+            "autoincrement": false,
+            "default": "(cast(unixepoch('subsecond') * 1000 as integer))",
+            "generated": null,
+            "name": "updated_at",
+            "entityType": "columns",
+            "table": "sessions"
+        },
+        {
+            "type": "text",
+            "notNull": false,
+            "autoincrement": false,
+            "default": null,
+            "generated": null,
+            "name": "id",
+            "entityType": "columns",
+            "table": "users"
+        },
+        {
+            "type": "text",
+            "notNull": true,
+            "autoincrement": false,
+            "default": null,
+            "generated": null,
+            "name": "name",
+            "entityType": "columns",
+            "table": "users"
+        },
+        {
+            "type": "text",
+            "notNull": true,
+            "autoincrement": false,
+            "default": null,
+            "generated": null,
+            "name": "email",
+            "entityType": "columns",
+            "table": "users"
+        },
+        {
+            "type": "integer",
+            "notNull": true,
+            "autoincrement": false,
+            "default": "false",
+            "generated": null,
+            "name": "email_verified",
+            "entityType": "columns",
+            "table": "users"
+        },
+        {
+            "type": "text",
+            "notNull": false,
+            "autoincrement": false,
+            "default": null,
+            "generated": null,
+            "name": "image",
+            "entityType": "columns",
+            "table": "users"
+        },
+        {
+            "type": "text",
+            "notNull": true,
+            "autoincrement": false,
+            "default": null,
+            "generated": null,
+            "name": "role",
+            "entityType": "columns",
+            "table": "users"
+        },
+        {
+            "type": "integer",
+            "notNull": true,
+            "autoincrement": false,
+            "default": null,
+            "generated": null,
+            "name": "banned",
+            "entityType": "columns",
+            "table": "users"
+        },
+        {
+            "type": "text",
+            "notNull": false,
+            "autoincrement": false,
+            "default": null,
+            "generated": null,
+            "name": "ban_reason",
+            "entityType": "columns",
+            "table": "users"
+        },
+        {
+            "type": "integer",
+            "notNull": false,
+            "autoincrement": false,
+            "default": null,
+            "generated": null,
+            "name": "ban_expires",
+            "entityType": "columns",
+            "table": "users"
+        },
+        {
+            "type": "integer",
+            "notNull": true,
+            "autoincrement": false,
+            "default": "(cast(unixepoch('subsecond') * 1000 as integer))",
+            "generated": null,
+            "name": "created_at",
+            "entityType": "columns",
+            "table": "users"
+        },
+        {
+            "type": "integer",
+            "notNull": true,
+            "autoincrement": false,
+            "default": "(cast(unixepoch('subsecond') * 1000 as integer))",
+            "generated": null,
+            "name": "updated_at",
+            "entityType": "columns",
+            "table": "users"
+        },
+        {
+            "type": "text",
+            "notNull": false,
+            "autoincrement": false,
+            "default": null,
+            "generated": null,
+            "name": "id",
+            "entityType": "columns",
+            "table": "verifications"
+        },
+        {
+            "type": "text",
+            "notNull": true,
+            "autoincrement": false,
+            "default": null,
+            "generated": null,
+            "name": "identifier",
+            "entityType": "columns",
+            "table": "verifications"
+        },
+        {
+            "type": "text",
+            "notNull": true,
+            "autoincrement": false,
+            "default": null,
+            "generated": null,
+            "name": "value",
+            "entityType": "columns",
+            "table": "verifications"
+        },
+        {
+            "type": "integer",
+            "notNull": true,
+            "autoincrement": false,
+            "default": null,
+            "generated": null,
+            "name": "expires_at",
+            "entityType": "columns",
+            "table": "verifications"
+        },
+        {
+            "type": "integer",
+            "notNull": true,
+            "autoincrement": false,
+            "default": "(cast(unixepoch('subsecond') * 1000 as integer))",
+            "generated": null,
+            "name": "created_at",
+            "entityType": "columns",
+            "table": "verifications"
+        },
+        {
+            "type": "integer",
+            "notNull": true,
+            "autoincrement": false,
+            "default": "(cast(unixepoch('subsecond') * 1000 as integer))",
+            "generated": null,
+            "name": "updated_at",
+            "entityType": "columns",
+            "table": "verifications"
+        },
+        {
+            "type": "text",
+            "notNull": false,
+            "autoincrement": false,
+            "default": null,
+            "generated": null,
+            "name": "id",
+            "entityType": "columns",
+            "table": "church_events"
+        },
+        {
+            "type": "text",
+            "notNull": true,
+            "autoincrement": false,
+            "default": null,
+            "generated": null,
+            "name": "title",
+            "entityType": "columns",
+            "table": "church_events"
+        },
+        {
+            "type": "text",
+            "notNull": true,
+            "autoincrement": false,
+            "default": null,
+            "generated": null,
+            "name": "slug",
+            "entityType": "columns",
+            "table": "church_events"
+        },
+        {
+            "type": "text",
+            "notNull": true,
+            "autoincrement": false,
+            "default": null,
+            "generated": null,
+            "name": "description",
+            "entityType": "columns",
+            "table": "church_events"
+        },
+        {
+            "type": "text",
+            "notNull": true,
+            "autoincrement": false,
+            "default": null,
+            "generated": null,
+            "name": "content",
+            "entityType": "columns",
+            "table": "church_events"
+        },
+        {
+            "type": "text",
+            "notNull": true,
+            "autoincrement": false,
+            "default": null,
+            "generated": null,
+            "name": "location",
+            "entityType": "columns",
+            "table": "church_events"
+        },
+        {
+            "type": "text",
+            "notNull": false,
+            "autoincrement": false,
+            "default": null,
+            "generated": null,
+            "name": "parish",
+            "entityType": "columns",
+            "table": "church_events"
+        },
+        {
+            "type": "text",
+            "notNull": true,
+            "autoincrement": false,
+            "default": null,
+            "generated": null,
+            "name": "cover_image_url",
+            "entityType": "columns",
+            "table": "church_events"
+        },
+        {
+            "type": "text",
+            "notNull": false,
+            "autoincrement": false,
+            "default": null,
+            "generated": null,
+            "name": "flyer_url",
+            "entityType": "columns",
+            "table": "church_events"
+        },
+        {
+            "type": "integer",
+            "notNull": false,
+            "autoincrement": false,
+            "default": "false",
+            "generated": null,
+            "name": "registration_required",
+            "entityType": "columns",
+            "table": "church_events"
+        },
+        {
+            "type": "integer",
+            "notNull": false,
+            "autoincrement": false,
+            "default": null,
+            "generated": null,
+            "name": "max_participants",
+            "entityType": "columns",
+            "table": "church_events"
+        },
+        {
+            "type": "integer",
+            "notNull": true,
+            "autoincrement": false,
+            "default": null,
+            "generated": null,
+            "name": "start_date",
+            "entityType": "columns",
+            "table": "church_events"
+        },
+        {
+            "type": "integer",
+            "notNull": false,
+            "autoincrement": false,
+            "default": null,
+            "generated": null,
+            "name": "end_date",
+            "entityType": "columns",
+            "table": "church_events"
+        },
+        {
+            "type": "integer",
+            "notNull": true,
+            "autoincrement": false,
+            "default": "(cast(unixepoch('subsecond') * 1000 as integer))",
+            "generated": null,
+            "name": "created_at",
+            "entityType": "columns",
+            "table": "church_events"
+        },
+        {
+            "type": "integer",
+            "notNull": true,
+            "autoincrement": false,
+            "default": "(cast(unixepoch('subsecond') * 1000 as integer))",
+            "generated": null,
+            "name": "updated_at",
+            "entityType": "columns",
+            "table": "church_events"
+        },
+        {
+            "type": "text",
+            "notNull": false,
+            "autoincrement": false,
+            "default": null,
+            "generated": null,
+            "name": "author_id",
+            "entityType": "columns",
+            "table": "church_events"
+        },
+        {
+            "type": "text",
+            "notNull": false,
+            "autoincrement": false,
+            "default": null,
+            "generated": null,
+            "name": "id",
+            "entityType": "columns",
+            "table": "job_postings"
+        },
+        {
+            "type": "text(150)",
+            "notNull": true,
+            "autoincrement": false,
+            "default": null,
+            "generated": null,
+            "name": "title",
+            "entityType": "columns",
+            "table": "job_postings"
+        },
+        {
+            "type": "text(150)",
+            "notNull": true,
+            "autoincrement": false,
+            "default": null,
+            "generated": null,
+            "name": "slug",
+            "entityType": "columns",
+            "table": "job_postings"
+        },
+        {
+            "type": "text(2000)",
+            "notNull": false,
+            "autoincrement": false,
+            "default": null,
+            "generated": null,
+            "name": "description",
+            "entityType": "columns",
+            "table": "job_postings"
+        },
+        {
+            "type": "text(100)",
+            "notNull": false,
+            "autoincrement": false,
+            "default": null,
+            "generated": null,
+            "name": "reports_to",
+            "entityType": "columns",
+            "table": "job_postings"
+        },
+        {
+            "type": "text",
+            "notNull": true,
+            "autoincrement": false,
+            "default": null,
+            "generated": null,
+            "name": "department",
+            "entityType": "columns",
+            "table": "job_postings"
+        },
+        {
+            "type": "text",
+            "notNull": false,
+            "autoincrement": false,
+            "default": "(json_array())",
+            "generated": null,
+            "name": "responsibilities",
+            "entityType": "columns",
+            "table": "job_postings"
+        },
+        {
+            "type": "text",
+            "notNull": false,
+            "autoincrement": false,
+            "default": "(json_array())",
+            "generated": null,
+            "name": "requirements",
+            "entityType": "columns",
+            "table": "job_postings"
+        },
+        {
+            "type": "text",
+            "notNull": false,
+            "autoincrement": false,
+            "default": "(json_array())",
+            "generated": null,
+            "name": "skills",
+            "entityType": "columns",
+            "table": "job_postings"
+        },
+        {
+            "type": "integer",
+            "notNull": false,
+            "autoincrement": false,
+            "default": null,
+            "generated": null,
+            "name": "salary_min",
+            "entityType": "columns",
+            "table": "job_postings"
+        },
+        {
+            "type": "integer",
+            "notNull": false,
+            "autoincrement": false,
+            "default": null,
+            "generated": null,
+            "name": "salary_max",
+            "entityType": "columns",
+            "table": "job_postings"
+        },
+        {
+            "type": "text",
+            "notNull": true,
+            "autoincrement": false,
+            "default": null,
+            "generated": null,
+            "name": "employment_type",
+            "entityType": "columns",
+            "table": "job_postings"
+        },
+        {
+            "type": "integer",
+            "notNull": true,
+            "autoincrement": false,
+            "default": "true",
+            "generated": null,
+            "name": "is_active",
+            "entityType": "columns",
+            "table": "job_postings"
+        },
+        {
+            "type": "integer",
+            "notNull": false,
+            "autoincrement": false,
+            "default": null,
+            "generated": null,
+            "name": "posted_at",
+            "entityType": "columns",
+            "table": "job_postings"
+        },
+        {
+            "type": "integer",
+            "notNull": false,
+            "autoincrement": false,
+            "default": null,
+            "generated": null,
+            "name": "expires_at",
+            "entityType": "columns",
+            "table": "job_postings"
+        },
+        {
+            "type": "integer",
+            "notNull": true,
+            "autoincrement": false,
+            "default": "(cast(unixepoch('subsecond') * 1000 as integer))",
+            "generated": null,
+            "name": "created_at",
+            "entityType": "columns",
+            "table": "job_postings"
+        },
+        {
+            "type": "integer",
+            "notNull": true,
+            "autoincrement": false,
+            "default": "(cast(unixepoch('subsecond') * 1000 as integer))",
+            "generated": null,
+            "name": "updated_at",
+            "entityType": "columns",
+            "table": "job_postings"
+        },
+        {
+            "type": "text",
+            "notNull": false,
+            "autoincrement": false,
+            "default": null,
+            "generated": null,
+            "name": "author_id",
+            "entityType": "columns",
+            "table": "job_postings"
+        },
+        {
+            "type": "text",
+            "notNull": false,
+            "autoincrement": false,
+            "default": null,
+            "generated": null,
+            "name": "id",
+            "entityType": "columns",
+            "table": "pending_payments"
+        },
+        {
+            "type": "text",
+            "notNull": true,
+            "autoincrement": false,
+            "default": null,
+            "generated": null,
+            "name": "source",
+            "entityType": "columns",
+            "table": "pending_payments"
+        },
+        {
+            "type": "integer",
+            "notNull": true,
+            "autoincrement": false,
+            "default": null,
+            "generated": null,
+            "name": "amount",
+            "entityType": "columns",
+            "table": "pending_payments"
+        },
+        {
+            "type": "integer",
+            "notNull": true,
+            "autoincrement": false,
+            "default": "0",
+            "generated": null,
+            "name": "mode",
+            "entityType": "columns",
+            "table": "pending_payments"
+        },
+        {
+            "type": "text",
+            "notNull": true,
+            "autoincrement": false,
+            "default": "''",
+            "generated": null,
+            "name": "metadata",
+            "entityType": "columns",
+            "table": "pending_payments"
+        },
+        {
+            "type": "integer",
+            "notNull": true,
+            "autoincrement": false,
+            "default": null,
+            "generated": null,
+            "name": "expires_at",
+            "entityType": "columns",
+            "table": "pending_payments"
+        },
+        {
+            "type": "integer",
+            "notNull": true,
+            "autoincrement": false,
+            "default": "(cast(unixepoch('subsecond') * 1000 as integer))",
+            "generated": null,
+            "name": "created_at",
+            "entityType": "columns",
+            "table": "pending_payments"
+        },
+        {
+            "type": "integer",
+            "notNull": true,
+            "autoincrement": false,
+            "default": "(cast(unixepoch('subsecond') * 1000 as integer))",
+            "generated": null,
+            "name": "updated_at",
+            "entityType": "columns",
+            "table": "pending_payments"
+        },
+        {
+            "type": "text",
+            "notNull": false,
+            "autoincrement": false,
+            "default": null,
+            "generated": null,
+            "name": "id",
+            "entityType": "columns",
+            "table": "posts"
+        },
+        {
+            "type": "text",
+            "notNull": true,
+            "autoincrement": false,
+            "default": null,
+            "generated": null,
+            "name": "title",
+            "entityType": "columns",
+            "table": "posts"
+        },
+        {
+            "type": "text",
+            "notNull": true,
+            "autoincrement": false,
+            "default": null,
+            "generated": null,
+            "name": "slug",
+            "entityType": "columns",
+            "table": "posts"
+        },
+        {
+            "type": "text",
+            "notNull": false,
+            "autoincrement": false,
+            "default": null,
+            "generated": null,
+            "name": "excerpt",
+            "entityType": "columns",
+            "table": "posts"
+        },
+        {
+            "type": "text",
+            "notNull": false,
+            "autoincrement": false,
+            "default": null,
+            "generated": null,
+            "name": "category",
+            "entityType": "columns",
+            "table": "posts"
+        },
+        {
+            "type": "text",
+            "notNull": true,
+            "autoincrement": false,
+            "default": null,
+            "generated": null,
+            "name": "content",
+            "entityType": "columns",
+            "table": "posts"
+        },
+        {
+            "type": "text",
+            "notNull": true,
+            "autoincrement": false,
+            "default": null,
+            "generated": null,
+            "name": "cover_image_url",
+            "entityType": "columns",
+            "table": "posts"
+        },
+        {
+            "type": "text",
+            "notNull": true,
+            "autoincrement": false,
+            "default": "'draft'",
+            "generated": null,
+            "name": "status",
+            "entityType": "columns",
+            "table": "posts"
+        },
+        {
+            "type": "integer",
+            "notNull": false,
+            "autoincrement": false,
+            "default": "(cast(unixepoch('subsecond') * 1000 as integer))",
+            "generated": null,
+            "name": "published_at",
+            "entityType": "columns",
+            "table": "posts"
+        },
+        {
+            "type": "integer",
+            "notNull": true,
+            "autoincrement": false,
+            "default": "(cast(unixepoch('subsecond') * 1000 as integer))",
+            "generated": null,
+            "name": "created_at",
+            "entityType": "columns",
+            "table": "posts"
+        },
+        {
+            "type": "integer",
+            "notNull": true,
+            "autoincrement": false,
+            "default": "(cast(unixepoch('subsecond') * 1000 as integer))",
+            "generated": null,
+            "name": "updated_at",
+            "entityType": "columns",
+            "table": "posts"
+        },
+        {
+            "type": "text",
+            "notNull": true,
+            "autoincrement": false,
+            "default": "'John Doe'",
+            "generated": null,
+            "name": "author_display_name",
+            "entityType": "columns",
+            "table": "posts"
+        },
+        {
+            "type": "text",
+            "notNull": false,
+            "autoincrement": false,
+            "default": null,
+            "generated": null,
+            "name": "author_id",
+            "entityType": "columns",
+            "table": "posts"
+        },
+        {
+            "type": "text",
+            "notNull": false,
+            "autoincrement": false,
+            "default": null,
+            "generated": null,
+            "name": "discord_message_id",
+            "entityType": "columns",
+            "table": "posts"
+        },
+        {
+            "columns": ["user_id"],
+            "tableTo": "users",
+            "columnsTo": ["id"],
+            "onUpdate": "NO ACTION",
+            "onDelete": "CASCADE",
+            "nameExplicit": false,
+            "name": "accounts_user_id_users_id_fk",
+            "entityType": "fks",
+            "table": "accounts"
+        },
+        {
+            "columns": ["user_id"],
+            "tableTo": "users",
+            "columnsTo": ["id"],
+            "onUpdate": "NO ACTION",
+            "onDelete": "CASCADE",
+            "nameExplicit": false,
+            "name": "sessions_user_id_users_id_fk",
+            "entityType": "fks",
+            "table": "sessions"
+        },
+        {
+            "columns": ["author_id"],
+            "tableTo": "users",
+            "columnsTo": ["id"],
+            "onUpdate": "NO ACTION",
+            "onDelete": "SET NULL",
+            "nameExplicit": false,
+            "name": "church_events_author_id_users_id_fk",
+            "entityType": "fks",
+            "table": "church_events"
+        },
+        {
+            "columns": ["author_id"],
+            "tableTo": "users",
+            "columnsTo": ["id"],
+            "onUpdate": "NO ACTION",
+            "onDelete": "SET NULL",
+            "nameExplicit": false,
+            "name": "job_postings_author_id_users_id_fk",
+            "entityType": "fks",
+            "table": "job_postings"
+        },
+        {
+            "columns": ["author_id"],
+            "tableTo": "users",
+            "columnsTo": ["id"],
+            "onUpdate": "NO ACTION",
+            "onDelete": "SET NULL",
+            "nameExplicit": false,
+            "name": "posts_author_id_users_id_fk",
+            "entityType": "fks",
+            "table": "posts"
+        },
+        {
+            "columns": ["id"],
+            "nameExplicit": false,
+            "name": "accounts_pk",
+            "table": "accounts",
+            "entityType": "pks"
+        },
+        {
+            "columns": ["id"],
+            "nameExplicit": false,
+            "name": "sessions_pk",
+            "table": "sessions",
+            "entityType": "pks"
+        },
+        {
+            "columns": ["id"],
+            "nameExplicit": false,
+            "name": "users_pk",
+            "table": "users",
+            "entityType": "pks"
+        },
+        {
+            "columns": ["id"],
+            "nameExplicit": false,
+            "name": "verifications_pk",
+            "table": "verifications",
+            "entityType": "pks"
+        },
+        {
+            "columns": ["id"],
+            "nameExplicit": false,
+            "name": "church_events_pk",
+            "table": "church_events",
+            "entityType": "pks"
+        },
+        {
+            "columns": ["id"],
+            "nameExplicit": false,
+            "name": "job_postings_pk",
+            "table": "job_postings",
+            "entityType": "pks"
+        },
+        {
+            "columns": ["id"],
+            "nameExplicit": false,
+            "name": "pending_payments_pk",
+            "table": "pending_payments",
+            "entityType": "pks"
+        },
+        {
+            "columns": ["id"],
+            "nameExplicit": false,
+            "name": "posts_pk",
+            "table": "posts",
+            "entityType": "pks"
+        },
+        {
+            "columns": [
+                {
+                    "value": "user_id",
+                    "isExpression": false
+                }
+            ],
+            "isUnique": false,
+            "where": null,
+            "origin": "manual",
+            "name": "accounts_user_id_idx",
+            "entityType": "indexes",
+            "table": "accounts"
+        },
+        {
+            "columns": [
+                {
+                    "value": "user_id",
+                    "isExpression": false
+                }
+            ],
+            "isUnique": false,
+            "where": null,
+            "origin": "manual",
+            "name": "sessions_user_id_idx",
+            "entityType": "indexes",
+            "table": "sessions"
+        },
+        {
+            "columns": [
+                {
+                    "value": "identifier",
+                    "isExpression": false
+                }
+            ],
+            "isUnique": false,
+            "where": null,
+            "origin": "manual",
+            "name": "verifications_identifier_idx",
+            "entityType": "indexes",
+            "table": "verifications"
+        },
+        {
+            "columns": [
+                {
+                    "value": "parish",
+                    "isExpression": false
+                }
+            ],
+            "isUnique": false,
+            "where": null,
+            "origin": "manual",
+            "name": "church_events_parish_idx",
+            "entityType": "indexes",
+            "table": "church_events"
+        },
+        {
+            "columns": [
+                {
+                    "value": "start_date",
+                    "isExpression": false
+                }
+            ],
+            "isUnique": false,
+            "where": null,
+            "origin": "manual",
+            "name": "church_events_start_date_idx",
+            "entityType": "indexes",
+            "table": "church_events"
+        },
+        {
+            "columns": [
+                {
+                    "value": "end_date",
+                    "isExpression": false
+                }
+            ],
+            "isUnique": false,
+            "where": null,
+            "origin": "manual",
+            "name": "church_events_end_date_idx",
+            "entityType": "indexes",
+            "table": "church_events"
+        },
+        {
+            "columns": [
+                {
+                    "value": "author_id",
+                    "isExpression": false
+                }
+            ],
+            "isUnique": false,
+            "where": null,
+            "origin": "manual",
+            "name": "church_events_author_id_idx",
+            "entityType": "indexes",
+            "table": "church_events"
+        },
+        {
+            "columns": [
+                {
+                    "value": "department",
+                    "isExpression": false
+                }
+            ],
+            "isUnique": false,
+            "where": null,
+            "origin": "manual",
+            "name": "job_postings_department_idx",
+            "entityType": "indexes",
+            "table": "job_postings"
+        },
+        {
+            "columns": [
+                {
+                    "value": "employment_type",
+                    "isExpression": false
+                }
+            ],
+            "isUnique": false,
+            "where": null,
+            "origin": "manual",
+            "name": "job_postings_employment_type_idx",
+            "entityType": "indexes",
+            "table": "job_postings"
+        },
+        {
+            "columns": [
+                {
+                    "value": "is_active",
+                    "isExpression": false
+                }
+            ],
+            "isUnique": false,
+            "where": null,
+            "origin": "manual",
+            "name": "job_postings_active_idx",
+            "entityType": "indexes",
+            "table": "job_postings"
+        },
+        {
+            "columns": [
+                {
+                    "value": "expires_at",
+                    "isExpression": false
+                }
+            ],
+            "isUnique": false,
+            "where": null,
+            "origin": "manual",
+            "name": "job_postings_expires_at_idx",
+            "entityType": "indexes",
+            "table": "job_postings"
+        },
+        {
+            "columns": [
+                {
+                    "value": "expires_at",
+                    "isExpression": false
+                }
+            ],
+            "isUnique": false,
+            "where": null,
+            "origin": "manual",
+            "name": "pending_payments_expires_at_idx",
+            "entityType": "indexes",
+            "table": "pending_payments"
+        },
+        {
+            "columns": [
+                {
+                    "value": "status",
+                    "isExpression": false
+                },
+                {
+                    "value": "published_at",
+                    "isExpression": false
+                }
+            ],
+            "isUnique": false,
+            "where": null,
+            "origin": "manual",
+            "name": "posts_status_published_at_idx",
+            "entityType": "indexes",
+            "table": "posts"
+        },
+        {
+            "columns": [
+                {
+                    "value": "author_id",
+                    "isExpression": false
+                }
+            ],
+            "isUnique": false,
+            "where": null,
+            "origin": "manual",
+            "name": "posts_author_id_idx",
+            "entityType": "indexes",
+            "table": "posts"
+        },
+        {
+            "columns": ["token"],
+            "nameExplicit": false,
+            "name": "sessions_token_unique",
+            "entityType": "uniques",
+            "table": "sessions"
+        },
+        {
+            "columns": ["email"],
+            "nameExplicit": false,
+            "name": "users_email_unique",
+            "entityType": "uniques",
+            "table": "users"
+        },
+        {
+            "columns": ["slug"],
+            "nameExplicit": false,
+            "name": "church_events_slug_unique",
+            "entityType": "uniques",
+            "table": "church_events"
+        },
+        {
+            "columns": ["slug"],
+            "nameExplicit": false,
+            "name": "job_postings_slug_unique",
+            "entityType": "uniques",
+            "table": "job_postings"
+        },
+        {
+            "columns": ["slug"],
+            "nameExplicit": false,
+            "name": "posts_slug_unique",
+            "entityType": "uniques",
+            "table": "posts"
+        }
+    ],
+    "renames": []
+}

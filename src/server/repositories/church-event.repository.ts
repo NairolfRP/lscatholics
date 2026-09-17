@@ -1,5 +1,5 @@
 import type { AnySQLiteColumn } from 'drizzle-orm/sqlite-core'
-import { and, asc, count, eq, gte, isNotNull, isNull, like, lt, or } from 'drizzle-orm'
+import { and, asc, count, desc, eq, gte, isNotNull, isNull, like, lt, or } from 'drizzle-orm'
 import { getMonthBounds } from '#/utils/date.ts'
 import { db } from '#server/db'
 import { churchEvents } from '#server/db/schema'
@@ -24,8 +24,8 @@ class ChurchEventRepository extends BaseRepository<typeof churchEvents> {
     return this.db.query.churchEvents.findMany({
       limit,
       columns,
-      orderBy: [asc(this.schema.startDate)],
-      where: this.#activeChurchEventSQLFilter(),
+      orderBy: { startDate: 'asc' },
+      where: this.#activeChurchEventFilter(),
     })
   }
 
@@ -40,10 +40,10 @@ class ChurchEventRepository extends BaseRepository<typeof churchEvents> {
   }) {
     return this.db.query.churchEvents.findFirst({
       columns,
-      where: and(
-        id ? eq(this.schema.id, id) : eq(this.schema.slug, slug!),
-        !includeEndedEvent ? this.#activeChurchEventSQLFilter() : undefined
-      ),
+      where: {
+        ...(id ? { id } : { slug: slug! }),
+        ...(!includeEndedEvent ? this.#activeChurchEventFilter() : {}),
+      },
     })
   }
 
@@ -66,10 +66,10 @@ class ChurchEventRepository extends BaseRepository<typeof churchEvents> {
       with: {
         author: authorColumns ? { columns: authorColumns } : true,
       },
-      where: and(
-        id ? eq(this.schema.id, id) : eq(this.schema.slug, slug!),
-        !includeEndedEvent ? this.#activeChurchEventSQLFilter() : undefined
-      ),
+      where: {
+        ...(id ? { id } : { slug: slug! }),
+        ...(!includeEndedEvent ? this.#activeChurchEventFilter() : {}),
+      },
     })
   }
 
@@ -92,8 +92,7 @@ class ChurchEventRepository extends BaseRepository<typeof churchEvents> {
       searchText,
     } = options
 
-    const whereClause = and(
-      !includeEndedEvents ? this.#activeChurchEventSQLFilter() : undefined,
+    const searchSql =
       searchText && searchText.length > 0
         ? or(
             ...searchText.map((s) => {
@@ -102,6 +101,17 @@ class ChurchEventRepository extends BaseRepository<typeof churchEvents> {
             })
           )
         : undefined
+
+    const whereFilter = {
+      ...(!includeEndedEvents ? this.#activeChurchEventFilter() : {}),
+      ...(searchSql ? { RAW: searchSql } : {}),
+    }
+
+    const whereClause = and(
+      !includeEndedEvents
+        ? and(gte(this.schema.startDate, new Date()), gte(this.schema.endDate, new Date()))
+        : undefined,
+      searchSql
     )
 
     const [data, total] = await Promise.all([
@@ -109,11 +119,12 @@ class ChurchEventRepository extends BaseRepository<typeof churchEvents> {
         columns,
         limit: pageSize,
         offset: (page - 1) * pageSize,
-        where: whereClause,
-        orderBy: (schema, { desc }) =>
+        where: whereFilter,
+        orderBy: (table) =>
           orderBy.map((raw) => {
-            const [column, order] = raw.split('.') as [keyof typeof schema, 'asc' | 'desc']
-            return order === 'asc' ? asc(schema[column]) : desc(schema[column])
+            const [column, order] = raw.split('.') as [keyof typeof table, 'asc' | 'desc']
+            const col = table[column] as AnySQLiteColumn
+            return order === 'asc' ? asc(col) : desc(col)
           }),
       }),
       db
@@ -151,8 +162,8 @@ class ChurchEventRepository extends BaseRepository<typeof churchEvents> {
 
     return db.query.churchEvents.findMany({
       columns,
-      where: and(monthOverlap, includeEndedEvents ? undefined : notEnded),
-      orderBy: asc(this.schema.startDate),
+      where: { RAW: and(monthOverlap, includeEndedEvents ? undefined : notEnded) },
+      orderBy: { startDate: 'asc' },
     })
   }
 
@@ -185,8 +196,8 @@ class ChurchEventRepository extends BaseRepository<typeof churchEvents> {
     return result.rowsAffected
   }
 
-  #activeChurchEventSQLFilter() {
-    return and(gte(this.schema.startDate, new Date()), gte(this.schema.endDate, new Date()))
+  #activeChurchEventFilter() {
+    return { startDate: { gte: new Date() }, endDate: { gte: new Date() } }
   }
 }
 

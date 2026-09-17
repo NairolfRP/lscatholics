@@ -34,11 +34,11 @@ class JobPostingRepository extends BaseRepository<typeof jobPostings> {
   }) {
     return this.db.query.jobPostings.findFirst({
       columns,
-      where: and(
-        id ? eq(this.schema.id, id) : eq(this.schema.slug, slug!),
-        !includeInactive ? this.#activeJobOpeningSQLFilter() : undefined,
-        !includeExpired ? this.#notExpiredJobOpeningSQLFilter() : undefined
-      ),
+      where: {
+        ...(id ? { id } : { slug: slug! }),
+        ...(!includeInactive ? this.#activeFilter() : {}),
+        ...(!includeExpired ? this.#notExpiredFilter() : {}),
+      },
     })
   }
 
@@ -63,11 +63,11 @@ class JobPostingRepository extends BaseRepository<typeof jobPostings> {
       with: {
         author: authorColumns ? { columns: authorColumns } : true,
       },
-      where: and(
-        id ? eq(this.schema.id, id) : eq(this.schema.slug, slug!),
-        !includeInactive ? this.#activeJobOpeningSQLFilter() : undefined,
-        !includeExpired ? this.#notExpiredJobOpeningSQLFilter() : undefined
-      ),
+      where: {
+        ...(id ? { id } : { slug: slug! }),
+        ...(!includeInactive ? this.#activeFilter() : {}),
+        ...(!includeExpired ? this.#notExpiredFilter() : {}),
+      },
     })
   }
 
@@ -96,15 +96,7 @@ class JobPostingRepository extends BaseRepository<typeof jobPostings> {
       searchText,
     } = options
 
-    const whereClause = and(
-      !includeInactives ? this.#activeJobOpeningSQLFilter() : undefined,
-      !includeExpired ? this.#notExpiredJobOpeningSQLFilter() : undefined,
-      departments.length > 0
-        ? or(...departments.map((dep) => eq(this.schema.department, dep)))
-        : undefined,
-      employmentTypes.length > 0
-        ? or(...employmentTypes.map((type) => eq(this.schema.employmentType, type)))
-        : undefined,
+    const searchSql =
       searchText && searchText.length > 0
         ? or(
             ...searchText.map((s) => {
@@ -113,6 +105,27 @@ class JobPostingRepository extends BaseRepository<typeof jobPostings> {
             })
           )
         : undefined
+
+    const whereFilter = {
+      ...(!includeInactives ? this.#activeFilter() : {}),
+      ...(!includeExpired ? this.#notExpiredFilter() : {}),
+      ...(departments.length > 0 ? { department: { in: departments } } : {}),
+      ...(employmentTypes.length > 0 ? { employmentType: { in: employmentTypes } } : {}),
+      ...(searchSql ? { RAW: searchSql } : {}),
+    }
+
+    const whereClause = and(
+      !includeInactives ? eq(this.schema.isActive, true) : undefined,
+      !includeExpired
+        ? or(isNull(this.schema.expiresAt), gte(this.schema.expiresAt, new Date()))
+        : undefined,
+      departments.length > 0
+        ? or(...departments.map((dep) => eq(this.schema.department, dep)))
+        : undefined,
+      employmentTypes.length > 0
+        ? or(...employmentTypes.map((type) => eq(this.schema.employmentType, type)))
+        : undefined,
+      searchSql
     )
 
     const [data, total] = await Promise.all([
@@ -120,11 +133,12 @@ class JobPostingRepository extends BaseRepository<typeof jobPostings> {
         columns,
         limit: pageSize,
         offset: (page - 1) * pageSize,
-        where: whereClause,
-        orderBy: (schema, { desc, asc }) =>
+        where: whereFilter,
+        orderBy: (schema, { asc, desc }) =>
           orderBy.map((raw) => {
             const [column, order] = raw.split('.') as [keyof typeof schema, 'asc' | 'desc']
-            return order === 'asc' ? asc(schema[column]) : desc(schema[column])
+            const col = schema[column] as AnySQLiteColumn
+            return order === 'asc' ? asc(col) : desc(col)
           }),
       }),
       this.db
@@ -150,12 +164,14 @@ class JobPostingRepository extends BaseRepository<typeof jobPostings> {
     return result.length > 0
   }
 
-  #activeJobOpeningSQLFilter() {
-    return eq(this.schema.isActive, true)
+  #activeFilter() {
+    return { isActive: true }
   }
 
-  #notExpiredJobOpeningSQLFilter() {
-    return or(isNull(this.schema.expiresAt), gte(this.schema.expiresAt, new Date()))
+  #notExpiredFilter() {
+    return {
+      OR: [{ expiresAt: { isNull: true } } as const, { expiresAt: { gte: new Date() } } as const],
+    }
   }
 }
 

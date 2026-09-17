@@ -1,5 +1,5 @@
 import type { AnySQLiteColumn } from 'drizzle-orm/sqlite-core'
-import { and, count, eq, like, or } from 'drizzle-orm'
+import { and, asc, count, desc, eq, like, or } from 'drizzle-orm'
 import { POST_STATUS } from '#/shared/constants/post-status'
 import type { PostStatus } from '#/shared/types/post.types'
 import type { UsersColumns } from '#server/repositories/user.repository.ts'
@@ -24,8 +24,8 @@ class PostRepository extends BaseRepository<typeof posts> {
     return this.db.query.posts.findMany({
       limit,
       columns,
-      where: (schema) => eq(schema.status, POST_STATUS.PUBLISHED),
-      orderBy: (schema, { desc }) => [desc(schema.publishedAt)],
+      where: { status: POST_STATUS.PUBLISHED },
+      orderBy: { publishedAt: 'desc' },
     })
   }
 
@@ -40,11 +40,7 @@ class PostRepository extends BaseRepository<typeof posts> {
   }) {
     return this.db.query.posts.findFirst({
       columns,
-      where: (schema) =>
-        and(
-          id ? eq(schema.id, id) : eq(schema.slug, slug!),
-          status !== null ? eq(schema.status, status) : undefined
-        ),
+      where: { ...(id ? { id } : { slug: slug! }), ...(status !== null ? { status } : {}) },
     })
   }
 
@@ -64,11 +60,7 @@ class PostRepository extends BaseRepository<typeof posts> {
       with: {
         author: authorColumns ? { columns: authorColumns } : true,
       },
-      where: (schema) =>
-        and(
-          id ? eq(schema.id, id) : eq(schema.slug, slug!),
-          status !== null ? eq(schema.status, status) : undefined
-        ),
+      where: { ...(id ? { id } : { slug: slug! }), ...(status !== null ? { status } : {}) },
     })
   }
 
@@ -91,8 +83,7 @@ class PostRepository extends BaseRepository<typeof posts> {
       searchText,
     } = options
 
-    const whereClause = and(
-      status !== null ? eq(this.schema.status, status) : undefined,
+    const searchSql =
       searchText && searchText.length > 0
         ? or(
             ...searchText.map((s) => {
@@ -101,18 +92,25 @@ class PostRepository extends BaseRepository<typeof posts> {
             })
           )
         : undefined
-    )
+
+    const whereFilter = {
+      ...(status !== null ? { status } : {}),
+      ...(searchSql ? { RAW: searchSql } : {}),
+    }
+
+    const whereClause = and(status !== null ? eq(this.schema.status, status) : undefined, searchSql)
 
     const [data, total] = await Promise.all([
       this.db.query.posts.findMany({
         columns,
         limit: pageSize,
         offset: (page - 1) * pageSize,
-        where: whereClause,
-        orderBy: (schema, { desc, asc }) =>
+        where: whereFilter,
+        orderBy: (schema) =>
           orderBy.map((raw) => {
             const [column, order] = raw.split('.') as [keyof typeof schema, 'asc' | 'desc']
-            return order === 'asc' ? asc(schema[column]) : desc(schema[column])
+            const col = schema[column] as AnySQLiteColumn
+            return order === 'asc' ? asc(col) : desc(col)
           }),
       }),
       db

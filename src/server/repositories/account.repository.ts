@@ -19,8 +19,7 @@ class AccountRepository extends BaseRepository<typeof accounts> {
   }) {
     return this.db.query.accounts.findFirst({
       columns: { ...columns, id: true },
-      where: (schema, { and, eq }) =>
-        and(eq(schema.providerId, 'discord'), eq(schema.userId, userId)),
+      where: { providerId: 'discord', userId },
     })
   }
 }

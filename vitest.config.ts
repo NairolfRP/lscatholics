@@ -40,9 +40,6 @@ export default defineConfig({
         },
         resolve: {
           tsconfigPaths: true,
-          alias: {
-            'drizzle-orm/libsql/web': 'drizzle-orm/libsql/node',
-          },
         },
       },
       {
@@ -79,9 +76,6 @@ export default defineConfig({
         },
         resolve: {
           tsconfigPaths: true,
-          alias: {
-            'drizzle-orm/libsql/web': 'drizzle-orm/libsql/node',
-          },
         },
       },
     ],

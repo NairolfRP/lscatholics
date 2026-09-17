@@ -35,11 +35,6 @@ jobs:
       - name: Install Playwright deps
         run: pnpm exec playwright install --with-deps
 
-      - name: Install Turso CLI
-        run: |
-          curl -sSfL https://get.tur.so/install.sh | bash
-          echo "$HOME/.turso" >> $GITHUB_PATH
-
       - name: Testing (unit & browser)
         run: pnpm run test
 

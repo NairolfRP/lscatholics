@@ -1,4 +1,3 @@
-import { relations } from 'drizzle-orm'
 import { index, integer, sqliteTable, text } from 'drizzle-orm/sqlite-core'
 import { PARISH_VALUES } from '#/shared/constants/parish'
 import { timestamps } from '#server/db/helpers.ts'
@@ -32,10 +31,3 @@ export const churchEvents = sqliteTable(
     index('church_events_author_id_idx').on(table.authorId),
   ]
 )
-
-export const churchEventsRelations = relations(churchEvents, ({ one }) => ({
-  author: one(users, {
-    fields: [churchEvents.authorId],
-    references: [users.id],
-  }),
-}))

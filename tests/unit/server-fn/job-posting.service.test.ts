@@ -126,9 +126,7 @@ describe('createJobPosting', () => {
       isActive: true,
     }
     vi.mocked(jobPostingRepository.existsBySlug).mockResolvedValue(false)
-    vi.mocked(jobPostingRepository.create).mockResolvedValue([
-      { id: 'new-job-1' },
-    ] as unknown as Awaited<ReturnType<typeof jobPostingRepository.create>>)
+    vi.mocked(jobPostingRepository.create).mockResolvedValue([{ id: 'new-job-1' }])
 
     const result = await jobPostingService.createJobPosting({ data: validData, user: mockUser })
 

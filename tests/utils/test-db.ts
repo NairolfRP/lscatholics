@@ -1,6 +1,8 @@
 import type { AnySQLiteTable } from 'drizzle-orm/sqlite-core'
+import { resolve } from 'node:path'
 import { sql } from 'drizzle-orm'
 import { SQLiteTable } from 'drizzle-orm/sqlite-core'
+import { migrate } from 'drizzle-orm/tursodatabase/migrator'
 import { db } from '#server/db'
 import * as schema from '#server/db/schema'
 
@@ -10,15 +12,12 @@ const tables = Object.values(schema).filter(
 )
 
 export async function setupTestDb() {
-  const { pushSQLiteSchema } = await import('drizzle-kit/api')
-  const { apply } = await pushSQLiteSchema(schema, db)
-  await apply()
+  await migrate(db, { migrationsFolder: resolve(import.meta.dirname, '../../drizzle') })
 }
 
 export async function resetDb() {
   await db.run(sql`PRAGMA foreign_keys = OFF`)
   for (const table of tables) {
-    // @ts-expect-error See table() - same reason
     await db.delete(table)
   }
   await db.run(sql`PRAGMA foreign_keys = ON`)

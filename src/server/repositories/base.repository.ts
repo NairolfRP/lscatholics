@@ -1,24 +1,28 @@
-import type { ResultSet } from '@libsql/client/web'
-import type { Table } from 'drizzle-orm'
+import type { InferInsertModel, InferSelectModel } from 'drizzle-orm'
+import type { AnySQLiteTable, SQLiteInsertValue } from 'drizzle-orm/sqlite-core'
+import type { TursoDatabaseServerlessRunResult } from 'drizzle-orm/tursodatabase-serverless'
 import { and, count, eq, getTableColumns } from 'drizzle-orm'
 import { db as dbClient } from '../db'
 
 type CreateResult<
-  TSchema extends Table,
-  TReturning extends boolean | readonly (keyof TSchema['$inferSelect'])[] | undefined,
+  TSchema extends AnySQLiteTable,
+  TReturning extends boolean | readonly (keyof InferSelectModel<TSchema>)[] | undefined,
 > = TReturning extends true
-  ? TSchema['$inferSelect'][]
-  : TReturning extends readonly (keyof TSchema['$inferSelect'])[]
-    ? Pick<TSchema['$inferSelect'], TReturning[number]>[]
-    : ResultSet
+  ? InferSelectModel<TSchema>[]
+  : TReturning extends readonly (keyof InferSelectModel<TSchema>)[]
+    ? Pick<InferSelectModel<TSchema>, TReturning[number]>[]
+    : TursoDatabaseServerlessRunResult
 
-export class BaseRepository<TSchema extends Table> {
+export class BaseRepository<TSchema extends AnySQLiteTable> {
   constructor(
     protected db = dbClient,
     protected schema: TSchema
   ) {}
 
-  async update(where: Partial<TSchema['$inferSelect']>, data: Partial<TSchema['$inferInsert']>) {
+  async update(
+    where: Partial<InferSelectModel<TSchema>>,
+    data: Partial<InferInsertModel<TSchema>>
+  ) {
     const columns = getTableColumns(this.schema)
 
     const conditions = Object.entries(where).map(([key, value]) => {
@@ -35,34 +39,31 @@ export class BaseRepository<TSchema extends Table> {
 
     const sqlCondition = conditions.length === 1 ? conditions[0] : and(...conditions)
 
-    return await this.db
-      .update(this.schema)
-      .set(data as Record<string, unknown>)
-      .where(sqlCondition)
-      .returning()
+    return await this.db.update(this.schema).set(data).where(sqlCondition).returning()
   }
 
   async create<
-    TReturning extends boolean | readonly (keyof TSchema['$inferSelect'])[] | undefined = undefined,
+    TReturning extends boolean | readonly (keyof InferSelectModel<TSchema>)[] | undefined =
+      undefined,
   >(
-    data: TSchema['$inferInsert'],
+    data: InferInsertModel<TSchema>,
     options?: { returning?: TReturning }
   ): Promise<
     TReturning extends true
-      ? TSchema['$inferSelect'][]
-      : TReturning extends readonly (keyof TSchema['$inferSelect'])[]
-        ? Pick<TSchema['$inferSelect'], TReturning[number]>[]
-        : ResultSet
+      ? InferSelectModel<TSchema>[]
+      : TReturning extends readonly (keyof InferSelectModel<TSchema>)[]
+        ? Pick<InferSelectModel<TSchema>, TReturning[number]>[]
+        : TursoDatabaseServerlessRunResult
   > {
     const returning = options?.returning
-    const query = this.db.insert(this.schema).values(data)
+    const query = this.db.insert(this.schema).values(data as unknown as SQLiteInsertValue<TSchema>)
 
     if (returning) {
       const returningFields =
         Array.isArray(returning) && returning.length > 0
           ? returning.reduce(
               (selectedFields, field) => {
-                selectedFields[field as keyof TSchema['$inferSelect']] =
+                selectedFields[field as keyof InferSelectModel<TSchema>] =
                   this.schema[field as keyof typeof this.schema]
                 return selectedFields
               },
@@ -75,7 +76,7 @@ export class BaseRepository<TSchema extends Table> {
       >
     }
 
-    return (await query) as unknown as CreateResult<TSchema, TReturning>
+    return await query
   }
 
   async getCount() {

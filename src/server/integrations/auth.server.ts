@@ -1,4 +1,4 @@
-import { drizzleAdapter } from '@better-auth/drizzle-adapter'
+import { drizzleAdapter } from '@better-auth/drizzle-adapter/relations-v2'
 import { waitUntil } from '@vercel/functions'
 import { betterAuth } from 'better-auth/minimal'
 import { envClient } from '#/config/env-client'

@@ -68,13 +68,10 @@ export default defineConfig({
   /* Run your local dev server before starting the tests */
   webServer: [
     {
-      command: 'mkdir -p tmp && turso dev --db-file tmp/e2e.db --port 8080',
-      port: 8080,
-      reuseExistingServer: !process.env.CI,
-      stdout: 'pipe',
+      command: 'mkdir -p tmp',
     },
     {
-      command: 'vite --port 3000 --mode e2e',
+      command: 'vite --port 3000',
       url: process.env.VITE_APP_URL || 'http://localhost:3000',
       reuseExistingServer: !process.env.CI,
       env: {
