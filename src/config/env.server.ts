@@ -8,7 +8,20 @@ export const env = createEnv({
     LOG_LEVEL: z.enum(['fatal', 'error', 'warn', 'info', 'debug', 'trace']).optional(),
     CRON_SECRET:
       process.env.NODE_ENV === 'production' ? z.string().min(64) : z.string().min(64).optional(),
-    DATABASE_URL: process.env.NODE_ENV === 'production' ? z.url() : z.string(),
+    DATABASE_URL:
+      process.env.NODE_ENV === 'production'
+        ? z
+            .string()
+            .refine(
+              (url) =>
+                url.startsWith('https://') ||
+                url.startsWith('turso://') ||
+                url.startsWith('libsql://'),
+              {
+                message: 'Database URL must start with https:// or turso://',
+              }
+            )
+        : z.string(),
     DATABASE_AUTH_TOKEN: z.string().optional(),
     BETTER_AUTH_URL: z.url(),
     BETTER_AUTH_SECRET: z.string().min(32),
