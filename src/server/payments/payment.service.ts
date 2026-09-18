@@ -244,19 +244,15 @@ export class PaymentService {
     now = new Date()
   ): Promise<{ reconciled: number; deleted: number }> {
     const expired = await pendingPaymentRepository.findExpired(now)
-    let reconciled = 0
-    let deleted = 0
 
-    for (const pending of expired) {
-      const { reconciled: isReconciled, deleted: isDeleted } = await this.#reconcileExpired(pending)
-      if (isReconciled) {
-        reconciled += 1
-      } else if (isDeleted) {
-        deleted += 1
-      }
+    const results = await Promise.all(
+      expired.map((pending) => this.#reconcileExpired(pending))
+    )
+
+    return {
+      reconciled: results.filter((result) => result.reconciled).length,
+      deleted: results.filter((result) => result.deleted).length,
     }
-
-    return { reconciled, deleted }
   }
 
   async processWebhook(input: {

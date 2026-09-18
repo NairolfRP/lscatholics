@@ -16,7 +16,7 @@ function client(accessToken: string) {
   return ky.create({
     prefix: BASE_URL,
     retry: 1,
-    timeout: 8000,
+    timeout: 5000,
     headers: {
       'Accept': 'application/json',
       'Authorization': `Bearer ${accessToken}`,
