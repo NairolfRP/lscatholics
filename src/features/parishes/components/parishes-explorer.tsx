@@ -69,7 +69,7 @@ export function ParishesExplorer() {
 
       <nav
         aria-label="Sélection rapide d'une paroisse"
-        className="col-span-5 -mx-4 flex gap-2 overflow-x-auto px-4 pb-1 lg:hidden"
+        className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 lg:hidden"
       >
         {parishes.map((parish) => (
           <button
