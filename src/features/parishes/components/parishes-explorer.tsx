@@ -3,6 +3,7 @@ import type { ComponentType } from 'react'
 import { CrossIcon, MapPinIcon, RotateCcwIcon } from 'lucide-react'
 import { parishes } from '#/config/parishes'
 import { MapFallback } from '#/shared/components/map/map-fallback'
+import { useMediaQuery } from '#/shared/hooks/use-media-query'
 import { cn } from '#/shared/lib/utils'
 import type { ParishId, ParishInfo } from '#/shared/types/parish.types'
 
@@ -21,6 +22,8 @@ export function ParishesExplorer() {
   const [activeParishId, setActiveParishId] = useState<ParishId | null>(null)
   const [ParishesMap, setParishesMap] = useState<ComponentType<ParishesMapProps> | null>(null)
   const listRef = useRef<HTMLDivElement | null>(null)
+  const chipsRef = useRef<HTMLElement | null>(null)
+  const isDesktop = useMediaQuery('(min-width: 1024px)')
 
   useEffect(() => {
     let cancelled = false
@@ -34,26 +37,40 @@ export function ParishesExplorer() {
     }
   }, [])
 
+  const centerChip = (id: ParishId) => {
+    const nav = chipsRef.current
+    const chip = nav?.querySelector<HTMLElement>(`[data-parish-chip="${id}"]`)
+    if (!nav || !chip) return
+
+    const delta =
+      chip.getBoundingClientRect().left -
+      nav.getBoundingClientRect().left -
+      (nav.clientWidth - chip.offsetWidth) / 2
+
+    nav.scrollTo({ left: nav.scrollLeft + delta, behavior: 'smooth' })
+  }
+
   const selectParish = (id: ParishId | null) => {
-    setActiveParishId((current) => {
-      const next = id == null || current === id ? null : id
+    const next = id == null || activeParishId === id ? null : id
+    setActiveParishId(next)
 
-      if (next) {
-        requestAnimationFrame(() => {
-          listRef.current
-            ?.querySelector(`[data-parish-id="${next}"]`)
-            ?.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
-        })
-      }
+    if (!next) return
 
-      return next
-    })
+    centerChip(next)
+
+    if (isDesktop) {
+      requestAnimationFrame(() => {
+        listRef.current
+          ?.querySelector(`[data-parish-id="${next}"]`)
+          ?.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+      })
+    }
   }
 
   return (
-    <div className="grid gap-6 lg:grid-cols-5 lg:gap-8">
-      <div className="lg:sticky lg:top-[calc(var(--header-height)+1.25rem)] lg:col-span-3 lg:self-start">
-        <div className="relative h-[320px] sm:h-[420px] lg:h-[calc(100svh-var(--header-height)-7rem)] lg:max-h-[720px] lg:min-h-[560px]">
+    <div className="flex flex-col gap-6 lg:grid lg:grid-cols-5 lg:gap-8">
+      <div className="sticky top-[calc(5rem+var(--twsa-safe-area-inset-top))] z-30 -mx-4 bg-background px-4 pt-2 pb-3 lg:top-[calc(var(--header-height)+1.25rem)] lg:col-span-3 lg:mx-0 lg:self-start lg:bg-transparent lg:p-0">
+        <div className="relative h-[min(40svh,320px)] min-h-[220px] lg:h-[calc(100svh-var(--header-height)-7rem)] lg:max-h-[720px] lg:min-h-[560px]">
           {ParishesMap ? (
             <ParishesMap activeParishId={activeParishId} onSelectParish={selectParish} />
           ) : (
@@ -61,33 +78,35 @@ export function ParishesExplorer() {
           )}
         </div>
 
-        <p className="mt-3 hidden items-center gap-1.5 text-xs text-muted-foreground lg:flex">
-          <MapPinIcon className="size-3.5" />
+        <p className="mt-2 flex items-center gap-1.5 text-xs text-muted-foreground lg:mt-3">
+          <MapPinIcon className="size-3.5 shrink-0" />
           Cliquez sur une carte pour la découvrir, ou sur une paroisse pour la localiser.
         </p>
-      </div>
 
-      <nav
-        aria-label="Sélection rapide d'une paroisse"
-        className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 lg:hidden"
-      >
-        {parishes.map((parish) => (
-          <button
-            key={parish.id}
-            type="button"
-            aria-pressed={activeParishId === parish.id}
-            onClick={() => selectParish(parish.id)}
-            className={cn(
-              'shrink-0 rounded-full border px-4 py-2 text-sm font-medium whitespace-nowrap transition',
-              activeParishId === parish.id
-                ? 'border-primary bg-primary text-primary-foreground'
-                : 'border-foreground/15 bg-background text-muted-foreground hover:border-primary/50 hover:text-foreground'
-            )}
-          >
-            {parish.title}
-          </button>
-        ))}
-      </nav>
+        <nav
+          ref={chipsRef}
+          aria-label="Sélection rapide d'une paroisse"
+          className="-mx-4 mt-2 flex snap-x scroll-px-4 gap-2 overflow-x-auto [mask-image:linear-gradient(to_right,transparent,black_1rem,black_calc(100%_-_1rem),transparent)] px-4 pb-1 lg:hidden"
+        >
+          {parishes.map((parish) => (
+            <button
+              key={parish.id}
+              type="button"
+              data-parish-chip={parish.id}
+              aria-pressed={activeParishId === parish.id}
+              onClick={() => selectParish(parish.id)}
+              className={cn(
+                'shrink-0 snap-start rounded-full border px-4 py-2 text-sm font-medium whitespace-nowrap transition',
+                activeParishId === parish.id
+                  ? 'border-primary bg-primary text-primary-foreground'
+                  : 'border-foreground/15 bg-background text-muted-foreground hover:border-primary/50 hover:text-foreground'
+              )}
+            >
+              {parish.title}
+            </button>
+          ))}
+        </nav>
+      </div>
 
       <div className="lg:col-span-2" ref={listRef}>
         <ol className="space-y-4">

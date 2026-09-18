@@ -4,6 +4,7 @@ import type { HTMLAttributes, PropsWithChildren } from 'react'
 import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react'
 import L from 'leaflet'
 import { LayersControl, MapContainer, useMap } from 'react-leaflet'
+import { useIsMobile } from '#/shared/hooks/use-mobile'
 import { cn } from '#/shared/lib/utils'
 import { createGta5Crs } from './custom-crs'
 import { Gta5TileLayer } from './tile-layer'
@@ -41,6 +42,7 @@ export const GTA5Map = forwardRef<GTA5MapHandle, Props>(function GTA5Map(
   ref
 ) {
   const mapRef = useRef<L.Map | null>(null)
+  const isMobile = useIsMobile()
 
   useImperativeHandle(ref, () => ({
     flyTo: (coords: LatLngExpression, flyZoom = 5, duration = 1.2) => {
@@ -66,7 +68,7 @@ export const GTA5Map = forwardRef<GTA5MapHandle, Props>(function GTA5Map(
         className="h-full w-full"
         preferCanvas
       >
-        <LayersControl position="topright" collapsed={false}>
+        <LayersControl position="topright" collapsed={isMobile}>
           <LayersControl.BaseLayer name="Atlas">
             <Gta5TileLayer url="/map/assets/map-tiles/atlas/{z}/{x}/{y}.jpg" />
           </LayersControl.BaseLayer>
