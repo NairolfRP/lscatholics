@@ -26,8 +26,7 @@ export const churchEvents = sqliteTable(
   },
   (table) => [
     index('church_events_parish_idx').on(table.parish),
-    index('church_events_start_date_idx').on(table.startDate),
-    index('church_events_end_date_idx').on(table.endDate),
+    index('church_events_period_idx').on(table.startDate, table.endDate),
     index('church_events_author_id_idx').on(table.authorId),
   ]
 )

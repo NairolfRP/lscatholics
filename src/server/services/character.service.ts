@@ -36,13 +36,14 @@ export async function getAllUserCharactersWithFactions(
     accessToken = result.accessToken
   }
 
-  const characters = await getAllUserCharacters(accessToken, options)
+  const [characters, factions] = await Promise.all([
+    getAllUserCharacters(accessToken, options),
+    getCharactersFactions(accessToken, options),
+  ])
 
   if (characters.length === 0) {
     return []
   }
-
-  const factions = await getCharactersFactions(accessToken, options)
 
   return characters.map((char) => ({
     ...char,

@@ -1,5 +1,6 @@
+import type { InferSelectModel, SQL } from 'drizzle-orm'
+import { and, asc, count, desc, eq, like, or, sql } from 'drizzle-orm'
 import type { AnySQLiteColumn } from 'drizzle-orm/sqlite-core'
-import { and, asc, count, desc, EmptyFilter, eq, like, or } from 'drizzle-orm'
 import { POST_STATUS } from '#/shared/constants/post-status'
 import type { PostStatus } from '#/shared/types/post.types'
 import type { UsersColumns } from '#server/repositories/user.repository.ts'
@@ -93,38 +94,56 @@ class PostRepository extends BaseRepository<typeof posts> {
           )
         : undefined
 
-    const searchSql = (table: typeof posts) => searchFilter(table) ?? EmptyFilter
-
-    const whereFilter = {
-      ...(status !== null ? { status } : {}),
-      RAW: searchSql,
-    }
-
     const whereClause = and(
       status !== null ? eq(this.schema.status, status) : undefined,
       searchFilter(this.schema)
     )
 
-    const [data, total] = await Promise.all([
-      this.db.query.posts.findMany({
-        columns,
-        limit: pageSize,
-        offset: (page - 1) * pageSize,
-        where: whereFilter,
-        orderBy: (schema) =>
-          orderBy.map((raw) => {
-            const [column, order] = raw.split('.') as [keyof typeof schema, 'asc' | 'desc']
-            const col = schema[column] as AnySQLiteColumn
-            return order === 'asc' ? asc(col) : desc(col)
-          }),
-      }),
-      db
+    const dataColumns =
+      columns && Object.keys(columns).length > 0
+        ? Object.fromEntries(
+            Object.keys(columns).map((key) => [key, posts[key as keyof typeof posts]])
+          )
+        : Object.fromEntries(
+            Object.keys(posts).map((key) => [key, posts[key as keyof typeof posts]])
+          )
+
+    const rows = await db
+      .select({ ...dataColumns, total: sql<number>`count(*) over ()`.mapWith(Number) } as Record<
+        string,
+        AnySQLiteColumn | SQL
+      >)
+      .from(posts)
+      .where(whereClause)
+      .orderBy(
+        ...orderBy.map((raw) => {
+          const [column, order] = raw.split('.') as [keyof typeof posts, 'asc' | 'desc']
+          const col = posts[column] as AnySQLiteColumn
+          return order === 'asc' ? asc(col) : desc(col)
+        })
+      )
+      .limit(pageSize)
+      .offset((page - 1) * pageSize)
+
+    const selectedRows = rows as (InferSelectModel<typeof posts> & { total: number })[]
+
+    let total: number
+    if (selectedRows.length > 0) {
+      total = selectedRows[0].total
+    } else {
+      const countResult = await db
         .select({ postsCount: count(posts.slug) })
         .from(posts)
-        .where(whereClause),
-    ])
+        .where(whereClause)
+      total = countResult[0].postsCount
+    }
 
-    return { posts: data, total: total[0].postsCount }
+    return {
+      posts: selectedRows.map(({ total: _total, ...post }) => post) as InferSelectModel<
+        typeof posts
+      >[],
+      total,
+    }
   }
 
   async existsBySlug(slug: string): Promise<boolean> {

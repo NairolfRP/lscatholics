@@ -1,5 +1,6 @@
+import type { InferSelectModel, SQL } from 'drizzle-orm'
+import { and, asc, count, desc, eq, gte, isNull, or, sql } from 'drizzle-orm'
 import type { AnySQLiteColumn } from 'drizzle-orm/sqlite-core'
-import { and, count, EmptyFilter, eq, gte, isNull, or, sql } from 'drizzle-orm'
 import { CAREERS_PAGINATION_LIMIT } from '#/features/job-posting/constants/job-posting.constants.ts'
 import { db } from '#server/db'
 import { jobPostings } from '#server/db/schema/job-posting-schema'
@@ -106,16 +107,6 @@ class JobPostingRepository extends BaseRepository<typeof jobPostings> {
           )
         : undefined
 
-    const searchSql = (table: typeof jobPostings) => searchFilter(table) ?? EmptyFilter
-
-    const whereFilter = {
-      ...(!includeInactives ? this.#activeFilter() : {}),
-      ...(!includeExpired ? this.#notExpiredFilter() : {}),
-      ...(departments.length > 0 ? { department: { in: departments } } : {}),
-      ...(employmentTypes.length > 0 ? { employmentType: { in: employmentTypes } } : {}),
-      RAW: searchSql,
-    }
-
     const whereClause = and(
       !includeInactives ? eq(this.schema.isActive, true) : undefined,
       !includeExpired
@@ -130,26 +121,60 @@ class JobPostingRepository extends BaseRepository<typeof jobPostings> {
       searchFilter(this.schema)
     )
 
-    const [data, total] = await Promise.all([
-      this.db.query.jobPostings.findMany({
-        columns,
-        limit: pageSize,
-        offset: (page - 1) * pageSize,
-        where: whereFilter,
-        orderBy: (schema, { asc, desc }) =>
-          orderBy.map((raw) => {
-            const [column, order] = raw.split('.') as [keyof typeof schema, 'asc' | 'desc']
-            const col = schema[column] as AnySQLiteColumn
-            return order === 'asc' ? asc(col) : desc(col)
-          }),
-      }),
-      this.db
+    const dataColumns =
+      columns && Object.keys(columns).length > 0
+        ? Object.fromEntries(
+            Object.keys(columns).map((key) => [
+              key,
+              this.schema[key as keyof typeof this.schema],
+            ])
+          )
+        : Object.fromEntries(
+            Object.keys(this.schema).map((key) => [
+              key,
+              this.schema[key as keyof typeof this.schema],
+            ])
+          )
+
+    const rows = await this.db
+      .select({ ...dataColumns, total: sql<number>`count(*) over ()`.mapWith(Number) } as Record<
+        string,
+        AnySQLiteColumn | SQL
+      >)
+      .from(this.schema)
+      .where(whereClause)
+      .orderBy(
+        ...orderBy.map((raw) => {
+          const [column, order] = raw.split('.') as [
+            keyof typeof this.schema,
+            'asc' | 'desc',
+          ]
+          const col = this.schema[column] as AnySQLiteColumn
+          return order === 'asc' ? asc(col) : desc(col)
+        })
+      )
+      .limit(pageSize)
+      .offset((page - 1) * pageSize)
+
+    const selectedRows = rows as (InferSelectModel<typeof jobPostings> & { total: number })[]
+
+    let total: number
+    if (selectedRows.length > 0) {
+      total = selectedRows[0].total
+    } else {
+      const countResult = await this.db
         .select({ jobPostingsCount: count(this.schema.slug) })
         .from(this.schema)
-        .where(whereClause),
-    ])
+        .where(whereClause)
+      total = countResult[0].jobPostingsCount
+    }
 
-    return { jobPostings: data, total: total[0].jobPostingsCount }
+    return {
+      jobPostings: selectedRows.map(({ total: _total, ...posting }) => posting) as InferSelectModel<
+        typeof jobPostings
+      >[],
+      total,
+    }
   }
 
   async deleteJobPosting({ id }: { id: string }) {

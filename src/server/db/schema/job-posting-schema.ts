@@ -40,7 +40,6 @@ export const jobPostings = sqliteTable(
   (table) => [
     index('job_postings_department_idx').on(table.department),
     index('job_postings_employment_type_idx').on(table.employmentType),
-    index('job_postings_active_idx').on(table.isActive),
-    index('job_postings_expires_at_idx').on(table.expiresAt),
+    index('job_postings_active_expires_at_idx').on(table.isActive, table.expiresAt),
   ]
 )

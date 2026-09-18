@@ -1,5 +1,6 @@
+import type { InferSelectModel, SQL } from 'drizzle-orm'
+import { and, asc, count, desc, eq, gte, isNull, like, lt, or, sql } from 'drizzle-orm'
 import type { AnySQLiteColumn } from 'drizzle-orm/sqlite-core'
-import { and, asc, count, desc, EmptyFilter, eq, gte, isNull, like, lt, or } from 'drizzle-orm'
 import { getMonthBounds } from '#/utils/date.ts'
 import { db } from '#server/db'
 import { churchEvents } from '#server/db/schema'
@@ -102,40 +103,61 @@ class ChurchEventRepository extends BaseRepository<typeof churchEvents> {
           )
         : undefined
 
-    const searchSql = (table: typeof churchEvents) => searchFilter(table) ?? EmptyFilter
+    const whereClause = and(
+      !includeEndedEvents
+        ? and(gte(churchEvents.startDate, new Date()), gte(churchEvents.endDate, new Date()))
+        : undefined,
+      searchFilter(churchEvents)
+    )
 
-    const whereFilter = {
-      ...(!includeEndedEvents ? this.#activeChurchEventFilter() : {}),
-      RAW: searchSql,
-    }
+    const dataColumns =
+      columns && Object.keys(columns).length > 0
+        ? Object.fromEntries(
+            Object.keys(columns).map((key) => [key, churchEvents[key as keyof typeof churchEvents]])
+          )
+        : Object.fromEntries(
+            Object.keys(churchEvents).map((key) => [
+              key,
+              churchEvents[key as keyof typeof churchEvents],
+            ])
+          )
 
-    const [data, total] = await Promise.all([
-      this.db.query.churchEvents.findMany({
-        columns,
-        limit: pageSize,
-        offset: (page - 1) * pageSize,
-        where: whereFilter,
-        orderBy: (table) =>
-          orderBy.map((raw) => {
-            const [column, order] = raw.split('.') as [keyof typeof table, 'asc' | 'desc']
-            const col = table[column] as AnySQLiteColumn
-            return order === 'asc' ? asc(col) : desc(col)
-          }),
-      }),
-      db
+    const rows = await db
+      .select({ ...dataColumns, total: sql<number>`count(*) over ()`.mapWith(Number) } as Record<
+        string,
+        AnySQLiteColumn | SQL
+      >)
+      .from(churchEvents)
+      .where(whereClause)
+      .orderBy(
+        ...orderBy.map((raw) => {
+          const [column, order] = raw.split('.') as [keyof typeof churchEvents, 'asc' | 'desc']
+          const col = churchEvents[column] as AnySQLiteColumn
+          return order === 'asc' ? asc(col) : desc(col)
+        })
+      )
+      .limit(pageSize)
+      .offset((page - 1) * pageSize)
+
+    const selectedRows = rows as (InferSelectModel<typeof churchEvents> & { total: number })[]
+
+    let total: number
+    if (selectedRows.length > 0) {
+      total = selectedRows[0].total
+    } else {
+      const countResult = await db
         .select({ churchEventsCount: count(churchEvents.slug) })
         .from(churchEvents)
-        .where(
-          and(
-            !includeEndedEvents
-              ? and(gte(churchEvents.startDate, new Date()), gte(churchEvents.endDate, new Date()))
-              : undefined,
-            searchFilter(churchEvents)
-          )
-        ),
-    ])
+        .where(whereClause)
+      total = countResult[0].churchEventsCount
+    }
 
-    return { churchEvents: data, total: total[0].churchEventsCount }
+    return {
+      churchEvents: selectedRows.map(({ total: _total, ...event }) => event) as InferSelectModel<
+        typeof churchEvents
+      >[],
+      total,
+    }
   }
 
   async getChurchEventsByYearMonth<TColumns extends EventsColumns>(

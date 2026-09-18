@@ -1,7 +1,7 @@
+import { lazy, Suspense } from 'react'
 import { createFileRoute, stripSearchParams } from '@tanstack/react-router'
 import { DashboardHeading } from '#/features/dashboard/components/dashboard-heading'
 import { UsersList } from '#/features/user/components/admin/users-list.tsx'
-import { CreateFakeUserButton } from '#/features/user/components/create-fake-user-button'
 import { DebouncedInput } from '#/shared/components/debounced-input'
 import {
   Card,
@@ -13,6 +13,14 @@ import {
 import { pageMetadata } from '#/utils/seo'
 import { DASHBOARD_LIST_INITIAL_FILTERS } from '#shared/constants/dashboard.ts'
 import { dashboardSearchSchema } from '#shared/schemas/dashboard/search.schema.ts'
+
+const CreateFakeUserButton = import.meta.env.DEV
+  ? lazy(() =>
+      import('#/features/user/components/create-fake-user-button').then((m) => ({
+        default: m.CreateFakeUserButton,
+      }))
+    )
+  : null
 
 export const Route = createFileRoute('/dashboard/users/')({
   head: () => ({
@@ -47,7 +55,13 @@ function RouteComponent() {
         <DashboardHeading
           title="Utilisateurs"
           description="Page OOC. Gérer les utilisateurs de l'application."
-          right={import.meta.env.DEV ? <CreateFakeUserButton deps={searchParams} /> : undefined}
+          right={
+            CreateFakeUserButton ? (
+              <Suspense fallback={null}>
+                <CreateFakeUserButton deps={searchParams} />
+              </Suspense>
+            ) : undefined
+          }
         />
 
         <Card>
