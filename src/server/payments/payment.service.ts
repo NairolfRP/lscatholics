@@ -245,9 +245,7 @@ export class PaymentService {
   ): Promise<{ reconciled: number; deleted: number }> {
     const expired = await pendingPaymentRepository.findExpired(now)
 
-    const results = await Promise.all(
-      expired.map((pending) => this.#reconcileExpired(pending))
-    )
+    const results = await Promise.all(expired.map((pending) => this.#reconcileExpired(pending)))
 
     return {
       reconciled: results.filter((result) => result.reconciled).length,

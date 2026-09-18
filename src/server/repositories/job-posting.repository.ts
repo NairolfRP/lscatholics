@@ -1,6 +1,6 @@
 import type { InferSelectModel, SQL } from 'drizzle-orm'
-import { and, asc, count, desc, eq, gte, isNull, or, sql } from 'drizzle-orm'
 import type { AnySQLiteColumn } from 'drizzle-orm/sqlite-core'
+import { and, asc, count, desc, eq, gte, isNull, or, sql } from 'drizzle-orm'
 import { CAREERS_PAGINATION_LIMIT } from '#/features/job-posting/constants/job-posting.constants.ts'
 import { db } from '#server/db'
 import { jobPostings } from '#server/db/schema/job-posting-schema'
@@ -124,10 +124,7 @@ class JobPostingRepository extends BaseRepository<typeof jobPostings> {
     const dataColumns =
       columns && Object.keys(columns).length > 0
         ? Object.fromEntries(
-            Object.keys(columns).map((key) => [
-              key,
-              this.schema[key as keyof typeof this.schema],
-            ])
+            Object.keys(columns).map((key) => [key, this.schema[key as keyof typeof this.schema]])
           )
         : Object.fromEntries(
             Object.keys(this.schema).map((key) => [
@@ -145,10 +142,7 @@ class JobPostingRepository extends BaseRepository<typeof jobPostings> {
       .where(whereClause)
       .orderBy(
         ...orderBy.map((raw) => {
-          const [column, order] = raw.split('.') as [
-            keyof typeof this.schema,
-            'asc' | 'desc',
-          ]
+          const [column, order] = raw.split('.') as [keyof typeof this.schema, 'asc' | 'desc']
           const col = this.schema[column] as AnySQLiteColumn
           return order === 'asc' ? asc(col) : desc(col)
         })
