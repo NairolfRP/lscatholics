@@ -176,13 +176,13 @@ importers:
         version: 1.8.0(@date-fns/tz@1.5.0)(@types/react@19.3.0)(date-fns@4.4.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       '@better-auth/drizzle-adapter':
         specifier: ^1.7.5
-        version: 1.7.5(@better-auth/core@1.7.5(@better-auth/utils@0.4.2)(@better-fetch/fetch@1.3.2)(better-call@1.4.0(zod@4.6.5))(jose@6.2.12)(kysely@0.29.6)(nanostores@1.5.3))(@better-auth/utils@0.4.2)(drizzle-orm@1.0.0-rc.5-ab785fc(@tursodatabase/database-common@0.7.2)(@tursodatabase/database@0.7.2)(@tursodatabase/serverless@1.4.0)(zod@4.6.5))
+        version: 1.7.5(@better-auth/core@1.7.5(@better-auth/utils@0.4.2)(@better-fetch/fetch@1.3.2)(better-call@1.4.0(zod@4.6.5))(jose@6.2.12)(kysely@0.29.6)(nanostores@1.5.3))(@better-auth/utils@0.4.2)(drizzle-orm@1.0.0-rc.4(@tursodatabase/database-common@0.7.2)(@tursodatabase/database@0.7.2)(@tursodatabase/serverless@1.4.0)(zod@4.6.5))
       '@better-auth/i18n':
         specifier: ^1.7.5
-        version: 1.7.5(@better-auth/core@1.7.5(@better-auth/utils@0.4.2)(@better-fetch/fetch@1.3.2)(better-call@1.4.0(zod@4.6.5))(jose@6.2.12)(kysely@0.29.6)(nanostores@1.5.3))(better-auth@1.7.5(@tanstack/react-start@1.168.56(crossws@0.4.12(srvx@1.0.5))(esbuild@0.28.2)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(rolldown@1.2.9)(vite@8.2.2(@types/node@26.6.1)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.13)))(drizzle-kit@1.0.0-rc.4(drizzle-orm@1.0.0-rc.5-ab785fc(@tursodatabase/database-common@0.7.2)(@tursodatabase/database@0.7.2)(@tursodatabase/serverless@1.4.0)(zod@4.6.5)))(drizzle-orm@1.0.0-rc.5-ab785fc(@tursodatabase/database-common@0.7.2)(@tursodatabase/database@0.7.2)(@tursodatabase/serverless@1.4.0)(zod@4.6.5))(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(solid-js@1.9.15)(vitest@4.1.11))
+        version: 1.7.5(@better-auth/core@1.7.5(@better-auth/utils@0.4.2)(@better-fetch/fetch@1.3.2)(better-call@1.4.0(zod@4.6.5))(jose@6.2.12)(kysely@0.29.6)(nanostores@1.5.3))(better-auth@1.7.5(@tanstack/react-start@1.168.56(crossws@0.4.12(srvx@1.0.5))(esbuild@0.28.2)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(rolldown@1.2.9)(vite@8.2.2(@types/node@26.6.1)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.13)))(drizzle-kit@1.0.0-rc.4(drizzle-orm@1.0.0-rc.4(@tursodatabase/database-common@0.7.2)(@tursodatabase/database@0.7.2)(@tursodatabase/serverless@1.4.0)(zod@4.6.5)))(drizzle-orm@1.0.0-rc.4(@tursodatabase/database-common@0.7.2)(@tursodatabase/database@0.7.2)(@tursodatabase/serverless@1.4.0)(zod@4.6.5))(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(solid-js@1.9.15)(vitest@4.1.11))
       '@gtaw-oauth-providers/better-auth':
         specifier: 2.2.1
-        version: 2.2.1(better-auth@1.7.5(@tanstack/react-start@1.168.56(crossws@0.4.12(srvx@1.0.5))(esbuild@0.28.2)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(rolldown@1.2.9)(vite@8.2.2(@types/node@26.6.1)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.13)))(drizzle-kit@1.0.0-rc.4(drizzle-orm@1.0.0-rc.5-ab785fc(@tursodatabase/database-common@0.7.2)(@tursodatabase/database@0.7.2)(@tursodatabase/serverless@1.4.0)(zod@4.6.5)))(drizzle-orm@1.0.0-rc.5-ab785fc(@tursodatabase/database-common@0.7.2)(@tursodatabase/database@0.7.2)(@tursodatabase/serverless@1.4.0)(zod@4.6.5))(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(solid-js@1.9.15)(vitest@4.1.11))
+        version: 2.2.1(better-auth@1.7.5(@tanstack/react-start@1.168.56(crossws@0.4.12(srvx@1.0.5))(esbuild@0.28.2)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(rolldown@1.2.9)(vite@8.2.2(@types/node@26.6.1)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.13)))(drizzle-kit@1.0.0-rc.4(drizzle-orm@1.0.0-rc.4(@tursodatabase/database-common@0.7.2)(@tursodatabase/database@0.7.2)(@tursodatabase/serverless@1.4.0)(zod@4.6.5)))(drizzle-orm@1.0.0-rc.4(@tursodatabase/database-common@0.7.2)(@tursodatabase/database@0.7.2)(@tursodatabase/serverless@1.4.0)(zod@4.6.5))(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(solid-js@1.9.15)(vitest@4.1.11))
       '@t3-oss/env-core':
         specifier: ^0.13.11
         version: 0.13.11(@typescript/typescript6@6.0.2)(zod@4.6.5)
@@ -233,7 +233,7 @@ importers:
         version: 2.0.0(react@19.3.0)
       better-auth:
         specifier: ^1.7.5
-        version: 1.7.5(@tanstack/react-start@1.168.56(crossws@0.4.12(srvx@1.0.5))(esbuild@0.28.2)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(rolldown@1.2.9)(vite@8.2.2(@types/node@26.6.1)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.13)))(drizzle-kit@1.0.0-rc.4(drizzle-orm@1.0.0-rc.5-ab785fc(@tursodatabase/database-common@0.7.2)(@tursodatabase/database@0.7.2)(@tursodatabase/serverless@1.4.0)(zod@4.6.5)))(drizzle-orm@1.0.0-rc.5-ab785fc(@tursodatabase/database-common@0.7.2)(@tursodatabase/database@0.7.2)(@tursodatabase/serverless@1.4.0)(zod@4.6.5))(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(solid-js@1.9.15)(vitest@4.1.11)
+        version: 1.7.5(@tanstack/react-start@1.168.56(crossws@0.4.12(srvx@1.0.5))(esbuild@0.28.2)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(rolldown@1.2.9)(vite@8.2.2(@types/node@26.6.1)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.13)))(drizzle-kit@1.0.0-rc.4(drizzle-orm@1.0.0-rc.4(@tursodatabase/database-common@0.7.2)(@tursodatabase/database@0.7.2)(@tursodatabase/serverless@1.4.0)(zod@4.6.5)))(drizzle-orm@1.0.0-rc.4(@tursodatabase/database-common@0.7.2)(@tursodatabase/database@0.7.2)(@tursodatabase/serverless@1.4.0)(zod@4.6.5))(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(solid-js@1.9.15)(vitest@4.1.11)
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
@@ -250,8 +250,8 @@ importers:
         specifier: ^11.0.0
         version: 11.0.0
       drizzle-orm:
-        specifier: ^1.0.0-rc.5-ab785fc
-        version: 1.0.0-rc.5-ab785fc(@tursodatabase/database-common@0.7.2)(@tursodatabase/database@0.7.2)(@tursodatabase/serverless@1.4.0)(zod@4.6.5)
+        specifier: 1.0.0-rc.4
+        version: 1.0.0-rc.4(@tursodatabase/database-common@0.7.2)(@tursodatabase/database@0.7.2)(@tursodatabase/serverless@1.4.0)(zod@4.6.5)
       ky:
         specifier: ^2.1.0
         version: 2.1.0
@@ -384,13 +384,13 @@ importers:
         version: 17.4.2
       drizzle-kit:
         specifier: 1.0.0-rc.4
-        version: 1.0.0-rc.4(drizzle-orm@1.0.0-rc.5-ab785fc(@tursodatabase/database-common@0.7.2)(@tursodatabase/database@0.7.2)(@tursodatabase/serverless@1.4.0)(zod@4.6.5))
+        version: 1.0.0-rc.4(drizzle-orm@1.0.0-rc.4(@tursodatabase/database-common@0.7.2)(@tursodatabase/database@0.7.2)(@tursodatabase/serverless@1.4.0)(zod@4.6.5))
       eslint:
         specifier: ^10.10.0
         version: 10.10.0(jiti@2.7.0)
       eslint-plugin-drizzle:
-        specifier: ^1.0.0-rc.5-ab785fc
-        version: 1.0.0-rc.5-ab785fc(eslint@10.10.0(jiti@2.7.0))
+        specifier: 1.0.0-rc.4
+        version: 1.0.0-rc.4(eslint@10.10.0(jiti@2.7.0))
       eslint-plugin-oxlint:
         specifier: ^1.83.0
         version: 1.83.0(oxlint@1.83.0(oxlint-tsgolint@7.0.2001))
@@ -3475,35 +3475,35 @@ packages:
     peerDependencies:
       drizzle-orm: '*'
 
-  drizzle-orm@1.0.0-rc.5-ab785fc:
-    resolution: {integrity: sha512-28PVt0PS/+4kPa8eKr4mqP8y/YcbdOgdVcGUa6LGl2Kd2bykNWuf/WUOFoSCoynagblbcRgMO1zChLvRcWD6Tg==}
+  drizzle-orm@1.0.0-rc.4:
+    resolution: {integrity: sha512-BT+pf+qoiYHqltoA88Jmf6ilGMXPlpfE0hEJKc2adRtMCAl25Swk/t5gXcWxZNAwdtf3F5gCd2FpeOyP/pT0Hw==}
     peerDependencies:
       '@aws-sdk/client-rds-data': '>=3'
       '@cloudflare/workers-types': '>=4'
-      '@effect/sql-d1': '>=4.0.0-beta.105 || >=4.0.0'
-      '@effect/sql-libsql': '>=4.0.0-beta.105 || >=4.0.0'
-      '@effect/sql-mysql2': '>=4.0.0-beta.105 || >=4.0.0'
-      '@effect/sql-pg': '>=4.0.0-beta.105 || >=4.0.0'
-      '@effect/sql-pglite': '>=4.0.0-beta.105 || >=4.0.0'
-      '@effect/sql-sqlite-bun': '>=4.0.0-beta.105 || >=4.0.0'
-      '@effect/sql-sqlite-do': '>=4.0.0-beta.105 || >=4.0.0'
-      '@effect/sql-sqlite-node': '>=4.0.0-beta.105 || >=4.0.0'
-      '@effect/sql-sqlite-wasm': '>=4.0.0-beta.105 || >=4.0.0'
+      '@effect/sql-d1': '>=4.0.0-beta.83 || >=4.0.0'
+      '@effect/sql-libsql': '>=4.0.0-beta.83 || >=4.0.0'
+      '@effect/sql-mysql2': '>=4.0.0-beta.83 || >=4.0.0'
+      '@effect/sql-pg': '>=4.0.0-beta.83 || >=4.0.0'
+      '@effect/sql-pglite': '>=4.0.0-beta.83 || >=4.0.0'
+      '@effect/sql-sqlite-bun': '>=4.0.0-beta.83 || >=4.0.0'
+      '@effect/sql-sqlite-do': '>=4.0.0-beta.83 || >=4.0.0'
+      '@effect/sql-sqlite-node': '>=4.0.0-beta.83 || >=4.0.0'
+      '@effect/sql-sqlite-wasm': '>=4.0.0-beta.83 || >=4.0.0'
       '@electric-sql/pglite': '>=0.2.0'
       '@libsql/client': '>=0.10.0'
       '@libsql/client-wasm': '>=0.10.0'
       '@neondatabase/serverless': '>=0.10.0'
-      '@op-engineering/op-sqlite': '>=17'
+      '@op-engineering/op-sqlite': '>=2'
       '@opentelemetry/api': ^1.4.1
       '@planetscale/database': '>=1.13'
       '@sinclair/typebox': '>=0.34.8'
       '@sqlitecloud/drivers': '>=1.0.653'
       '@tidbcloud/serverless': '*'
-      '@tursodatabase/database': '>=0.7.1'
-      '@tursodatabase/database-common': '>=0.7.1'
-      '@tursodatabase/database-wasm': '>=0.7.1'
-      '@tursodatabase/serverless': '>=1.4.0'
-      '@tursodatabase/sync': '>=0.7.1'
+      '@tursodatabase/database': '>=0.6.0-pre.28 || >=0.6.0'
+      '@tursodatabase/database-common': '>=0.6.0-pre.28 || >=0.6.0'
+      '@tursodatabase/database-wasm': '>=0.6.0-pre.28 || >=0.6.0'
+      '@tursodatabase/serverless': '>=1.1.3'
+      '@tursodatabase/sync': '>=0.6.0-pre.28 || >=0.6.0'
       '@types/better-sqlite3': '*'
       '@types/mssql': ^9.1.4
       '@types/pg': '*'
@@ -3514,16 +3514,15 @@ packages:
       arktype: '>=2.0.0'
       better-sqlite3: '>=9.3.0'
       bun-types: '*'
-      effect: '>=4.0.0-beta.105 || >=4.0.0'
+      effect: '>=4.0.0-beta.83 || >=4.0.0'
       expo-sqlite: '>=14.0.0'
-      minipg: '>=0.2.0'
       mssql: ^11.0.1
       mysql2: '>=2'
       pg: '>=8'
       postgres: '>=3'
       sql.js: '>=1'
       sqlite3: '>=5'
-      typebox: '>=1.2.0'
+      typebox: '>=1.0.0'
       valibot: '>=1.0.0-beta.7'
       zod: ^3.25.0 || ^4.0.0
     peerDependenciesMeta:
@@ -3602,8 +3601,6 @@ packages:
       effect:
         optional: true
       expo-sqlite:
-        optional: true
-      minipg:
         optional: true
       mssql:
         optional: true
@@ -3714,8 +3711,8 @@ packages:
     resolution: {integrity: sha512-/veY75JbMK4j1yjvuUxuVsiS/hr/4iHs9FTT6cgTexxdE0Ly/glccBAkloH/DofkjRbZU3bnoj38mOmhkZ0lHw==}
     engines: {node: '>=12'}
 
-  eslint-plugin-drizzle@1.0.0-rc.5-ab785fc:
-    resolution: {integrity: sha512-kRNC2LS/6ay1lkX3UA3JJvtaesYZegFZ38W2XnS1XAiQubUZvWQlSHQaI82aDwqwgGsOS61qoanKINu/Hzqo3g==}
+  eslint-plugin-drizzle@1.0.0-rc.4:
+    resolution: {integrity: sha512-bXxOn9HBWI3Ico5zFshPHMyN6DZUA9LOvFAgugIges2rLLIX3t470L9adHxiyqtkymnELr7YWhCXaeA8F4s/CA==}
     peerDependencies:
       eslint: '>=8.0.0'
 
@@ -6146,17 +6143,17 @@ snapshots:
       nanostores: 1.5.3
       zod: 4.6.5
 
-  '@better-auth/drizzle-adapter@1.7.5(@better-auth/core@1.7.5(@better-auth/utils@0.4.2)(@better-fetch/fetch@1.3.2)(better-call@1.4.0(zod@4.6.5))(jose@6.2.12)(kysely@0.29.6)(nanostores@1.5.3))(@better-auth/utils@0.4.2)(drizzle-orm@1.0.0-rc.5-ab785fc(@tursodatabase/database-common@0.7.2)(@tursodatabase/database@0.7.2)(@tursodatabase/serverless@1.4.0)(zod@4.6.5))':
+  '@better-auth/drizzle-adapter@1.7.5(@better-auth/core@1.7.5(@better-auth/utils@0.4.2)(@better-fetch/fetch@1.3.2)(better-call@1.4.0(zod@4.6.5))(jose@6.2.12)(kysely@0.29.6)(nanostores@1.5.3))(@better-auth/utils@0.4.2)(drizzle-orm@1.0.0-rc.4(@tursodatabase/database-common@0.7.2)(@tursodatabase/database@0.7.2)(@tursodatabase/serverless@1.4.0)(zod@4.6.5))':
     dependencies:
       '@better-auth/core': 1.7.5(@better-auth/utils@0.4.2)(@better-fetch/fetch@1.3.2)(better-call@1.4.0(zod@4.6.5))(jose@6.2.12)(kysely@0.29.6)(nanostores@1.5.3)
       '@better-auth/utils': 0.4.2
     optionalDependencies:
-      drizzle-orm: 1.0.0-rc.5-ab785fc(@tursodatabase/database-common@0.7.2)(@tursodatabase/database@0.7.2)(@tursodatabase/serverless@1.4.0)(zod@4.6.5)
+      drizzle-orm: 1.0.0-rc.4(@tursodatabase/database-common@0.7.2)(@tursodatabase/database@0.7.2)(@tursodatabase/serverless@1.4.0)(zod@4.6.5)
 
-  '@better-auth/i18n@1.7.5(@better-auth/core@1.7.5(@better-auth/utils@0.4.2)(@better-fetch/fetch@1.3.2)(better-call@1.4.0(zod@4.6.5))(jose@6.2.12)(kysely@0.29.6)(nanostores@1.5.3))(better-auth@1.7.5(@tanstack/react-start@1.168.56(crossws@0.4.12(srvx@1.0.5))(esbuild@0.28.2)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(rolldown@1.2.9)(vite@8.2.2(@types/node@26.6.1)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.13)))(drizzle-kit@1.0.0-rc.4(drizzle-orm@1.0.0-rc.5-ab785fc(@tursodatabase/database-common@0.7.2)(@tursodatabase/database@0.7.2)(@tursodatabase/serverless@1.4.0)(zod@4.6.5)))(drizzle-orm@1.0.0-rc.5-ab785fc(@tursodatabase/database-common@0.7.2)(@tursodatabase/database@0.7.2)(@tursodatabase/serverless@1.4.0)(zod@4.6.5))(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(solid-js@1.9.15)(vitest@4.1.11))':
+  '@better-auth/i18n@1.7.5(@better-auth/core@1.7.5(@better-auth/utils@0.4.2)(@better-fetch/fetch@1.3.2)(better-call@1.4.0(zod@4.6.5))(jose@6.2.12)(kysely@0.29.6)(nanostores@1.5.3))(better-auth@1.7.5(@tanstack/react-start@1.168.56(crossws@0.4.12(srvx@1.0.5))(esbuild@0.28.2)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(rolldown@1.2.9)(vite@8.2.2(@types/node@26.6.1)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.13)))(drizzle-kit@1.0.0-rc.4(drizzle-orm@1.0.0-rc.4(@tursodatabase/database-common@0.7.2)(@tursodatabase/database@0.7.2)(@tursodatabase/serverless@1.4.0)(zod@4.6.5)))(drizzle-orm@1.0.0-rc.4(@tursodatabase/database-common@0.7.2)(@tursodatabase/database@0.7.2)(@tursodatabase/serverless@1.4.0)(zod@4.6.5))(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(solid-js@1.9.15)(vitest@4.1.11))':
     dependencies:
       '@better-auth/core': 1.7.5(@better-auth/utils@0.4.2)(@better-fetch/fetch@1.3.2)(better-call@1.4.0(zod@4.6.5))(jose@6.2.12)(kysely@0.29.6)(nanostores@1.5.3)
-      better-auth: 1.7.5(@tanstack/react-start@1.168.56(crossws@0.4.12(srvx@1.0.5))(esbuild@0.28.2)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(rolldown@1.2.9)(vite@8.2.2(@types/node@26.6.1)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.13)))(drizzle-kit@1.0.0-rc.4(drizzle-orm@1.0.0-rc.5-ab785fc(@tursodatabase/database-common@0.7.2)(@tursodatabase/database@0.7.2)(@tursodatabase/serverless@1.4.0)(zod@4.6.5)))(drizzle-orm@1.0.0-rc.5-ab785fc(@tursodatabase/database-common@0.7.2)(@tursodatabase/database@0.7.2)(@tursodatabase/serverless@1.4.0)(zod@4.6.5))(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(solid-js@1.9.15)(vitest@4.1.11)
+      better-auth: 1.7.5(@tanstack/react-start@1.168.56(crossws@0.4.12(srvx@1.0.5))(esbuild@0.28.2)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(rolldown@1.2.9)(vite@8.2.2(@types/node@26.6.1)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.13)))(drizzle-kit@1.0.0-rc.4(drizzle-orm@1.0.0-rc.4(@tursodatabase/database-common@0.7.2)(@tursodatabase/database@0.7.2)(@tursodatabase/serverless@1.4.0)(zod@4.6.5)))(drizzle-orm@1.0.0-rc.4(@tursodatabase/database-common@0.7.2)(@tursodatabase/database@0.7.2)(@tursodatabase/serverless@1.4.0)(zod@4.6.5))(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(solid-js@1.9.15)(vitest@4.1.11)
 
   '@better-auth/kysely-adapter@1.7.5(@better-auth/core@1.7.5(@better-auth/utils@0.4.2)(@better-fetch/fetch@1.3.2)(better-call@1.4.0(zod@4.6.5))(jose@6.2.12)(kysely@0.29.6)(nanostores@1.5.3))(@better-auth/utils@0.4.2)(kysely@0.29.6)':
     dependencies:
@@ -6518,9 +6515,9 @@ snapshots:
 
   '@floating-ui/utils@0.2.12': {}
 
-  '@gtaw-oauth-providers/better-auth@2.2.1(better-auth@1.7.5(@tanstack/react-start@1.168.56(crossws@0.4.12(srvx@1.0.5))(esbuild@0.28.2)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(rolldown@1.2.9)(vite@8.2.2(@types/node@26.6.1)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.13)))(drizzle-kit@1.0.0-rc.4(drizzle-orm@1.0.0-rc.5-ab785fc(@tursodatabase/database-common@0.7.2)(@tursodatabase/database@0.7.2)(@tursodatabase/serverless@1.4.0)(zod@4.6.5)))(drizzle-orm@1.0.0-rc.5-ab785fc(@tursodatabase/database-common@0.7.2)(@tursodatabase/database@0.7.2)(@tursodatabase/serverless@1.4.0)(zod@4.6.5))(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(solid-js@1.9.15)(vitest@4.1.11))':
+  '@gtaw-oauth-providers/better-auth@2.2.1(better-auth@1.7.5(@tanstack/react-start@1.168.56(crossws@0.4.12(srvx@1.0.5))(esbuild@0.28.2)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(rolldown@1.2.9)(vite@8.2.2(@types/node@26.6.1)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.13)))(drizzle-kit@1.0.0-rc.4(drizzle-orm@1.0.0-rc.4(@tursodatabase/database-common@0.7.2)(@tursodatabase/database@0.7.2)(@tursodatabase/serverless@1.4.0)(zod@4.6.5)))(drizzle-orm@1.0.0-rc.4(@tursodatabase/database-common@0.7.2)(@tursodatabase/database@0.7.2)(@tursodatabase/serverless@1.4.0)(zod@4.6.5))(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(solid-js@1.9.15)(vitest@4.1.11))':
     dependencies:
-      better-auth: 1.7.5(@tanstack/react-start@1.168.56(crossws@0.4.12(srvx@1.0.5))(esbuild@0.28.2)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(rolldown@1.2.9)(vite@8.2.2(@types/node@26.6.1)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.13)))(drizzle-kit@1.0.0-rc.4(drizzle-orm@1.0.0-rc.5-ab785fc(@tursodatabase/database-common@0.7.2)(@tursodatabase/database@0.7.2)(@tursodatabase/serverless@1.4.0)(zod@4.6.5)))(drizzle-orm@1.0.0-rc.5-ab785fc(@tursodatabase/database-common@0.7.2)(@tursodatabase/database@0.7.2)(@tursodatabase/serverless@1.4.0)(zod@4.6.5))(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(solid-js@1.9.15)(vitest@4.1.11)
+      better-auth: 1.7.5(@tanstack/react-start@1.168.56(crossws@0.4.12(srvx@1.0.5))(esbuild@0.28.2)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(rolldown@1.2.9)(vite@8.2.2(@types/node@26.6.1)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.13)))(drizzle-kit@1.0.0-rc.4(drizzle-orm@1.0.0-rc.4(@tursodatabase/database-common@0.7.2)(@tursodatabase/database@0.7.2)(@tursodatabase/serverless@1.4.0)(zod@4.6.5)))(drizzle-orm@1.0.0-rc.4(@tursodatabase/database-common@0.7.2)(@tursodatabase/database@0.7.2)(@tursodatabase/serverless@1.4.0)(zod@4.6.5))(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(solid-js@1.9.15)(vitest@4.1.11)
       ky: 2.1.0
 
   '@hono/node-server@2.1.1(hono@4.13.8)':
@@ -8190,10 +8187,10 @@ snapshots:
 
   baseline-browser-mapping@2.11.25: {}
 
-  better-auth@1.7.5(@tanstack/react-start@1.168.56(crossws@0.4.12(srvx@1.0.5))(esbuild@0.28.2)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(rolldown@1.2.9)(vite@8.2.2(@types/node@26.6.1)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.13)))(drizzle-kit@1.0.0-rc.4(drizzle-orm@1.0.0-rc.5-ab785fc(@tursodatabase/database-common@0.7.2)(@tursodatabase/database@0.7.2)(@tursodatabase/serverless@1.4.0)(zod@4.6.5)))(drizzle-orm@1.0.0-rc.5-ab785fc(@tursodatabase/database-common@0.7.2)(@tursodatabase/database@0.7.2)(@tursodatabase/serverless@1.4.0)(zod@4.6.5))(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(solid-js@1.9.15)(vitest@4.1.11):
+  better-auth@1.7.5(@tanstack/react-start@1.168.56(crossws@0.4.12(srvx@1.0.5))(esbuild@0.28.2)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(rolldown@1.2.9)(vite@8.2.2(@types/node@26.6.1)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.13)))(drizzle-kit@1.0.0-rc.4(drizzle-orm@1.0.0-rc.4(@tursodatabase/database-common@0.7.2)(@tursodatabase/database@0.7.2)(@tursodatabase/serverless@1.4.0)(zod@4.6.5)))(drizzle-orm@1.0.0-rc.4(@tursodatabase/database-common@0.7.2)(@tursodatabase/database@0.7.2)(@tursodatabase/serverless@1.4.0)(zod@4.6.5))(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(solid-js@1.9.15)(vitest@4.1.11):
     dependencies:
       '@better-auth/core': 1.7.5(@better-auth/utils@0.4.2)(@better-fetch/fetch@1.3.2)(better-call@1.4.0(zod@4.6.5))(jose@6.2.12)(kysely@0.29.6)(nanostores@1.5.3)
-      '@better-auth/drizzle-adapter': 1.7.5(@better-auth/core@1.7.5(@better-auth/utils@0.4.2)(@better-fetch/fetch@1.3.2)(better-call@1.4.0(zod@4.6.5))(jose@6.2.12)(kysely@0.29.6)(nanostores@1.5.3))(@better-auth/utils@0.4.2)(drizzle-orm@1.0.0-rc.5-ab785fc(@tursodatabase/database-common@0.7.2)(@tursodatabase/database@0.7.2)(@tursodatabase/serverless@1.4.0)(zod@4.6.5))
+      '@better-auth/drizzle-adapter': 1.7.5(@better-auth/core@1.7.5(@better-auth/utils@0.4.2)(@better-fetch/fetch@1.3.2)(better-call@1.4.0(zod@4.6.5))(jose@6.2.12)(kysely@0.29.6)(nanostores@1.5.3))(@better-auth/utils@0.4.2)(drizzle-orm@1.0.0-rc.4(@tursodatabase/database-common@0.7.2)(@tursodatabase/database@0.7.2)(@tursodatabase/serverless@1.4.0)(zod@4.6.5))
       '@better-auth/kysely-adapter': 1.7.5(@better-auth/core@1.7.5(@better-auth/utils@0.4.2)(@better-fetch/fetch@1.3.2)(better-call@1.4.0(zod@4.6.5))(jose@6.2.12)(kysely@0.29.6)(nanostores@1.5.3))(@better-auth/utils@0.4.2)(kysely@0.29.6)
       '@better-auth/memory-adapter': 1.7.5(@better-auth/core@1.7.5(@better-auth/utils@0.4.2)(@better-fetch/fetch@1.3.2)(better-call@1.4.0(zod@4.6.5))(jose@6.2.12)(kysely@0.29.6)(nanostores@1.5.3))(@better-auth/utils@0.4.2)
       '@better-auth/mongo-adapter': 1.7.5(@better-auth/core@1.7.5(@better-auth/utils@0.4.2)(@better-fetch/fetch@1.3.2)(better-call@1.4.0(zod@4.6.5))(jose@6.2.12)(kysely@0.29.6)(nanostores@1.5.3))(@better-auth/utils@0.4.2)
@@ -8211,8 +8208,8 @@ snapshots:
       zod: 4.6.5
     optionalDependencies:
       '@tanstack/react-start': 1.168.56(crossws@0.4.12(srvx@1.0.5))(esbuild@0.28.2)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(rolldown@1.2.9)(vite@8.2.2(@types/node@26.6.1)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.13))
-      drizzle-kit: 1.0.0-rc.4(drizzle-orm@1.0.0-rc.5-ab785fc(@tursodatabase/database-common@0.7.2)(@tursodatabase/database@0.7.2)(@tursodatabase/serverless@1.4.0)(zod@4.6.5))
-      drizzle-orm: 1.0.0-rc.5-ab785fc(@tursodatabase/database-common@0.7.2)(@tursodatabase/database@0.7.2)(@tursodatabase/serverless@1.4.0)(zod@4.6.5)
+      drizzle-kit: 1.0.0-rc.4(drizzle-orm@1.0.0-rc.4(@tursodatabase/database-common@0.7.2)(@tursodatabase/database@0.7.2)(@tursodatabase/serverless@1.4.0)(zod@4.6.5))
+      drizzle-orm: 1.0.0-rc.4(@tursodatabase/database-common@0.7.2)(@tursodatabase/database@0.7.2)(@tursodatabase/serverless@1.4.0)(zod@4.6.5)
       react: 19.3.0
       react-dom: 19.3.0(react@19.3.0)
       solid-js: 1.9.15
@@ -8512,16 +8509,16 @@ snapshots:
 
   dotenv@17.4.2: {}
 
-  drizzle-kit@1.0.0-rc.4(drizzle-orm@1.0.0-rc.5-ab785fc(@tursodatabase/database-common@0.7.2)(@tursodatabase/database@0.7.2)(@tursodatabase/serverless@1.4.0)(zod@4.6.5)):
+  drizzle-kit@1.0.0-rc.4(drizzle-orm@1.0.0-rc.4(@tursodatabase/database-common@0.7.2)(@tursodatabase/database@0.7.2)(@tursodatabase/serverless@1.4.0)(zod@4.6.5)):
     dependencies:
       '@drizzle-team/brocli': 0.12.1
       '@js-temporal/polyfill': 0.5.1
-      drizzle-orm: 1.0.0-rc.5-ab785fc(@tursodatabase/database-common@0.7.2)(@tursodatabase/database@0.7.2)(@tursodatabase/serverless@1.4.0)(zod@4.6.5)
+      drizzle-orm: 1.0.0-rc.4(@tursodatabase/database-common@0.7.2)(@tursodatabase/database@0.7.2)(@tursodatabase/serverless@1.4.0)(zod@4.6.5)
       esbuild: 0.25.12
       get-tsconfig: 4.14.3
       jiti: 2.7.0
 
-  drizzle-orm@1.0.0-rc.5-ab785fc(@tursodatabase/database-common@0.7.2)(@tursodatabase/database@0.7.2)(@tursodatabase/serverless@1.4.0)(zod@4.6.5):
+  drizzle-orm@1.0.0-rc.4(@tursodatabase/database-common@0.7.2)(@tursodatabase/database@0.7.2)(@tursodatabase/serverless@1.4.0)(zod@4.6.5):
     optionalDependencies:
       '@tursodatabase/database': 0.7.2
       '@tursodatabase/database-common': 0.7.2
@@ -8656,7 +8653,7 @@ snapshots:
 
   escape-string-regexp@5.0.0: {}
 
-  eslint-plugin-drizzle@1.0.0-rc.5-ab785fc(eslint@10.10.0(jiti@2.7.0)):
+  eslint-plugin-drizzle@1.0.0-rc.4(eslint@10.10.0(jiti@2.7.0)):
     dependencies:
       eslint: 10.10.0(jiti@2.7.0)
 
