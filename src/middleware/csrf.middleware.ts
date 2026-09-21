@@ -9,6 +9,5 @@ export const csrfMiddleware = createCsrfMiddleware({
     return secFetchSite === 'same-origin'
   },
   origin: (origin, ctx) =>
-    origin.startsWith(CFX_NUI_ORIGIN) ||
-    origin === new URL(ctx.request.url).origin,
+    origin.startsWith(CFX_NUI_ORIGIN) || origin === new URL(ctx.request.url).origin,
 })
