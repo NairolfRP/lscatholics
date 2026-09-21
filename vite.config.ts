@@ -6,6 +6,7 @@ import tailwindcss from '@tailwindcss/vite'
 import viteReact, { reactCompilerPreset } from '@vitejs/plugin-react'
 import { nitro } from 'nitro/vite'
 import { defineConfig, loadEnv } from 'vite'
+import { VERCEL_IMAGE_SIZES } from '#shared/lib/vercel-image-sizes.ts'
 
 const isDev = process.env.NODE_ENV !== 'production'
 
@@ -42,7 +43,7 @@ const config = defineConfig(({ mode }) => {
             version: 3,
             images: {
               domains: [],
-              sizes: [640, 750, 828, 960, 1080, 1280, 1668, 1920, 2048, 2560, 3200, 3840],
+              sizes: VERCEL_IMAGE_SIZES,
               formats: ['image/avif', 'image/webp'],
               minimumCacheTTL: 60,
             },
