@@ -1,6 +1,5 @@
 import type { PropsWithChildren } from 'react'
 import { createFileRoute, Link } from '@tanstack/react-router'
-import { Image } from '@unpic/react'
 import {
   ChurchIcon,
   GraduationCapIcon,
@@ -8,6 +7,7 @@ import {
   School2Icon,
   UsersRoundIcon,
 } from 'lucide-react'
+import { Image } from '#shared/components/image'
 import { buttonVariants } from '#shared/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '#shared/components/ui/card'
 import { Separator } from '#shared/components/ui/separator'

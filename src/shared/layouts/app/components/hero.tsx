@@ -1,13 +1,13 @@
-import type { ImageProps } from '@unpic/react'
 import type { ComponentProps, ReactNode } from 'react'
 import React from 'react'
 import { Link } from '@tanstack/react-router'
-import { Image } from '@unpic/react'
 import type { Button } from '#/shared/components/ui/button'
 import { buttonVariants } from '#/shared/components/ui/button'
 import { Typography } from '#/shared/components/ui/typography'
 import { cn } from '#/shared/lib/utils'
 import { isExternalLink } from '#/utils/link'
+import { Image } from '#shared/components/image'
+import type { ImageProps } from '#shared/components/image'
 
 export type HeroVariant = 'image' | 'video' | 'minimal' | 'split'
 export type HeroSize = 'sm' | 'md' | 'lg' | 'full'
@@ -277,13 +277,16 @@ export function SplitHero({
         </div>
         <div className={cn('relative min-h-80', sizes[size])}>
           {imageSrc && (
-            <img
-              src={imageSrc}
-              alt={imageAlt}
-              fetchPriority="high"
-              decoding="async"
-              className="absolute inset-0 h-full w-full object-cover"
-              style={{ objectPosition: imagePosition }}
+            <Image
+              {...({
+                src: imageSrc,
+                alt: imageAlt,
+                layout: 'fullWidth',
+                fetchPriority: 'high',
+                decoding: 'async',
+                className: 'absolute inset-0 h-full w-full object-cover',
+                style: { objectPosition: imagePosition },
+              } as ImageProps)}
             />
           )}
           <div

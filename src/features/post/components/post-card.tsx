@@ -1,5 +1,4 @@
 import { Link } from '@tanstack/react-router'
-import { Image } from '@unpic/react'
 import { ArrowRight, CalendarIcon } from 'lucide-react'
 import { Badge } from '#/shared/components/ui/badge'
 import {
@@ -14,6 +13,7 @@ import { Skeleton } from '#/shared/components/ui/skeleton'
 import { cn } from '#/shared/lib/utils'
 import { formatDate } from '#/utils/date'
 import { imageUrl } from '#/utils/image'
+import { Image } from '#shared/components/image'
 
 type Props = {
   slug: string

@@ -1,10 +1,10 @@
 import { createFileRoute, Link, notFound } from '@tanstack/react-router'
-import { Image } from '@unpic/react'
 import { ArrowRightIcon, Building2Icon, PhoneIcon, UserRoundIcon } from 'lucide-react'
 import { departments } from '#/config/departments.ts'
 import { getDepartmentBySlug } from '#/utils/department.ts'
 import type { ResolvedDepartment } from '#/utils/department.ts'
 import { pageMetadata } from '#/utils/seo.ts'
+import { Image } from '#shared/components/image'
 import { buttonVariants } from '#shared/components/ui/button'
 import {
   Card,

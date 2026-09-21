@@ -37,6 +37,17 @@ const config = defineConfig(({ mode }) => {
         scheduledTasks: {
           '0 3 * * *': ['cleanup'],
         },
+        vercel: {
+          config: {
+            version: 3,
+            images: {
+              domains: [],
+              sizes: [640, 750, 828, 960, 1080, 1280, 1668, 1920, 2048, 2560, 3200, 3840],
+              formats: ['image/avif', 'image/webp'],
+              minimumCacheTTL: 60,
+            },
+          },
+        },
       }),
       tailwindcss(),
       tanstackStart({

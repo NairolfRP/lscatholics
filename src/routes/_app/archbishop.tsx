@@ -1,8 +1,8 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { Image } from '@unpic/react'
 import { pageMetadata } from '#/utils/seo.ts'
 import EyefindMatic from '#shared/components/icons/eyefind-matic.tsx'
 import FacebrowserIcon from '#shared/components/icons/facebrowser.tsx'
+import { Image } from '#shared/components/image'
 import { buttonVariants } from '#shared/components/ui/button'
 import {
   Card,

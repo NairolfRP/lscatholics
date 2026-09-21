@@ -1,5 +1,5 @@
-import { Image } from '@unpic/react'
 import { ArrowDownIcon, HandHeartIcon } from 'lucide-react'
+import { Image } from '#shared/components/image'
 import { buttonVariants } from '#shared/components/ui/button'
 
 const stats = [

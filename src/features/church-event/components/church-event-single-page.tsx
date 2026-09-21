@@ -1,6 +1,5 @@
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { Link, useParams } from '@tanstack/react-router'
-import { Image } from '@unpic/react'
 import {
   ArrowLeftIcon,
   CalendarDaysIcon,
@@ -13,6 +12,7 @@ import {
 import { singleChurchEventQueryOptions } from '#/features/church-event/queries.ts'
 import { formatDateTime } from '#/utils/date.ts'
 import { imageUrl } from '#/utils/image.ts'
+import { Image } from '#shared/components/image'
 import { Alert, AlertTitle } from '#shared/components/ui/alert.tsx'
 import { Badge } from '#shared/components/ui/badge.tsx'
 import { buttonVariants } from '#shared/components/ui/button.tsx'

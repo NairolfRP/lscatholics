@@ -1,5 +1,5 @@
-import type { ImageProps } from '@unpic/react'
-import { Image } from '@unpic/react'
+import { Image } from '#shared/components/image'
+import type { ImageProps } from '#shared/components/image'
 
 type Props = Omit<ImageProps, 'src' | 'alt'> & {
   alt?: string

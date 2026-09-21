@@ -1,5 +1,4 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
-import { Image } from '@unpic/react'
 import {
   ArrowRightIcon,
   BookOpenIcon,
@@ -15,6 +14,7 @@ import {
 import type { VocationsSelfTestResult } from '#/features/vocations/components/vocations-self-test.tsx'
 import { VocationsSelfTest } from '#/features/vocations/components/vocations-self-test.tsx'
 import { pageMetadata } from '#/utils/seo.ts'
+import { Image } from '#shared/components/image'
 import { Button, buttonVariants } from '#shared/components/ui/button'
 import { Tooltip, TooltipContent, TooltipTrigger } from '#shared/components/ui/tooltip.tsx'
 import { cn } from '#shared/lib/utils.ts'

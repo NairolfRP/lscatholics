@@ -1,7 +1,6 @@
 import { Fragment } from 'react/jsx-runtime'
 import { useQuery } from '@tanstack/react-query'
 import { Link } from '@tanstack/react-router'
-import { Image } from '@unpic/react'
 import { AlertCircleIcon, CalendarIcon } from 'lucide-react'
 import { Alert, AlertDescription, AlertTitle } from '#/shared/components/ui/alert'
 import { Badge } from '#/shared/components/ui/badge'
@@ -11,6 +10,7 @@ import { Skeleton } from '#/shared/components/ui/skeleton'
 import { Typography } from '#/shared/components/ui/typography'
 import { formatDate } from '#/utils/date'
 import { imageUrl } from '#/utils/image'
+import { Image } from '#shared/components/image'
 import { latestPostsQueryOptions } from '#shared/queries/post.queries.ts'
 
 export function LatestPostsSection() {

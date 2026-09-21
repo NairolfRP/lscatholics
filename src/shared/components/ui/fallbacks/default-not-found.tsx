@@ -1,4 +1,4 @@
-import { Image } from '@unpic/react'
+import { Image } from '#shared/components/image'
 
 export function DefaultNotFound() {
   return (

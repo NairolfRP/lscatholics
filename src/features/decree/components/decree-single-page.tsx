@@ -1,12 +1,12 @@
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { Link, notFound, useParams } from '@tanstack/react-router'
-import { Image } from '@unpic/react'
 import { ArrowLeftIcon, CalendarDaysIcon, ScrollTextIcon, ShieldCheckIcon } from 'lucide-react'
 import { DECREE_CATEGORIES } from '#/features/decree/constants/decree.constants.ts'
 import { decreeQueryOptions } from '#/features/decree/queries.ts'
 import type { Decree, DecreeField } from '#/features/decree/types/decree.types.ts'
 import { formatDate } from '#/utils/date.ts'
 import { imageUrl } from '#/utils/image.ts'
+import { Image } from '#shared/components/image'
 import { Badge } from '#shared/components/ui/badge.tsx'
 import { buttonVariants } from '#shared/components/ui/button.tsx'
 import {
