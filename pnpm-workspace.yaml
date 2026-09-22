@@ -46,6 +46,7 @@ minimumReleaseAgeExclude:
   - '@tanstack/query-devtools@5.102.2'
   - '@tanstack/react-query-devtools@5.102.2'
 allowBuilds:
+  '@sentry/cli': true
   esbuild: true
 overrides:
   rolldown: ~1.2.7

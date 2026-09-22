@@ -2,6 +2,7 @@ import { fileURLToPath } from 'node:url'
 import { devtools } from '@tanstack/devtools-vite'
 import { tanstackStart } from '@tanstack/react-start/plugin/vite'
 import babel from '@rolldown/plugin-babel'
+import { sentryTanstackStart } from '@sentry/tanstackstart-react/vite'
 import tailwindcss from '@tailwindcss/vite'
 import viteReact, { reactCompilerPreset } from '@vitejs/plugin-react'
 import { nitro } from 'nitro/vite'
@@ -19,11 +20,16 @@ const config = defineConfig(({ mode }) => {
       tsconfigPaths: true,
     },
     env,
+    define: {
+      __SENTRY_ENVIRONMENT__: JSON.stringify(
+        process.env.VERCEL_ENV ?? (mode === 'production' ? 'production' : 'development')
+      ),
+    },
     build: {
       target: 'chrome103',
       cssTarget: 'chrome111',
       minify: 'oxc',
-      sourcemap: false,
+      sourcemap: env.SENTRY_AUTH_TOKEN ? undefined : false,
     },
     plugins: [
       ...(isDev ? [devtools()] : []),
@@ -61,6 +67,17 @@ const config = defineConfig(({ mode }) => {
       }),
       viteReact(),
       babel({ presets: [reactCompilerPreset()] }),
+      ...(isDev
+        ? []
+        : [
+            sentryTanstackStart({
+              org: env.SENTRY_ORG,
+              project: env.SENTRY_PROJECT,
+              authToken: env.SENTRY_AUTH_TOKEN,
+              autoInstrumentMiddleware: false,
+              tunnelRoute: true,
+            }),
+          ]),
     ],
   }
 })

@@ -6,6 +6,7 @@ import { resolvePermissions } from '#/server/services/permission.service.ts'
 import { parseCsvString } from '#/utils/string'
 import { requireAuthMiddleware } from './auth.middleware'
 import { requireGameMiddleware } from './game.middleware'
+import { captureUnexpected, markReported } from './sentry.middleware'
 
 export const adminMiddleware = createMiddleware({ type: 'request' })
   .middleware([requireAuthMiddleware])
@@ -32,8 +33,9 @@ export const adminMiddleware = createMiddleware({ type: 'request' })
       }
 
       logger.error({ err }, 'Admin Middleware failed')
+      captureUnexpected(err)
       setResponseStatus(500)
-      throw new Error('Internal error')
+      throw markReported(new Error('Internal error'))
     }
   })
 

@@ -7,7 +7,7 @@ import { pageMetadata } from '#/utils/seo'
 import { Alert, AlertDescription } from '#shared/components/ui/alert.tsx'
 import { Card, CardContent, CardHeader, CardTitle } from '#shared/components/ui/card.tsx'
 
-const lastUpdated = '11 août 2026'
+const lastUpdated = '22 septembre 2026'
 
 export const Route = createFileRoute('/_app/privacy')({
   head: () => ({
@@ -282,7 +282,7 @@ function RouteComponent() {
             </ul>
           </PrivacyCard>
 
-          <PrivacyCard title="6. Outils d'analyse et de mesure de performance">
+          <PrivacyCard title="6. Outils d'analyse, de mesure de performance et de monitoring">
             <p>Nous utilisons les outils suivants pour améliorer l'expérience utilisateur :</p>
 
             <Typography as="h3" variant="h4" className="mt-6">
@@ -320,6 +320,24 @@ function RouteComponent() {
                 rel="noopener noreferrer"
               >
                 https://vercel.com/docs/speed-insights/privacy-policy
+              </a>
+            </p>
+
+            <Typography as="h3" variant="h4" className="mt-6">
+              6.3 Sentry (monitoring des erreurs)
+            </Typography>
+            <p>
+              Nous utilisons{' '}
+              <a href="https://sentry.io" target="_blank" rel="noopener noreferrer">
+                Sentry
+              </a>{' '}
+              pour détecter et corriger les erreurs inattendues de l'application.
+            </p>
+            <p>Les données sont hébergées dans l'Union européenne.</p>
+            <p>
+              Pour plus d'informations, consultez leur politique de confidentialité :{' '}
+              <a href="https://sentry.io/privacy/" target="_blank" rel="noopener noreferrer">
+                https://sentry.io/privacy/
               </a>
             </p>
           </PrivacyCard>

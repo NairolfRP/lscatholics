@@ -1,5 +1,6 @@
 import { isNotFound, isRedirect } from '@tanstack/react-router'
 import { setResponseStatus } from '@tanstack/react-start/server'
+import { captureUnexpected, markReported } from '#/middleware/sentry.middleware'
 import { HttpException } from '#server/exceptions/http-exception.ts'
 import { logger } from '#server/integrations/logger.ts'
 
@@ -23,6 +24,7 @@ export function handleServiceError(
   }
 
   logger.error({ err, ...context }, message)
+  captureUnexpected(err, context)
   setResponseStatus(500)
-  throw new Error('Internal error')
+  throw markReported(new Error('Internal error'))
 }

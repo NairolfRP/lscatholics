@@ -79,6 +79,8 @@ export const env = createEnv({
     DONATE_PUBLIC_NOTIFICATION_WEBHOOK: z.url().optional(),
     GIFT_SHOP_NOTIFICATION_WEBHOOK:
       process.env.NODE_ENV === 'production' ? z.url() : z.url().optional(),
+    VITE_SENTRY_DSN: z.url().optional(),
+    SENTRY_RELEASE: z.string().optional(),
   },
 
   /**

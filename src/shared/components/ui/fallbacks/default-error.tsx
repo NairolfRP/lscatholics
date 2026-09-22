@@ -1,10 +1,16 @@
+import { useEffect } from 'react'
 import type { ErrorComponentProps } from '@tanstack/react-router'
 import { AlertTriangle, RefreshCw, RotateCcw } from 'lucide-react'
+import { captureUnexpected } from '#/middleware/sentry.middleware'
 import { Button } from '../button'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '../card'
 import { Separator } from '../separator'
 
 export function DefaultErrorComponent({ error, reset }: ErrorComponentProps) {
+  useEffect(() => {
+    captureUnexpected(error)
+  }, [error])
+
   return (
     <div className="flex min-h-screen flex-col items-center justify-center gap-8 bg-background p-4">
       <div className="absolute top-0 left-0 z-0 block h-100 w-full bg-primary" />

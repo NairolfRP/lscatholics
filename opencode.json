@@ -39,6 +39,11 @@
             "type": "local",
             "command": ["pnpm", "drizzle-kit", "mcp"],
             "enabled": true
+        },
+        "sentry": {
+            "type": "remote",
+            "url": "https://mcp.sentry.dev/mcp",
+            "oauth": {}
         }
     }
 }

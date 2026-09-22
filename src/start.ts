@@ -3,6 +3,7 @@ import { getResponseHeaders, setResponseHeaders } from '@tanstack/react-start/se
 import { cspConfig } from './config/csp.server'
 import { securityHeaders } from './config/headers.server'
 import { csrfMiddleware } from './middleware/csrf.middleware'
+import { sentryFunctionMiddleware, sentryRequestMiddleware } from './middleware/sentry.middleware'
 
 const globalHeadersMiddleware = createMiddleware().server(({ next }) => {
   const [nonce, cspHeader] = cspConfig()
@@ -22,6 +23,7 @@ const globalHeadersMiddleware = createMiddleware().server(({ next }) => {
 
 export const startInstance = createStart(() => {
   return {
-    requestMiddleware: [csrfMiddleware, globalHeadersMiddleware],
+    requestMiddleware: [sentryRequestMiddleware, csrfMiddleware, globalHeadersMiddleware],
+    functionMiddleware: [sentryFunctionMiddleware],
   }
 })

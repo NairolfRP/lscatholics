@@ -12,6 +12,7 @@ export const envClient = createEnv({
     VITE_APP_TITLE: z.string().min(1).optional().default('LS Catholics'),
     VITE_APP_URL: z.url(),
     VITE_LANGUAGE: z.string().min(2).optional().default('en'),
+    VITE_SENTRY_DSN: z.url().optional(),
   },
 
   /**
