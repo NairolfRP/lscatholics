@@ -65,6 +65,10 @@ export const navItems: NavItem[] = [
         to: '/volunteers',
       },
       {
+        label: 'Associations de fidèles',
+        to: '/associations',
+      },
+      {
         label: 'Faire un don',
         to: '/donate',
       },
@@ -131,6 +135,10 @@ export const footerNavItems: NavItem[] = [
       {
         label: 'Services',
         to: '/services',
+      },
+      {
+        label: 'Associations de fidèles',
+        to: '/associations',
       },
       {
         label: 'Événements',

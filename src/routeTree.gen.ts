@@ -16,6 +16,7 @@ import { Route as AppIndexRouteImport } from './routes/_app/index'
 import { Route as AppAboutRouteImport } from './routes/_app/about'
 import { Route as AppAccountRouteRouteImport } from './routes/_app/account/route'
 import { Route as AppArchbishopRouteImport } from './routes/_app/archbishop'
+import { Route as AppAssociationsRouteImport } from './routes/_app/associations'
 import { Route as AppCareersRouteImport } from './routes/_app/careers'
 import { Route as AppCharitiesRouteRouteImport } from './routes/_app/charities/route'
 import { Route as AppClergyApplicationRouteImport } from './routes/_app/clergy-application'
@@ -103,6 +104,11 @@ const AppAccountRouteRoute = AppAccountRouteRouteImport.update({
 const AppArchbishopRoute = AppArchbishopRouteImport.update({
   id: '/archbishop',
   path: '/archbishop',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAssociationsRoute = AppAssociationsRouteImport.update({
+  id: '/associations',
+  path: '/associations',
   getParentRoute: () => AppRoute,
 } as any)
 const AppCareersRoute = AppCareersRouteImport.update({
@@ -394,6 +400,7 @@ export interface FileRoutesByFullPath {
   '/dashboard/users': typeof DashboardUsersRouteRouteWithChildren
   '/about': typeof AppAboutRoute
   '/archbishop': typeof AppArchbishopRoute
+  '/associations': typeof AppAssociationsRoute
   '/careers': typeof AppCareersRouteWithChildren
   '/clergy-application': typeof AppClergyApplicationRoute
   '/contact': typeof AppContactRoute
@@ -450,6 +457,7 @@ export interface FileRoutesByTo {
   '/robots.txt': typeof RobotsDottxtRoute
   '/about': typeof AppAboutRoute
   '/archbishop': typeof AppArchbishopRoute
+  '/associations': typeof AppAssociationsRoute
   '/clergy-application': typeof AppClergyApplicationRoute
   '/contact': typeof AppContactRoute
   '/daily-readings': typeof AppDailyReadingsRoute
@@ -513,6 +521,7 @@ export interface FileRoutesById {
   '/dashboard/users': typeof DashboardUsersRouteRouteWithChildren
   '/_app/about': typeof AppAboutRoute
   '/_app/archbishop': typeof AppArchbishopRoute
+  '/_app/associations': typeof AppAssociationsRoute
   '/_app/careers': typeof AppCareersRouteWithChildren
   '/_app/clergy-application': typeof AppClergyApplicationRoute
   '/_app/contact': typeof AppContactRoute
@@ -578,6 +587,7 @@ export interface FileRouteTypes {
     | '/dashboard/users'
     | '/about'
     | '/archbishop'
+    | '/associations'
     | '/careers'
     | '/clergy-application'
     | '/contact'
@@ -634,6 +644,7 @@ export interface FileRouteTypes {
     | '/robots.txt'
     | '/about'
     | '/archbishop'
+    | '/associations'
     | '/clergy-application'
     | '/contact'
     | '/daily-readings'
@@ -696,6 +707,7 @@ export interface FileRouteTypes {
     | '/dashboard/users'
     | '/_app/about'
     | '/_app/archbishop'
+    | '/_app/associations'
     | '/_app/careers'
     | '/_app/clergy-application'
     | '/_app/contact'
@@ -809,6 +821,13 @@ declare module '@tanstack/react-router' {
       path: '/archbishop'
       fullPath: '/archbishop'
       preLoaderRoute: typeof AppArchbishopRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/associations': {
+      id: '/_app/associations'
+      path: '/associations'
+      fullPath: '/associations'
+      preLoaderRoute: typeof AppAssociationsRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/careers': {
@@ -1310,6 +1329,7 @@ interface AppRouteChildren {
   AppDecreesRouteRoute: typeof AppDecreesRouteRouteWithChildren
   AppAboutRoute: typeof AppAboutRoute
   AppArchbishopRoute: typeof AppArchbishopRoute
+  AppAssociationsRoute: typeof AppAssociationsRoute
   AppCareersRoute: typeof AppCareersRouteWithChildren
   AppClergyApplicationRoute: typeof AppClergyApplicationRoute
   AppContactRoute: typeof AppContactRoute
@@ -1340,6 +1360,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppDecreesRouteRoute: AppDecreesRouteRouteWithChildren,
   AppAboutRoute: AppAboutRoute,
   AppArchbishopRoute: AppArchbishopRoute,
+  AppAssociationsRoute: AppAssociationsRoute,
   AppCareersRoute: AppCareersRouteWithChildren,
   AppClergyApplicationRoute: AppClergyApplicationRoute,
   AppContactRoute: AppContactRoute,
