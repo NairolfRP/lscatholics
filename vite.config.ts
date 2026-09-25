@@ -75,6 +75,7 @@ const config = defineConfig(({ mode }) => {
               project: env.SENTRY_PROJECT,
               authToken: env.SENTRY_AUTH_TOKEN,
               autoInstrumentMiddleware: false,
+              telemetry: false,
               tunnelRoute: true,
             }),
           ]),
