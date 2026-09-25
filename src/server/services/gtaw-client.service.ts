@@ -92,13 +92,13 @@ async function forceRefresh<T extends readonly ForceRefreshType[]>(
     switch (type) {
       case 'characters':
         await cachedUserCharacters.invalidate(event, accessToken)
-        logger.debug(`User characters cache invalidated for token %s`, accessToken)
+        logger.debug(`User characters cache invalidated for token %s`, hashToken(accessToken))
         results.characters = await cachedUserCharacters(event, accessToken)
         break
 
       case 'factions':
         await cachedUserFactions.invalidate(event, accessToken)
-        logger.debug(`User factions cache invalidated for token %s`, accessToken)
+        logger.debug(`User factions cache invalidated for token %s`, hashToken(accessToken))
         results.factions = await cachedUserFactions(event, accessToken)
         break
     }
