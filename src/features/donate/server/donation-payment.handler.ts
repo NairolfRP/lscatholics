@@ -20,13 +20,16 @@ class DonationPaymentHandler implements PaymentHandler {
       sendPublicDonationNotification({ ...metadata, amount: payment.amount }),
     ])
     logger.info(
-      { paymentId: payment.id, amount: payment.amount },
+      { source: payment.source, paymentId: payment.id, amount: payment.amount },
       'Donation payment successful, notifications sent'
     )
   }
 
   onFailure(payment: PendingPayment): Promise<void> {
-    logger.warn({ paymentId: payment.id, amount: payment.amount }, 'Donation payment failed')
+    logger.warn(
+      { source: payment.source, paymentId: payment.id, amount: payment.amount },
+      'Donation payment failed'
+    )
     return Promise.resolve()
   }
 }

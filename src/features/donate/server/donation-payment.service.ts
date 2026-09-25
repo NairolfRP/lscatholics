@@ -29,6 +29,11 @@ export async function initiateDonation(data: unknown): Promise<InitiateDonationR
       description: `Don — ${parsed.firstname} ${parsed.lastname}`,
     })
 
+    logger.info(
+      { source: DONATION_SOURCE, paymentId, amount: parsed.amount },
+      'Donation payment initiated'
+    )
+
     return { success: true, paymentId, paymentUrl }
   } catch (err) {
     if (err instanceof z.ZodError) {
@@ -38,7 +43,10 @@ export async function initiateDonation(data: unknown): Promise<InitiateDonationR
     }
 
     if (err instanceof FleecaClientError && err.code === 'UNCONFIGURED') {
-      logger.warn('Attempted donation while Fleeca is not configured')
+      logger.warn(
+        { source: DONATION_SOURCE, errorCode: err.code },
+        'Donation payment provider is unavailable'
+      )
       setResponseStatus(503)
       return {
         success: false,
@@ -47,7 +55,10 @@ export async function initiateDonation(data: unknown): Promise<InitiateDonationR
     }
 
     if (err instanceof FleecaClientError && err.code === 'HTTP' && err.status === 422) {
-      logger.warn('Fleeca rejected the payment request with a validation error (422)')
+      logger.warn(
+        { source: DONATION_SOURCE, errorCode: err.code, status: err.status },
+        'Payment provider rejected the request'
+      )
       setResponseStatus(400)
       return {
         success: false,
@@ -55,7 +66,14 @@ export async function initiateDonation(data: unknown): Promise<InitiateDonationR
       }
     }
 
-    logger.error({ err }, 'Failed to initiate a donation payment')
+    logger.error(
+      {
+        err,
+        source: DONATION_SOURCE,
+        errorType: err instanceof Error ? err.name : typeof err,
+      },
+      'Donation payment initiation failed'
+    )
     setResponseStatus(500)
     return {
       success: false,

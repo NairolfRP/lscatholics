@@ -17,6 +17,31 @@ This project is built with the following technologies:
 - **[Tailwind CSS v4](https://tailwindcss.com)** - Utility-first CSS framework
 - **[Turso](https://turso.tech/)** - SQLite Database
 
+## Sentry logging
+
+Server logs already go through Pino. The Sentry `pinoIntegration` captures Pino `info`, `warn`, and `error` messages automatically, so keep one call at the call site instead of duplicating it with `Sentry.logger`:
+
+```ts
+import { logger } from '#server/integrations/logger.ts'
+
+logger.info(
+  { source: 'donation', paymentId: payment.id, amount: payment.amount },
+  'Donation payment completed'
+)
+
+logger.warn(
+  { source: 'donation', errorCode: 'UNCONFIGURED' },
+  'Donation payment provider is unavailable'
+)
+
+logger.error(
+  { err, source: 'donation', errorType: error.name },
+  'Donation payment initiation failed'
+)
+```
+
+`debug` and `trace` logs stay local. In-game data is fictional by design, so character names, in-game phone numbers and addresses, IDs and serialized errors are safe — and useful — to log. Never attach credentials, tokens, cookies, webhook URLs, card details, or whole request/response payloads (`data`, `body`, `payload`, `rawBody`) to Sentry attributes: those hold real secrets and real form submissions (contact, parishioner, applications). `beforeSendLog` strips them as a safety net, but call sites must still select context deliberately.
+
 ## 📦 Installation
 
 ### Prerequisites
