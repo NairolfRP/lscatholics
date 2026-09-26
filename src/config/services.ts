@@ -472,7 +472,7 @@ export const services: ChurchService[] = [
     ],
   },
 
-  {
+  /*{
     id: CHURCH_SERVICE.QUINCEANERA,
     slug: 'quinceanera',
     title: 'Quinceañera',
@@ -520,5 +520,5 @@ export const services: ChurchService[] = [
         text: 'La Quinceañera peut être célébrée en anglais ou en espagnol.',
       },
     ],
-  },
+  },*/
 ]

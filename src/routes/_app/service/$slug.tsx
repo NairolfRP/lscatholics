@@ -1,10 +1,7 @@
 import type { LucideIcon } from 'lucide-react'
-import type { Components } from 'react-markdown'
-import { createFileRoute, Link, notFound } from '@tanstack/react-router'
 import {
   ArrowLeftIcon,
   ArrowRightIcon,
-  CakeIcon,
   CalendarHeartIcon,
   ChevronRightIcon,
   CrossIcon,
@@ -19,7 +16,9 @@ import {
   ShieldIcon,
   UserRoundIcon,
 } from 'lucide-react'
+import type { Components } from 'react-markdown'
 import ReactMarkdown from 'react-markdown'
+import { createFileRoute, Link, notFound } from '@tanstack/react-router'
 import { serviceCategories } from '#/config/service-categories.ts'
 import { services } from '#/config/services.ts'
 import { pageMetadata } from '#/utils/seo.ts'
@@ -53,7 +52,7 @@ const serviceIcons: Record<ChurchServiceId, LucideIcon> = {
   benediction: HandHeartIcon,
   conference: MicIcon,
   mediation: HandshakeIcon,
-  quinceanera: CakeIcon,
+  // quinceanera: CakeIcon,
 }
 
 export const Route = createFileRoute('/_app/service/$slug')({

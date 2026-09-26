@@ -11,5 +11,5 @@ export const [CHURCH_SERVICE, CHURCH_SERVICE_VALUES] = createEnum({
   BENEDICTION: 'benediction',
   CONFERENCE: 'conference',
   MEDIATION: 'mediation',
-  QUINCEANERA: 'quinceanera',
+  // QUINCEANERA: 'quinceanera',
 })
