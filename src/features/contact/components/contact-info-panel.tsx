@@ -1,5 +1,5 @@
 import type { ComponentType, ReactNode } from 'react'
-import { MapPinIcon, PhoneIcon } from 'lucide-react'
+import { AtSign, MapPinIcon, PhoneIcon } from 'lucide-react'
 import {
   Card,
   CardContent,
@@ -26,6 +26,13 @@ export function ContactInfoPanel() {
             iconClassName="bg-primary/10 text-primary"
             label="Téléphone"
             value={<span className="text-lg leading-7 font-bold text-foreground">700</span>}
+          />
+
+          <InfoRow
+            icon={AtSign}
+            iconClassName="bg-catholic-red/10 text-catholic-red"
+            label="EyefindMail"
+            value={<span className="font-medium text-foreground">contact@lscatholics.org</span>}
           />
 
           <InfoRow
@@ -99,7 +106,7 @@ function InfoRow({
         <Icon className="size-5" />
       </span>
       <div>
-        <p className="text-xs font-bold tracking-wide text-secondary uppercase">{label}</p>
+        <p className="text-xs font-bold tracking-wide text-secondary uppercase select-none">{label}</p>
         <div className="mt-0.5 leading-relaxed">{value}</div>
       </div>
     </div>
