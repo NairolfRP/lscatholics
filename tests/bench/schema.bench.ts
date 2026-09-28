@@ -1,4 +1,4 @@
-import { bench, describe } from 'vitest'
+import { test } from 'vitest'
 import {
   createChurchEventSchema,
   editChurchEventSchema,
@@ -70,48 +70,50 @@ const validJobPosting = {
 
 const postError = createPostSchema.safeParse(invalidPost).error!
 
-describe('post schemas', () => {
-  bench('createPostSchema valid input', () => {
-    createPostSchema.safeParse(validPost)
-  })
-
-  bench('createPostSchema invalid input', () => {
-    createPostSchema.safeParse(invalidPost)
-  })
-
-  bench('postsSearchSchema search params', () => {
-    postsSearchSchema.parse({ page: '3', search: 'saint-michel' })
-  })
+test('post schemas', async ({ bench }) => {
+  await bench.compare(
+    bench('createPostSchema valid input', () => {
+      createPostSchema.safeParse(validPost)
+    }),
+    bench('createPostSchema invalid input', () => {
+      createPostSchema.safeParse(invalidPost)
+    }),
+    bench('postsSearchSchema search params', () => {
+      postsSearchSchema.parse({ page: '3', search: 'saint-michel' })
+    })
+  )
 })
 
-describe('church event schemas', () => {
-  bench('editChurchEventSchema valid input', () => {
-    editChurchEventSchema.safeParse(validChurchEvent)
-  })
-
-  bench('createChurchEventSchema valid input', () => {
-    createChurchEventSchema.safeParse(validChurchEvent)
-  })
+test('church event schemas', async ({ bench }) => {
+  await bench.compare(
+    bench('editChurchEventSchema valid input', () => {
+      editChurchEventSchema.safeParse(validChurchEvent)
+    }),
+    bench('createChurchEventSchema valid input', () => {
+      createChurchEventSchema.safeParse(validChurchEvent)
+    })
+  )
 })
 
-describe('job posting schemas', () => {
-  bench('editJobPostingSchema valid input', () => {
+test('job posting schemas', async ({ bench }) => {
+  await bench('editJobPostingSchema valid input', () => {
     editJobPostingSchema.safeParse(validJobPosting)
-  })
+  }).run()
 })
 
-describe('dashboard filters schema', () => {
-  bench('parse defaults', () => {
-    dashboardFiltersSchema.parse({})
-  })
-
-  bench('parse full filters', () => {
-    dashboardFiltersSchema.parse({ search: 'callahan', page: 4, sortBy: 'createdAt.desc' })
-  })
+test('dashboard filters schema', async ({ bench }) => {
+  await bench.compare(
+    bench('parse defaults', () => {
+      dashboardFiltersSchema.parse({})
+    }),
+    bench('parse full filters', () => {
+      dashboardFiltersSchema.parse({ search: 'callahan', page: 4, sortBy: 'createdAt.desc' })
+    })
+  )
 })
 
-describe('getFieldErrors', () => {
-  bench('map zod issues to field errors', () => {
+test('getFieldErrors', async ({ bench }) => {
+  await bench('map zod issues to field errors', () => {
     getFieldErrors(postError)
-  })
+  }).run()
 })

@@ -1,17 +1,17 @@
-import { bench, describe } from 'vitest'
+import { test } from 'vitest'
 import { isExternalLink } from '#/utils/link'
 import { formatNumber } from '#/utils/number'
 import { sortByToState, stateToSortBy } from '#/utils/table'
 import { createEnum } from '#shared/lib/enum.ts'
 
-describe('formatNumber', () => {
-  bench('format large number', () => {
+test('formatNumber', async ({ bench }) => {
+  await bench('format large number', () => {
     formatNumber(1234567.89)
-  })
+  }).run()
 })
 
-describe('createEnum', () => {
-  bench('freeze enum object', () => {
+test('createEnum', async ({ bench }) => {
+  await bench('freeze enum object', () => {
     createEnum({
       admin: 'admin',
       moderator: 'moderator',
@@ -19,25 +19,27 @@ describe('createEnum', () => {
       guest: 'guest',
       priest: 'priest',
     })
-  })
+  }).run()
 })
 
-describe('isExternalLink', () => {
-  bench('external url', () => {
-    isExternalLink('https://example.com/path')
-  })
-
-  bench('internal url', () => {
-    isExternalLink('/dashboard/settings')
-  })
+test('isExternalLink', async ({ bench }) => {
+  await bench.compare(
+    bench('external url', () => {
+      isExternalLink('https://example.com/path')
+    }),
+    bench('internal url', () => {
+      isExternalLink('/dashboard/settings')
+    })
+  )
 })
 
-describe('table sorting helpers', () => {
-  bench('stateToSortBy', () => {
-    stateToSortBy([{ id: 'createdAt', desc: true }])
-  })
-
-  bench('sortByToState', () => {
-    sortByToState('createdAt.desc')
-  })
+test('table sorting helpers', async ({ bench }) => {
+  await bench.compare(
+    bench('stateToSortBy', () => {
+      stateToSortBy([{ id: 'createdAt', desc: true }])
+    }),
+    bench('sortByToState', () => {
+      sortByToState('createdAt.desc')
+    })
+  )
 })

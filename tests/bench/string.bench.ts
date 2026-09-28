@@ -1,4 +1,4 @@
-import { bench, describe } from 'vitest'
+import { test } from 'vitest'
 import { createSlug, generateExcerpt, parseCsvString } from '#/utils/string'
 
 const title = 'Bénédiction de la nouvelle église Saint-Michel à Los Santos — 2025 !'
@@ -22,28 +22,30 @@ Rejoignez-nous pour ce moment de recueillement et de partage fraternel.`.repeat(
 
 const csv = 'admin, moderator ,  member,,guest,  visitor  ,priest'
 
-describe('createSlug', () => {
-  bench('short title', () => {
-    createSlug(title)
-  })
-
-  bench('long title', () => {
-    createSlug(title.repeat(20))
-  })
+test('createSlug', async ({ bench }) => {
+  await bench.compare(
+    bench('short title', () => {
+      createSlug(title)
+    }),
+    bench('long title', () => {
+      createSlug(title.repeat(20))
+    })
+  )
 })
 
-describe('generateExcerpt', () => {
-  bench('markdown to 160 char excerpt', () => {
-    generateExcerpt(markdown, 160)
-  })
-
-  bench('markdown to 320 char excerpt', () => {
-    generateExcerpt(markdown, 320)
-  })
+test('generateExcerpt', async ({ bench }) => {
+  await bench.compare(
+    bench('markdown to 160 char excerpt', () => {
+      generateExcerpt(markdown, 160)
+    }),
+    bench('markdown to 320 char excerpt', () => {
+      generateExcerpt(markdown, 320)
+    })
+  )
 })
 
-describe('parseCsvString', () => {
-  bench('parse csv string', () => {
+test('parseCsvString', async ({ bench }) => {
+  await bench('parse csv string', () => {
     parseCsvString(csv)
-  })
+  }).run()
 })

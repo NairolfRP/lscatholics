@@ -1,5 +1,5 @@
 import type { Connection, Statement } from '@tursodatabase/serverless'
-import { bench, describe } from 'vitest'
+import { test } from 'vitest'
 import { connectWithRetries } from '#server/db/turso-retry'
 
 function statement(): Statement {
@@ -23,22 +23,26 @@ const wrappedStatement: Statement = await connectWithRetries(makeConnection()).p
 const rawConnection = makeConnection()
 const wrappedConnection = connectWithRetries(makeConnection())
 
-describe('overhead du proxy Turso (chemin steady-state)', () => {
-  bench('statement raw().all() — client direct', () => {
-    rawStatement.raw(false).all()
-  })
-
-  bench('statement raw().all() — via connectWithRetries', () => {
-    wrappedStatement.raw(false).all()
-  })
+test('overhead du proxy Turso (chemin steady-state)', async ({ bench }) => {
+  await bench.compare(
+    bench('statement raw().all() — client direct', () => {
+      rawStatement.raw(false).all()
+    }),
+    bench('statement raw().all() — via connectWithRetries', () => {
+      wrappedStatement.raw(false).all()
+    })
+  )
 })
 
-describe('préparation de requête (appelée une fois par requête, puis mise en cache)', () => {
-  bench('prepare — client direct', () => {
-    rawConnection.prepare('sql')
-  })
-
-  bench('prepare — via connectWithRetries', () => {
-    wrappedConnection.prepare('sql')
-  })
+test('préparation de requête (appelée une fois par requête, puis mise en cache)', async ({
+  bench,
+}) => {
+  await bench.compare(
+    bench('prepare — client direct', () => {
+      rawConnection.prepare('sql')
+    }),
+    bench('prepare — via connectWithRetries', () => {
+      wrappedConnection.prepare('sql')
+    })
+  )
 })
