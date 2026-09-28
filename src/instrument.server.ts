@@ -1,6 +1,6 @@
 import * as Sentry from '@sentry/tanstackstart-react'
 import { env } from '#/config/env.server'
-import { beforeSendLog } from '#/config/sentry'
+import { beforeSendLog, dataCollection } from '#/config/sentry'
 
 const dsn = env.NODE_ENV === 'development' ? undefined : env.VITE_SENTRY_DSN
 
@@ -9,7 +9,7 @@ if (dsn) {
     dsn,
     environment: __SENTRY_ENVIRONMENT__,
     release: env.SENTRY_RELEASE || undefined,
-    enableLogs: true,
+    dataCollection,
     beforeSendLog,
     integrations: [
       Sentry.pinoIntegration({
