@@ -159,7 +159,7 @@ function GiftShopCatalogCard({
   const isAtMax = quantity >= GIFT_ORDER_QUANTITY_MAX
 
   return (
-    <Card className="justify-between rounded-xl">
+    <Card className="justify-between rounded-xl pt-0">
       <img
         src={imageUrl(product.imageSrc)}
         alt={product.name}
