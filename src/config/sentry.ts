@@ -4,6 +4,9 @@ import type { Log } from '@sentry/tanstackstart-react'
  * Sentry v11 collects every category by default. These sites handle real form
  * submissions (contact, parishioner, applications), so bodies, cookies, query
  * params and user info stay off and headers keep the default denylist.
+ *
+ * `frameContextLines` keeps the v10 default of 7: stack context is source code
+ * around the frame, not user data, so there is no reason to trim it.
  */
 const DENIED_KEYS = ['forwarded', '-ip', 'remote-', 'via', '-user']
 
@@ -19,6 +22,7 @@ export const dataCollection = {
   genAI: { inputs: false, outputs: false },
   databaseQueryData: false,
   graphQL: { document: false, variables: false },
+  frameContextLines: 7,
 }
 
 const SENSITIVE_LOG_ATTRIBUTES = new Set([
