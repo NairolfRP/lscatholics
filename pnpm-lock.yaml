@@ -163,7 +163,7 @@ settings:
   excludeLinksFromLockfile: false
 
 overrides:
-  rolldown: ~1.2.7
+  rolldown: ~1.2.11
 
 packageExtensionsChecksum: sha256-CGrIxUxwVsS4NUc5kVffV7wPJyz72rcofMmCW8mlNgo=
 
@@ -386,8 +386,8 @@ importers:
         specifier: ^0.38.55
         version: 0.38.55
       dotenv:
-        specifier: ^17.4.2
-        version: 17.4.2
+        specifier: ^18.0.4
+        version: 18.0.4
       drizzle-kit:
         specifier: 1.0.0-rc.4
         version: 1.0.0-rc.4(drizzle-orm@1.0.0-rc.4(@opentelemetry/api@1.9.1)(@tursodatabase/database-common@0.7.2)(@tursodatabase/database@0.7.2)(@tursodatabase/serverless@1.4.0)(zod@4.6.5))
@@ -2118,7 +2118,7 @@ packages:
       '@babel/core': ^7.29.0 || ^8.0.0-rc.1
       '@babel/plugin-transform-runtime': ^7.29.0 || ^8.0.0-rc.1
       '@babel/runtime': ^7.27.0 || ^8.0.0-rc.1
-      rolldown: ~1.2.7
+      rolldown: ~1.2.11
       vite: ^8.0.0
     peerDependenciesMeta:
       '@babel/plugin-transform-runtime':
@@ -3667,6 +3667,11 @@ packages:
   dotenv@17.4.2:
     resolution: {integrity: sha512-nI4U3TottKAcAD9LLud4Cb7b2QztQMUEfHbvhTH09bqXTxnSie8WnjPALV/WMCrJZ6UV/qHJ6L03OqO3LcdYZw==}
     engines: {node: '>=12'}
+
+  dotenv@18.0.4:
+    resolution: {integrity: sha512-jGt9uI5BIxpVO15kvy+iEFqNAwxYClKWnkptLjSNPnFLC003Imd0ofr3aEVsbpHdSBdSsbcApNIlz4nbyGMwdA==}
+    engines: {node: '>=12'}
+    hasBin: true
 
   drizzle-kit@1.0.0-rc.4:
     resolution: {integrity: sha512-KZCpjRyu+oYHLj/UJogfFlOkWhHVkaEI2EOT1U3NDVXUzLoTyPjqwFxwOrlQxsY6jzRyxcz4EacqboGfhEeYrA==}
@@ -5814,7 +5819,7 @@ packages:
       '@rspack/core': '*'
       bun-types-no-globals: '*'
       esbuild: '*'
-      rolldown: ~1.2.7
+      rolldown: ~1.2.11
       rollup: '*'
       unloader: '*'
       vite: '*'
@@ -8895,6 +8900,8 @@ snapshots:
   dotenv@16.6.1: {}
 
   dotenv@17.4.2: {}
+
+  dotenv@18.0.4: {}
 
   drizzle-kit@1.0.0-rc.4(drizzle-orm@1.0.0-rc.4(@opentelemetry/api@1.9.1)(@tursodatabase/database-common@0.7.2)(@tursodatabase/database@0.7.2)(@tursodatabase/serverless@1.4.0)(zod@4.6.5)):
     dependencies:

@@ -49,4 +49,4 @@ allowBuilds:
   '@sentry/cli': true
   esbuild: true
 overrides:
-  rolldown: ~1.2.7
+  rolldown: ~1.2.11
