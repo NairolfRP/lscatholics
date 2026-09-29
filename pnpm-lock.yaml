@@ -163,7 +163,7 @@ settings:
   excludeLinksFromLockfile: false
 
 overrides:
-  rolldown: ~1.2.7
+  rolldown: ~1.2.11
 
 packageExtensionsChecksum: sha256-CGrIxUxwVsS4NUc5kVffV7wPJyz72rcofMmCW8mlNgo=
 
@@ -2118,7 +2118,7 @@ packages:
       '@babel/core': ^7.29.0 || ^8.0.0-rc.1
       '@babel/plugin-transform-runtime': ^7.29.0 || ^8.0.0-rc.1
       '@babel/runtime': ^7.27.0 || ^8.0.0-rc.1
-      rolldown: ~1.2.7
+      rolldown: ~1.2.11
       vite: ^8.0.0
     peerDependenciesMeta:
       '@babel/plugin-transform-runtime':
@@ -5814,7 +5814,7 @@ packages:
       '@rspack/core': '*'
       bun-types-no-globals: '*'
       esbuild: '*'
-      rolldown: ~1.2.7
+      rolldown: ~1.2.11
       rollup: '*'
       unloader: '*'
       vite: '*'
