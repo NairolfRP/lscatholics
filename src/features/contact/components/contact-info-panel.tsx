@@ -106,7 +106,9 @@ function InfoRow({
         <Icon className="size-5" />
       </span>
       <div>
-        <p className="text-xs font-bold tracking-wide text-secondary uppercase select-none">{label}</p>
+        <p className="text-xs font-bold tracking-wide text-secondary uppercase select-none">
+          {label}
+        </p>
         <div className="mt-0.5 leading-relaxed">{value}</div>
       </div>
     </div>
