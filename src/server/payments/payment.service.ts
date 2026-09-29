@@ -249,7 +249,7 @@ export class PaymentService {
 
     return {
       reconciled: results.filter((result) => result.reconciled).length,
-      deleted: results.filter((result) => result.deleted).length,
+      deleted: results.filter((result) => !result.reconciled && result.deleted).length,
     }
   }
 
