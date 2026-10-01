@@ -398,8 +398,8 @@ importers:
         specifier: 1.0.0-rc.4
         version: 1.0.0-rc.4(eslint@10.11.0(jiti@2.7.0)(supports-color@8.1.1))
       eslint-plugin-oxlint:
-        specifier: ^1.85.0
-        version: 1.85.0(oxlint@1.85.0(oxlint-tsgolint@7.0.2003))
+        specifier: ^1.86.0
+        version: 1.86.0(oxlint@1.85.0(oxlint-tsgolint@7.0.2003))
       jsdom:
         specifier: ^30.1.1
         version: 30.1.1(@noble/hashes@2.4.0)
@@ -3920,10 +3920,10 @@ packages:
     peerDependencies:
       eslint: '>=8.0.0'
 
-  eslint-plugin-oxlint@1.85.0:
-    resolution: {integrity: sha512-ea+6IH4JRVX1le3C6KLNZ181qhCQwGPDO5kTzAZ8OM3joF4656G0RN8OOXaly78L2RAFuREYQEUIlwOjy0YG8A==}
+  eslint-plugin-oxlint@1.86.0:
+    resolution: {integrity: sha512-AYBDGxR/a8kJmUeZBZ98TF5+Kihg8LvWU4EEYoIv5nsEml18kXCD9b4RsqxLz4BiXD7PcrvrCO0/t16NmaFR1A==}
     peerDependencies:
-      oxlint: ~1.85.0
+      oxlint: ~1.86.0
 
   eslint-scope@9.1.2:
     resolution: {integrity: sha512-xS90H51cKw0jltxmvmHy2Iai1LIqrfbw57b79w/J7MfvDfkIkFZ+kj6zC3BjtUwh150HsSSdxXZcsuv72miDFQ==}
@@ -9052,7 +9052,7 @@ snapshots:
     dependencies:
       eslint: 10.11.0(jiti@2.7.0)(supports-color@8.1.1)
 
-  eslint-plugin-oxlint@1.85.0(oxlint@1.85.0(oxlint-tsgolint@7.0.2003)):
+  eslint-plugin-oxlint@1.86.0(oxlint@1.85.0(oxlint-tsgolint@7.0.2003)):
     dependencies:
       jsonc-parser: 3.3.1
       oxlint: 1.85.0(oxlint-tsgolint@7.0.2003)
