@@ -25,7 +25,7 @@
         "#shared/*": "./src/shared/*"
     },
     "scripts": {
-        "dev": "dotenv -e .env.local -- sh -c \"vite --port 3000\"",
+        "dev": "dotenv run -f .env.local -- vite --port 3000",
         "generate-routes": "tsr generate",
         "build": "vite build",
         "vercel-build": "vite build && ([ \"$VERCEL_ENV\" != \"production\" ] || drizzle-kit migrate)",
