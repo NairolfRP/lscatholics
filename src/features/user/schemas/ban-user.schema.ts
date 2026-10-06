@@ -18,4 +18,4 @@ export const banUserFormSchema = z.object({
     .optional(),
 })
 
-export type BanUserForm = z.infer<typeof banUserFormSchema>
+export type BanUserForm = z.output<typeof banUserFormSchema>

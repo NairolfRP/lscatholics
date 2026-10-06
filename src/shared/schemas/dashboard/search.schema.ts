@@ -7,7 +7,7 @@ export const dashboardSearchSchema = z.object({
   sortBy: sortBySchema.catch('createdAt.desc').default('createdAt.desc'),
 })
 
-export type DashboardSearch = z.infer<typeof dashboardSearchSchema>
+export type DashboardSearch = z.output<typeof dashboardSearchSchema>
 
 export const dashboardFiltersSchema = z.object({
   search: z.string().default(''),
@@ -15,4 +15,4 @@ export const dashboardFiltersSchema = z.object({
   sortBy: z.string().default('createdAt.desc'),
 })
 
-export type DashboardFilters = z.infer<typeof dashboardFiltersSchema>
+export type DashboardFilters = z.output<typeof dashboardFiltersSchema>

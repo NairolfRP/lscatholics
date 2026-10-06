@@ -49,7 +49,7 @@ export async function submit({ data, user }: { data: unknown; user: User }) {
   }
 }
 
-function buildContactEmbeds({ data }: { data: z.infer<typeof contactSchema> }): DiscordEmbed[] {
+function buildContactEmbeds({ data }: { data: z.output<typeof contactSchema> }): DiscordEmbed[] {
   return [
     {
       title: `Nouvelle demande de contact — ${contactSubjectLabels[data.subject]}`,
