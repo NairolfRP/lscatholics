@@ -1,6 +1,6 @@
+import type { ClassValue } from 'cn'
 import type { LucideIcon } from 'lucide-react'
 import type { ComponentType } from 'react'
-import { type ClassValue } from 'cn'
 import type { IconProps } from './icon.types'
 
 type SocialWhere = 'footer'
