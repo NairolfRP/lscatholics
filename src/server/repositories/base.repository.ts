@@ -1,7 +1,7 @@
 import type { InferInsertModel, InferSelectModel } from 'drizzle-orm'
 import type { AnySQLiteTable, SQLiteInsertValue } from 'drizzle-orm/sqlite-core'
 import type { TursoDatabaseServerlessRunResult } from 'drizzle-orm/tursodatabase-serverless'
-import { and, count, eq, getTableColumns } from 'drizzle-orm'
+import { and, count, eq, getColumns } from 'drizzle-orm'
 import { db as dbClient } from '../db'
 
 type CreateResult<
@@ -23,7 +23,7 @@ export class BaseRepository<TSchema extends AnySQLiteTable> {
     where: Partial<InferSelectModel<TSchema>>,
     data: Partial<InferInsertModel<TSchema>>
   ) {
-    const columns = getTableColumns(this.schema)
+    const columns = getColumns(this.schema)
 
     const conditions = Object.entries(where).map(([key, value]) => {
       const column = columns[key]
