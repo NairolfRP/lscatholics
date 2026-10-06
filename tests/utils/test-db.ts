@@ -1,8 +1,8 @@
 import type { AnySQLiteTable } from 'drizzle-orm/sqlite-core'
 import { resolve } from 'node:path'
 import { sql } from 'drizzle-orm'
+import { migrate } from 'drizzle-orm/libsql/migrator'
 import { SQLiteTable } from 'drizzle-orm/sqlite-core'
-import { migrate } from 'drizzle-orm/tursodatabase/migrator'
 import { db } from '#server/db'
 import * as schema from '#server/db/schema'
 

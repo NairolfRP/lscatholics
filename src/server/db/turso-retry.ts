@@ -1,12 +1,24 @@
-import type { Connection, Statement } from '@tursodatabase/serverless'
+import type { Client, Transaction } from '@libsql/client'
 
 const RETRYABLE_STATUS = [408, 429, 502, 503, 504]
 const MAX_ATTEMPTS = 3
 const RETRY_DELAYS = [150, 500, 1500]
 
+function statusOf(error: unknown): number | undefined {
+  const candidates: unknown[] = [error]
+  if (error instanceof Error) candidates.push(error.cause)
+
+  for (const candidate of candidates) {
+    if (typeof candidate !== 'object' || candidate === null || !('status' in candidate)) continue
+    if (typeof candidate.status === 'number') return candidate.status
+  }
+
+  return undefined
+}
+
 function isRetryable(error: unknown): boolean {
-  if (!(error instanceof Error)) return false
-  return RETRYABLE_STATUS.some((status) => error.message.includes(`status: ${status}`))
+  const status = statusOf(error)
+  return status !== undefined && RETRYABLE_STATUS.includes(status)
 }
 
 async function withRetry<T>(operation: () => Promise<T>): Promise<T> {
@@ -20,42 +32,27 @@ async function withRetry<T>(operation: () => Promise<T>): Promise<T> {
   }
 }
 
-function wrapStatement<T extends Statement>(statement: T): T {
-  return new Proxy(statement, {
-    get(target, property, receiver) {
-      const value = Reflect.get(target, property, receiver)
+function wrapTransaction(transaction: Transaction): Transaction {
+  return new Proxy(transaction, {
+    get(target, property) {
+      const value = Reflect.get(target, property, target)
       if (typeof value !== 'function') return value
-      if (property === 'raw') {
-        const raw = value as (...args: unknown[]) => Statement
-        return (...args: unknown[]) => wrapStatement(raw.apply(target, args))
-      }
+      if (property === 'close') return value.bind(target)
       return (...args: unknown[]) => withRetry(() => value.apply(target, args))
     },
   })
 }
 
-export function connectWithRetries(connection: Connection): Connection {
-  return new Proxy(connection, {
-    get(target, property, receiver) {
-      const value = Reflect.get(target, property, receiver)
+export function connectWithRetries(client: Client): Client {
+  return new Proxy(client, {
+    get(target, property) {
+      const value = Reflect.get(target, property, target)
       if (typeof value !== 'function') return value
-
-      if (property === 'prepare') {
-        const prepare = value as (sql: string) => Promise<Statement>
-        return async (sql: string) => {
-          const statement = await withRetry(() => prepare.call(target, sql))
-          return wrapStatement(statement)
-        }
-      }
+      if (property === 'close' || property === 'reconnect') return value.bind(target)
 
       if (property === 'transaction') {
-        return (fn: unknown) => {
-          const wrapped = value.call(target, fn)
-          if (typeof wrapped === 'function') {
-            return (...args: unknown[]) => withRetry(() => wrapped(...args))
-          }
-          return wrapped
-        }
+        return async (...args: unknown[]) =>
+          wrapTransaction(await withRetry(() => value.apply(target, args)))
       }
 
       return (...args: unknown[]) => withRetry(() => value.apply(target, args))

@@ -1,48 +1,37 @@
-import type { Connection, Statement } from '@tursodatabase/serverless'
+import type { Client, ResultSet } from '@libsql/client'
 import { test } from 'vitest'
 import { connectWithRetries } from '#server/db/turso-retry'
 
-function statement(): Statement {
-  const stmt = {
-    raw: () => stmt,
-    on: () => stmt,
-    all: () => Promise.resolve([{ n: 1 }]),
-    get: () => Promise.resolve({ n: 1 }),
-    run: () => Promise.resolve({ n: 1 }),
-    values: () => Promise.resolve([[1]]),
-  }
-  return stmt as unknown as Statement
+const result = { rows: [], rowsAffected: 0 } as unknown as ResultSet
+
+function makeClient(): Client {
+  return {
+    execute: () => Promise.resolve(result),
+    transaction: () => Promise.resolve({ closed: false, close: () => {} }),
+  } as unknown as Client
 }
 
-function makeConnection(): Connection {
-  return { prepare: () => Promise.resolve(statement()) } as unknown as Connection
-}
-
-const rawStatement = statement()
-const wrappedStatement: Statement = await connectWithRetries(makeConnection()).prepare('sql')
-const rawConnection = makeConnection()
-const wrappedConnection = connectWithRetries(makeConnection())
+const rawClient = makeClient()
+const wrappedClient = connectWithRetries(makeClient())
 
 test('overhead du proxy Turso (chemin steady-state)', async ({ bench }) => {
   await bench.compare(
-    bench('statement raw().all() — client direct', () => {
-      rawStatement.raw(false).all()
+    bench('execute — client direct', () => {
+      rawClient.execute('sql')
     }),
-    bench('statement raw().all() — via connectWithRetries', () => {
-      wrappedStatement.raw(false).all()
+    bench('execute — via connectWithRetries', () => {
+      wrappedClient.execute('sql')
     })
   )
 })
 
-test('préparation de requête (appelée une fois par requête, puis mise en cache)', async ({
-  bench,
-}) => {
+test('création de transaction (par requête transactionnelle)', async ({ bench }) => {
   await bench.compare(
-    bench('prepare — client direct', () => {
-      rawConnection.prepare('sql')
+    bench('transaction — client direct', () => {
+      rawClient.transaction()
     }),
-    bench('prepare — via connectWithRetries', () => {
-      wrappedConnection.prepare('sql')
+    bench('transaction — via connectWithRetries', () => {
+      wrappedClient.transaction()
     })
   )
 })

@@ -1,155 +1,159 @@
-import type { Connection, Statement } from '@tursodatabase/serverless'
+import type { Client, ResultSet, Transaction } from '@libsql/client'
+import { LibsqlError } from '@libsql/client'
 import { describe, expect, it } from 'vitest'
 import { connectWithRetries } from '#server/db/turso-retry'
 
-const RETRYABLE = 'HTTP error! status: 502'
+const result = { rows: [], rowsAffected: 0 } as unknown as ResultSet
 
-function statement(overrides: Record<string, unknown> = {}) {
-  const stmt = {
-    raw: () => stmt,
-    on: () => stmt,
-    ...overrides,
-  }
-  return stmt as unknown as Statement
+function httpError(status: number): LibsqlError {
+  return new LibsqlError(
+    `Server returned HTTP status ${status}`,
+    'SERVER_ERROR',
+    undefined,
+    undefined,
+    Object.assign(new Error(`status ${status}`), { status })
+  )
 }
 
-function connection({ prepare, transaction }: Partial<Connection> = {}): Connection {
-  return { ...(prepare ? { prepare } : {}), ...(transaction ? { transaction } : {}) } as Connection
+function client(overrides: Partial<Client> = {}): Client {
+  return { ...overrides } as Client
+}
+
+function transaction(overrides: Partial<Transaction> = {}): Transaction {
+  return { closed: false, close: () => {}, ...overrides } as Transaction
 }
 
 describe('connectWithRetries', () => {
-  it('retries prepare on a transient error then succeeds', async () => {
-    let prepareCalls = 0
+  it('retries execute on a transient error then succeeds', async () => {
+    let executeCalls = 0
     const proxied = connectWithRetries(
-      connection({
-        prepare: () => {
-          prepareCalls++
-          if (prepareCalls === 1) return Promise.reject(new Error(RETRYABLE))
-          return Promise.resolve(statement({ run: () => Promise.resolve('ran') }))
+      client({
+        execute: () => {
+          executeCalls++
+          if (executeCalls === 1) return Promise.reject(httpError(502))
+          return Promise.resolve(result)
         },
       })
     )
 
-    const stmt = await proxied.prepare('x')
-    await expect(stmt.run()).resolves.toBe('ran')
-    expect(prepareCalls).toBe(2)
+    await expect(proxied.execute('x')).resolves.toBe(result)
+    expect(executeCalls).toBe(2)
   })
 
   it('gives up after MAX_ATTEMPTS and rethrows the last error', async () => {
-    let prepareCalls = 0
+    let executeCalls = 0
     const proxied = connectWithRetries(
-      connection({
-        prepare: () => {
-          prepareCalls++
-          return Promise.reject(new Error(RETRYABLE))
+      client({
+        execute: () => {
+          executeCalls++
+          return Promise.reject(httpError(503))
         },
       })
     )
 
-    await expect(proxied.prepare('x')).rejects.toThrow(RETRYABLE)
-    expect(prepareCalls).toBe(3)
+    await expect(proxied.execute('x')).rejects.toThrow('HTTP status 503')
+    expect(executeCalls).toBe(3)
   })
 
   it('does not retry non-transient errors', async () => {
-    let prepareCalls = 0
+    let executeCalls = 0
     const proxied = connectWithRetries(
-      connection({
-        prepare: () => {
-          prepareCalls++
-          return Promise.reject(new Error('HTTP error! status: 400'))
+      client({
+        execute: () => {
+          executeCalls++
+          return Promise.reject(httpError(400))
         },
       })
     )
 
-    await expect(proxied.prepare('x')).rejects.toThrow('status: 400')
-    expect(prepareCalls).toBe(1)
+    await expect(proxied.execute('x')).rejects.toThrow('HTTP status 400')
+    expect(executeCalls).toBe(1)
   })
 
-  it('retries a failing statement execution', async () => {
-    let runCalls = 0
+  it('retries a failing batch', async () => {
+    let batchCalls = 0
     const proxied = connectWithRetries(
-      connection({
-        prepare: () =>
+      client({
+        batch: () => {
+          batchCalls++
+          if (batchCalls === 1) return Promise.reject(httpError(502))
+          return Promise.resolve([result])
+        },
+      })
+    )
+
+    await expect(proxied.batch(['x'])).resolves.toEqual([result])
+    expect(batchCalls).toBe(2)
+  })
+
+  it('retries transaction()', async () => {
+    let transactionCalls = 0
+    const proxied = connectWithRetries(
+      client({
+        transaction: () => {
+          transactionCalls++
+          if (transactionCalls === 1) return Promise.reject(httpError(502))
+          return Promise.resolve(transaction())
+        },
+      })
+    )
+
+    await expect(proxied.transaction()).resolves.toMatchObject({ closed: false })
+    expect(transactionCalls).toBe(2)
+  })
+
+  it('retries a failing statement execution inside a transaction', async () => {
+    let executeCalls = 0
+    const proxied = connectWithRetries(
+      client({
+        transaction: () =>
           Promise.resolve(
-            statement({
-              run: () => {
-                runCalls++
-                if (runCalls === 1) return Promise.reject(new Error(RETRYABLE))
-                return Promise.resolve('ran')
+            transaction({
+              execute: () => {
+                executeCalls++
+                if (executeCalls === 1) return Promise.reject(httpError(502))
+                return Promise.resolve(result)
               },
             })
           ),
       })
     )
 
-    const stmt = await proxied.prepare('x')
-    await expect(stmt.run()).resolves.toBe('ran')
-    expect(runCalls).toBe(2)
+    const tx = await proxied.transaction()
+    await expect(tx.execute('x')).resolves.toBe(result)
+    expect(executeCalls).toBe(2)
   })
 
-  it('retries the raw().all() chain', async () => {
-    let allCalls = 0
-    const proxied = connectWithRetries(
-      connection({
-        prepare: () =>
-          Promise.resolve(
-            statement({
-              all: () => {
-                allCalls++
-                if (allCalls === 1) return Promise.reject(new Error(RETRYABLE))
-                return Promise.resolve([['row']])
-              },
-            })
-          ),
-      })
-    )
+  it('keeps close() synchronous', () => {
+    let closed = false
+    const proxied = connectWithRetries(client({ close: () => void (closed = true) }))
 
-    const stmt = await proxied.prepare('x')
-    await expect(stmt.raw(false).all()).resolves.toEqual([['row']])
-    expect(allCalls).toBe(2)
-  })
-
-  it('retries the function returned by transaction()', async () => {
-    let txnCalls = 0
-    const proxied = connectWithRetries(
-      connection({
-        transaction: () => () => {
-          txnCalls++
-          if (txnCalls === 1) return Promise.reject(new Error(RETRYABLE))
-          return Promise.resolve('committed')
-        },
-      })
-    )
-
-    const run = proxied.transaction(async () => {})
-    await expect(run()).resolves.toBe('committed')
-    expect(txnCalls).toBe(2)
+    expect(proxied.close()).toBeUndefined()
+    expect(closed).toBe(true)
   })
 
   it('passes non-function properties through', () => {
-    const proxied = connectWithRetries({ inTransaction: false } as Connection)
-    expect(proxied.inTransaction).toBe(false)
+    const proxied = connectWithRetries(client({ closed: false }))
+    expect(proxied.closed).toBe(false)
   })
 
   it('borne les tentatives sous charge concurrente lors du réveil', async () => {
     let calls = 0
     const wakeUntil = Date.now() + 200
     const proxied = connectWithRetries(
-      connection({
-        prepare: () => {
+      client({
+        execute: () => {
           calls++
-          if (Date.now() < wakeUntil) return Promise.reject(new Error(RETRYABLE))
-          return Promise.resolve(statement({ all: () => Promise.resolve([['row']]) }))
+          if (Date.now() < wakeUntil) return Promise.reject(httpError(503))
+          return Promise.resolve(result)
         },
       })
     )
 
-    const results = await Promise.all(
-      Array.from({ length: 20 }, () => proxied.prepare('x').then((s) => s.raw(false).all()))
-    )
+    const results = await Promise.all(Array.from({ length: 20 }, () => proxied.execute('x')))
 
     expect(results).toHaveLength(20)
-    expect(results.every((r) => Array.isArray(r))).toBe(true)
+    expect(results.every((r) => r === result)).toBe(true)
     expect(calls).toBeLessThanOrEqual(20 * 3)
   })
 })

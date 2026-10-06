@@ -1,6 +1,6 @@
 import type { InferInsertModel, InferSelectModel } from 'drizzle-orm'
+import type { LibSQLRunResult } from 'drizzle-orm/libsql'
 import type { AnySQLiteTable, SQLiteInsertValue } from 'drizzle-orm/sqlite-core'
-import type { TursoDatabaseServerlessRunResult } from 'drizzle-orm/tursodatabase-serverless'
 import { and, count, eq, getColumns } from 'drizzle-orm'
 import { db as dbClient } from '../db'
 
@@ -11,7 +11,7 @@ type CreateResult<
   ? InferSelectModel<TSchema>[]
   : TReturning extends readonly (keyof InferSelectModel<TSchema>)[]
     ? Pick<InferSelectModel<TSchema>, TReturning[number]>[]
-    : TursoDatabaseServerlessRunResult
+    : LibSQLRunResult
 
 export class BaseRepository<TSchema extends AnySQLiteTable> {
   constructor(
@@ -53,7 +53,7 @@ export class BaseRepository<TSchema extends AnySQLiteTable> {
       ? InferSelectModel<TSchema>[]
       : TReturning extends readonly (keyof InferSelectModel<TSchema>)[]
         ? Pick<InferSelectModel<TSchema>, TReturning[number]>[]
-        : TursoDatabaseServerlessRunResult
+        : LibSQLRunResult
   > {
     const returning = options?.returning
     const query = this.db.insert(this.schema).values(data as unknown as SQLiteInsertValue<TSchema>)
@@ -76,7 +76,7 @@ export class BaseRepository<TSchema extends AnySQLiteTable> {
       >
     }
 
-    return await query
+    return (await query) as unknown as CreateResult<TSchema, TReturning>
   }
 
   async getCount() {
