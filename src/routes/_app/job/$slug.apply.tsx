@@ -9,7 +9,10 @@ export const Route = createFileRoute('/_app/job/$slug/apply')({
   pendingMs: 200,
   pendingComponent: EmploymentApplicationPageSkeleton,
   loader: async ({ params: { slug }, context }) => {
-    const job = await context.queryClient.ensureQueryData(singleJobPostingQueryOptions(slug))
+    const job = await context.queryClient.query({
+      ...singleJobPostingQueryOptions(slug),
+      staleTime: 'static',
+    })
 
     return { slug, title: job.title }
   },

@@ -6,7 +6,10 @@ import { pageMetadata } from '#/utils/seo.ts'
 
 export const Route = createFileRoute('/_app/event/$slug')({
   loader: async ({ params: { slug }, context }) => {
-    const data = await context.queryClient.ensureQueryData(singleChurchEventQueryOptions(slug))
+    const data = await context.queryClient.query({
+      ...singleChurchEventQueryOptions(slug),
+      staleTime: 'static',
+    })
 
     return {
       title: data.title,

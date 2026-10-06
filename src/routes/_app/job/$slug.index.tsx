@@ -7,7 +7,10 @@ import { generateExcerpt } from '#/utils/string.ts'
 
 export const Route = createFileRoute('/_app/job/$slug/')({
   loader: async ({ params: { slug }, context }) => {
-    const data = await context.queryClient.ensureQueryData(singleJobPostingQueryOptions(slug))
+    const data = await context.queryClient.query({
+      ...singleJobPostingQueryOptions(slug),
+      staleTime: 'static',
+    })
     return {
       title: data.title,
       slug: data.slug,

@@ -33,7 +33,7 @@ export const Route = createFileRoute('/dashboard/posts/')({
   },
   loaderDeps: ({ search }) => search,
   loader: async ({ deps, context }) => {
-    await context.queryClient.prefetchQuery(postsDashboardQueryOptions(deps))
+    await context.queryClient.query(postsDashboardQueryOptions(deps)).catch(() => {})
   },
   component: RouteComponent,
 })

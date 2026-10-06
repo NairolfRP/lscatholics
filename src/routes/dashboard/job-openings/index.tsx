@@ -33,7 +33,7 @@ export const Route = createFileRoute('/dashboard/job-openings/')({
   },
   loaderDeps: ({ search }) => search,
   loader: async ({ deps, context }) => {
-    await context.queryClient.prefetchQuery(jobPostingsDashboardQueryOptions(deps))
+    await context.queryClient.query(jobPostingsDashboardQueryOptions(deps)).catch(() => {})
   },
   component: RouteComponent,
 })

@@ -38,7 +38,7 @@ export const Route = createFileRoute('/dashboard/events/')({
   },
   loaderDeps: ({ search }) => search,
   loader: async ({ deps, context }) => {
-    await context.queryClient.prefetchQuery(churchEventsDashboardQueryOptions(deps))
+    await context.queryClient.query(churchEventsDashboardQueryOptions(deps)).catch(() => {})
   },
   component: RouteComponent,
 })

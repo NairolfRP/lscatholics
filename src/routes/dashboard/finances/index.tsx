@@ -21,7 +21,7 @@ export const Route = createFileRoute('/dashboard/finances/')({
     }
   },
   loader: async ({ context }) => {
-    await context.queryClient.prefetchQuery(bankAccountBalanceQueryOptions).catch(() => {})
+    await context.queryClient.query(bankAccountBalanceQueryOptions).catch(() => {})
   },
   head: () => ({
     meta: pageMetadata('Finances'),

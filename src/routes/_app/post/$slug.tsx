@@ -9,7 +9,7 @@ import { postQueryOptions } from '#shared/queries/post.queries.ts'
 
 export const Route = createFileRoute('/_app/post/$slug')({
   loader: ({ context: { queryClient }, params }) => {
-    return queryClient.ensureQueryData(postQueryOptions(params.slug))
+    return queryClient.query({ ...postQueryOptions(params.slug), staleTime: 'static' })
   },
   head: ({ loaderData }) => {
     if (!loaderData) return {}

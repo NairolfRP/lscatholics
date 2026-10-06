@@ -11,7 +11,10 @@ export const Route = createFileRoute('/_app/careers/')({
     middlewares: [stripSearchParams({ page: 1, search: '', department: undefined, type: [] })],
   },
   beforeLoad: async ({ context, search }) => {
-    const { total } = await context.queryClient.ensureQueryData(jobPostingsQueryOptions(search))
+    const { total } = await context.queryClient.query({
+      ...jobPostingsQueryOptions(search),
+      staleTime: 'static',
+    })
 
     const totalPages = Math.ceil(total / CAREERS_PAGINATION_LIMIT)
 

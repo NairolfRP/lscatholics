@@ -11,7 +11,10 @@ export const Route = createFileRoute('/_app/newsroom')({
     middlewares: [stripSearchParams({ page: 1 })],
   },
   beforeLoad: async ({ context, search }) => {
-    const { total } = await context.queryClient.ensureQueryData(postsQueryOptions(search.page))
+    const { total } = await context.queryClient.query({
+      ...postsQueryOptions(search.page),
+      staleTime: 'static',
+    })
 
     const totalPages = Math.ceil(total / 6)
 

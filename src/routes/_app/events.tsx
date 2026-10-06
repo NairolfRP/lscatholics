@@ -16,7 +16,7 @@ export const Route = createFileRoute('/_app/events')({
   },
   loaderDeps: ({ search }) => ({ year: search.year, month: search.month }),
   loader: async ({ context, deps }) => {
-    await context.queryClient.ensureQueryData(churchEventsQueryOptions(deps))
+    await context.queryClient.query({ ...churchEventsQueryOptions(deps), staleTime: 'static' })
   },
   pendingMs: 200,
   pendingComponent: ChurchEventsPageSkeleton,

@@ -15,7 +15,10 @@ export const Route = createFileRoute('/_app/decrees/$uid')({
   loader: async ({ params: { uid }, context }) => {
     if (parseDecreeUid(uid) === null) throw notFound()
 
-    const detail = await context.queryClient.ensureQueryData(decreeQueryOptions(uid))
+    const detail = await context.queryClient.query({
+      ...decreeQueryOptions(uid),
+      staleTime: 'static',
+    })
 
     if (!detail) throw notFound()
     if (detail.canonicalUid !== uid) {
