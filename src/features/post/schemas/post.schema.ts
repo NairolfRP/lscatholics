@@ -58,12 +58,12 @@ export const editPostSchema = z.object({
   sendDiscordNotification: z.boolean().optional(),
 })
 
-export type InferEditPostSchema = z.Infer<typeof editPostSchema>
+export type InferEditPostSchema = z.infer<typeof editPostSchema>
 export type EditPostFormInput = z.input<typeof editPostSchema>
 
 export const createPostSchema = editPostSchema.extend({
   status: postStatusSchemaWithoutArchived,
   sendDiscordNotification: z.boolean().default(false),
 })
-export type InferCreatePostSchema = z.Infer<typeof createPostSchema>
+export type InferCreatePostSchema = z.infer<typeof createPostSchema>
 export type CreatePostFormInput = z.input<typeof createPostSchema>

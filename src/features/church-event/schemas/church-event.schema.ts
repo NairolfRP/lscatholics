@@ -138,7 +138,7 @@ export const createChurchEventSchema = z
     }
   )
 
-export type InferEditChurchEventSchema = z.Infer<typeof editChurchEventSchema>
+export type InferEditChurchEventSchema = z.infer<typeof editChurchEventSchema>
 export type EditChurchEventFormInput = z.input<typeof editChurchEventSchema>
-export type InferCreateChurchEventSchema = z.Infer<typeof createChurchEventSchema>
+export type InferCreateChurchEventSchema = z.infer<typeof createChurchEventSchema>
 export type CreateChurchEventFormInput = z.input<typeof createChurchEventSchema>
