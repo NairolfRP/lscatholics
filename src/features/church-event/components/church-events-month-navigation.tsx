@@ -15,7 +15,7 @@ export function ChurchEventsMonthNavigation() {
   const search = useSearch({ from: '/_app/events' })
   const [isNavigating, setIsNavigating] = useState(false)
 
-  const now = new Date()
+  const [now] = useState(() => new Date())
   const minDate = addMonths(now, -CHURCH_EVENT_LOOKBACK_MONTHS)
   const minYearMonth = { year: minDate.getFullYear(), month: minDate.getMonth() + 1 }
   const maxYearMonth = { year: now.getFullYear() + CHURCH_EVENT_FORWARD_YEARS, month: 12 }

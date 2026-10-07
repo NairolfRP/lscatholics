@@ -17,10 +17,10 @@ const wrappedClient = connectWithRetries(makeClient())
 test('overhead du proxy Turso (chemin steady-state)', async ({ bench }) => {
   await bench.compare(
     bench('execute — client direct', () => {
-      rawClient.execute('sql')
+      void rawClient.execute('sql')
     }),
     bench('execute — via connectWithRetries', () => {
-      wrappedClient.execute('sql')
+      void wrappedClient.execute('sql')
     })
   )
 })
@@ -28,10 +28,10 @@ test('overhead du proxy Turso (chemin steady-state)', async ({ bench }) => {
 test('création de transaction (par requête transactionnelle)', async ({ bench }) => {
   await bench.compare(
     bench('transaction — client direct', () => {
-      rawClient.transaction()
+      void rawClient.transaction()
     }),
     bench('transaction — via connectWithRetries', () => {
-      wrappedClient.transaction()
+      void wrappedClient.transaction()
     })
   )
 })

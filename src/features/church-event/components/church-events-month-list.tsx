@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { Link, useNavigate, useSearch } from '@tanstack/react-router'
 import { addDays, endOfDay, endOfMonth, isBefore, max, min, startOfDay } from 'date-fns'
@@ -135,7 +136,7 @@ function ChurchEventCard({ event }: { event: ChurchEvent }) {
 function ChurchEventsMonthListEmpty() {
   const { month, year } = useSearch({ from: '/_app/events' })
   const navigate = useNavigate({ from: '/events' })
-  const now = new Date()
+  const [now] = useState(() => new Date())
 
   const currentYearMonth = { year: now.getFullYear(), month: now.getMonth() + 1 }
   const isCurrentMonth = year === currentYearMonth.year && month === currentYearMonth.month

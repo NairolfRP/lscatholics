@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { Link, useParams } from '@tanstack/react-router'
 import {
@@ -37,7 +38,7 @@ export function ChurchEventSinglePage() {
   const endDate = churchEvent.endDate ? new Date(churchEvent.endDate) : null
   const isSameDay = endDate && startDate.toDateString() === endDate.toDateString()
 
-  const now = new Date()
+  const [now] = useState(() => new Date())
   const isExpired = (endDate && now > endDate) || (!endDate && now > startDate)
 
   const parish = churchEvent.parish ? getParishInfo(churchEvent.parish) : null
