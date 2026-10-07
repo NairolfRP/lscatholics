@@ -12,13 +12,27 @@ import { LatestPostsSection } from '#/features/home/components/latest-posts-sect
 import { NextChurchEvent } from '#/features/home/components/next-church-event'
 import { homeCTA } from '#/features/home/constants/home-cta'
 import { stats } from '#/features/home/constants/stats'
+import { latestEventsQueryOptions } from '#/features/home/queries'
 import { Separator } from '#/shared/components/ui/separator'
 import { Typography } from '#/shared/components/ui/typography'
 import Hero from '#/shared/layouts/app/components/hero'
 import { cn } from '#/shared/lib/utils'
 import type { RoutePath } from '#/shared/types/route.types'
+import { latestPostsQueryOptions } from '#shared/queries/post.queries.ts'
 
-export const Route = createFileRoute('/_app/')({ component: Home })
+export const Route = createFileRoute('/_app/')({
+  loader: async ({ context }) => {
+    await Promise.all([
+      context.queryClient
+        .query({ ...latestPostsQueryOptions, staleTime: 'static' })
+        .catch(() => {}),
+      context.queryClient
+        .query({ ...latestEventsQueryOptions, staleTime: 'static' })
+        .catch(() => {}),
+    ])
+  },
+  component: Home,
+})
 
 function Home() {
   return (
