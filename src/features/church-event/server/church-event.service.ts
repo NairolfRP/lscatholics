@@ -189,9 +189,9 @@ export async function updateChurchEvent({ data, user }: { data: unknown; user: U
     const validatedData = await editChurchEventSchema.parseAsync(values)
 
     let slug = resolveSlug(validatedData.slug, validatedData.title)
-    if (slug !== churchEvent.slug && (await churchEventRepository.existsBySlug(slug))) {
-      let counter = 1
+    if (slug !== churchEvent.slug) {
       const baseSlug = slug
+      let counter = 1
       while (await churchEventRepository.existsBySlug(slug)) {
         slug = `${baseSlug}-${counter}`
         counter++
@@ -226,38 +226,43 @@ export async function createChurchEvent({ data, user }: { data: unknown; user: U
     const validatedData = await createChurchEventSchema.parseAsync(data)
 
     let slug = resolveSlug(validatedData.slug, validatedData.title)
-
-    if (await churchEventRepository.existsBySlug(slug)) {
-      let counter = 1
-      const baseSlug = slug
-      while (await churchEventRepository.existsBySlug(slug)) {
-        slug = `${baseSlug}-${counter}`
-        counter++
-      }
-    }
+    const baseSlug = slug
+    let counter = 0
 
     const maxParticipants = validatedData.registrationRequired
       ? validatedData.maxParticipants
       : null
 
-    const createdChurchEvent = await churchEventRepository.create(
-      {
-        title: validatedData.title,
-        slug,
-        description: validatedData.description,
-        content: validatedData.content,
-        location: validatedData.location,
-        parish: validatedData.parish,
-        coverImageUrl: validatedData.coverImageUrl,
-        flyerUrl: validatedData.flyerUrl,
-        registrationRequired: validatedData.registrationRequired,
-        maxParticipants,
-        startDate: validatedData.startDate,
-        endDate: validatedData.endDate,
-        authorId: user.id,
-      },
-      { returning: ['id'] }
-    )
+    const churchEventValues = {
+      title: validatedData.title,
+      slug,
+      description: validatedData.description,
+      content: validatedData.content,
+      location: validatedData.location,
+      parish: validatedData.parish,
+      coverImageUrl: validatedData.coverImageUrl,
+      flyerUrl: validatedData.flyerUrl,
+      registrationRequired: validatedData.registrationRequired,
+      maxParticipants,
+      startDate: validatedData.startDate,
+      endDate: validatedData.endDate,
+      authorId: user.id,
+    }
+
+    let createdChurchEvent = await churchEventRepository.create(churchEventValues, {
+      returning: ['id'],
+      onConflictDoNothing: ['slug'],
+    })
+
+    while (createdChurchEvent.length === 0) {
+      counter += 1
+      slug = `${baseSlug}-${counter}`
+      churchEventValues.slug = slug
+      createdChurchEvent = await churchEventRepository.create(churchEventValues, {
+        returning: ['id'],
+        onConflictDoNothing: ['slug'],
+      })
+    }
 
     return { success: true, churchEventId: createdChurchEvent[0].id }
   } catch (err) {

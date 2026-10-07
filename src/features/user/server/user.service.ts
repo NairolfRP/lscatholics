@@ -1,4 +1,4 @@
-import { notFound } from '@tanstack/react-router'
+import { isNotFound, notFound } from '@tanstack/react-router'
 import { getRequestHeaders, setResponseStatus } from '@tanstack/react-start/server'
 import { isAPIError } from 'better-auth/api'
 import z from 'zod'
@@ -6,6 +6,7 @@ import { handleServiceError } from '#/server/exceptions/service-error'
 import { auth } from '#/server/integrations/auth.server'
 import { logger } from '#/server/integrations/logger'
 import { accountRepository } from '#/server/repositories/account.repository'
+import { userRepository } from '#/server/repositories/user.repository'
 import { ROLE_HIERARCHY } from '#/shared/constants/roles.ts'
 import type { User } from '#/shared/lib/types/auth'
 import type { UserRole } from '#/shared/types/role.types.ts'
@@ -92,20 +93,14 @@ export async function getUsersList({
   data: { search: string; page: number; sortBy: string }
 }) {
   try {
-    const headers = getRequestHeaders()
-
     const sorting = data.sortBy.split('.')
 
-    return (await auth.api.listUsers({
-      query: {
-        searchField: 'name',
-        searchValue: data.search,
-        limit: DASHBOARD_PAGINATION_LIMIT,
-        offset: (data.page - 1) * DASHBOARD_PAGINATION_LIMIT,
-        sortBy: sorting[0],
-        sortDirection: (['desc', 'asc'] as const).find((b) => sorting[1] === b) ?? 'desc',
-      },
-      headers,
+    return (await userRepository.listForDashboard({
+      search: data.search,
+      limit: DASHBOARD_PAGINATION_LIMIT,
+      offset: (data.page - 1) * DASHBOARD_PAGINATION_LIMIT,
+      sortBy: sorting[0],
+      sortDirection: (['desc', 'asc'] as const).find((b) => sorting[1] === b) ?? 'desc',
     })) as { users: User[]; total: number }
   } catch (err) {
     handleServiceError(err, { data }, 'Failed to get users list')
@@ -113,26 +108,17 @@ export async function getUsersList({
 }
 
 export async function getTargetUser({ data }: { data: { userId: string } }) {
-  const headers = getRequestHeaders()
-
   try {
-    const targetUser = await auth.api.getUser({
-      query: {
-        id: data.userId,
-      },
-      headers,
-    })
+    const targetUser = await userRepository.findById(data.userId)
+
+    if (!targetUser) {
+      throw notFound()
+    }
 
     return targetUser
   } catch (err) {
-    if (isAPIError(err)) {
-      if (err.statusCode === 404) {
-        throw notFound()
-      }
-    }
-
-    if (err instanceof z.ZodError) {
-      throw notFound()
+    if (isNotFound(err)) {
+      throw err
     }
 
     logger.error({ err }, '[getTargetUserFn] Error occured')
@@ -158,10 +144,12 @@ export async function updateTargetUser({
 
   try {
     const headers = getRequestHeaders()
-    const targetUser = await auth.api.getUser({
-      query: { id: targetId },
-      headers,
-    })
+    const targetUser = await userRepository.findById(targetId)
+
+    if (!targetUser) {
+      setResponseStatus(404)
+      return { success: false, error: 'User not found' }
+    }
 
     const submitterRoles: UserRole[] = user.role ? parseCsvString(user.role) : ['user']
     const currentTargetRoles: UserRole[] = targetUser.role

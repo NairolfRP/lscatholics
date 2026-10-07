@@ -20,4 +20,5 @@ export const usersListQueryOptions = (deps: DashboardSearch) =>
   queryOptions({
     queryKey: ['users', 'dashboard', deps],
     queryFn: () => getUsersListFn({ data: deps }),
+    staleTime: 1000 * 60 * 5, // 5 minutes
   })

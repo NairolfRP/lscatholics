@@ -14,7 +14,7 @@ export function useUserAdminMutations(deps?: DashboardSearch) {
 
   const invalidateUsersList = () =>
     queryClient.invalidateQueries({
-      queryKey: deps ? usersListQueryOptions(deps).queryKey : ['admin', 'list-users'],
+      queryKey: deps ? usersListQueryOptions(deps).queryKey : ['users', 'dashboard'],
     })
 
   const deleteUserMutation = useMutation({

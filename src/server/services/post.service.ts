@@ -311,15 +311,8 @@ export async function createPost({
     const validatedData = await createPostSchema.parseAsync(data)
 
     let slug = resolveSlug(validatedData.slug, validatedData.title)
-
-    if (await postRepository.existsBySlug(slug)) {
-      let counter = 1
-      const baseSlug = slug
-      while (await postRepository.existsBySlug(slug)) {
-        slug = `${baseSlug}-${counter}`
-        counter++
-      }
-    }
+    const baseSlug = slug
+    let counter = 0
 
     const excerpt = resolveExcerpt(validatedData.excerpt, validatedData.content)
     const publishedAt = resolvePublishedAt(validatedData.publishedAt, validatedData.status)
@@ -328,20 +321,32 @@ export async function createPost({
       .filter(Boolean)
       .join(' ')
 
-    const createdPost = await postRepository.create(
-      {
-        title: validatedData.title,
-        slug,
-        excerpt,
-        content: validatedData.content,
-        coverImageUrl: validatedData.coverImageUrl,
-        status: validatedData.status,
-        publishedAt,
-        authorDisplayName: currentCharacterFullName.trim() || 'John Doe',
-        authorId: user.id,
-      },
-      { returning: ['id'] }
-    )
+    const postValues = {
+      title: validatedData.title,
+      slug,
+      excerpt,
+      content: validatedData.content,
+      coverImageUrl: validatedData.coverImageUrl,
+      status: validatedData.status,
+      publishedAt,
+      authorDisplayName: currentCharacterFullName.trim() || 'John Doe',
+      authorId: user.id,
+    }
+
+    let createdPost = await postRepository.create(postValues, {
+      returning: ['id'],
+      onConflictDoNothing: ['slug'],
+    })
+
+    while (createdPost.length === 0) {
+      counter += 1
+      slug = `${baseSlug}-${counter}`
+      postValues.slug = slug
+      createdPost = await postRepository.create(postValues, {
+        returning: ['id'],
+        onConflictDoNothing: ['slug'],
+      })
+    }
 
     const postId = createdPost[0].id
 

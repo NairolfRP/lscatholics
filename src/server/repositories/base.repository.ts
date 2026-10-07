@@ -1,6 +1,6 @@
 import type { InferInsertModel, InferSelectModel } from 'drizzle-orm'
 import type { LibSQLRunResult } from 'drizzle-orm/libsql'
-import type { AnySQLiteTable, SQLiteInsertValue } from 'drizzle-orm/sqlite-core'
+import type { AnySQLiteTable, SQLiteColumn, SQLiteInsertValue } from 'drizzle-orm/sqlite-core'
 import { and, count, eq, getColumns } from 'drizzle-orm'
 import { db as dbClient } from '../db'
 
@@ -47,7 +47,10 @@ export class BaseRepository<TSchema extends AnySQLiteTable> {
       undefined,
   >(
     data: InferInsertModel<TSchema>,
-    options?: { returning?: TReturning }
+    options?: {
+      returning?: TReturning
+      onConflictDoNothing?: readonly (keyof InferSelectModel<TSchema>)[]
+    }
   ): Promise<
     TReturning extends true
       ? InferSelectModel<TSchema>[]
@@ -56,7 +59,15 @@ export class BaseRepository<TSchema extends AnySQLiteTable> {
         : LibSQLRunResult
   > {
     const returning = options?.returning
-    const query = this.db.insert(this.schema).values(data as unknown as SQLiteInsertValue<TSchema>)
+    let query = this.db.insert(this.schema).values(data as unknown as SQLiteInsertValue<TSchema>)
+
+    const conflictTarget = options?.onConflictDoNothing
+    if (conflictTarget && conflictTarget.length > 0) {
+      const target = conflictTarget.map(
+        (key) => this.schema[key as keyof typeof this.schema] as SQLiteColumn
+      )
+      query = query.onConflictDoNothing({ target })
+    }
 
     if (returning) {
       const returningFields =

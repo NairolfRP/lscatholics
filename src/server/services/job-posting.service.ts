@@ -245,39 +245,44 @@ export async function createJobPosting({ data, user }: { data: unknown; user: Us
     const validatedData = await createJobPostingSchema.parseAsync(data)
 
     let slug = resolveSlug(validatedData.slug, validatedData.title)
-
-    if (await jobPostingRepository.existsBySlug(slug)) {
-      let counter = 1
-      const baseSlug = slug
-      while (await jobPostingRepository.existsBySlug(slug)) {
-        slug = `${baseSlug}-${counter}`
-        counter++
-      }
-    }
+    const baseSlug = slug
+    let counter = 0
 
     const postedAt = validatedData.isActive ? validatedData.postedAt : null
     const expiresAt = validatedData.isActive ? validatedData.expiresAt : null
 
-    const createdJobPosting = await jobPostingRepository.create(
-      {
-        title: validatedData.title,
-        slug,
-        description: validatedData.description,
-        reportsTo: validatedData.reportsTo,
-        department: validatedData.department,
-        responsibilities: validatedData.responsibilities,
-        requirements: validatedData.requirements,
-        skills: validatedData.skills,
-        salaryMin: validatedData.salary.min,
-        salaryMax: validatedData.salary.max,
-        employmentType: validatedData.employmentType,
-        isActive: validatedData.isActive,
-        postedAt,
-        expiresAt,
-        authorId: user.id,
-      },
-      { returning: ['id'] }
-    )
+    const jobPostingValues = {
+      title: validatedData.title,
+      slug,
+      description: validatedData.description,
+      reportsTo: validatedData.reportsTo,
+      department: validatedData.department,
+      responsibilities: validatedData.responsibilities,
+      requirements: validatedData.requirements,
+      skills: validatedData.skills,
+      salaryMin: validatedData.salary.min,
+      salaryMax: validatedData.salary.max,
+      employmentType: validatedData.employmentType,
+      isActive: validatedData.isActive,
+      postedAt,
+      expiresAt,
+      authorId: user.id,
+    }
+
+    let createdJobPosting = await jobPostingRepository.create(jobPostingValues, {
+      returning: ['id'],
+      onConflictDoNothing: ['slug'],
+    })
+
+    while (createdJobPosting.length === 0) {
+      counter += 1
+      slug = `${baseSlug}-${counter}`
+      jobPostingValues.slug = slug
+      createdJobPosting = await jobPostingRepository.create(jobPostingValues, {
+        returning: ['id'],
+        onConflictDoNothing: ['slug'],
+      })
+    }
 
     return { success: true, jobPostingId: createdJobPosting[0].id }
   } catch (err) {
@@ -322,9 +327,9 @@ export async function updateJobPosting({ data, user }: { data: unknown; user: Us
     const validatedData = await editJobPostingSchema.parseAsync(values)
 
     let slug = resolveSlug(validatedData.slug, validatedData.title)
-    if (slug !== jobPosting.slug && (await jobPostingRepository.existsBySlug(slug))) {
-      let counter = 1
+    if (slug !== jobPosting.slug) {
       const baseSlug = slug
+      let counter = 1
       while (await jobPostingRepository.existsBySlug(slug)) {
         slug = `${baseSlug}-${counter}`
         counter++

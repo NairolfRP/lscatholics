@@ -30,9 +30,11 @@ import { parseCsvString } from '#/utils/string.ts'
 
 export const Route = createFileRoute('/dashboard/users/edit/$id')({
   loader: async ({ params }) => {
-    const targetUser = (await getTargetUserFn({ data: { userId: params.id } })) as User
+    const [targetUser, session] = await Promise.all([
+      getTargetUserFn({ data: { userId: params.id } }),
+      getSessionFn(),
+    ])
 
-    const session = await getSessionFn()
     const userHighestRole = session!.user.role
       ? getUserRoleMaxLevel(parseCsvString<UserRole[]>(session!.user.role))
       : 0
@@ -44,7 +46,11 @@ export const Route = createFileRoute('/dashboard/users/edit/$id')({
         disabled: getRoleLevel(role) >= userHighestRole,
       }))
 
-    return { isSelf: targetUser.id === session!.user.id, targetUser, assignableRoles }
+    return {
+      isSelf: targetUser.id === session!.user.id,
+      targetUser: targetUser as User,
+      assignableRoles,
+    }
   },
   head: ({ loaderData }) => ({
     meta: pageMetadata(
@@ -88,7 +94,7 @@ function RouteComponent() {
         return toast.error(result.error)
       }
 
-      void queryClient.invalidateQueries({ queryKey: ['admin', 'list-users'] })
+      void queryClient.invalidateQueries({ queryKey: ['users', 'dashboard'] })
       toast.success('Utilisateur mis à jour')
     },
   })

@@ -2,6 +2,7 @@ import { lazy, Suspense } from 'react'
 import { createFileRoute, stripSearchParams } from '@tanstack/react-router'
 import { DashboardHeading } from '#/features/dashboard/components/dashboard-heading'
 import { UsersList } from '#/features/user/components/admin/users-list.tsx'
+import { usersListQueryOptions } from '#/features/user/queries'
 import { DebouncedInput } from '#/shared/components/debounced-input'
 import {
   Card,
@@ -29,6 +30,10 @@ export const Route = createFileRoute('/dashboard/users/')({
   validateSearch: dashboardSearchSchema,
   search: {
     middlewares: [stripSearchParams(DASHBOARD_LIST_INITIAL_FILTERS)],
+  },
+  loaderDeps: ({ search }) => search,
+  loader: async ({ deps, context }) => {
+    await context.queryClient.query(usersListQueryOptions(deps)).catch(() => {})
   },
   component: RouteComponent,
 })
