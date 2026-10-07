@@ -389,8 +389,8 @@ importers:
         specifier: ^10.12.0
         version: 10.12.0(jiti@2.7.0)(supports-color@8.1.1)
       eslint-plugin-drizzle:
-        specifier: 1.0.0-rc.4
-        version: 1.0.0-rc.4(eslint@10.12.0(jiti@2.7.0)(supports-color@8.1.1))
+        specifier: 1.0.0-rc.5-ab785fc
+        version: 1.0.0-rc.5-ab785fc(eslint@10.12.0(jiti@2.7.0)(supports-color@8.1.1))
       eslint-plugin-oxlint:
         specifier: ^1.87.0
         version: 1.87.0(oxlint@1.87.0(oxlint-tsgolint@7.0.2003))
@@ -3942,8 +3942,8 @@ packages:
     resolution: {integrity: sha512-/veY75JbMK4j1yjvuUxuVsiS/hr/4iHs9FTT6cgTexxdE0Ly/glccBAkloH/DofkjRbZU3bnoj38mOmhkZ0lHw==}
     engines: {node: '>=12'}
 
-  eslint-plugin-drizzle@1.0.0-rc.4:
-    resolution: {integrity: sha512-bXxOn9HBWI3Ico5zFshPHMyN6DZUA9LOvFAgugIges2rLLIX3t470L9adHxiyqtkymnELr7YWhCXaeA8F4s/CA==}
+  eslint-plugin-drizzle@1.0.0-rc.5-ab785fc:
+    resolution: {integrity: sha512-kRNC2LS/6ay1lkX3UA3JJvtaesYZegFZ38W2XnS1XAiQubUZvWQlSHQaI82aDwqwgGsOS61qoanKINu/Hzqo3g==}
     peerDependencies:
       eslint: '>=8.0.0'
 
@@ -9131,7 +9131,7 @@ snapshots:
 
   escape-string-regexp@5.0.0: {}
 
-  eslint-plugin-drizzle@1.0.0-rc.4(eslint@10.12.0(jiti@2.7.0)(supports-color@8.1.1)):
+  eslint-plugin-drizzle@1.0.0-rc.5-ab785fc(eslint@10.12.0(jiti@2.7.0)(supports-color@8.1.1)):
     dependencies:
       eslint: 10.12.0(jiti@2.7.0)(supports-color@8.1.1)
 
