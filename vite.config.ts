@@ -1,4 +1,4 @@
-import type { Plugin } from 'vite'
+import { defineConfig, loadEnv } from 'vite'
 import { fileURLToPath } from 'node:url'
 import { devtools } from '@tanstack/devtools-vite'
 import { tanstackStart } from '@tanstack/react-start/plugin/vite'
@@ -7,34 +7,9 @@ import { sentryTanstackStart } from '@sentry/tanstackstart-react/vite'
 import tailwindcss from '@tailwindcss/vite'
 import viteReact, { reactCompilerPreset } from '@vitejs/plugin-react'
 import { nitro } from 'nitro/vite'
-import { defineConfig, loadEnv } from 'vite'
 import { VERCEL_IMAGE_SIZES } from '#shared/lib/vercel-image-sizes.ts'
 
 const isDev = process.env.NODE_ENV !== 'production'
-
-const stripEmptyVarFallbacks = (): Plugin => {
-  const re = /var\(--tw-ring-inset,\)/g
-  const strip = (code: string) => code.replace(re, '')
-  return {
-    name: 'strip-empty-var-fallbacks',
-    transform(code: string, id: string) {
-      if (!id.endsWith('.css') || !code.includes('var(--')) return undefined
-      const next = strip(code)
-      return next === code ? undefined : { code: next, map: null }
-    },
-    generateBundle(_, bundle) {
-      for (const file of Object.values(bundle) as {
-        type: string
-        fileName: string
-        source?: unknown
-      }[]) {
-        if (file.type !== 'asset' || !file.fileName.endsWith('.css')) continue
-        if (typeof file.source !== 'string' || !file.source.includes('var(--')) continue
-        file.source = strip(file.source)
-      }
-    },
-  }
-}
 
 const config = defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
@@ -80,7 +55,6 @@ const config = defineConfig(({ mode }) => {
         },
       }),
       tailwindcss(),
-      stripEmptyVarFallbacks(),
       tanstackStart({
         importProtection: {
           behavior: 'error',

@@ -1,7 +1,6 @@
 import { createRouter as createTanStackRouter } from '@tanstack/react-router'
 import { setupRouterSsrQueryIntegration } from '@tanstack/react-router-ssr-query'
 import { getGlobalStartContext } from '@tanstack/react-start'
-import { isFiveMNui } from '#/utils/fivem-client.ts'
 import { routeTree } from './routeTree.gen'
 import { DefaultErrorComponent } from './shared/components/ui/fallbacks/default-error'
 import { DefaultNotFound } from './shared/components/ui/fallbacks/default-not-found'
@@ -17,7 +16,7 @@ export function getRouter() {
     context,
     scrollRestoration: true,
     defaultViewTransition: true,
-    defaultPreload: isFiveMNui ? false : 'intent',
+    defaultPreload: 'intent',
     defaultPreloadStaleTime: 0,
     defaultErrorComponent: DefaultErrorComponent,
     defaultNotFoundComponent: () => (

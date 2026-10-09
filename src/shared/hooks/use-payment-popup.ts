@@ -1,8 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
-import { isFiveMNui } from '#/utils/fivem-client.ts'
 import { formatCurrency } from '#/utils/number.ts'
 import { toast } from '#shared/components/ui/toast.tsx'
-import { persistPaymentReturn } from '#shared/hooks/payment-return.ts'
 
 const PAYMENT_WINDOW_CONFIG = {
   width: 800,
@@ -58,11 +56,11 @@ export function usePaymentPopup() {
   const openPayment = ({ paymentId, paymentUrl, onSuccess, onFailure }: OpenPaymentOptions) => {
     cancelTrackingRef.current?.()
 
-    if (isFiveMNui) {
+    /* if (isFiveMNui) {
       persistPaymentReturn(window.location.pathname, paymentId)
       window.location.assign(paymentUrl)
       return
-    }
+    } */
 
     const popup = createPaymentWindow(paymentUrl)
     popupWindowRef.current = popup
