@@ -18,7 +18,6 @@ import { Route as AppAccountRouteRouteImport } from './routes/_app/account/route
 import { Route as AppArchbishopRouteImport } from './routes/_app/archbishop'
 import { Route as AppAssociationsRouteImport } from './routes/_app/associations'
 import { Route as AppCareersRouteImport } from './routes/_app/careers'
-import { Route as AppCefProbeRouteImport } from './routes/_app/cef-probe'
 import { Route as AppCharitiesRouteRouteImport } from './routes/_app/charities/route'
 import { Route as AppClergyApplicationRouteImport } from './routes/_app/clergy-application'
 import { Route as AppContactRouteImport } from './routes/_app/contact'
@@ -115,11 +114,6 @@ const AppAssociationsRoute = AppAssociationsRouteImport.update({
 const AppCareersRoute = AppCareersRouteImport.update({
   id: '/careers',
   path: '/careers',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppCefProbeRoute = AppCefProbeRouteImport.update({
-  id: '/cef-probe',
-  path: '/cef-probe',
   getParentRoute: () => AppRoute,
 } as any)
 const AppCharitiesRouteRoute = AppCharitiesRouteRouteImport.update({
@@ -408,7 +402,6 @@ export interface FileRoutesByFullPath {
   '/archbishop': typeof AppArchbishopRoute
   '/associations': typeof AppAssociationsRoute
   '/careers': typeof AppCareersRouteWithChildren
-  '/cef-probe': typeof AppCefProbeRoute
   '/clergy-application': typeof AppClergyApplicationRoute
   '/contact': typeof AppContactRoute
   '/daily-readings': typeof AppDailyReadingsRoute
@@ -465,7 +458,6 @@ export interface FileRoutesByTo {
   '/about': typeof AppAboutRoute
   '/archbishop': typeof AppArchbishopRoute
   '/associations': typeof AppAssociationsRoute
-  '/cef-probe': typeof AppCefProbeRoute
   '/clergy-application': typeof AppClergyApplicationRoute
   '/contact': typeof AppContactRoute
   '/daily-readings': typeof AppDailyReadingsRoute
@@ -531,7 +523,6 @@ export interface FileRoutesById {
   '/_app/archbishop': typeof AppArchbishopRoute
   '/_app/associations': typeof AppAssociationsRoute
   '/_app/careers': typeof AppCareersRouteWithChildren
-  '/_app/cef-probe': typeof AppCefProbeRoute
   '/_app/clergy-application': typeof AppClergyApplicationRoute
   '/_app/contact': typeof AppContactRoute
   '/_app/daily-readings': typeof AppDailyReadingsRoute
@@ -598,7 +589,6 @@ export interface FileRouteTypes {
     | '/archbishop'
     | '/associations'
     | '/careers'
-    | '/cef-probe'
     | '/clergy-application'
     | '/contact'
     | '/daily-readings'
@@ -655,7 +645,6 @@ export interface FileRouteTypes {
     | '/about'
     | '/archbishop'
     | '/associations'
-    | '/cef-probe'
     | '/clergy-application'
     | '/contact'
     | '/daily-readings'
@@ -720,7 +709,6 @@ export interface FileRouteTypes {
     | '/_app/archbishop'
     | '/_app/associations'
     | '/_app/careers'
-    | '/_app/cef-probe'
     | '/_app/clergy-application'
     | '/_app/contact'
     | '/_app/daily-readings'
@@ -847,13 +835,6 @@ declare module '@tanstack/react-router' {
       path: '/careers'
       fullPath: '/careers'
       preLoaderRoute: typeof AppCareersRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/cef-probe': {
-      id: '/_app/cef-probe'
-      path: '/cef-probe'
-      fullPath: '/cef-probe'
-      preLoaderRoute: typeof AppCefProbeRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/charities': {
@@ -1350,7 +1331,6 @@ interface AppRouteChildren {
   AppArchbishopRoute: typeof AppArchbishopRoute
   AppAssociationsRoute: typeof AppAssociationsRoute
   AppCareersRoute: typeof AppCareersRouteWithChildren
-  AppCefProbeRoute: typeof AppCefProbeRoute
   AppClergyApplicationRoute: typeof AppClergyApplicationRoute
   AppContactRoute: typeof AppContactRoute
   AppDailyReadingsRoute: typeof AppDailyReadingsRoute
@@ -1382,7 +1362,6 @@ const AppRouteChildren: AppRouteChildren = {
   AppArchbishopRoute: AppArchbishopRoute,
   AppAssociationsRoute: AppAssociationsRoute,
   AppCareersRoute: AppCareersRouteWithChildren,
-  AppCefProbeRoute: AppCefProbeRoute,
   AppClergyApplicationRoute: AppClergyApplicationRoute,
   AppContactRoute: AppContactRoute,
   AppDailyReadingsRoute: AppDailyReadingsRoute,
