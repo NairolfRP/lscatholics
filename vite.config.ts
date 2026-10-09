@@ -51,8 +51,6 @@ const config = defineConfig(({ mode }) => {
       ),
     },
     build: {
-      target: 'chrome103',
-      cssTarget: 'chrome111',
       minify: 'oxc',
       sourcemap: env.SENTRY_AUTH_TOKEN ? undefined : false,
     },
