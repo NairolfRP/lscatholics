@@ -4,7 +4,6 @@
 @import 'tw-animate-css';
 @import 'shadcn/tailwind.css';
 @import './safe-area.css';
-@import './fivem-compat.css';
 
 @custom-variant dark (&:is(.dark *));
 
