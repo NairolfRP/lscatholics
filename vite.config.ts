@@ -1,4 +1,3 @@
-import { defineConfig, loadEnv } from 'vite'
 import { fileURLToPath } from 'node:url'
 import { devtools } from '@tanstack/devtools-vite'
 import { tanstackStart } from '@tanstack/react-start/plugin/vite'
@@ -7,6 +6,7 @@ import { sentryTanstackStart } from '@sentry/tanstackstart-react/vite'
 import tailwindcss from '@tailwindcss/vite'
 import viteReact, { reactCompilerPreset } from '@vitejs/plugin-react'
 import { nitro } from 'nitro/vite'
+import { defineConfig, loadEnv } from 'vite'
 import { VERCEL_IMAGE_SIZES } from '#shared/lib/vercel-image-sizes.ts'
 
 const isDev = process.env.NODE_ENV !== 'production'
