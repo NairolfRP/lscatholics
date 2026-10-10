@@ -5,6 +5,7 @@ import { decryptMetadata } from '#server/payments/payment-crypto.service.ts'
 import type { PaymentHandler } from '#server/payments/payment-handler.ts'
 import { paymentHandlerRegistry } from '#server/payments/payment-handler.ts'
 import type { PendingPayment } from '#server/repositories/pending-payment.repository.ts'
+import { sendDonationConfirmationMail } from './donation-mail.service'
 import {
   sendPrivateDonationNotification,
   sendPublicDonationNotification,
@@ -15,9 +16,11 @@ class DonationPaymentHandler implements PaymentHandler {
 
   async onSuccess(payment: PendingPayment): Promise<void> {
     const metadata = decryptMetadata<DonationMetadata>(payment.metadata)
+    const data = { ...metadata, amount: payment.amount }
     await Promise.all([
-      sendPrivateDonationNotification({ ...metadata, amount: payment.amount }),
-      sendPublicDonationNotification({ ...metadata, amount: payment.amount }),
+      sendPrivateDonationNotification(data),
+      sendPublicDonationNotification(data),
+      sendDonationConfirmationMail(data),
     ])
     logger.info(
       { source: payment.source, paymentId: payment.id, amount: payment.amount },

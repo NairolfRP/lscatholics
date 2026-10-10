@@ -10,6 +10,7 @@ const validInput = {
   phone: '123 456',
   address: '12 Ginger Street',
   district: 'little_seoul',
+  eyefindMail: 'jean.valjean@mail.eyefind.fr',
   isOrganization: false,
   organizationName: '',
   anonymous: false,
@@ -29,6 +30,7 @@ describe('donationSchema', () => {
       phone: '123456',
       address: '12 Ginger Street',
       district: 'little_seoul',
+      eyefindMail: 'jean.valjean@mail.eyefind.fr',
       isOrganization: false,
       organizationName: undefined,
       anonymous: false,
@@ -45,13 +47,21 @@ describe('donationSchema', () => {
       phone: '',
       address: '',
       district: '',
+      eyefindMail: '',
     })
 
     expect(result.age).toBeUndefined()
     expect(result.phone).toBeUndefined()
     expect(result.address).toBeUndefined()
+    expect(result.eyefindMail).toBeUndefined()
     expect(result.ethnicity).toBeNull()
     expect(result.district).toBeNull()
+  })
+
+  it('rejects a non-email EyefindMail address', () => {
+    expect(() => donationSchema.parse({ ...validInput, eyefindMail: 'pas-un-email' })).toThrow(
+      "L'adresse EyefindMail doit être une adresse valide (ex. prenom.nom@mail.eyefind.fr)."
+    )
   })
 
   it('rejects a missing amount', () => {

@@ -83,6 +83,26 @@ const optionalAddressSchema = z
   .optional()
   .transform((value) => (value ? value : undefined))
 
+const EYEFIND_MAIL_MAX = 255
+
+const optionalEyefindMailSchema = z
+  .string()
+  .trim()
+  .max(EYEFIND_MAIL_MAX, {
+    error: `L'adresse EyefindMail ne doit pas dépasser ${EYEFIND_MAIL_MAX} caractères.`,
+  })
+  .optional()
+  .transform((value) => (value ? value : undefined))
+  .pipe(
+    z.union([
+      z.undefined(),
+      z.email({
+        error:
+          "L'adresse EyefindMail doit être une adresse valide (ex. prenom.nom@mail.eyefind.fr).",
+      }),
+    ])
+  )
+
 export const donationSchema = z
   .object({
     amount: amountSchema,
@@ -96,6 +116,7 @@ export const donationSchema = z
     ),
     phone: optionalPhoneSchema,
     address: optionalAddressSchema,
+    eyefindMail: optionalEyefindMailSchema,
     district: emptyToNull(
       optionalEnumSchema(DISTRICT_VALUES, {
         errorMessage: 'Sélectionnez une réponse valide.',

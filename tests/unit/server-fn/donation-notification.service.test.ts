@@ -20,6 +20,7 @@ const data: DonationNotificationData = {
   phone: '123456',
   address: '12 Ginger Street',
   district: 'little_seoul',
+  eyefindMail: '',
   isOrganization: false,
   organizationName: '',
   message: '',

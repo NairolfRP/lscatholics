@@ -8,17 +8,44 @@ export const DonateAddressSection = withForm({
     <FieldSet>
       <FieldLegend className="mb-5 w-full border-b pb-1 font-extrabold">Coordonnées</FieldLegend>
 
-      <form.AppField name="phone">
-        {(field) => (
-          <field.InputField
-            label="Numéro de téléphone"
-            placeholder="1234"
-            type="tel"
-            inputMode="numeric"
-            autoComplete="off"
-          />
-        )}
-      </form.AppField>
+      <div className="grid grid-cols-1 items-start gap-7 sm:grid-cols-2">
+        <form.AppField name="phone">
+          {(field) => (
+            <field.InputField
+              label="Numéro de téléphone"
+              placeholder="1234"
+              type="tel"
+              inputMode="numeric"
+              autoComplete="off"
+            />
+          )}
+        </form.AppField>
+
+        <form.AppField name="eyefindMail">
+          {(field) => (
+            <field.InputField
+              label="EyefindMail"
+              type="email"
+              autoComplete="off"
+              placeholder="john.doe@mail.eyefind.fr"
+              description={
+                <>
+                  (( Adresse fictive{' '}
+                  <a
+                    href="https://eyefind.fr/mail.php"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-medium text-primary underline underline-offset-4"
+                  >
+                    EyefindMail
+                  </a>{' '}
+                  (application de GTA World). JAMAIS une vraie adresse e-mail. ))
+                </>
+              }
+            />
+          )}
+        </form.AppField>
+      </div>
 
       <div className="grid grid-cols-1 items-start gap-7 sm:grid-cols-2">
         <form.AppField name="address">

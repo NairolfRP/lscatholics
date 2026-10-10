@@ -11,6 +11,7 @@ export function getDonationDefaults(currentCharacter: Character | null | undefin
     phone: '',
     address: '',
     district: '',
+    eyefindMail: '',
     isOrganization: false,
     organizationName: '',
     message: '',

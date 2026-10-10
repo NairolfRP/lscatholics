@@ -90,6 +90,10 @@ function buildPrivateEmbed(data: DonationNotificationData): DiscordEmbed {
     fields.push({ name: 'Téléphone', value: data.phone })
   }
 
+  if (data.eyefindMail) {
+    fields.push({ name: 'EyefindMail', value: data.eyefindMail })
+  }
+
   if (data.address) {
     const district = data.district ? ` (${getDistrictLabel(data.district)})` : ''
     fields.push({ name: 'Adresse', value: `${escapeDiscordMarkdown(data.address)}${district}` })

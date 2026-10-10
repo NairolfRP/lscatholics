@@ -43,6 +43,7 @@ const mocks = vi.hoisted(() => {
     },
     sendPrivateDonationNotification: vi.fn(async () => {}),
     sendPublicDonationNotification: vi.fn(async () => {}),
+    sendDonationConfirmationMail: vi.fn(async () => {}),
   }
 })
 
@@ -62,6 +63,10 @@ vi.mock('#server/services/app.service.ts', () => ({
 vi.mock('#/features/donate/server/donation-notification.service.ts', () => ({
   sendPrivateDonationNotification: mocks.sendPrivateDonationNotification,
   sendPublicDonationNotification: mocks.sendPublicDonationNotification,
+}))
+
+vi.mock('#/features/donate/server/donation-mail.service.ts', () => ({
+  sendDonationConfirmationMail: mocks.sendDonationConfirmationMail,
 }))
 
 beforeEach(() => {
@@ -111,6 +116,7 @@ async function createPendingPayment(overrides: Partial<NewPendingPayment> = {}) 
     phone: '123456',
     address: '12 Ginger Street',
     district: 'little_seoul',
+    eyefindMail: '',
     isOrganization: false,
     organizationName: '',
     message: '',
@@ -660,6 +666,9 @@ describe('paymentService.processWebhook', () => {
       expect.objectContaining({ firstname: 'Jean', lastname: 'Valjean', amount: 500 })
     )
     expect(mocks.sendPublicDonationNotification).toHaveBeenCalledWith(
+      expect.objectContaining({ firstname: 'Jean', amount: 500 })
+    )
+    expect(mocks.sendDonationConfirmationMail).toHaveBeenCalledWith(
       expect.objectContaining({ firstname: 'Jean', amount: 500 })
     )
     await expect(pendingPaymentRepository.findById('pay_1')).resolves.toBeUndefined()
