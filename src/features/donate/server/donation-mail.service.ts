@@ -5,12 +5,13 @@ import type { SendEyefindMailInput } from '#server/services/eyefind-mail.service
 import { EyefindMailError, sendEyefindMail } from '#server/services/eyefind-mail.service.ts'
 import type { MailLetterBlock } from '#server/services/mail-template.service.ts'
 import { renderMailTemplate } from '#server/services/mail-template.service.ts'
+import { socials } from '#shared/constants/socials.ts'
 
 export const DONATION_CONFIRMATION_MAIL_SUBJECT =
   'Merci pour votre don — Gracias por su donación | LS Catholics'
 
 const COAT_OF_ARMS_URL = 'https://i.imgur.com/6YJtfqY.png'
-const FACE_BROWSER_URL = 'https://face-fr.gta.world/page/lscatholics'
+const FACE_BROWSER_URL = socials.facebrowser.href
 
 export async function sendDonationConfirmationMail(data: DonationNotificationData): Promise<void> {
   const to = data.eyefindMail
