@@ -12,6 +12,7 @@ export const employmentApplicationFormOptions = formOptions({
     district: '',
     address: '',
     phone: '',
+    eyefindMail: '',
     iban: '',
     isPracticingCatholic: undefined,
     hasDriverLicense: undefined,

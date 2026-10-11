@@ -52,6 +52,10 @@ export const ContactSection = withForm({
           )}
         </form.AppField>
 
+        <form.AppField name="eyefindMail">
+          {(field) => <field.MailField label="EyefindMail (facultatif)" />}
+        </form.AppField>
+
         <form.AppField name="iban" defaultValue={currentCharacter?.bankRoutingNumber ?? ''}>
           {(field) => (
             <field.IbanField

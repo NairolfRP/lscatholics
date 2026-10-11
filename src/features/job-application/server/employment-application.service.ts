@@ -23,6 +23,7 @@ import type { DiscordEmbed } from '#server/services/discord.service.ts'
 import { sendWebhookMessage } from '#server/services/discord.service.ts'
 import { getDistrictLabel } from '#shared/constants/districts.constants.ts'
 import type { User } from '#shared/lib/types/auth.ts'
+import { sendEmploymentApplicationAcknowledgementMail } from './employment-application-mail.service.ts'
 
 export const JOB_APPLICATION_EMBED_COLOR = 0x1e40af
 
@@ -102,6 +103,8 @@ export async function submit({
       },
     })
 
+    await sendEmploymentApplicationAcknowledgementMail(validatedData)
+
     return { success: true }
   } catch (err) {
     if (err instanceof z.ZodError) {
@@ -141,6 +144,7 @@ function buildMainInfoEmbed(jobTitle: string, data: EmploymentApplicationOutput)
       value: `${data.address}${districtLabel ? ` (${districtLabel})` : ''}`,
     },
     { name: 'Numéro de téléphone', value: data.phone, inline: true },
+    ...(data.eyefindMail ? [{ name: 'EyefindMail', value: data.eyefindMail, inline: true }] : []),
     { name: 'IBAN', value: '``' + formatIban(data.iban) + '``', inline: true },
     {
       name: 'Catholique pratiquant ?',

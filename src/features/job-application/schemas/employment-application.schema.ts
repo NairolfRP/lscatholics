@@ -16,7 +16,7 @@ import { addressSchema, districtSchema } from '#shared/schemas/location.schema.t
 import { ageSchema, nameSchema } from '#shared/schemas/person.schema.ts'
 import { phoneSchema } from '#shared/schemas/phone.schema.ts'
 import { discordUsernameSchema } from '#shared/schemas/social.schema.ts'
-import { optionalEnumSchema } from '#shared/schemas/utils.schema'
+import { optionalEnumSchema, optionalEyefindMailSchema } from '#shared/schemas/utils.schema'
 
 const MAX = EMPLOYMENT_APPLICATION_MAX_LENGTHS
 
@@ -175,6 +175,7 @@ export const employmentApplicationSchema = z.object({
   district: districtSchema(DISTRICT_VALUES, 'district'),
   address: addressSchema(MAX.ADDRESS),
   phone: phoneSchema,
+  eyefindMail: optionalEyefindMailSchema,
   iban: individualIban,
   isPracticingCatholic: yesNoBooleanSchema,
   hasDriverLicense: yesNoBooleanSchema,
