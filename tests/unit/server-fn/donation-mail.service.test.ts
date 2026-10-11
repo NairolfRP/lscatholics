@@ -72,9 +72,12 @@ describe('sendDonationConfirmationMail', () => {
     expect(payload.body).toContain('votre don de $500')
     expect(payload.body).toContain('Hola Jean Valjean')
     expect(payload.body).toContain('su donación de $500')
-    expect(payload.html).toContain('<p>Bonjour <strong>Jean Valjean</strong>,</p>')
+    expect(payload.html).toContain('Bonjour <strong>Jean Valjean</strong>,</p>')
     expect(payload.html).toContain('<strong>$500</strong>')
-    expect(payload.html).toContain('<p>Hola <strong>Jean Valjean</strong>,</p>')
+    expect(payload.html).toContain('Hola <strong>Jean Valjean</strong>,</p>')
+    expect(payload.html).toContain('Montant du don')
+    expect(payload.html).toContain('Monto de la donación')
+    expect(payload.html).toContain('https://i.imgur.com/6YJtfqY.png')
   })
 
   it('mentions the organization when the donation is made on its behalf', async () => {
