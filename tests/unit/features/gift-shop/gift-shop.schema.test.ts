@@ -33,6 +33,27 @@ describe('giftOrderSchema', () => {
     })
   })
 
+  it('accepts an optional valid EyefindMail address', () => {
+    const result = giftOrderSchema.parse({
+      ...validInput,
+      eyefindMail: ' jean.valjean@mail.eyefind.fr ',
+    })
+
+    expect(result.eyefindMail).toBe('jean.valjean@mail.eyefind.fr')
+  })
+
+  it('treats an empty EyefindMail address as absent', () => {
+    const result = giftOrderSchema.parse({ ...validInput, eyefindMail: '' })
+
+    expect(result.eyefindMail).toBeUndefined()
+  })
+
+  it('rejects an invalid EyefindMail address', () => {
+    expect(() => giftOrderSchema.parse({ ...validInput, eyefindMail: 'not-an-email' })).toThrow(
+      "L'adresse EyefindMail doit être une adresse valide"
+    )
+  })
+
   it('rejects a missing phone number', () => {
     expect(() => giftOrderSchema.parse({ ...validInput, phone: '   ' })).toThrow(
       'Le numéro de téléphone est requis.'

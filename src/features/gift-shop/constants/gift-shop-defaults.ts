@@ -9,6 +9,7 @@ export function getGiftOrderDefaults(currentCharacter: Character | null | undefi
     firstname: currentCharacter?.firstname ?? '',
     lastname: currentCharacter?.lastname ?? '',
     phone: '',
+    eyefindMail: '',
     address: '',
     fleecaConfirmation: false,
   } as unknown as GiftOrderInput

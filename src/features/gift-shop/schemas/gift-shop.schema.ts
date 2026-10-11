@@ -4,6 +4,7 @@ import {
   GIFT_SHOP_PRODUCTS,
 } from '#/features/gift-shop/constants/gift-shop.constants.ts'
 import { CIVIL_TITLE_VALUES } from '#shared/constants/civil-title.ts'
+import { optionalEyefindMailSchema } from '#shared/schemas/utils.schema.ts'
 
 const PRODUCT_IDS = new Set(GIFT_SHOP_PRODUCTS.map((product) => product.id))
 
@@ -70,6 +71,7 @@ export const giftOrderSchema = z.object({
   firstname: nameSchema('prénom'),
   lastname: nameSchema('nom de famille'),
   phone: phoneSchema,
+  eyefindMail: optionalEyefindMailSchema,
   address: addressSchema,
   fleecaConfirmation: z.literal(true, {
     error: 'Vous devez cocher la confirmation pour continuer.',

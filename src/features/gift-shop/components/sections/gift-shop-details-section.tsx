@@ -8,18 +8,24 @@ export const GiftShopDetailsSection = withForm({
     <FieldSet>
       <FieldLegend className="mb-5 w-full border-b pb-1 font-extrabold">Coordonnées</FieldLegend>
 
-      <form.AppField name="phone">
-        {(field) => (
-          <field.InputField
-            label="Numéro de téléphone"
-            placeholder="1234"
-            type="tel"
-            inputMode="numeric"
-            required
-            autoComplete="off"
-          />
-        )}
-      </form.AppField>
+      <div className="grid grid-cols-1 items-start gap-7 sm:grid-cols-2">
+        <form.AppField name="phone">
+          {(field) => (
+            <field.InputField
+              label="Numéro de téléphone"
+              placeholder="1234"
+              type="tel"
+              inputMode="numeric"
+              required
+              autoComplete="off"
+            />
+          )}
+        </form.AppField>
+
+        <form.AppField name="eyefindMail">
+          {(field) => <field.MailField label="EyefindMail (facultatif)" />}
+        </form.AppField>
+      </div>
 
       <form.AppField name="address">
         {(field) => (

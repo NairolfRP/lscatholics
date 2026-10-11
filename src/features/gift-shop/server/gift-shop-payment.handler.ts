@@ -5,6 +5,7 @@ import { decryptMetadata } from '#server/payments/payment-crypto.service.ts'
 import type { PaymentHandler } from '#server/payments/payment-handler.ts'
 import { paymentHandlerRegistry } from '#server/payments/payment-handler.ts'
 import type { PendingPayment } from '#server/repositories/pending-payment.repository.ts'
+import { sendGiftOrderConfirmationMail } from './gift-shop-mail.service'
 import { sendGiftShopNotification } from './gift-shop-notification.service'
 
 class GiftShopPaymentHandler implements PaymentHandler {
@@ -12,7 +13,8 @@ class GiftShopPaymentHandler implements PaymentHandler {
 
   async onSuccess(payment: PendingPayment): Promise<void> {
     const metadata = decryptMetadata<GiftOrderMetadata>(payment.metadata)
-    await sendGiftShopNotification({ ...metadata, amount: payment.amount })
+    const data = { ...metadata, amount: payment.amount }
+    await Promise.all([sendGiftShopNotification(data), sendGiftOrderConfirmationMail(data)])
     logger.info(
       { paymentId: payment.id, amount: payment.amount },
       'Gift shop order payment successful, notification sent'

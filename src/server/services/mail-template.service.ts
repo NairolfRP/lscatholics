@@ -17,6 +17,7 @@ export interface MailLetterBlock {
   title: string
   greeting: string
   intro: string
+  recap?: string
   amountLabel?: string
   amount?: string
   paragraphs: string[]
@@ -65,6 +66,7 @@ function renderLetterBlock(block: MailLetterBlock, logoUrl?: string): string {
     `<div style="background:#fff; padding:30px; border:1px solid ${CARD_BORDER}; border-top:none; border-radius:0 0 14px 14px;">`,
     `<p style="margin:0 0 16px;">${block.greeting}</p>`,
     `<p style="margin:0 0 16px;">${block.intro}</p>`,
+    block.recap ? `<div style="margin:0;">${block.recap}</div>` : '',
     block.amount && block.amountLabel
       ? `<div style="margin:22px 0; padding:18px 0; border-top:1px solid ${CARD_BORDER}; border-bottom:1px solid ${CARD_BORDER}; text-align:center;"><div style="font-size:10px; letter-spacing:3px; color:${LABEL_COLOR}; text-transform:uppercase;">${block.amountLabel}</div><div style="font-size:28px; font-weight:bold; color:${PRIMARY_COLOR}; margin-top:6px;">${block.amount}</div></div>`
       : '',

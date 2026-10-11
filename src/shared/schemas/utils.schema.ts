@@ -47,3 +47,4 @@ export const optionalEyefindMailSchema = z
       }),
     ])
   )
+  .optional()

@@ -48,6 +48,7 @@ const mocks = vi.hoisted(() => {
       mocks.giftShopNotificationWebhook = value
     },
     sendGiftShopNotification: vi.fn(async () => {}),
+    sendGiftOrderConfirmationMail: vi.fn(async () => {}),
   }
 })
 
@@ -77,6 +78,10 @@ vi.mock('#server/services/app.service.ts', () => ({
 
 vi.mock('#/features/gift-shop/server/gift-shop-notification.service.ts', () => ({
   sendGiftShopNotification: mocks.sendGiftShopNotification,
+}))
+
+vi.mock('#/features/gift-shop/server/gift-shop-mail.service.ts', () => ({
+  sendGiftOrderConfirmationMail: mocks.sendGiftOrderConfirmationMail,
 }))
 
 beforeEach(() => {
@@ -353,6 +358,13 @@ describe('gift shop payment handler', () => {
       reference: 'GC-AB2CD3EF4J',
       amount: 10_470,
     })
+    expect(mocks.sendGiftOrderConfirmationMail).toHaveBeenCalledWith(
+      expect.objectContaining({
+        reference: 'GC-AB2CD3EF4J',
+        amount: 10_470,
+        phone: '123456',
+      })
+    )
     await expect(pendingPaymentRepository.findById('pay_1')).resolves.toBeUndefined()
   })
 
