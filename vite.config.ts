@@ -10,6 +10,9 @@ import { defineConfig, loadEnv } from 'vite'
 import { VERCEL_IMAGE_SIZES } from '#shared/lib/vercel-image-sizes.ts'
 
 const isDev = process.env.NODE_ENV !== 'production'
+const shouldUseSentryPlugin =
+  process.env.NODE_ENV === 'production' && Boolean(process.env.SENTRY_AUTH_TOKEN)
+const shouldBuildSourcemaps = shouldUseSentryPlugin || process.env.BUILD_SOURCEMAPS === 'true'
 
 const config = defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
@@ -27,7 +30,7 @@ const config = defineConfig(({ mode }) => {
     },
     build: {
       minify: 'oxc',
-      sourcemap: env.SENTRY_AUTH_TOKEN ? undefined : false,
+      sourcemap: shouldBuildSourcemaps,
     },
     plugins: [
       ...(isDev ? [devtools()] : []),
@@ -65,9 +68,8 @@ const config = defineConfig(({ mode }) => {
       }),
       viteReact(),
       babel({ presets: [reactCompilerPreset()] }),
-      ...(isDev
-        ? []
-        : [
+      ...(shouldUseSentryPlugin
+        ? [
             sentryTanstackStart({
               org: env.SENTRY_ORG,
               project: env.SENTRY_PROJECT,
@@ -76,7 +78,8 @@ const config = defineConfig(({ mode }) => {
               telemetry: false,
               tunnelRoute: true,
             }),
-          ]),
+          ]
+        : []),
     ],
   }
 })
