@@ -4,7 +4,7 @@ import { logger } from '#server/integrations/logger.ts'
 import type { SendEyefindMailInput } from '#server/services/eyefind-mail.service.ts'
 import { EyefindMailError, sendEyefindMail } from '#server/services/eyefind-mail.service.ts'
 import type { MailLetterBlock } from '#server/services/mail-template.service.ts'
-import { renderMailTemplate } from '#server/services/mail-template.service.ts'
+import { escapeHtml, renderMailTemplate } from '#server/services/mail-template.service.ts'
 import { socials } from '#shared/constants/socials.ts'
 
 export const DONATION_CONFIRMATION_MAIL_SUBJECT =
@@ -56,8 +56,7 @@ export async function sendDonationConfirmationMail(data: DonationNotificationDat
     blessing: 'Que la joie de Dieu vous comble !',
     close: 'Fraternellement,',
     signature: 'Archidiocèse de Los Santos',
-    followLabel: 'Suivez-nous sur Facebrowser :',
-    followLink: FACE_BROWSER_URL,
+    links: [{ label: 'Suivez-nous sur Facebrowser :', href: FACE_BROWSER_URL }],
     note: 'Ceci est un message automatique, merci de ne pas y répondre.',
   }
 
@@ -75,8 +74,7 @@ export async function sendDonationConfirmationMail(data: DonationNotificationDat
     blessing: '¡Que la alegría de Dios lo llene!',
     close: 'Fraternalmente,',
     signature: 'Arquidiócesis de Los Santos',
-    followLabel: 'Síguenos en Facebrowser:',
-    followLink: FACE_BROWSER_URL,
+    links: [{ label: 'Síguenos en Facebrowser:', href: FACE_BROWSER_URL }],
     note: 'Este es un mensaje automático, por favor no responda.',
   }
 
@@ -139,17 +137,4 @@ export async function sendDonationConfirmationMail(data: DonationNotificationDat
       'Failed to send donation confirmation mail'
     )
   }
-}
-
-function escapeHtml(value: string): string {
-  return value.replace(/[&<>"']/g, (char) => {
-    const entities: Record<string, string> = {
-      '&': '&amp;',
-      '<': '&lt;',
-      '>': '&gt;',
-      '"': '&quot;',
-      "'": '&#39;',
-    }
-    return entities[char]
-  })
 }

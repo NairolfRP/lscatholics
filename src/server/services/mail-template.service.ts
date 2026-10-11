@@ -8,6 +8,11 @@ const MUTED_COLOR = '#6f737c'
 const LABEL_COLOR = '#8a6d1f'
 const DEFAULT_SEPARATOR = '❦'
 
+export interface MailLink {
+  label: string
+  href: string
+}
+
 export interface MailLetterBlock {
   title: string
   greeting: string
@@ -18,8 +23,7 @@ export interface MailLetterBlock {
   blessing?: string
   close?: string
   signature?: string
-  followLabel?: string
-  followLink?: string
+  links?: MailLink[]
   note?: string
 }
 
@@ -60,7 +64,7 @@ function renderLetterBlock(block: MailLetterBlock, logoUrl?: string): string {
   const body = [
     `<div style="background:#fff; padding:30px; border:1px solid ${CARD_BORDER}; border-top:none; border-radius:0 0 14px 14px;">`,
     `<p style="margin:0 0 16px;">${block.greeting}</p>`,
-    `<p style="margin:0;">${block.intro}</p>`,
+    `<p style="margin:0 0 16px;">${block.intro}</p>`,
     block.amount && block.amountLabel
       ? `<div style="margin:22px 0; padding:18px 0; border-top:1px solid ${CARD_BORDER}; border-bottom:1px solid ${CARD_BORDER}; text-align:center;"><div style="font-size:10px; letter-spacing:3px; color:${LABEL_COLOR}; text-transform:uppercase;">${block.amountLabel}</div><div style="font-size:28px; font-weight:bold; color:${PRIMARY_COLOR}; margin-top:6px;">${block.amount}</div></div>`
       : '',
@@ -73,17 +77,31 @@ function renderLetterBlock(block: MailLetterBlock, logoUrl?: string): string {
   ]
 
   const footer =
-    block.followLabel || block.followLink || block.note
-      ? `<div style="margin-top:22px; padding-top:16px; border-top:1px solid ${CARD_BORDER}; text-align:center; font-size:12px; color:${MUTED_COLOR}; line-height:1.8;">${
-          block.followLabel ? `${block.followLabel}<br>` : ''
-        }${
-          block.followLink
-            ? `<a href="${block.followLink}" style="color:${PRIMARY_COLOR}; font-weight:bold; text-decoration:none;">${block.followLink}</a>`
+    block.links?.length || block.note
+      ? `<div style="margin-top:22px; padding-top:16px; border-top:1px solid ${CARD_BORDER}; text-align:left; font-size:12px; color:${MUTED_COLOR}; line-height:1.8;">${
+          block.links?.length
+            ? block.links
+                .map(
+                  (link) =>
+                    `${link.label}<br><a href="${link.href}" style="color:${PRIMARY_COLOR}; font-weight:bold; text-decoration:none;">${link.href}</a>`
+                )
+                .join(`<div style="margin-top:12px;"></div>`)
             : ''
-        }${
-          block.note ? `<div style="margin-top:8px; font-size:11px;">${block.note}</div>` : ''
-        }</div>`
+        }${block.note ? `<div style="margin-top:8px; font-size:11px;">${block.note}</div>` : ''}</div>`
       : ''
 
   return `${header}${body.join('')}${footer}</div>`
+}
+
+export function escapeHtml(value: string): string {
+  return value.replace(/[&<>"']/g, (char) => {
+    const entities: Record<string, string> = {
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#39;',
+    }
+    return entities[char]
+  })
 }

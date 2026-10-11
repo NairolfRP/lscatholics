@@ -2,6 +2,7 @@ import { SendIcon } from 'lucide-react'
 import { ContactFormSkeleton } from '#/features/contact/components/contact-form-skeleton.tsx'
 import { contactSubjectOptions } from '#/features/contact/constants/contact-subjects.ts'
 import { contactSchema } from '#/features/contact/schemas/contact.schema.ts'
+import type { ContactFormInput } from '#/features/contact/schemas/contact.schema.ts'
 import { submitContactFn } from '#/features/contact/server-fn/contact.functions.ts'
 import { RequireAuth } from '#shared/components/auth/require-auth.tsx'
 import {
@@ -30,9 +31,10 @@ export function ContactForm() {
       firstName: currentCharacter?.firstname ?? '',
       lastName: currentCharacter?.lastname ?? '',
       phone: '',
+      eyefindMail: '',
       subject: '',
       message: '',
-    },
+    } as unknown as ContactFormInput,
     onSubmit: async ({ value, formApi }) => {
       const result = await submitContactFn({ data: value })
 
@@ -103,19 +105,29 @@ export function ContactForm() {
                 </form.AppField>
               </div>
 
-              <form.AppField name="phone">
-                {(field) => (
-                  <field.InputField
-                    type="tel"
-                    inputMode="tel"
-                    label="Téléphone"
-                    placeholder="1234"
-                    required
-                    autoComplete="off"
-                    className="max-w-92"
-                  />
-                )}
-              </form.AppField>
+              <div className="grid grid-cols-1 gap-7 sm:grid-cols-2">
+                <form.Subscribe selector={(state) => state.values.eyefindMail}>
+                  {(eyefindMail) => (
+                    <form.AppField name="phone">
+                      {(field) => (
+                        <field.InputField
+                          type="tel"
+                          inputMode="tel"
+                          label="Téléphone"
+                          description="Obligatoire uniquement si aucune adresse EyefindMail n'est indiquée."
+                          placeholder="1234"
+                          required={!eyefindMail}
+                          autoComplete="off"
+                        />
+                      )}
+                    </form.AppField>
+                  )}
+                </form.Subscribe>
+
+                <form.AppField name="eyefindMail">
+                  {(field) => <field.MailField label="EyefindMail (facultatif)" />}
+                </form.AppField>
+              </div>
 
               <form.AppField name="subject">
                 {(field) => (

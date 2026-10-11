@@ -27,3 +27,23 @@ export const optionalShortTextSchema = (max: number) =>
     .max(max, { error: (iss) => `Ne doit pas dépasser ${iss.maximum} caractères.` })
     .optional()
     .transform((value) => (value ? value : undefined))
+
+export const EYEFIND_MAIL_MAX = 255
+
+export const optionalEyefindMailSchema = z
+  .string()
+  .trim()
+  .max(EYEFIND_MAIL_MAX, {
+    error: `L'adresse EyefindMail ne doit pas dépasser ${EYEFIND_MAIL_MAX} caractères.`,
+  })
+  .optional()
+  .transform((value) => (value ? value : undefined))
+  .pipe(
+    z.union([
+      z.undefined(),
+      z.email({
+        error:
+          "L'adresse EyefindMail doit être une adresse valide (ex. prenom.nom@mail.eyefind.fr).",
+      }),
+    ])
+  )

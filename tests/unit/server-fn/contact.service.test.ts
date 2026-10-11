@@ -16,6 +16,12 @@ vi.mock('ky', () => ({
   },
 }))
 
+const sendContactAcknowledgementMailMock = vi.hoisted(() => vi.fn())
+
+vi.mock('#/features/contact/server/contact-mail.service.ts', () => ({
+  sendContactAcknowledgementMail: sendContactAcknowledgementMailMock,
+}))
+
 const CONTACT_WEBHOOK_URL = 'https://discord.com/api/webhooks/test'
 
 const validData = {
@@ -28,6 +34,7 @@ const validData = {
 
 beforeEach(() => {
   postMock.mockReset()
+  sendContactAcknowledgementMailMock.mockReset()
 })
 
 afterEach(() => {
@@ -55,6 +62,10 @@ describe('submit', () => {
     })
 
     expect(result).toEqual({ success: true })
+
+    expect(sendContactAcknowledgementMailMock).toHaveBeenCalledWith(
+      expect.objectContaining({ firstName: validData.firstName, lastName: validData.lastName })
+    )
 
     const timestamp = mockDate.toISOString()
     expect(postMock).toHaveBeenCalledWith(
@@ -88,6 +99,73 @@ describe('submit', () => {
         },
       })
     )
+  })
+
+  it('includes the EyefindMail address in the embed and forwards it to the acknowledgement', async () => {
+    postMock.mockResolvedValue({})
+
+    const eyefindMail = 'jean.valjean@mail.eyefind.fr'
+    await contactService.submit({
+      data: { ...validData, eyefindMail },
+      user: mockUser,
+    })
+
+    const payload = postMock.mock.calls[0][1] as {
+      json: { embeds: { fields: { name: string; value: string }[] }[] }
+    }
+    expect(payload.json.embeds[0].fields).toContainEqual({
+      name: 'EyefindMail',
+      value: eyefindMail,
+    })
+    expect(sendContactAcknowledgementMailMock).toHaveBeenCalledWith(
+      expect.objectContaining({ eyefindMail })
+    )
+  })
+
+  it('accepts a submission without a phone number when an EyefindMail address is provided', async () => {
+    postMock.mockResolvedValue({})
+
+    const eyefindMail = 'jean.valjean@mail.eyefind.fr'
+    const dataWithoutPhone = {
+      firstName: validData.firstName,
+      lastName: validData.lastName,
+      subject: validData.subject,
+      message: validData.message,
+      eyefindMail,
+    }
+
+    const result = await contactService.submit({
+      data: dataWithoutPhone,
+      user: mockUser,
+    })
+
+    expect(result).toEqual({ success: true })
+
+    const payload = postMock.mock.calls[0][1] as {
+      json: { embeds: { fields: { name: string; value: string }[] }[] }
+    }
+    const fieldNames = payload.json.embeds[0].fields.map((field) => field.name)
+    expect(fieldNames).not.toContain('Téléphone')
+    expect(fieldNames).toContain('EyefindMail')
+  })
+
+  it('requires a phone number or an EyefindMail address', async () => {
+    const dataWithoutContact = {
+      firstName: validData.firstName,
+      lastName: validData.lastName,
+      subject: validData.subject,
+      message: validData.message,
+    }
+
+    const result = await contactService.submit({
+      data: dataWithoutContact,
+      user: mockUser,
+    })
+
+    expect(result.success).toBe(false)
+    expect(result.validationErrors).toBeDefined()
+    expect(setResponseStatus).toHaveBeenCalledWith(400)
+    expect(postMock).not.toHaveBeenCalled()
   })
 
   it('returns an error and a 500 status when the webhook request fails', async () => {

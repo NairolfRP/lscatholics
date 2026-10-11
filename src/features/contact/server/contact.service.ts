@@ -8,6 +8,7 @@ import { logger } from '#server/integrations/logger.ts'
 import type { DiscordEmbed } from '#server/services/discord.service.ts'
 import { sendWebhookMessage } from '#server/services/discord.service.ts'
 import type { User } from '#shared/lib/types/auth.ts'
+import { sendContactAcknowledgementMail } from './contact-mail.service'
 
 export const CONTACT_EMBED_COLOR = 0x7c3aed
 
@@ -35,6 +36,8 @@ export async function submit({ data, user }: { data: unknown; user: User }) {
       },
     })
 
+    await sendContactAcknowledgementMail(validatedData)
+
     return { success: true }
   } catch (err) {
     if (err instanceof z.ZodError) {
@@ -58,7 +61,8 @@ function buildContactEmbeds({ data }: { data: z.output<typeof contactSchema> }):
       fields: [
         { name: 'Prénom', value: data.firstName, inline: true },
         { name: 'Nom', value: data.lastName, inline: true },
-        { name: 'Téléphone', value: String(data.phone) },
+        ...(data.phone ? [{ name: 'Téléphone', value: data.phone }] : []),
+        ...(data.eyefindMail ? [{ name: 'EyefindMail', value: data.eyefindMail }] : []),
         { name: 'Sujet', value: contactSubjectLabels[data.subject] },
       ],
       footer: {
