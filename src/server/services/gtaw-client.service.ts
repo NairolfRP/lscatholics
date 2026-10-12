@@ -1,6 +1,6 @@
 import type { GTAWCharacter, GTAWProfile } from '@gtaw-oauth-providers/better-auth'
-import { createHash } from 'node:crypto'
 import { getRequest } from '@tanstack/react-start/server'
+import { waitUntil } from '@vercel/functions'
 import ky from 'ky'
 import { defineCachedFunction } from 'nitro/cache'
 import { env } from '#/config/env.server'
@@ -34,24 +34,30 @@ function getRequestEvent(): CacheEvent | undefined {
 }
 
 const cachedUserCharacters = defineCachedFunction(
-  async (_event: CacheEvent | undefined, accessToken: string): Promise<GTAWCharacter[]> => {
-    logger.debug('GTAW Client calling api/user...')
+  async (
+    _event: CacheEvent | undefined,
+    userId: string,
+    accessToken: string
+  ): Promise<GTAWCharacter[]> => {
+    logger.debug({ userId }, 'GTAW Client calling api/user...')
     const response = await client(accessToken).get('api/user').json<GTAWProfile>()
     return response.user.character
   },
   {
     maxAge: 60 * 5, // 5 minutes
     name: 'userCharactersFromAPI',
-    getKey: (_event: CacheEvent | undefined, token: string) => hashToken(token),
+    getKey: (_event: CacheEvent | undefined, userId: string) => userId,
+    waitUntil,
   }
 )
 
 const cachedUserFactions = defineCachedFunction(
   async (
     _event: CacheEvent | undefined,
+    userId: string,
     accessToken: string
   ): Promise<GTAWClientFetchFactionsResponse['data']> => {
-    logger.debug('GTAW Client calling api/factions...')
+    logger.debug({ userId }, 'GTAW Client calling api/factions...')
     const response = await client(accessToken)
       .get('api/factions')
       .json<GTAWClientFetchFactionsResponse>()
@@ -60,7 +66,8 @@ const cachedUserFactions = defineCachedFunction(
   {
     maxAge: 60 * 5, // 5 minutes
     name: 'userFactionsFromAPI',
-    getKey: (_event: CacheEvent | undefined, token: string) => hashToken(token),
+    getKey: (_event: CacheEvent | undefined, userId: string) => userId,
+    waitUntil,
   }
 )
 
@@ -70,17 +77,19 @@ export type ForceRefreshReturnMap = {
 }
 export type ForceRefreshType = keyof ForceRefreshReturnMap
 
-async function fetchUserCharacters(accessToken: string): Promise<GTAWCharacter[]> {
-  return cachedUserCharacters(getRequestEvent(), accessToken)
+async function fetchUserCharacters(userId: string, accessToken: string): Promise<GTAWCharacter[]> {
+  return cachedUserCharacters(getRequestEvent(), userId, accessToken)
 }
 
 async function fetchUserFactions(
+  userId: string,
   accessToken: string
 ): Promise<GTAWClientFetchFactionsResponse['data']> {
-  return cachedUserFactions(getRequestEvent(), accessToken)
+  return cachedUserFactions(getRequestEvent(), userId, accessToken)
 }
 
 async function forceRefresh<T extends readonly ForceRefreshType[]>(
+  userId: string,
   accessToken: string,
   keys: T
 ): Promise<{ [K in T[number]]: ForceRefreshReturnMap[K] }> {
@@ -91,15 +100,15 @@ async function forceRefresh<T extends readonly ForceRefreshType[]>(
   const promises = keys.map(async (type) => {
     switch (type) {
       case 'characters':
-        await cachedUserCharacters.invalidate(event, accessToken)
-        logger.debug(`User characters cache invalidated for token %s`, hashToken(accessToken))
-        results.characters = await cachedUserCharacters(event, accessToken)
+        await cachedUserCharacters.invalidate(event, userId, accessToken)
+        logger.debug({ userId }, 'User characters cache invalidated')
+        results.characters = await cachedUserCharacters(event, userId, accessToken)
         break
 
       case 'factions':
-        await cachedUserFactions.invalidate(event, accessToken)
-        logger.debug(`User factions cache invalidated for token %s`, hashToken(accessToken))
-        results.factions = await cachedUserFactions(event, accessToken)
+        await cachedUserFactions.invalidate(event, userId, accessToken)
+        logger.debug({ userId }, 'User factions cache invalidated')
+        results.factions = await cachedUserFactions(event, userId, accessToken)
         break
     }
   })
@@ -111,10 +120,6 @@ async function forceRefresh<T extends readonly ForceRefreshType[]>(
   await Promise.all(promises)
 
   return results as { [K in T[number]]: ForceRefreshReturnMap[K] }
-}
-
-function hashToken(token: string): string {
-  return createHash('sha256').update(token).digest('hex')
 }
 
 export const gtawClient = {

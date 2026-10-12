@@ -1,23 +1,26 @@
 import type { GTAWCharacter } from '@gtaw-oauth-providers/better-auth'
 import type { Character, CharacterWithFaction, Faction } from '#/shared/types/character.types'
 import type { GTAWApiFaction } from '#/shared/types/gtaw-client.types'
-import { getAccessToken } from './auth.service'
+import { ensureSession, getAccessToken } from './auth.service'
 import { gtawClient } from './gtaw-client.service'
 
 export async function getAllUserCharacters(
   accessToken?: string,
   options?: { forceRefresh?: boolean }
 ): Promise<Character[]> {
+  const session = await ensureSession()
+  const userId = session.user.id
+
   if (!accessToken) {
-    const result = await getAccessToken()
+    const result = await getAccessToken({ userId })
     accessToken = result.accessToken
   }
   let characters
   if (options?.forceRefresh) {
-    const forceRefreshResult = await gtawClient.forceRefresh(accessToken, ['characters'])
+    const forceRefreshResult = await gtawClient.forceRefresh(userId, accessToken, ['characters'])
     characters = forceRefreshResult.characters
   } else {
-    characters = await gtawClient.fetchUserCharacters(accessToken)
+    characters = await gtawClient.fetchUserCharacters(userId, accessToken)
   }
 
   if (characters.length === 0) {
@@ -31,8 +34,11 @@ export async function getAllUserCharactersWithFactions(
   accessToken?: string,
   options?: { forceRefresh?: boolean }
 ): Promise<CharacterWithFaction[]> {
+  const session = await ensureSession()
+  const userId = session.user.id
+
   if (!accessToken) {
-    const result = await getAccessToken()
+    const result = await getAccessToken({ userId })
     accessToken = result.accessToken
   }
 
@@ -55,17 +61,20 @@ export async function getCharactersFactions(
   accessToken?: string,
   options?: { forceRefresh?: boolean }
 ): Promise<{ [characterId: string]: Faction } | null> {
+  const session = await ensureSession()
+  const userId = session.user.id
+
   if (!accessToken) {
-    const result = await getAccessToken()
+    const result = await getAccessToken({ userId })
     accessToken = result.accessToken
   }
 
   let factions
   if (options?.forceRefresh) {
-    const forceRefreshResult = await gtawClient.forceRefresh(accessToken, ['factions'])
+    const forceRefreshResult = await gtawClient.forceRefresh(userId, accessToken, ['factions'])
     factions = forceRefreshResult.factions
   } else {
-    factions = await gtawClient.fetchUserFactions(accessToken)
+    factions = await gtawClient.fetchUserFactions(userId, accessToken)
   }
 
   // oxlint-disable-next-line typescript/no-unnecessary-condition
