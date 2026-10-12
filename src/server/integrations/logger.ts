@@ -1,7 +1,7 @@
 import type { Logger as PinoLogger } from 'pino'
 import pino, { stdSerializers } from 'pino'
+import pretty from 'pino-pretty'
 import { env } from '#/config/env.server'
-import { inDev } from '#server/services/app.service.ts'
 
 export interface LogContext {
   [key: string]: unknown
@@ -28,7 +28,7 @@ export class Logger implements ILogger {
   private static createRootLogger(): PinoLogger {
     const options = {
       name: 'app-logger',
-      level: env.LOG_LEVEL || (inDev ? 'debug' : 'info'),
+      level: env.LOG_LEVEL || (import.meta.env.DEV ? 'debug' : 'info'),
       serializers: {
         err: stdSerializers.err,
         req: stdSerializers.req,
@@ -47,14 +47,8 @@ export class Logger implements ILogger {
       },
     }
 
-    if (inDev) {
-      return pino({
-        ...options,
-        transport: {
-          target: 'pino-pretty',
-          options: { colorize: true, translateTime: 'SYS:standard' },
-        },
-      })
+    if (import.meta.env.DEV) {
+      return pino(options, pretty({ colorize: true, translateTime: 'SYS:standard' }))
     }
 
     return pino(options, pino.destination({ dest: 1, sync: true }))
