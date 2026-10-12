@@ -1,4 +1,5 @@
 import { getRequestHeaders } from '@tanstack/react-start/server'
+import { db } from '#server/db'
 import { UnauthorizedException } from '../exceptions/http-exception'
 import { auth } from '../integrations/auth.server'
 import { logger } from '../integrations/logger'
@@ -47,8 +48,14 @@ export async function getAccessToken({
   const headers = getRequestHeaders()
 
   if (!accountId) {
-    const accounts = await auth.api.listUserAccounts({ headers })
-    const account = accounts.find((acc) => acc.providerId === providerId)
+    if (!userId) {
+      throw UnauthorizedException(`No ${providerId} account linked to the current user`)
+    }
+
+    const account = await db.query.accounts.findFirst({
+      columns: { id: true },
+      where: { providerId, userId },
+    })
 
     if (!account) {
       throw UnauthorizedException(`No ${providerId} account linked to the current user`)
