@@ -1,5 +1,5 @@
 import { createMiddleware, createStart } from '@tanstack/react-start'
-import { getResponseHeaders, setResponseHeaders } from '@tanstack/react-start/server'
+import { setResponseHeader } from '@tanstack/react-start/server'
 import { cspConfig } from './config/csp.server'
 import { securityHeaders } from './config/headers.server'
 import { csrfMiddleware } from './middleware/csrf.middleware'
@@ -8,16 +8,13 @@ import { sentryFunctionMiddleware, sentryRequestMiddleware } from './middleware/
 const globalHeadersMiddleware = createMiddleware().server(({ next }) => {
   const [nonce, cspHeader] = cspConfig()
 
-  const headers = getResponseHeaders()
-
   for (const [name, value] of Object.entries({
     ...securityHeaders,
     'Content-Security-Policy': cspHeader,
   })) {
-    headers.set(name, value)
+    setResponseHeader(name, value)
   }
 
-  setResponseHeaders(headers)
   return next({ context: { nonce } })
 })
 
