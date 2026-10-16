@@ -7,7 +7,7 @@ export function getContext() {
     defaultOptions: {
       queries: {
         networkMode,
-        staleTime: 60 * 1000,
+        staleTime: 5 * 60 * 1000,
         // retry: isFiveMNui ? 1 : undefined,
         // refetchOnWindowFocus: isFiveMNui ? false : undefined,
         // refetchOnReconnect: isFiveMNui ? false : undefined,
@@ -22,4 +22,3 @@ export function getContext() {
     queryClient,
   }
 }
-export default function TanstackQueryProvider() {}
