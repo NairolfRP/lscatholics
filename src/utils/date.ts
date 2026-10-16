@@ -72,3 +72,12 @@ export function getMonthBounds({ year, month }: { year: number; month: number })
 export function addMonths(date: Date, amount: number) {
   return new Date(date.getFullYear(), date.getMonth() + amount, 1)
 }
+
+export interface YearMonth {
+  year: number
+  month: number
+}
+
+export function getCurrentYearMonth(date: Date = new Date()): YearMonth {
+  return { year: date.getFullYear(), month: date.getMonth() + 1 }
+}
