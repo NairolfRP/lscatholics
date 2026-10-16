@@ -5,9 +5,9 @@ export function toISODate(date: Date): string {
   return format(date, 'yyyy-MM-dd')
 }
 
-export function todayISODate(): string {
-  return toISODate(new Date())
-}
+export const readingsDateSchema = z
+  .string()
+  .regex(/^\d{4}-\d{2}-\d{2}$/, { error: 'Date invalide.' })
 
 // --- AELF.org API payload validation ---
 
