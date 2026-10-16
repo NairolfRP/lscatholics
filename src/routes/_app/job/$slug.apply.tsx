@@ -24,7 +24,7 @@ export const Route = createFileRoute('/_app/job/$slug/apply')({
             url: `/job/${loaderData.slug}/apply`,
           },
         })
-      : pageMetadata("Demande d'emploi"),
+      : undefined,
     ...(loaderData
       ? {
           links: [
