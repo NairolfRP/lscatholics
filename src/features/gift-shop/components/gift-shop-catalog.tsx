@@ -30,6 +30,15 @@ interface GiftShopCatalogProps {
   quantities: ReadonlyMap<string, number>
 }
 
+const productsByCategory = new Map<string, GiftProduct[]>()
+for (const product of GIFT_SHOP_PRODUCTS) {
+  for (const categoryId of product.categoryIds) {
+    const existing = productsByCategory.get(categoryId)
+    if (existing) existing.push(product)
+    else productsByCategory.set(categoryId, [product])
+  }
+}
+
 export function GiftShopCatalog({
   onAdd,
   onSetQuantity,
@@ -84,9 +93,7 @@ export function GiftShopCatalog({
         {GIFT_SHOP_CATEGORIES.map((category) => (
           <TabsContent key={category.id} value={category.id} className="min-w-0 flex-1">
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
-              {GIFT_SHOP_PRODUCTS.filter((product) =>
-                product.categoryIds.includes(category.id)
-              ).map((product) => (
+              {(productsByCategory.get(category.id) ?? []).map((product) => (
                 <GiftShopCatalogCard
                   key={product.id}
                   product={product}
