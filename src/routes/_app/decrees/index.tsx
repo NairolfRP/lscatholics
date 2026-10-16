@@ -1,8 +1,14 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { DecreesPage, DecreesPageSkeleton } from '#/features/decree/components/decrees-page.tsx'
+import { decreesQueryOptions } from '#/features/decree/queries.ts'
 import { pageMetadata } from '#/utils/seo.ts'
 
 export const Route = createFileRoute('/_app/decrees/')({
+  loader: async ({ context }) => {
+    await context.queryClient
+      .query({ ...decreesQueryOptions, staleTime: 'static' })
+      .catch(() => undefined)
+  },
   pendingMs: 200,
   pendingComponent: DecreesPageSkeleton,
   head: () => ({
