@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useQuery } from '@tanstack/react-query'
+import { useRouter } from '@tanstack/react-router'
 import { AlertCircleIcon, CalendarX2Icon, ChurchIcon } from 'lucide-react'
 import { ReadingCard } from '#/features/daily-readings/components/reading-card.tsx'
 import { ReadingsHeader } from '#/features/daily-readings/components/readings-header.tsx'
 import { ReadingsSidebar } from '#/features/daily-readings/components/readings-sidebar.tsx'
 import { dailyReadingsQueryOptions } from '#/features/daily-readings/queries.ts'
-import { todayISODate } from '#/features/daily-readings/schemas/daily-readings.schema.ts'
 import type { AELFReadingsResponse } from '#/features/daily-readings/types/aelf.types.ts'
 import { sortReadings } from '#/features/daily-readings/utils/readings.utils.ts'
 import { Alert, AlertAction, AlertDescription, AlertTitle } from '#/shared/components/ui/alert.tsx'
@@ -13,9 +13,16 @@ import { Button } from '#/shared/components/ui/button.tsx'
 import { Skeleton } from '#/shared/components/ui/skeleton.tsx'
 import Hero from '#shared/layouts/app/components/hero.tsx'
 
-export function DailyReadingsPage() {
-  const today = useTodayISO()
-  const { data, isPending, isError, refetch } = useQuery(dailyReadingsQueryOptions(today))
+export function DailyReadingsPage({ date }: { date: string }) {
+  const router = useRouter()
+  const { data, isPending, isError, refetch } = useQuery(dailyReadingsQueryOptions(date))
+
+  useEffect(() => {
+    const now = new Date()
+    const nextMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1)
+    const timer = setTimeout(() => void router.invalidate(), nextMidnight.getTime() - now.getTime())
+    return () => clearTimeout(timer)
+  }, [router])
 
   return (
     <>
@@ -51,19 +58,6 @@ export function DailyReadingsPage() {
       </main>
     </>
   )
-}
-
-function useTodayISO(): string {
-  const [date, setDate] = useState(todayISODate)
-
-  useEffect(() => {
-    const now = new Date()
-    const nextMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1)
-    const timer = setTimeout(() => setDate(todayISODate()), nextMidnight.getTime() - now.getTime())
-    return () => clearTimeout(timer)
-  }, [])
-
-  return date
 }
 
 function DailyReadingsContent({ data }: { data: AELFReadingsResponse }) {
