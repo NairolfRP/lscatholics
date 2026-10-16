@@ -1,48 +1,26 @@
-import { useState } from 'react'
-import { useIsomorphicLayoutEffect } from '#/shared/hooks/use-isomorphic-layout-effect'
+import { useCallback, useSyncExternalStore } from 'react'
 
 interface UseMediaQueryOptions {
   defaultValue?: boolean
   initializeWithValue?: boolean
 }
 
-const IS_SERVER = typeof window === 'undefined'
+function subscribe(query: string, onStoreChange: () => void): () => void {
+  const matchMedia = window.matchMedia(query)
+  matchMedia.addEventListener('change', onStoreChange)
+  return () => matchMedia.removeEventListener('change', onStoreChange)
+}
 
 export function useMediaQuery(
   query: string,
-  { defaultValue = false, initializeWithValue = true }: UseMediaQueryOptions = {}
+  { defaultValue = false }: UseMediaQueryOptions = {}
 ): boolean {
-  const getMatches = (q: string): boolean => {
-    if (IS_SERVER) {
-      return defaultValue
-    }
-    return window.matchMedia(q).matches
-  }
+  const subscribeToQuery = useCallback(
+    (onStoreChange: () => void) => subscribe(query, onStoreChange),
+    [query]
+  )
+  const getSnapshot = useCallback(() => window.matchMedia(query).matches, [query])
+  const getServerSnapshot = useCallback(() => defaultValue, [defaultValue])
 
-  const [matches, setMatches] = useState<boolean>(() => {
-    if (initializeWithValue) {
-      return getMatches(query)
-    }
-    return defaultValue
-  })
-
-  // Handles the change event of the media query.
-  function handleChange() {
-    setMatches(getMatches(query))
-  }
-
-  useIsomorphicLayoutEffect(() => {
-    const matchMedia = window.matchMedia(query)
-
-    // Triggered at the first client-side load and if query changes
-    handleChange()
-
-    matchMedia.addEventListener('change', handleChange)
-
-    return () => {
-      matchMedia.removeEventListener('change', handleChange)
-    }
-  }, [query])
-
-  return matches
+  return useSyncExternalStore(subscribeToQuery, getSnapshot, getServerSnapshot)
 }
