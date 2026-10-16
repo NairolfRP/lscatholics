@@ -7,6 +7,7 @@ import {
   FieldError,
   FieldLabel,
 } from '#/shared/components/ui/field'
+import { NativeSelect, NativeSelectOption } from '#/shared/components/ui/native-select'
 import {
   Select,
   SelectContent,
@@ -14,6 +15,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '#/shared/components/ui/select'
+import { useIsMobile } from '#/shared/hooks/use-mobile'
 import { useFieldContext } from '#/shared/integrations/form/form-hook'
 import type { FieldComponentProps, SelectValues } from '#/shared/lib/types/form'
 
@@ -58,10 +60,16 @@ export function SelectField({
 }: SelectFieldProps) {
   const generatedId = useId()
   const field = useFieldContext<string | null | undefined>()
+  const isMobile = useIsMobile()
 
   const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
 
   const fieldId = props.id ?? generatedId
+
+  const handleValueChange = (value: string | null | undefined) =>
+    onValueChange ? onValueChange(value, field.handleChange) : field.handleChange(value)
+
+  const hasPlaceholderValue = values.some((item) => item.value == null)
 
   return (
     <Field {...fieldProps} data-invalid={isInvalid}>
@@ -75,29 +83,55 @@ export function SelectField({
         {isInvalid && errorsPos === 'before' && <FieldError errors={field.state.meta.errors} />}
       </FieldContent>
 
-      <Select
-        items={values}
-        name={field.name}
-        value={field.state.value ?? null}
-        onValueChange={(v) =>
-          onValueChange
-            ? onValueChange(v as string | null | undefined, field.handleChange)
-            : field.handleChange(v as string | null | undefined)
-        }
-        required={required}
-        {...props}
-      >
-        <SelectTrigger {...selectTriggerProps} id={fieldId} aria-invalid={isInvalid}>
-          <SelectValue placeholder={placeholder} />
-        </SelectTrigger>
-        <SelectContent {...selectContentProps}>
+      {isMobile ? (
+        <NativeSelect
+          className={
+            typeof selectTriggerProps?.className === 'string'
+              ? selectTriggerProps.className
+              : undefined
+          }
+          id={fieldId}
+          aria-invalid={isInvalid}
+          name={field.name}
+          value={field.state.value ?? ''}
+          onChange={(e) => {
+            const value = e.target.value
+            handleValueChange(value === '' ? null : value)
+          }}
+          required={required}
+        >
+          {!hasPlaceholderValue && (
+            <NativeSelectOption value="" disabled>
+              {placeholder ?? ''}
+            </NativeSelectOption>
+          )}
           {values.map((item) => (
-            <SelectItem key={item.label} value={item.value}>
+            <NativeSelectOption key={item.label} value={item.value ?? ''}>
               {item.label}
-            </SelectItem>
+            </NativeSelectOption>
           ))}
-        </SelectContent>
-      </Select>
+        </NativeSelect>
+      ) : (
+        <Select
+          items={values}
+          name={field.name}
+          value={field.state.value ?? null}
+          onValueChange={(v) => handleValueChange(v as string | null | undefined)}
+          required={required}
+          {...props}
+        >
+          <SelectTrigger {...selectTriggerProps} id={fieldId} aria-invalid={isInvalid}>
+            <SelectValue placeholder={placeholder} />
+          </SelectTrigger>
+          <SelectContent {...selectContentProps}>
+            {values.map((item) => (
+              <SelectItem key={item.label} value={item.value}>
+                {item.label}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      )}
 
       {description && descriptionPos === 'after' && (
         <FieldDescription>{description}</FieldDescription>
