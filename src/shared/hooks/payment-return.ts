@@ -1,4 +1,11 @@
-export type PaymentResultStatus = 'payment_successful' | 'payment_failed' | 'expired' | 'not_found'
+export const PAYMENT_RESULT_STATUSES = [
+  'payment_successful',
+  'payment_failed',
+  'expired',
+  'not_found',
+] as const
+
+export type PaymentResultStatus = (typeof PAYMENT_RESULT_STATUSES)[number]
 
 export const PAYMENT_STATUS_QUERY_PARAM = 'status'
 
