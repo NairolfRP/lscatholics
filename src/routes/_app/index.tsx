@@ -11,7 +11,7 @@ import { LatestEventsSection } from '#/features/home/components/latest-events-se
 import { LatestPostsSection } from '#/features/home/components/latest-posts-section'
 import { NextChurchEvent } from '#/features/home/components/next-church-event'
 import { homeCTA } from '#/features/home/constants/home-cta'
-import { stats } from '#/features/home/constants/stats'
+import { getHomeStats } from '#/features/home/constants/stats'
 import { latestEventsQueryOptions } from '#/features/home/queries'
 import { Separator } from '#/shared/components/ui/separator'
 import { Typography } from '#/shared/components/ui/typography'
@@ -104,7 +104,7 @@ function Home() {
         <section className="bg-secondary py-16">
           <div className="container mx-auto px-4 lg:px-8">
             <div className="grid grid-cols-1 gap-12 text-center sm:grid-cols-2 lg:grid-cols-4">
-              {stats.map(({ icon: Icon, value, label, colorClass }) => (
+              {getHomeStats().map(({ icon: Icon, value, label, colorClass }) => (
                 <div key={label} className="space-y-3">
                   <span
                     className={cn(

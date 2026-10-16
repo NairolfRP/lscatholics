@@ -4,9 +4,13 @@ import { Typography } from '#/shared/components/ui/typography'
 import { socials } from '#/shared/constants/socials'
 import { footerNavItems } from '../constants/nav.constants'
 
-const currentYear = new Date().getFullYear()
+function getCurrentYear() {
+  return new Date().getFullYear()
+}
 
 export function Footer() {
+  const currentYear = getCurrentYear()
+
   return (
     <footer className="bg-catholic-purple px-5 pb-safe text-catholic-purple-foreground">
       <div className="container mx-auto py-12">
