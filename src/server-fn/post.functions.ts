@@ -3,6 +3,7 @@ import { basePostInteractionSchema, postsSearchSchema } from '#/features/post/sc
 import { requirePermission } from '#/middleware/permission.middleware'
 import * as postService from '#server/services/post.service'
 import { dashboardSearchSchema } from '#shared/schemas/dashboard/search.schema'
+import { idSchema } from '#shared/schemas/id.schema.ts'
 import { looseObjectSchema } from '#shared/schemas/utils.schema.ts'
 
 export const getPostFn = createServerFn({ method: 'GET' })
@@ -11,7 +12,7 @@ export const getPostFn = createServerFn({ method: 'GET' })
 
 export const getDashboardPostFn = createServerFn({ method: 'GET' })
   .middleware([requirePermission('post', 'read')])
-  .validator((id: string) => id)
+  .validator(idSchema)
   .handler(async ({ data, context }) =>
     postService.getDashboardPost({ id: data, user: context.session.user })
   )

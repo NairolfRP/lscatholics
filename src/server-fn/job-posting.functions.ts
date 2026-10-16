@@ -7,6 +7,7 @@ import { requirePermission } from '#/middleware/permission.middleware'
 import * as jobPostingService from '#server/services/job-posting.service'
 import { getJobPostings, getSingleJobPosting } from '#server/services/job-posting.service'
 import { dashboardSearchSchema } from '#shared/schemas/dashboard/search.schema'
+import { idSchema } from '#shared/schemas/id.schema.ts'
 import { slugSchema } from '#shared/schemas/slug.schema.ts'
 import { looseObjectSchema } from '#shared/schemas/utils.schema.ts'
 
@@ -20,7 +21,7 @@ export const getJobPostingsFn = createServerFn({ method: 'GET' })
 
 export const getDashboardJobPostingFn = createServerFn({ method: 'GET' })
   .middleware([requirePermission('job', 'read')])
-  .validator((id: string) => id)
+  .validator(idSchema)
   .handler(async ({ data }) => jobPostingService.getDashboardJobPosting({ id: data }))
 
 export const getDashboardJobPostingsFn = createServerFn({ method: 'GET' })
