@@ -1,6 +1,6 @@
 import { useSuspenseQuery } from '@tanstack/react-query'
-import { Link, useParams } from '@tanstack/react-router'
-import { isPast } from 'date-fns'
+import { Link, useLoaderData, useParams } from '@tanstack/react-router'
+import { isBefore } from 'date-fns'
 import {
   AlertCircleIcon,
   ArrowLeftIcon,
@@ -40,7 +40,8 @@ export default function JobPostingSinglePage() {
   const { slug } = useParams({ from: '/_app/job/$slug/' })
   const { data: job } = useSuspenseQuery(singleJobPostingQueryOptions(slug))
 
-  const isExpired = Boolean(job.expiresAt && isPast(new Date(job.expiresAt)))
+  const { now: nowISO } = useLoaderData({ from: '/_app/job/$slug/' })
+  const isExpired = Boolean(job.expiresAt && isBefore(new Date(job.expiresAt), new Date(nowISO)))
 
   const department = getDepartmentTitle(job.department)
 

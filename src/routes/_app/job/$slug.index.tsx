@@ -15,6 +15,7 @@ export const Route = createFileRoute('/_app/job/$slug/')({
       title: data.title,
       slug: data.slug,
       description: data.description,
+      now: new Date().toISOString(),
     }
   },
   head: ({ loaderData }) => ({

@@ -14,7 +14,7 @@ export const Route = createFileRoute('/_app/job/$slug/apply')({
       staleTime: 'static',
     })
 
-    return { slug, title: job.title }
+    return { slug, title: job.title, now: new Date().toISOString() }
   },
   head: ({ loaderData }) => ({
     meta: loaderData
