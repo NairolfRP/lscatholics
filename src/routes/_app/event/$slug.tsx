@@ -19,6 +19,7 @@ export const Route = createFileRoute('/_app/event/$slug')({
       location: data.location,
       startDate: data.startDate,
       endDate: data.endDate,
+      now: new Date().toISOString(),
     }
   },
   head: ({ loaderData }) => ({

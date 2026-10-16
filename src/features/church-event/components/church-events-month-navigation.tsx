@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useNavigate, useSearch } from '@tanstack/react-router'
+import { useLoaderData, useNavigate, useSearch } from '@tanstack/react-router'
 import { CalendarDaysIcon, ChevronLeftIcon, ChevronRightIcon } from 'lucide-react'
 import { addMonths, formatYearMonth } from '#/utils/date.ts'
 import { Button } from '#shared/components/ui/button.tsx'
@@ -15,7 +15,8 @@ export function ChurchEventsMonthNavigation() {
   const search = useSearch({ from: '/_app/events' })
   const [isNavigating, setIsNavigating] = useState(false)
 
-  const [now] = useState(() => new Date())
+  const { now: nowISO } = useLoaderData({ from: '/_app/events' })
+  const now = new Date(nowISO)
   const minDate = addMonths(now, -CHURCH_EVENT_LOOKBACK_MONTHS)
   const minYearMonth = { year: minDate.getFullYear(), month: minDate.getMonth() + 1 }
   const maxYearMonth = { year: now.getFullYear() + CHURCH_EVENT_FORWARD_YEARS, month: 12 }

@@ -1,6 +1,5 @@
-import { useState } from 'react'
 import { useSuspenseQuery } from '@tanstack/react-query'
-import { Link, useParams } from '@tanstack/react-router'
+import { Link, useLoaderData, useParams } from '@tanstack/react-router'
 import {
   ArrowLeftIcon,
   CalendarDaysIcon,
@@ -38,7 +37,8 @@ export function ChurchEventSinglePage() {
   const endDate = churchEvent.endDate ? new Date(churchEvent.endDate) : null
   const isSameDay = endDate && startDate.toDateString() === endDate.toDateString()
 
-  const [now] = useState(() => new Date())
+  const { now: nowISO } = useLoaderData({ from: '/_app/event/$slug' })
+  const now = new Date(nowISO)
   const isExpired = (endDate && now > endDate) || (!endDate && now > startDate)
 
   const parish = churchEvent.parish ? getParishInfo(churchEvent.parish) : null

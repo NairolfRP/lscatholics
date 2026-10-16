@@ -1,6 +1,5 @@
-import { useState } from 'react'
 import { useSuspenseQuery } from '@tanstack/react-query'
-import { Link, useNavigate, useSearch } from '@tanstack/react-router'
+import { Link, useLoaderData, useNavigate, useSearch } from '@tanstack/react-router'
 import { addDays, endOfDay, endOfMonth, isBefore, max, min, startOfDay } from 'date-fns'
 import { AlertCircleIcon, ArrowRightIcon, CalendarDaysIcon, CalendarX2Icon } from 'lucide-react'
 import {
@@ -136,7 +135,8 @@ function ChurchEventCard({ event }: { event: ChurchEvent }) {
 function ChurchEventsMonthListEmpty() {
   const { month, year } = useSearch({ from: '/_app/events' })
   const navigate = useNavigate({ from: '/events' })
-  const [now] = useState(() => new Date())
+  const { now: nowISO } = useLoaderData({ from: '/_app/events' })
+  const now = new Date(nowISO)
 
   const currentYearMonth = { year: now.getFullYear(), month: now.getMonth() + 1 }
   const isCurrentMonth = year === currentYearMonth.year && month === currentYearMonth.month

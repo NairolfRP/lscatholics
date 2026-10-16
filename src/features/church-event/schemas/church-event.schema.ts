@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { formatDateTime } from '#/utils/date.ts'
+import { formatDateTime, getCurrentYearMonth } from '#/utils/date.ts'
 import {
   CHURCH_EVENT_FORWARD_YEARS,
   CHURCH_EVENT_LOOKBACK_MONTHS,
@@ -9,23 +9,30 @@ import { slugSchema } from '#shared/schemas/slug.schema.ts'
 import { emptyToNull } from '#shared/schemas/utils.schema.ts'
 
 const toMonthIndex = (y: number, m: number) => y * 12 + (m - 1)
+const REFERENCE_YEAR_MONTH = getCurrentYearMonth()
 const MIN_MONTH_INDEX =
-  toMonthIndex(new Date().getFullYear(), new Date().getMonth()) - CHURCH_EVENT_LOOKBACK_MONTHS
-const MAX_MONTH_INDEX = toMonthIndex(new Date().getFullYear() + CHURCH_EVENT_FORWARD_YEARS, 12)
+  toMonthIndex(REFERENCE_YEAR_MONTH.year, REFERENCE_YEAR_MONTH.month) -
+  CHURCH_EVENT_LOOKBACK_MONTHS
+const MAX_MONTH_INDEX = toMonthIndex(
+  REFERENCE_YEAR_MONTH.year + CHURCH_EVENT_FORWARD_YEARS,
+  12
+)
+
+export const churchEventsDefaultSearch = { ...REFERENCE_YEAR_MONTH }
 
 export const churchEventsSearchSchema = z
   .object({
     year: z
       .int()
       .positive()
-      .catch(() => new Date().getFullYear())
-      .default(() => new Date().getFullYear()),
+      .catch(REFERENCE_YEAR_MONTH.year)
+      .default(REFERENCE_YEAR_MONTH.year),
     month: z
       .int()
       .min(1)
       .max(12)
-      .catch(() => new Date().getMonth() + 1)
-      .default(() => new Date().getMonth() + 1),
+      .catch(REFERENCE_YEAR_MONTH.month)
+      .default(REFERENCE_YEAR_MONTH.month),
   })
   .superRefine(({ year, month }, ctx) => {
     const idx = toMonthIndex(year, month)
