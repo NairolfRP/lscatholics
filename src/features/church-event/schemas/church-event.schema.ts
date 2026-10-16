@@ -11,22 +11,14 @@ import { emptyToNull } from '#shared/schemas/utils.schema.ts'
 const toMonthIndex = (y: number, m: number) => y * 12 + (m - 1)
 const REFERENCE_YEAR_MONTH = getCurrentYearMonth()
 const MIN_MONTH_INDEX =
-  toMonthIndex(REFERENCE_YEAR_MONTH.year, REFERENCE_YEAR_MONTH.month) -
-  CHURCH_EVENT_LOOKBACK_MONTHS
-const MAX_MONTH_INDEX = toMonthIndex(
-  REFERENCE_YEAR_MONTH.year + CHURCH_EVENT_FORWARD_YEARS,
-  12
-)
+  toMonthIndex(REFERENCE_YEAR_MONTH.year, REFERENCE_YEAR_MONTH.month) - CHURCH_EVENT_LOOKBACK_MONTHS
+const MAX_MONTH_INDEX = toMonthIndex(REFERENCE_YEAR_MONTH.year + CHURCH_EVENT_FORWARD_YEARS, 12)
 
 export const churchEventsDefaultSearch = { ...REFERENCE_YEAR_MONTH }
 
 export const churchEventsSearchSchema = z
   .object({
-    year: z
-      .int()
-      .positive()
-      .catch(REFERENCE_YEAR_MONTH.year)
-      .default(REFERENCE_YEAR_MONTH.year),
+    year: z.int().positive().catch(REFERENCE_YEAR_MONTH.year).default(REFERENCE_YEAR_MONTH.year),
     month: z
       .int()
       .min(1)
