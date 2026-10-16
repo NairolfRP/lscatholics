@@ -250,6 +250,7 @@ export async function updatePost({ data, user }: { data: unknown; user: User }) 
 
   const post = await postRepository.getPost({
     id: postId,
+    status: null,
     columns: { authorId: true, status: true, discordMessageId: true },
   })
 
