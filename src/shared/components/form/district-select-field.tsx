@@ -10,6 +10,11 @@ import {
   FieldLabel,
 } from '#shared/components/ui/field.tsx'
 import {
+  NativeSelect,
+  NativeSelectOptGroup,
+  NativeSelectOption,
+} from '#shared/components/ui/native-select.tsx'
+import {
   Select,
   SelectContent,
   SelectGroup,
@@ -19,6 +24,7 @@ import {
   SelectValue,
 } from '#shared/components/ui/select.tsx'
 import { DISTRICT_GROUPS } from '#shared/constants/districts.constants.ts'
+import { useIsMobile } from '#shared/hooks/use-mobile.ts'
 
 type DistrictSelectFieldProps = FieldComponentProps<
   typeof Select,
@@ -47,11 +53,14 @@ export function DistrictSelectField({
   ...props
 }: DistrictSelectFieldProps) {
   const generatedId = useId()
-  const field = useFieldContext<string | null>()
+  const field = useFieldContext<string | null | undefined>()
+  const isMobile = useIsMobile()
 
   const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
 
   const fieldId = props.id ?? generatedId
+
+  const handleValueChange = (value: string | null | undefined) => field.handleChange(value)
 
   return (
     <Field {...fieldProps} data-invalid={isInvalid}>
@@ -64,35 +73,69 @@ export function DistrictSelectField({
         )}
       </FieldContent>
 
-      <Select
-        items={DISTRICT_GROUPS.flatMap((group) => group.options)}
-        name={field.name}
-        value={field.state.value}
-        onValueChange={(v) => field.handleChange(v as string | null)}
-        required={required}
-        {...props}
-      >
-        <SelectTrigger {...selectTriggerProps} id={fieldId} aria-invalid={isInvalid}>
-          <SelectValue placeholder={placeholder} />
-        </SelectTrigger>
-        <SelectContent>
+      {isMobile ? (
+        <NativeSelect
+          className={
+            typeof selectTriggerProps?.className === 'string'
+              ? selectTriggerProps.className
+              : undefined
+          }
+          id={fieldId}
+          aria-invalid={isInvalid}
+          name={field.name}
+          value={field.state.value ?? ''}
+          onChange={(e) => {
+            const value = e.target.value
+            handleValueChange(value === '' ? null : value)
+          }}
+          required={required}
+        >
           {nullable ? (
-            <SelectGroup>
-              <SelectItem value={null}>{placeholder ?? 'Sélectionnez un district'}</SelectItem>
-            </SelectGroup>
+            <NativeSelectOption value="">
+              {placeholder ?? 'Sélectionnez un district'}
+            </NativeSelectOption>
           ) : null}
           {DISTRICT_GROUPS.map((group) => (
-            <SelectGroup key={group.label}>
-              <SelectLabel>{group.label}</SelectLabel>
+            <NativeSelectOptGroup key={group.label} label={group.label}>
               {group.options.map((option) => (
-                <SelectItem key={option.value} value={option.value}>
+                <NativeSelectOption key={option.value} value={option.value}>
                   {option.label}
-                </SelectItem>
+                </NativeSelectOption>
               ))}
-            </SelectGroup>
+            </NativeSelectOptGroup>
           ))}
-        </SelectContent>
-      </Select>
+        </NativeSelect>
+      ) : (
+        <Select
+          items={DISTRICT_GROUPS.flatMap((group) => group.options)}
+          name={field.name}
+          value={field.state.value}
+          onValueChange={(v) => field.handleChange(v as string | null)}
+          required={required}
+          {...props}
+        >
+          <SelectTrigger {...selectTriggerProps} id={fieldId} aria-invalid={isInvalid}>
+            <SelectValue placeholder={placeholder} />
+          </SelectTrigger>
+          <SelectContent>
+            {nullable ? (
+              <SelectGroup>
+                <SelectItem value={null}>{placeholder ?? 'Sélectionnez un district'}</SelectItem>
+              </SelectGroup>
+            ) : null}
+            {DISTRICT_GROUPS.map((group) => (
+              <SelectGroup key={group.label}>
+                <SelectLabel>{group.label}</SelectLabel>
+                {group.options.map((option) => (
+                  <SelectItem key={option.value} value={option.value}>
+                    {option.label}
+                  </SelectItem>
+                ))}
+              </SelectGroup>
+            ))}
+          </SelectContent>
+        </Select>
+      )}
 
       {description && descriptionPos === 'after' && (
         <FieldDescription>{description}</FieldDescription>
