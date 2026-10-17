@@ -21,3 +21,16 @@ minimumReleaseAgeExclude:
 allowBuilds:
   '@sentry/cli': true
   esbuild: true
+permissions:
+  '@tanstack/devtools-vite':
+    skills: true
+  '@tanstack/match-sorter-utils':
+    skills: true
+  '@tanstack/react-start':
+    skills: true
+  '@tanstack/react-table':
+    skills: true
+  '@tanstack/router-plugin':
+    skills: true
+  drizzle-kit:
+    skills: true
