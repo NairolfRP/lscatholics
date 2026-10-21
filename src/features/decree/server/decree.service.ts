@@ -1,7 +1,11 @@
-import type { APIEmbedField, APIMessage, APIPublicThreadChannel } from 'discord-api-types/v10'
+import type { APIMessage, APIPublicThreadChannel } from 'discord-api-types/v10'
 import { HTTPError } from 'ky'
 import type { DecreeCategory } from '#/features/decree/constants/decree.constants.ts'
-import { DECREES_CHANNEL_ID } from '#/features/decree/constants/decree.constants.ts'
+import {
+  DECREE_SUMMARY_MAX_LENGTH,
+  DECREES_CHANNEL_ID,
+} from '#/features/decree/constants/decree.constants.ts'
+import { mapMessageComponents } from '#/features/decree/server/decree-components.ts'
 import {
   fetchArchivedPublicThreads,
   fetchChannelMessages,
@@ -9,8 +13,8 @@ import {
 } from '#/features/decree/server/discord.api.ts'
 import type {
   Decree,
+  DecreeBlock,
   DecreeDetail,
-  DecreeField,
   DecreeListItem,
   DecreesIndex,
 } from '#/features/decree/types/decree.types.ts'
@@ -93,9 +97,11 @@ function toDecreeDetail(
     return null
   }
 
-  if (messages.length === 0 || messages[0].embeds.length === 0) return null
+  if (messages.length === 0) return null
 
-  const embed = messages[0].embeds[0]
+  const message = messages[0]
+  const blocks = toBlocks(message)
+  if (blocks.length === 0) return null
 
   const title = channel.name
   const decree: Decree = {
@@ -103,10 +109,10 @@ function toDecreeDetail(
     uid: buildDecreeUid(channel.id, title),
     title,
     slug: slugifyTitle(title),
-    description: embed.description ?? '',
-    publishedAt: embed.timestamp ?? null,
-    image: embed.image?.url ?? null,
-    fields: (embed.fields ?? []).map(toDecreeField),
+    publishedAt: message.timestamp || channel.thread_metadata?.create_timestamp || null,
+    blocks,
+    description: buildSummary(blocks),
+    image: findFirstMediaUrl(blocks),
     category,
     isEnacted: isDecreeEnacted(tags),
     isInEffect: isDecreeInEffect(tags),
@@ -115,6 +121,43 @@ function toDecreeDetail(
   return { decree, canonicalUid: decree.uid }
 }
 
-function toDecreeField(field: APIEmbedField): DecreeField {
-  return { name: field.name, value: field.value }
+/** The message content comes first, then the components v2 tree. */
+function toBlocks(message: APIMessage): DecreeBlock[] {
+  const blocks = mapMessageComponents(message.components ?? [])
+  const content = message.content.trim()
+
+  if (content.length === 0) return blocks
+  return [{ kind: 'text', content: message.content }, ...blocks]
+}
+
+/** Plain-text summary of the decree, used for SEO metadata. */
+function buildSummary(blocks: DecreeBlock[]): string {
+  const text = blocks
+    .map((block) => (block.kind === 'text' || block.kind === 'section' ? block.content : ''))
+    .join(' ')
+
+  const plain = text
+    .replace(/!\[[^\]]*]\([^)]*\)/g, ' ')
+    .replace(/\[([^\]]*)]\([^)]*\)/g, '$1')
+    .replace(/[*_~`>#]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim()
+
+  if (plain.length <= DECREE_SUMMARY_MAX_LENGTH) return plain
+  return `${plain.slice(0, DECREE_SUMMARY_MAX_LENGTH).trimEnd()}…`
+}
+
+function findFirstMediaUrl(blocks: DecreeBlock[]): string | null {
+  for (const block of blocks) {
+    if (block.kind === 'media') {
+      const first = block.items.at(0)
+      if (first) return first.url
+    }
+
+    if (block.kind === 'section' && block.accessory) {
+      return block.accessory.url
+    }
+  }
+
+  return null
 }

@@ -3,20 +3,15 @@ import { Link, notFound, useParams } from '@tanstack/react-router'
 import { ArrowLeftIcon, CalendarDaysIcon, ScrollTextIcon, ShieldCheckIcon } from 'lucide-react'
 import { DECREE_CATEGORIES } from '#/features/decree/constants/decree.constants.ts'
 import { decreeQueryOptions } from '#/features/decree/queries.ts'
-import type { Decree, DecreeField } from '#/features/decree/types/decree.types.ts'
+import type { Decree, DecreeBlock } from '#/features/decree/types/decree.types.ts'
 import { formatDate } from '#/utils/date.ts'
 import { imageUrl } from '#/utils/image.ts'
 import { Image } from '#shared/components/image'
 import { Badge } from '#shared/components/ui/badge.tsx'
 import { buttonVariants } from '#shared/components/ui/button.tsx'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '#shared/components/ui/card.tsx'
+import { Card, CardContent, CardDescription, CardHeader } from '#shared/components/ui/card.tsx'
 import { Markdown } from '#shared/components/ui/markdown.tsx'
+import { Separator } from '#shared/components/ui/separator.tsx'
 import { Skeleton } from '#shared/components/ui/skeleton.tsx'
 import Hero from '#shared/layouts/app/components/hero.tsx'
 
@@ -79,56 +74,86 @@ export function DecreeSinglePage() {
 }
 
 function DecreeContent({ decree }: { decree: Decree }) {
+  const firstBlock = decree.blocks.at(0)
+  const headerMedia = firstBlock?.kind === 'media' ? firstBlock : null
+  const bodyBlocks = headerMedia ? decree.blocks.slice(1) : decree.blocks
+
   return (
     <Card className="overflow-hidden rounded-2xl">
-      {decree.image && (
+      {headerMedia && (
         <div className="mx-auto max-w-lg p-6 sm:p-8">
           <Image
-            src={imageUrl(decree.image)}
-            alt="Sceau ou emblème associé au décret"
-            className="w-full object-contain"
+            src={imageUrl(headerMedia.items[0].url)}
+            alt={headerMedia.items[0].description ?? 'Sceau ou emblème associé au décret'}
+            className="h-auto max-w-full object-contain"
             loading="lazy"
             layout="constrained"
-            width={640}
-            height={360}
+            objectFit="contain"
+            width={headerMedia.items[0].width ?? undefined}
+            height={headerMedia.items[0].height ?? undefined}
           />
         </div>
       )}
 
-      {decree.description && (
-        <CardHeader>
-          <CardTitle className="text-2xl font-semibold">Texte du décret</CardTitle>
-          <CardDescription>
-            {DECREE_CATEGORIES[decree.category].label} — publié le{' '}
-            {decree.publishedAt ? formatDate(decree.publishedAt) : 'date inconnue'}
-          </CardDescription>
-        </CardHeader>
-      )}
+      <CardHeader>
+        <CardDescription>
+          Publié le {decree.publishedAt ? formatDate(decree.publishedAt) : 'date inconnue'}
+        </CardDescription>
+      </CardHeader>
 
       <CardContent className="prose max-w-none prose-neutral prose-headings:font-semibold prose-p:leading-relaxed">
-        {decree.description && <Markdown content={decree.description} />}
-
-        {decree.fields.length > 0 && (
-          <dl className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
-            {decree.fields.map((field, index) => (
-              <DecreeFieldItem key={index} field={field} />
-            ))}
-          </dl>
-        )}
+        {bodyBlocks.map((block, index) => (
+          <DecreeBlockItem key={index} block={block} />
+        ))}
       </CardContent>
     </Card>
   )
 }
 
-function DecreeFieldItem({ field }: { field: DecreeField }) {
-  return (
-    <div className="rounded-xl bg-muted/50 p-4">
-      <dt className="text-sm font-semibold text-foreground">{field.name}</dt>
-      <dd className="mt-1.5 text-sm/relaxed text-muted-foreground [&_a]:underline">
-        <Markdown content={field.value} />
-      </dd>
-    </div>
-  )
+function DecreeBlockItem({ block }: { block: DecreeBlock }) {
+  switch (block.kind) {
+    case 'text':
+      return <Markdown content={block.content} />
+
+    case 'separator':
+      return block.divider ? (
+        <Separator className={block.spacing === 'large' ? 'my-8' : 'my-3'} />
+      ) : (
+        <div className={block.spacing === 'large' ? 'my-8' : 'my-3'} />
+      )
+
+    case 'media':
+      return (
+        <div className="not-prose my-6 flex flex-col items-center gap-4">
+          {block.items.map((item, index) => (
+            <img
+              key={index}
+              src={imageUrl(item.url)}
+              alt={item.description ?? 'Illustration du décret'}
+              className="h-auto max-h-96 w-auto max-w-full rounded-lg object-contain"
+              loading="lazy"
+            />
+          ))}
+        </div>
+      )
+
+    case 'section':
+      return (
+        <div className="not-prose my-6 flex items-start gap-4 rounded-xl bg-muted/50 p-4">
+          <div className="min-w-0 flex-1 text-sm leading-relaxed">
+            <Markdown content={block.content} />
+          </div>
+          {block.accessory && (
+            <img
+              src={imageUrl(block.accessory.url)}
+              alt={block.accessory.description ?? 'Signature de l’autorité'}
+              className="size-16 shrink-0 rounded-lg object-cover"
+              loading="lazy"
+            />
+          )}
+        </div>
+      )
+  }
 }
 
 export function DecreeSinglePageSkeleton() {

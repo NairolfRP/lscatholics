@@ -8,20 +8,37 @@ export interface DecreeListItem {
   publishedAt: string | null
 }
 
-export interface DecreeField {
-  name: string
-  value: string
+/** A media item (image) referenced by a Discord components v2 payload. */
+export interface DecreeMedia {
+  url: string
+  description: string | null
+  /** Intrinsic dimensions, when Discord provides them. */
+  width: number | null
+  height: number | null
 }
+
+/**
+ * Blocks extracted from a Discord components v2 payload, normalized for the web app.
+ * Containers are flattened: their children are exposed as sibling blocks.
+ */
+export type DecreeBlock =
+  | { kind: 'text'; content: string }
+  | { kind: 'separator'; divider: boolean; spacing: 'small' | 'large' }
+  | { kind: 'media'; items: DecreeMedia[] }
+  | { kind: 'section'; content: string; accessory: DecreeMedia | null }
 
 export interface Decree {
   threadId: string
   uid: string
   title: string
   slug: string
-  description: string
   publishedAt: string | null
+  /** Ordered content of the decree. */
+  blocks: DecreeBlock[]
+  /** Plain-text summary of the decree, used for SEO metadata. */
+  description: string
+  /** First image of the decree, used as social preview. */
   image: string | null
-  fields: DecreeField[]
   category: DecreeCategory
   isEnacted: boolean
   isInEffect: boolean

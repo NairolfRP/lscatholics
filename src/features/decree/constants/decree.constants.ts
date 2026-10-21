@@ -3,6 +3,9 @@ import { createEnum } from '#shared/lib/enum.ts'
 /** Discord forum channel that archives the decrees of the Archdiocese. */
 export const DECREES_CHANNEL_ID = '1539521428188041246'
 
+/** Maximum length of the plain-text summary used for SEO metadata. */
+export const DECREE_SUMMARY_MAX_LENGTH = 200
+
 export const [DECREE_FORUM_TAG_ID] = createEnum({
   EXECUTIVE: '1539521783781392544',
   LEGISLATIVE: '1539521868040773672',
