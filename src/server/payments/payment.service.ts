@@ -68,12 +68,18 @@ interface ReconcileExpiredResult {
   reconciled: boolean
 }
 
-function isValidWebhookPayload(payload: unknown): payload is FleecaWebhookPayload {
+type ValidatedWebhookPayload = Pick<
+  FleecaWebhookPayload,
+  'payment_id' | 'mode' | 'status' | 'amount'
+>
+
+function isValidWebhookPayload(payload: unknown): payload is ValidatedWebhookPayload {
   if (typeof payload !== 'object' || payload === null) return false
-  const { payment_id, status, amount } = payload as Record<string, unknown>
+  const { payment_id, mode, status, amount } = payload as Record<string, unknown>
   return (
     typeof payment_id === 'string' &&
     payment_id.length > 0 &&
+    (mode === 'live' || mode === 'sandbox') &&
     typeof status === 'string' &&
     VALID_WEBHOOK_STATUSES.has(status) &&
     typeof amount === 'number' &&
@@ -208,16 +214,24 @@ export class PaymentService {
     try {
       const details = await fleecaClient.getPayment(pending.id)
       if (details.status === 'payment_successful' || details.status === 'payment_failed') {
-        if (details.amount !== pending.amount) {
+        const expectedMode = pending.mode === FLEECA_PAYMENT_MODE.LIVE ? 'live' : 'sandbox'
+        if (
+          details.payment_id !== pending.id ||
+          details.mode !== expectedMode ||
+          details.amount !== pending.amount
+        ) {
           logger.error(
             {
               paymentId: pending.id,
+              receivedPaymentId: details.payment_id,
+              expectedMode,
+              receivedMode: details.mode,
               expectedAmount: pending.amount,
               receivedAmount: details.amount,
             },
-            'Reconciled payment amount mismatch — payment kept pending, not processed'
+            'Reconciled payment details mismatch — payment kept pending, not processed'
           )
-          return { kind: 'error', err: new Error('Reconciled payment amount mismatch') }
+          return { kind: 'error', err: new Error('Reconciled payment details mismatch') }
         }
 
         const claimed = await pendingPaymentRepository.claimAndDeleteById(pending.id)
@@ -258,7 +272,74 @@ export class PaymentService {
     signature: string
   }): Promise<WebhookProcessingResult> {
     const { rawBody, signature } = input
+    const requestError = this.#validateWebhookRequest(rawBody, signature)
+    if (requestError) return requestError
 
+    const parsed = this.#parseWebhookPayload(rawBody)
+    if ('status' in parsed && typeof parsed.status === 'number') return parsed
+
+    try {
+      const pending = await pendingPaymentRepository.findById(parsed.payment_id)
+      if (!pending) {
+        logger.warn(
+          { paymentId: parsed.payment_id },
+          'Webhook for unknown or already-processed payment — ignored'
+        )
+        return { status: 200, body: 'OK' }
+      }
+
+      if (inProd && pending.mode === FLEECA_PAYMENT_MODE.SANDBOX) {
+        logger.error(
+          { paymentId: pending.id },
+          'Sandbox payment webhook received in production — rejected'
+        )
+        return { status: 500, body: 'Internal Server Error' }
+      }
+
+      const expectedMode = pending.mode === FLEECA_PAYMENT_MODE.LIVE ? 'live' : 'sandbox'
+      if (parsed.amount !== pending.amount || parsed.mode !== expectedMode) {
+        logger.error(
+          {
+            paymentId: pending.id,
+            expectedAmount: pending.amount,
+            receivedAmount: parsed.amount,
+            expectedMode,
+            receivedMode: parsed.mode,
+          },
+          'Fleeca webhook payload mismatch with pending payment'
+        )
+        return { status: 500, body: 'Internal Server Error' }
+      }
+
+      if (parsed.status === 'pending') {
+        if (pending.expiresAt < new Date()) {
+          logger.warn({ paymentId: pending.id }, 'Webhook for an expired payment still pending')
+        }
+        return { status: 200, body: 'OK' }
+      }
+
+      const claimed = await pendingPaymentRepository.claimAndDeleteById(parsed.payment_id)
+      if (!claimed) {
+        logger.warn(
+          { paymentId: parsed.payment_id },
+          'Webhook for an already-processed payment — ignored'
+        )
+        return { status: 200, body: 'OK' }
+      }
+
+      await this.#runPaymentHandler(claimed, parsed.status)
+
+      return { status: 200, body: 'OK' }
+    } catch (err) {
+      logger.error(
+        { err, paymentId: parsed.payment_id },
+        'Webhook processing error — returning 500 so Fleeca retries'
+      )
+      return { status: 500, body: 'Internal Server Error' }
+    }
+  }
+
+  #validateWebhookRequest(rawBody: string, signature: string): WebhookProcessingResult | null {
     if (Buffer.byteLength(rawBody, 'utf8') > MAX_WEBHOOK_BODY_BYTES) {
       logger.error({ bytes: Buffer.byteLength(rawBody, 'utf8') }, 'Fleeca webhook body too large')
       return { status: 413, body: 'Payload Too Large' }
@@ -274,6 +355,10 @@ export class PaymentService {
       return { status: 403, body: 'Forbidden' }
     }
 
+    return null
+  }
+
+  #parseWebhookPayload(rawBody: string): ValidatedWebhookPayload | WebhookProcessingResult {
     let payload: unknown
     try {
       payload = JSON.parse(rawBody)
@@ -283,72 +368,14 @@ export class PaymentService {
     }
 
     if (!isValidWebhookPayload(payload)) {
-      logger.error({ rawBody }, 'Fleeca webhook payload is malformed')
+      logger.error(
+        { bytes: Buffer.byteLength(rawBody, 'utf8') },
+        'Fleeca webhook payload is malformed'
+      )
       return { status: 400, body: 'Bad Request' }
     }
 
-    try {
-      const pending = await pendingPaymentRepository.findById(payload.payment_id)
-      if (!pending) {
-        logger.warn(
-          { paymentId: payload.payment_id },
-          'Webhook for unknown or already-processed payment — ignored'
-        )
-        return { status: 200, body: 'OK' }
-      }
-
-      if (inProd && pending.mode === FLEECA_PAYMENT_MODE.SANDBOX) {
-        logger.error(
-          { paymentId: pending.id },
-          'Sandbox payment webhook received in production — rejected'
-        )
-        return { status: 500, body: 'Internal Server Error' }
-      }
-
-      const expectedMode = pending.mode === FLEECA_PAYMENT_MODE.LIVE ? 'live' : 'sandbox'
-      if (payload.amount !== pending.amount || payload.mode !== expectedMode) {
-        logger.error(
-          {
-            paymentId: pending.id,
-            expectedAmount: pending.amount,
-            receivedAmount: payload.amount,
-            expectedMode,
-            receivedMode: payload.mode,
-          },
-          'Fleeca webhook payload mismatch with pending payment'
-        )
-        return { status: 500, body: 'Internal Server Error' }
-      }
-
-      if (pending.expiresAt < new Date() && payload.status === 'pending') {
-        logger.warn({ paymentId: pending.id }, 'Webhook for an expired payment still pending')
-        await pendingPaymentRepository.deleteById(pending.id)
-        return { status: 200, body: 'OK' }
-      }
-
-      if (payload.status === 'pending') {
-        return { status: 200, body: 'OK' }
-      }
-
-      const claimed = await pendingPaymentRepository.claimAndDeleteById(payload.payment_id)
-      if (!claimed) {
-        logger.warn(
-          { paymentId: payload.payment_id },
-          'Webhook for an already-processed payment — ignored'
-        )
-        return { status: 200, body: 'OK' }
-      }
-
-      await this.#runPaymentHandler(claimed, payload.status)
-
-      return { status: 200, body: 'OK' }
-    } catch (err) {
-      logger.error(
-        { err, paymentId: payload.payment_id },
-        'Webhook processing error — returning 500 so Fleeca retries'
-      )
-      return { status: 500, body: 'Internal Server Error' }
-    }
+    return payload
   }
 
   async #runPaymentHandler(

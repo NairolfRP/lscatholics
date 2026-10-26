@@ -270,6 +270,7 @@ describe('paymentService.resolvePaymentStatus', () => {
       payment_id: 'pay_1',
       status: 'pending',
       amount: 500,
+      mode: 'live',
     })
 
     await expect(paymentService.resolvePaymentStatus('pay_1')).resolves.toEqual({
@@ -285,6 +286,7 @@ describe('paymentService.resolvePaymentStatus', () => {
       payment_id: 'pay_1',
       status: 'payment_successful',
       amount: 500,
+      mode: 'live',
     })
 
     await expect(paymentService.resolvePaymentStatus('pay_1')).resolves.toEqual({
@@ -304,6 +306,7 @@ describe('paymentService.resolvePaymentStatus', () => {
       payment_id: 'pay_1',
       status: 'payment_failed',
       amount: 500,
+      mode: 'live',
     })
 
     await expect(paymentService.resolvePaymentStatus('pay_1')).resolves.toEqual({
@@ -313,6 +316,38 @@ describe('paymentService.resolvePaymentStatus', () => {
     })
     expect(mocks.sendPrivateDonationNotification).not.toHaveBeenCalled()
     await expect(pendingPaymentRepository.findById('pay_1')).resolves.toBeUndefined()
+  })
+
+  it('keeps an expired payment pending when Fleeca returns another payment id', async () => {
+    await createPendingPayment({ mode: 1, expiresAt: new Date(Date.now() - 60_000) })
+    mocks.fleecaClient.getPayment.mockResolvedValue({
+      payment_id: 'another-payment',
+      status: 'payment_successful',
+      amount: 500,
+      mode: 'live',
+    })
+
+    await expect(paymentService.resolvePaymentStatus('pay_1')).resolves.toEqual({
+      origin: 'expired',
+    })
+    expect(mocks.sendPrivateDonationNotification).not.toHaveBeenCalled()
+    await expect(pendingPaymentRepository.findById('pay_1')).resolves.toBeDefined()
+  })
+
+  it('keeps an expired payment pending when Fleeca returns another mode', async () => {
+    await createPendingPayment({ mode: 1, expiresAt: new Date(Date.now() - 60_000) })
+    mocks.fleecaClient.getPayment.mockResolvedValue({
+      payment_id: 'pay_1',
+      status: 'payment_successful',
+      amount: 500,
+      mode: 'sandbox',
+    })
+
+    await expect(paymentService.resolvePaymentStatus('pay_1')).resolves.toEqual({
+      origin: 'expired',
+    })
+    expect(mocks.sendPrivateDonationNotification).not.toHaveBeenCalled()
+    await expect(pendingPaymentRepository.findById('pay_1')).resolves.toBeDefined()
   })
 
   it('keeps an expired payment for a later attempt when Fleeca is unreachable', async () => {
@@ -360,8 +395,8 @@ describe('paymentService.resolvePaymentStatus', () => {
     })
     mocks.fleecaClient.getPayment.mockImplementation((id: string) =>
       id === 'pay_1'
-        ? { payment_id: id, status: 'payment_successful', amount: 500 }
-        : { payment_id: id, status: 'pending', amount: 300 }
+        ? { payment_id: id, status: 'payment_successful', amount: 500, mode: 'live' }
+        : { payment_id: id, status: 'pending', amount: 300, mode: 'live' }
     )
 
     await expect(paymentService.reconcileExpiredPayments()).resolves.toEqual({
@@ -406,6 +441,7 @@ describe('paymentService.resolvePaymentStatus', () => {
       payment_id: 'pay_1',
       status: 'payment_successful',
       amount: 500,
+      mode: 'live',
     })
 
     await expect(paymentService.resolvePaymentStatus('pay_1')).resolves.toEqual({
@@ -503,6 +539,19 @@ describe('paymentService.processWebhook', () => {
     })
 
     expect(result).toEqual({ status: 400, body: 'Bad Request' })
+  })
+
+  it('rejects a webhook with an invalid mode before looking up a payment', async () => {
+    mocks.fleecaClient.verifyWebhookSignature.mockReturnValue(true)
+    const findById = vi.spyOn(pendingPaymentRepository, 'findById')
+
+    const result = await paymentService.processWebhook({
+      rawBody: JSON.stringify({ ...webhookPayload(), mode: 'test' }),
+      signature: 'sha256=x',
+    })
+
+    expect(result).toEqual({ status: 400, body: 'Bad Request' })
+    expect(findById).not.toHaveBeenCalled()
   })
 
   it('rejects a webhook with an unknown status', async () => {
@@ -608,7 +657,7 @@ describe('paymentService.processWebhook', () => {
     await expect(pendingPaymentRepository.findById('pay_1')).resolves.toBeUndefined()
   })
 
-  it('deletes an expired payment on webhook when Fleeca reports status "pending"', async () => {
+  it('keeps an expired payment reported as pending so a later success can be reconciled', async () => {
     await createPendingPayment({ expiresAt: new Date(Date.now() - 60_000) })
     mocks.fleecaClient.verifyWebhookSignature.mockReturnValue(true)
 
@@ -618,8 +667,17 @@ describe('paymentService.processWebhook', () => {
     })
 
     expect(result).toEqual({ status: 200, body: 'OK' })
-    await expect(pendingPaymentRepository.findById('pay_1')).resolves.toBeUndefined()
+    await expect(pendingPaymentRepository.findById('pay_1')).resolves.toBeDefined()
     expect(mocks.sendPrivateDonationNotification).not.toHaveBeenCalled()
+
+    const success = await paymentService.processWebhook({
+      rawBody: JSON.stringify(webhookPayload({ status: 'payment_successful' })),
+      signature: 'sha256=x',
+    })
+
+    expect(success).toEqual({ status: 200, body: 'OK' })
+    expect(mocks.sendPrivateDonationNotification).toHaveBeenCalledOnce()
+    await expect(pendingPaymentRepository.findById('pay_1')).resolves.toBeUndefined()
   })
 
   it('processes a live-mode webhook for a live pending payment', async () => {

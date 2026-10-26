@@ -94,6 +94,7 @@ describe('cleanup task', () => {
       payment_id: 'pay_1',
       status: 'payment_successful',
       amount: 500,
+      mode: 'live',
     })
 
     await (cleanupTask.run as () => Promise<unknown>)()
@@ -133,6 +134,7 @@ describe('cleanup task', () => {
       payment_id: 'pay_mismatch',
       status: 'payment_successful',
       amount: 100,
+      mode: 'live',
     })
 
     await (cleanupTask.run as () => Promise<unknown>)()
