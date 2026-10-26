@@ -1,10 +1,4 @@
-import { Skeleton } from '#/shared/components/ui/skeleton.tsx'
-import {
-  Table as TableShadcn,
-  TableBody,
-  TableCell,
-  TableRow,
-} from '#/shared/components/ui/table.tsx'
+import { DashboardListSkeletonRows } from '#/shared/components/dashboard/list-skeleton-rows.tsx'
 import { authClient } from '#/shared/integrations/auth/auth-client.ts'
 import { DashboardList } from '#shared/components/dashboard/list.tsx'
 import {
@@ -16,6 +10,39 @@ import type { UsersTableMeta } from '../../types/user.types'
 import { userColumns } from '../../constants/dashboard-user-columns'
 import { useUserAdminMutations } from '../../hooks/use-user-admin-mutations'
 import { usersListQueryOptions } from '../../queries'
+
+const skeletonRows = [
+  [
+    { widths: ['h-4 w-36'] },
+    { widths: ['h-5 w-16', 'h-5 w-20'] },
+    { widths: ['h-4 w-24'] },
+    { widths: ['size-5', 'size-5', 'size-5'], contentClassName: 'flex justify-end gap-2' },
+  ],
+  [
+    { widths: ['h-4 w-44'] },
+    { widths: ['h-5 w-20'] },
+    { widths: ['h-4 w-20'] },
+    { widths: ['size-5', 'size-5'], contentClassName: 'flex justify-end gap-2' },
+  ],
+  [
+    { widths: ['h-4 w-32'] },
+    { widths: ['h-5 w-16', 'h-5 w-24', 'h-5 w-20'] },
+    { widths: ['h-4 w-24'] },
+    { widths: ['size-5', 'size-5', 'size-5'], contentClassName: 'flex justify-end gap-2' },
+  ],
+  [
+    { widths: ['h-4 w-40'] },
+    { widths: ['h-5 w-20', 'h-5 w-16'] },
+    { widths: ['h-4 w-20'] },
+    { widths: ['size-5'], contentClassName: 'flex justify-end gap-2' },
+  ],
+  [
+    { widths: ['h-4 w-28'] },
+    { widths: ['h-5 w-16'] },
+    { widths: ['h-4 w-24'] },
+    { widths: ['size-5', 'size-5'], contentClassName: 'flex justify-end gap-2' },
+  ],
+]
 
 function hasPermission(_user: { id: string }, _permission: 'deleteUsers'): boolean {
   return true
@@ -36,7 +63,7 @@ export function UsersList() {
   )
 
   if (isSessionPending || list.isPending) {
-    return <UsersListSkeletonRows />
+    return <DashboardListSkeletonRows rows={skeletonRows} />
   }
 
   if (list.isError) {
@@ -67,38 +94,5 @@ export function UsersList() {
         } satisfies UsersTableMeta
       }
     />
-  )
-}
-
-export function UsersListSkeletonRows() {
-  return (
-    <div>
-      <TableShadcn>
-        <TableBody>
-          {Array.from({ length: 5 }).map((_, index) => (
-            <TableRow key={index} className="hover:bg-transparent">
-              <TableCell className="bg-background">
-                <Skeleton className="h-4 w-45" />
-              </TableCell>
-              <TableCell className="bg-background">
-                <div className="flex flex-wrap gap-2">
-                  <Skeleton className="h-4 w-24" />
-                  <Skeleton className="h-4 w-24" />
-                </div>
-              </TableCell>
-              <TableCell className="bg-background">
-                <Skeleton className="h-4 max-w-25" />
-              </TableCell>
-              <TableCell className="bg-background text-right">
-                <div className="flex justify-end gap-2">
-                  <Skeleton className="size-5" />
-                  <Skeleton className="size-5" />
-                </div>
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </TableShadcn>
-    </div>
   )
 }

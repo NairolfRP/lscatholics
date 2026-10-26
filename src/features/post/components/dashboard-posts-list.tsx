@@ -1,13 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useRouter } from '@tanstack/react-router'
 import { deletePostFn, sendPostNotificationFn } from '#/server-fn/post.functions.ts'
-import { Skeleton } from '#/shared/components/ui/skeleton.tsx'
-import {
-  Table as TableShadcn,
-  TableBody,
-  TableCell,
-  TableRow,
-} from '#/shared/components/ui/table.tsx'
+import { DashboardListSkeletonRows } from '#/shared/components/dashboard/list-skeleton-rows.tsx'
 import { toast } from '#/shared/components/ui/toast'
 import { usePermissions } from '#/shared/hooks/use-permissions'
 import { authClient } from '#/shared/integrations/auth/auth-client.ts'
@@ -21,6 +15,7 @@ import { useDashboardList } from '#shared/hooks/dashboard/use-dashboard-list.tsx
 import { postsDashboardQueryOptions } from '#shared/queries/post.queries.ts'
 import type { DashboardPostsTableMeta } from '../types/dashboard-post.types'
 import { dashboardPostColumns } from '../constants/dashboard-post-columns'
+import { dashboardPostsListSkeletonRows } from '../constants/dashboard-posts-list-skeleton-rows'
 import { canEditPost } from '../utils/post.utils'
 
 export function DashboardPostsList() {
@@ -71,7 +66,7 @@ export function DashboardPostsList() {
   })
 
   if (isSessionPending || list.isPending) {
-    return <DashboardPostsListSkeletonRows />
+    return <DashboardListSkeletonRows rows={dashboardPostsListSkeletonRows} />
   }
 
   if (list.isError) {
@@ -111,38 +106,5 @@ export function DashboardPostsList() {
         } satisfies DashboardPostsTableMeta
       }
     />
-  )
-}
-
-function DashboardPostsListSkeletonRows() {
-  return (
-    <div>
-      <TableShadcn>
-        <TableBody>
-          {Array.from({ length: 5 }).map((_, index) => (
-            <TableRow key={index} className="hover:bg-transparent">
-              <TableCell className="bg-background">
-                <Skeleton className="h-4 w-45" />
-              </TableCell>
-              <TableCell className="bg-background">
-                <div className="flex flex-wrap gap-2">
-                  <Skeleton className="h-4 w-24" />
-                  <Skeleton className="h-4 w-24" />
-                </div>
-              </TableCell>
-              <TableCell className="bg-background">
-                <Skeleton className="h-4 max-w-25" />
-              </TableCell>
-              <TableCell className="bg-background text-right">
-                <div className="flex justify-end gap-2">
-                  <Skeleton className="size-5" />
-                  <Skeleton className="size-5" />
-                </div>
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </TableShadcn>
-    </div>
   )
 }
