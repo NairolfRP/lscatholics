@@ -35,6 +35,73 @@ export const DashboardJobPostingForm = withForm({
   },
   render: function Render({ form, variant }) {
     const formId = variant === 'edit' ? 'edit-job-posting-form' : 'create-job-posting-form'
+    const renderStringListField = (
+      name: 'requirements' | 'skills',
+      label: string,
+      placeholder: string
+    ) => (
+      <form.AppField name={name} mode="array">
+        {(field) => {
+          const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
+          return (
+            <FieldSet>
+              <FieldLegend variant="label">{label}</FieldLegend>
+              <FieldGroup>
+                {field.state.value?.map((_, i) => (
+                  <form.AppField key={i} name={`${name}[${i}]`}>
+                    {(subField) => {
+                      const isSubFieldInvalid =
+                        subField.state.meta.isTouched && !subField.state.meta.isValid
+                      return (
+                        <Field orientation="horizontal" data-invalid={isSubFieldInvalid}>
+                          <FieldContent>
+                            <InputGroup>
+                              <InputGroupInput
+                                type="text"
+                                name={subField.name}
+                                value={subField.state.value}
+                                onBlur={subField.handleBlur}
+                                onChange={(e) => subField.handleChange(e.target.value)}
+                                aria-invalid={isSubFieldInvalid}
+                                placeholder={placeholder}
+                                autoComplete="off"
+                              />
+                              <InputGroupAddon align="inline-end">
+                                <InputGroupButton
+                                  type="button"
+                                  variant="ghost"
+                                  size="icon-xs"
+                                  aria-label="Supprimer la ligne"
+                                  onClick={() => field.removeValue(i)}
+                                >
+                                  <XIcon />
+                                </InputGroupButton>
+                              </InputGroupAddon>
+                            </InputGroup>
+                            {isSubFieldInvalid && (
+                              <FieldError errors={subField.state.meta.errors} />
+                            )}
+                          </FieldContent>
+                        </Field>
+                      )
+                    }}
+                  </form.AppField>
+                ))}
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={() => field.pushValue('')}
+                >
+                  <PlusCircleIcon /> Ajouter
+                </Button>
+              </FieldGroup>
+              {isInvalid && <FieldError errors={field.state.meta.errors} />}
+            </FieldSet>
+          )
+        }}
+      </form.AppField>
+    )
 
     return (
       <form.AppForm>
@@ -208,135 +275,16 @@ export const DashboardJobPostingForm = withForm({
                     }}
                   </form.AppField>
 
-                  <form.AppField name="requirements" mode="array">
-                    {(field) => {
-                      const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
-                      return (
-                        <FieldSet>
-                          <FieldLegend variant="label">Conditions requises</FieldLegend>
-                          <FieldGroup>
-                            {field.state.value?.map((_, i) => (
-                              <form.AppField key={i} name={`requirements[${i}]`}>
-                                {(subField) => {
-                                  const isSubFieldInvalid =
-                                    subField.state.meta.isTouched && !subField.state.meta.isValid
-                                  return (
-                                    <Field
-                                      orientation="horizontal"
-                                      data-invalid={isSubFieldInvalid}
-                                    >
-                                      <FieldContent>
-                                        <InputGroup>
-                                          <InputGroupInput
-                                            type="text"
-                                            name={subField.name}
-                                            value={subField.state.value}
-                                            onBlur={subField.handleBlur}
-                                            onChange={(e) => subField.handleChange(e.target.value)}
-                                            aria-invalid={isSubFieldInvalid}
-                                            placeholder="Être titulaire du permis de conduire"
-                                            autoComplete="off"
-                                          />
-                                          <InputGroupAddon align="inline-end">
-                                            <InputGroupButton
-                                              type="button"
-                                              variant="ghost"
-                                              size="icon-xs"
-                                              aria-label="Supprimer la ligne"
-                                              onClick={() => field.removeValue(i)}
-                                            >
-                                              <XIcon />
-                                            </InputGroupButton>
-                                          </InputGroupAddon>
-                                        </InputGroup>
-                                        {isSubFieldInvalid && (
-                                          <FieldError errors={subField.state.meta.errors} />
-                                        )}
-                                      </FieldContent>
-                                    </Field>
-                                  )
-                                }}
-                              </form.AppField>
-                            ))}
-                            <Button
-                              type="button"
-                              variant="outline"
-                              size="sm"
-                              onClick={() => field.pushValue('')}
-                            >
-                              <PlusCircleIcon /> Ajouter
-                            </Button>
-                          </FieldGroup>
-                          {isInvalid && <FieldError errors={field.state.meta.errors} />}
-                        </FieldSet>
-                      )
-                    }}
-                  </form.AppField>
-
-                  <form.AppField name="skills" mode="array">
-                    {(field) => {
-                      const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
-                      return (
-                        <FieldSet>
-                          <FieldLegend variant="label">Profil recherché</FieldLegend>
-                          <FieldGroup>
-                            {field.state.value?.map((_, i) => (
-                              <form.AppField key={i} name={`skills[${i}]`}>
-                                {(subField) => {
-                                  const isSubFieldInvalid =
-                                    subField.state.meta.isTouched && !subField.state.meta.isValid
-                                  return (
-                                    <Field
-                                      orientation="horizontal"
-                                      data-invalid={isSubFieldInvalid}
-                                    >
-                                      <FieldContent>
-                                        <InputGroup>
-                                          <InputGroupInput
-                                            type="text"
-                                            name={subField.name}
-                                            value={subField.state.value}
-                                            onBlur={subField.handleBlur}
-                                            onChange={(e) => subField.handleChange(e.target.value)}
-                                            aria-invalid={isSubFieldInvalid}
-                                            placeholder="Adhère et respecte l'enseignement social de l'Église catholique"
-                                            autoComplete="off"
-                                          />
-                                          <InputGroupAddon align="inline-end">
-                                            <InputGroupButton
-                                              type="button"
-                                              variant="ghost"
-                                              size="icon-xs"
-                                              aria-label="Supprimer la ligne"
-                                              onClick={() => field.removeValue(i)}
-                                            >
-                                              <XIcon />
-                                            </InputGroupButton>
-                                          </InputGroupAddon>
-                                        </InputGroup>
-                                        {isSubFieldInvalid && (
-                                          <FieldError errors={subField.state.meta.errors} />
-                                        )}
-                                      </FieldContent>
-                                    </Field>
-                                  )
-                                }}
-                              </form.AppField>
-                            ))}
-                            <Button
-                              type="button"
-                              variant="outline"
-                              size="sm"
-                              onClick={() => field.pushValue('')}
-                            >
-                              <PlusCircleIcon /> Ajouter
-                            </Button>
-                          </FieldGroup>
-                          {isInvalid && <FieldError errors={field.state.meta.errors} />}
-                        </FieldSet>
-                      )
-                    }}
-                  </form.AppField>
+                  {renderStringListField(
+                    'requirements',
+                    'Conditions requises',
+                    'Être titulaire du permis de conduire'
+                  )}
+                  {renderStringListField(
+                    'skills',
+                    'Profil recherché',
+                    "Adhère et respecte l'enseignement social de l'Église catholique"
+                  )}
                 </FieldGroup>
               </CardContent>
             </Card>
