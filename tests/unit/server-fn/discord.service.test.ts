@@ -168,19 +168,21 @@ describe('discordBotClient', () => {
 })
 
 describe('editWebhookMessage', () => {
-  it('patches the webhook message with the embed payload', async () => {
+  it('patches the webhook message with the payload and with_components query param', async () => {
     const edited = { id: 'msg-1' }
     patchMock.mockReturnValue({ json: vi.fn().mockResolvedValue(edited) })
 
     const result = await editWebhookMessage({
       webhookUrl: 'https://discord.com/api/webhooks/123/abc',
       messageId: 'msg-1',
+      withComponents: true,
       payload: { embeds: [{ title: 'Updated' }] },
     })
 
     expect(patchMock).toHaveBeenCalledWith(
       'https://discord.com/api/v10/webhooks/123/abc/messages/msg-1',
       {
+        searchParams: { with_components: true },
         json: { embeds: [{ title: 'Updated' }] },
         timeout: 10000,
         retry: 0,

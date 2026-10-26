@@ -191,6 +191,8 @@ export async function sendExistingPostNotification({
       authorId: true,
       title: true,
       slug: true,
+      excerpt: true,
+      coverImageUrl: true,
       publishedAt: true,
       status: true,
       discordMessageId: true,
@@ -219,6 +221,8 @@ export async function sendExistingPostNotification({
     const discordMessageId = await sendPostNotification({
       title: post.title,
       slug: post.slug,
+      excerpt: post.excerpt ?? ' ',
+      bannerImg: post.coverImageUrl,
       publishedAt: post.publishedAt,
     })
 
@@ -281,6 +285,8 @@ export async function updatePost({ data, user }: { data: unknown; user: User }) 
         messageId: post.discordMessageId,
         title: validatedData.title,
         slug,
+        excerpt,
+        bannerImg: validatedData.coverImageUrl,
         publishedAt,
       })
     }
@@ -355,6 +361,8 @@ export async function createPost({
       const discordMessageId = await sendPostNotification({
         title: validatedData.title,
         slug,
+        excerpt,
+        bannerImg: validatedData.coverImageUrl,
         publishedAt,
       })
 

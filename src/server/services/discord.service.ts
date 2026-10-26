@@ -89,15 +89,18 @@ export async function editWebhookMessage({
   webhookUrl,
   messageId,
   payload,
+  withComponents,
 }: {
   webhookUrl: string
   messageId: string
   payload: DiscordWebhookPayload
+  withComponents?: boolean
 }): Promise<APIMessage> {
   const { id, token } = parseWebhookUrl(webhookUrl)
 
   return ky
     .patch(`${DISCORD_API_BASE_URL}/webhooks/${id}/${token}/messages/${messageId}`, {
+      searchParams: withComponents ? { with_components: true } : undefined,
       json: payload,
       timeout: REQUEST_TIMEOUT,
       retry: 0,

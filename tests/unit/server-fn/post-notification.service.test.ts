@@ -1,3 +1,9 @@
+import {
+  ButtonStyle,
+  ComponentType,
+  MessageFlags,
+  SeparatorSpacingSize,
+} from 'discord-api-types/v10'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { POST_EMBED_COLOR } from '#/features/post/server/post-notification.service.ts'
 
@@ -40,6 +46,72 @@ vi.mock('#server/services/discord.service.ts', () => ({
 }))
 
 const mockDate = new Date('2026-08-05T14:09:05.100Z')
+const postData = {
+  title: 'Test Post',
+  slug: 'test-post',
+  excerpt: 'A test excerpt',
+  bannerImg: 'https://cdn.example.com/banner.png',
+  publishedAt: mockDate,
+}
+
+function expectedPostComponents({
+  includeRoleMentions = true,
+  excerpt = postData.excerpt,
+  slug = postData.slug,
+  title = postData.title,
+}: {
+  includeRoleMentions?: boolean
+  excerpt?: string | null
+  slug?: string
+  title?: string
+} = {}) {
+  return [
+    ...(includeRoleMentions
+      ? [
+          {
+            type: ComponentType.TextDisplay,
+            content: '<@&1071282875976126506> <@&1254316102805098526>',
+          },
+        ]
+      : []),
+    {
+      type: ComponentType.Container,
+      accent_color: POST_EMBED_COLOR,
+      components: [
+        {
+          type: ComponentType.TextDisplay,
+          content: 'Newsroom - Archidiocèse de Los Santos · <t:1785938945:F>',
+        },
+        {
+          type: ComponentType.MediaGallery,
+          items: [{ media: { url: 'https://cdn.example.com/banner.png' } }],
+        },
+        { type: ComponentType.Separator, spacing: SeparatorSpacingSize.Small },
+        {
+          type: ComponentType.Section,
+          components: [
+            {
+              type: ComponentType.TextDisplay,
+              content: `# [${title}](https://app.example.com/post/${slug})`,
+            },
+          ],
+          accessory: {
+            type: ComponentType.Button,
+            style: ButtonStyle.Link,
+            label: 'Lire le communiqué',
+            url: `https://app.example.com/post/${slug}`,
+          },
+        },
+        ...(excerpt
+          ? [
+              { type: ComponentType.Separator, spacing: SeparatorSpacingSize.Large },
+              { type: ComponentType.TextDisplay, content: excerpt },
+            ]
+          : []),
+      ],
+    },
+  ]
+}
 
 beforeEach(() => {
   vi.useFakeTimers()
@@ -55,40 +127,25 @@ afterEach(() => {
 })
 
 describe('sendPostNotification', () => {
-  it('sends the notification with role mentions and embed', async () => {
+  it('sends the Components V2 notification with role mentions', async () => {
     mocks.sendWebhookMessage.mockResolvedValue({ id: 'msg-1' })
     const { sendPostNotification } =
       await import('#/features/post/server/post-notification.service.ts')
 
-    const result = await sendPostNotification({
-      title: 'Test Post',
-      slug: 'test-post',
-      publishedAt: mockDate,
-    })
+    const result = await sendPostNotification(postData)
 
     expect(result).toBe('msg-1')
     expect(mocks.sendWebhookMessage).toHaveBeenCalledWith({
       url: 'https://discord.com/api/webhooks/test/token',
       payload: {
-        content: '<@&1071282875976126506> <@&1254316102805098526>',
-        embeds: [
-          {
-            title: 'Test Post',
-            color: POST_EMBED_COLOR,
-            url: 'https://app.example.com/post/test-post',
-            author: {
-              name: 'Newsroom - Archidiocèse de Los Santos',
-              icon_url: 'https://i.imgur.com/6YJtfqY.png',
-            },
-            thumbnail: { url: 'https://i.imgur.com/6YJtfqY.png' },
-            timestamp: mockDate.toISOString(),
-          },
-        ],
+        flags: MessageFlags.IsComponentsV2,
+        components: expectedPostComponents(),
         allowed_mentions: {
           roles: ['1071282875976126506', '1254316102805098526'],
         },
       },
       wait: true,
+      withComponents: true,
     })
   })
 
@@ -100,6 +157,8 @@ describe('sendPostNotification', () => {
     const result = await sendPostNotification({
       title: 'Test Post',
       slug: 'test-post',
+      excerpt: 'A test excerpt',
+      bannerImg: 'https://cdn.example.com/banner.png',
       publishedAt: null,
     })
 
@@ -115,6 +174,8 @@ describe('sendPostNotification', () => {
     const result = await sendPostNotification({
       title: 'Test Post',
       slug: 'test-post',
+      excerpt: 'A test excerpt',
+      bannerImg: 'https://cdn.example.com/banner.png',
       publishedAt: null,
     })
 
@@ -127,19 +188,15 @@ describe('sendPostNotification', () => {
       await import('#/features/post/server/post-notification.service.ts')
 
     await sendPostNotification({
+      ...postData,
       title: 'Draft Post',
-      slug: 'draft-post',
       publishedAt: null,
     })
 
     expect(mocks.sendWebhookMessage).toHaveBeenCalledWith(
       expect.objectContaining({
         payload: expect.objectContaining({
-          embeds: [
-            expect.objectContaining({
-              timestamp: mockDate.toISOString(),
-            }),
-          ],
+          components: expectedPostComponents({ title: 'Draft Post' }),
         }),
       })
     )
@@ -147,7 +204,7 @@ describe('sendPostNotification', () => {
 })
 
 describe('editPostNotification', () => {
-  it('edits the existing message with updated embed', async () => {
+  it('edits the existing message with updated Components V2 content', async () => {
     const { editPostNotification } =
       await import('#/features/post/server/post-notification.service.ts')
 
@@ -155,26 +212,22 @@ describe('editPostNotification', () => {
       messageId: 'msg-1',
       title: 'Updated Title',
       slug: 'updated-slug',
+      excerpt: postData.excerpt,
+      bannerImg: postData.bannerImg,
       publishedAt: mockDate,
     })
 
     expect(mocks.editWebhookMessage).toHaveBeenCalledWith({
       webhookUrl: 'https://discord.com/api/webhooks/test/token',
       messageId: 'msg-1',
+      withComponents: true,
       payload: {
-        embeds: [
-          {
-            title: 'Updated Title',
-            color: POST_EMBED_COLOR,
-            url: 'https://app.example.com/post/updated-slug',
-            author: {
-              name: 'Newsroom - Archidiocèse de Los Santos',
-              icon_url: 'https://i.imgur.com/6YJtfqY.png',
-            },
-            thumbnail: { url: 'https://i.imgur.com/6YJtfqY.png' },
-            timestamp: mockDate.toISOString(),
-          },
-        ],
+        flags: MessageFlags.IsComponentsV2,
+        components: expectedPostComponents({
+          includeRoleMentions: false,
+          title: 'Updated Title',
+          slug: 'updated-slug',
+        }),
       },
     })
   })
@@ -188,6 +241,8 @@ describe('editPostNotification', () => {
       messageId: 'msg-1',
       title: 'Title',
       slug: 'slug',
+      excerpt: postData.excerpt,
+      bannerImg: postData.bannerImg,
       publishedAt: null,
     })
 
@@ -204,6 +259,8 @@ describe('editPostNotification', () => {
         messageId: 'msg-1',
         title: 'Title',
         slug: 'slug',
+        excerpt: postData.excerpt,
+        bannerImg: postData.bannerImg,
         publishedAt: null,
       })
     ).resolves.toBeUndefined()

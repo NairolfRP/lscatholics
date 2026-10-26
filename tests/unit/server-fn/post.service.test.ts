@@ -185,6 +185,8 @@ describe('createPost', () => {
     expect(notificationMocks.sendPostNotification).toHaveBeenCalledWith({
       title: 'New Post',
       slug: 'new-post',
+      excerpt: 'Content here...',
+      bannerImg: 'https://example.com/image.jpg',
       publishedAt: new Date('2025-01-01'),
     })
     expect(postRepository.update).toHaveBeenCalledWith(
@@ -252,6 +254,8 @@ describe('sendExistingPostNotification', () => {
     expect(notificationMocks.sendPostNotification).toHaveBeenCalledWith({
       title: 'My Post',
       slug: 'my-post',
+      excerpt: 'My excerpt',
+      bannerImg: 'https://example.com/image.jpg',
       publishedAt: mockPost.publishedAt,
     })
   })

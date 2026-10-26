@@ -1,6 +1,12 @@
+import type { APIComponentInContainer, APIMessageTopLevelComponent } from 'discord-api-types/v10'
+import {
+  ButtonStyle,
+  ComponentType,
+  MessageFlags,
+  SeparatorSpacingSize,
+} from 'discord-api-types/v10'
 import { env } from '#/config/env.server.ts'
 import { logger } from '#server/integrations/logger.ts'
-import type { DiscordEmbed } from '#server/services/discord.service.ts'
 import {
   deleteWebhookMessage,
   editWebhookMessage,
@@ -16,6 +22,8 @@ const ROLE_MENTIONS = NOTIFICATION_ROLE_IDS.map((id) => `<@&${id}>`).join(' ')
 export async function sendPostNotification(data: {
   title: string
   slug: string
+  excerpt: string
+  bannerImg: string
   publishedAt: Date | null
 }): Promise<string | null> {
   const webhookUrl = env.POST_DISCORD_WEBHOOK
@@ -31,11 +39,12 @@ export async function sendPostNotification(data: {
     const response = await sendWebhookMessage({
       url: webhookUrl,
       payload: {
-        content: ROLE_MENTIONS,
-        embeds: [buildPostEmbed(data)],
+        flags: MessageFlags.IsComponentsV2,
+        components: buildPostComponents(data, true),
         allowed_mentions: { roles: [...NOTIFICATION_ROLE_IDS] },
       },
       wait: true,
+      withComponents: true,
     })
 
     return response?.id ?? null
@@ -60,11 +69,15 @@ export async function editPostNotification({
   messageId,
   title,
   slug,
+  excerpt,
+  bannerImg,
   publishedAt,
 }: {
   messageId: string
   title: string
   slug: string
+  excerpt: string
+  bannerImg: string
   publishedAt: Date | null
 }): Promise<void> {
   const webhookUrl = env.POST_DISCORD_WEBHOOK
@@ -74,30 +87,85 @@ export async function editPostNotification({
     await editWebhookMessage({
       webhookUrl,
       messageId,
-      payload: { embeds: [buildPostEmbed({ title, slug, publishedAt })] },
+      withComponents: true,
+      payload: {
+        flags: MessageFlags.IsComponentsV2,
+        components: buildPostComponents({ title, slug, excerpt, bannerImg, publishedAt }, false),
+      },
     })
   } catch (err) {
     logger.error({ err, messageId }, 'Failed to edit post notification')
   }
 }
 
-function buildPostEmbed(data: {
-  title: string
-  slug: string
-  publishedAt: Date | null
-}): DiscordEmbed {
+function buildPostComponents(
+  data: {
+    title: string
+    slug: string
+    excerpt: string | null
+    bannerImg: string
+    publishedAt: Date | null
+  },
+  includeRoleMentions: boolean
+): APIMessageTopLevelComponent[] {
   const appUrl = env.VITE_APP_URL
   const postUrl = `${appUrl}/post/${data.slug}`
+  const publishedAt = data.publishedAt ?? new Date()
+  const components: APIMessageTopLevelComponent[] = []
 
-  return {
-    title: escapeDiscordMarkdown(data.title),
-    color: POST_EMBED_COLOR,
-    url: postUrl,
-    author: {
-      name: 'Newsroom - Archidiocèse de Los Santos',
-      icon_url: 'https://i.imgur.com/6YJtfqY.png',
-    },
-    thumbnail: { url: 'https://i.imgur.com/6YJtfqY.png' },
-    timestamp: data.publishedAt ? data.publishedAt.toISOString() : new Date().toISOString(),
+  if (includeRoleMentions) {
+    components.push({ type: ComponentType.TextDisplay, content: ROLE_MENTIONS })
   }
+
+  components.push({
+    type: ComponentType.Container,
+    accent_color: POST_EMBED_COLOR,
+    components: [
+      {
+        type: ComponentType.TextDisplay,
+        content: `Newsroom - Archidiocèse de Los Santos · <t:${Math.floor(publishedAt.getTime() / 1000)}:F>`,
+      },
+      {
+        type: ComponentType.MediaGallery,
+        items: [
+          {
+            media: { url: data.bannerImg },
+          },
+        ],
+      },
+      {
+        type: ComponentType.Separator,
+        spacing: SeparatorSpacingSize.Small,
+      },
+      {
+        type: ComponentType.Section,
+        components: [
+          {
+            type: ComponentType.TextDisplay,
+            content: `# [${escapeDiscordMarkdown(data.title)}](${postUrl})`,
+          },
+        ],
+        accessory: {
+          type: ComponentType.Button,
+          style: ButtonStyle.Link,
+          label: 'Lire le communiqué',
+          url: postUrl,
+        },
+      },
+      ...(data.excerpt
+        ? ([
+            {
+              type: ComponentType.Separator,
+              spacing: SeparatorSpacingSize.Large,
+            },
+            {
+              type: ComponentType.TextDisplay,
+              content: escapeDiscordMarkdown(data.excerpt),
+            },
+          ] as APIComponentInContainer[])
+        : []),
+    ],
+  })
+
+  return components
 }
