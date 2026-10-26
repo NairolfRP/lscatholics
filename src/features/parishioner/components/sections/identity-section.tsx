@@ -48,24 +48,22 @@ export const IdentitySection = withForm({
 
         <form.AppField name="firstname">
           {(field) => (
-            <field.InputField
-              key={`current-character-firstname-${currentCharacter?.id ?? 'unknown'}`}
+            <field.CharacterNameField
               label="Prénom"
               placeholder="John"
               required
-              autoComplete="off"
+              currentCharacterId={currentCharacter?.id}
             />
           )}
         </form.AppField>
 
         <form.AppField name="lastname">
           {(field) => (
-            <field.InputField
-              key={`current-character-lastname-${currentCharacter?.id ?? 'unknown'}`}
+            <field.CharacterNameField
               label="Nom de famille"
               placeholder="Doe"
               required
-              autoComplete="off"
+              currentCharacterId={currentCharacter?.id}
             />
           )}
         </form.AppField>

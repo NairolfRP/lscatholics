@@ -27,24 +27,22 @@ export const GiftShopIdentitySection = withForm({
       <div className="grid grid-cols-1 items-start gap-7 sm:grid-cols-2">
         <form.AppField name="firstname">
           {(field) => (
-            <field.InputField
-              key={`current-character-firstname-${currentCharacter?.id ?? 'unknown'}`}
+            <field.CharacterNameField
               label="Prénom"
               placeholder="John"
               required
-              autoComplete="off"
+              currentCharacterId={currentCharacter?.id}
             />
           )}
         </form.AppField>
 
         <form.AppField name="lastname">
           {(field) => (
-            <field.InputField
-              key={`current-character-lastname-${currentCharacter?.id ?? 'unknown'}`}
+            <field.CharacterNameField
               label="Nom de famille"
               placeholder="Doe"
               required
-              autoComplete="off"
+              currentCharacterId={currentCharacter?.id}
             />
           )}
         </form.AppField>

@@ -1,4 +1,5 @@
 import { createFormHook, createFormHookContexts } from '@tanstack/react-form'
+import { CharacterNameField } from '#/shared/components/form/character-name-field'
 import { DateTimePickerField } from '#/shared/components/form/date-time-picker-field'
 import { InputField } from '#/shared/components/form/input-field'
 import { MultiSelectField } from '#/shared/components/form/multi-select-field'
@@ -20,6 +21,7 @@ export const { fieldContext, useFieldContext, formContext, useFormContext } =
 export const { useAppForm, withForm } = createFormHook({
   fieldComponents: {
     InputField,
+    CharacterNameField,
     TextareaField,
     SelectField,
     MultiSelectField,
