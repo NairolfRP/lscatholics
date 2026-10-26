@@ -26,6 +26,8 @@ permissions:
     skills: true
   '@tanstack/match-sorter-utils':
     skills: true
+  '@tanstack/react-router':
+    skills: true
   '@tanstack/react-start':
     skills: true
   '@tanstack/react-table':
