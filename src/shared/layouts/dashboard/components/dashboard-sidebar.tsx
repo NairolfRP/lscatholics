@@ -50,7 +50,7 @@ export function DashboardSidebar() {
     return names.length > 1 ? `${names[0][0]}${names[1][0]}` : names[0][0]
   }, [user])
 
-  if (isPending) {
+  if (isPending || !user) {
     return null
   }
 
@@ -75,7 +75,7 @@ export function DashboardSidebar() {
       </SidebarContent>
       <DashboardSidebarFooter
         userInitials={userInitials}
-        username={user!.name}
+        username={user.name}
         isMobile={isMobile}
       />
       <SidebarRail />
@@ -215,7 +215,7 @@ function DashboardSidebarFooter({
                     className="cursor-pointer"
                     onClick={async () => {
                       await authClient.signOut({
-                        callbackURL: window.location.href,
+                        callbackURL: '/',
                       })
                     }}
                     variant="destructive"
