@@ -12,9 +12,9 @@ import {
   MinusIcon,
   QuoteIcon,
 } from 'lucide-react'
-import { Button } from '#shared/components/ui/button'
 import { Separator } from '#shared/components/ui/separator'
 import { Textarea } from '#shared/components/ui/textarea'
+import { Toggle } from '#shared/components/ui/toggle'
 import { cn } from '#shared/lib/utils.ts'
 
 type MarkdownTextareaProps = Omit<ComponentProps<typeof Textarea>, 'onChange'> & {
@@ -200,11 +200,11 @@ export function MarkdownTextarea({
           <div key={i} className="flex items-center gap-0.5">
             {i > 0 && <Separator orientation="vertical" className="mx-1 h-4" />}
             {group.map((tool) => (
-              <Button
+              <Toggle
                 key={tool.label}
                 type="button"
-                variant="ghost"
                 size="sm"
+                pressed={false}
                 className="h-7 w-7 p-0"
                 title={tool.label}
                 disabled={disabled}
@@ -212,7 +212,7 @@ export function MarkdownTextarea({
               >
                 {tool.icon}
                 <span className="sr-only">{tool.label}</span>
-              </Button>
+              </Toggle>
             ))}
           </div>
         ))}
