@@ -94,6 +94,7 @@ export function DashboardSidebar() {
 }
 
 function DashboardSidebarItems() {
+  const { isMobile, state } = useSidebar()
   const context = useRouteContext({ from: '/dashboard' })
   const resolved = context.gameContext.permissions
   const pathname = useRouterState({ select: (state) => state.location.pathname })
@@ -114,6 +115,31 @@ function DashboardSidebarItems() {
       return normalized === '/dashboard'
     }
     return normalized.startsWith(item.to)
+  }
+
+  if (!isMobile && state === 'collapsed') {
+    return (
+      <SidebarGroup>
+        <SidebarMenu>
+          {menuItems.map((item) => {
+            const Icon = item.category?.icon ?? item.icon
+
+            return (
+              <SidebarMenuItem key={item.label}>
+                <SidebarMenuButton
+                  isActive={isItemActive(item)}
+                  tooltip={item.label}
+                  render={<Link to={item.to} preload={false} />}
+                >
+                  {Icon && <Icon />}
+                  <span>{item.label}</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            )
+          })}
+        </SidebarMenu>
+      </SidebarGroup>
+    )
   }
 
   return (
