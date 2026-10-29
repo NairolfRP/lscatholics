@@ -32,6 +32,7 @@ import { Route as AppParishesRouteImport } from './routes/_app/parishes'
 import { Route as AppPrivacyRouteImport } from './routes/_app/privacy'
 import { Route as AppRegisterParishionerRouteImport } from './routes/_app/register-parishioner'
 import { Route as AppServicesRouteImport } from './routes/_app/services'
+import { Route as AppSignInRouteImport } from './routes/_app/sign-in'
 import { Route as AppVocationsRouteImport } from './routes/_app/vocations'
 import { Route as AppVolunteersRouteImport } from './routes/_app/volunteers'
 import { Route as DashboardIndexRouteImport } from './routes/dashboard/index'
@@ -184,6 +185,11 @@ const AppRegisterParishionerRoute = AppRegisterParishionerRouteImport.update({
 const AppServicesRoute = AppServicesRouteImport.update({
   id: '/services',
   path: '/services',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppSignInRoute = AppSignInRouteImport.update({
+  id: '/sign-in',
+  path: '/sign-in',
   getParentRoute: () => AppRoute,
 } as any)
 const AppVocationsRoute = AppVocationsRouteImport.update({
@@ -414,6 +420,7 @@ export interface FileRoutesByFullPath {
   '/privacy': typeof AppPrivacyRoute
   '/register-parishioner': typeof AppRegisterParishionerRoute
   '/services': typeof AppServicesRoute
+  '/sign-in': typeof AppSignInRoute
   '/vocations': typeof AppVocationsRoute
   '/volunteers': typeof AppVolunteersRoute
   '/dashboard/': typeof DashboardIndexRoute
@@ -470,6 +477,7 @@ export interface FileRoutesByTo {
   '/privacy': typeof AppPrivacyRoute
   '/register-parishioner': typeof AppRegisterParishionerRoute
   '/services': typeof AppServicesRoute
+  '/sign-in': typeof AppSignInRoute
   '/vocations': typeof AppVocationsRoute
   '/volunteers': typeof AppVolunteersRoute
   '/': typeof AppIndexRoute
@@ -535,6 +543,7 @@ export interface FileRoutesById {
   '/_app/privacy': typeof AppPrivacyRoute
   '/_app/register-parishioner': typeof AppRegisterParishionerRoute
   '/_app/services': typeof AppServicesRoute
+  '/_app/sign-in': typeof AppSignInRoute
   '/_app/vocations': typeof AppVocationsRoute
   '/_app/volunteers': typeof AppVolunteersRoute
   '/_app/': typeof AppIndexRoute
@@ -601,6 +610,7 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/register-parishioner'
     | '/services'
+    | '/sign-in'
     | '/vocations'
     | '/volunteers'
     | '/dashboard/'
@@ -657,6 +667,7 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/register-parishioner'
     | '/services'
+    | '/sign-in'
     | '/vocations'
     | '/volunteers'
     | '/'
@@ -721,6 +732,7 @@ export interface FileRouteTypes {
     | '/_app/privacy'
     | '/_app/register-parishioner'
     | '/_app/services'
+    | '/_app/sign-in'
     | '/_app/vocations'
     | '/_app/volunteers'
     | '/_app/'
@@ -933,6 +945,13 @@ declare module '@tanstack/react-router' {
       path: '/services'
       fullPath: '/services'
       preLoaderRoute: typeof AppServicesRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/sign-in': {
+      id: '/_app/sign-in'
+      path: '/sign-in'
+      fullPath: '/sign-in'
+      preLoaderRoute: typeof AppSignInRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/vocations': {
@@ -1343,6 +1362,7 @@ interface AppRouteChildren {
   AppPrivacyRoute: typeof AppPrivacyRoute
   AppRegisterParishionerRoute: typeof AppRegisterParishionerRoute
   AppServicesRoute: typeof AppServicesRoute
+  AppSignInRoute: typeof AppSignInRoute
   AppVocationsRoute: typeof AppVocationsRoute
   AppVolunteersRoute: typeof AppVolunteersRoute
   AppIndexRoute: typeof AppIndexRoute
@@ -1374,6 +1394,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppPrivacyRoute: AppPrivacyRoute,
   AppRegisterParishionerRoute: AppRegisterParishionerRoute,
   AppServicesRoute: AppServicesRoute,
+  AppSignInRoute: AppSignInRoute,
   AppVocationsRoute: AppVocationsRoute,
   AppVolunteersRoute: AppVolunteersRoute,
   AppIndexRoute: AppIndexRoute,

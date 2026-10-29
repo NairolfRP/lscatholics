@@ -6,8 +6,17 @@ import { DashboardLayout } from '#/shared/layouts/dashboard/components/dashboard
 import { gameContextQueryOptions } from '#/shared/queries/game.queries'
 
 export const Route = createFileRoute('/dashboard')({
-  beforeLoad: async ({ context }) => {
+  beforeLoad: async ({ context, location }) => {
     const gameContext = await getGameContextFn()
+
+    if (!gameContext.user) {
+      throw redirect({
+        to: '/sign-in',
+        search: { redirectTo: location.href },
+        replace: true,
+      })
+    }
+
     if (!gameContext.canAccessDashboard) {
       throw redirect({
         to: '/',
