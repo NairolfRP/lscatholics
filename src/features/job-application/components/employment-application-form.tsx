@@ -9,11 +9,17 @@ import { ExperienceSection } from '#/features/job-application/components/section
 import { IdentitySection } from '#/features/job-application/components/sections/identity-section.tsx'
 import { OocSection } from '#/features/job-application/components/sections/ooc-section.tsx'
 import { ScreeningSection } from '#/features/job-application/components/sections/screening-section.tsx'
-import { employmentApplicationFormOptions } from '#/features/job-application/form/employment-application-form-options.ts'
+import { JOB_APPLICATION_DRAFT_STORAGE_KEY } from '#/features/job-application/constants/employment-application.constants.tsx'
+import {
+  createEmploymentApplicationDefaultValues,
+  employmentApplicationFormOptions,
+} from '#/features/job-application/form/employment-application-form-options.ts'
+import type { EmploymentApplicationInput } from '#/features/job-application/schemas/employment-application.schema.ts'
 import { employmentApplicationSchema } from '#/features/job-application/schemas/employment-application.schema.ts'
 import { submitEmploymentApplicationFn } from '#/features/job-application/server-fn/employment-application.functions.ts'
 import { singleJobPostingQueryOptions } from '#/features/job-posting/queries.ts'
 import { RequireAuth } from '#shared/components/auth/require-auth.tsx'
+import { FormDraftRestoreDialog } from '#shared/components/form/form-draft-restore-dialog.tsx'
 import {
   Card,
   CardContent,
@@ -25,6 +31,7 @@ import {
 import { FieldGroup } from '#shared/components/ui/field.tsx'
 import { Separator } from '#shared/components/ui/separator.tsx'
 import { toast } from '#shared/components/ui/toast.tsx'
+import { useFormLocalStorage } from '#shared/hooks/use-form-local-storage.ts'
 import { useGameContext } from '#shared/hooks/use-game-context.ts'
 import { useAppForm } from '#shared/integrations/form/form-hook.ts'
 
@@ -36,6 +43,7 @@ export function EmploymentApplicationForm() {
 
   const form = useAppForm({
     ...employmentApplicationFormOptions,
+    defaultValues: createEmploymentApplicationDefaultValues(currentCharacter),
     validators: {
       onChange: employmentApplicationSchema,
       onSubmit: employmentApplicationSchema,
@@ -64,14 +72,27 @@ export function EmploymentApplicationForm() {
           description: `Votre candidature pour le poste de ${job.title} a bien été transmise. Le Département RH vous recontactera dans les plus brefs délais.`,
         })
         formApi.reset()
+        draft.clearDraft()
       } catch {
         toast.add({ type: 'error', title: 'Une erreur est survenue' })
       }
     },
   })
 
+  const draft = useFormLocalStorage<EmploymentApplicationInput>({
+    form,
+    storageKey: JOB_APPLICATION_DRAFT_STORAGE_KEY,
+  })
+
   return (
     <Card className="rounded-2xl">
+      <FormDraftRestoreDialog
+        open={draft.hasDraft}
+        onRestore={draft.restoreDraft}
+        onDiscard={draft.discardDraft}
+        title="Reprendre votre candidature ?"
+        description="Un brouillon de votre candidature a été enregistré. Voulez-vous restaurer son contenu pour continuer où vous en étiez ?"
+      />
       <CardHeader>
         <CardTitle className="text-xl font-bold">Candidature — {job.title}</CardTitle>
         <CardDescription>
@@ -93,8 +114,8 @@ export function EmploymentApplicationForm() {
           >
             <CardContent>
               <FieldGroup>
-                <IdentitySection form={form} currentCharacter={currentCharacter} />
-                <ContactSection form={form} currentCharacter={currentCharacter} />
+                <IdentitySection form={form} />
+                <ContactSection form={form} />
                 <ScreeningSection form={form} />
                 <EducationSection form={form} />
                 <ExperienceSection form={form} />

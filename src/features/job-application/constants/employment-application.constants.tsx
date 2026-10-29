@@ -95,3 +95,5 @@ export const EMPLOYMENT_APPLICATION_MAX_LENGTHS = Object.freeze({
   MOTIVATIONS: 1500,
   MAX_PROFESSIONAL_EXPERIENCE: 3,
 } as const)
+
+export const JOB_APPLICATION_DRAFT_STORAGE_KEY = 'job-application-draft'

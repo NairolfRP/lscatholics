@@ -1,14 +1,10 @@
 import { employmentApplicationFormOptions } from '#/features/job-application/form/employment-application-form-options.ts'
 import { FieldLegend, FieldSet } from '#shared/components/ui/field.tsx'
 import { withForm } from '#shared/integrations/form/form-hook.ts'
-import type { CharacterWithFaction } from '#shared/types/character.types.ts'
 
 export const ContactSection = withForm({
   ...employmentApplicationFormOptions,
-  props: {
-    currentCharacter: null as CharacterWithFaction | null | undefined,
-  },
-  render: ({ form, currentCharacter }) => (
+  render: ({ form }) => (
     <FieldSet>
       <FieldLegend className="mb-5 w-full border-b pb-2 font-extrabold">
         Vos coordonnées
@@ -56,7 +52,7 @@ export const ContactSection = withForm({
           {(field) => <field.MailField label="EyefindMail (facultatif)" />}
         </form.AppField>
 
-        <form.AppField name="iban" defaultValue={currentCharacter?.bankRoutingNumber ?? ''}>
+        <form.AppField name="iban">
           {(field) => (
             <field.IbanField
               label="IBAN"
