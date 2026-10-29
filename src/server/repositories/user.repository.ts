@@ -1,6 +1,7 @@
 import type { AnySQLiteColumn } from 'drizzle-orm/sqlite-core'
-import { asc, count, desc, getColumns, like, sql } from 'drizzle-orm'
-import { users } from '#server/db/schema'
+import { and, asc, count, desc, eq, getColumns, like, sql } from 'drizzle-orm'
+import { alias } from 'drizzle-orm/sqlite-core'
+import { accounts, users } from '#server/db/schema'
 import { BaseRepository } from './base.repository'
 
 type UserSchemaKeys = keyof typeof users.$inferSelect
@@ -25,6 +26,37 @@ class UserRepository extends BaseRepository<typeof users> {
 
   async findById(id: string) {
     return this.db.query.users.findFirst({ where: { id } })
+  }
+
+  async findForDashboardEdit(id: string) {
+    const gtawAccount = alias(accounts, 'gtaw_account')
+    const discordAccount = alias(accounts, 'discord_account')
+
+    return this.db
+      .select({
+        user: {
+          id: users.id,
+          name: users.name,
+          role: users.role,
+          banned: users.banned,
+          banExpires: users.banExpires,
+          createdAt: users.createdAt,
+        },
+        gtawAccountId: gtawAccount.accountId,
+        discordAccountId: discordAccount.accountId,
+        discordAccountInternalId: discordAccount.id,
+      })
+      .from(users)
+      .leftJoin(
+        gtawAccount,
+        and(eq(gtawAccount.userId, users.id), eq(gtawAccount.providerId, 'gtaw'))
+      )
+      .leftJoin(
+        discordAccount,
+        and(eq(discordAccount.userId, users.id), eq(discordAccount.providerId, 'discord'))
+      )
+      .where(eq(users.id, id))
+      .limit(1)
   }
 
   async listForDashboard({

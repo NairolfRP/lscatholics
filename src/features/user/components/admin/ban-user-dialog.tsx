@@ -19,7 +19,7 @@ import type { BanUserForm } from '../../schemas/ban-user.schema'
 import { banUserFormSchema } from '../../schemas/ban-user.schema'
 
 type Props = PropsWithChildren<{
-  user: User
+  user: Pick<User, 'id' | 'name'>
   onSuccess?: ({ bannedUser, closeDialog }: { bannedUser: User; closeDialog: () => void }) => void
 }>
 

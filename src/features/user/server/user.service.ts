@@ -109,13 +109,29 @@ export async function getUsersList({
 
 export async function getTargetUser({ data }: { data: { userId: string } }) {
   try {
-    const targetUser = await userRepository.findById(data.userId)
+    const [target] = await userRepository.findForDashboardEdit(data.userId)
 
-    if (!targetUser) {
+    // oxlint-disable-next-line typescript/no-unnecessary-condition
+    if (!target) {
       throw notFound()
     }
 
-    return targetUser
+    let discordAccountInfo: { id: string; username: string } | null = null
+    if (target.discordAccountInternalId && target.discordAccountId) {
+      const discordUserInfo = await auth.api.accountInfo({
+        query: { accountId: target.discordAccountInternalId, userId: target.user.id },
+      })
+      discordAccountInfo = {
+        id: target.discordAccountId,
+        username: (discordUserInfo.data as { username: string }).username,
+      }
+    }
+
+    return {
+      ...target.user,
+      gtawAccountId: target.gtawAccountId,
+      discordAccount: discordAccountInfo,
+    }
   } catch (err) {
     if (isNotFound(err)) {
       throw err

@@ -8,6 +8,7 @@ import { updateUserFormSchema } from '#/features/user/schemas/user.schema.ts'
 import { getTargetUserFn, updateTargetUserFn } from '#/features/user/server-fn/user.functions.ts'
 import { getSessionFn } from '#/server-fn/auth.functions.ts'
 import { ActionButton } from '#/shared/components/action-button.tsx'
+import { CopyButton } from '#/shared/components/copy-button.tsx'
 import { ButtonGroup } from '#/shared/components/ui/button-group.tsx'
 import { Button, buttonVariants } from '#/shared/components/ui/button.tsx'
 import {
@@ -22,7 +23,6 @@ import { toast } from '#/shared/components/ui/toast'
 import { Tooltip, TooltipContent, TooltipTrigger } from '#/shared/components/ui/tooltip.tsx'
 import { allRoles, getRoleLevel, getUserRoleMaxLevel } from '#/shared/constants/roles.ts'
 import { useAppForm } from '#/shared/integrations/form/form-hook.ts'
-import type { User } from '#/shared/lib/types/auth.ts'
 import type { UserRole } from '#/shared/types/role.types.ts'
 import { formatDateTime } from '#/utils/date.ts'
 import { pageMetadata } from '#/utils/seo.ts'
@@ -48,7 +48,7 @@ export const Route = createFileRoute('/dashboard/users/edit/$id')({
 
     return {
       isSelf: targetUser.id === session!.user.id,
-      targetUser: targetUser as User,
+      targetUser,
       assignableRoles,
     }
   },
@@ -66,6 +66,8 @@ function RouteComponent() {
   const queryClient = useQueryClient()
   const { isSelf, targetUser, assignableRoles } = Route.useLoaderData()
   const { unbanUserMutation, handleBanSuccess } = useUserAdminMutations()
+  const gtawAccountId = targetUser.gtawAccountId
+  const discordAccount = targetUser.discordAccount
 
   const form = useAppForm({
     defaultValues: {
@@ -125,7 +127,36 @@ function RouteComponent() {
                   <FieldGroup>
                     <Field>
                       <FieldLabel>Nom d'utilisateur GTAW</FieldLabel>
-                      {targetUser.name}
+                      <div className="flex items-center gap-2">
+                        <span>{targetUser.name}</span>
+                        <CopyButton value={targetUser.name} label="le nom d'utilisateur GTAW" />
+                      </div>
+                    </Field>
+                    <Field>
+                      <FieldLabel>Identifiant du compte GTAW</FieldLabel>
+                      {gtawAccountId ? (
+                        <div className="flex items-center gap-2">
+                          <span>{gtawAccountId}</span>
+                          <CopyButton value={gtawAccountId} label="l’identifiant du compte GTAW" />
+                        </div>
+                      ) : (
+                        'Indisponible'
+                      )}
+                    </Field>
+                    <Field>
+                      <FieldLabel>Compte Discord</FieldLabel>
+                      {discordAccount ? (
+                        <div className="flex items-center gap-2">
+                          <span>{discordAccount.username}</span>
+                          <CopyButton value={discordAccount.id} label="l’identifiant Discord" />
+                        </div>
+                      ) : (
+                        'Aucun compte lié'
+                      )}
+                    </Field>
+                    <Field>
+                      <FieldLabel>Compte créé le</FieldLabel>
+                      {formatDateTime(targetUser.createdAt)}
                     </Field>
                     <form.AppField name="roles">
                       {(field) => (
@@ -223,12 +254,12 @@ function RouteComponent() {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="flex gap-2">
-                  <form.Subscribe selector={(state) => [state.isSubmitting]}>
-                    {([isSubmitting]) => (
+                  <form.Subscribe selector={(state) => [state.isSubmitting, state.isDirty]}>
+                    {([isSubmitting, isDirty]) => (
                       <Button
                         form="dashboard-edit-user-form"
                         type="submit"
-                        disabled={isSubmitting}
+                        disabled={isSubmitting || !isDirty}
                         className="flex-1"
                       >
                         Mettre à jour
