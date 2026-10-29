@@ -6,6 +6,7 @@ import { incidentReportSchema } from '#/features/incident-report/schemas/inciden
 import {
   submitIncidentReportFn,
 } from '#/features/incident-report/server-fn/incident-report.functions.ts'
+import { FormDraftRestoreDialog } from '#shared/components/form/form-draft-restore-dialog.tsx'
 import {
   Card,
   CardContent,
@@ -16,6 +17,7 @@ import {
 } from '#shared/components/ui/card.tsx'
 import { FieldGroup } from '#shared/components/ui/field.tsx'
 import { toast } from '#shared/components/ui/toast.tsx'
+import { useFormLocalStorage } from '#shared/hooks/use-form-local-storage.ts'
 import { useGameContext } from '#shared/hooks/use-game-context.ts'
 import { useAppForm } from '#shared/integrations/form/form-hook.ts'
 
@@ -60,11 +62,34 @@ export function IncidentReportForm() {
         description: 'Votre rapport d’incident a été transmis.',
       })
       formApi.reset()
+      draft.clearDraft()
+    },
+  })
+
+  const draft = useFormLocalStorage<IncidentReportFormInput>({
+    form,
+    storageKey: 'incident-report-draft',
+    deserialize: (stored) => {
+      const values = stored as Omit<IncidentReportFormInput, 'incidentAt'> & {
+        incidentAt?: string
+      }
+      const incidentAt = values.incidentAt ? new Date(values.incidentAt) : undefined
+      return {
+        ...values,
+        incidentAt: incidentAt && !Number.isNaN(incidentAt.getTime()) ? incidentAt : undefined,
+      } as IncidentReportFormInput
     },
   })
 
   return (
     <Card className="rounded-2xl">
+      <FormDraftRestoreDialog
+        open={draft.hasDraft}
+        onRestore={draft.restoreDraft}
+        onDiscard={draft.discardDraft}
+        title="Reprendre votre rapport d’incident ?"
+        description="Un brouillon de votre rapport d’incident a été enregistré. Voulez-vous restaurer son contenu pour continuer où vous en étiez ?"
+      />
       <CardHeader>
         <CardTitle className="text-xl font-bold">Rapport d’incident</CardTitle>
         <CardDescription />
