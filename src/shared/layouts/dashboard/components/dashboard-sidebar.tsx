@@ -97,7 +97,7 @@ function DashboardSidebarItems() {
   const { isMobile, state } = useSidebar()
   const context = useRouteContext({ from: '/dashboard' })
   const resolved = context.gameContext.permissions
-  const pathname = useRouterState({ select: (state) => state.location.pathname })
+  const pathname = useRouterState({ select: (routerState) => routerState.location.pathname })
 
   const menuItems = useMemo(
     () =>
