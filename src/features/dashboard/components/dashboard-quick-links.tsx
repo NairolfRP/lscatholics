@@ -14,6 +14,7 @@ const quickLinkDescriptions: Partial<Record<string, string>> = {
   '/dashboard/posts': 'Gérez les articles publiés sur le site',
   '/dashboard/events': 'Créez et gérez les événements à venir',
   '/dashboard/job-openings': "Publiez et gérez les offres d'emploi",
+  '/dashboard/personnel/incident-reports': 'Soumettez un rapport d’incident',
   '/dashboard/users': 'Consultez la liste des utilisateurs inscrits',
 }
 

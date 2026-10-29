@@ -63,6 +63,13 @@ export const env = createEnv({
       .max(15)
       .optional()
       .default(12),
+    ROLEPLAY_FACTION_MINIMAL_RANK_INCIDENT_REPORT: z.coerce
+      .number()
+      .int()
+      .min(1)
+      .max(15)
+      .optional()
+      .default(3),
 
     CONTACT_DISCORD_WEBHOOK: z.url().optional(),
     PARISHIONER_REGISTRATION_DISCORD_WEBHOOK: z.url().optional(),
@@ -71,6 +78,7 @@ export const env = createEnv({
     CLERGY_APPLICATION_DISCORD_WEBHOOK: z.url().optional(),
     BANKING_TRANSACTION_LOGS_DISCORD_WEBHOOK: z.url().optional(),
     POST_DISCORD_WEBHOOK: z.url().optional(),
+    INCIDENT_REPORT_DISCORD_WEBHOOK: z.url().optional(),
 
     FLEECA_API_KEY: z.string().optional(),
     FLEECA_BASE_URL: z.url().optional().default('https://fleeca.gta.world/api/v2'),

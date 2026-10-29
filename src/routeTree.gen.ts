@@ -56,6 +56,7 @@ import { Route as DashboardFinancesIndexRouteImport } from './routes/dashboard/f
 import { Route as DashboardFinancesTransferRouteImport } from './routes/dashboard/finances/transfer'
 import { Route as DashboardJobOpeningsIndexRouteImport } from './routes/dashboard/job-openings/index'
 import { Route as DashboardJobOpeningsCreateRouteImport } from './routes/dashboard/job-openings/create'
+import { Route as DashboardPersonnelIncidentReportsRouteImport } from './routes/dashboard/personnel/incident-reports'
 import { Route as DashboardPostsIndexRouteImport } from './routes/dashboard/posts/index'
 import { Route as DashboardPostsCreateRouteImport } from './routes/dashboard/posts/create'
 import { Route as DashboardUsersIndexRouteImport } from './routes/dashboard/users/index'
@@ -311,6 +312,12 @@ const DashboardJobOpeningsCreateRoute =
     path: '/job-openings/create',
     getParentRoute: () => DashboardRouteRoute,
   } as any)
+const DashboardPersonnelIncidentReportsRoute =
+  DashboardPersonnelIncidentReportsRouteImport.update({
+    id: '/personnel/incident-reports',
+    path: '/personnel/incident-reports',
+    getParentRoute: () => DashboardRouteRoute,
+  } as any)
 const DashboardPostsIndexRoute = DashboardPostsIndexRouteImport.update({
   id: '/posts/',
   path: '/posts/',
@@ -436,6 +443,7 @@ export interface FileRoutesByFullPath {
   '/dashboard/events/create': typeof DashboardEventsCreateRoute
   '/dashboard/finances/transfer': typeof DashboardFinancesTransferRoute
   '/dashboard/job-openings/create': typeof DashboardJobOpeningsCreateRoute
+  '/dashboard/personnel/incident-reports': typeof DashboardPersonnelIncidentReportsRoute
   '/dashboard/posts/create': typeof DashboardPostsCreateRoute
   '/account/': typeof AppAccountIndexRoute
   '/careers/': typeof AppCareersIndexRoute
@@ -494,6 +502,7 @@ export interface FileRoutesByTo {
   '/dashboard/events/create': typeof DashboardEventsCreateRoute
   '/dashboard/finances/transfer': typeof DashboardFinancesTransferRoute
   '/dashboard/job-openings/create': typeof DashboardJobOpeningsCreateRoute
+  '/dashboard/personnel/incident-reports': typeof DashboardPersonnelIncidentReportsRoute
   '/dashboard/posts/create': typeof DashboardPostsCreateRoute
   '/account': typeof AppAccountIndexRoute
   '/careers': typeof AppCareersIndexRoute
@@ -560,6 +569,7 @@ export interface FileRoutesById {
   '/dashboard/events/create': typeof DashboardEventsCreateRoute
   '/dashboard/finances/transfer': typeof DashboardFinancesTransferRoute
   '/dashboard/job-openings/create': typeof DashboardJobOpeningsCreateRoute
+  '/dashboard/personnel/incident-reports': typeof DashboardPersonnelIncidentReportsRoute
   '/dashboard/posts/create': typeof DashboardPostsCreateRoute
   '/_app/account/': typeof AppAccountIndexRoute
   '/_app/careers/': typeof AppCareersIndexRoute
@@ -626,6 +636,7 @@ export interface FileRouteTypes {
     | '/dashboard/events/create'
     | '/dashboard/finances/transfer'
     | '/dashboard/job-openings/create'
+    | '/dashboard/personnel/incident-reports'
     | '/dashboard/posts/create'
     | '/account/'
     | '/careers/'
@@ -684,6 +695,7 @@ export interface FileRouteTypes {
     | '/dashboard/events/create'
     | '/dashboard/finances/transfer'
     | '/dashboard/job-openings/create'
+    | '/dashboard/personnel/incident-reports'
     | '/dashboard/posts/create'
     | '/account'
     | '/careers'
@@ -749,6 +761,7 @@ export interface FileRouteTypes {
     | '/dashboard/events/create'
     | '/dashboard/finances/transfer'
     | '/dashboard/job-openings/create'
+    | '/dashboard/personnel/incident-reports'
     | '/dashboard/posts/create'
     | '/_app/account/'
     | '/_app/careers/'
@@ -1115,6 +1128,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardJobOpeningsCreateRouteImport
       parentRoute: typeof DashboardRouteRoute
     }
+    '/dashboard/personnel/incident-reports': {
+      id: '/dashboard/personnel/incident-reports'
+      path: '/personnel/incident-reports'
+      fullPath: '/dashboard/personnel/incident-reports'
+      preLoaderRoute: typeof DashboardPersonnelIncidentReportsRouteImport
+      parentRoute: typeof DashboardRouteRoute
+    }
     '/dashboard/posts/': {
       id: '/dashboard/posts/'
       path: '/posts'
@@ -1249,6 +1269,7 @@ interface DashboardRouteRouteChildren {
   DashboardEventsCreateRoute: typeof DashboardEventsCreateRoute
   DashboardFinancesTransferRoute: typeof DashboardFinancesTransferRoute
   DashboardJobOpeningsCreateRoute: typeof DashboardJobOpeningsCreateRoute
+  DashboardPersonnelIncidentReportsRoute: typeof DashboardPersonnelIncidentReportsRoute
   DashboardPostsCreateRoute: typeof DashboardPostsCreateRoute
   DashboardEventsIndexRoute: typeof DashboardEventsIndexRoute
   DashboardFinancesIndexRoute: typeof DashboardFinancesIndexRoute
@@ -1268,6 +1289,8 @@ const DashboardRouteRouteChildren: DashboardRouteRouteChildren = {
   DashboardEventsCreateRoute: DashboardEventsCreateRoute,
   DashboardFinancesTransferRoute: DashboardFinancesTransferRoute,
   DashboardJobOpeningsCreateRoute: DashboardJobOpeningsCreateRoute,
+  DashboardPersonnelIncidentReportsRoute:
+    DashboardPersonnelIncidentReportsRoute,
   DashboardPostsCreateRoute: DashboardPostsCreateRoute,
   DashboardEventsIndexRoute: DashboardEventsIndexRoute,
   DashboardFinancesIndexRoute: DashboardFinancesIndexRoute,
