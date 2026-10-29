@@ -118,12 +118,17 @@ export async function getTargetUser({ data }: { data: { userId: string } }) {
 
     let discordAccountInfo: { id: string; username: string } | null = null
     if (target.discordAccountInternalId && target.discordAccountId) {
-      const discordUserInfo = await auth.api.accountInfo({
-        query: { accountId: target.discordAccountInternalId, userId: target.user.id },
-      })
       discordAccountInfo = {
         id: target.discordAccountId,
-        username: (discordUserInfo.data as { username: string }).username,
+        username: 'Indisponible',
+      }
+      try {
+        const discordUserInfo = await auth.api.accountInfo({
+          query: { accountId: target.discordAccountInternalId, userId: target.user.id },
+        })
+        discordAccountInfo.username = (discordUserInfo.data as { username: string }).username
+      } catch (err) {
+        logger.warn({ err, userId: target.user.id }, 'Failed to get linked Discord account info')
       }
     }
 
