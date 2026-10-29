@@ -4,6 +4,7 @@ import {
   BoldIcon,
   Heading2Icon,
   Heading3Icon,
+  Heading4Icon,
   ImageIcon,
   ItalicIcon,
   LinkIcon,
@@ -155,6 +156,11 @@ export function MarkdownTextarea({
         icon: <Heading3Icon className="size-3.5" />,
         label: 'Titre 3',
         action: (ta, cb) => prependLine(ta, '### ', 'Titre', cb),
+      },
+      {
+        icon: <Heading4Icon className="size-3.5" />,
+        label: 'Titre 4',
+        action: (ta, cb) => prependLine(ta, '#### ', 'Titre', cb),
       },
       {
         icon: <QuoteIcon className="size-3.5" />,

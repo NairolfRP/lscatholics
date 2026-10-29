@@ -22,7 +22,7 @@ function HeadingLink({
   ...props
 }: {
   children: React.ReactNode
-  variant: 'h1' | 'h2' | 'h3'
+  variant: 'h1' | 'h2' | 'h3' | 'h4'
   id?: string
 } & React.HTMLAttributes<HTMLHeadingElement>) {
   return (
@@ -54,6 +54,11 @@ const MarkdownComponents: ReactMarkdownComponents = {
   ),
   h3: ({ children, id, ...props }) => (
     <HeadingLink {...props} variant="h3" id={id}>
+      {children}
+    </HeadingLink>
+  ),
+  h4: ({ children, id, ...props }) => (
+    <HeadingLink {...props} variant="h4" id={id}>
       {children}
     </HeadingLink>
   ),
