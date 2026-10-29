@@ -3,6 +3,7 @@ import { Link, useRouteContext, useRouterState } from '@tanstack/react-router'
 import {
   ArrowBigLeftIcon,
   ArrowRightLeftIcon,
+  ChevronRightIcon,
   ChevronsUpDownIcon,
   LogOutIcon,
   SettingsIcon,
@@ -12,6 +13,11 @@ import { dashboardMenuItems } from '#/features/dashboard/constants/dashboard-men
 import type { DashboardMenuItem } from '#/features/dashboard/types/dashboard.types'
 import { Logo } from '#/shared/components/logo'
 import { Avatar, AvatarFallback, AvatarImage } from '#/shared/components/ui/avatar'
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from '#/shared/components/ui/collapsible'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -26,10 +32,14 @@ import {
   SidebarContent,
   SidebarFooter,
   SidebarGroup,
+  SidebarGroupContent,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarMenuSub,
+  SidebarMenuSubButton,
+  SidebarMenuSubItem,
   SidebarRail,
   useSidebar,
 } from '#/shared/components/ui/sidebar'
@@ -107,21 +117,76 @@ function DashboardSidebarItems() {
   }
 
   return (
-    <SidebarGroup>
-      <SidebarMenu>
-        {menuItems.map((item) => (
-          <SidebarMenuItem key={item.label}>
-            <SidebarMenuButton
-              isActive={isItemActive(item)}
-              render={<Link to={item.to} preload={false} />}
-            >
-              <item.icon />
-              <span>{item.label}</span>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
+    <>
+      {menuItems
+        .filter((item) => !item.category)
+        .map((item) => (
+          <SidebarGroup key={item.label}>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                <SidebarMenuItem>
+                  <SidebarMenuButton
+                    isActive={isItemActive(item)}
+                    tooltip={item.label}
+                    render={<Link to={item.to} preload={false} />}
+                  >
+                    {item.icon && <item.icon />}
+                    <span>{item.label}</span>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
         ))}
-      </SidebarMenu>
-    </SidebarGroup>
+      <SidebarGroup>
+        <SidebarMenu>
+          {[
+            ...new Map(
+              menuItems.flatMap((item) =>
+                item.category ? [[item.category.id, item.category]] : []
+              )
+            ).values(),
+          ].map((category) => {
+            const categoryItems = menuItems.filter((item) => item.category?.id === category.id)
+            const isCategoryActive = categoryItems.some(isItemActive)
+
+            return (
+              <Collapsible
+                key={`${category.id}-${isCategoryActive}`}
+                defaultOpen={isCategoryActive}
+                className="group/collapsible"
+              >
+                <SidebarMenuItem>
+                  <CollapsibleTrigger
+                    render={
+                      <SidebarMenuButton tooltip={category.label} isActive={isCategoryActive} />
+                    }
+                  >
+                    <category.icon />
+                    <span>{category.label}</span>
+                    <ChevronRightIcon className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
+                  </CollapsibleTrigger>
+                  <CollapsibleContent>
+                    <SidebarMenuSub>
+                      {categoryItems.map((item) => (
+                        <SidebarMenuSubItem key={item.label}>
+                          <SidebarMenuSubButton
+                            isActive={isItemActive(item)}
+                            render={<Link to={item.to} preload={false} />}
+                          >
+                            <span>{item.label}</span>
+                          </SidebarMenuSubButton>
+                        </SidebarMenuSubItem>
+                      ))}
+                    </SidebarMenuSub>
+                  </CollapsibleContent>
+                </SidebarMenuItem>
+              </Collapsible>
+            )
+          })}
+        </SidebarMenu>
+      </SidebarGroup>
+    </>
   )
 }
 

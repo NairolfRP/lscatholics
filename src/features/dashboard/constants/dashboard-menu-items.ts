@@ -1,12 +1,18 @@
 import {
   BriefcaseBusinessIcon,
-  CalendarIcon,
   FileTextIcon,
   LandmarkIcon,
   LayoutDashboardIcon,
   UsersIcon,
 } from 'lucide-react'
 import type { DashboardMenuItem } from '../types/dashboard.types'
+
+export const dashboardMenuCategories = {
+  content: { id: 'content', label: 'Contenu', icon: FileTextIcon },
+  employment: { id: 'employment', label: 'Ressources humaines', icon: BriefcaseBusinessIcon },
+  finances: { id: 'finances', label: 'Finances & Immobiliers', icon: LandmarkIcon },
+  admin: { id: 'admin', label: '(( Admin ))', icon: UsersIcon },
+} as const
 
 export const dashboardMenuItems: DashboardMenuItem[] = [
   {
@@ -17,32 +23,32 @@ export const dashboardMenuItems: DashboardMenuItem[] = [
   },
   {
     label: 'Articles',
-    icon: FileTextIcon,
     to: '/dashboard/posts',
     permissions: { post: ['read'] },
+    category: dashboardMenuCategories.content,
   },
   {
     label: 'Événements',
-    icon: CalendarIcon,
     to: '/dashboard/events',
     permissions: { event: ['read'] },
+    category: dashboardMenuCategories.content,
   },
   {
     label: "Offres d'emplois",
-    icon: BriefcaseBusinessIcon,
     to: '/dashboard/job-openings',
     permissions: { job: ['read'] },
+    category: dashboardMenuCategories.employment,
   },
   {
     label: 'Finances',
-    icon: LandmarkIcon,
     to: '/dashboard/finances',
     permissions: { finances: ['read'] },
+    category: dashboardMenuCategories.finances,
   },
   {
     label: 'Utilisateurs',
-    icon: UsersIcon,
     to: '/dashboard/users',
     permissions: { user: ['list'] },
+    category: dashboardMenuCategories.admin,
   },
 ]
