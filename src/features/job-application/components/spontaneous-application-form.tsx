@@ -83,7 +83,7 @@ export function SpontaneousApplicationForm() {
   return (
     <Card className="rounded-2xl">
       <FormDraftRestoreDialog
-        open={draft.hasDraft}
+        open={!isLoading && draft.hasDraft}
         onRestore={draft.restoreDraft}
         onDiscard={draft.discardDraft}
         title="Reprendre votre candidature ?"
