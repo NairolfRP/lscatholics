@@ -4,11 +4,13 @@ import { PermanentDeaconStep } from '#/features/clergy-application/components/st
 import { PriestStep } from '#/features/clergy-application/components/steps/priest-step.tsx'
 import { TemporaryDeaconStep } from '#/features/clergy-application/components/steps/temporary-deacon-step.tsx'
 import {
+  CLERGY_APPLICATION_DRAFT_STORAGE_KEY,
   CLERGY_APPLICATION_MAX_LENGTHS,
   CLERGY_ROLE,
   clergyRoleOptions,
 } from '#/features/clergy-application/constants/clergy-application.constants.ts'
 import { clergyApplicationFormOpts } from '#/features/clergy-application/form/shared-clergy-application-form.ts'
+import { FormDraftRestoreDialog } from '#shared/components/form/form-draft-restore-dialog.tsx'
 import { Card, CardContent } from '#shared/components/ui/card.tsx'
 import {
   Field,
@@ -20,6 +22,7 @@ import {
 } from '#shared/components/ui/field.tsx'
 import { RadioGroup, RadioGroupItem } from '#shared/components/ui/radio-group.tsx'
 import { Typography } from '#shared/components/ui/typography.tsx'
+import { useFormLocalStorage } from '#shared/hooks/use-form-local-storage.ts'
 import { useGameContext } from '#shared/hooks/use-game-context.ts'
 import { useAppForm } from '#shared/integrations/form/form-hook.ts'
 import Hero from '#shared/layouts/app/components/hero.tsx'
@@ -58,8 +61,20 @@ export function ClergyApplicationPage() {
     }),
   })
 
+  const draft = useFormLocalStorage({
+    form,
+    storageKey: CLERGY_APPLICATION_DRAFT_STORAGE_KEY,
+  })
+
   return (
     <>
+      <FormDraftRestoreDialog
+        open={!isLoading && draft.hasDraft}
+        onRestore={draft.restoreDraft}
+        onDiscard={draft.discardDraft}
+        title="Reprendre votre candidature ?"
+        description="Un brouillon de votre candidature a été enregistré. Voulez-vous restaurer son contenu pour continuer où vous en étiez ?"
+      />
       <Hero
         variant="minimal"
         size="md"

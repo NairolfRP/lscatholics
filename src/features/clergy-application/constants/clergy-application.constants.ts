@@ -53,6 +53,8 @@ export const CLERGY_APPLICATION_MIN_LENGTHS = Object.freeze({
   MOTIVATIONS: 50,
 })
 
+export const CLERGY_APPLICATION_DRAFT_STORAGE_KEY = 'clergy-application-draft'
+
 export const clergyApplicationDiscordThreadTag = Object.freeze({
   [CLERGY_ROLE.PRIEST]: '1537100606676795433',
   [CLERGY_ROLE.DEACON_TEMPORARY]: '1537100782074204210',

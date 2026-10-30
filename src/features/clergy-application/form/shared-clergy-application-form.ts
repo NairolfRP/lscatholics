@@ -1,7 +1,10 @@
 import type { AnyFormGroupApi } from '@tanstack/react-form'
 import { formOptions } from '@tanstack/react-form'
 import type { ClergyRole } from '#/features/clergy-application/constants/clergy-application.constants'
-import { CLERGY_ROLE } from '#/features/clergy-application/constants/clergy-application.constants'
+import {
+  CLERGY_APPLICATION_DRAFT_STORAGE_KEY,
+  CLERGY_ROLE,
+} from '#/features/clergy-application/constants/clergy-application.constants'
 import type { PermanentDeaconApplicationInput } from '#/features/clergy-application/schemas/clergy-application.schema'
 import { submitClergyApplicationFn } from '#/features/clergy-application/server-fn/clergy-application.functions.ts'
 import { toast } from '#shared/components/ui/toast.tsx'
@@ -73,6 +76,11 @@ export async function handleSubmitClergyApplication(
         '(( Ta candidature pour le clergé a été soumise avec succès. Nous reviendrons vers toi dès que possible ! ))',
     })
     formGroupApi.form.reset()
+    try {
+      window.localStorage.removeItem(CLERGY_APPLICATION_DRAFT_STORAGE_KEY)
+    } catch {
+      // Storage can be unavailable (private mode, disabled cookies).
+    }
   } catch {
     toast.add({ type: 'error', title: 'Une erreur est survenue' })
   }
