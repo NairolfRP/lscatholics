@@ -104,4 +104,58 @@ describe('useFormLocalStorage', () => {
     expect(result.current.hasDraft).toBe(false)
     expect(window.localStorage.getItem(STORAGE_KEY)).toBeNull()
   })
+
+  it('does not restore a draft deleted from another tab', async () => {
+    window.localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify({ version: 1, values: { name: 'Javert' } })
+    )
+
+    const form = createForm({ name: 'Javert' })
+    const { result, act } = await renderFormDraft(form)
+
+    expect(result.current.hasDraft).toBe(true)
+
+    await act(() => {
+      window.localStorage.removeItem(STORAGE_KEY)
+      window.dispatchEvent(new StorageEvent('storage', { key: STORAGE_KEY, newValue: null }))
+    })
+
+    expect(result.current.hasDraft).toBe(false)
+
+    // Leaving the form must not save the still-open values back to storage.
+    await act(() => {
+      window.dispatchEvent(new PageTransitionEvent('pagehide'))
+    })
+
+    expect(window.localStorage.getItem(STORAGE_KEY)).toBeNull()
+  })
+
+  it('saves again once the form is edited after an external deletion', async () => {
+    window.localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify({ version: 1, values: { name: 'Javert' } })
+    )
+
+    const form = createForm({ name: 'Javert' })
+    const { act } = await renderFormDraft(form)
+
+    await act(() => {
+      window.localStorage.removeItem(STORAGE_KEY)
+      window.dispatchEvent(new StorageEvent('storage', { key: STORAGE_KEY, newValue: null }))
+    })
+
+    await act(() => {
+      form.state.values = { name: 'Jean Valjean' }
+      form.emit()
+    })
+
+    await vi.waitFor(() => {
+      expect(JSON.parse(window.localStorage.getItem(STORAGE_KEY) ?? '')).toEqual({
+        version: 1,
+        values: { name: 'Jean Valjean' },
+        savedAt: expect.any(Number),
+      })
+    })
+  })
 })

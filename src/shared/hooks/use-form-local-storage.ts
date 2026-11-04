@@ -35,6 +35,7 @@ export function useFormLocalStorage<TValues>({
   const [pendingValues, setPendingValues] = useState<TValues | null>(null)
   const [isHydrated, setIsHydrated] = useState(false)
 
+  const externallyDeletedValuesRef = useRef<string | null>(null)
   const optionsRef = useRef({ serialize, deserialize })
   useEffect(() => {
     optionsRef.current = { serialize, deserialize }
@@ -70,6 +71,22 @@ export function useFormLocalStorage<TValues>({
   }, [storageKey])
 
   useEffect(() => {
+    const handleStorage = (event: StorageEvent) => {
+      if (event.key !== storageKey || event.newValue !== null) {
+        return
+      }
+
+      // Another tab deleted this draft. Stop the open form from saving its
+      // current values again, unless the user edits them afterwards.
+      externallyDeletedValuesRef.current = JSON.stringify(form.state.values)
+      setPendingValues(null)
+    }
+
+    window.addEventListener('storage', handleStorage)
+    return () => window.removeEventListener('storage', handleStorage)
+  }, [form, storageKey])
+
+  useEffect(() => {
     if (!isHydrated || pendingValues) return
 
     const save = () => {
@@ -79,6 +96,12 @@ export function useFormLocalStorage<TValues>({
       const { serialize: serializeDraft } = optionsRef.current
 
       try {
+        const currentValues = JSON.stringify(values)
+        if (externallyDeletedValuesRef.current !== null) {
+          if (externallyDeletedValuesRef.current === currentValues) return
+          externallyDeletedValuesRef.current = null
+        }
+
         window.localStorage.setItem(
           storageKey,
           JSON.stringify({
@@ -133,6 +156,7 @@ export function useFormLocalStorage<TValues>({
   }, [form, pendingValues])
 
   const discardDraft = useCallback(() => {
+    externallyDeletedValuesRef.current = null
     try {
       window.localStorage.removeItem(storageKey)
     } catch {
@@ -142,6 +166,7 @@ export function useFormLocalStorage<TValues>({
   }, [storageKey])
 
   const clearDraft = useCallback(() => {
+    externallyDeletedValuesRef.current = null
     try {
       window.localStorage.removeItem(storageKey)
     } catch {
