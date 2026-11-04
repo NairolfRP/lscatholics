@@ -2,6 +2,7 @@ import { Suspense } from 'react'
 import { createFileRoute } from '@tanstack/react-router'
 import { UserConnections } from '#/features/user/components/user-connections'
 import { UserDangerZone } from '#/features/user/components/user-danger-zone'
+import { UserFormDrafts } from '#/features/user/components/user-form-drafts'
 import { Separator } from '#/shared/components/ui/separator'
 import { Skeleton } from '#/shared/components/ui/skeleton'
 import { Typography } from '#/shared/components/ui/typography'
@@ -18,6 +19,8 @@ function RouteComponent() {
       <Suspense fallback={<Skeleton className="h-26 w-full rounded-md" />}>
         <UserConnections />
       </Suspense>
+      <Separator />
+      <UserFormDrafts />
       <Separator />
       <Suspense fallback={<Skeleton className="h-40 w-full rounded-2xl" />}>
         <UserDangerZone />
