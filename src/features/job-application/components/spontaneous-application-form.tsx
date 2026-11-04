@@ -8,7 +8,6 @@ import { IdentitySection } from '#/features/job-application/components/sections/
 import { OocSection } from '#/features/job-application/components/sections/ooc-section.tsx'
 import { ScreeningSection } from '#/features/job-application/components/sections/screening-section.tsx'
 import { SpontaneousSection } from '#/features/job-application/components/sections/spontaneous-section.tsx'
-import { JOB_APPLICATION_DRAFT_STORAGE_KEY } from '#/features/job-application/constants/employment-application.constants.tsx'
 import {
   createEmploymentApplicationDefaultValues,
   employmentApplicationFormOptions,
@@ -29,6 +28,7 @@ import {
 import { FieldGroup } from '#shared/components/ui/field.tsx'
 import { Separator } from '#shared/components/ui/separator.tsx'
 import { toast } from '#shared/components/ui/toast.tsx'
+import { JOB_APPLICATION_DRAFT_STORAGE_KEY } from '#shared/constants/form-drafts.ts'
 import { useFormLocalStorage } from '#shared/hooks/use-form-local-storage.ts'
 import { useGameContext } from '#shared/hooks/use-game-context.ts'
 import { useAppForm } from '#shared/integrations/form/form-hook.ts'

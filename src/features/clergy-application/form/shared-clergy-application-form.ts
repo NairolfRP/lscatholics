@@ -1,13 +1,11 @@
 import type { AnyFormGroupApi } from '@tanstack/react-form'
 import { formOptions } from '@tanstack/react-form'
 import type { ClergyRole } from '#/features/clergy-application/constants/clergy-application.constants'
-import {
-  CLERGY_APPLICATION_DRAFT_STORAGE_KEY,
-  CLERGY_ROLE,
-} from '#/features/clergy-application/constants/clergy-application.constants'
+import { CLERGY_ROLE } from '#/features/clergy-application/constants/clergy-application.constants'
 import type { PermanentDeaconApplicationInput } from '#/features/clergy-application/schemas/clergy-application.schema'
 import { submitClergyApplicationFn } from '#/features/clergy-application/server-fn/clergy-application.functions.ts'
 import { toast } from '#shared/components/ui/toast.tsx'
+import { CLERGY_APPLICATION_DRAFT_STORAGE_KEY } from '#shared/constants/form-drafts.ts'
 
 const sharedDefaultValues = (
   { firstname = '', lastname = '' }: { firstname?: string; lastname?: string } = {

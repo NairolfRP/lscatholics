@@ -1,11 +1,7 @@
 import { SendIcon } from 'lucide-react'
-import type {
-  IncidentReportFormInput,
-} from '#/features/incident-report/schemas/incident-report.schema.ts'
+import type { IncidentReportFormInput } from '#/features/incident-report/schemas/incident-report.schema.ts'
 import { incidentReportSchema } from '#/features/incident-report/schemas/incident-report.schema.ts'
-import {
-  submitIncidentReportFn,
-} from '#/features/incident-report/server-fn/incident-report.functions.ts'
+import { submitIncidentReportFn } from '#/features/incident-report/server-fn/incident-report.functions.ts'
 import { FormDraftRestoreDialog } from '#shared/components/form/form-draft-restore-dialog.tsx'
 import {
   Card,
@@ -17,6 +13,7 @@ import {
 } from '#shared/components/ui/card.tsx'
 import { FieldGroup } from '#shared/components/ui/field.tsx'
 import { toast } from '#shared/components/ui/toast.tsx'
+import { INCIDENT_REPORT_DRAFT_STORAGE_KEY } from '#shared/constants/form-drafts.ts'
 import { useFormLocalStorage } from '#shared/hooks/use-form-local-storage.ts'
 import { useGameContext } from '#shared/hooks/use-game-context.ts'
 import { useAppForm } from '#shared/integrations/form/form-hook.ts'
@@ -68,7 +65,7 @@ export function IncidentReportForm() {
 
   const draft = useFormLocalStorage<IncidentReportFormInput>({
     form,
-    storageKey: 'incident-report-draft',
+    storageKey: INCIDENT_REPORT_DRAFT_STORAGE_KEY,
     deserialize: (stored) => {
       const values = stored as Omit<IncidentReportFormInput, 'incidentAt'> & {
         incidentAt?: string

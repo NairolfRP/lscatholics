@@ -4,7 +4,6 @@ import { PermanentDeaconStep } from '#/features/clergy-application/components/st
 import { PriestStep } from '#/features/clergy-application/components/steps/priest-step.tsx'
 import { TemporaryDeaconStep } from '#/features/clergy-application/components/steps/temporary-deacon-step.tsx'
 import {
-  CLERGY_APPLICATION_DRAFT_STORAGE_KEY,
   CLERGY_APPLICATION_MAX_LENGTHS,
   CLERGY_ROLE,
   clergyRoleOptions,
@@ -22,6 +21,7 @@ import {
 } from '#shared/components/ui/field.tsx'
 import { RadioGroup, RadioGroupItem } from '#shared/components/ui/radio-group.tsx'
 import { Typography } from '#shared/components/ui/typography.tsx'
+import { CLERGY_APPLICATION_DRAFT_STORAGE_KEY } from '#shared/constants/form-drafts.ts'
 import { useFormLocalStorage } from '#shared/hooks/use-form-local-storage.ts'
 import { useGameContext } from '#shared/hooks/use-game-context.ts'
 import { useAppForm } from '#shared/integrations/form/form-hook.ts'
