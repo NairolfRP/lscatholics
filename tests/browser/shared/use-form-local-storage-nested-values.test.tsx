@@ -62,6 +62,7 @@ describe('useFormLocalStorage with nested values', () => {
       expect(JSON.parse(window.localStorage.getItem(STORAGE_KEY) ?? '')).toEqual({
         version: 1,
         values: { step: { name: 'Edited' } },
+        savedAt: expect.any(Number),
       })
     })
   })

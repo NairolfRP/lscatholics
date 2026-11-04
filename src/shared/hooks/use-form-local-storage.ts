@@ -4,9 +4,10 @@ import type { AnyFormApi } from '@tanstack/react-form'
 const DRAFT_VERSION = 1
 const DEFAULT_SAVE_DELAY_MS = 500
 
-interface StoredFormDraft {
+export interface StoredFormDraft {
   version: number
   values: unknown
+  savedAt?: number
 }
 
 export interface UseFormLocalStorageOptions<TValues> {
@@ -83,6 +84,7 @@ export function useFormLocalStorage<TValues>({
           JSON.stringify({
             version: DRAFT_VERSION,
             values: serializeDraft ? serializeDraft(values) : values,
+            savedAt: Date.now(),
           } satisfies StoredFormDraft)
         )
       } catch {

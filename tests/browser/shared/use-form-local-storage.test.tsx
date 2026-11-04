@@ -55,6 +55,7 @@ describe('useFormLocalStorage', () => {
       expect(JSON.parse(window.localStorage.getItem(STORAGE_KEY) ?? '')).toEqual({
         version: 1,
         values: { name: 'Jean Valjean' },
+        savedAt: expect.any(Number),
       })
     })
   })
