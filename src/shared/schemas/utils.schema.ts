@@ -2,6 +2,9 @@ import { z } from 'zod'
 
 export const looseObjectSchema = z.looseObject({})
 
+export const HTTP_URL_PROTOCOL = /^https?$/
+export const MAX_MARKDOWN_CONTENT_LENGTH = 100_000
+
 export const emptyToNull = <T extends z.ZodTypeAny>(schema: T) =>
   z
     .union([z.literal(''), z.undefined(), z.null(), schema])

@@ -6,7 +6,11 @@ import {
 } from '#shared/constants/church-event.constants.ts'
 import { PARISH_VALUES } from '#shared/constants/parish.ts'
 import { slugSchema } from '#shared/schemas/slug.schema.ts'
-import { emptyToNull } from '#shared/schemas/utils.schema.ts'
+import {
+  emptyToNull,
+  HTTP_URL_PROTOCOL,
+  MAX_MARKDOWN_CONTENT_LENGTH,
+} from '#shared/schemas/utils.schema.ts'
 
 const toMonthIndex = (y: number, m: number) => y * 12 + (m - 1)
 const REFERENCE_YEAR_MONTH = getCurrentYearMonth()
@@ -63,7 +67,10 @@ export const editChurchEventSchema = z
         error: (iss) => (iss.input === undefined ? 'Le contenu est requis.' : 'Contenu invalide.'),
       })
       .trim()
-      .min(10, { error: (iss) => `Le contenu doit comporter au moins ${iss.minimum} caractères.` }),
+      .min(10, { error: (iss) => `Le contenu doit comporter au moins ${iss.minimum} caractères.` })
+      .max(MAX_MARKDOWN_CONTENT_LENGTH, {
+        error: (iss) => `Le contenu ne doit pas dépasser ${iss.maximum} caractères.`,
+      }),
     location: z
       .string({
         error: (iss) => (iss.input === undefined ? 'Le lieu est requis.' : 'Lieu invalide.'),
@@ -73,12 +80,18 @@ export const editChurchEventSchema = z
       .max(200, { error: (iss) => `Le lieu ne doit pas dépasser ${iss.maximum} caractères.` }),
     parish: z.enum(PARISH_VALUES, { error: 'Sélectionnez une paroisse valide.' }).nullable(),
     coverImageUrl: z.url({
+      protocol: HTTP_URL_PROTOCOL,
       error: (iss) =>
         iss.input === undefined
           ? "L'image de couverture est requise."
-          : "L'image de couverture doit être une URL valide.",
+          : "L'image de couverture doit être une URL valide (http ou https).",
     }),
-    flyerUrl: emptyToNull(z.url({ error: "L'affiche doit être une URL valide." })),
+    flyerUrl: emptyToNull(
+      z.url({
+        protocol: HTTP_URL_PROTOCOL,
+        error: "L'affiche doit être une URL valide (http ou https).",
+      })
+    ),
     registrationRequired: z.boolean(),
     maxParticipants: emptyToNull(
       z

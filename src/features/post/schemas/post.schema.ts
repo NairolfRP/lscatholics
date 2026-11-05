@@ -2,6 +2,7 @@ import z from 'zod'
 import { pageSchema } from '#/shared/schemas/pagination.schema'
 import { POST_STATUS, POST_STATUS_VALUES } from '#shared/constants/post-status.ts'
 import { slugSchema } from '#shared/schemas/slug.schema.ts'
+import { HTTP_URL_PROTOCOL, MAX_MARKDOWN_CONTENT_LENGTH } from '#shared/schemas/utils.schema.ts'
 
 export const basePostInteractionSchema = z.object({ postId: z.uuidv4() })
 export const postStatusSchema = z.enum(POST_STATUS_VALUES, {
@@ -43,12 +44,16 @@ export const editPostSchema = z.object({
       error: (iss) => (iss.input === undefined ? 'Le contenu est requis.' : 'Contenu invalide.'),
     })
     .trim()
-    .min(10, { error: (iss) => `Le contenu doit comporter au moins ${iss.minimum} caractères.` }),
+    .min(10, { error: (iss) => `Le contenu doit comporter au moins ${iss.minimum} caractères.` })
+    .max(MAX_MARKDOWN_CONTENT_LENGTH, {
+      error: (iss) => `Le contenu ne doit pas dépasser ${iss.maximum} caractères.`,
+    }),
   coverImageUrl: z.url({
+    protocol: HTTP_URL_PROTOCOL,
     error: (iss) =>
       iss.input === undefined
         ? "L'image de une est requise."
-        : "L'image de une doit être une URL valide.",
+        : "L'image de une doit être une URL valide (http ou https).",
   }),
   status: postStatusSchema,
   publishedAt: z
