@@ -8,8 +8,9 @@ export function getContext() {
       queries: {
         networkMode,
         staleTime: 5 * 60 * 1000,
+        gcTime: 30 * 60 * 1000,
+        refetchOnWindowFocus: false,
         // retry: isFiveMNui ? 1 : undefined,
-        // refetchOnWindowFocus: isFiveMNui ? false : undefined,
         // refetchOnReconnect: isFiveMNui ? false : undefined,
       },
       mutations: {
