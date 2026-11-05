@@ -21,6 +21,7 @@ export const singleJobPostingQueryOptions = (slug: string) => {
     queryKey: ['job-posting', slug],
     queryFn: () => getSingleJobPostingFn({ data: slug }),
     staleTime: 60_000, // 1 minute
+    refetchOnWindowFocus: true,
   })
 }
 

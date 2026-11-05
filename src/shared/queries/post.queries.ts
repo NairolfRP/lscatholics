@@ -6,12 +6,14 @@ import type { DashboardSearch } from '../schemas/dashboard/search.schema.ts'
 export const latestPostsQueryOptions = queryOptions({
   queryKey: ['posts', 'latest'],
   queryFn: () => getLatestPostsFn(),
+  refetchOnWindowFocus: true,
 })
 
 export const postQueryOptions = (slug: string) => {
   return queryOptions({
     queryKey: ['post', slug],
     queryFn: () => getPostFn({ data: slug }),
+    refetchOnWindowFocus: true,
   })
 }
 

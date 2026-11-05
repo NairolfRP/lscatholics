@@ -11,6 +11,7 @@ export const churchEventsQueryOptions = ({ month, year }: { month: number; year:
     queryKey: ['events', year, month],
     queryFn: () => getChurchEventsByYearMonthFn({ data: { year, month } }),
     staleTime: 60_000, // 1 minute
+    refetchOnWindowFocus: true,
   })
 }
 
@@ -19,6 +20,7 @@ export const singleChurchEventQueryOptions = (slug: string) => {
     queryKey: ['event', slug],
     queryFn: () => getSingleChurchEventFn({ data: slug }),
     staleTime: 60_000, // 1 minute
+    refetchOnWindowFocus: true,
   })
 }
 
