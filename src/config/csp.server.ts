@@ -15,6 +15,7 @@ const csp = (nonce: string) => ({
   'font-src': [
     "'self'",
     'https://fonts.bunny.net',
+    'https://cdn.jsdelivr.net',
     ...(import.meta.env.DEV ? ['https://fonts.scalar.com'] : []),
   ],
   'connect-src': [
