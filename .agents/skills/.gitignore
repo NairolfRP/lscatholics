@@ -1,1 +1,14 @@
-pnpm-*
+# pnpm
+/devtools-vite-plugin
+/drizzle
+/fuzzy-ranking
+/getting-started
+/migrate-from-nextjs
+/migrate-from-react-router
+/migrate-v8-to-v9
+/react-router
+/react-start
+/router-plugin
+/router-query
+/table-state
+# pnpm end
