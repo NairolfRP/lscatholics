@@ -10,6 +10,7 @@ import { bankTransferSchema } from '#/features/banking/schema/banking.schema.ts'
 import { bankTransferFn } from '#/features/banking/server-fn/banking.functions.ts'
 import { DashboardHeading } from '#/features/dashboard/components/dashboard-heading.tsx'
 import { formatCurrency } from '#/utils/number.ts'
+import { ConfirmDialog } from '#shared/components/callable/confirm-dialog.tsx'
 import { Card, CardContent } from '#shared/components/ui/card.tsx'
 import { FieldGroup } from '#shared/components/ui/field.tsx'
 import { toast } from '#shared/components/ui/toast.tsx'
@@ -35,39 +36,52 @@ function RouteComponent() {
       onChange: bankTransferSchema,
     },
     onSubmit: async ({ value, formApi }) => {
-      const result = await bankTransferFn({ data: value })
-
-      if (!result.success) {
-        if (result.validationErrors) {
-          return formApi.setErrorMap({
-            onServer: {
-              fields: result.validationErrors,
-            },
-          } as unknown as Parameters<typeof formApi.setErrorMap>[0])
-        }
-
-        return toast.error(result.error)
-      }
-
-      queryClient.setQueryData(bankAccountBalanceQueryOptions.queryKey, result.data!.newBalance)
-
-      await navigate({ to: '/dashboard/finances' })
-      toast.add({
-        type: 'success',
-        title: 'Transaction effectuée',
+      await ConfirmDialog.call({
+        title: 'Confirmez-vous cette transaction ?',
         description: (
-          <ul>
-            <li>
-              <strong>ID</strong> : #{result.data!.transferId}
-            </li>
-            <li>
-              <strong>Destinataire</strong> : {result.data!.recipient}
-            </li>
-            <li>
-              <strong>Montant</strong> : {formatCurrency(result.data!.amount)}
-            </li>
-          </ul>
+          <>
+            Un montant de <strong>{formatCurrency(value.amount)}</strong> va être transféré vers
+            l'IBAN <strong>{value.iban}</strong>
+          </>
         ),
+        action: async () => {
+          const result = await bankTransferFn({ data: value })
+
+          if (!result.success) {
+            if (result.validationErrors) {
+              formApi.setErrorMap({
+                onServer: {
+                  fields: result.validationErrors,
+                },
+              } as unknown as Parameters<typeof formApi.setErrorMap>[0])
+              return { error: true, message: 'Corrigez les erreurs avant de réessayer.' }
+            }
+
+            return { error: true, message: result.error }
+          }
+
+          queryClient.setQueryData(bankAccountBalanceQueryOptions.queryKey, result.data!.newBalance)
+
+          await navigate({ to: '/dashboard/finances' })
+          toast.add({
+            type: 'success',
+            title: 'Transaction effectuée',
+            description: (
+              <ul>
+                <li>
+                  <strong>ID</strong> : #{result.data!.transferId}
+                </li>
+                <li>
+                  <strong>Destinataire</strong> : {result.data!.recipient}
+                </li>
+                <li>
+                  <strong>Montant</strong> : {formatCurrency(result.data!.amount)}
+                </li>
+              </ul>
+            ),
+          })
+          return { error: false }
+        },
       })
     },
   })
