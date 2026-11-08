@@ -10,6 +10,7 @@ import {
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/react'
 import { envClient } from '#/config/env-client'
+import { ConfirmDialog } from '#/shared/components/callable/confirm-dialog'
 import ScrollToTopButton from '#/shared/components/scroll-to-top'
 import { Toaster } from '#/shared/components/ui/toast'
 import { ThemeProvider } from '#/shared/providers/theme-provider'
@@ -111,6 +112,7 @@ function RootDocument() {
           <Outlet />
           <ScrollToTopButton />
           <Toaster />
+          <ConfirmDialog />
         </ThemeProvider>
         {LazyAppDevtools && (
           <Suspense fallback={null}>

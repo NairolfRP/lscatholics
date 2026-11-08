@@ -1,27 +1,21 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { BadgeCheckIcon, UnlinkIcon } from 'lucide-react'
-import { ActionButton } from '#/shared/components/action-button'
-import type { ActionButtonReturnType } from '#/shared/components/action-button'
 import DiscordIcon from '#/shared/components/icons/discord'
 import { Avatar, AvatarFallback, AvatarImage } from '#/shared/components/ui/avatar'
 import { Button } from '#/shared/components/ui/button'
 import { Skeleton } from '#/shared/components/ui/skeleton'
 import { toast } from '#/shared/components/ui/toast'
-import { isSessionNotFresh, useReauth } from '#/shared/hooks/auth/use-reauth'
 import { authClient } from '#/shared/integrations/auth/auth-client'
-import { RequireReauthProvider } from '#/shared/providers/require-reauth-provider'
+import type { ActionReturnType } from '#/shared/types/action.types'
+import { confirmAction } from '#/shared/utils/confirm-action'
+import { isSessionNotFresh, withFreshSession } from '#/shared/utils/reauth'
 import { discordConnectionQueryKey, discordConnectionQueryOptions } from '../queries'
 
 export function UserConnections() {
-  return (
-    <RequireReauthProvider cancelCallbackURL="/account/settings">
-      <DiscordConnection />
-    </RequireReauthProvider>
-  )
+  return <DiscordConnection />
 }
 
 function DiscordConnection() {
-  const { withFreshSession } = useReauth()
   const { data: session, isPending: isSessionPending } = authClient.useSession()
   const queryClient = useQueryClient()
 
@@ -60,28 +54,21 @@ function DiscordConnection() {
   })
 
   const unlinkMutation = useMutation({
-    mutationFn: async (): ActionButtonReturnType => {
-      try {
-        return await withFreshSession(async () => {
-          const { error } = await authClient.unlinkAccount({
-            accountId: discordAccount?.id ?? '',
-          })
-          if (error) {
-            if (isSessionNotFresh(error)) {
-              throw error
-            }
-            return { error: true, message: error.message }
-          }
-          toast.success('Compte Discord délié')
-          void queryClient.invalidateQueries(discordConnectionQueryKey(session?.session.id))
-          return { error: false }
+    mutationFn: async (): ActionReturnType => {
+      return withFreshSession(async () => {
+        const { error } = await authClient.unlinkAccount({
+          accountId: discordAccount?.id ?? '',
         })
-      } catch (error) {
-        if (error instanceof Error && error.message === 'Reauth cancelled') {
-          return { error: false }
+        if (error) {
+          if (isSessionNotFresh(error)) {
+            throw error
+          }
+          return { error: true, message: error.message }
         }
-        throw error
-      }
+        toast.success('Compte Discord délié')
+        void queryClient.invalidateQueries(discordConnectionQueryKey(session?.session.id))
+        return { error: false }
+      })
     },
   })
 
@@ -130,19 +117,28 @@ function DiscordConnection() {
                 </Avatar>
                 <span className="font-medium">{discordAccount.username}</span>
               </div>
-              <ActionButton
-                requireAreYouSure
-                areYouSureTitle="Délier votre compte Discord ?"
-                areYouSureDescription="Vous perdrez l'accès aux fonctionnalités liées à Discord. Vous pourrez toujours relier votre compte ultérieurement."
-                action={unlinkMutation.mutateAsync}
+              <Button
                 variant="ghost"
                 size="sm"
                 className="cursor-pointer text-destructive hover:text-destructive"
                 aria-label="Supprimer la connexion Discord"
                 title="Délier le compte Discord"
+                onClick={() =>
+                  void confirmAction(
+                    {
+                      title: 'Délier votre compte Discord ?',
+                      description:
+                        "Vous perdrez l'accès aux fonctionnalités liées à Discord. Vous pourrez toujours relier votre compte ultérieurement.",
+                      confirmLabel: 'Délier',
+                      confirmSubmittingLabel: 'Dissociation...',
+                      confirmVariant: 'destructive',
+                    },
+                    unlinkMutation.mutateAsync
+                  )
+                }
               >
                 <UnlinkIcon /> Délier
-              </ActionButton>
+              </Button>
             </div>
           ) : (
             <Button

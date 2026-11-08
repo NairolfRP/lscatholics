@@ -1,10 +1,10 @@
 import { Link } from '@tanstack/react-router'
 import { BanIcon, CircleOffIcon, Edit, Trash2 } from 'lucide-react'
-import type { ActionButtonReturnType } from '#/shared/components/action-button'
-import { ActionButton } from '#/shared/components/action-button'
 import { Button, buttonVariants } from '#/shared/components/ui/button'
 import { ButtonGroup } from '#/shared/components/ui/button-group'
 import type { User } from '#/shared/lib/types/auth'
+import type { ActionReturnType } from '#/shared/types/action.types'
+import { confirmAction } from '#/shared/utils/confirm-action'
 import { formatDateTime } from '#/utils/date'
 import type { UsersTableMeta } from '../../types/user.types'
 import { BanUserDialog } from './ban-user-dialog'
@@ -20,9 +20,9 @@ export function UserActionsCell({
   target: User
   currentUserId: string
   canDeleteUsers: boolean
-  onUnban: (id: string) => ActionButtonReturnType
+  onUnban: (id: string) => ActionReturnType
   onBanSuccess: UsersTableMeta['onBanSuccess']
-  onDelete: (id: string) => ActionButtonReturnType
+  onDelete: (id: string) => ActionReturnType
 }) {
   const isSelf = currentUserId === target.id
 
@@ -40,26 +40,35 @@ export function UserActionsCell({
         </Link>
 
         {target.banned ? (
-          <ActionButton
+          <Button
             variant="ghost"
             size="icon"
-            areYouSureTitle="Débannir ?"
             title={`Débannir ${target.name}`}
-            areYouSureDescription={
-              <>
-                Êtes-vous sûr de vouloir lever le bannissement de <strong>{target.name}</strong> ?
-                {/* oxlint-disable-next-line typescript/no-unnecessary-condition */}
-                {target.banExpires ? (
-                  <> Il est temporairement banni jusqu'au {formatDateTime(target.banExpires)}</>
-                ) : null}
-              </>
-            }
             aria-label={`Débannir ${target.name}`}
-            action={() => onUnban(target.id)}
-            requireAreYouSure
+            onClick={() =>
+              void confirmAction(
+                {
+                  title: 'Débannir ?',
+                  description: (
+                    <>
+                      Êtes-vous sûr de vouloir lever le bannissement de{' '}
+                      <strong>{target.name}</strong> ?
+                      {/* oxlint-disable-next-line typescript/no-unnecessary-condition */}
+                      {target.banExpires ? (
+                        <>
+                          {' '}
+                          Il est temporairement banni jusqu'au {formatDateTime(target.banExpires)}
+                        </>
+                      ) : null}
+                    </>
+                  ),
+                },
+                () => onUnban(target.id)
+              )
+            }
           >
             <CircleOffIcon />
-          </ActionButton>
+          </Button>
         ) : !isSelf ? (
           <BanUserDialog user={target} onSuccess={onBanSuccess}>
             <Button
@@ -74,16 +83,24 @@ export function UserActionsCell({
         ) : null}
 
         {!isSelf && canDeleteUsers ? (
-          <ActionButton
+          <Button
             variant="ghost"
             size="icon"
-            areYouSureTitle={`Supprimer l'utilisateur « ${target.name} » ?`}
-            areYouSureDescription="Attention. La suppression est définitive, immédiate et sensible. Assurez-vous d'avoir de bonnes raisons."
-            action={() => onDelete(target.id)}
-            requireAreYouSure
+            title={`Supprimer l'utilisateur « ${target.name} »`}
+            aria-label={`Supprimer l'utilisateur « ${target.name} »`}
+            onClick={() =>
+              void confirmAction(
+                {
+                  title: `Supprimer l'utilisateur « ${target.name} » ?`,
+                  description:
+                    "Attention. La suppression est définitive, immédiate et sensible. Assurez-vous d'avoir de bonnes raisons.",
+                },
+                () => onDelete(target.id)
+              )
+            }
           >
             <Trash2 className="h-4 w-4 text-destructive" />
-          </ActionButton>
+          </Button>
         ) : null}
       </ButtonGroup>
     </div>

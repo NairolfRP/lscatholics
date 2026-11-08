@@ -4,10 +4,10 @@ import { CalendarIcon, EditIcon, Trash2Icon } from 'lucide-react'
 import type { ChurchEvent } from '#/features/church-event/types/church-event.types.ts'
 import type { DashboardChurchEventsTableMeta } from '#/features/church-event/types/dashboard-church-event.types.ts'
 import { formatDateTime } from '#/utils/date.ts'
-import { ActionButton } from '#shared/components/action-button.tsx'
 import { ButtonGroup } from '#shared/components/ui/button-group.tsx'
-import { buttonVariants } from '#shared/components/ui/button.tsx'
+import { Button, buttonVariants } from '#shared/components/ui/button.tsx'
 import type { DashboardTableFeatures } from '#shared/lib/table-features.ts'
+import { confirmAction } from '#shared/utils/confirm-action.ts'
 
 const columnHelper = createColumnHelper<DashboardTableFeatures, ChurchEvent>()
 
@@ -98,17 +98,20 @@ export const dashboardChurchEventColumns = columnHelper.columns([
             </Link>
           ) : null}
           {meta.canDelete ? (
-            <ActionButton
+            <Button
               variant="ghost"
               size="icon"
-              areYouSureTitle="Êtes-vous sûr de vouloir supprimer cet événement ?"
               title={`Supprimer « ${info.row.original.title} »`}
               aria-label={`Supprimer « ${info.row.original.title} »`}
-              action={() => meta.onDelete(info.row.original.id)}
-              requireAreYouSure
+              onClick={() =>
+                void confirmAction(
+                  { title: 'Êtes-vous sûr de vouloir supprimer cet événement ?' },
+                  () => meta.onDelete(info.row.original.id)
+                )
+              }
             >
               <Trash2Icon className="h-4 w-4 text-red-600" />
-            </ActionButton>
+            </Button>
           ) : null}
         </ButtonGroup>
       )

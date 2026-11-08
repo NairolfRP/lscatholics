@@ -7,12 +7,12 @@ import type {
 } from '#/features/job-posting/types/job-posting.types.ts'
 import { formatDate, formatDateTime } from '#/utils/date.ts'
 import { getDepartmentTitle } from '#/utils/department.ts'
-import { ActionButton } from '#shared/components/action-button.tsx'
 import { Badge } from '#shared/components/ui/badge.tsx'
 import { ButtonGroup } from '#shared/components/ui/button-group.tsx'
-import { buttonVariants } from '#shared/components/ui/button.tsx'
+import { Button, buttonVariants } from '#shared/components/ui/button.tsx'
 import { employmentTypeLabel } from '#shared/constants/employment.ts'
 import type { DashboardTableFeatures } from '#shared/lib/table-features.ts'
+import { confirmAction } from '#shared/utils/confirm-action.ts'
 
 const columnHelper = createColumnHelper<DashboardTableFeatures, JobPosting>()
 
@@ -106,43 +106,52 @@ export const dashboardJobPostingColumns = columnHelper.columns([
           ) : null}
           {meta.canUpdate ? (
             isActive ? (
-              <ActionButton
+              <Button
                 variant="ghost"
                 size="icon"
-                areYouSureTitle="Êtes-vous sûr de vouloir fermer cette offre d'emploi ?"
                 title={`Clôre « ${info.row.original.title} »`}
                 aria-label={`Clôre « ${info.row.original.title} »`}
-                action={() => meta.onToggleActiveState(info.row.original.id)}
-                requireAreYouSure
+                onClick={() =>
+                  void confirmAction(
+                    { title: "Êtes-vous sûr de vouloir fermer cette offre d'emploi ?" },
+                    () => meta.onToggleActiveState(info.row.original.id)
+                  )
+                }
               >
                 <LockIcon className="h-4 w-4 text-warning" />
-              </ActionButton>
+              </Button>
             ) : (
-              <ActionButton
+              <Button
                 variant="ghost"
                 size="icon"
-                areYouSureTitle="Êtes-vous sûr de vouloir rouvrir cette offre d'emploi ?"
                 title={`Rouvrir « ${info.row.original.title} »`}
                 aria-label={`Rouvrir « ${info.row.original.title} »`}
-                action={() => meta.onToggleActiveState(info.row.original.id)}
-                requireAreYouSure
+                onClick={() =>
+                  void confirmAction(
+                    { title: "Êtes-vous sûr de vouloir rouvrir cette offre d'emploi ?" },
+                    () => meta.onToggleActiveState(info.row.original.id)
+                  )
+                }
               >
                 <UnlockIcon className="h-4 w-4 text-success" />
-              </ActionButton>
+              </Button>
             )
           ) : null}
           {meta.canDelete ? (
-            <ActionButton
+            <Button
               variant="ghost"
               size="icon"
-              areYouSureTitle="Êtes-vous sûr de vouloir supprimer cette offre d'emploi ?"
               title={`Supprimer « ${info.row.original.title} »`}
               aria-label={`Supprimer « ${info.row.original.title} »`}
-              action={() => meta.onDelete(info.row.original.id)}
-              requireAreYouSure
+              onClick={() =>
+                void confirmAction(
+                  { title: "Êtes-vous sûr de vouloir supprimer cette offre d'emploi ?" },
+                  () => meta.onDelete(info.row.original.id)
+                )
+              }
             >
               <Trash2Icon className="h-4 w-4 text-destructive" />
-            </ActionButton>
+            </Button>
           ) : null}
         </ButtonGroup>
       )

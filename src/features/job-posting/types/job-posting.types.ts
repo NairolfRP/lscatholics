@@ -1,12 +1,12 @@
 import type { InferSelectModel } from 'drizzle-orm'
 import type { jobPostings } from '#server/db/schema'
-import type { ActionButtonReturnType } from '#shared/components/action-button.tsx'
+import type { ActionReturnType } from '#shared/types/action.types.ts'
 
 export type DashboardJobPostingsTableMeta = {
   canUpdate: boolean
   canDelete: boolean
-  onDelete: (jobPostingId: string) => ActionButtonReturnType
-  onToggleActiveState: (jobPostingId: string) => ActionButtonReturnType
+  onDelete: (jobPostingId: string) => ActionReturnType
+  onToggleActiveState: (jobPostingId: string) => ActionReturnType
 }
 
 export type JobPosting = InferSelectModel<typeof jobPostings>

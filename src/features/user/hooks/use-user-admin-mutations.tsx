@@ -1,9 +1,9 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useRouter } from '@tanstack/react-router'
-import type { ActionButtonReturnType } from '#/shared/components/action-button'
 import { toast } from '#/shared/components/ui/toast'
 import { authClient } from '#/shared/integrations/auth/auth-client'
 import type { User } from '#/shared/lib/types/auth'
+import type { ActionReturnType } from '#/shared/types/action.types'
 import { formatDateTime } from '#/utils/date'
 import type { DashboardSearch } from '#shared/schemas/dashboard/search.schema.ts'
 import { usersListQueryOptions } from '../queries'
@@ -18,7 +18,7 @@ export function useUserAdminMutations(deps?: DashboardSearch) {
     })
 
   const deleteUserMutation = useMutation({
-    mutationFn: async (userId: string): ActionButtonReturnType => {
+    mutationFn: async (userId: string): ActionReturnType => {
       const { error } = await authClient.admin.removeUser({ userId })
 
       if (error) {

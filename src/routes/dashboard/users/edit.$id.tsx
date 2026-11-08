@@ -7,7 +7,6 @@ import { useUserAdminMutations } from '#/features/user/hooks/use-user-admin-muta
 import { updateUserFormSchema } from '#/features/user/schemas/user.schema.ts'
 import { getTargetUserFn, updateTargetUserFn } from '#/features/user/server-fn/user.functions.ts'
 import { getSessionFn } from '#/server-fn/auth.functions.ts'
-import { ActionButton } from '#/shared/components/action-button.tsx'
 import { CopyButton } from '#/shared/components/copy-button.tsx'
 import { ButtonGroup } from '#/shared/components/ui/button-group.tsx'
 import { Button, buttonVariants } from '#/shared/components/ui/button.tsx'
@@ -24,6 +23,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '#/shared/components/ui/
 import { allRoles, getRoleLevel, getUserRoleMaxLevel } from '#/shared/constants/roles.ts'
 import { useAppForm } from '#/shared/integrations/form/form-hook.ts'
 import type { UserRole } from '#/shared/types/role.types.ts'
+import { confirmAction } from '#/shared/utils/confirm-action.ts'
 import { formatDateTime } from '#/utils/date.ts'
 import { pageMetadata } from '#/utils/seo.ts'
 import { parseCsvString } from '#/utils/string.ts'
@@ -190,30 +190,35 @@ function RouteComponent() {
               <CardContent className="space-y-4">
                 <ButtonGroup>
                   {targetUser.banned ? (
-                    <ActionButton
+                    <Button
                       variant="info"
-                      areYouSureTitle="Débannir ?"
                       title={`Débannir ${targetUser.name}`}
-                      areYouSureDescription={
-                        <>
-                          Êtes-vous sûr de vouloir lever le bannissement de{' '}
-                          <strong>{targetUser.name}</strong> ?
-                          {/* oxlint-disable-next-line typescript/no-unnecessary-condition */}
-                          {targetUser.banExpires ? (
-                            <>
-                              {' '}
-                              Il est temporairement banni jusqu'au{' '}
-                              {formatDateTime(targetUser.banExpires)}
-                            </>
-                          ) : null}
-                        </>
-                      }
                       aria-label={`Débannir ${targetUser.name}`}
-                      action={() => unbanUserMutation.mutateAsync(targetUser.id)}
-                      requireAreYouSure
+                      onClick={() =>
+                        void confirmAction(
+                          {
+                            title: 'Débannir ?',
+                            description: (
+                              <>
+                                Êtes-vous sûr de vouloir lever le bannissement de{' '}
+                                <strong>{targetUser.name}</strong> ?
+                                {/* oxlint-disable-next-line typescript/no-unnecessary-condition */}
+                                {targetUser.banExpires ? (
+                                  <>
+                                    {' '}
+                                    Il est temporairement banni jusqu'au{' '}
+                                    {formatDateTime(targetUser.banExpires)}
+                                  </>
+                                ) : null}
+                              </>
+                            ),
+                          },
+                          () => unbanUserMutation.mutateAsync(targetUser.id)
+                        )
+                      }
                     >
                       <CircleOffIcon /> Débannir
-                    </ActionButton>
+                    </Button>
                   ) : isSelf ? (
                     <Tooltip>
                       <TooltipTrigger

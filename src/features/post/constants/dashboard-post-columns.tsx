@@ -1,14 +1,14 @@
 import { Link } from '@tanstack/react-router'
 import { createColumnHelper } from '@tanstack/react-table'
 import { EditIcon, SendIcon, Trash2Icon } from 'lucide-react'
-import { ActionButton } from '#/shared/components/action-button.tsx'
 import { Badge } from '#/shared/components/ui/badge.tsx'
 import { ButtonGroup } from '#/shared/components/ui/button-group.tsx'
-import { buttonVariants } from '#/shared/components/ui/button.tsx'
+import { Button, buttonVariants } from '#/shared/components/ui/button.tsx'
 import { formatDate } from '#/utils/date.ts'
 import type { DashboardTableFeatures } from '#shared/lib/table-features.ts'
 import { cn } from '#shared/lib/utils.ts'
 import type { Post } from '#shared/types/post.types.ts'
+import { confirmAction } from '#shared/utils/confirm-action.ts'
 import type { DashboardPostsTableMeta } from '../types/dashboard-post.types'
 
 const columnHelper = createColumnHelper<DashboardTableFeatures, Post>()
@@ -84,39 +84,46 @@ export const dashboardPostColumns = columnHelper.columns([
             </Link>
           )}
           {isPublished && meta.canUpdatePost(post.authorId) && (
-            <ActionButton
+            <Button
               variant="ghost"
               size="icon"
-              areYouSureTitle={
-                hasNotification
-                  ? '(( Envoyer une nouvelle notification ? ))'
-                  : '(( Envoyer la notification Discord ? ))'
-              }
-              areYouSureDescription={
-                hasNotification
-                  ? "L'ancien message sera supprimé et un nouveau sera envoyé."
-                  : 'Une notification sera envoyée sur le salon approprié du Discord.'
-              }
-              requireAreYouSure
               title={notifTitle}
               aria-label={notifTitle}
-              action={() => meta.onSendNotification(post.id)}
+              onClick={() =>
+                void confirmAction(
+                  {
+                    title: hasNotification
+                      ? '(( Envoyer une nouvelle notification ? ))'
+                      : '(( Envoyer la notification Discord ? ))',
+                    description: hasNotification
+                      ? "L'ancien message sera supprimé et un nouveau sera envoyé."
+                      : 'Une notification sera envoyée sur le salon approprié du Discord.',
+                  },
+                  () => meta.onSendNotification(post.id)
+                )
+              }
             >
               <SendIcon className={cn('h-4 w-4', { 'text-warning': hasNotification })} />
-            </ActionButton>
+            </Button>
           )}
           {meta.canDeletePost(post.authorId) && (
-            <ActionButton
+            <Button
               variant="ghost"
               size="icon"
-              areYouSureTitle="Êtes-vous sûr de vouloir supprimer cet article ?"
               title={`Supprimer « ${post.title} »`}
               aria-label={`Supprimer « ${post.title} »`}
-              action={() => meta.onDelete(post.id)}
-              requireAreYouSure
+              onClick={() =>
+                void confirmAction(
+                  {
+                    title: 'Êtes-vous sûr de vouloir supprimer cet article ?',
+                    description: 'Cette action est irréversible.',
+                  },
+                  () => meta.onDelete(post.id)
+                )
+              }
             >
               <Trash2Icon className="h-4 w-4 text-red-600" />
-            </ActionButton>
+            </Button>
           )}
         </ButtonGroup>
       )

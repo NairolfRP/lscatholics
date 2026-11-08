@@ -10,8 +10,9 @@ import {
   sendPostNotificationFn,
   updatePostFn,
 } from '#/server-fn/post.functions.ts'
-import { ActionButton } from '#/shared/components/action-button.tsx'
+import { Button } from '#/shared/components/ui/button.tsx'
 import { toast } from '#/shared/components/ui/toast'
+import { confirmAction } from '#/shared/utils/confirm-action.ts'
 import { hasPermission } from '#/shared/utils/permissions'
 import { pageMetadata } from '#/utils/seo.ts'
 import { POST_STATUS } from '#shared/constants/post-status.ts'
@@ -116,27 +117,28 @@ function RouteComponent() {
 
         {post.status === POST_STATUS.PUBLISHED && (
           <div className="flex">
-            <ActionButton
+            <Button
               variant="outline"
               size="sm"
-              areYouSureTitle={
-                post.discordMessageId
-                  ? '(( Envoyer une nouvelle notification ? ))'
-                  : '(( Envoyer la notification Discord ? ))'
+              onClick={() =>
+                void confirmAction(
+                  {
+                    title: post.discordMessageId
+                      ? '(( Envoyer une nouvelle notification ? ))'
+                      : '(( Envoyer la notification Discord ? ))',
+                    description: post.discordMessageId
+                      ? "L'ancien message sera supprimé et un nouveau sera envoyé."
+                      : 'Une notification sera envoyée sur le salon approprié du Discord.',
+                  },
+                  () => sendNotificationMutation.mutateAsync()
+                )
               }
-              areYouSureDescription={
-                post.discordMessageId
-                  ? "L'ancien message sera supprimé et un nouveau sera envoyé."
-                  : 'Une notification sera envoyée sur le salon approprié du Discord.'
-              }
-              requireAreYouSure
-              action={() => sendNotificationMutation.mutateAsync()}
             >
               <SendIcon className="mr-2 h-4 w-4" />
               {post.discordMessageId
                 ? '(( Renvoyer la notification Discord ))'
                 : '(( Envoyer la notification Discord ))'}
-            </ActionButton>
+            </Button>
           </div>
         )}
 

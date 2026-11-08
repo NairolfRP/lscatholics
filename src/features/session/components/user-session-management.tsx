@@ -1,8 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useRouter } from '@tanstack/react-router'
 import { CheckIcon, CircleXIcon, LogOutIcon } from 'lucide-react'
-import type { ActionButtonReturnType } from '#/shared/components/action-button'
-import { ActionButton } from '#/shared/components/action-button'
 import { Alert, AlertAction, AlertDescription, AlertTitle } from '#/shared/components/ui/alert'
 import { Badge } from '#/shared/components/ui/badge'
 import { Button } from '#/shared/components/ui/button'
@@ -15,13 +13,14 @@ import {
 } from '#/shared/components/ui/card'
 import { Skeleton } from '#/shared/components/ui/skeleton'
 import { Spinner } from '#/shared/components/ui/spinner'
-import { useReauth } from '#/shared/hooks/auth/use-reauth'
 import { authClient } from '#/shared/integrations/auth/auth-client'
 import type { Session } from '#/shared/lib/types/auth'
+import type { ActionReturnType } from '#/shared/types/action.types'
+import { confirmAction } from '#/shared/utils/confirm-action'
+import { withFreshSession } from '#/shared/utils/reauth'
 import { userListSessionsQueryKey, userlistSessionsQueryOptions } from '../queries'
 
 export function UserSessionManagement() {
-  const { withFreshSession } = useReauth()
   const { data: currentSession, isPending: isCurrentSessionPending } = authClient.useSession()
   const queryClient = useQueryClient()
   const {
@@ -31,12 +30,12 @@ export function UserSessionManagement() {
     error: queryError,
     refetch,
   } = useQuery({
-    ...userlistSessionsQueryOptions(withFreshSession, currentSession?.session.id),
+    ...userlistSessionsQueryOptions(currentSession?.session.id),
     enabled: !isCurrentSessionPending,
   })
 
   const revokeMutation = useMutation({
-    mutationFn: async (token: string): ActionButtonReturnType => {
+    mutationFn: async (token: string): ActionReturnType => {
       return withFreshSession(async () => {
         const { error } = await authClient.revokeSession({ token })
         if (error) {
@@ -111,7 +110,7 @@ type SessionCardProps = {
   session: Session['session']
   isCurrent: boolean
   isPending: boolean
-  onRevoke: (token: string) => ActionButtonReturnType
+  onRevoke: (token: string) => ActionReturnType
 }
 
 function SessionCard({ session, isCurrent, isPending, onRevoke }: SessionCardProps) {
@@ -136,25 +135,31 @@ function SessionCard({ session, isCurrent, isPending, onRevoke }: SessionCardPro
           </CardDescription>
         </CardHeader>
         <CardContent className="px-2 sm:px-6">
-          <ActionButton
-            areYouSureTitle="Confirmation"
-            areYouSureDescription="Êtes-vous sûr de vouloir révoquer cette session ? Cette action est irréversible."
-            requireAreYouSure
+          <Button
             variant="link"
             className="px-0 text-destructive hover:text-destructive/80"
-            action={async () => {
-              if (isCurrent) {
-                const { error } = await authClient.signOut()
-                if (error) {
-                  return { error: true, message: 'Une erreur est survenue' }
-                }
-                void router.invalidate()
-                return { error: false }
-              }
-              return onRevoke(session.token)
-            }}
             disabled={isPending}
             aria-label="Déconnecter cet appareil"
+            onClick={() =>
+              void confirmAction(
+                {
+                  title: 'Confirmation',
+                  description:
+                    'Êtes-vous sûr de vouloir révoquer cette session ? Cette action est irréversible.',
+                },
+                async () => {
+                  if (isCurrent) {
+                    const { error } = await authClient.signOut()
+                    if (error) {
+                      return { error: true, message: 'Une erreur est survenue' }
+                    }
+                    void router.invalidate()
+                    return { error: false }
+                  }
+                  return onRevoke(session.token)
+                }
+              )
+            }
           >
             {isPending ? (
               <>
@@ -165,7 +170,7 @@ function SessionCard({ session, isCurrent, isPending, onRevoke }: SessionCardPro
                 <LogOutIcon className="mr-1" /> Déconnecter
               </>
             )}
-          </ActionButton>
+          </Button>
         </CardContent>
       </Card>
     </>

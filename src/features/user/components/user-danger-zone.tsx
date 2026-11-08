@@ -21,10 +21,9 @@ import {
   DialogTrigger,
 } from '#/shared/components/ui/dialog'
 import { toast } from '#/shared/components/ui/toast'
-import { useReauth } from '#/shared/hooks/auth/use-reauth'
 import { authClient } from '#/shared/integrations/auth/auth-client'
 import { useAppForm } from '#/shared/integrations/form/form-hook'
-import { RequireReauthProvider } from '#/shared/providers/require-reauth-provider'
+import { withFreshSession } from '#/shared/utils/reauth'
 import { deleteUserFormSchema } from '../schemas/delete-user-schema'
 
 export function UserDangerZone() {
@@ -43,23 +42,20 @@ export function UserDangerZone() {
         </CardDescription>
       </CardHeader>
       <CardFooter className="flex justify-end bg-destructive/10 py-3">
-        <RequireReauthProvider cancelCallbackURL="/account/settings">
-          <Dialog open={open} onOpenChange={(v) => setOpen(v)}>
-            <DialogTrigger render={<Button variant="destructive" className="cursor-pointer" />}>
-              <Trash className="mr-2" /> Supprimer mon compte
-            </DialogTrigger>
-            <DialogContent>
-              <DeleteUserConfirmation closeDialog={() => setOpen(false)} />
-            </DialogContent>
-          </Dialog>
-        </RequireReauthProvider>
+        <Dialog open={open} onOpenChange={(v) => setOpen(v)}>
+          <DialogTrigger render={<Button variant="destructive" className="cursor-pointer" />}>
+            <Trash className="mr-2" /> Supprimer mon compte
+          </DialogTrigger>
+          <DialogContent>
+            <DeleteUserConfirmation closeDialog={() => setOpen(false)} />
+          </DialogContent>
+        </Dialog>
       </CardFooter>
     </Card>
   )
 }
 
 function DeleteUserConfirmation({ closeDialog }: { closeDialog: () => void }) {
-  const { withFreshSession } = useReauth()
   const { user } = useRouteContext({ from: '/_app/account/settings' })
   const router = useRouter()
 
