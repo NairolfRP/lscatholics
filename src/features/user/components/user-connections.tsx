@@ -1,19 +1,27 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { BadgeCheckIcon, UnlinkIcon } from 'lucide-react'
 import { ActionButton } from '#/shared/components/action-button'
+import type { ActionButtonReturnType } from '#/shared/components/action-button'
 import DiscordIcon from '#/shared/components/icons/discord'
 import { Avatar, AvatarFallback, AvatarImage } from '#/shared/components/ui/avatar'
 import { Button } from '#/shared/components/ui/button'
 import { Skeleton } from '#/shared/components/ui/skeleton'
 import { toast } from '#/shared/components/ui/toast'
+import { isSessionNotFresh, useReauth } from '#/shared/hooks/auth/use-reauth'
 import { authClient } from '#/shared/integrations/auth/auth-client'
+import { RequireReauthProvider } from '#/shared/providers/require-reauth-provider'
 import { discordConnectionQueryKey, discordConnectionQueryOptions } from '../queries'
 
 export function UserConnections() {
-  return <DiscordConnection />
+  return (
+    <RequireReauthProvider cancelCallbackURL="/account/settings">
+      <DiscordConnection />
+    </RequireReauthProvider>
+  )
 }
 
 function DiscordConnection() {
+  const { withFreshSession } = useReauth()
   const { data: session, isPending: isSessionPending } = authClient.useSession()
   const queryClient = useQueryClient()
 
@@ -52,14 +60,28 @@ function DiscordConnection() {
   })
 
   const unlinkMutation = useMutation({
-    mutationFn: async () => {
-      const { error } = await authClient.unlinkAccount({ accountId: discordAccount?.id ?? '' })
-      if (error) {
-        return { error: true, message: error.message }
+    mutationFn: async (): ActionButtonReturnType => {
+      try {
+        return await withFreshSession(async () => {
+          const { error } = await authClient.unlinkAccount({
+            accountId: discordAccount?.id ?? '',
+          })
+          if (error) {
+            if (isSessionNotFresh(error)) {
+              throw error
+            }
+            return { error: true, message: error.message }
+          }
+          toast.success('Compte Discord délié')
+          void queryClient.invalidateQueries(discordConnectionQueryKey(session?.session.id))
+          return { error: false }
+        })
+      } catch (error) {
+        if (error instanceof Error && error.message === 'Reauth cancelled') {
+          return { error: false }
+        }
+        throw error
       }
-      toast.success('Compte Discord délié')
-      void queryClient.invalidateQueries(discordConnectionQueryKey(session?.session.id))
-      return { error: false }
     },
   })
 
