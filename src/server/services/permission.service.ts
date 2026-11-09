@@ -9,16 +9,16 @@ const FACTION_RANK_RULES = [
   {
     factionId: env.ROLEPLAY_FACTION_ID,
     minRank: env.ROLEPLAY_FACTION_MINIMAL_RANK_DASHBOARD_ACCESS,
-    permission: {
-      dashboard: ['access'],
-      post: ['read', 'create'],
-      event: ['read', 'create', 'update', 'delete'],
-    },
+    permission: { dashboard: ['access'] },
   },
   {
     factionId: env.ROLEPLAY_FACTION_ID,
     minRank: env.ROLEPLAY_FACTION_LOWEST_SUPERVISOR_RANK,
-    permission: { dashboard: ['supervise'] },
+    permission: {
+      dashboard: ['supervise'],
+      post: ['read', 'create'],
+      event: ['read', 'create', 'update', 'delete'],
+    },
   },
   {
     factionId: env.ROLEPLAY_FACTION_ID,

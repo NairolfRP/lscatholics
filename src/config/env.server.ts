@@ -55,7 +55,7 @@ export const env = createEnv({
       .min(1)
       .max(15)
       .optional()
-      .default(9),
+      .default(3),
     ROLEPLAY_FACTION_MINIMAL_RANK_FINANCES: z.coerce
       .number()
       .int()
