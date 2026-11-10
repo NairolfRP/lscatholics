@@ -92,11 +92,13 @@ export async function submit({ data, user }: { data: unknown; user: User }) {
 }
 
 function buildEthnicTags(ethnicCommunity: string | undefined): string[] | undefined {
-  if (!ethnicCommunity) return undefined
-  const tag = PARISHIONER_ETHNIC_DISCORD_TAGS[
-    ethnicCommunity as keyof typeof PARISHIONER_ETHNIC_DISCORD_TAGS
-  ] as unknown as string | undefined
-  return tag ? [tag] : undefined
+  if (!ethnicCommunity || !isEthnicTagKey(ethnicCommunity)) return undefined
+
+  return [PARISHIONER_ETHNIC_DISCORD_TAGS[ethnicCommunity]]
+}
+
+function isEthnicTagKey(value: string): value is keyof typeof PARISHIONER_ETHNIC_DISCORD_TAGS {
+  return Object.hasOwn(PARISHIONER_ETHNIC_DISCORD_TAGS, value)
 }
 
 function buildMainEmbeds(data: ParishionerFormOutput): DiscordEmbed[] {
