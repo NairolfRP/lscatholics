@@ -74,8 +74,8 @@ export function DashboardSidebar() {
           >
             <Logo width={56} height={56} loading="eager" className="size-14 shrink-0" />
             <div className="grid flex-1 gap-0.5 overflow-hidden">
+              <span className="truncate text-xs text-muted-foreground">Retour vers</span>
               <span className="truncate text-base leading-tight font-semibold">LS Catholics</span>
-              <span className="truncate text-xs text-muted-foreground">Tableau de bord</span>
             </div>
           </Link>
         </SidebarHeader>
