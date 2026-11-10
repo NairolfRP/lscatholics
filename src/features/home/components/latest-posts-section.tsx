@@ -47,10 +47,12 @@ export function LatestPostsSection() {
         <Typography variant="h4" className="mt-2 transition-colors group-hover:text-catholic-gold">
           {latestPost.title}
         </Typography>
-        <time className="mt-2 flex items-center gap-1.5 text-sm text-muted-foreground">
-          <CalendarIcon className="size-3.5" />
-          {formatDate(latestPost.publishedAt!.toISOString())}
-        </time>
+        {latestPost.publishedAt && (
+          <time className="mt-2 flex items-center gap-1.5 text-sm text-muted-foreground">
+            <CalendarIcon className="size-3.5" />
+            {formatDate(latestPost.publishedAt.toISOString())}
+          </time>
+        )}
       </Link>
 
       <div className="flex flex-col gap-1">
@@ -72,10 +74,12 @@ export function LatestPostsSection() {
               >
                 {post.title}
               </Typography>
-              <time className="mt-2 flex items-center gap-1.5 text-sm text-muted-foreground">
-                <CalendarIcon className="size-3.5" />
-                {formatDate(post.publishedAt!.toISOString())}
-              </time>
+              {post.publishedAt && (
+                <time className="mt-2 flex items-center gap-1.5 text-sm text-muted-foreground">
+                  <CalendarIcon className="size-3.5" />
+                  {formatDate(post.publishedAt.toISOString())}
+                </time>
+              )}
             </Link>
             {index + 1 < otherPosts.length ? <Separator /> : null}
           </Fragment>

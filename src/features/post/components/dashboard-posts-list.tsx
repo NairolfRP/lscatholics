@@ -69,7 +69,7 @@ export function DashboardPostsList() {
     return <DashboardListSkeletonRows rows={dashboardPostsListSkeletonRows} />
   }
 
-  if (list.isError) {
+  if (list.isError || !session?.user) {
     return <p>Une erreur est survenue</p>
   }
 
@@ -94,13 +94,13 @@ export function DashboardPostsList() {
       onResetFilters={list.resetFilters}
       meta={
         {
-          canEditPost: (authorId) => canEditPost({ user: session!.user, authorId }),
+          canEditPost: (authorId) => canEditPost({ user: session.user, authorId }),
           canUpdatePost: (authorId) =>
             hasPermission(permissions, 'post', 'update') &&
-            canEditPost({ user: session!.user, authorId }),
+            canEditPost({ user: session.user, authorId }),
           canDeletePost: (authorId) =>
             hasPermission(permissions, 'post', 'delete') &&
-            canEditPost({ user: session!.user, authorId }),
+            canEditPost({ user: session.user, authorId }),
           onDelete: (postId) => deletePostMutation.mutateAsync(postId),
           onSendNotification: (postId) => sendNotificationMutation.mutateAsync(postId),
         } satisfies DashboardPostsTableMeta

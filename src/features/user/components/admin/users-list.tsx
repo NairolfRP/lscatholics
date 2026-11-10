@@ -66,7 +66,7 @@ export function UsersList() {
     return <DashboardListSkeletonRows rows={skeletonRows} />
   }
 
-  if (list.isError) {
+  if (list.isError || !session?.user) {
     return <p>Une erreur est survenue</p>
   }
 
@@ -86,8 +86,8 @@ export function UsersList() {
       onResetFilters={list.resetFilters}
       meta={
         {
-          currentUserId: session!.user.id,
-          canDeleteUsers: hasPermission(session!.user, 'deleteUsers'),
+          currentUserId: session.user.id,
+          canDeleteUsers: hasPermission(session.user, 'deleteUsers'),
           onUnban: unbanUserMutation.mutateAsync,
           onBanSuccess: handleBanSuccess,
           onDelete: deleteUserMutation.mutateAsync,

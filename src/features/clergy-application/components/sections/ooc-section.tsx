@@ -58,9 +58,11 @@ export const OocSection = withForm({
                 label="Lien de votre dossier de sanctions GTA World"
                 placeholder="Ex. https://ucp-fr.gta.world/view/record/aBcDeFG"
                 description={
-                  <Suspense>
-                    <GTAWSanctionsDescription sessionId={session!.session.id} />
-                  </Suspense>
+                  session ? (
+                    <Suspense fallback={null}>
+                      <GTAWSanctionsDescription sessionId={session.session.id} />
+                    </Suspense>
+                  ) : null
                 }
                 maxLength={255}
                 required

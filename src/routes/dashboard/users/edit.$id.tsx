@@ -36,8 +36,9 @@ export const Route = createFileRoute('/dashboard/users/edit/$id')({
       getSessionFn(),
     ])
 
-    const userHighestRole = session!.user.role
-      ? getUserRoleMaxLevel(parseCsvString<UserRole[]>(session!.user.role))
+    const currentUser = session?.user
+    const userHighestRole = currentUser?.role
+      ? getUserRoleMaxLevel(parseCsvString<UserRole[]>(currentUser.role))
       : 0
 
     const assignableRoles = allRoles
@@ -48,7 +49,7 @@ export const Route = createFileRoute('/dashboard/users/edit/$id')({
       }))
 
     return {
-      isSelf: targetUser.id === session!.user.id,
+      isSelf: targetUser.id === currentUser?.id,
       targetUser,
       assignableRoles,
     }
