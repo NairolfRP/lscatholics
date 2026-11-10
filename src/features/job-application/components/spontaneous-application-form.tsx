@@ -15,6 +15,7 @@ import {
 import type { SpontaneousEmploymentApplicationInput } from '#/features/job-application/schemas/employment-application.schema.ts'
 import { spontaneousEmploymentApplicationSchema } from '#/features/job-application/schemas/employment-application.schema.ts'
 import { submitEmploymentApplicationFn } from '#/features/job-application/server-fn/employment-application.functions.ts'
+import { applyServerFieldErrors } from '#/utils/form'
 import { RequireAuth } from '#shared/components/auth/require-auth.tsx'
 import { FormDraftRestoreDialog } from '#shared/components/form/form-draft-restore-dialog.tsx'
 import {
@@ -51,11 +52,7 @@ export function SpontaneousApplicationForm() {
 
         if (!result.success) {
           if (result.validationErrors) {
-            return formApi.setErrorMap({
-              onServer: {
-                fields: result.validationErrors,
-              },
-            } as unknown as Parameters<typeof formApi.setErrorMap>[0])
+            return applyServerFieldErrors(formApi, result.validationErrors)
           }
 
           return toast.add({ type: 'error', title: result.error || 'Une erreur est survenue' })

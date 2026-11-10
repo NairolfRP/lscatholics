@@ -7,6 +7,7 @@ import { OocSection } from '#/features/parishioner/components/sections/ooc-secti
 import { getParishionerDefaultValues } from '#/features/parishioner/constants/parishioner-defaults.ts'
 import { parishionerSchema } from '#/features/parishioner/schemas/parishioner.schema.ts'
 import { submitRegisterParishionerFn } from '#/features/parishioner/server-fn/register-parishioner.functions.ts'
+import { applyServerFieldErrors } from '#/utils/form'
 import { RequireAuth } from '#shared/components/auth/require-auth.tsx'
 import {
   Card,
@@ -37,11 +38,7 @@ export function RegisterParishionerForm() {
 
         if (!result.success) {
           if (result.validationErrors) {
-            return formApi.setErrorMap({
-              onServer: {
-                fields: result.validationErrors,
-              },
-            } as unknown as Parameters<typeof formApi.setErrorMap>[0])
+            return applyServerFieldErrors(formApi, result.validationErrors)
           }
 
           return toast.add({ type: 'error', title: result.error || 'Une erreur est survenue' })

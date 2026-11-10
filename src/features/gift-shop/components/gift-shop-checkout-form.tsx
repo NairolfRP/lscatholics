@@ -10,6 +10,7 @@ import type { GiftOrderInput } from '#/features/gift-shop/schemas/gift-shop.sche
 import { giftOrderSchema } from '#/features/gift-shop/schemas/gift-shop.schema.ts'
 import { createGiftOrderFn } from '#/features/gift-shop/server-fn/gift-shop.functions.ts'
 import type { GiftShopCartEntry } from '#/features/gift-shop/types/gift-shop.types.ts'
+import { applyServerFieldErrors } from '#/utils/form'
 import { formatNumber } from '#/utils/number.ts'
 import { Button } from '#shared/components/ui/button.tsx'
 import { FieldGroup } from '#shared/components/ui/field.tsx'
@@ -54,11 +55,7 @@ export function GiftShopCheckoutForm({
 
         if (!result.success) {
           if (result.validationErrors) {
-            return formApi.setErrorMap({
-              onServer: {
-                fields: result.validationErrors,
-              },
-            } as unknown as Parameters<typeof formApi.setErrorMap>[0])
+            return applyServerFieldErrors(formApi, result.validationErrors)
           }
 
           return toast.add({

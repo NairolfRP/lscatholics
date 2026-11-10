@@ -25,6 +25,7 @@ import { useAppForm } from '#/shared/integrations/form/form-hook.ts'
 import type { UserRole } from '#/shared/types/role.types.ts'
 import { confirmAction } from '#/shared/utils/confirm-action.ts'
 import { formatDateTime } from '#/utils/date.ts'
+import { applyServerFieldErrors } from '#/utils/form'
 import { pageMetadata } from '#/utils/seo.ts'
 import { parseCsvString } from '#/utils/string.ts'
 
@@ -86,11 +87,7 @@ function RouteComponent() {
 
       if (!result.success) {
         if (result.validationErrors) {
-          return formApi.setErrorMap({
-            onServer: {
-              fields: result.validationErrors,
-            },
-          } as unknown as Parameters<typeof formApi.setErrorMap>[0])
+          return applyServerFieldErrors(formApi, result.validationErrors)
         }
 
         return toast.error(result.error)

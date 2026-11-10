@@ -8,6 +8,7 @@ import { VolunteerApplicationFormSkeleton } from '#/features/volunteers/componen
 import { getVolunteerDefaults } from '#/features/volunteers/constants/volunteer-defaults.ts'
 import { volunteerApplicationSchema } from '#/features/volunteers/schemas/volunteer-application.schema.ts'
 import { submitVolunteerApplicationFn } from '#/features/volunteers/server-fn/volunteer-application.functions.ts'
+import { applyServerFieldErrors } from '#/utils/form'
 import { RequireAuth } from '#shared/components/auth/require-auth.tsx'
 import {
   Card,
@@ -38,11 +39,7 @@ export function VolunteerApplicationForm() {
 
         if (!result.success) {
           if (result.validationErrors) {
-            return formApi.setErrorMap({
-              onServer: {
-                fields: result.validationErrors,
-              },
-            } as unknown as Parameters<typeof formApi.setErrorMap>[0])
+            return applyServerFieldErrors(formApi, result.validationErrors)
           }
 
           return toast.add({ type: 'error', title: result.error || 'Une erreur est survenue' })

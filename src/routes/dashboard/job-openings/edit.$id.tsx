@@ -6,6 +6,7 @@ import { editJobPostingSchema } from '#/features/job-posting/schemas/job-posting
 import { getDashboardJobPostingFn, updateJobPostingFn } from '#/server-fn/job-posting.functions.ts'
 import { toast } from '#/shared/components/ui/toast'
 import { hasPermission } from '#/shared/utils/permissions'
+import { applyServerFieldErrors } from '#/utils/form'
 import { pageMetadata } from '#/utils/seo.ts'
 import { useAppForm } from '#shared/integrations/form/form-hook.ts'
 
@@ -57,11 +58,7 @@ function RouteComponent() {
 
         if (!result.success) {
           if (result.validationErrors) {
-            return formApi.setErrorMap({
-              onServer: {
-                fields: result.validationErrors,
-              },
-            } as unknown as Parameters<typeof formApi.setErrorMap>[0])
+            return applyServerFieldErrors(formApi, result.validationErrors)
           }
 
           return toast.error('Une erreur est survenue')

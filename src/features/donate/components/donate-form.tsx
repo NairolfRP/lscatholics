@@ -9,6 +9,7 @@ import { getDonationDefaults } from '#/features/donate/constants/donate-defaults
 import type { DonationInput } from '#/features/donate/schemas/donate.schema.ts'
 import { donationSchema } from '#/features/donate/schemas/donate.schema.ts'
 import { initiateDonationFn } from '#/features/donate/server-fn/donation.functions.ts'
+import { applyServerFieldErrors } from '#/utils/form'
 import { formatNumber } from '#/utils/number.ts'
 import { Button } from '#shared/components/ui/button.tsx'
 import {
@@ -51,11 +52,7 @@ export function DonateForm() {
 
         if (!result.success) {
           if (result.validationErrors) {
-            return formApi.setErrorMap({
-              onServer: {
-                fields: result.validationErrors,
-              },
-            } as unknown as Parameters<typeof formApi.setErrorMap>[0])
+            return applyServerFieldErrors(formApi, result.validationErrors)
           }
 
           return toast.add({

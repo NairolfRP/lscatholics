@@ -4,6 +4,7 @@ import { contactSubjectOptions } from '#/features/contact/constants/contact-subj
 import { contactSchema } from '#/features/contact/schemas/contact.schema.ts'
 import type { ContactFormInput } from '#/features/contact/schemas/contact.schema.ts'
 import { submitContactFn } from '#/features/contact/server-fn/contact.functions.ts'
+import { applyServerFieldErrors } from '#/utils/form'
 import { RequireAuth } from '#shared/components/auth/require-auth.tsx'
 import {
   Card,
@@ -40,11 +41,7 @@ export function ContactForm() {
 
       if (!result.success) {
         if (result.validationErrors) {
-          return formApi.setErrorMap({
-            onServer: {
-              fields: result.validationErrors,
-            },
-          } as unknown as Parameters<typeof formApi.setErrorMap>[0])
+          return applyServerFieldErrors(formApi, result.validationErrors)
         }
 
         return toast.add({ type: 'error', title: result.error || 'Une erreur est survenue' })

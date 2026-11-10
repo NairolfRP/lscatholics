@@ -9,6 +9,7 @@ import { bankAccountBalanceQueryOptions } from '#/features/banking/queries.ts'
 import { bankTransferSchema } from '#/features/banking/schema/banking.schema.ts'
 import { bankTransferFn } from '#/features/banking/server-fn/banking.functions.ts'
 import { DashboardHeading } from '#/features/dashboard/components/dashboard-heading.tsx'
+import { applyServerFieldErrors } from '#/utils/form'
 import { formatCurrency } from '#/utils/number.ts'
 import { ConfirmDialog } from '#shared/components/callable/confirm-dialog.tsx'
 import { Card, CardContent } from '#shared/components/ui/card.tsx'
@@ -49,11 +50,7 @@ function RouteComponent() {
 
           if (!result.success) {
             if (result.validationErrors) {
-              formApi.setErrorMap({
-                onServer: {
-                  fields: result.validationErrors,
-                },
-              } as unknown as Parameters<typeof formApi.setErrorMap>[0])
+              applyServerFieldErrors(formApi, result.validationErrors)
               return { error: true, message: 'Corrigez les erreurs avant de réessayer.' }
             }
 

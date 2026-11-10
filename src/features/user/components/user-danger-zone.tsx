@@ -24,6 +24,7 @@ import { toast } from '#/shared/components/ui/toast'
 import { useReauth } from '#/shared/hooks/use-reauth'
 import { authClient } from '#/shared/integrations/auth/auth-client'
 import { useAppForm } from '#/shared/integrations/form/form-hook'
+import { applyServerFieldErrors } from '#/utils/form'
 import { deleteUserFormSchema } from '../schemas/delete-user-schema'
 
 export function UserDangerZone() {
@@ -75,11 +76,7 @@ function DeleteUserConfirmation({ closeDialog }: { closeDialog: () => void }) {
 
         if (!result.success) {
           if (result.validationErrors) {
-            return formApi.setErrorMap({
-              onServer: {
-                fields: result.validationErrors,
-              },
-            } as unknown as Parameters<typeof formApi.setErrorMap>[0])
+            return applyServerFieldErrors(formApi, result.validationErrors)
           }
 
           if (result.error && result.error.status !== 500) {

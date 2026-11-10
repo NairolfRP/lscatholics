@@ -2,6 +2,7 @@ import { SendIcon } from 'lucide-react'
 import type { IncidentReportFormInput } from '#/features/incident-report/schemas/incident-report.schema.ts'
 import { incidentReportSchema } from '#/features/incident-report/schemas/incident-report.schema.ts'
 import { submitIncidentReportFn } from '#/features/incident-report/server-fn/incident-report.functions.ts'
+import { applyServerFieldErrors } from '#/utils/form'
 import { FormDraftRestoreDialog } from '#shared/components/form/form-draft-restore-dialog.tsx'
 import {
   Card,
@@ -43,11 +44,7 @@ export function IncidentReportForm() {
 
       if (!result.success) {
         if (result.validationErrors) {
-          return formApi.setErrorMap({
-            onServer: {
-              fields: result.validationErrors,
-            },
-          } as unknown as Parameters<typeof formApi.setErrorMap>[0])
+          return applyServerFieldErrors(formApi, result.validationErrors)
         }
 
         return toast.add({ type: 'error', title: result.error || 'Une erreur est survenue' })
