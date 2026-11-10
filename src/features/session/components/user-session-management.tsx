@@ -21,7 +21,7 @@ import { confirmAction } from '#/shared/utils/confirm-action'
 import { userListSessionsQueryKey, userlistSessionsQueryOptions } from '../queries'
 
 export function UserSessionManagement() {
-  const { withFreshSession } = useReauth()
+  const { withFreshSession } = useReauth('/account/settings')
   const { data: currentSession, isPending: isCurrentSessionPending } = authClient.useSession()
   const queryClient = useQueryClient()
   const {

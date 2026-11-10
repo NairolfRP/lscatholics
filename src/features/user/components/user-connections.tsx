@@ -17,7 +17,7 @@ export function UserConnections() {
 }
 
 function DiscordConnection() {
-  const { withFreshSession } = useReauth()
+  const { withFreshSession } = useReauth('/account/settings')
   const { data: session, isPending: isSessionPending } = authClient.useSession()
   const queryClient = useQueryClient()
 

@@ -3,7 +3,7 @@ import type { RoutePath } from '#/shared/types/route.types'
 import { withFreshSession } from '#/shared/utils/reauth'
 import { isReauthCancelled } from '#/shared/utils/reauth-error'
 
-export function useReauth(cancelCallbackURL: RoutePath = '/account/settings') {
+export function useReauth(cancelCallbackURL: RoutePath) {
   const router = useRouter()
 
   return {

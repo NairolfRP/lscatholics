@@ -56,7 +56,7 @@ export function UserDangerZone() {
 }
 
 function DeleteUserConfirmation({ closeDialog }: { closeDialog: () => void }) {
-  const { withFreshSession } = useReauth()
+  const { withFreshSession } = useReauth('/account/settings')
   const { user } = useRouteContext({ from: '/_app/account/settings' })
   const router = useRouter()
 
