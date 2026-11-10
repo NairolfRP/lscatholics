@@ -4,6 +4,7 @@ import { UnauthorizedException } from '#/server/exceptions/http-exception.ts'
 import { logger } from '#/server/integrations/logger'
 import { resolvePermissions } from '#/server/services/permission.service.ts'
 import { parseCsvString } from '#/utils/string'
+import type { PermissionAction, PermissionResource } from '#shared/utils/permissions'
 import { requireAuthMiddleware } from './auth.middleware'
 import { requireGameMiddleware } from './game.middleware'
 import { captureUnexpected, markReported } from './sentry.middleware'
@@ -39,7 +40,10 @@ export const adminMiddleware = createMiddleware({ type: 'request' })
     }
   })
 
-export function requirePermission(resource: string, action: string) {
+export function requirePermission<R extends PermissionResource>(
+  resource: R,
+  action: PermissionAction<R>
+) {
   return createMiddleware({ type: 'request' })
     .middleware([requireGameMiddleware])
     .server(async ({ next, context }) => {

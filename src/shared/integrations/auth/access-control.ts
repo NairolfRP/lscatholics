@@ -1,7 +1,7 @@
 import { createAccessControl } from 'better-auth/plugins'
 import { adminAc, defaultStatements, userAc } from 'better-auth/plugins/admin/access'
 
-const statement = {
+export const statement = {
   ...defaultStatements,
   dashboard: ['access', 'supervise', 'manage'],
   post: ['create', 'read', 'update', 'delete'],
