@@ -56,15 +56,8 @@ export function useDashboardList<
     paginationState,
     sortingState,
     onPaginationChange: (pagination: Updater<PaginationState>) => {
-      if (typeof pagination === 'function') {
-        const resolved = pagination(paginationState)
-        return setFilters({ page: resolved.pageIndex } as unknown as Parameters<
-          typeof setFilters
-        >[0])
-      }
-      return setFilters({ page: pagination.pageIndex } as unknown as Parameters<
-        typeof setFilters
-      >[0])
+      const resolved = typeof pagination === 'function' ? pagination(paginationState) : pagination
+      return setFilters({ page: resolved.pageIndex } as unknown as Parameters<typeof setFilters>[0])
     },
     onSortingChange: (updaterOrValue: Updater<SortingState>) => {
       const newSorting =
