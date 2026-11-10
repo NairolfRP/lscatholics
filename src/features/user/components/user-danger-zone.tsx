@@ -21,9 +21,9 @@ import {
   DialogTrigger,
 } from '#/shared/components/ui/dialog'
 import { toast } from '#/shared/components/ui/toast'
+import { useReauth } from '#/shared/hooks/auth/use-reauth'
 import { authClient } from '#/shared/integrations/auth/auth-client'
 import { useAppForm } from '#/shared/integrations/form/form-hook'
-import { withFreshSession } from '#/shared/utils/reauth'
 import { deleteUserFormSchema } from '../schemas/delete-user-schema'
 
 export function UserDangerZone() {
@@ -56,6 +56,7 @@ export function UserDangerZone() {
 }
 
 function DeleteUserConfirmation({ closeDialog }: { closeDialog: () => void }) {
+  const { withFreshSession } = useReauth()
   const { user } = useRouteContext({ from: '/_app/account/settings' })
   const router = useRouter()
 

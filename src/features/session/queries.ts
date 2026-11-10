@@ -1,10 +1,13 @@
 import { queryOptions } from '@tanstack/react-query'
+import type { useReauth } from '#/shared/hooks/auth/use-reauth'
 import { authClient } from '#/shared/integrations/auth/auth-client'
-import { withFreshSession } from '#/shared/utils/reauth'
 
 const USER_SESSIONS_QUERY_KEY = 'active-sessions'
 
-export const userlistSessionsQueryOptions = (currentSessionId?: string) => {
+export const userlistSessionsQueryOptions = (
+  withFreshSession: ReturnType<typeof useReauth>['withFreshSession'],
+  currentSessionId?: string
+) => {
   return queryOptions({
     queryKey: [USER_SESSIONS_QUERY_KEY, currentSessionId],
     queryFn: async () => {

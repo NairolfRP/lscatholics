@@ -16,14 +16,29 @@ export async function requireFreshSession(): Promise<void> {
       "Pour des raisons de sécurité, vous devez rafraichir votre session avant d'effectuer cette action. Vous allez être redirigé vers le service de connexion, puis automatiquement renvoyé ici.",
     icon: <ShieldAlert className="text-warning" />,
     confirmLabel: 'Se ré-authentifier',
+    confirmSubmittingLabel: 'Redirection...',
+    action: async () => {
+      const { error: signOutError } = await authClient.signOut()
+      if (signOutError) {
+        return { error: true, message: 'Impossible de rafraîchir votre session' }
+      }
+
+      const { error: signInError } = await authClient.signIn.social({
+        provider: 'gtaw',
+        callbackURL: window.location.pathname,
+      })
+      if (signInError) {
+        return { error: true, message: 'Impossible de vous rediriger vers la connexion' }
+      }
+
+      // Keep the dialog pending while the browser redirects.
+      return await new Promise<never>(() => undefined)
+    },
   })
 
   if (!confirmed) {
     throw new ReauthCancelledError()
   }
-
-  await authClient.signOut()
-  void authClient.signIn.social({ provider: 'gtaw', callbackURL: window.location.pathname })
 }
 
 export async function withFreshSession<T>(fn: () => Promise<T>): Promise<T> {

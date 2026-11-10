@@ -5,10 +5,11 @@ import { Avatar, AvatarFallback, AvatarImage } from '#/shared/components/ui/avat
 import { Button } from '#/shared/components/ui/button'
 import { Skeleton } from '#/shared/components/ui/skeleton'
 import { toast } from '#/shared/components/ui/toast'
+import { useReauth } from '#/shared/hooks/auth/use-reauth'
 import { authClient } from '#/shared/integrations/auth/auth-client'
 import type { ActionReturnType } from '#/shared/types/action.types'
 import { confirmAction } from '#/shared/utils/confirm-action'
-import { isSessionNotFresh, withFreshSession } from '#/shared/utils/reauth'
+import { isSessionNotFresh } from '#/shared/utils/reauth'
 import { discordConnectionQueryKey, discordConnectionQueryOptions } from '../queries'
 
 export function UserConnections() {
@@ -16,6 +17,7 @@ export function UserConnections() {
 }
 
 function DiscordConnection() {
+  const { withFreshSession } = useReauth()
   const { data: session, isPending: isSessionPending } = authClient.useSession()
   const queryClient = useQueryClient()
 

@@ -13,14 +13,15 @@ import {
 } from '#/shared/components/ui/card'
 import { Skeleton } from '#/shared/components/ui/skeleton'
 import { Spinner } from '#/shared/components/ui/spinner'
+import { useReauth } from '#/shared/hooks/auth/use-reauth'
 import { authClient } from '#/shared/integrations/auth/auth-client'
 import type { Session } from '#/shared/lib/types/auth'
 import type { ActionReturnType } from '#/shared/types/action.types'
 import { confirmAction } from '#/shared/utils/confirm-action'
-import { withFreshSession } from '#/shared/utils/reauth'
 import { userListSessionsQueryKey, userlistSessionsQueryOptions } from '../queries'
 
 export function UserSessionManagement() {
+  const { withFreshSession } = useReauth()
   const { data: currentSession, isPending: isCurrentSessionPending } = authClient.useSession()
   const queryClient = useQueryClient()
   const {
@@ -30,7 +31,7 @@ export function UserSessionManagement() {
     error: queryError,
     refetch,
   } = useQuery({
-    ...userlistSessionsQueryOptions(currentSession?.session.id),
+    ...userlistSessionsQueryOptions(withFreshSession, currentSession?.session.id),
     enabled: !isCurrentSessionPending,
   })
 
