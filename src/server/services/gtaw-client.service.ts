@@ -93,33 +93,28 @@ async function forceRefresh<T extends readonly ForceRefreshType[]>(
   accessToken: string,
   keys: T
 ): Promise<{ [K in T[number]]: ForceRefreshReturnMap[K] }> {
-  const results: Partial<ForceRefreshReturnMap> = {}
-
-  const event = getRequestEvent()
-
-  const promises = keys.map(async (type) => {
-    switch (type) {
-      case 'characters':
-        await cachedUserCharacters.invalidate(event, userId, accessToken)
-        logger.debug({ userId }, 'User characters cache invalidated')
-        results.characters = await cachedUserCharacters(event, userId, accessToken)
-        break
-
-      case 'factions':
-        await cachedUserFactions.invalidate(event, userId, accessToken)
-        logger.debug({ userId }, 'User factions cache invalidated')
-        results.factions = await cachedUserFactions(event, userId, accessToken)
-        break
-    }
-  })
-
-  if (!Array.isArray(promises) || promises.length === 0) {
+  if (keys.length === 0) {
     throw new Error('Unable to force a refresh because the keys are invalid')
   }
 
-  await Promise.all(promises)
+  const event = getRequestEvent()
 
-  return results as { [K in T[number]]: ForceRefreshReturnMap[K] }
+  const refresh: { [K in ForceRefreshType]: () => Promise<ForceRefreshReturnMap[K]> } = {
+    characters: async () => {
+      await cachedUserCharacters.invalidate(event, userId, accessToken)
+      logger.debug({ userId }, 'User characters cache invalidated')
+      return cachedUserCharacters(event, userId, accessToken)
+    },
+    factions: async () => {
+      await cachedUserFactions.invalidate(event, userId, accessToken)
+      logger.debug({ userId }, 'User factions cache invalidated')
+      return cachedUserFactions(event, userId, accessToken)
+    },
+  }
+
+  const entries = await Promise.all(keys.map(async (key) => [key, await refresh[key]()] as const))
+
+  return Object.fromEntries(entries) as { [K in T[number]]: ForceRefreshReturnMap[K] }
 }
 
 export const gtawClient = {
