@@ -26,6 +26,7 @@ export async function requireFreshSession(): Promise<void> {
       const { error: signInError } = await authClient.signIn.social({
         provider: 'gtaw',
         callbackURL: window.location.pathname,
+        errorCallbackURL: window.location.href,
       })
       if (signInError) {
         return { error: true, message: 'Impossible de vous rediriger vers la connexion' }
