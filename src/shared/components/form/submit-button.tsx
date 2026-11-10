@@ -30,14 +30,14 @@ export function SubmitButton<TFormValues = unknown>({
   return (
     <form.Subscribe
       selector={(state) => {
-        const typedState = state as unknown as FormState<TFormValues>
+        const typedState = state as FormState<TFormValues>
+        const isDisabled =
+          typeof disabled === 'function'
+            ? disabled(typedState)
+            : (disabled ?? defaultDisabled(state))
 
         return [
-          typeof disabled === 'function'
-            ? disabled(state as unknown as FormState<TFormValues>)
-            : typeof disabled === 'boolean'
-              ? disabled
-              : defaultDisabled(state),
+          isDisabled,
           state.isSubmitting,
           typeof label === 'function' ? label(typedState) : label,
           typeof submittingLabel === 'function' ? submittingLabel(typedState) : submittingLabel,

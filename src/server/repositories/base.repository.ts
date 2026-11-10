@@ -95,8 +95,7 @@ export class BaseRepository<TSchema extends AnySQLiteTable> {
   }
 
   async getCount() {
-    const result = await this.db.select({ count: count() }).from(this.schema)
-
-    return result[0].count
+    const [row] = await this.db.select({ count: count() }).from(this.schema)
+    return row.count
   }
 }

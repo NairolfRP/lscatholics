@@ -20,8 +20,7 @@ export function LatestPostsSection() {
   if (isError) return <LatestPostsError onRetry={refetch} />
   if (posts.length === 0) return <Typography variant="p">Aucun article pour le moment</Typography>
 
-  const latestPost = posts[0]
-  const otherPosts = posts.slice(1)
+  const [latestPost, ...otherPosts] = posts
 
   return (
     <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
