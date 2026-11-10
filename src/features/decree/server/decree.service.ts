@@ -42,15 +42,15 @@ export async function getDecrees(): Promise<DecreesIndex> {
       })
       .sort((a, b) => compareByDateDesc(a.publishedAt, b.publishedAt))
 
-    const categories = {
+    const categories: Record<DecreeCategory, DecreeListItem[]> = {
       executive: [],
       law: [],
       administrative: [],
       judicial: [],
-    } satisfies Record<DecreeCategory, DecreeListItem[]>
+    }
 
     for (const item of items) {
-      categories[item.category].push(item as never)
+      categories[item.category].push(item)
     }
 
     return { categories, total: items.length }
