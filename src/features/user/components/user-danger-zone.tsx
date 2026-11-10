@@ -21,7 +21,7 @@ import {
   DialogTrigger,
 } from '#/shared/components/ui/dialog'
 import { toast } from '#/shared/components/ui/toast'
-import { useReauth } from '#/shared/hooks/auth/use-reauth'
+import { useReauth } from '#/shared/hooks/use-reauth'
 import { authClient } from '#/shared/integrations/auth/auth-client'
 import { useAppForm } from '#/shared/integrations/form/form-hook'
 import { deleteUserFormSchema } from '../schemas/delete-user-schema'

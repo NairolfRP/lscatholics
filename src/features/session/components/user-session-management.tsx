@@ -13,7 +13,7 @@ import {
 } from '#/shared/components/ui/card'
 import { Skeleton } from '#/shared/components/ui/skeleton'
 import { Spinner } from '#/shared/components/ui/spinner'
-import { useReauth } from '#/shared/hooks/auth/use-reauth'
+import { useReauth } from '#/shared/hooks/use-reauth'
 import { authClient } from '#/shared/integrations/auth/auth-client'
 import type { Session } from '#/shared/lib/types/auth'
 import type { ActionReturnType } from '#/shared/types/action.types'

@@ -5,7 +5,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '#/shared/components/ui/avat
 import { Button } from '#/shared/components/ui/button'
 import { Skeleton } from '#/shared/components/ui/skeleton'
 import { toast } from '#/shared/components/ui/toast'
-import { useReauth } from '#/shared/hooks/auth/use-reauth'
+import { useReauth } from '#/shared/hooks/use-reauth'
 import { authClient } from '#/shared/integrations/auth/auth-client'
 import type { ActionReturnType } from '#/shared/types/action.types'
 import { confirmAction } from '#/shared/utils/confirm-action'

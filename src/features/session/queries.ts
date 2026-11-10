@@ -1,5 +1,5 @@
 import { queryOptions } from '@tanstack/react-query'
-import type { useReauth } from '#/shared/hooks/auth/use-reauth'
+import type { useReauth } from '#/shared/hooks/use-reauth'
 import { authClient } from '#/shared/integrations/auth/auth-client'
 
 const USER_SESSIONS_QUERY_KEY = 'active-sessions'
