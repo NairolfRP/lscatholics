@@ -92,7 +92,7 @@ export const parishionerSchema = z.object({
     .superRefine((sacraments, ctx) => {
       for (const sacrament of sacraments) {
         const missingPrerequisites = getSacramentPrerequisites(sacrament).filter(
-          (prerequisite) => !sacraments.includes(prerequisite as never)
+          (prerequisite) => !sacraments.includes(prerequisite)
         )
 
         if (missingPrerequisites.length > 0) {

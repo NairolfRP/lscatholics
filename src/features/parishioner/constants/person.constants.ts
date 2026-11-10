@@ -122,8 +122,12 @@ export const [INDIVIDUAL_SACRAMENT, INDIVIDUAL_SACRAMENT_VALUES] = createEnum({
   CONFIRMATION: 'confirmation',
 })
 
-const individualSacramentRequirements = Object.freeze({
-  [INDIVIDUAL_SACRAMENT.BAPTISM]: [] as string[],
+type IndividualSacramentValue = (typeof INDIVIDUAL_SACRAMENT_VALUES)[number]
+
+const individualSacramentRequirements: Readonly<
+  Record<IndividualSacramentValue, readonly IndividualSacramentValue[]>
+> = Object.freeze({
+  [INDIVIDUAL_SACRAMENT.BAPTISM]: [],
   [INDIVIDUAL_SACRAMENT.FIRST_COMMUNION]: [INDIVIDUAL_SACRAMENT.BAPTISM],
   [INDIVIDUAL_SACRAMENT.CONFIRMATION]: [
     INDIVIDUAL_SACRAMENT.BAPTISM,
@@ -142,18 +146,14 @@ export const individualSacramentOptions = INDIVIDUAL_SACRAMENT_VALUES.map((value
   label: individualSacramentLabels[value],
 }))
 
-export function getIndividualSacramentLabel(value: string) {
-  return individualSacramentLabels[value as keyof typeof individualSacramentLabels]
+export function isIndividualSacrament(value: string): value is IndividualSacramentValue {
+  return (INDIVIDUAL_SACRAMENT_VALUES as readonly string[]).includes(value)
 }
 
-export function getSacramentPrerequisites(value: string): string[] {
-  if (
-    !INDIVIDUAL_SACRAMENT_VALUES.includes(
-      value as unknown as keyof typeof individualSacramentRequirements
-    )
-  ) {
-    return []
-  }
+export function getIndividualSacramentLabel(value: string): string | undefined {
+  return isIndividualSacrament(value) ? individualSacramentLabels[value] : undefined
+}
 
-  return individualSacramentRequirements[value as keyof typeof individualSacramentRequirements]
+export function getSacramentPrerequisites(value: string): readonly IndividualSacramentValue[] {
+  return isIndividualSacrament(value) ? individualSacramentRequirements[value] : []
 }

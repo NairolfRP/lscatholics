@@ -3,7 +3,6 @@ import {
   getSacramentPrerequisites,
   individualSacramentOptions,
 } from '#/features/parishioner/constants/person.constants.ts'
-import type { IndividualSacrament } from '#/features/parishioner/types/parishioner.types.ts'
 import {
   Accordion,
   AccordionContent,
@@ -36,8 +35,7 @@ export const OocSection = withForm({
                   values={individualSacramentOptions.map((option) => ({
                     ...option,
                     disabled: getSacramentPrerequisites(option.value).some(
-                      (prerequisite) =>
-                        !field.state.value?.includes(prerequisite as IndividualSacrament)
+                      (prerequisite) => !field.state.value?.includes(prerequisite)
                     ),
                   }))}
                 />
