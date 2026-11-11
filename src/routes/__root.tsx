@@ -40,7 +40,7 @@ export const Route = createRootRouteWithContext<RouterContext>()({
       },
       {
         rel: 'stylesheet',
-        href: 'https://fonts.bunny.net/css?family=crimson-pro:200,300,400,500,600,700,800,900|geist-mono:400,600|inter:200,300,400,500,600,700,800,900&display=swap',
+        href: 'https://fonts.bunny.net/css?family=ibm-plex-mono:400,500|inter:400,400i,500,700|playfair-display:400,400i,600,700&display=swap',
       },
       {
         rel: 'preload',
