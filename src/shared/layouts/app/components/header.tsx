@@ -41,7 +41,14 @@ export function Header() {
           <div className="flex w-full items-center justify-between align-middle lg:px-10 lg:py-5">
             <div className="shrink-0">
               <Link to="/">
-                <Logo width={80} height={80} loading="eager" />
+                <Logo
+                  width={240}
+                  height={80}
+                  layout="fixed"
+                  unstyled
+                  loading="eager"
+                  className="h-12 w-auto sm:h-16 lg:h-20"
+                />
               </Link>
             </div>
 
