@@ -55,25 +55,19 @@ const postData = {
 }
 
 function expectedPostComponents({
-  includeRoleMentions = true,
   excerpt = postData.excerpt,
   slug = postData.slug,
   title = postData.title,
 }: {
-  includeRoleMentions?: boolean
   excerpt?: string | null
   slug?: string
   title?: string
 } = {}) {
   return [
-    ...(includeRoleMentions
-      ? [
-          {
-            type: ComponentType.TextDisplay,
-            content: '<@&1071282875976126506> <@&1254316102805098526>',
-          },
-        ]
-      : []),
+    {
+      type: ComponentType.TextDisplay,
+      content: '<@&1071282875976126506> <@&1254316102805098526>',
+    },
     {
       type: ComponentType.Container,
       accent_color: POST_EMBED_COLOR,
@@ -224,10 +218,12 @@ describe('editPostNotification', () => {
       payload: {
         flags: MessageFlags.IsComponentsV2,
         components: expectedPostComponents({
-          includeRoleMentions: false,
           title: 'Updated Title',
           slug: 'updated-slug',
         }),
+        allowed_mentions: {
+          roles: ['1071282875976126506', '1254316102805098526'],
+        },
       },
     })
   })

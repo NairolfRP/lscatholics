@@ -40,7 +40,7 @@ export async function sendPostNotification(data: {
       url: webhookUrl,
       payload: {
         flags: MessageFlags.IsComponentsV2,
-        components: buildPostComponents(data, true),
+        components: buildPostComponents(data),
         allowed_mentions: { roles: [...NOTIFICATION_ROLE_IDS] },
       },
       wait: true,
@@ -90,7 +90,8 @@ export async function editPostNotification({
       withComponents: true,
       payload: {
         flags: MessageFlags.IsComponentsV2,
-        components: buildPostComponents({ title, slug, excerpt, bannerImg, publishedAt }, false),
+        components: buildPostComponents({ title, slug, excerpt, bannerImg, publishedAt }),
+        allowed_mentions: { roles: [...NOTIFICATION_ROLE_IDS] },
       },
     })
   } catch (err) {
@@ -98,24 +99,19 @@ export async function editPostNotification({
   }
 }
 
-function buildPostComponents(
-  data: {
-    title: string
-    slug: string
-    excerpt: string | null
-    bannerImg: string
-    publishedAt: Date | null
-  },
-  includeRoleMentions: boolean
-): APIMessageTopLevelComponent[] {
+function buildPostComponents(data: {
+  title: string
+  slug: string
+  excerpt: string | null
+  bannerImg: string
+  publishedAt: Date | null
+}): APIMessageTopLevelComponent[] {
   const appUrl = env.VITE_APP_URL
   const postUrl = `${appUrl}/post/${data.slug}`
   const publishedAt = data.publishedAt ?? new Date()
   const components: APIMessageTopLevelComponent[] = []
 
-  if (includeRoleMentions) {
-    components.push({ type: ComponentType.TextDisplay, content: ROLE_MENTIONS })
-  }
+  components.push({ type: ComponentType.TextDisplay, content: ROLE_MENTIONS })
 
   components.push({
     type: ComponentType.Container,
