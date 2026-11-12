@@ -7,7 +7,7 @@ import { pageMetadata } from '#/utils/seo'
 import { Alert, AlertDescription } from '#shared/components/ui/alert.tsx'
 import { Card, CardContent, CardHeader, CardTitle } from '#shared/components/ui/card.tsx'
 
-const lastUpdated = '22 septembre 2026'
+const lastUpdated = '12 novembre 2026'
 
 export const Route = createFileRoute('/_app/privacy')({
   head: () => ({
@@ -35,6 +35,7 @@ function RouteComponent() {
               données réelles collectées et traitées par cette application.
             </AlertDescription>
           </Alert>
+
           <PrivacyCard title="1. Nature de l'application">
             <p>
               Cette application sert de portail pour la faction{' '}
@@ -51,12 +52,17 @@ function RouteComponent() {
               constitue en aucun cas un site religieux réel ni une organisation réelle, et ne vise
               aucun autre public que les joueurs du serveur de jeu susmentionné.
             </p>
+            <p>
+              La plupart des données saisies dans l'application sont des{' '}
+              <strong>données de jeu (roleplay)</strong> et ne concernent pas votre personne réelle.
+              Nous vous invitons à ne pas y saisir de données personnelles réelles sensibles.
+            </p>
           </PrivacyCard>
 
           <PrivacyCard title="2. Responsable du traitement">
             <p>
               Le responsable du traitement des données est le créateur et développeur de
-              l'application. Pour toute question, vous pouvez le contacter via :
+              l'application. Pour toute question relative à vos données, contactez-le via :
             </p>
             <ul>
               <li>
@@ -75,7 +81,7 @@ function RouteComponent() {
             </ul>
           </PrivacyCard>
 
-          <PrivacyCard title="3. Données collectées">
+          <PrivacyCard title="3. Données traitées">
             <p>
               Conformément au{' '}
               <a
@@ -91,14 +97,14 @@ function RouteComponent() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                loi informatique et Libertés du 6 janvier 1978
+                loi Informatique et Libertés du 6 janvier 1978
               </a>
               , nous collectons le strict minimum de données nécessaires au fonctionnement de
-              l'application.
+              l'application : des identifiants de connexion et des données de jeu.
             </p>
 
             <Typography as="h3" variant="h4" className="mt-6">
-              3.1 Données collectées lors de la création de compte et de la connexion
+              3.1 Compte et connexion
             </Typography>
             <p>
               Nous utilisons uniquement le{' '}
@@ -109,8 +115,7 @@ function RouteComponent() {
               >
                 service d'authentification (OAuth) de GTA World
               </a>{' '}
-              pour permettre la connexion. Les données suivantes sont récupérées via l'API OAuth de
-              GTA World :
+              pour permettre la connexion. Les données suivantes sont récupérées :
             </p>
             <ul>
               <li>
@@ -119,25 +124,28 @@ function RouteComponent() {
               <li>
                 <strong>ID unique du compte GTA World</strong>
               </li>
+              <li>
+                <strong>Jetons de connexion</strong> (pour maintenir la session)
+              </li>
             </ul>
             <p>
-              <strong>Aucune adresse e-mail ni information personnelle n'est collectée</strong>{' '}
-              auprès de GTA World.
+              <strong>Aucune adresse e-mail réelle n'est collectée</strong> auprès de GTA World ; un
+              identifiant technique interne est généré à la place.
             </p>
             <p>
               La politique de confidentialité de GTA World est disponible à l'adresse suivante :{' '}
-              <a href="https://gta.world/terms" target="_blank" rel="noopener noreferrer">
-                https://gta.world/terms
+              <a href="https://global.gta.world/privacy" target="_blank" rel="noopener noreferrer">
+                https://global.gta.world/privacy
               </a>
             </p>
 
             <Typography as="h3" variant="h4" className="mt-6">
-              3.2 Données collectées lors du lien avec Discord (optionnel)
+              3.2 Lien avec Discord (optionnel)
             </Typography>
             <p>
               L'utilisateur peut choisir de lier son compte Discord via ses paramètres de compte
               pour accéder à des fonctionnalités complémentaires. Nous limitons la collecte aux
-              informations de base sur l'identité du compte, c'est-à-dire :
+              informations de base de l'identité du compte :
             </p>
             <ul>
               <li>
@@ -149,34 +157,37 @@ function RouteComponent() {
               <li>
                 <strong>Avatar Discord</strong>
               </li>
+              <li>
+                <strong>Jetons de connexion</strong>
+              </li>
             </ul>
             <p>
-              <strong>Aucune adresse e-mail ni donnée supplémentaire n'est collectée</strong> via
-              Discord.
+              <strong>Aucune adresse e-mail réelle n'est collectée</strong> via Discord.
             </p>
 
             <Typography as="h3" variant="h4" className="mt-6">
-              3.3 Données des personnages et factions (GTA World)
+              3.3 Personnages et factions (GTA World)
             </Typography>
             <p>
-              Après la connexion et pendant la durée d'utilisation de l'application, nous récupérons
-              les informations suivantes depuis le service de GTA World :
+              Pendant l'utilisation de l'application, nous récupérons les informations suivantes
+              depuis le service de GTA World :
             </p>
             <ul>
               <li>
-                <strong>Personnages</strong> : identité (ID, prénom et nom) et IBAN des personnages
+                <strong>Personnages</strong> : identité (ID, prénom et nom) et IBAN du personnage
+                (donnée de jeu)
               </li>
               <li>
-                <strong>Factions</strong> : ID, nom de la faction, rang et nom du rang
+                <strong>Factions</strong> : ID, nom de la faction, rang et nom du rang du personnage
               </li>
             </ul>
             <p>
-              Ces données ne sont pas persistées dans nos bases de données. Elles sont exclusivement
-              récupérées puis synchronisées via les API mises à disposition par GTA World.
+              Ces données ne sont pas persistées dans notre base de données. Elles sont récupérées
+              puis mises en cache en mémoire pendant 5 minutes.
             </p>
 
             <Typography as="h3" variant="h4" className="mt-6">
-              3.4 Données de session
+              3.4 Sessions et sécurité
             </Typography>
             <p>
               Les sessions sont stockées de manière sécurisée en base de données. Un cache de
@@ -186,81 +197,121 @@ function RouteComponent() {
             <p>Les informations suivantes sont enregistrées :</p>
             <ul>
               <li>
-                <strong>Adresse IP</strong> (pour la gestion des sessions et la sécurité)
+                <strong>Adresse IP</strong> (gestion des sessions et sécurité)
               </li>
               <li>
-                <strong>Agent utilisateur du navigateur</strong> (pour la gestion des sessions)
+                <strong>Agent utilisateur du navigateur</strong> (gestion des sessions)
               </li>
               <li>
-                <strong>Date d'expiration de la session</strong> (durée de vie : 7 jours maximum)
+                <strong>Date d'expiration de la session</strong> : 7 jours après la dernière
+                activité, prolongée automatiquement tant que vous utilisez l'application
               </li>
             </ul>
             <p>
               Vous pouvez à tout moment révoquer vos sessions via vos paramètres de compte, ou vous
-              déconnecter pour supprimer votre session actuelle.
+              déconnecter pour supprimer votre session actuelle. Pour des raisons de sécurité, les
+              actions sensibles peuvent nécessiter une ré-authentification si la session existe
+              depuis plus de 24 heures.
             </p>
             <p>
-              Pour des raisons de sécurité, les actions sensibles peuvent nécessiter une
-              réauthentification si la session existe depuis plus de 24 heures.
+              Des <strong>données de modération</strong> sont associées au compte : rôle, statut de
+              bannissement, motif et date d'expiration le cas échéant. Elles sont gérées par les
+              utilisateurs qui ont reçu ces permissions spécifiques.
             </p>
 
             <Typography as="h3" variant="h4" className="mt-6">
-              3.5 Données du personnage actuel
+              3.5 Personnage actuel
             </Typography>
             <p>
-              Un cookie de préférence (<code>lscatholics.current_character</code>) permet de
-              mémoriser le personnage sélectionné par l'utilisateur. Ce cookie est sécurisé et
-              expire après 30 jours.
+              Un cookie de préférence mémorise le personnage sélectionné par l'utilisateur. Ce
+              cookie est sécurisé et expire après 30 jours.
+            </p>
+
+            <Typography as="h3" variant="h4" className="mt-6">
+              3.6 Mesure d'audience et monitoring
+            </Typography>
+            <p>
+              Nous utilisons <strong>Vercel Analytics</strong> et{' '}
+              <strong>Vercel Speed Insights</strong> pour mesurer la fréquentation et les
+              performances. Ces outils sont conçus pour respecter la vie privée : aucun identifiant
+              personnel, aucune trace individuelle, aucun cookie tiers.
+            </p>
+            <p>
+              Nous utilisons également{' '}
+              <a href="https://sentry.io" target="_blank" rel="noopener noreferrer">
+                Sentry
+              </a>{' '}
+              pour détecter et corriger les erreurs inattendues. Les données sont hébergées dans
+              l'Union européenne.
             </p>
           </PrivacyCard>
 
-          <PrivacyCard title="4. Durée de conservation">
+          <PrivacyCard title="4. Bases légales">
             <ul>
               <li>
-                <strong>Comptes utilisateurs</strong> : conservés tant que le compte existe. La
-                suppression du compte entraîne la suppression de toutes les données associées
+                <strong>Compte et connexion</strong> : exécution du contrat (fourniture du service).
               </li>
               <li>
-                <strong>Sessions</strong> : expires après 7 jours maximum. Le cache des cookies est
-                limité à 5 minutes
+                <strong>Discord lié</strong> : consentement (optionnel et révocable).
               </li>
               <li>
-                <strong>Cookie du personnage actuel</strong> : 30 jours
+                <strong>Sessions, sécurité et modération</strong> : intérêt légitime (sécurité et
+                prévention des abus).
               </li>
               <li>
-                <strong>Personnages et factions</strong> : temporairement mis en mémoire durant 5
-                minutes. Ils ne sont ni conservés ni sauvegardés sur notre base de données
+                <strong>Mesure d'audience et monitoring</strong> : intérêt légitime (amélioration et
+                fiabilité de l'application).
               </li>
             </ul>
           </PrivacyCard>
 
-          <PrivacyCard title="5. Tiers et sous-traitants">
+          <PrivacyCard title="5. Durée de conservation">
+            <ul>
+              <li>
+                <strong>Compte utilisateur</strong> : tant que le compte existe. Vous pouvez le
+                supprimer à tout moment via vos paramètres.
+              </li>
+              <li>
+                <strong>Sessions</strong> : 7 jours après la dernière activité.
+              </li>
+              <li>
+                <strong>Personnage actuel</strong> : 30 jours (cookie).
+              </li>
+              <li>
+                <strong>Personnages et factions</strong> : 5 minutes en mémoire, non persistés.
+              </li>
+              <li>
+                <strong>Brouillons de formulaires</strong> : jusqu'à suppression par vos soins
+                (stockage local du navigateur).
+              </li>
+            </ul>
+          </PrivacyCard>
+
+          <PrivacyCard title="6. Destinataires et transferts">
             <p>
-              Vos données ne sont jamais vendues, partagées, ni louées à des tiers à des fins
-              commerciales ou marketing.
-            </p>
-            <p>
-              Les seules entités ayant accès à vos données sont les partenaires techniques
-              indispensables au fonctionnement de l'application, listés ci-dessous. Nous vous
-              encourageons à prendre connaissance de leurs politiques en matière de traitement des
-              données :
+              Vos données réelles ne sont jamais vendues, louées ni partagées à des fins
+              commerciales ou marketing. Les seuls destinataires sont les partenaires techniques
+              indispensables :
             </p>
             <ul>
               <li>
-                <strong>GTA World</strong> (fournisseur d'authentification OAuth et API du serveur
-                de jeu) —{' '}
-                <a href="https://gta.world/terms" target="_blank" rel="noopener noreferrer">
+                <strong>GTA World</strong> (authentification OAuth et API de jeu) —{' '}
+                <a
+                  href="https://global.gta.world/privacy"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   Politique de confidentialité
                 </a>
               </li>
               <li>
-                <strong>Discord</strong> (lien de compte optionnel) —{' '}
+                <strong>Discord</strong> (liaison de compte optionnelle) —{' '}
                 <a href="https://discord.com/privacy" target="_blank" rel="noopener noreferrer">
                   Politique de confidentialité
                 </a>
               </li>
               <li>
-                <strong>Vercel</strong> (hébergement de l'application) —{' '}
+                <strong>Vercel</strong> (hébergement) —{' '}
                 <a
                   href="https://vercel.com/legal/privacy-notice"
                   target="_blank"
@@ -270,7 +321,7 @@ function RouteComponent() {
                 </a>
               </li>
               <li>
-                <strong>Turso Cloud</strong> (hébergeur de la base de données) —{' '}
+                <strong>Turso Cloud</strong> (base de données) —{' '}
                 <a
                   href="https://turso.tech/privacy-policy"
                   target="_blank"
@@ -279,70 +330,39 @@ function RouteComponent() {
                   Politique de confidentialité
                 </a>
               </li>
+              <li>
+                <strong>Sentry</strong> (monitoring des erreurs, région UE) —{' '}
+                <a href="https://sentry.io/privacy/" target="_blank" rel="noopener noreferrer">
+                  Politique de confidentialité
+                </a>
+              </li>
             </ul>
-          </PrivacyCard>
-
-          <PrivacyCard title="6. Outils d'analyse, de mesure de performance et de monitoring">
-            <p>Nous utilisons les outils suivants pour améliorer l'expérience utilisateur :</p>
-
-            <Typography as="h3" variant="h4" className="mt-6">
-              6.1 Vercel Analytics
-            </Typography>
             <p>
-              Vercel Analytics est un outil d'analyse respectueux de la vie privée qui ne collecte{' '}
-              <strong>aucun identifiant personnel</strong> permettant de tracer ou d'identifier les
-              visiteurs. Les données collectées sont entièrement anonymes et agrégées. Aucun cookie
-              tiers n'est utilisé.
-            </p>
-            <p>
-              Pour plus d'informations, consultez leur politique de confidentialité :{' '}
-              <a
-                href="https://vercel.com/docs/analytics/privacy-policy"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                https://vercel.com/docs/analytics/privacy-policy
-              </a>
-            </p>
-
-            <Typography as="h3" variant="h4" className="mt-6">
-              6.2 Vercel Speed Insights
-            </Typography>
-            <p>
-              Vercel Speed Insights mesure les performances de l'application (Web Vitals). Comme
-              Vercel Analytics, cet outil est conçu pour respecter la vie privée.
-            </p>
-            <p>
-              Pour plus d'informations, consultez leur politique de confidentialité :{' '}
-              <a
-                href="https://vercel.com/docs/speed-insights/privacy-policy"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                https://vercel.com/docs/speed-insights/privacy-policy
-              </a>
-            </p>
-
-            <Typography as="h3" variant="h4" className="mt-6">
-              6.3 Sentry (monitoring des erreurs)
-            </Typography>
-            <p>
-              Nous utilisons{' '}
-              <a href="https://sentry.io" target="_blank" rel="noopener noreferrer">
-                Sentry
-              </a>{' '}
-              pour détecter et corriger les erreurs inattendues de l'application.
-            </p>
-            <p>Les données sont hébergées dans l'Union européenne.</p>
-            <p>
-              Pour plus d'informations, consultez leur politique de confidentialité :{' '}
-              <a href="https://sentry.io/privacy/" target="_blank" rel="noopener noreferrer">
-                https://sentry.io/privacy/
-              </a>
+              Certains de ces prestataires (Vercel, Discord, Turso) sont établis hors de l'Union
+              européenne ; les transferts sont encadrés par les garanties prévues par le RGPD.
+              D'autres services (polices Bunny Fonts, images Imgur) peuvent recevoir votre adresse
+              IP lors du chargement des pages.
             </p>
           </PrivacyCard>
 
-          <PrivacyCard title="7. Vos droits">
+          <PrivacyCard title="7. Cookies et stockage local">
+            <p>
+              L'application utilise des cookies et le stockage local du navigateur pour fonctionner.
+              Ces éléments sont strictement nécessaires au service et ne sont pas utilisés à des
+              fins publicitaires. Aucun cookie tiers de suivi n'est déposé.
+            </p>
+          </PrivacyCard>
+
+          <PrivacyCard title="8. Sécurité">
+            <p>
+              Les données sont transmises en HTTPS. Les cookies de session sont signés et l'accès
+              aux données est limité aux personnes autorisées. Aucun système n'étant infaillible,
+              nous vous encourageons à ne pas saisir de données réelles sensibles dans les champs de
+              jeu.
+            </p>
+          </PrivacyCard>
+
+          <PrivacyCard title="9. Vos droits">
             <p>
               Conformément au RGPD et à la loi Informatique et Libertés, vous disposez des droits
               suivants concernant vos données personnelles :
@@ -370,7 +390,7 @@ function RouteComponent() {
               </li>
               <li>
                 <strong>Droit d'opposition</strong> (art. 21 RGPD) : vous opposer au traitement de
-                vos données à des fins de prospection ou pour motif légitime
+                vos données pour motif légitime
               </li>
               <li>
                 <strong>Droit de retirer votre consentement</strong> à tout moment, sans affecter la
@@ -379,9 +399,9 @@ function RouteComponent() {
             </ul>
             <p>
               Vous pouvez exercer ces droits en contactant le responsable du traitement (voir
-              section concernée). Si vous estimez que vos droits ne sont pas respectés, vous pouvez
-              adresser une réclamation à l'autorité de contrôle compétente en France, la Commission
-              Nationale de l'Informatique et des Libertés (CNIL) via leur site internet :{' '}
+              section 2). Si vous estimez que vos droits ne sont pas respectés, vous pouvez adresser
+              une réclamation à l'autorité de contrôle compétente en France, la Commission Nationale
+              de l'Informatique et des Libertés (CNIL) :{' '}
               <a href="https://www.cnil.fr" target="_blank" rel="noopener noreferrer">
                 https://www.cnil.fr
               </a>
@@ -389,7 +409,7 @@ function RouteComponent() {
             </p>
           </PrivacyCard>
 
-          <PrivacyCard title="8. Suppression du compte">
+          <PrivacyCard title="10. Suppression du compte">
             <p>
               Vous pouvez supprimer votre compte à tout moment depuis vos{' '}
               <Link to="/account/settings">paramètres de compte</Link>. Cette action est{' '}
@@ -397,7 +417,7 @@ function RouteComponent() {
             </p>
           </PrivacyCard>
 
-          <PrivacyCard title="9. Modifications de cette politique">
+          <PrivacyCard title="11. Modifications de cette politique">
             <p>
               Cette politique de confidentialité peut être mise à jour à tout moment. La date de
               dernière mise à jour est indiquée en haut de cette page.
@@ -413,7 +433,7 @@ function PrivacyCard({ title, children }: PropsWithChildren<{ title: string }>) 
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="scroll-m-20 text-2xl font-bold tracking-tight transition-colors">
+        <CardTitle className="scroll-m-20 font-serif text-2xl font-bold tracking-tight transition-colors">
           {title}
         </CardTitle>
       </CardHeader>
