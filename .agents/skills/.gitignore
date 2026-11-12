@@ -1,11 +1,11 @@
 # pnpm
 /devtools-vite-plugin
-/drizzle
 /fuzzy-ranking
 /getting-started
 /migrate-from-nextjs
 /migrate-from-react-router
 /migrate-v8-to-v9
+/pnpm-drizzle-kit-drizzle
 /react-router
 /react-start
 /router-plugin
