@@ -1,23 +1,28 @@
 {
-    "version": 1,
-    "skills": {
-        "better-auth-best-practices": {
-            "source": "better-auth/skills",
-            "sourceType": "github",
-            "skillPath": "better-auth/best-practices/SKILL.md",
-            "computedHash": "61ba0ef64ed2e7c424401cc848ca33dd6d790a720c44727717dc0c5cba5fc122"
-        },
-        "better-auth-security-best-practices": {
-            "source": "better-auth/skills",
-            "sourceType": "github",
-            "skillPath": "security/SKILL.md",
-            "computedHash": "7a230edf3a24ce18162cb4379f59b6a19b8d24ca04db530609d0f15cede556dc"
-        },
-        "react-call": {
-            "source": "desko27/react-call",
-            "sourceType": "github",
-            "skillPath": "skills/react-call/SKILL.md",
-            "computedHash": "81852b665736193af9d2fd420dbf1c5e9beffdf36f48c678b9985b3f3bd06ab5"
-        }
+  "version": 2,
+  "skills": {
+    "better-auth-best-practices": {
+      "source": "better-auth/skills",
+      "sourceType": "github",
+      "skillPath": "better-auth/best-practices/SKILL.md",
+      "computedHash": "bb7bb27183fc02da42fa74a05727e038ab89d0fdbdbafa40dbba3a41e727ecb4"
+    },
+    "better-auth-security-best-practices": {
+      "source": "better-auth/skills",
+      "sourceType": "github",
+      "skillPath": "security/SKILL.md",
+      "computedHash": "36e9710eaa13c61c00bec00a4902fdc6ed829e6de13127238ae57494e93c1d9d"
+    },
+    "drizzle": {
+      "source": "./node_modules/.pnpm/drizzle-kit@1.0.0-rc.5_drizzle-orm@1.0.0-rc.5_@libsql+client@0.18.0_@opentelemetry+api@1.10.0_zod@4.6.7_/node_modules/drizzle-kit/skills",
+      "sourceType": "local",
+      "computedHash": "c91331769b0cf9a9f5592d9ea5cf0998fdfcd81c4ed1fb0d8784ada819a797e9"
+    },
+    "react-call": {
+      "source": "desko27/react-call",
+      "sourceType": "github",
+      "skillPath": "skills/react-call/SKILL.md",
+      "computedHash": "08663ec0dd1cf49091f2c66508633a1f9b72b9f35fa052559cca5efa99792d31"
     }
+  }
 }
