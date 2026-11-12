@@ -1,28 +1,28 @@
 {
-  "version": 2,
-  "skills": {
-    "better-auth-best-practices": {
-      "source": "better-auth/skills",
-      "sourceType": "github",
-      "skillPath": "better-auth/best-practices/SKILL.md",
-      "computedHash": "bb7bb27183fc02da42fa74a05727e038ab89d0fdbdbafa40dbba3a41e727ecb4"
-    },
-    "better-auth-security-best-practices": {
-      "source": "better-auth/skills",
-      "sourceType": "github",
-      "skillPath": "security/SKILL.md",
-      "computedHash": "36e9710eaa13c61c00bec00a4902fdc6ed829e6de13127238ae57494e93c1d9d"
-    },
-    "drizzle": {
-      "source": "./node_modules/.pnpm/drizzle-kit@1.0.0-rc.5_drizzle-orm@1.0.0-rc.5_@libsql+client@0.18.0_@opentelemetry+api@1.10.0_zod@4.6.7_/node_modules/drizzle-kit/skills",
-      "sourceType": "local",
-      "computedHash": "c91331769b0cf9a9f5592d9ea5cf0998fdfcd81c4ed1fb0d8784ada819a797e9"
-    },
-    "react-call": {
-      "source": "desko27/react-call",
-      "sourceType": "github",
-      "skillPath": "skills/react-call/SKILL.md",
-      "computedHash": "08663ec0dd1cf49091f2c66508633a1f9b72b9f35fa052559cca5efa99792d31"
+    "version": 2,
+    "skills": {
+        "better-auth-best-practices": {
+            "source": "better-auth/skills",
+            "sourceType": "github",
+            "skillPath": "better-auth/best-practices/SKILL.md",
+            "computedHash": "bb7bb27183fc02da42fa74a05727e038ab89d0fdbdbafa40dbba3a41e727ecb4"
+        },
+        "better-auth-security-best-practices": {
+            "source": "better-auth/skills",
+            "sourceType": "github",
+            "skillPath": "security/SKILL.md",
+            "computedHash": "36e9710eaa13c61c00bec00a4902fdc6ed829e6de13127238ae57494e93c1d9d"
+        },
+        "drizzle": {
+            "source": "./node_modules/.pnpm/drizzle-kit@1.0.0-rc.5_drizzle-orm@1.0.0-rc.5_@libsql+client@0.18.0_@opentelemetry+api@1.10.0_zod@4.6.7_/node_modules/drizzle-kit/skills",
+            "sourceType": "local",
+            "computedHash": "c91331769b0cf9a9f5592d9ea5cf0998fdfcd81c4ed1fb0d8784ada819a797e9"
+        },
+        "react-call": {
+            "source": "desko27/react-call",
+            "sourceType": "github",
+            "skillPath": "skills/react-call/SKILL.md",
+            "computedHash": "08663ec0dd1cf49091f2c66508633a1f9b72b9f35fa052559cca5efa99792d31"
+        }
     }
-  }
 }
