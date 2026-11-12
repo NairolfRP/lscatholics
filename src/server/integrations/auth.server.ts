@@ -3,7 +3,7 @@ import { waitUntil } from '@vercel/functions'
 import { betterAuth } from 'better-auth/minimal'
 import { envClient } from '#/config/env-client'
 import { env } from '#/config/env.server'
-import { isDev, isProd } from '#/utils/environment.ts'
+import { isDev, isProd, isTest } from '#/utils/environment.ts'
 import { db } from '#server/db'
 import * as authSchema from '#server/db/schema/auth-schema'
 import { AUTH_PLUGINS } from '#server/integrations/auth/plugins.ts'
@@ -70,7 +70,7 @@ export const auth = betterAuth({
       trustedProviders: ['discord'],
       allowDifferentEmails: true,
     },
-    encryptOAuthTokens: true,
+    encryptOAuthTokens: !isTest,
     storeStateStrategy: 'cookie',
   },
   verification: {

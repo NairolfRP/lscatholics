@@ -2,7 +2,7 @@ import * as Sentry from '@sentry/tanstackstart-react'
 import { envClient } from '#/config/env-client'
 import { beforeSendLog, dataCollection } from '#/config/sentry'
 
-const dsn = import.meta.env.DEV ? undefined : envClient.VITE_SENTRY_DSN
+const dsn = import.meta.env.PROD ? envClient.VITE_SENTRY_DSN : undefined
 
 if (dsn) {
   Sentry.init({

@@ -21,7 +21,20 @@ export async function createTestUser(
     banned: false,
     ...override,
   })
+
   await testUtils.saveUser(user)
+
+  const authContext = await auth.$context
+
+  await authContext.internalAdapter.createAccount({
+    accountId: '1234',
+    providerId: 'gtaw',
+    userId: user.id,
+    accessToken: 'fake-access-token',
+    refreshToken: 'fake-refresh-token',
+    accessTokenExpiresAt: new Date(Date.now() + 31536000000),
+    refreshTokenExpiresAt: new Date(Date.now() + 31536000000),
+  })
 
   const cookies = await testUtils.getCookies({
     userId: user.id,
@@ -53,4 +66,23 @@ export async function deleteTestUser(userId: string) {
   const testUtils = ctx.test
 
   await testUtils.deleteUser(userId)
+}
+
+const CURRENT_CHARACTER_COOKIE_NAME = 'lscatholics.current_character'
+
+export async function setCurrentCharacter(context: BrowserContext, characterId: number) {
+  const prevCookies = await context.cookies()
+
+  await context.addCookies([
+    ...prevCookies,
+    {
+      name: CURRENT_CHARACTER_COOKIE_NAME,
+      value: String(characterId),
+      domain: 'localhost',
+      path: '/',
+      httpOnly: true,
+      secure: false,
+      sameSite: 'Lax',
+    },
+  ])
 }

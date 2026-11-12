@@ -7,7 +7,9 @@ import { env } from '#/config/env.server'
 import type { GTAWClientFetchFactionsResponse } from '#/shared/types/gtaw-client.types'
 import { logger } from '../integrations/logger'
 
-const BASE_URL = env.GTAW_SERVER === 'fr' ? 'https://ucp-fr.gta.world' : 'https://ucp.gta.world'
+const BASE_URL =
+  env.GTAW_API_URL ??
+  (env.GTAW_SERVER === 'fr' ? 'https://ucp-fr.gta.world' : 'https://ucp.gta.world')
 const USER_AGENT = 'BetterAuth/1.0'
 
 type CacheEvent = { req: Request }

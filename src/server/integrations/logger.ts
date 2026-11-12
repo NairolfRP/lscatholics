@@ -28,7 +28,8 @@ export class Logger implements ILogger {
   private static createRootLogger(): PinoLogger {
     const options = {
       name: 'app-logger',
-      level: env.LOG_LEVEL || (import.meta.env.DEV ? 'debug' : 'info'),
+      // oxlint-disable-next-line @typescript/no-unnecessary-condition
+      level: env.LOG_LEVEL || (import.meta.env?.DEV ? 'debug' : 'info'),
       serializers: {
         err: stdSerializers.err,
         req: stdSerializers.req,
@@ -47,7 +48,8 @@ export class Logger implements ILogger {
       },
     }
 
-    if (import.meta.env.DEV) {
+    // oxlint-disable-next-line @typescript/no-unnecessary-condition
+    if (import.meta.env?.DEV) {
       return pino(options, pretty({ colorize: true, translateTime: 'SYS:standard' }))
     }
 

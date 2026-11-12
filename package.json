@@ -31,7 +31,7 @@
         "vercel-build": "vite build && ([ \"$VERCEL_ENV\" != \"production\" ] || drizzle-kit migrate)",
         "preview": "vite preview",
         "test": "vitest --exclude '**/*.bench.*'",
-        "pretest:e2e": "mkdir -p tmp && rm -f tmp/e2e.db*",
+        "pretest:e2e": "mkdir -p tmp && rm -f tmp/e2e.db* && dotenv run --override -f .env.e2e -- drizzle-kit migrate",
         "test:e2e": "playwright test",
         "posttest:e2e": "rm -f tmp/e2e.db*",
         "bench": "vitest bench --run --project 'bench*'",

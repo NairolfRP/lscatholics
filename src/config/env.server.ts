@@ -27,6 +27,7 @@ export const env = createEnv({
     BETTER_AUTH_URL: z.url(),
     BETTER_AUTH_SECRET: z.string().min(32),
     OAUTH_PROXY_SECRET: z.string(),
+    GTAW_API_URL: z.url().optional(),
     GTAW_SERVER: z.enum(['en', 'fr']).optional().default('en'),
     GTAW_OAUTH_CLIENT_ID: z.string(),
     GTAW_OAUTH_CLIENT_SECRET: z.string(),
