@@ -11,6 +11,7 @@ import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/react'
 import { envClient } from '#/config/env-client'
 import { ConfirmDialog } from '#/shared/components/callable/confirm-dialog'
+import { CefBlocker } from '#/shared/components/cef-blocker'
 import ScrollToTopButton from '#/shared/components/scroll-to-top'
 import { Toaster } from '#/shared/components/ui/toast'
 import { ThemeProvider } from '#/shared/providers/theme-provider'
@@ -99,6 +100,9 @@ function RootDocument() {
     select: (state) => state.location.pathname.startsWith('/dashboard'),
   })
 
+  // Detect CFX CEF browser via user agent
+  const isCefBrowser = typeof navigator !== 'undefined' && navigator.userAgent.includes('CitizenFX')
+
   return (
     <html lang={envClient.VITE_LANGUAGE} suppressHydrationWarning>
       <head>
@@ -109,7 +113,14 @@ function RootDocument() {
         suppressHydrationWarning
       >
         <ThemeProvider defaultTheme="light" storageKey="theme">
-          <Outlet />
+          {isCefBrowser ? (
+            <CefBlocker
+              link="https://lscatholics.vercel.app"
+              message="Cette application ne fonctionne plus via le navigateur intégré de FiveM."
+            />
+          ) : (
+            <Outlet />
+          )}
           <ScrollToTopButton />
           <Toaster />
           <ConfirmDialog />
