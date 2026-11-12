@@ -18,7 +18,7 @@ export function getHomeStats() {
       icon: LanguagesIcon,
       value: 42,
       label: 'Langues différentes',
-      colorClass: 'text-catholic-purple dark:text-catholic-purple-light',
+      colorClass: 'text-primary dark:text-primary',
     },
     {
       icon: UsersRoundIcon,
@@ -30,7 +30,7 @@ export function getHomeStats() {
       icon: HistoryIcon,
       value: yearsBetween(ARCHDIOCESAN_HISTORY_START_DATE, new Date()),
       label: "ans d'histoire",
-      colorClass: 'text-catholic-blue dark:text-catholic-blue',
+      colorClass: 'text-primary dark:text-primary',
     },
   ]
 }

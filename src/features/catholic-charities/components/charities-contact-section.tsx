@@ -9,7 +9,7 @@ const rows = [
 
 export function CharitiesContactSection() {
   return (
-    <section id="contact" className="scroll-mt-(--header-height) bg-catholic-blue py-24 md:py-28">
+    <section id="contact" className="scroll-mt-(--header-height) bg-primary py-24 md:py-28">
       <div className="container mx-auto grid items-center gap-14 px-4 sm:px-6 lg:grid-cols-2 lg:px-8">
         <div>
           <p className="text-xs font-semibold tracking-[0.3em] text-amber-400 uppercase">

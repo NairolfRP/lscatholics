@@ -10,13 +10,11 @@ export function CharitiesHelpSection() {
     <section id="participer" className="scroll-mt-(--header-height) bg-muted py-24 md:py-32">
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto mb-16 max-w-3xl text-center">
-          <p className="text-xs font-semibold tracking-[0.3em] text-catholic-blue uppercase">
-            Ensemble
-          </p>
+          <p className="text-xs font-semibold tracking-[0.3em] text-primary uppercase">Ensemble</p>
           <h2 className="mt-4 text-4xl font-extrabold tracking-tight text-balance md:text-5xl">
-            Comment <span className="text-catholic-blue">participer</span>
+            Comment <span className="text-primary">participer</span>
           </h2>
-          <Ornament className="mt-6 text-catholic-blue" />
+          <Ornament className="mt-6 text-primary" />
         </div>
         <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
           {helpCards.map(({ icon: Icon, title, body, cta, to, hash, accent }) => (

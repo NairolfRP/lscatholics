@@ -33,7 +33,7 @@ function PostsComponent() {
     <>
       <Hero
         variant="minimal"
-        backgroundColor="bg-linear-to-r from-catholic-purple to-catholic-red"
+        backgroundColor="bg-linear-to-r from-primary to-catholic-red"
         title="Actualités"
         subtitle="Restez informé de la vie de notre archidiocèse"
       />

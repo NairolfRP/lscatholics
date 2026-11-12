@@ -99,7 +99,7 @@ export function ProgramShowPage() {
               </ul>
             </nav>
 
-            <div className="rounded-2xl bg-catholic-blue p-6 text-white">
+            <div className="rounded-2xl bg-primary p-6 text-white">
               <p className="text-xs font-semibold tracking-widest text-amber-400 uppercase">
                 Coordonnées
               </p>

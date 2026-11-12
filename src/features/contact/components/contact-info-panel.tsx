@@ -37,7 +37,7 @@ export function ContactInfoPanel() {
 
           <InfoRow
             icon={MapPinIcon}
-            iconClassName="bg-catholic-purple/10 text-catholic-purple"
+            iconClassName="bg-primary/10 text-primary"
             label="Adresse"
             value={
               <span className="font-medium">

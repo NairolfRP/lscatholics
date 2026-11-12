@@ -25,7 +25,7 @@ function RouteComponent() {
     <>
       <Hero
         variant="split"
-        backgroundColor="var(--color-catholic-purple)"
+        backgroundColor="var(--color-primary)"
         imageSrc="/assets/images/olscathedral.webp"
         imageAlt="La cathédrale Notre-Dame-des-Saints de Los Santos"
         title={

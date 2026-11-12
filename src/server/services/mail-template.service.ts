@@ -1,11 +1,11 @@
 const FONT_FAMILY = "Georgia,'Times New Roman',serif"
-const PRIMARY_COLOR = '#0693e3'
-const ACCENT_COLOR = '#daa520'
+const PRIMARY_COLOR = '#2E374D'
+const ACCENT_COLOR = '#DB9B24'
 const PAGE_BACKGROUND = '#faf7f0'
 const CARD_BORDER = '#e7dfd0'
 const TEXT_COLOR = '#111827'
 const MUTED_COLOR = '#6f737c'
-const LABEL_COLOR = '#8a6d1f'
+const LABEL_COLOR = '#9B6B40'
 const DEFAULT_SEPARATOR = '❦'
 
 export interface MailLink {

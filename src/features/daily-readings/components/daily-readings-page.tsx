@@ -28,7 +28,7 @@ export function DailyReadingsPage({ date }: { date: string }) {
     <>
       <Hero
         variant="minimal"
-        backgroundColor="bg-linear-to-r from-catholic-purple to-catholic-red"
+        backgroundColor="bg-linear-to-r from-primary to-catholic-red"
         title="Lectures du jour"
         subtitle="La Parole de Dieu pour aujourd'hui, tirée de la liturgie de l'Église catholique"
       />
@@ -158,7 +158,7 @@ export function DailyReadingsPageSkeleton() {
     <>
       <Hero
         variant="minimal"
-        backgroundColor="bg-linear-to-r from-catholic-purple to-catholic-red"
+        backgroundColor="bg-linear-to-r from-primary to-catholic-red"
         title="Lectures du jour"
         subtitle="La Parole de Dieu pour aujourd'hui, tirée de la liturgie de l'Église catholique"
       />

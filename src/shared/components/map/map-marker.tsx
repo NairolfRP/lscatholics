@@ -22,7 +22,7 @@ type Props = {
 function parishPinHtml(active: boolean) {
   const pin = active ? 'var(--color-catholic-gold)' : '#ffffff'
   const pinStroke = active ? 'var(--color-catholic-red)' : 'rgba(0, 0, 0, 0.28)'
-  const cross = active ? '#ffffff' : 'var(--color-catholic-purple)'
+  const cross = active ? '#ffffff' : 'var(--color-primary)'
 
   return `
     <svg viewBox="0 0 28 36" width="28" height="36" aria-hidden="true">

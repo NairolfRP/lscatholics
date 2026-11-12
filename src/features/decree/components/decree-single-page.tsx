@@ -24,7 +24,7 @@ export function DecreeSinglePage() {
     <article className="contents">
       <Hero
         variant="minimal"
-        backgroundColor="bg-linear-to-r from-catholic-purple to-catholic-red"
+        backgroundColor="bg-linear-to-r from-primary to-catholic-red"
         title={
           <>
             <Badge variant="secondary" className="mb-4 bg-white/90 text-neutral-900 hover:bg-white">
@@ -159,7 +159,7 @@ function DecreeBlockItem({ block }: { block: DecreeBlock }) {
 export function DecreeSinglePageSkeleton() {
   return (
     <>
-      <section className="relative flex w-full overflow-hidden bg-linear-to-r from-catholic-purple to-catholic-red pt-[calc(var(--header-height)+1rem)] pb-16">
+      <section className="relative flex w-full overflow-hidden bg-linear-to-r from-primary to-catholic-red pt-[calc(var(--header-height)+1rem)] pb-16">
         <div className="relative mx-auto flex w-full max-w-7xl flex-col justify-center gap-5 px-6 md:px-10">
           <Skeleton className="h-6 w-40 rounded-full bg-white/20" />
           <Skeleton className="h-10 w-2/3 bg-white/20 sm:h-12 md:h-16" />

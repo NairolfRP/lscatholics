@@ -16,7 +16,6 @@ import { latestEventsQueryOptions } from '#/features/home/queries'
 import { Separator } from '#/shared/components/ui/separator'
 import { Typography } from '#/shared/components/ui/typography'
 import Hero from '#/shared/layouts/app/components/hero'
-import { cn } from '#/shared/lib/utils'
 import type { RoutePath } from '#/shared/types/route.types'
 import { latestPostsQueryOptions } from '#shared/queries/post.queries.ts'
 
@@ -104,17 +103,12 @@ function Home() {
         <section className="bg-secondary py-16">
           <div className="container mx-auto px-4 lg:px-8">
             <div className="grid grid-cols-1 gap-12 text-center sm:grid-cols-2 lg:grid-cols-4">
-              {getHomeStats().map(({ icon: Icon, value, label, colorClass }) => (
+              {getHomeStats().map(({ icon: Icon, value, label }) => (
                 <div key={label} className="space-y-3">
-                  <span
-                    className={cn(
-                      'mx-auto flex size-12 items-center justify-center rounded-full bg-black/10',
-                      colorClass
-                    )}
-                  >
+                  <span className="mx-auto flex size-12 items-center justify-center rounded-full bg-white/10 text-secondary-foreground">
                     <Icon className="size-6" />
                   </span>
-                  <div className={cn('text-4xl font-bold', colorClass)}>{value}</div>
+                  <div className="text-4xl font-bold text-secondary-foreground">{value}</div>
                   <div className="text-sm font-medium tracking-wide text-secondary-foreground uppercase">
                     {label}
                   </div>

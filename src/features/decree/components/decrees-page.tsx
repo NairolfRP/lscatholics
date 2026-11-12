@@ -48,7 +48,7 @@ export function DecreesPage() {
     <>
       <Hero
         variant="minimal"
-        backgroundColor="bg-linear-to-r from-catholic-purple to-catholic-red"
+        backgroundColor="bg-linear-to-r from-primary to-catholic-red"
         title="Décrets et lois"
         subtitle="Les actes de droit canonique émis par l'Archevêché : décisions exécutives, lois canoniques, actes administratifs et jugements."
       />
@@ -213,7 +213,7 @@ export function DecreesPageSkeleton() {
     <>
       <Hero
         variant="minimal"
-        backgroundColor="bg-linear-to-r from-catholic-purple to-catholic-red"
+        backgroundColor="bg-linear-to-r from-primary to-catholic-red"
         title="Décrets et lois"
         subtitle="Les actes de droit canonique émis par l'Archevêché : décisions exécutives, lois canoniques, actes administratifs et jugements."
       />

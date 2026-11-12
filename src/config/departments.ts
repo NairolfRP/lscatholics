@@ -61,7 +61,7 @@ export const departments: Department[] = [
       "Le Chancelier est garde des sceaux de l'Archidiocèse et responsable des archives et des actes officiels. Il dirige l'administration temporelle de l'Archidiocèse et coordonne les départements de la Curie.",
     category: 'curia',
     page: {
-      banner: { color: 'bg-catholic-blue' },
+      banner: { color: 'bg-primary' },
       director: {
         position: 'Chancelier',
       },
@@ -101,7 +101,7 @@ export const departments: Department[] = [
       "Le Département des Communications est chargé de la communication de l'archidiocèse ainsi que des relations avec les médias.",
     category: 'curia',
     page: {
-      banner: { color: 'bg-catholic-blue' },
+      banner: { color: 'bg-primary' },
       director: {
         position: 'Vice-Chancelier',
       },
@@ -179,7 +179,7 @@ export const departments: Department[] = [
       "Le Bureau du Conseiller juridique répond aux questions légales des paroisses et départements, et supervise les affaires juridiques de l'archidiocèse.",
     category: 'curia',
     page: {
-      banner: { color: 'bg-catholic-blue' },
+      banner: { color: 'bg-primary' },
       director: {
         position: 'Conseiller juridique',
       },

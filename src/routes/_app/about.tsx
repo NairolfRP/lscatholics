@@ -35,12 +35,15 @@ function AboutUsPage() {
         variant="image"
         title={
           <Typography variant="h1">
-            <span className="bg-linear-135 from-[#daa520] to-[#b8860b] bg-clip-text text-transparent">
+            <span className="bg-linear-135 from-[#DB9B24] to-[#b8860b] bg-clip-text text-transparent">
               Nous Sommes
             </span>
             <br />
-            Une <span className="text-primary">Famille</span> de{' '}
-            <span className="text-catholic-purple dark:text-catholic-purple-light">Familles</span>
+            Une <span className="text-[color-mix(in_oklch,var(--primary),white_45%)]">
+              Famille
+            </span>{' '}
+            de{' '}
+            <span className="text-[color-mix(in_oklch,var(--secondary),white_40%)]">Familles</span>
           </Typography>
         }
         subtitle={
@@ -52,40 +55,42 @@ function AboutUsPage() {
         imageSrc="/assets/images/olacathedral-cross.webp"
         imagePosition="50% 1%"
       />
-      <section className="bg-catholic-purple py-16 text-catholic-purple-foreground">
+      <section className="bg-primary py-16 text-primary-foreground">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 gap-8 text-center md:grid-cols-4">
             <div>
-              <div className="mb-1 text-4xl font-bold text-amber-500">
+              <div className="mb-1 text-primary-foreground">
                 <ChurchIcon className="mx-auto size-9 text-inherit" />
               </div>
-              <div className="mb-2 text-4xl font-bold text-amber-500">288</div>
-              <div className="font-medium text-catholic-purple-foreground">Paroisses</div>
+              <div className="mb-2 text-4xl font-bold text-primary-foreground">288</div>
+              <div className="font-medium text-primary-foreground/90">Paroisses</div>
             </div>
             <div>
-              <div className="mb-1 text-4xl font-bold text-amber-500">
+              <div className="mb-1 text-primary-foreground">
                 <UsersRoundIcon className="mx-auto size-9 text-inherit" />
               </div>
-              <div className="mb-2 text-4xl font-bold text-amber-500">{formattedNbOfFaithful}</div>
-              <div className="font-medium text-catholic-purple-foreground">Fidèles catholiques</div>
+              <div className="mb-2 text-4xl font-bold text-primary-foreground">
+                {formattedNbOfFaithful}
+              </div>
+              <div className="font-medium text-primary-foreground/90">Fidèles catholiques</div>
             </div>
             <div>
-              <div className="mb-1 text-4xl font-bold text-amber-500">
+              <div className="mb-1 text-primary-foreground">
                 <School2Icon className="mx-auto size-9 text-inherit" />
               </div>
-              <div className="mb-2 text-4xl font-bold text-amber-500">265</div>
-              <div className="font-medium text-catholic-purple-foreground">
+              <div className="mb-2 text-4xl font-bold text-primary-foreground">265</div>
+              <div className="font-medium text-primary-foreground/90">
                 Écoles et lycées catholiques
               </div>
             </div>
             <div>
-              <div className="mb-1 text-4xl font-bold text-amber-500">
+              <div className="mb-1 text-primary-foreground">
                 <GraduationCapIcon className="mx-auto size-9 text-inherit" />
               </div>
-              <div className="mb-2 text-4xl font-bold text-amber-500">
+              <div className="mb-2 text-4xl font-bold text-primary-foreground">
                 {formattedNbOfEnrolledStudents}+
               </div>
-              <div className="font-medium text-catholic-purple-foreground">Étudiants inscrits</div>
+              <div className="font-medium text-primary-foreground/90">Étudiants inscrits</div>
             </div>
           </div>
         </div>
@@ -157,7 +162,7 @@ function AboutUsPage() {
         <div className="relative z-10 container mx-auto w-full px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col items-center justify-between gap-8 xl:flex-row">
             <div className="max-w-4xl space-y-5">
-              <h2 className="border-b border-secondary text-2xl font-bold text-secondary uppercase md:text-5xl">
+              <h2 className="border-b border-white/60 text-2xl font-bold text-white uppercase md:text-5xl">
                 Notre impact
               </h2>
               <p className="md:text-lg">

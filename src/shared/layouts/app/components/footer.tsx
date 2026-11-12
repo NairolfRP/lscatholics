@@ -12,7 +12,11 @@ export function Footer() {
   const currentYear = getCurrentYear()
 
   return (
-    <footer className="bg-catholic-purple px-5 pb-safe text-catholic-purple-foreground">
+    <footer className="bg-primary px-5 pb-safe text-primary-foreground">
+      <div
+        className="h-2 w-full bg-linear-to-r from-transparent via-catholic-gold to-transparent"
+        aria-hidden="true"
+      />
       <div className="container mx-auto py-12">
         <div className="grid gap-8 sm:grid-cols-2 md:grid-cols-4">
           {footerNavItems.map((item) => (
@@ -42,7 +46,7 @@ export function Footer() {
             </Typography>
             <div className="space-y-4 text-sm">
               <div className="flex items-start gap-3">
-                <MapPinIcon className="mt-1.5 h-4 w-4 shrink-0 text-catholic-gold" />
+                <MapPinIcon className="mt-1.5 h-4 w-4 shrink-0" />
                 <div>
                   <p className="flex flex-col font-medium">
                     <span>Cathédrale Notre-Dame-des-Saints</span>
@@ -52,7 +56,7 @@ export function Footer() {
                 </div>
               </div>
               <div className="flex items-center gap-3">
-                <PhoneIcon className="h-4 w-4 shrink-0 text-catholic-gold" />
+                <PhoneIcon className="h-4 w-4 shrink-0" />
                 <span className="opacity-80">700</span>
               </div>
             </div>
@@ -75,7 +79,7 @@ export function Footer() {
                     title={social.label}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex size-12 items-center justify-center rounded-full bg-white/10 transition-colors hover:bg-catholic-gold md:size-8"
+                    className="flex size-12 items-center justify-center rounded-full bg-white/10 transition-colors hover:bg-secondary md:size-8"
                   >
                     <SocialIcon className="size-8 md:size-4" />
                   </a>
@@ -86,7 +90,7 @@ export function Footer() {
         </div>
       </div>
 
-      <div className="mb-10 border-t border-catholic-purple-foreground/20 md:mb-0">
+      <div className="mb-10 border-t border-primary-foreground/20 md:mb-0">
         <div className="container mx-auto py-6 md:px-4">
           <div className="mb-4 text-sm md:flex md:items-center md:justify-between">
             <p className="mb-4 text-center opacity-80 md:mb-0 md:text-left">
@@ -116,7 +120,7 @@ export function Footer() {
               . ))
             </p>
             <p className="mt-3 text-xs">
-              (( Développé avec <span className="text-[#e25555]">❤</span> par{' '}
+              (( Développé avec <span className="text-catholic-gold">❤</span> par{' '}
               <a
                 className="text-inherit"
                 href="https://forum-fr.gta.world/profile/11040-nairolf/"

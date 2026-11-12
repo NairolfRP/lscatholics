@@ -8,7 +8,7 @@ export const helpCards: HelpCard[] = [
     body: 'Chaque offrande, petite ou grande, se transforme en nourriture, en abri, en espérance.',
     cta: 'Donner maintenant',
     to: '/donate',
-    accent: 'bg-catholic-blue',
+    accent: 'bg-primary',
   },
   {
     icon: HeartHandshake,
@@ -16,7 +16,7 @@ export const helpCards: HelpCard[] = [
     body: 'Offrez votre temps et vos talents au service de vos frères et sœurs dans le besoin.',
     cta: "S'engager",
     to: '/volunteers',
-    accent: 'bg-catholic-purple',
+    accent: 'bg-primary',
   },
   {
     icon: LifeBuoy,

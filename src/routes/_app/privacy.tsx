@@ -21,7 +21,7 @@ function RouteComponent() {
     <>
       <Hero
         variant="minimal"
-        backgroundColor="bg-linear-to-r from-primary to-catholic-blue"
+        backgroundColor="bg-linear-to-r from-primary to-primary/80"
         title="Politique de confidentialité"
         subtitle={`Dernière mise à jour : ${lastUpdated}`}
       />

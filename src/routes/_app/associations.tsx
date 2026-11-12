@@ -34,7 +34,7 @@ function AssociationsPage() {
       <Hero
         variant="minimal"
         title="Associations de fidèles"
-        backgroundColor="bg-linear-to-r from-catholic-purple to-catholic-blue"
+        backgroundColor="bg-linear-to-r from-secondary to-primary"
         subtitle="Le registre des associations privées et publiques de fidèles ayant reçues une personnalité juridique en droit de l'Église dans l'Archidiocèse de Los Santos."
       />
 

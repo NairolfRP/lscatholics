@@ -21,7 +21,7 @@ function ParishesPage() {
       <Hero
         variant="minimal"
         title="Nos Paroisses"
-        backgroundColor="bg-linear-to-r from-catholic-purple to-catholic-blue"
+        backgroundColor="bg-linear-to-r from-secondary to-primary"
         subtitle="Découvrez les communautés de foi qui composent l'archidiocèse de Los Santos."
       />
 

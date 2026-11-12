@@ -121,13 +121,13 @@ export default function Navigation() {
                                   aria-current={
                                     isPathActive(subItem.to, pathname) ? 'page' : undefined
                                   }
-                                  className="group block space-y-1 rounded-md p-3 leading-none no-underline transition-colors outline-none select-none hover:bg-transparent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                                  className="group block space-y-1 rounded-md p-3 leading-none no-underline transition-colors outline-none select-none hover:bg-transparent hover:text-secondary focus:bg-secondary/10 focus:text-secondary"
                                 />
                               }
                             >
                               <div
                                 className={cn(
-                                  'text-sm leading-none font-medium transition-colors group-hover:text-catholic-gold',
+                                  'text-sm leading-none font-medium transition-colors group-hover:text-secondary',
                                   isPathActive(subItem.to, pathname) && 'text-catholic-gold'
                                 )}
                               >
@@ -169,7 +169,7 @@ export default function Navigation() {
               buttonVariants({
                 variant: 'secondary',
               }),
-              'py-5 font-bold hover:bg-primary'
+              'py-5 font-bold hover:bg-primary hover:text-primary-foreground'
             )}
             aria-label="Faire un don"
           >
@@ -286,7 +286,7 @@ function SiteMobileNavigationItem({ item, onClose }: { item: NavItem; onClose: (
         >
           {item.label}
         </AccordionTrigger>
-        <AccordionContent className="flex flex-col gap-3 pb-0 pl-3 [&_a]:no-underline [&_a]:hover:bg-secondary [&_a]:hover:text-primary-foreground">
+        <AccordionContent className="flex flex-col gap-3 pb-0 pl-3 [&_a]:no-underline [&_a]:hover:bg-secondary [&_a]:hover:text-secondary-foreground">
           {item.children.map((child) => {
             const childActive = child.to ? isPathActive(child.to, pathname) : false
 
