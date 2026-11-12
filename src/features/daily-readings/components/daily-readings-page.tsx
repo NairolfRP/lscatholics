@@ -34,7 +34,7 @@ export function DailyReadingsPage({ date }: { date: string }) {
       />
 
       <main className="container mx-auto px-4 pt-8 pb-24">
-        <div className="mx-auto mt-6 grid max-w-7xl grid-cols-1 gap-10 lg:grid-cols-3 lg:gap-8">
+        <div className="mx-auto mt-6 grid max-w-[90rem] grid-cols-1 gap-10 lg:grid-cols-3 lg:gap-8">
           <div className="min-w-0 space-y-5 lg:col-span-2">
             {isPending && <DailyReadingsListSkeleton />}
 
@@ -164,7 +164,7 @@ export function DailyReadingsPageSkeleton() {
       />
 
       <main className="container mx-auto px-4 pt-8 pb-24">
-        <div className="mx-auto mt-6 grid max-w-7xl grid-cols-1 gap-10 lg:grid-cols-3 lg:gap-8">
+        <div className="mx-auto mt-6 grid max-w-[90rem] grid-cols-1 gap-10 lg:grid-cols-3 lg:gap-8">
           <div className="min-w-0 space-y-5 lg:col-span-2">
             <DailyReadingsListSkeleton />
           </div>

@@ -28,7 +28,7 @@ export function EmploymentApplicationPage() {
         subtitle="Rejoignez l'équipe de l'Archidiocèse de Los Santos. Remplissez le formulaire de candidature ci-dessous : seuls les champs marqués d'un astérisque sont obligatoires."
       />
 
-      <section className="container mx-auto max-w-7xl px-4 pb-20 sm:px-6 lg:px-8">
+      <section className="container mx-auto max-w-[90rem] px-4 pb-20 sm:px-6 lg:px-8">
         <div className="-mt-10 flex justify-start">
           <Link
             to="/job/$slug"

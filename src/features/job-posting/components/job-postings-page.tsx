@@ -69,7 +69,7 @@ export default function JobPostingsPage() {
         title="Offres d'emploi"
         subtitle="Travaillez pour l'archidiocèse de Los Santos"
       />
-      <div className="container mx-auto max-w-7xl px-4 pt-15 pb-20 sm:px-6 lg:px-8">
+      <div className="container mx-auto max-w-[90rem] px-4 pt-15 pb-20 sm:px-6 lg:px-8">
         <Card className="mb-10 border-primary/20 bg-linear-to-br from-primary/5 to-transparent shadow-sm">
           <CardContent className="flex flex-col items-start justify-between gap-6 p-6 sm:p-8 lg:flex-row lg:items-center">
             <div className="max-w-2xl space-y-2">

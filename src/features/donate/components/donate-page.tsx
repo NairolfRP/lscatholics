@@ -15,7 +15,7 @@ export function DonatePage() {
         title={<Typography variant="h1">Soutenir notre communauté</Typography>}
       />
 
-      <section className="container mx-auto max-w-7xl px-4 pt-12 sm:px-6 lg:px-8">
+      <section className="container mx-auto max-w-[90rem] px-4 pt-12 sm:px-6 lg:px-8">
         <div className="mt-8 grid grid-cols-1 items-start gap-5 pb-16 lg:grid-cols-5">
           <div className="flex flex-col gap-5 lg:col-span-3">
             <DonateTabs />

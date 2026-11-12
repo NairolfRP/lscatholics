@@ -239,7 +239,7 @@ export function MinimalHero({
       />
       <div
         className={cn(
-          'relative mx-auto flex w-full max-w-7xl flex-col justify-center px-6 md:px-10',
+          'relative mx-auto flex w-full max-w-[90rem] flex-col justify-center px-6 md:px-10',
           wrapAlign[align]
         )}
       >
@@ -269,7 +269,7 @@ export function SplitHero({
       className={cn('relative w-full overflow-hidden', className)}
       style={{ backgroundColor }}
     >
-      <div className="mx-auto grid max-w-7xl grid-cols-1 md:grid-cols-2">
+      <div className="mx-auto grid max-w-[90rem] grid-cols-1 md:grid-cols-2">
         <div className="relative z-10 flex flex-col justify-center gap-5 px-6 py-16 md:px-10 md:py-24 lg:py-32">
           <Content title={title} subtitle={subtitle} actions={actions}>
             {children}
@@ -330,7 +330,7 @@ export function VideoHero({
       <Overlay opacity={overlayOpacity} />
       <div
         className={cn(
-          'relative mx-auto flex w-full max-w-7xl flex-col justify-end px-6 md:px-10',
+          'relative mx-auto flex w-full max-w-[90rem] flex-col justify-end px-6 md:px-10',
           wrapAlign[align]
         )}
       >

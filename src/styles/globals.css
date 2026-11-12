@@ -16,7 +16,7 @@
   --sb-radius: 99px;
 
   --header-height: calc(var(--spacing) * 30); /* 7.5rem = 120px */
-  --text-base: 1rem;
+  --text-base: 1.125rem;
   --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
   --font-serif: 'Playfair Display', ui-serif, Georgia, serif;
   --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, monospace;
@@ -243,8 +243,23 @@
     @apply bg-background font-sans text-base text-foreground;
   }
   html {
+    font-size: 1rem;
     scrollbar-gutter: stable;
-    @apply font-sans text-base;
+    overflow-x: hidden;
+    @apply font-sans;
+  }
+  @media (max-width: 71.999rem) {
+    html {
+      scrollbar-width: none;
+    }
+    html::-webkit-scrollbar {
+      display: none;
+    }
+  }
+  @media (min-width: 72rem) {
+    html {
+      scrollbar-gutter: stable both-edges;
+    }
   }
 
   body[data-scroll-locked] {

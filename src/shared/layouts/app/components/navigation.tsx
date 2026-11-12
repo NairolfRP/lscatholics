@@ -86,7 +86,7 @@ export default function Navigation() {
 
   return (
     <NavigationMenu
-      className="z-40 hidden w-full justify-end leading-none uppercase min-[65.875rem]:flex"
+      className="z-40 hidden w-full justify-end leading-none uppercase min-[90rem]:flex"
       role="navigation"
       aria-label="Navigation principale"
       anchor={listRef}
@@ -238,7 +238,7 @@ export function MobileNavigation({
       role="dialog"
       aria-modal="true"
       aria-label="Menu de navigation"
-      className="pointer-events-auto fixed inset-0 z-[35] overflow-y-auto bg-primary px-6 pt-40 text-primary-foreground opacity-100 transition-all duration-300 min-[65.875rem]:hidden"
+      className="pointer-events-auto fixed inset-0 z-[35] overflow-y-auto bg-primary px-6 pt-40 text-primary-foreground opacity-100 transition-all duration-300 min-[90rem]:hidden"
     >
       <nav className="flex flex-col items-center gap-4 p-4">
         <Accordion

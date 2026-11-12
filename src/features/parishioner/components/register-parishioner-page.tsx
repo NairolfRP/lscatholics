@@ -33,7 +33,7 @@ export function RegisterParishionerPage() {
         </a>
       </Hero>
 
-      <section className="container mx-auto max-w-7xl px-4 pt-12 sm:px-6 lg:px-8">
+      <section className="container mx-auto max-w-[90rem] px-4 pt-12 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
           <Typography variant="h2">Pourquoi devenir paroissien ?</Typography>
           <p className="mt-3 text-muted-foreground">

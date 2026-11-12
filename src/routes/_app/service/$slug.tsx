@@ -100,7 +100,7 @@ function ServiceDetailPage() {
         subtitle={service.description}
       />
 
-      <div className="container mx-auto max-w-7xl px-4 pt-8 pb-20 sm:px-6 lg:px-8">
+      <div className="container mx-auto max-w-[90rem] px-4 pt-8 pb-20 sm:px-6 lg:px-8">
         <nav aria-label="Fil d'Ariane">
           <ol className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
             <li>

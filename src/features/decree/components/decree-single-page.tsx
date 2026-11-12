@@ -160,7 +160,7 @@ export function DecreeSinglePageSkeleton() {
   return (
     <>
       <section className="relative flex w-full overflow-hidden bg-linear-to-r from-primary to-catholic-red pt-[calc(var(--header-height)+1rem)] pb-16">
-        <div className="relative mx-auto flex w-full max-w-7xl flex-col justify-center gap-5 px-6 md:px-10">
+        <div className="relative mx-auto flex w-full max-w-[90rem] flex-col justify-center gap-5 px-6 md:px-10">
           <Skeleton className="h-6 w-40 rounded-full bg-white/20" />
           <Skeleton className="h-10 w-2/3 bg-white/20 sm:h-12 md:h-16" />
           <div className="flex flex-wrap gap-2">

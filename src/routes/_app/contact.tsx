@@ -45,7 +45,7 @@ function RouteComponent() {
         </a>
       </Hero>
 
-      <section className="container mx-auto max-w-7xl px-4 pt-12 sm:px-6 lg:px-8">
+      <section className="container mx-auto max-w-[90rem] px-4 pt-12 sm:px-6 lg:px-8">
         <EmergencyBanner />
 
         <div className="relative grid grid-cols-1 gap-10 pb-16 lg:grid-cols-3">

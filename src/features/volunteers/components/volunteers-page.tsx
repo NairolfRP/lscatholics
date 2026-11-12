@@ -23,7 +23,7 @@ export function VolunteersPage() {
         </a>
       </Hero>
 
-      <section className="container mx-auto max-w-7xl px-4 pt-12 sm:px-6 lg:px-8">
+      <section className="container mx-auto max-w-[90rem] px-4 pt-12 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
           <p className="mt-3 leading-relaxed text-muted-foreground">
             Nos programmes ont besoin de bénévoles au service des personnes les plus vulnérables des
@@ -40,7 +40,7 @@ export function VolunteersPage() {
 
       <section
         id="volunteer-application-form"
-        className="container mx-auto max-w-7xl scroll-mt-32 px-4 pb-16 sm:px-6 lg:px-8"
+        className="container mx-auto max-w-[90rem] scroll-mt-32 px-4 pb-16 sm:px-6 lg:px-8"
       >
         <div className="grid grid-cols-1 items-start gap-5 lg:grid-cols-5">
           <div className="flex flex-col gap-5 lg:col-span-3">

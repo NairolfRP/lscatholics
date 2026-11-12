@@ -2,7 +2,7 @@ import { Image } from '#shared/components/image'
 
 export function DefaultNotFound() {
   return (
-    <div className="container mx-auto my-48 flex max-w-7xl flex-col items-center px-4 text-center">
+    <div className="container mx-auto my-48 flex max-w-[90rem] flex-col items-center px-4 text-center">
       <h1 className="mb-8 text-3xl font-bold md:text-5xl">Oops... Page non trouvée</h1>
 
       <Image

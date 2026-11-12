@@ -98,7 +98,7 @@ export function ChurchEventsPageSkeleton() {
         title="Événements"
         subtitle="Consultez les événements et les activités à venir dans notre archidiocèse"
       />
-      <main className="container mx-auto max-w-7xl px-4 pt-14 pb-24">
+      <main className="container mx-auto max-w-[90rem] px-4 pt-14 pb-24">
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-3 lg:gap-8">
           <div className="lg:col-span-2">
             <ChurchEventsMonthListSkeleton />

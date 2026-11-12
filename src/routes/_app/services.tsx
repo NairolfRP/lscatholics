@@ -65,7 +65,7 @@ function ServicesPage() {
         subtitle="Sacrements, sacramentaux et accompagnement : la grâce de Dieu se vit à chaque étape de la vie."
       />
 
-      <section className="container mx-auto max-w-7xl px-4 pt-12 pb-20 sm:px-6 lg:px-8">
+      <section className="container mx-auto max-w-[90rem] px-4 pt-12 pb-20 sm:px-6 lg:px-8">
         <Intro />
 
         <nav aria-label="Accès rapide aux catégories de services">

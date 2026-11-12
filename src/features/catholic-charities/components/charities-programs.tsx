@@ -4,7 +4,7 @@ import { ProgramCard } from './program-card'
 export function CharitiesPrograms() {
   return (
     <section id="programmes" className="scroll-mt-(--header-height) bg-background py-24 md:py-32">
-      <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="container mx-auto max-w-[90rem] px-4 sm:px-6 lg:px-8">
         <div className="mx-auto mb-16 max-w-3xl text-center">
           <p className="text-xs font-semibold tracking-[0.3em] text-primary  uppercase ">
             Ce que nous faisons

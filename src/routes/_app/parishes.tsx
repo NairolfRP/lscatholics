@@ -25,7 +25,7 @@ function ParishesPage() {
         subtitle="Découvrez les communautés de foi qui composent l'archidiocèse de Los Santos."
       />
 
-      <section className="container mx-auto max-w-7xl px-4 pt-15 pb-20 sm:px-6 lg:px-8">
+      <section className="container mx-auto max-w-[90rem] px-4 pt-15 pb-20 sm:px-6 lg:px-8">
         <header className="mb-10 max-w-3xl">
           <p className="mt-4 leading-relaxed text-muted-foreground">
             Les paroisses de l'archidiocèse de Los Santos vous accueillent pour les célébrations,

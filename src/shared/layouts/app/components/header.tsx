@@ -37,22 +37,22 @@ export function Header() {
           )}
         />
 
-        <div className="min-w-[79.813rem]:container mx-auto">
-          <div className="flex w-full items-center justify-between align-middle lg:px-10 lg:py-5">
+        <div className="mx-auto min-[79.813rem]:container">
+          <div className="flex w-full items-center justify-between px-4 py-3 align-middle sm:px-6 lg:px-10 lg:py-5">
             <div className="shrink-0">
               <Link to="/">
                 <Logo
                   width={240}
                   height={80}
-                  layout="fixed"
+                  layout="constrained"
                   unstyled
                   loading="eager"
-                  className="h-12 w-auto sm:h-16 lg:h-20"
+                  className="h-8 w-auto sm:h-12 lg:h-16"
                 />
               </Link>
             </div>
 
-            <div className="flex min-w-0 items-center px-5 lg:gap-4 lg:p-0">
+            <div className="flex min-w-0 items-center gap-1 px-2 sm:gap-2 sm:px-4 lg:gap-4 lg:px-0">
               <Navigation />
 
               <Account />
@@ -66,7 +66,7 @@ export function Header() {
                 aria-label={
                   mobileNavOpen ? 'Fermer le menu de navigation' : 'Ouvrir le menu de navigation'
                 }
-                className="size-inherit mx-5 p-2 min-[65.875rem]:hidden"
+                className="size-inherit mx-2 p-2 min-[90rem]:hidden"
               >
                 {mobileNavOpen ? (
                   <XIcon className="size-5 min-[17.688rem]:size-8" />
@@ -128,7 +128,7 @@ function Account() {
       ) : (
         <LogInIcon className="size-4 min-[17.688rem]:size-8 min-[28.063rem]:size-4" />
       )}
-      <span className="hidden min-[28.063rem]:block min-[65.813rem]:hidden min-[76.063rem]:block">
+      <span className="hidden min-[28.063rem]:block min-[76.063rem]:block min-[90rem]:hidden">
         {loading ? <>Connexion...</> : <>Connexion</>}
       </span>
     </Button>

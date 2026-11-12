@@ -38,7 +38,7 @@ function AssociationsPage() {
         subtitle="Le registre des associations privées et publiques de fidèles ayant reçues une personnalité juridique en droit de l'Église dans l'Archidiocèse de Los Santos."
       />
 
-      <section className="container mx-auto max-w-7xl px-4 pt-12 pb-20 sm:px-6 lg:px-8">
+      <section className="container mx-auto max-w-[90rem] px-4 pt-12 pb-20 sm:px-6 lg:px-8">
         <Intro />
 
         <RegisterSection

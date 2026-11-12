@@ -57,7 +57,7 @@ export function ProgramShowPage() {
         </div>
       </section>
 
-      <div className="container mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+      <div className="container mx-auto max-w-[90rem] px-4 py-16 sm:px-6 lg:px-8">
         <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_18rem]">
           <div className="min-w-0 space-y-16">
             <Section id="about" title="À propos">

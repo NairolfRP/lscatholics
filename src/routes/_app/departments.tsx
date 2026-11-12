@@ -79,7 +79,7 @@ function DepartmentsPage() {
         title="Départements"
         subtitle="Les départements, bureaux et ministères au service de l'Archevêque, des paroisses et des fidèles de l'Archidiocèse de Los Santos."
       />
-      <div className="container mx-auto max-w-7xl px-4 pt-15 pb-20 sm:px-6 lg:px-8">
+      <div className="container mx-auto max-w-[90rem] px-4 pt-15 pb-20 sm:px-6 lg:px-8">
         <div className="space-y-16">
           {categories.map((category) => {
             const items = sortedDepartments.filter(
