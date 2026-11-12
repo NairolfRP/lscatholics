@@ -63,7 +63,7 @@ const MarkdownComponents: ReactMarkdownComponents = {
     </HeadingLink>
   ),
   p: ({ children }) => (
-    <Typography variant="p" className="mb-4 leading-7">
+    <Typography variant="p" className="mb-4 leading-7 text-inherit">
       {children}
     </Typography>
   ),

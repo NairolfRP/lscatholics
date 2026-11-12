@@ -57,10 +57,10 @@ function PostPage() {
         />
       </header>
 
-      <div className="mx-auto flex max-w-200 flex-col px-2 pt-10 pb-20 lg:px-0">
-        <div className="space-y-8 text-justify">
+      <div className="mx-auto prose max-w-3xl px-5 pt-12 pb-20 dark:prose-invert">
+        <div className="space-y-8">
           <div>
-            <span className="block font-bold uppercase">Pour diffusion immédiate —</span>
+            <span className="block text-sm font-bold uppercase">Pour diffusion immédiate —</span>
             {post.publishedAt && (
               <time dateTime={post.publishedAt.toISOString()}>{formatDate(post.publishedAt)}</time>
             )}
