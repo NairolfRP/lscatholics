@@ -53,7 +53,7 @@ export default function ScrollToTopButton() {
   return (
     <div
       className={[
-        'fixed bottom-0 right-0 pb-[calc(0.75rem+env(safe-area-inset-bottom))] pr-[calc(1.25rem+env(safe-area-inset-right))] z-50',
+        'fixed right-0 z-50 pr-[calc(1.25rem+env(safe-area-inset-right))] bottom-[calc(5rem+env(safe-area-inset-bottom))] md:bottom-[calc(0.75rem+env(safe-area-inset-bottom))]',
         'transition-all duration-300',
         isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none',
       ].join(' ')}

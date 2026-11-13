@@ -1,7 +1,7 @@
 import type { Dispatch, SetStateAction } from 'react'
 import { useEffect, useRef } from 'react'
 import { Link, useLocation } from '@tanstack/react-router'
-import { HandHeart } from 'lucide-react'
+import { HandHeart, XIcon } from 'lucide-react'
 import {
   Accordion,
   AccordionContent,
@@ -238,9 +238,19 @@ export function MobileNavigation({
       role="dialog"
       aria-modal="true"
       aria-label="Menu de navigation"
-      className="pointer-events-auto fixed inset-0 z-[35] overflow-y-auto bg-primary px-6 pt-40 text-primary-foreground opacity-100 transition-all duration-300 min-[90rem]:hidden"
+      className="pointer-events-auto fixed inset-0 z-[35] overflow-y-auto bg-primary px-6 pt-24 text-primary-foreground opacity-100 transition-all duration-300 min-[90rem]:hidden"
     >
       <nav className="flex flex-col items-center gap-4 p-4">
+        <div className="mb-6 flex w-full justify-end">
+          <button
+            type="button"
+            onClick={() => setOpen(false)}
+            aria-label="Fermer le menu de navigation"
+            className="inline-flex size-10 items-center justify-center rounded-md text-primary-foreground transition-colors hover:bg-primary-foreground/10"
+          >
+            <XIcon className="size-8" />
+          </button>
+        </div>
         <Accordion
           className="w-full gap-5"
           defaultValue={activeParentLabel ? [activeParentLabel] : undefined}

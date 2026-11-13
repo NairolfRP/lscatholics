@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import type { Dispatch, SetStateAction } from 'react'
 import { Link } from '@tanstack/react-router'
 import { LogInIcon, MenuIcon, XIcon } from 'lucide-react'
 import { Logo } from '#/shared/components/logo'
@@ -15,8 +16,13 @@ import Navigation, { MobileNavigation } from './navigation'
 
 const SCROLL_THRESHOLD = 50
 
-export function Header() {
-  const [mobileNavOpen, setMobileNavOpen] = useState<boolean>(false)
+export function Header({
+  mobileNavOpen,
+  setMobileNavOpen,
+}: {
+  mobileNavOpen: boolean
+  setMobileNavOpen: Dispatch<SetStateAction<boolean>>
+}) {
   const isScrolled = useIsScrolled(SCROLL_THRESHOLD) && !mobileNavOpen
 
   return (
@@ -66,7 +72,7 @@ export function Header() {
                 aria-label={
                   mobileNavOpen ? 'Fermer le menu de navigation' : 'Ouvrir le menu de navigation'
                 }
-                className="size-inherit mx-2 p-2 min-[90rem]:hidden"
+                className="mx-2 hidden p-2 md:inline-flex min-[90rem]:hidden"
               >
                 {mobileNavOpen ? (
                   <XIcon className="size-5 min-[17.688rem]:size-8" />

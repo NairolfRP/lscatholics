@@ -61,9 +61,7 @@ UserMenu.Trigger = function Trigger({ characterName }: UserMenuTriggerProps) {
       render={
         <Button variant="ghost" aria-label={characterName}>
           <User className="size-lg" />
-          <span className="ml-2 hidden max-w-35 truncate min-[28.063rem]:inline min-[65.875rem]:hidden min-[76.063rem]:inline">
-            {characterName}
-          </span>
+          <span className="ml-2 max-w-35 truncate">{characterName}</span>
         </Button>
       }
     />
