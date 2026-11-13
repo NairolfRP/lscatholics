@@ -18,7 +18,7 @@ import {
 import { authClient } from '#shared/integrations/auth/auth-client.ts'
 import { gameContextQueryOptions } from '#shared/queries/game.queries.ts'
 import { Button } from '../ui/button.tsx'
-import { Label } from '../ui/label.tsx'
+import { FieldLabel } from '../ui/field.tsx'
 
 type Props = {
   open?: boolean
@@ -29,7 +29,7 @@ export default function SwitchCharacterDialog({ open, onOpenChange }: Props) {
   return (
     <ResponsiveDialog open={open} onOpenChange={onOpenChange}>
       <ResponsiveDialogContent>
-        <ResponsiveDialogHeader>
+        <ResponsiveDialogHeader className="mb-4 md:mb-0">
           <ResponsiveDialogTitle>(( Changer de personnage ))</ResponsiveDialogTitle>
           <ResponsiveDialogDescription>
             Choisissez quel personnage vous souhaitez utiliser comme personnage actuel sur le site.
@@ -116,27 +116,50 @@ function SwitchCharacterForm({ onClose }: { onClose: () => void }) {
       (c) => c.id !== gameContext!.currentCharacter!.id
     )
 
+    if (charactersListWithoutCurrent.length === 0) {
+      return (
+        <div className="px-4 py-6 text-center text-sm text-muted-foreground">
+          Aucun autre personnage disponible.
+        </div>
+      )
+    }
+
     return (
       <form
         id="switch-character-form"
         onSubmit={handleSubmit}
-        className="grid items-start gap-4 px-4"
+        className="flex min-h-0 flex-1 flex-col gap-4 px-4 py-2 md:py-0"
       >
-        <RadioGroup
-          id="characterId"
-          name="characterId"
-          className="mb-5 flex flex-col gap-6"
-          onValueChange={(val) => setSelectedId(Number(val))}
-        >
-          {charactersListWithoutCurrent.map((character) => (
-            <div key={character.id} className="flex items-center space-x-2">
-              <RadioGroupItem id={`${character.id}`} value={`${character.id}`} />
-              <Label htmlFor={`${character.id}`}>
-                {character.firstname} {character.lastname}
-              </Label>
+        <div className="min-h-0 flex-1 overflow-y-auto pr-1">
+          {gameContext?.currentCharacter && (
+            <div className="mb-2 flex items-center gap-3 rounded-lg bg-muted/40 px-3 py-3 text-muted-foreground">
+              <span className="size-4 rounded-full border border-muted-foreground/40" />
+              <span className="text-sm font-medium">
+                {gameContext.currentCharacter.firstname} {gameContext.currentCharacter.lastname}
+              </span>
+              <span className="ml-auto text-xs">Actuel</span>
             </div>
-          ))}
-        </RadioGroup>
+          )}
+          <RadioGroup
+            id="characterId"
+            name="characterId"
+            className="flex flex-col gap-2"
+            onValueChange={(val) => setSelectedId(Number(val))}
+          >
+            {charactersListWithoutCurrent.map((character) => (
+              <FieldLabel
+                key={character.id}
+                htmlFor={`${character.id}`}
+                className="flex w-full cursor-pointer items-center gap-3 rounded-lg border border-transparent px-3 py-3 transition-colors hover:bg-muted has-data-[state=checked]:border-primary/40 has-data-[state=checked]:bg-muted/60"
+              >
+                <RadioGroupItem id={`${character.id}`} value={`${character.id}`} />
+                <span className="text-sm font-medium">
+                  {character.firstname} {character.lastname}
+                </span>
+              </FieldLabel>
+            ))}
+          </RadioGroup>
+        </div>
       </form>
     )
   }
@@ -145,10 +168,10 @@ function SwitchCharacterForm({ onClose }: { onClose: () => void }) {
     switchCharacterMutation.isPending || isLoading || isError || selectedId === null
 
   return (
-    <>
+    <div className="flex min-h-0 flex-1 flex-col">
       {dialogContent()}
 
-      <ResponsiveDialogFooter>
+      <ResponsiveDialogFooter className="mt-4 shrink-0 md:mt-0">
         <ResponsiveDialogClose
           render={<Button variant="outline" disabled={switchCharacterMutation.isPending} />}
         >
@@ -158,6 +181,6 @@ function SwitchCharacterForm({ onClose }: { onClose: () => void }) {
           {switchCharacterMutation.isPending ? 'Sauvegarde...' : 'Sauvegarder'}
         </Button>
       </ResponsiveDialogFooter>
-    </>
+    </div>
   )
 }
