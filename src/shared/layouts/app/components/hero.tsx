@@ -181,8 +181,10 @@ export function ImageHero({
             layout: 'fullWidth',
             fetchPriority: 'high',
             decoding: 'async',
-            className: 'absolute inset-0 h-full w-full object-cover',
+            className:
+              'absolute inset-0 h-full w-full select-none object-cover [-webkit-user-drag:none]',
             style: { objectPosition: imagePosition },
+            draggable: false,
           } as ImageProps)}
         />
       )}
@@ -284,8 +286,10 @@ export function SplitHero({
                 layout: 'fullWidth',
                 fetchPriority: 'high',
                 decoding: 'async',
-                className: 'absolute inset-0 h-full w-full object-cover',
+                className:
+                  'absolute inset-0 h-full w-full select-none object-cover [-webkit-user-drag:none]',
                 style: { objectPosition: imagePosition },
+                draggable: false,
               } as ImageProps)}
             />
           )}
@@ -323,8 +327,9 @@ export function VideoHero({
           loop
           muted
           playsInline
-          className="absolute inset-0 h-full w-full object-cover"
+          className="absolute inset-0 h-full w-full object-cover select-none [-webkit-user-drag:none]"
           aria-hidden
+          draggable={false}
         />
       )}
       <Overlay opacity={overlayOpacity} />

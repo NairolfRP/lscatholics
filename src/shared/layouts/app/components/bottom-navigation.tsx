@@ -27,7 +27,7 @@ export function BottomNavigation({ open, onOpenMenu }: { open: boolean; onOpenMe
   return (
     <nav
       aria-label="Navigation mobile"
-      className="fixed inset-x-0 bottom-0 z-30 border-t border-border bg-background/95 px-safe pb-safe backdrop-blur supports-[backdrop-filter]:bg-background/80 md:hidden"
+      className="fixed inset-x-0 bottom-0 z-30 border-t border-border bg-background/95 px-safe pb-safe backdrop-blur select-none supports-[backdrop-filter]:bg-background/80 md:hidden"
     >
       <div className="mx-auto flex h-16 max-w-lg items-stretch justify-around px-2">
         {items.map((item) => {

@@ -65,7 +65,7 @@ export function DashboardSidebar() {
   }
 
   return (
-    <Sidebar collapsible="icon" variant="inset">
+    <Sidebar collapsible="icon" variant="inset" className="select-none">
       {open && (
         <SidebarHeader className="mb-5">
           <Link

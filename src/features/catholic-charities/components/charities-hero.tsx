@@ -14,10 +14,11 @@ export function CharitiesHero() {
       <Image
         src="/assets/images/catholic-charities-hero.webp"
         alt=""
-        className="absolute inset-0 h-full w-full object-cover object-[50%_35%]"
+        className="absolute inset-0 h-full w-full object-cover object-[50%_35%] select-none [-webkit-user-drag:none]"
         layout="fullWidth"
         fetchPriority="high"
         decoding="async"
+        draggable={false}
       />
       <div className="absolute inset-0 bg-linear-to-t from-[#170a0d] via-[#170a0d]/75 to-black/40" />
       <div className="relative container mx-auto flex flex-col px-4 pt-(--header-height) pb-16 sm:px-6 lg:px-8">

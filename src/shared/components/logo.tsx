@@ -20,7 +20,11 @@ export function Logo({
       src={src}
       alt={alt}
       loading={loading}
-      className={cn('transition-opacity duration-300 ease-in-out hover:opacity-80', className)}
+      draggable={false}
+      className={cn(
+        'transition-opacity duration-300 ease-in-out select-none [-webkit-user-drag:none] hover:opacity-80',
+        className
+      )}
     />
   )
 }
