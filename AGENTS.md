@@ -73,4 +73,9 @@ Strong success criteria let you loop independently. Weak criteria ("make it work
 
 ---
 
+## Git Commits
+
+- Commit messages MUST be written in English.
+- Follow the Conventional Commits v1.0.0 specification (https://www.conventionalcommits.org/en/v1.0.0/).
+
 **These guidelines are working if:** fewer unnecessary changes in diffs, fewer rewrites due to overcomplication, and clarifying questions come before implementation rather than after mistakes.
