@@ -1,9 +1,15 @@
 import { createStart } from '@tanstack/react-start'
+import { cachePolicyMiddleware } from '#/middleware/cache-policy.middleware'
 import { cspMiddleware } from '#/middleware/csp.middleware'
 import { csrfMiddleware } from '#/middleware/csrf.middleware'
 import { sentryFunctionMiddleware, sentryRequestMiddleware } from '#/middleware/sentry.middleware'
 
 export const startInstance = createStart(() => ({
-  requestMiddleware: [sentryRequestMiddleware, csrfMiddleware, cspMiddleware],
+  requestMiddleware: [
+    sentryRequestMiddleware,
+    csrfMiddleware,
+    cspMiddleware,
+    cachePolicyMiddleware,
+  ],
   functionMiddleware: [sentryFunctionMiddleware],
 }))

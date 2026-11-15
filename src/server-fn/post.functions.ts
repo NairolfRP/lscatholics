@@ -1,6 +1,7 @@
 import { createServerFn } from '@tanstack/react-start'
 import { basePostInteractionSchema, postsSearchSchema } from '#/features/post/schemas/post.schema'
 import { requirePermission } from '#/middleware/permission.middleware'
+import { setPublicCache } from '#server/lib/http-cache'
 import * as postService from '#server/services/post.service'
 import { dashboardSearchSchema } from '#shared/schemas/dashboard/search.schema'
 import { idSchema } from '#shared/schemas/id.schema.ts'
@@ -8,7 +9,14 @@ import { looseObjectSchema } from '#shared/schemas/utils.schema.ts'
 
 export const getPostFn = createServerFn({ method: 'GET' })
   .validator((slug: string) => slug)
-  .handler(async ({ data }) => postService.getPost({ slug: data }))
+  .handler(async ({ data }) => {
+    setPublicCache({
+      maxAge: 300,
+      sMaxAge: 600,
+      staleWhileRevalidate: 86400,
+    })
+    return postService.getPost({ slug: data })
+  })
 
 export const getDashboardPostFn = createServerFn({ method: 'GET' })
   .middleware([requirePermission('post', 'read')])
@@ -19,7 +27,10 @@ export const getDashboardPostFn = createServerFn({ method: 'GET' })
 
 export const getPostsFn = createServerFn({ method: 'GET' })
   .validator(postsSearchSchema)
-  .handler(async ({ data }) => postService.getPosts({ data }))
+  .handler(async ({ data }) => {
+    setPublicCache({ maxAge: 60, sMaxAge: 300, staleWhileRevalidate: 3600 })
+    return postService.getPosts({ data })
+  })
 
 export const getDashboardPostsFn = createServerFn({ method: 'GET' })
   .middleware([requirePermission('post', 'read')])

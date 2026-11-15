@@ -20,8 +20,7 @@ export const singleJobPostingQueryOptions = (slug: string) => {
   return queryOptions({
     queryKey: ['job-posting', slug],
     queryFn: () => getSingleJobPostingFn({ data: slug }),
-    staleTime: 60_000, // 1 minute
-    refetchOnWindowFocus: true,
+    staleTime: 5 * 60 * 1000,
   })
 }
 
@@ -35,9 +34,8 @@ export const jobPostingsQueryOptions = (filters: {
   return queryOptions({
     queryKey: ['job-postings', page, other],
     queryFn: () => getJobPostingsFn({ data: filters }),
-    staleTime: 60_000, // 1 minute
+    staleTime: 5 * 60 * 1000,
     placeholderData: keepPreviousData,
-    refetchOnWindowFocus: true,
     retry: 2,
   })
 }

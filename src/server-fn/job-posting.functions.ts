@@ -4,6 +4,7 @@ import {
   jobPostingsSearchSchema,
 } from '#/features/job-posting/schemas/job-posting.schema'
 import { requirePermission } from '#/middleware/permission.middleware'
+import { setPublicCache } from '#server/lib/http-cache'
 import * as jobPostingService from '#server/services/job-posting.service'
 import { getJobPostings, getSingleJobPosting } from '#server/services/job-posting.service'
 import { dashboardSearchSchema } from '#shared/schemas/dashboard/search.schema'
@@ -13,11 +14,21 @@ import { looseObjectSchema } from '#shared/schemas/utils.schema.ts'
 
 export const getSingleJobPostingFn = createServerFn({ method: 'GET' })
   .validator(slugSchema)
-  .handler(async ({ data: slug }) => getSingleJobPosting({ slug }))
+  .handler(async ({ data: slug }) => {
+    setPublicCache({
+      maxAge: 300,
+      sMaxAge: 600,
+      staleWhileRevalidate: 86400,
+    })
+    return getSingleJobPosting({ slug })
+  })
 
 export const getJobPostingsFn = createServerFn({ method: 'GET' })
   .validator(jobPostingsSearchSchema)
-  .handler(async ({ data }) => getJobPostings(data))
+  .handler(async ({ data }) => {
+    setPublicCache({ maxAge: 300, sMaxAge: 600, staleWhileRevalidate: 86400 })
+    return getJobPostings(data)
+  })
 
 export const getDashboardJobPostingFn = createServerFn({ method: 'GET' })
   .middleware([requirePermission('job', 'read')])

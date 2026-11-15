@@ -6,14 +6,14 @@ import type { DashboardSearch } from '../schemas/dashboard/search.schema.ts'
 export const latestPostsQueryOptions = queryOptions({
   queryKey: ['posts', 'latest'],
   queryFn: () => getLatestPostsFn(),
-  refetchOnWindowFocus: true,
+  staleTime: 5 * 60 * 1000,
 })
 
 export const postQueryOptions = (slug: string) => {
   return queryOptions({
     queryKey: ['post', slug],
     queryFn: () => getPostFn({ data: slug }),
-    refetchOnWindowFocus: true,
+    staleTime: 5 * 60 * 1000,
   })
 }
 
@@ -21,9 +21,8 @@ export const postsQueryOptions = (page: number) => {
   return queryOptions({
     queryKey: ['posts', page],
     queryFn: () => getPostsFn({ data: { page } }),
-    staleTime: 60_000, // 1min
+    staleTime: 60_000,
     placeholderData: keepPreviousData,
-    refetchOnWindowFocus: true,
     retry: 2,
   })
 }

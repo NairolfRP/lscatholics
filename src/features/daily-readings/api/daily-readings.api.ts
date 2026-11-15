@@ -5,7 +5,7 @@ import type { AELFReadingsResponse } from '#/features/daily-readings/types/aelf.
 const aelfClient = ky.create({
   prefix: 'https://api.aelf.org/v1',
   timeout: 10_000,
-  retry: 0,
+  retry: { limit: 2, methods: ['get'], backoffLimit: 1000 },
   headers: { Accept: 'application/json' },
 })
 

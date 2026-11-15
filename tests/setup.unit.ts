@@ -13,6 +13,7 @@ vi.mock('@/server/auth', () => ({
 vi.mock('@tanstack/react-start/server', () => ({
   getRequestHeaders: () => new Headers(),
   setResponseStatus: vi.fn(),
+  setResponseHeader: vi.fn(),
   setCookie: vi.fn(),
   getCookie: vi.fn(),
   deleteCookie: vi.fn(),
