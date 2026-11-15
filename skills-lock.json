@@ -5,7 +5,7 @@
             "source": "better-auth/skills",
             "sourceType": "github",
             "skillPath": "better-auth/best-practices/SKILL.md",
-            "computedHash": "bb7bb27183fc02da42fa74a05727e038ab89d0fdbdbafa40dbba3a41e727ecb4"
+            "computedHash": "2773c3687f2cf96d659049ebf2d8c86058a33541b09360712df0dc6b1404c403"
         },
         "better-auth-security-best-practices": {
             "source": "better-auth/skills",
@@ -13,16 +13,40 @@
             "skillPath": "security/SKILL.md",
             "computedHash": "36e9710eaa13c61c00bec00a4902fdc6ed829e6de13127238ae57494e93c1d9d"
         },
+        "create-auth": {
+            "source": "better-auth/skills",
+            "sourceType": "github",
+            "skillPath": "better-auth/create-auth/SKILL.md",
+            "computedHash": "6f68253a5ab812aa8c9b70c57609aca763093a594e3b07163142e0fa7d64904a"
+        },
         "drizzle": {
             "source": "./node_modules/.pnpm/drizzle-kit@1.0.0-rc.5_drizzle-orm@1.0.0-rc.5_@libsql+client@0.18.0_@opentelemetry+api@1.10.0_zod@4.6.7_/node_modules/drizzle-kit/skills",
             "sourceType": "local",
             "computedHash": "c91331769b0cf9a9f5592d9ea5cf0998fdfcd81c4ed1fb0d8784ada819a797e9"
+        },
+        "email-and-password-best-practices": {
+            "source": "better-auth/skills",
+            "sourceType": "github",
+            "skillPath": "better-auth/emailAndPassword/SKILL.md",
+            "computedHash": "407c1244202876daa748818ed41dc55afde1b3f7aec48ae3a1f1c8a7ee40465e"
+        },
+        "organization-best-practices": {
+            "source": "better-auth/skills",
+            "sourceType": "github",
+            "skillPath": "better-auth/organization/SKILL.md",
+            "computedHash": "e5b1238c3b62c789918fe397ed52787742e50944343de33f459629f29b0fe922"
         },
         "react-call": {
             "source": "desko27/react-call",
             "sourceType": "github",
             "skillPath": "skills/react-call/SKILL.md",
             "computedHash": "08663ec0dd1cf49091f2c66508633a1f9b72b9f35fa052559cca5efa99792d31"
+        },
+        "two-factor-authentication-best-practices": {
+            "source": "better-auth/skills",
+            "sourceType": "github",
+            "skillPath": "better-auth/twoFactor/SKILL.md",
+            "computedHash": "89ca7fde92a69aec2cf7407d29058c5428e17d228e2578c79e0129d128524f38"
         }
     }
 }
