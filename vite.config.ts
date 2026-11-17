@@ -37,6 +37,9 @@ const config = defineConfig(({ mode }) => {
       ...(isDev ? [devtools()] : []),
       nitro({
         sourcemap: false,
+        rolldownConfig: {
+          checks: { moduleLevelDirective: false },
+        },
         experimental: { tasks: true },
         routeRules: {
           '**': {
