@@ -23,6 +23,7 @@ export const Route = createFileRoute('/_app/account')({
   loader: ({ context }) => {
     return { user: context.user }
   },
+  ssr: 'data-only',
   head: () => ({
     meta: pageMetadata('Paramètres'),
   }),

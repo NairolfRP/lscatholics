@@ -33,6 +33,7 @@ export const Route = createFileRoute('/_app/sign-in')({
       throw redirect({ href: search.redirectTo, replace: true })
     }
   },
+  ssr: false,
   head: () => ({
     meta: pageMetadata('Connexion'),
   }),
